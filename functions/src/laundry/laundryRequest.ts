@@ -46,7 +46,6 @@ export enum ReqLaundryError {
     CustomerNotFound = "customerNotFound",
     LaundryStoreNotApproved = "laundryStoreNotApproved",
     StoreClosed = "storeClosed",
-    NoDeliveryPartner = "noDeliveryPartner",
     DeliveryNotAvailable = "deliveryNotAvailable",
     OrderCreationError = "orderCreationError",
     NoChatId = "noChatId",
@@ -155,12 +154,12 @@ async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider,
         linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
     }
     mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
     if(laundryStore.operators != undefined) {
         laundryStore.operators.forEach((l) => {
-          if(l.user) {
-            pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.LaundryOperator);
+          if(l.user && l.notificationInfo?.turnOffNotifications == false) {
+            pushNotification(l.user.firebaseId, notification, l.notificationInfo, ParticipantType.LaundryOperator, l.user.language);
           }
         });
     }

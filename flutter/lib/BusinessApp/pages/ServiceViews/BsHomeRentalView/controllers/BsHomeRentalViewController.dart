@@ -97,7 +97,7 @@ class BsHomeRentalViewController {
               .trim() ??
           "";
       petFriendly.value = rental!.details.additionalParameters?["petFriendly"];
-      homeLocation.value = rental!.gpsLocation;
+      homeLocation.value = rental!.location.location;
       homeType.value = rental!.category1;
       final String? roomType1 =
           rental!.details.additionalParameters?["roomType1"];
@@ -157,13 +157,22 @@ class BsHomeRentalViewController {
     details.additionalParameters = {
       "area": areaController.text.trim() + " sq ft",
       "petFriendly": petFriendly.value,
+      "roomType1": roomType.value?.toFirebaseFormatString(),
+      "additionalRooms": [
+        for (final Map<String, dynamic> room in additionalRooms)
+          {
+            "roomType": room["roomType"],
+            "cost": room["controller"].priceTimeUnitMap.value.map(
+                (TimeUnit key, TextEditingController value) => MapEntry(
+                    key.toFirebaseFormatString(), double.parse(value.text))),
+          },
+      ],
     };
     final Home rental = Home(
       availableFor: HomeAvailabilityOption.Rent,
       location: HomeLocation(
           name: homeLocation.value!.address, location: homeLocation.value!),
       category1: homeType.value!,
-      gpsLocation: homeLocation.value,
       details: details,
       bathrooms: int.tryParse(bathroomsController.text),
       bedrooms: int.tryParse(bedroomsController.text),
@@ -180,7 +189,6 @@ class BsHomeRentalViewController {
       ),
       category1: homeType.value!,
       availableFor: HomeAvailabilityOption.Rent,
-      gpsLocation: homeLocation.value,
       bathrooms: int.tryParse(bathroomsController.text),
       bedrooms: int.tryParse(bedroomsController.text),
       details: detailsController.details!,

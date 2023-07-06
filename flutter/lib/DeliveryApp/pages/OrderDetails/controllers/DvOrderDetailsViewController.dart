@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
+import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
@@ -18,6 +19,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 class DvOrderDetailsViewController {
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -44,6 +46,7 @@ class DvOrderDetailsViewController {
   OrderCosts? get orderCosts =>
       (isCourier) ? _orderCosts.value : order.value?.costs;
   Rxn<List<CourierOrdeItem>> items = Rxn();
+  Rxn<List<RestaurantOrderItem>> restaurantOrderItem = Rxn();
   TextEditingController costText = TextEditingController();
   TextEditingController taxText = TextEditingController();
 // getters //
@@ -85,10 +88,15 @@ class DvOrderDetailsViewController {
     if (order.value != null) {
       unawaited(_fetchOrdersCountAndReviews());
     }
-    if (order.value != null &&
-        order.value!.orderType == cModels.OrderType.Courier) {
-      unawaited(_fetchOrderItems(orderId));
-      unawaited(_fetchOrderBill(orderId));
+
+    if (order.value != null) {
+      if (order.value!.orderType == cModels.OrderType.Courier) {
+        unawaited(_fetchOrderItems(orderId));
+        unawaited(_fetchOrderBill(orderId));
+      } else {
+        unawaited(_fetchRestaurantOrderItems());
+        unawaited(_fetchOrderBill(orderId));
+      }
     }
   }
 
@@ -96,6 +104,12 @@ class DvOrderDetailsViewController {
     items.value =
         await get_courier_order_items(orderId: orderId, withCache: false);
     items.refresh();
+  }
+
+  Future<void> _fetchRestaurantOrderItems() async {
+    restaurantOrderItem.value = await get_dv_order_restaurant_items(
+        deliveryOrderId: orderId, withCache: false);
+    restaurantOrderItem.refresh();
   }
 
   Future<void> _fetchOrderBill(int orderId) async {

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/CustLaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -103,6 +101,11 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
+        actionIcons: [
+          FloatingCartComponent(
+            cartType: CartType.business,
+          ),
+        ],
         onClick: MezRouter.back,
         title: _i18n()['services'],
       ),

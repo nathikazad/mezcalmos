@@ -1,10 +1,11 @@
 import { $, notification_info_constraint, notification_info_update_column } from "../../../../../hasura/library/src/generated/graphql-zeus";
-import { RestaurantDetails } from "../../../restaurant/createNewRestaurant";
+import { RestaurantDetails, RestaurantError } from "../../../restaurant/createNewRestaurant";
 import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { PaymentType } from '../../models/Generic/Order';
+import { QRFlyerLinks, createQRFlyerPDF } from "../../../utilities/links/flyer";
 
 
 export async function createRestaurant(
@@ -13,9 +14,29 @@ export async function createRestaurant(
 ): Promise<ServiceProvider> {
   let chain = getHasura();
 
+  if(restaurantDetails.uniqueId) {
+    let queryResponse = await chain.query({
+        service_provider_details: [{
+            where: {
+                unique_id: {
+                    _eq: restaurantDetails.uniqueId
+                }
+            }
+        }, {
+            id: true,
+        }]
+    });
+    if(queryResponse.service_provider_details.length) {
+        throw new MezError(RestaurantError.UniqueIdAlreadyExists);
+    }
+  }
+  if(restaurantDetails.phoneNumber.length == 10) {
+    restaurantDetails.phoneNumber = `+52${restaurantDetails.phoneNumber}`;
+}
   let uniqueId: string = restaurantDetails.uniqueId ?? generateString();
 
-  let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Restaurant)
+  let linksResponse: Partial<Record<DeepLinkType, IDeepLink>> = await generateDeepLinks(uniqueId, AppType.Restaurant)
+  let QRflyer: QRFlyerLinks = await createQRFlyerPDF(uniqueId);
   
   let response = await chain.mutation({
     insert_restaurant_restaurant_one: [{
@@ -51,12 +72,12 @@ export async function createRestaurant(
             },
             service_link: {
               data: {
-                customer_deep_link: linksResponse[DeepLinkType.Customer].url,
-                customer_qr_image_link: linksResponse[DeepLinkType.Customer].urlQrImage,
-                operator_deep_link: linksResponse[DeepLinkType.AddOperator].url,
-                operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
-                driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
-                driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                customer_qr_image_link: QRflyer.customerQRImageLink,
+                operator_deep_link: linksResponse[DeepLinkType.AddOperator]?.url,
+                operator_qr_image_link: linksResponse[DeepLinkType.AddOperator]?.urlQrImage,
+                driver_deep_link: linksResponse[DeepLinkType.AddDriver]?.url,
+                driver_qr_image_link: linksResponse[DeepLinkType.AddDriver]?.urlQrImage,
+                customer_flyer_links: $`customer_flyer_links`,
               }
             }
           }
@@ -93,13 +114,14 @@ export async function createRestaurant(
     "gps": {
       "type": "Point",
       "coordinates": [restaurantDetails.location.lng, restaurantDetails.location.lat]
-    }
+    },
+    "customer_flyer_links": QRflyer.flyerLinks
   })
   console.log("response: ", response);
 
   if (response.insert_restaurant_restaurant_one == null) {
 
-    throw new MezError("restaurantCreationError");
+    throw new MezError(RestaurantError.RestaurantCreationError);
   }
   if(restaurantDetails.restaurantOperatorNotificationToken) {
     chain.mutation({

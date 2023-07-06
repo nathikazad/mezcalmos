@@ -7,6 +7,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsOtherServiceView/BsOtherServiceView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsProductView/BsProductView.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRealEstateView/BsRealEstateView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRentalView/BsRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsServiceView/BsServiceView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
@@ -15,7 +16,6 @@ import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
-import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsRealEstateView/BsRealEstateView.dart';
 
 class BusinessOpRoutes {
   static const String kBusniessOpTabsView = '/tabsView';
@@ -23,7 +23,7 @@ class BusinessOpRoutes {
   static const String kBsOpHomeRental = '/homeRental/:id';
   static const String kBsCoWorking = '/woWorking/:id';
   static const String kBsOpRealEstate = '/realEstate/:id';
-  static const String kBsOpHomeRentalOrder = '/homeRentalOrder/:id';
+  static const String kBsOpBusinessOrder = '/businessOrders/:id';
   static const String kBsOpRental = '/rental/:id';
   static const String kBsOpEvent = '/event/:id';
   static const String kBsOpService = '/service/:id';
@@ -56,8 +56,8 @@ class BusinessOpRoutes {
           builder: () => BusinessOpUnauthView(),
         ),
         QRoute(
-          path: kBsOpHomeRentalOrder,
-          name: kBsOpHomeRentalOrder,
+          path: kBsOpBusinessOrder,
+          name: kBsOpBusinessOrder,
           builder: () => BsHomeRentalOrderView(),
         ),
         QRoute(

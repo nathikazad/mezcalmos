@@ -5,9 +5,9 @@ query getServiceProviderLinks($serviceLinkId: Int!) {
     driver_qr_image_link
     operator_deep_link
     operator_qr_image_link
-     customer_deep_link
+    customer_deep_link
     customer_qr_image_link
-  
+    customer_flyer_links
   }
 }
 
@@ -105,14 +105,12 @@ query getServiceInfo($serviceDetailsId: Int!) {
     firebase_id
     id
     image
-is_open
+    is_open
     name
-
+    unique_id
     phone_number
     language
-   
     service_provider_type
-
     location {
       id
       gps

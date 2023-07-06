@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -173,7 +174,7 @@ class ServiceInfoEditViewController {
         phoneNumber: '${prefixTextFieldController.text} ${phoneNumber.text}',
         descriptionId: newDescId,
         image: newImageUrl.value,
-        name: serviceNameTxt.text);
+        name: serviceNameTxt.text.inCaps);
   }
 
   // void changePrimaryLang(Language value) {
@@ -228,10 +229,10 @@ class ServiceInfoEditViewController {
 
   LanguageMap _contructDesc() {
     final LanguageMap _desc = <Language, String>{
-      languages.value!.primary: primaryServiceDesc.text
+      languages.value!.primary: primaryServiceDesc.text.inCaps
     };
     if (languages.value!.secondary != null) {
-      _desc[languages.value!.secondary!] = secondayServiceDesc.text;
+      _desc[languages.value!.secondary!] = secondayServiceDesc.text.inCaps;
     }
     return _desc;
   }

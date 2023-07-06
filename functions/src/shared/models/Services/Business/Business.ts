@@ -49,8 +49,8 @@ export interface Home {
   details: BusinessItemDetails;
   bedrooms?: number;
   bathrooms?: number;
-  gpsLocation?: Location;
   availableFor: HomeAvailabilityOption;
+  locationId?: number;
   location: HomeLocation;
 }
 export enum HomeAvailabilityOption {

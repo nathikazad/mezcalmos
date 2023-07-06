@@ -76,6 +76,7 @@ query getBusinessCart($customer_id: Int!) {
           tags
         }
         business {
+          id
           details {
             name
             currency
@@ -89,6 +90,7 @@ query getBusinessCart($customer_id: Int!) {
       product {
         id
         business {
+          id
           details {
             name
             currency
@@ -126,6 +128,7 @@ query getBusinessCart($customer_id: Int!) {
       service {
         id
         business {
+          id
           details {
             name
             currency
@@ -163,6 +166,7 @@ query getBusinessCart($customer_id: Int!) {
       event {
         id
         business {
+          id
           details {
             name
             currency
@@ -249,6 +253,12 @@ mutation set_cart_business_id($business_id: Int, $customer_id: Int!) {
   }
 }
 
+mutation clear_business_cart($customer_id: Int!) {
+  delete_business_cart_item(where: { customer_id: { _eq: $customer_id } }) {
+    affected_rows
+  }
+}
+
 mutation delete_business_cart_item($_id: Int!) {
   delete_business_cart_item(where: { id: { _eq: $_id } }) {
     affected_rows
@@ -332,6 +342,7 @@ subscription listen_on_business_order_request($_id: Int!) {
           tags
         }
         business {
+          id
           details {
             name
             online_ordering
@@ -344,6 +355,7 @@ subscription listen_on_business_order_request($_id: Int!) {
       }
       product {
         business {
+          id
           details {
             name
             currency
@@ -379,7 +391,9 @@ subscription listen_on_business_order_request($_id: Int!) {
         }
       }
       service {
+        id
         business {
+          id
           details {
             name
             currency
@@ -415,7 +429,221 @@ subscription listen_on_business_order_request($_id: Int!) {
         }
       }
       event {
+        id
         business {
+          id
+          details {
+            name
+            currency
+            id
+            accepted_payments
+            online_ordering
+            image
+          }
+        }
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        id
+        schedule_type
+        schedule
+        starts_at
+        ends_at
+      }
+    }
+    business_id
+    status
+    customer_id
+    cost
+    cancellation_time
+    id
+    chat_id
+  }
+}
+
+query get_business_order_request($id: Int!) {
+  business_order_request_by_pk(id: $id) {
+    items {
+      id
+      parameters
+      cost
+      item_id
+      offering_type
+      time
+      home {
+        available_for
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        id
+        business {
+          id
+          details {
+            id
+            name
+            currency
+            online_ordering
+            accepted_payments
+            image
+            location {
+              gps
+              address
+            }
+          }
+        }
+        bathrooms
+        bedrooms
+        location {
+          address
+          gps
+          name
+        }
+        available_for
+        offering_type
+      }
+      rental {
+        details {
+          name_id
+          description_id
+          id
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+          additional_parameters
+          available
+          category1
+          category2
+          cost
+          image
+          position
+          tags
+        }
+        business {
+          id
+          details {
+            name
+            online_ordering
+            currency
+            id
+            accepted_payments
+            image
+          }
+        }
+      }
+      product {
+        business {
+          id
+          details {
+            name
+            currency
+            id
+            online_ordering
+            accepted_payments
+            image
+          }
+        }
+        details {
+          additional_parameters
+          available
+          category1
+          category2
+          name_id
+          description_id
+          cost
+          tags
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          id
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      service {
+        id
+        business {
+          id
+          details {
+            name
+            currency
+            id
+            accepted_payments
+            online_ordering
+            image
+          }
+        }
+        details {
+          additional_parameters
+          available
+          category1
+          name_id
+          description_id
+          category2
+          cost
+          tags
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          id
+          image
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+        }
+      }
+      event {
+        id
+        business {
+          id
           details {
             name
             currency

@@ -231,6 +231,17 @@ class CloudFunctions {
       }));
   }
 
+  static Future<ChangeUniqueIdResponse> serviceProvider_changeUniqueId(
+      {required String currentuniqueId,
+      required String newUniqueId}  ) async {
+    return ChangeUniqueIdResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "serviceProvider-changeUniqueId",
+      parameters: <String, dynamic>{
+        "currentuniqueId": currentuniqueId,
+        "newUniqueId": newUniqueId,
+      }));
+  }
+
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,
@@ -374,13 +385,11 @@ class CloudFunctions {
   }
 
   static Future<OrderReqResponse> business_requestOrder(
-      {required num businessId,
-      required CustomerAppType customerAppType,
+      {required CustomerAppType customerAppType,
       String? notes}  ) async {
     return OrderReqResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "business-requestOrder",
       parameters: <String, dynamic>{
-        "businessId": businessId,
         "customerAppType":customerAppType.toFirebaseFormatString(),
         "notes": notes,
       }));
@@ -412,6 +421,7 @@ class CloudFunctions {
       {required String name,
       required String image,
       required Location location,
+      required String phoneNumber,
       required Schedule schedule,
       String? laundryOperatorNotificationToken,
       String? firebaseId,
@@ -424,6 +434,7 @@ class CloudFunctions {
         "name": name,
         "image": image,
         "location":location.toFirebaseFormattedJson(),
+        "phoneNumber": phoneNumber,
         "schedule":schedule.toFirebaseFormattedJson(),
         "laundryOperatorNotificationToken": laundryOperatorNotificationToken,
         "firebaseId": firebaseId,

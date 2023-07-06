@@ -1,7 +1,7 @@
-import { getServiceProviderFromUniqueId } from "./graphql/serviceProvider/getServiceProvider"
-import { updateUniqueIdAndServiceLinks } from "./graphql/serviceProvider/updateServiceProvider";
-import { MezError } from "./models/Generic/Generic";
-import { Operator, ServiceProvider } from "./models/Services/Service"
+import { getServiceProviderFromUniqueId } from "../shared/graphql/serviceProvider/getServiceProvider"
+import { updateUniqueIdAndServiceLinks } from "../shared/graphql/serviceProvider/updateServiceProvider";
+import { MezError } from "../shared/models/Generic/Generic";
+import { Operator, ServiceProvider } from "../shared/models/Services/Service"
 
 export interface UniqueIdDetails {
     currentuniqueId: string,

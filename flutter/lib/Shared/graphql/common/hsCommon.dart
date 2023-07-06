@@ -385,6 +385,7 @@ enum MezService {
   Surf,
   Vehicle,
   Home,
+  CoWorking,
   Cleaning,
   PetSitting,
   Consumable,

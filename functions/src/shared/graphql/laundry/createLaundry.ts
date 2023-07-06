@@ -1,6 +1,7 @@
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { LaundryDetails, LaundryError } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
+import { QRFlyerLinks, createQRFlyerPDF } from "../../../utilities/links/flyer";
 import { DeepLinkType, IDeepLink, generateDeepLinks } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { PaymentType } from "../../models/Generic/Order";
@@ -12,10 +13,29 @@ export async function createLaundryStore(
 ): Promise<ServiceProvider>  {
     let chain = getHasura();
 
+    if(laundryDetails.uniqueId) {
+        let queryResponse = await chain.query({
+            service_provider_details: [{
+                where: {
+                    unique_id: {
+                        _eq: laundryDetails.uniqueId
+                    }
+                }
+            }, {
+                id: true,
+            }]
+        });
+        if(queryResponse.service_provider_details.length) {
+            throw new MezError(LaundryError.UniqueIdAlreadyExists);
+        }
+    }
+    if(laundryDetails.phoneNumber.length == 10) {
+        laundryDetails.phoneNumber = `+52${laundryDetails.phoneNumber}`;
+    }
     let uniqueId: string = laundryDetails.uniqueId ?? generateString();
 
-    let linksResponse: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(uniqueId, AppType.Laundry)
-
+    let linksResponse: Partial<Record<DeepLinkType, IDeepLink>> = await generateDeepLinks(uniqueId, AppType.Laundry)
+    let QRflyer: QRFlyerLinks = await createQRFlyerPDF(uniqueId);
 
     let response = await chain.mutation({
         insert_laundry_store_one: [{
@@ -48,12 +68,12 @@ export async function createLaundryStore(
                         },
                         service_link: {
                             data: {
-                              customer_deep_link: linksResponse[DeepLinkType.Customer].url,
-                              customer_qr_image_link: linksResponse[DeepLinkType.Customer].urlQrImage,
-                              operator_deep_link: linksResponse[DeepLinkType.AddOperator].url,
-                              operator_qr_image_link: linksResponse[DeepLinkType.AddOperator].urlQrImage,
-                              driver_deep_link: linksResponse[DeepLinkType.AddDriver].url,
-                              driver_qr_image_link: linksResponse[DeepLinkType.AddDriver].urlQrImage,
+                              customer_qr_image_link: QRflyer.customerQRImageLink,
+                              operator_deep_link: linksResponse[DeepLinkType.AddOperator]?.url,
+                              operator_qr_image_link: linksResponse[DeepLinkType.AddOperator]?.urlQrImage,
+                              driver_deep_link: linksResponse[DeepLinkType.AddDriver]?.url,
+                              driver_qr_image_link: linksResponse[DeepLinkType.AddDriver]?.urlQrImage,
+                              customer_flyer_links: $`customer_flyer_links`,
                             }
                           }
                     }
@@ -97,7 +117,8 @@ export async function createLaundryStore(
         "gps": {
             "type": "Point",
             "coordinates": [laundryDetails.location.lng, laundryDetails.location.lat]
-        }
+        },
+        "customer_flyer_links": QRflyer.flyerLinks
     });
     
     console.log("response: ", response);

@@ -299,13 +299,18 @@ Future<int?> addDriverOrderReviewId(
       .parsedData?.update_delivery_order_by_pk?.driver_review_by_customer_id;
 }
 
-Future<int?> get_customer_orders_by_type(
-    {required int customerId, required OrderType orderType}) async {
+Future<int?> get_customer_last_order_id(
+    {required int customerId,
+    required OrderType orderType,
+    int? limit,
+    int? offset}) async {
   QueryResult<Query$getCustomerOrdersByType> res = await _graphClient
       .query$getCustomerOrdersByType(Options$Query$getCustomerOrdersByType(
           fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Query$getCustomerOrdersByType(
               custId: customerId,
+              limit: limit,
+              offset: offset,
               orderType: orderType.toFirebaseFormatString())));
   if (res.hasException) {
     throwError(res.exception);
@@ -317,4 +322,25 @@ Future<int?> get_customer_orders_by_type(
     return null;
   }
   return res.parsedData?.customer_minimal_orders_aggregate.nodes.first.id;
+}
+
+Future<int?> get_customer_orders_count(
+    {required int customerId,
+    required OrderType orderType,
+    int? limit,
+    int? offset}) async {
+  QueryResult<Query$getCustomerOrdersByType> res = await _graphClient
+      .query$getCustomerOrdersByType(Options$Query$getCustomerOrdersByType(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$getCustomerOrdersByType(
+              custId: customerId,
+              limit: limit,
+              offset: offset,
+              orderType: orderType.toFirebaseFormatString())));
+
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+
+  return res.parsedData?.customer_minimal_orders_aggregate.aggregate?.count;
 }

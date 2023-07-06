@@ -2218,7 +2218,14 @@ columns and relationships of "business.home_location"
 """
 type business_home_location {
   address: String!
+
+  """An object relationship"""
+  business: business_business!
+  business_id: Int!
   gps: geography!
+
+  """An object relationship"""
+  home: business_home
   id: Int!
   name: String!
 }
@@ -2250,6 +2257,7 @@ type business_home_location_aggregate_fields {
 
 """aggregate avg on columns"""
 type business_home_location_avg_fields {
+  business_id: Float
   id: Float
 }
 
@@ -2261,7 +2269,10 @@ input business_home_location_bool_exp {
   _not: business_home_location_bool_exp
   _or: [business_home_location_bool_exp!]
   address: String_comparison_exp
+  business: business_business_bool_exp
+  business_id: Int_comparison_exp
   gps: geography_comparison_exp
+  home: business_home_bool_exp
   id: Int_comparison_exp
   name: String_comparison_exp
 }
@@ -2280,6 +2291,7 @@ enum business_home_location_constraint {
 input type for incrementing numeric columns in table "business.home_location"
 """
 input business_home_location_inc_input {
+  business_id: Int
   id: Int
 }
 
@@ -2288,7 +2300,10 @@ input type for inserting data into table "business.home_location"
 """
 input business_home_location_insert_input {
   address: String
+  business: business_business_obj_rel_insert_input
+  business_id: Int
   gps: geography
+  home: business_home_obj_rel_insert_input
   id: Int
   name: String
 }
@@ -2296,6 +2311,7 @@ input business_home_location_insert_input {
 """aggregate max on columns"""
 type business_home_location_max_fields {
   address: String
+  business_id: Int
   id: Int
   name: String
 }
@@ -2303,6 +2319,7 @@ type business_home_location_max_fields {
 """aggregate min on columns"""
 type business_home_location_min_fields {
   address: String
+  business_id: Int
   id: Int
   name: String
 }
@@ -2340,7 +2357,10 @@ input business_home_location_on_conflict {
 """Ordering options when selecting data from "business.home_location"."""
 input business_home_location_order_by {
   address: order_by
+  business: business_business_order_by
+  business_id: order_by
   gps: order_by
+  home: business_home_order_by
   id: order_by
   name: order_by
 }
@@ -2358,6 +2378,9 @@ enum business_home_location_select_column {
   address
 
   """column name"""
+  business_id
+
+  """column name"""
   gps
 
   """column name"""
@@ -2372,6 +2395,7 @@ input type for updating data in table "business.home_location"
 """
 input business_home_location_set_input {
   address: String
+  business_id: Int
   gps: geography
   id: Int
   name: String
@@ -2379,16 +2403,19 @@ input business_home_location_set_input {
 
 """aggregate stddev on columns"""
 type business_home_location_stddev_fields {
+  business_id: Float
   id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type business_home_location_stddev_pop_fields {
+  business_id: Float
   id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type business_home_location_stddev_samp_fields {
+  business_id: Float
   id: Float
 }
 
@@ -2406,6 +2433,7 @@ input business_home_location_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input business_home_location_stream_cursor_value_input {
   address: String
+  business_id: Int
   gps: geography
   id: Int
   name: String
@@ -2413,6 +2441,7 @@ input business_home_location_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type business_home_location_sum_fields {
+  business_id: Int
   id: Int
 }
 
@@ -2422,6 +2451,9 @@ update columns of table "business.home_location"
 enum business_home_location_update_column {
   """column name"""
   address
+
+  """column name"""
+  business_id
 
   """column name"""
   gps
@@ -2446,16 +2478,19 @@ input business_home_location_updates {
 
 """aggregate var_pop on columns"""
 type business_home_location_var_pop_fields {
+  business_id: Float
   id: Float
 }
 
 """aggregate var_samp on columns"""
 type business_home_location_var_samp_fields {
+  business_id: Float
   id: Float
 }
 
 """aggregate variance on columns"""
 type business_home_location_variance_fields {
+  business_id: Float
   id: Float
 }
 
@@ -3770,6 +3805,11 @@ type business_order_request {
   customer_id: Int!
   id: Int!
 
+  """
+  A computed field, executes function "business.order_in_process"
+  """
+  in_progress: Boolean
+
   """An array relationship"""
   items(
     """distinct select on columns"""
@@ -3867,6 +3907,7 @@ input business_order_request_bool_exp {
   customer_app_type: String_comparison_exp
   customer_id: Int_comparison_exp
   id: Int_comparison_exp
+  in_progress: Boolean_comparison_exp
   items: business_order_request_item_bool_exp
   items_aggregate: business_order_request_item_aggregate_bool_exp
   notes: String_comparison_exp
@@ -4585,6 +4626,7 @@ input business_order_request_order_by {
   customer_app_type: order_by
   customer_id: order_by
   id: order_by
+  in_progress: order_by
   items_aggregate: business_order_request_item_aggregate_order_by
   notes: order_by
   order_time: order_by
@@ -7752,10 +7794,10 @@ type customer_minimal_order {
   estimated_delivery_time: timestamptz
   estimated_ready_time: timestamptz
   id: Int!
-  image: String!
+  image: String
   in_process: Boolean!
   items_weight: float8
-  name: String!
+  name: String
   number_of_items: Int
   order_time: timestamptz!
   order_type: String!

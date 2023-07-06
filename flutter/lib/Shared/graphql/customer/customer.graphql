@@ -124,10 +124,17 @@ mutation updateLaundryOrderReviewId($orderId: Int!, $reviewId: Int!) {
     review_id
   }
 }
-query getCustomerOrdersByType($custId: Int!, $orderType: String!) {
+query getCustomerOrdersByType(
+  $custId: Int!
+  $orderType: String!
+  $limit: Int
+  $offset: Int
+) {
   customer_minimal_orders_aggregate(
-    where: { order_type: { _eq: $orderType }, in_process: { _eq: true } }
+    where: { order_type: { _eq: $orderType } }
     args: { cus_id: $custId }
+    offset: $offset
+    limit: $limit
   ) {
     aggregate {
       count
@@ -137,4 +144,3 @@ query getCustomerOrdersByType($custId: Int!, $orderType: String!) {
     }
   }
 }
-

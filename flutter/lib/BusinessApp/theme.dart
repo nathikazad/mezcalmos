@@ -152,13 +152,13 @@ class BusinessAppTheme {
         labelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
-          fontSize: 14.sp,
+          fontSize: 12.sp,
           //color: Colors.black,
         ),
         unselectedLabelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
-          fontSize: 14.sp,
+          fontSize: 12.sp,
           // color: Colors.grey,
         ),
       ),

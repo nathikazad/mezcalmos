@@ -59,7 +59,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      floatingActionButton: FloatingCartComponent(),
+     
       bottomSheet: Obx(
         () => (_viewController.restaurant.value?.isOpen == false)
             ? _schedulingOrdersBottomWidget()

@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
@@ -462,4 +461,32 @@ Future<List<MinimalOrder>?> get_past_restaurant_orders(
     throw Exception(
         "🚨 Getting min orders exceptions \n ${queryResult.exception}");
   }
+}
+
+Future<List<RestaurantOrderItem>> get_dv_order_restaurant_items(
+    {required int deliveryOrderId, bool withCache = true}) async {
+  QueryResult<Query$get_restaurant_order_items_by_id> res =
+      await _hasuraDb.graphQLClient.query$get_restaurant_order_items_by_id(
+          Options$Query$get_restaurant_order_items_by_id(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+              variables: Variables$Query$get_restaurant_order_items_by_id(
+                  deliveryOrderId: deliveryOrderId)));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  List<Query$get_restaurant_order_items_by_id$restaurant_order$items> data =
+      res.parsedData!.restaurant_order.first.items;
+  return data
+      .map((Query$get_restaurant_order_items_by_id$restaurant_order$items e) =>
+          RestaurantOrderItem(
+              costPerOne: e.cost_per_one,
+              totalCost: e.cost_per_one * e.quantity,
+              idInCart: 0,
+              idInRestaurant: e.restaurant_item.id,
+              name: toLanguageMap(
+                  translations: e.restaurant_item.name.translations),
+              image: e.restaurant_item.image,
+              quantity: e.quantity))
+      .toList();
 }

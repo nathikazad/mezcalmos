@@ -43,6 +43,7 @@ update_permissions:
     permission:
       columns:
         - business_id
+        - customer_id
       filter:
         customer_id:
           _eq: X-Hasura-User-Id

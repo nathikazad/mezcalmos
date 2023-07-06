@@ -2,9 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealestateView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealEstateView/CustRealestateView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/controllers/CustRealEstateListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -51,10 +51,17 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          actionIcons: [
+            FloatingCartComponent(
+              cartType: CartType.business,
+            ),
+          ],
           onClick: MezRouter.back,
-          titleWidget: Text(
-            '${_i18n()['properties']}',
-          )),
+          titleWidget: Obx(() => Text(
+                viewController.isMapView
+                    ? '${_i18n()['map']}'
+                    : '${_i18n()['properties']}',
+              ))),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 100),
         child: Obx(
@@ -95,6 +102,8 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                       _viewBusinessesSwitcher(),
 
                       // filter bar
+                      // if (viewController.showBusiness.isFalse)
+                      //   _filterButton(context),
 
                       Container(
                         margin: const EdgeInsets.only(top: 15),
@@ -169,6 +178,57 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
           ),
         )
       ],
+    );
+  }
+
+  Widget _filterButton(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(top: 15),
+      color: Color(0xFFF0F0F0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () async {
+          // _showFilterSheet(context);
+          FilterInput? data = await cusShowBusinessFilerSheet(
+              context: context,
+              filterInput: viewController.filterInput,
+              isTherapy: true,
+              defaultFilterInput: viewController.defaultFilters());
+          if (data != null) {
+            viewController.filter(data);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${_i18n()['filter']}:',
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Flexible(
+                child: Text(
+                  "${_i18n()["offerOnly"]}",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -315,6 +375,7 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                               fontWeight: FontWeight.bold),
                         ),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -335,7 +396,7 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                                         style: context.textTheme.bodyLarge
                                             ?.copyWith(
                                                 fontSize: 12.5.mezSp,
-                                                fontWeight: FontWeight.w500),
+                                                fontWeight: FontWeight.w600),
                                       ),
                                     ],
                                   ),
@@ -344,7 +405,7 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                                       null)
                                     Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Icon(Icons.single_bed_outlined,
@@ -378,7 +439,7 @@ class _CustRealEstateListViewState extends State<CustRealEstateListView> {
                                       null)
                                     Row(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Icon(Icons.house_siding,

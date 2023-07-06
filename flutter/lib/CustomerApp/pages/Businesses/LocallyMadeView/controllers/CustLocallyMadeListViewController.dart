@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
@@ -60,8 +61,21 @@ class CustLocallyMadeListViewController {
         : productsCategory.first.toFirebaseFormatString();
   }
 
+  late FilterInput _filterInput;
+
+  FilterInput get filterInput => _filterInput;
+
+  FilterInput defaultFilters() {
+    return {
+      "categories": [],
+      "schedule": [],
+      "onlineOrder": ["false"],
+    };
+  }
+
 // methods //
   Future<void> init({required List<ProductCategory1> serviceCategory}) async {
+    _filterInput = defaultFilters();
     _currentProductCategory.addAll(serviceCategory);
 
     filterCategories.addAll(
@@ -73,7 +87,8 @@ class CustLocallyMadeListViewController {
     try {
       _isLoading.value = true;
 
-      locPkg.LocationData location = await locPkg.Location().getLocation();
+      final locPkg.LocationData location =
+          await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
           lat: location.latitude!,
@@ -112,6 +127,8 @@ class CustLocallyMadeListViewController {
         withCache: false,
         offset: _productsCurrentOffset,
         limit: productsFetchSize,
+        onlineOrdering:
+            filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _products.value += newList;
       if (newList.length == 0) {
@@ -155,9 +172,13 @@ class CustLocallyMadeListViewController {
     }
   }
 
-  void filter() {
+  void filter(FilterInput newData) {
+    _filterInput.clear();
+    newData.forEach((String key, List<String> value) {
+      _filterInput[key] = List.from(value);
+    });
     selectedCategories.value = List.from(previewCategories);
-
+    resetFilter();
     _resetRentals();
     _fetchProducts();
   }

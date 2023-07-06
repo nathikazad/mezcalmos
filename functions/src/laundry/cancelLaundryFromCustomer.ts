@@ -199,9 +199,9 @@ function notify(cancelOrderDetails: CancelOrderDetails, mezAdmins: MezAdmin[], l
     linkUrl: orderUrl(OrderType.Laundry, cancelOrderDetails.orderId)
   };
   mezAdmins.forEach((m) => {
-    pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+    pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
   });
   laundryOperators.forEach((r) => {
-    pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.LaundryOperator);
+    pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.LaundryOperator, r.user?.language);
   });
 }

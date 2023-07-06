@@ -1,9 +1,11 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/controllers/CustHomeRentalViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -39,8 +41,11 @@ class CustHomeRentalView extends StatefulWidget {
     int? guestCount,
     String? roomType,
   }) async {
-    final String route =
-        CustBusinessRoutes.custHomeRentalRoute.replaceFirst(":id", "$rentalId");
+    final String route = cartId != null
+        ? CustBusinessRoutes.custHomeRentalRouteEdit
+            .replaceFirst(":id", "$rentalId")
+        : CustBusinessRoutes.custHomeRentalRoute
+            .replaceFirst(":id", "$rentalId");
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,
@@ -99,11 +104,9 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     : "Add to cart",
                 withGradient: true,
                 borderRadius: 0,
-                onClick: viewController.startDate.value == null
-                    ? null
-                    : () async {
-                        await viewController.bookOffering();
-                      },
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
               )
             : SizedBox.shrink(),
       ),
@@ -148,16 +151,16 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
 
                       if (viewController.isMultipleRooms.value)
                         _multipleRoomSelector(context),
-                      if (viewController.homeRental?.gpsLocation != null)
+                      if (viewController.homeRental?.location.location != null)
                         ServiceLocationCard(
                           height: 20.h,
                           location: MezLocation(
-                            viewController.homeRental!.gpsLocation?.address ??
-                                "",
+                            viewController
+                                .homeRental!.location.location.address,
                             MezLocation.buildLocationData(
-                              viewController.homeRental!.gpsLocation!.lat
+                              viewController.homeRental!.location.location.lat
                                   .toDouble(),
-                              viewController.homeRental!.gpsLocation!.lng
+                              viewController.homeRental!.location.location.lng
                                   .toDouble(),
                             ),
                           ),
@@ -170,75 +173,91 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       ),
                       if (!viewController.isOnlineOrdering.value!)
                         CustBusinessNoOrderBanner(),
+                      if (viewController.isOnlineOrdering.value!)
+                        CustBusinessInquryBanner(),
 
                       /// Bookings
                       if (viewController.isOnlineOrdering.value!)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            bigSeperator,
-                            BsOpDateTimePicker(
-                              fillColor: Colors.white,
-                              onNewPeriodSelected: (DateTime v) {
-                                viewController.startDate.value = v;
-                              },
-                              label: "Start Date",
-                              validator: (DateTime? p0) {
-                                if (p0 == null) return "Please select a time";
-
-                                return null;
-                              },
-                              time: viewController.startDate.value,
-                            ),
-                            bigSeperator,
-                            CustBusinessDurationPicker(
-                              costUnits: viewController.isMultipleRooms.value
-                                  ? viewController.selectedRoomCostUnits.value!
-                                  : viewController.homeRental!.details.cost,
-                              label: "Duration",
-                              value: viewController.duration.value,
-                              unitValue:
-                                  viewController.timeCost.value?.keys.first,
-                              validator: (TimeUnit? p0) {
-                                if (p0 == null) return "Please select a time";
-                                return null;
-                              },
-                              onNewCostUnitSelected: (Map<TimeUnit, num> v) {
-                                viewController.setTimeCost(v);
-                              },
-                              onNewDurationSelected: (int v) {
-                                viewController.setDuration(v);
-                              },
-                            ),
-                            bigSeperator,
-                            CustGuestPicker(
-                              label: "Guests",
-                              icon: Icons.person,
-                              onNewGuestSelected: (int v) {
-                                viewController.setTotalGuests(v);
-                              },
-                              value: viewController.totalGuests.value,
-                              lowestValue: 1,
-                            ),
-                            bigSeperator,
-                            Text(
-                              "Notes",
-                              style: context.textTheme.bodyLarge,
-                            ),
-                            smallSepartor,
-                            TextFormField(
-                              maxLines: 7,
-                              minLines: 5,
-                              decoration: InputDecoration(
+                        Form(
+                          key: viewController.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              bigSeperator,
+                              BsOpDateTimePicker(
                                 fillColor: Colors.white,
-                                hintText: "Write your notes here.",
+                                onNewPeriodSelected: (DateTime v) {
+                                  viewController.startDate.value = v;
+                                },
+                                label: "Start Date",
+                                validator: (DateTime? p0) {
+                                  if (p0 == null) {
+                                    BotToast.showText(
+                                        text: "Please select a time",
+                                        duration: Duration(seconds: 5));
+                                    return "Please select a time";
+                                  }
+
+                                  return null;
+                                },
+                                time: viewController.startDate.value,
                               ),
-                            ),
-                            bigSeperator,
-                            CustOrderCostCard(
-                              orderCostString: viewController.orderString.value,
-                            ),
-                          ],
+                              bigSeperator,
+                              CustBusinessDurationPicker(
+                                costUnits: viewController.isMultipleRooms.value
+                                    ? viewController
+                                        .selectedRoomCostUnits.value!
+                                    : viewController.homeRental!.details.cost,
+                                label: "Duration",
+                                value: viewController.duration.value,
+                                unitValue:
+                                    viewController.timeCost.value?.keys.first,
+                                validator: (TimeUnit? p0) {
+                                  if (p0 == null) {
+                                    BotToast.showText(
+                                        text: "Please select a time",
+                                        duration: Duration(seconds: 5));
+                                    return "Please select a time";
+                                  }
+                                  return null;
+                                },
+                                onNewCostUnitSelected: (Map<TimeUnit, num> v) {
+                                  viewController.setTimeCost(v);
+                                },
+                                onNewDurationSelected: (int v) {
+                                  viewController.setDuration(v);
+                                },
+                              ),
+                              bigSeperator,
+                              CustGuestPicker(
+                                label: "Guests",
+                                onNewGuestSelected: (int v) {
+                                  viewController.setTotalGuests(v);
+                                },
+                                value: viewController.totalGuests.value,
+                                lowestValue: 1,
+                              ),
+                              bigSeperator,
+                              Text(
+                                "Notes",
+                                style: context.textTheme.bodyLarge,
+                              ),
+                              smallSepartor,
+                              TextFormField(
+                                maxLines: 7,
+                                minLines: 5,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  hintText: "Write your notes here.",
+                                ),
+                              ),
+                              bigSeperator,
+                              CustOrderCostCard(
+                                orderCostString:
+                                    viewController.orderString.value,
+                              ),
+                            ],
+                          ),
                         ),
                     ],
                   ),
@@ -335,6 +354,10 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
       ],
     );
   }
+
+  String _additionalData() {
+    return '';
+  }
 }
 
 class _CustBusinessAdditionalData extends StatelessWidget {
@@ -347,33 +370,27 @@ class _CustBusinessAdditionalData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String wholeAdditionalParamString() {
-      final String circle = "•";
       final Map<String, String> additionalValues = {
         'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
         'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
         'houseType':
             '${_i18n()[homeRental?.category1.name.toLowerCase()] ?? ''}',
       };
-      final Map<String, String> moreAdditionalValues = homeRental
-              ?.details.additionalParameters
-              ?.map((key, value) => MapEntry(key, value.toString())) ??
-          {};
 
-      additionalValues.addAll(
-        moreAdditionalValues,
-      );
-      final StringBuffer wholeString = StringBuffer();
-      additionalValues.map(
-        (key, value) {
-          if (additionalValues.keys.toList().indexOf(key) == 0) {
-            wholeString.write("$value ");
-          } else {
-            wholeString.write("$circle $value ");
-          }
-          return MapEntry(key, value);
-        },
-      );
-      return wholeString.toString();
+      String additionalData = '';
+
+      for (String key in additionalValues.keys) {
+        additionalData += additionalValues[key]!;
+
+        if (additionalValues.keys.toList().indexOf(key) !=
+            additionalValues.length - 1) {
+          additionalData += ' • ';
+        }
+      }
+      additionalData += homeRental?.details.additionalParameters?["petFriendly"] != null
+              ? ' • ${_i18n()["petFriendly"] ?? ''}'
+              : "";
+      return additionalData;
     }
 
     return Text(

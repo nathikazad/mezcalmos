@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 extension BottomReachExtension on ScrollController {
   void onBottomReach(
     VoidCallback callback, {
-    double sensitivity = 200.0,
+    double sensitivity = 300.0,
   }) {
     addListener(() {
       final bool isReverse =

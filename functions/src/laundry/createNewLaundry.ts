@@ -16,6 +16,7 @@ export interface LaundryDetails {
   name: string,
   image: string,
   location: Location,
+  phoneNumber: string,
   schedule: Schedule,
   laundryOperatorNotificationToken?: string,
   firebaseId?: string,
@@ -31,11 +32,11 @@ export interface LaundryResponse {
 export enum LaundryError {
   UnhandledError = "unhandledError",
   DeliveryDetailsNotSet = "deliveryDetailsNotSet",
-  NoDeliveryPartner = "noDeliveryPartner",
   UserNotFound = "userNotFound",
   DeepLinkError = "deepLinkError",
   QRGenerationError = "qrGenerationError",
-  LaundryCreationError = "laundryCreationError"
+  LaundryCreationError = "laundryCreationError",
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
 }
 
 export async function createLaundry(userId: number, laundryDetails: LaundryDetails): Promise<LaundryResponse> {
@@ -43,10 +44,7 @@ export async function createLaundry(userId: number, laundryDetails: LaundryDetai
     if(laundryDetails.deliveryDetails.deliveryAvailable) {
       if(laundryDetails.deliveryDetails.selfDelivery && !(laundryDetails.deliveryDetails.radius)) {
         throw new MezError(LaundryError.DeliveryDetailsNotSet);
-      } 
-      // else if(!(laundryDetails.deliveryDetails.selfDelivery) && !(laundryDetails.deliveryPartnerId)) {
-      //   throw new MezError(LaundryError.NoDeliveryPartner);
-      // }
+      }
     }
   
     let userPromise = getUser(userId);
@@ -104,7 +102,7 @@ function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
     linkUrl: laundryUrl(laundryStore.id)
   };
   mezAdmins.forEach((m) => {
-    pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+    pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
   });
 }
 

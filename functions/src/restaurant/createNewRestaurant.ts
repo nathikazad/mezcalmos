@@ -33,11 +33,11 @@ export interface RestaurantResponse {
 export enum RestaurantError {
   UnhandledError = "unhandledError",
   DeliveryDetailsNotSet = "deliveryDetailsNotSet",
-  NoDeliveryPartner = "noDeliveryPartner",
   UserNotFound = "userNotFound",
   DeepLinkError = "deepLinkError",
   QRGenerationError = "qrGenerationError",
-  RestaurantCreationError = "restaurantCreationError"
+  RestaurantCreationError = "restaurantCreationError",
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails): Promise<RestaurantResponse> {
@@ -45,8 +45,6 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     if(restaurantDetails.deliveryDetails.deliveryAvailable) {
       if(restaurantDetails.deliveryDetails.selfDelivery && restaurantDetails.deliveryDetails.radius == 0) {
         throw new MezError(RestaurantError.DeliveryDetailsNotSet);
-      } else if(!(restaurantDetails.deliveryDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
-        throw new MezError(RestaurantError.NoDeliveryPartner);
       }
     }
     let userPromise = getUser(userId);
@@ -79,7 +77,7 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
       linkUrl: restaurantUrl(restaurant.id!)
     }
     mezAdmins.forEach((m) => {
-      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
     return {
       success: true

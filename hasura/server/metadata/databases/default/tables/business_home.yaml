@@ -29,6 +29,22 @@ object_relationships:
         remote_table:
           name: home_location
           schema: business
+insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - available_for
+        - bathrooms
+        - bedrooms
+        - business_id
+        - details_id
+        - location_id
+        - offering_type
 select_permissions:
   - role: anonymous
     permission:
@@ -42,6 +58,7 @@ select_permissions:
         - available_for
         - offering_type
       filter: {}
+      allow_aggregations: true
   - role: business_operator
     permission:
       columns:
@@ -70,6 +87,7 @@ select_permissions:
         - available_for
         - offering_type
       filter: {}
+      allow_aggregations: true
 update_permissions:
   - role: business_operator
     permission:

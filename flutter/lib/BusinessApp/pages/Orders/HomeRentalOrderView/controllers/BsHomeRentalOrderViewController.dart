@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/buisness_order/hsBusinessOrder.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
@@ -23,16 +24,22 @@ class BsHomeRentalOrderViewController {
   BusinessOrder? get order => _order.value;
   UserInfo? get customer => order?.customer;
   bool get hasChanges =>
-      order?.items.any((BusinessOrderItem element) =>
-          element.parameters.previousCost != null ||
-          element.parameters.previoustime != null) ??
+      order?.items.any((BusinessOrderItem element) {
+        mezDbgPrint(
+            "Checl item params ====> ${element.parameters.toFirebaseFormattedJson()}");
+        return element.parameters.previousCost != null ||
+            element.parameters.previoustime != null;
+      }) ??
       false;
   bool get orderIsRequested =>
       order?.status == BusinessOrderRequestStatus.RequestReceived;
   bool get canCancel {
-    final DateTime? maxTime = order?.items
-        .map((BusinessOrderItem e) => DateTime.parse(e.time!))
-        .reduce((DateTime? value, DateTime element) {
+    final DateTime? maxTime = order?.items.map((BusinessOrderItem e) {
+      if (e.offeringType == OfferingType.Product) {
+        return DateTime.now();
+      }
+      return DateTime.parse(e.time!);
+    }).reduce((DateTime? value, DateTime element) {
       if (value == null) return element;
       return (value.isAfter(element)) ? value : element;
     });
@@ -48,10 +55,16 @@ class BsHomeRentalOrderViewController {
   String? subscriptionId;
   //
 
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: OrderType.Business, orderId: orderId);
+  }
+
   late int orderId;
   Future<void> init({required int orderId}) async {
     _isLoading.value = true;
     this.orderId = orderId;
+    clearNotifications(orderId);
     BusinessOrder? res =
         await get_home_rental_order_req(orderId: orderId, withCache: false);
     if (res == null) {
@@ -116,10 +129,11 @@ class BsHomeRentalOrderViewController {
     final res = await update_bs_order_item(
         id: itemId,
         item: item.copyWith(
-            cost: newPrice,
-            parameters: item.parameters.copyWith(
-              previousCost: item.cost,
-            )));
+          cost: newPrice,
+          // parameters: item.parameters.copyWith(
+          //   previousCost: item.cost,
+          // )
+        ));
   }
 
   Future<void> _requestChanges() async {

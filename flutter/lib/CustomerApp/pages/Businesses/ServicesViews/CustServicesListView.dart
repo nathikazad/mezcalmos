@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView/CustServiceView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/controllers/CustServicesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -59,6 +61,11 @@ class _CustServicesListViewState extends State<CustServicesListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
+         actionIcons: [
+          FloatingCartComponent(
+            cartType: CartType.business,
+          ),
+        ],
         onClick: MezRouter.back,
         titleWidget: Text(
             '${_i18n()[viewController.serviceCategory.first.toFirebaseFormatString()]}'),
@@ -83,7 +90,8 @@ class _CustServicesListViewState extends State<CustServicesListView> {
                       _viewBusinessesSwitcher(),
 
                       // filter bar
-                      // if (viewController.showFilter) _filterButton(context),
+                      if (viewController.showBusiness.isFalse)
+                        _filterButton(context),
                       Container(
                         margin: const EdgeInsets.only(top: 15),
                         child: (viewController.showBusiness.isTrue)
@@ -164,6 +172,56 @@ class _CustServicesListViewState extends State<CustServicesListView> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _filterButton(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(top: 15),
+      color: Color(0xFFF0F0F0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () async {
+          // _showFilterSheet(context);
+          FilterInput? data = await cusShowBusinessFilerSheet(
+              context: context,
+              filterInput: viewController.filterInput,
+              defaultFilterInput: viewController.defaultFilters());
+          if (data != null) {
+            viewController.filter(data);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${_i18n()['filter']}:',
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Flexible(
+                child: Text(
+                  "${_i18n()["offerOnly"]}",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

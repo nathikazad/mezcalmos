@@ -2,9 +2,25 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
+        "BsOrdersListViews": {
+          "BsOrdersListView": {
+            "orders": "Pedidos",
+            "pending": "Pendiente",
+            "upcoming": "Próxima",
+            "past": "Pasado",
+            "pendingOrders": "Ordenes pendientes",
+            "upcomingOrders": "Próximos pedidos",
+            "pastOrders": "Órdenes pasadas"
+          }
+        },
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
+              "pending": "Pendiente",
+              "waitingCustomer": "Esperando a un cliente",
+              "cancelled": "Cancelada",
+              "confirmed": "Confirmada",
+              "completed": "Terminada",
               "error": "Error",
               "edit": "Editar",
               "markAsUnavailable": "Marcar como no disponible",
@@ -15,13 +31,15 @@
               "save": "Guardar",
               "cancel": "Cancelar",
               "startFrom": "Comienza desde",
-
               "updateTimeTitle": "Tiempo de actualizacion"
             }
           }
         }
       },
       "Components": {
+        "BsOrderCard": {
+          "items": "Elementos"
+        },
         "BsRentalCard": {
           "hour": "hora",
           "day": "día",
@@ -506,6 +524,9 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "CustOrderCostCard": {
+        "orderCost": "Costo de la orden"
+      },
       "NoOpenServiceComponent": {
         "title": "Sin servicios abiertos",
         "desc": "No hay servicios abiertos en su área. Vuelva a intentarlo más tarde.",
@@ -545,13 +566,119 @@
       }
     },
     "pages": {
+      "CustOrderView": {
+        "CustOrderView": {
+          "order": "Orden",
+          "notes": "Notas",
+          "writeNotesHere": "Escribe tus notas aquí.",
+          "summary": "Resumen",
+          "orderCost": "Costo de la orden",
+          "notComfirmed": "Reserva aún no confirmada",
+          "businessModifications": "El negocio ha realizado modificaciones, por favor revise si todo está bien, haga clic en Aceptar.",
+          "acceptChange": "Aceptar el cambio",
+          "cancelRequest": "Cancelar petición",
+          "pending": "Pending",
+          "waitingCustomer": "Waiting...",
+          "cancelled": "Cancelled",
+          "confirmed": "Confirmed",
+          "completed": "Completed"
+        }
+      },
       "CustCartView": {
+        "components": {
+          "HomeCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          },
+          "ProductCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          },
+          "ServiceCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          },
+          "EventCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          },
+          "RentalCartItemCard": {
+            "item": "Artículo",
+            "remove": "Eliminar",
+            "noDate": "Sin cita",
+            "perHour": "Hora",
+            "perDay": "Día",
+            "perWeek": "Semana",
+            "perMonth": "Mes",
+            "perPerson": "Persona",
+            "unit": "Unidad",
+            "roomType": {
+              "singleBed": "Cama individual",
+              "doubleBed": "Cama matrimonial",
+              "dormRoom": "Dormitorio",
+              "suite": "Suite"
+            }
+          }
+        },
         "CustCartView": {
           "myCart": "Mi carrito",
           "request": "Pedido",
           "notes": "Notas",
           "writeNotesHere": "Escribe tus notas aquí.",
           "summary": "Resumen",
+          "myOrders": "Mis ordenes",
           "orderCost": "Costo de la orden",
           "disclaimer": "Descargo de responsabilidad",
           "disclaimerPartOneText": "Mezkala solo transmite su solicitud de pedido al negocio",
@@ -561,6 +688,8 @@
       },
       "JoinUsView": {
         "joinUs": "Únete a nosotros",
+        "whichBusinessDoYouHave": "¿Qué negocio tienes?",
+        "growYourBusiness": "Con nuestra ayuda, aumente su negocio en línea y aumente sus ganancias.",
         "restaurantBusiness": {
           "title": "Negocio de los restaurantes",
           "subtitle": "Si posee un restaurante y desea expandirlo en línea."
@@ -644,6 +773,7 @@
       },
       "Offerings": {
         "hour": "hora",
+        "hours": "Horas",
         "day": "día",
         "week": "semana",
         "month": "mes",
@@ -660,7 +790,9 @@
         "perUnit": "unidad",
         "bedrooms": "Dormitorios",
         "bathrooms": "Baños",
+        "petFriendly": "Mascota amigable",
         "apartment": "Departamento",
+        "choostTime": "Elige el tiempo",
         "villa": "Villa",
         "condo": "Condominio",
         "bungalow": "Bungalow",
@@ -670,12 +802,19 @@
         "doubleBed": "Cama matrimonial",
         "dormRoom": "Dormitorio",
         "suite": "Suite",
+        "startDate": "Fecha de inicio",
+        "selectATime": "Seleccione una hora",
+        "updateItem": "Artículo de actualización",
+        "addToCart": "Añadir artículo",
+        "notes": "Notas",
+        "writeNotesHere": "Escribe tus notas aquí.",
         "components": {
           "loading": "Cargando",
           "schedule": "Horario",
           "availability": "Disponibilidad",
           "time": "Tiempo",
           "noBooking": "No se pueden hacer reservas en línea, pero puede enviar un mensaje a la empresa para cualquier consulta.",
+          "inqury": "Puede enviar mensajes al negocio con respecto a cualquier consulta.",
           "weekDays": {
             "monday": "Lunes",
             "tuesday": "Martes",
@@ -696,7 +835,12 @@
           "organizer": "Organizadora",
           "studio": "Estudio",
           "view": "Ver",
-          "agency": "Agencia"
+          "agency": "Agencia",
+          "days": "días",
+          "hours": "horas",
+          "min": "minutos",
+          "ago": "atrás",
+          "active": "Activa"
         }
       },
       "cards": {
@@ -714,6 +858,8 @@
           "title": "Empresas de entrega a su alrededor",
           "courier": "Entrega abierta",
           "min": "Min",
+          "offerOnly": "Solo ofertas",
+          "filter": "Filtrar",
           "showOnlyOpenCompanies": "Mostrar solo compañías abiertas",
           "search": "Buscar"
         },
@@ -865,6 +1011,8 @@
           "ListRestaurantScreen": {
             "restaurants": "Restaurantes",
             "search": "Búsqueda",
+            "offerOnly": "Reserva en línea",
+            "filter": "Filtrar",
             "showOnlyOpenRestaurants": "Mostrar solo restaurantes abiertos",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
             "noOpenRestaurant": "No hay restaurantes abiertos",
@@ -1389,13 +1537,41 @@
         "AllServiceView": {
           "AllServiceView": {
             "welcomeText": "Bienvenido a MEZKALA 👋",
-            "appDescription": "Su único lugar de parada para encontrar todos sus negocios locales.Si tiene un negocio y desea anunciarlo, puede ",
+            "appDescription": "Su único lugar de parada para encontrar todos sus negocios locales.\nSi tiene un negocio y desea anunciarlo, puede ",
             "clickHere": "haga clic aquí",
             "services": "Servicios"
           }
         }
       },
       "Businesses": {
+        "Offerings": {
+          "CustEventView": {
+            "hour": "hora",
+            "hours": "Horas",
+            "description": "Descripción",
+            "noDescription": "Sin descripción",
+            "startDate": "Fecha de inicio",
+            "selectATime": "Seleccione una hora",
+            "updateItem": "Artículo de actualización",
+            "addToCart": "Añadir artículo",
+            "notes": "Notas",
+            "writeNotesHere": "Escribe tus notas aquí.",
+            "day": "día",
+            "week": "semana",
+            "month": "mes",
+            "person": "persona",
+            "total": "total",
+            "unit": "unidad",
+            "perHour": "hora",
+            "perDay": "día",
+            "perWeek": "semana",
+            "perMonth": "mes",
+            "perPerson": "persona",
+            "perUnit": "unidad",
+            "none": "ninguna",
+            "free": "GRATIS"
+          }
+        },
         "components": {
           "OnMapRentalCard": {
             "hour": "hora",
@@ -1424,7 +1600,16 @@
             "person": "persona",
             "total": "total",
             "unit": "unidad",
-            "free": "GRATIS"
+            "free": "GRATIS",
+            "filter": "Filter",
+            "weekly": "Weekly",
+            "workshop": "Workshop",
+            "private": "Private",
+            "surf": "Surf",
+            "yoga": "Yoga",
+            "fitness": "Fitness",
+            "dance": "Dance",
+            "therapy": "Terapia"
           },
           "CustBusinessRentalCost": {
             "hour": "hora",
@@ -1454,6 +1639,8 @@
             "unit": "unidad"
           },
           "cusShowBusinessFilerSheet": {
+            "canBookOnline": "Muestre solo artículos que se pueden reservar en línea.",
+            "showOnlyOpenRestaurants": "Show only open restaurants",
             "confirm": "Confirmar",
             "cancel": "Cancelar",
             "filter": "Filtrar",
@@ -1498,6 +1685,8 @@
             "homes": "Casas",
             "home": "Hogar",
             "map": "Mapa",
+            "filter": "Filtrar",
+            "offerOnly": "Solo ofertas",
             "viewOnMap": "Ver en el mapa",
             "viewAsList": "Ver como lista",
             "showCost": "Costo de exhibición",
@@ -1535,6 +1724,7 @@
           },
           "CustRentalsListView": {
             "home": "Hogar",
+            "offerOnly": "Solo ofertas",
             "map": "Mapa",
             "viewOnMap": "Ver en el mapa",
             "viewAsList": "Ver como lista",
@@ -1570,8 +1760,9 @@
         "CustRealEstateListView": {
           "home": "Hogar",
           "map": "Mapa",
+          "offerOnly": "Solo ofertas",
           "realEstate": "Realestate",
-          "properties": "Propiedades",
+          "properties": "Propiedad",
           "store": "Agency",
           "viewOnMap": "Ver en el mapa",
           "viewAsList": "Ver como lista",
@@ -1681,6 +1872,7 @@
             "confirm": "Confirmar",
             "hour": "hora",
             "day": "día",
+            "offerOnly": "Solo ofertas",
             "week": "week",
             "month": "mes",
             "person": "persona",
@@ -1726,6 +1918,8 @@
             "mealPlanning": "Planificación de comidas",
             "service": "Servicio",
             "meal": "Comida",
+            "offerOnly": "Solo ofertas",
+            "filter": "Filtrar",
             "petSitting": "Cuidado de mascotas",
             "uncategorized": "Sin categoría",
             "cleaning": "Servicio",
@@ -1785,6 +1979,8 @@
             "product": "Productos",
             "noPetServiceFound": "No se encontraron servicios",
             "art": "Arte",
+            "offerOnly": "Solo ofertas",
+            "filter": "Filtrar",
             "noBusinessesFound": "No se encontraron negocios",
             "store": "Almacenar",
             "services": "Servicios",
@@ -1863,7 +2059,9 @@
         "onDemandClasses": "Lecciones privadas",
         "weeklyEvents": "Eventos semanales",
         "oneTimeEvents": "Próximos Eventos",
-        "onDemandEvents": "Experiencias"
+        "onDemandEvents": "Experiencias",
+        "description": "Descripción",
+        "noDescription": "Sin descripción"
       },
 
       "CustomerWrapper": {
@@ -2043,6 +2241,8 @@
           "noLaundaryFound": "No se encontró lavandería",
           "showOnlyOpenLaundries": "Mostrar solo lavas abiertas",
           "map": "Mapa",
+          "offerOnly": "Reserva en línea",
+          "filter": "Filtrar",
           "viewOnMap": "Ver en el mapa",
           "viewAsList": "Ver como lista",
           "showCost": "Costo de exhibición",
@@ -2287,6 +2487,12 @@
         "businessId": "Identificación del negocio",
         "onlySevenDays": "Puede cambiar su identificación solo una vez cada 7 días.",
         "cancel": "Cancelar",
+        "copyLink": "Copiar link",
+        "whatsapp": "WhatsApp",
+        "status": "Estado",
+        "instagram": "Instagram",
+        "story": "Historia",
+        "facebook": "Facebook",
         "save": "Ahorrar"
       },
       "CreateServiceView": {
@@ -2471,7 +2677,8 @@
         "sameLangErrorText": "Se utiliza este idioma, ingrese un idioma diferente.",
         "none": "Ninguna",
         "en": "Ingles",
-        "es": "Español"
+        "es": "Español",
+        "uniqueId": "Unique ID"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
@@ -3889,6 +4096,7 @@
             "totalCost": "Coste total",
             "waiting": "En proceso",
             "delivered": "Entregada",
+            "confirmed": "Confirmada",
             "canceled": "Cancelada"
           }
         },

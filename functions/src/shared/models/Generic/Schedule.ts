@@ -29,8 +29,7 @@ export enum Weekday {
 //     };
 //   };
   
-export interface Schedule {
-  openHours: Record<Weekday, WorkingDay>;
-  }
-  
+export interface Schedule{
+  openHours:  Record<Weekday, WorkingDay>;
+}
 

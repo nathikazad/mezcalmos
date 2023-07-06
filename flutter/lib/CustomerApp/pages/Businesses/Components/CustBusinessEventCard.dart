@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -74,9 +74,7 @@ class CustBusinessEventCard extends StatelessWidget {
                       : '${event.details.cost.values.first.toPriceString()}/${'${_i18n()[event.details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
                   overflow: TextOverflow.ellipsis,
                   style: context.textTheme.bodyLarge?.copyWith(
-                      fontSize: 12.5.mezSp,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis),
+                      fontSize: 12.5.mezSp, fontWeight: FontWeight.w600),
                 )
               ],
             ),
@@ -105,11 +103,52 @@ class CustBusinessEventCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Divider(),
-                  Text(event.businessName),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(event.businessName),
+                      Text(classType(event.scheduleType, event.category1)),
+                    ],
+                  )
                 ],
               )
           ],
         ));
+  }
+
+  String classType(ScheduleType scheduleType, EventCategory1 category) {
+    switch (scheduleType) {
+      case ScheduleType.OnDemand:
+        return [
+          EventCategory1.Dance,
+          EventCategory1.Social,
+          EventCategory1.Surf,
+          EventCategory1.Fitness,
+          EventCategory1.Yoga
+        ].contains(category)
+            ? '${_i18n()['private']}/${_i18n()[category.toFirebaseFormatString()]}'
+            : '${_i18n()['private']}';
+      case ScheduleType.OneTime:
+        return [
+          EventCategory1.Dance,
+          EventCategory1.Social,
+          EventCategory1.Surf,
+          EventCategory1.Fitness,
+          EventCategory1.Yoga
+        ].contains(category)
+            ? '${_i18n()['workshop']}/${_i18n()[category.toFirebaseFormatString()]}'
+            : '${_i18n()['workshop']}';
+      default:
+        return [
+          EventCategory1.Dance,
+          EventCategory1.Social,
+          EventCategory1.Surf,
+          EventCategory1.Fitness,
+          EventCategory1.Yoga
+        ].contains(category)
+            ? '${_i18n()['weekly']}/${_i18n()[category.toFirebaseFormatString()]}'
+            : '${_i18n()['weekly']}';
+    }
   }
 
   Widget oneTimeBuilder(EventCard eventData) {

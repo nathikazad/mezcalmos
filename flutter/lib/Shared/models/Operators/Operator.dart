@@ -6,6 +6,7 @@ class OperatorState {
   final int? serviceProviderDetailsId;
   final int? deliveryDetailsId;
   final int? serviceLinkId;
+  final bool? isOnlineOrdering;
   final AgentStatus operatorState;
   final bool owner;
   const OperatorState(
@@ -13,6 +14,7 @@ class OperatorState {
       required this.operatorState,
       required this.deliveryDetailsId,
       required this.serviceLinkId,
+      this.isOnlineOrdering,
       required this.serviceProviderDetailsId,
       required this.owner});
 

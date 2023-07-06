@@ -3134,7 +3134,22 @@ const documentNodeQuerygetDeliveryCompanies = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'referral_points'),
+                    value:
+                        EnumValueNode(name: NameNode(value: 'desc_nulls_last')),
+                  )
+                ]),
+              )
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [

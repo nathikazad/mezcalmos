@@ -1,5 +1,4 @@
 import '../../__generated/schema.graphql.dart';
-import '../../business_rental/__generated/business_rental.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -6714,7 +6713,7 @@ const documentNodeQuerygetBsRentalUpcomingOrdersItems =
                 value: ListValueNode(values: [
                   ObjectValueNode(fields: [
                     ObjectFieldNode(
-                      name: NameNode(value: 'rental'),
+                      name: NameNode(value: 'order'),
                       value: ObjectValueNode(fields: [
                         ObjectFieldNode(
                           name: NameNode(value: 'business_id'),
@@ -6974,6 +6973,330 @@ const documentNodeQuerygetBsRentalUpcomingOrdersItems =
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'home'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'event'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'service'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'product'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -7109,6 +7432,10 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item {
     required this.order,
     this.time,
     this.rental,
+    this.home,
+    this.event,
+    this.service,
+    this.product,
     required this.$__typename,
   });
 
@@ -7120,6 +7447,10 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item {
     final l$order = json['order'];
     final l$time = json['time'];
     final l$rental = json['rental'];
+    final l$home = json['home'];
+    final l$event = json['event'];
+    final l$service = json['service'];
+    final l$product = json['product'];
     final l$$__typename = json['__typename'];
     return Query$getBsRentalUpcomingOrdersItems$business_order_request_item(
       cost: moneyFromJson(l$cost),
@@ -7133,6 +7464,22 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item {
           ? null
           : Query$getBsRentalUpcomingOrdersItems$business_order_request_item$rental
               .fromJson((l$rental as Map<String, dynamic>)),
+      home: l$home == null
+          ? null
+          : Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home
+              .fromJson((l$home as Map<String, dynamic>)),
+      event: l$event == null
+          ? null
+          : Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event
+              .fromJson((l$event as Map<String, dynamic>)),
+      service: l$service == null
+          ? null
+          : Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service
+              .fromJson((l$service as Map<String, dynamic>)),
+      product: l$product == null
+          ? null
+          : Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product
+              .fromJson((l$product as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -7151,6 +7498,18 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item {
   final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$rental?
       rental;
 
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home?
+      home;
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event?
+      event;
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service?
+      service;
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product?
+      product;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -7167,6 +7526,14 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item {
     _resultData['time'] = l$time;
     final l$rental = rental;
     _resultData['rental'] = l$rental?.toJson();
+    final l$home = home;
+    _resultData['home'] = l$home?.toJson();
+    final l$event = event;
+    _resultData['event'] = l$event?.toJson();
+    final l$service = service;
+    _resultData['service'] = l$service?.toJson();
+    final l$product = product;
+    _resultData['product'] = l$product?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -7180,6 +7547,10 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item {
     final l$order = order;
     final l$time = time;
     final l$rental = rental;
+    final l$home = home;
+    final l$event = event;
+    final l$service = service;
+    final l$product = product;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost,
@@ -7188,6 +7559,10 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item {
       l$order,
       l$time,
       l$rental,
+      l$home,
+      l$event,
+      l$service,
+      l$product,
       l$$__typename,
     ]);
   }
@@ -7232,6 +7607,26 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item {
     if (l$rental != lOther$rental) {
       return false;
     }
+    final l$home = home;
+    final lOther$home = other.home;
+    if (l$home != lOther$home) {
+      return false;
+    }
+    final l$event = event;
+    final lOther$event = other.event;
+    if (l$event != lOther$event) {
+      return false;
+    }
+    final l$service = service;
+    final lOther$service = other.service;
+    if (l$service != lOther$service) {
+      return false;
+    }
+    final l$product = product;
+    final lOther$product = other.product;
+    if (l$product != lOther$product) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -7274,12 +7669,27 @@ abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_requ
     String? time,
     Query$getBsRentalUpcomingOrdersItems$business_order_request_item$rental?
         rental,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home? home,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event?
+        event,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service?
+        service,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product?
+        product,
     String? $__typename,
   });
   CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$order<
       TRes> get order;
   CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$rental<
       TRes> get rental;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+      TRes> get home;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+      TRes> get event;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+      TRes> get service;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+      TRes> get product;
 }
 
 class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item<
@@ -7307,6 +7717,10 @@ class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_
     Object? order = _undefined,
     Object? time = _undefined,
     Object? rental = _undefined,
+    Object? home = _undefined,
+    Object? event = _undefined,
+    Object? service = _undefined,
+    Object? product = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBsRentalUpcomingOrdersItems$business_order_request_item(
@@ -7329,6 +7743,22 @@ class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_
             ? _instance.rental
             : (rental
                 as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$rental?),
+        home: home == _undefined
+            ? _instance.home
+            : (home
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home?),
+        event: event == _undefined
+            ? _instance.event
+            : (event
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event?),
+        service: service == _undefined
+            ? _instance.service
+            : (service
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service?),
+        product: product == _undefined
+            ? _instance.product
+            : (product
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -7348,6 +7778,46 @@ class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_
             .stub(_then(_instance))
         : CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$rental(
             local$rental, (e) => call(rental: e));
+  }
+
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+      TRes> get home {
+    final local$home = _instance.home;
+    return local$home == null
+        ? CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
+            local$home, (e) => call(home: e));
+  }
+
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+      TRes> get event {
+    final local$event = _instance.event;
+    return local$event == null
+        ? CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event(
+            local$event, (e) => call(event: e));
+  }
+
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+      TRes> get service {
+    final local$service = _instance.service;
+    return local$service == null
+        ? CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service(
+            local$service, (e) => call(service: e));
+  }
+
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+      TRes> get product {
+    final local$product = _instance.product;
+    return local$product == null
+        ? CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product(
+            local$product, (e) => call(product: e));
   }
 }
 
@@ -7370,6 +7840,13 @@ class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_requ
     String? time,
     Query$getBsRentalUpcomingOrdersItems$business_order_request_item$rental?
         rental,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home? home,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event?
+        event,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service?
+        service,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product?
+        product,
     String? $__typename,
   }) =>
       _res;
@@ -7382,6 +7859,26 @@ class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_requ
           TRes>
       get rental =>
           CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$rental
+              .stub(_res);
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+          TRes>
+      get home =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home
+              .stub(_res);
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+          TRes>
+      get event =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event
+              .stub(_res);
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+          TRes>
+      get service =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service
+              .stub(_res);
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+          TRes>
+      get product =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product
               .stub(_res);
 }
 
@@ -8548,6 +9045,2778 @@ class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_requ
       _res;
 }
 
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home({
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
+      details: l$details == null
+          ? null
+          : Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details?
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home;
+
+  TRes call({
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
+              .stub(_res);
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details;
+
+  TRes call({
+    dynamic? image,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name
+              .stub(_res);
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name;
+
+  TRes call({
+    List<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations<
+                      Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations<
+                          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event({
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event(
+      details:
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event;
+
+  TRes call({
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details
+              .stub(_res);
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details;
+
+  TRes call({
+    dynamic? image,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name
+              .stub(_res);
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name;
+
+  TRes call({
+    List<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations<
+                      Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations<
+                          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$event$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service({
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service(
+      details:
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service;
+
+  TRes call({
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details
+              .stub(_res);
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details;
+
+  TRes call({
+    dynamic? image,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name
+              .stub(_res);
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name;
+
+  TRes call({
+    List<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations<
+                      Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations<
+                          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$service$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product({
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product(
+      details:
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product;
+
+  TRes call({
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details
+              .stub(_res);
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details;
+
+  TRes call({
+    dynamic? image,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name
+              .stub(_res);
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name;
+
+  TRes call({
+    List<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations<
+                      Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations<
+                          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations {
+  Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations
+    on Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations {
+  CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations<
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations(
+    Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations
+        instance,
+    TRes Function(
+            Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations;
+
+  factory CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$product$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$getBsRentalPastOrdersItems {
   factory Variables$Query$getBsRentalPastOrdersItems({
     required int rentalBusinessId,
@@ -8909,7 +12178,7 @@ const documentNodeQuerygetBsRentalPastOrdersItems = DocumentNode(definitions: [
                 value: ListValueNode(values: [
                   ObjectValueNode(fields: [
                     ObjectFieldNode(
-                      name: NameNode(value: 'rental'),
+                      name: NameNode(value: 'order'),
                       value: ObjectValueNode(fields: [
                         ObjectFieldNode(
                           name: NameNode(value: 'business_id'),
@@ -9179,6 +12448,330 @@ const documentNodeQuerygetBsRentalPastOrdersItems = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'home'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'event'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'service'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'product'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'translations'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'language_id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'value'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -9313,6 +12906,10 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item {
     required this.order,
     this.time,
     this.rental,
+    this.home,
+    this.event,
+    this.service,
+    this.product,
     required this.$__typename,
   });
 
@@ -9324,6 +12921,10 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item {
     final l$order = json['order'];
     final l$time = json['time'];
     final l$rental = json['rental'];
+    final l$home = json['home'];
+    final l$event = json['event'];
+    final l$service = json['service'];
+    final l$product = json['product'];
     final l$$__typename = json['__typename'];
     return Query$getBsRentalPastOrdersItems$business_order_request_item(
       cost: moneyFromJson(l$cost),
@@ -9336,6 +12937,22 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item {
           ? null
           : Query$getBsRentalPastOrdersItems$business_order_request_item$rental
               .fromJson((l$rental as Map<String, dynamic>)),
+      home: l$home == null
+          ? null
+          : Query$getBsRentalPastOrdersItems$business_order_request_item$home
+              .fromJson((l$home as Map<String, dynamic>)),
+      event: l$event == null
+          ? null
+          : Query$getBsRentalPastOrdersItems$business_order_request_item$event
+              .fromJson((l$event as Map<String, dynamic>)),
+      service: l$service == null
+          ? null
+          : Query$getBsRentalPastOrdersItems$business_order_request_item$service
+              .fromJson((l$service as Map<String, dynamic>)),
+      product: l$product == null
+          ? null
+          : Query$getBsRentalPastOrdersItems$business_order_request_item$product
+              .fromJson((l$product as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -9354,6 +12971,17 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item {
   final Query$getBsRentalPastOrdersItems$business_order_request_item$rental?
       rental;
 
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$home? home;
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$event?
+      event;
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$service?
+      service;
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$product?
+      product;
+
   final String $__typename;
 
   Map<String, dynamic> toJson() {
@@ -9370,6 +12998,14 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item {
     _resultData['time'] = l$time;
     final l$rental = rental;
     _resultData['rental'] = l$rental?.toJson();
+    final l$home = home;
+    _resultData['home'] = l$home?.toJson();
+    final l$event = event;
+    _resultData['event'] = l$event?.toJson();
+    final l$service = service;
+    _resultData['service'] = l$service?.toJson();
+    final l$product = product;
+    _resultData['product'] = l$product?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -9383,6 +13019,10 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item {
     final l$order = order;
     final l$time = time;
     final l$rental = rental;
+    final l$home = home;
+    final l$event = event;
+    final l$service = service;
+    final l$product = product;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost,
@@ -9391,6 +13031,10 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item {
       l$order,
       l$time,
       l$rental,
+      l$home,
+      l$event,
+      l$service,
+      l$product,
       l$$__typename,
     ]);
   }
@@ -9435,6 +13079,26 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item {
     if (l$rental != lOther$rental) {
       return false;
     }
+    final l$home = home;
+    final lOther$home = other.home;
+    if (l$home != lOther$home) {
+      return false;
+    }
+    final l$event = event;
+    final lOther$event = other.event;
+    if (l$event != lOther$event) {
+      return false;
+    }
+    final l$service = service;
+    final lOther$service = other.service;
+    if (l$service != lOther$service) {
+      return false;
+    }
+    final l$product = product;
+    final lOther$product = other.product;
+    if (l$product != lOther$product) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -9474,12 +13138,26 @@ abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_
     Query$getBsRentalPastOrdersItems$business_order_request_item$order? order,
     String? time,
     Query$getBsRentalPastOrdersItems$business_order_request_item$rental? rental,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home? home,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event? event,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service?
+        service,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product?
+        product,
     String? $__typename,
   });
   CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$order<
       TRes> get order;
   CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$rental<
       TRes> get rental;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+      TRes> get home;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+      TRes> get event;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+      TRes> get service;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+      TRes> get product;
 }
 
 class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item<
@@ -9506,6 +13184,10 @@ class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item
     Object? order = _undefined,
     Object? time = _undefined,
     Object? rental = _undefined,
+    Object? home = _undefined,
+    Object? event = _undefined,
+    Object? service = _undefined,
+    Object? product = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBsRentalPastOrdersItems$business_order_request_item(
@@ -9528,6 +13210,22 @@ class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item
             ? _instance.rental
             : (rental
                 as Query$getBsRentalPastOrdersItems$business_order_request_item$rental?),
+        home: home == _undefined
+            ? _instance.home
+            : (home
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$home?),
+        event: event == _undefined
+            ? _instance.event
+            : (event
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$event?),
+        service: service == _undefined
+            ? _instance.service
+            : (service
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$service?),
+        product: product == _undefined
+            ? _instance.product
+            : (product
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$product?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -9548,6 +13246,46 @@ class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item
         : CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$rental(
             local$rental, (e) => call(rental: e));
   }
+
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+      TRes> get home {
+    final local$home = _instance.home;
+    return local$home == null
+        ? CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home(
+            local$home, (e) => call(home: e));
+  }
+
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+      TRes> get event {
+    final local$event = _instance.event;
+    return local$event == null
+        ? CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event(
+            local$event, (e) => call(event: e));
+  }
+
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+      TRes> get service {
+    final local$service = _instance.service;
+    return local$service == null
+        ? CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service(
+            local$service, (e) => call(service: e));
+  }
+
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+      TRes> get product {
+    final local$product = _instance.product;
+    return local$product == null
+        ? CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product(
+            local$product, (e) => call(product: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item<
@@ -9567,6 +13305,12 @@ class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_
     Query$getBsRentalPastOrdersItems$business_order_request_item$order? order,
     String? time,
     Query$getBsRentalPastOrdersItems$business_order_request_item$rental? rental,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home? home,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event? event,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service?
+        service,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product?
+        product,
     String? $__typename,
   }) =>
       _res;
@@ -9579,6 +13323,26 @@ class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_
           TRes>
       get rental =>
           CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$rental
+              .stub(_res);
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+          TRes>
+      get home =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home
+              .stub(_res);
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+          TRes>
+      get event =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event
+              .stub(_res);
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+          TRes>
+      get service =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service
+              .stub(_res);
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+          TRes>
+      get product =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product
               .stub(_res);
 }
 
@@ -10729,6 +14493,2772 @@ class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_
         CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$rental$details$name$translations<
             TRes> {
   _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$rental$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$home {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$home({
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$home.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$home(
+      details: l$details == null
+          ? null
+          : Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$home$details?
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$home) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$home
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$home {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$home)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home;
+
+  TRes call({
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$home
+      _instance;
+
+  final TRes Function(
+      Query$getBsRentalPastOrdersItems$business_order_request_item$home) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getBsRentalPastOrdersItems$business_order_request_item$home(
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$home$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
+              .stub(_res);
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$home$details {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$home$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$home$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$home$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$home$details {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$home$details)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details;
+
+  TRes call({
+    dynamic? image,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name
+              .stub(_res);
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name;
+
+  TRes call({
+    List<Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations<
+                      Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations<
+                          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$event {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$event({
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$event.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$event(
+      details:
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$event$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$event) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$event
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$event {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$event)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event;
+
+  TRes call({
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$event
+      _instance;
+
+  final TRes Function(
+      Query$getBsRentalPastOrdersItems$business_order_request_item$event) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getBsRentalPastOrdersItems$business_order_request_item$event(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$event$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details
+              .stub(_res);
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$event$details {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$event$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$event$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$event$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$event$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$event$details {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event$details
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$event$details)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details;
+
+  TRes call({
+    dynamic? image,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$event$details
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name
+              .stub(_res);
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name;
+
+  TRes call({
+    List<Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations<
+                      Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations<
+                          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$event$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$service {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$service({
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$service.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$service(
+      details:
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$service$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$service) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$service
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$service {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$service)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service;
+
+  TRes call({
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$service
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$service$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details
+              .stub(_res);
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$service$details {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$service$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$service$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$service$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$service$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$service$details {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service$details
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$service$details)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details;
+
+  TRes call({
+    dynamic? image,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$service$details
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name
+              .stub(_res);
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name;
+
+  TRes call({
+    List<Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations<
+                      Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations<
+                          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$service$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$product {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$product({
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$product.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$product(
+      details:
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$product$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$product) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$product
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$product {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$product)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product;
+
+  TRes call({
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$product
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$product$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details
+              .stub(_res);
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$product$details {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$product$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$product$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$product$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name:
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name
+      name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$product$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$product$details {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product$details
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$product$details)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details;
+
+  TRes call({
+    dynamic? image,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name?
+        name,
+    String? $__typename,
+  });
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$product$details
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name?
+        name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name
+              .stub(_res);
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name;
+
+  TRes call({
+    List<Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations<
+                      Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations<
+                          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations {
+  Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations
+    on Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations {
+  CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations<
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations(
+    Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations
+        instance,
+    TRes Function(
+            Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations;
+
+  factory CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_item$product$details$name$translations(
       this._res);
 
   TRes _res;

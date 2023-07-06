@@ -341,6 +341,13 @@ const documentNodeQuerygetServiceProviderLinks = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'customer_flyer_links'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -476,6 +483,7 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     this.operator_qr_image_link,
     this.customer_deep_link,
     this.customer_qr_image_link,
+    this.customer_flyer_links,
     required this.$__typename,
   });
 
@@ -488,6 +496,7 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     final l$operator_qr_image_link = json['operator_qr_image_link'];
     final l$customer_deep_link = json['customer_deep_link'];
     final l$customer_qr_image_link = json['customer_qr_image_link'];
+    final l$customer_flyer_links = json['customer_flyer_links'];
     final l$$__typename = json['__typename'];
     return Query$getServiceProviderLinks$service_provider_service_link_by_pk(
       id: (l$id as int),
@@ -497,6 +506,9 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
       operator_qr_image_link: (l$operator_qr_image_link as String?),
       customer_deep_link: (l$customer_deep_link as String?),
       customer_qr_image_link: (l$customer_qr_image_link as String?),
+      customer_flyer_links: l$customer_flyer_links == null
+          ? null
+          : mapFromJson(l$customer_flyer_links),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -514,6 +526,8 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
   final String? customer_deep_link;
 
   final String? customer_qr_image_link;
+
+  final dynamic? customer_flyer_links;
 
   final String $__typename;
 
@@ -533,6 +547,10 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     _resultData['customer_deep_link'] = l$customer_deep_link;
     final l$customer_qr_image_link = customer_qr_image_link;
     _resultData['customer_qr_image_link'] = l$customer_qr_image_link;
+    final l$customer_flyer_links = customer_flyer_links;
+    _resultData['customer_flyer_links'] = l$customer_flyer_links == null
+        ? null
+        : mapToJson(l$customer_flyer_links);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -547,6 +565,7 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     final l$operator_qr_image_link = operator_qr_image_link;
     final l$customer_deep_link = customer_deep_link;
     final l$customer_qr_image_link = customer_qr_image_link;
+    final l$customer_flyer_links = customer_flyer_links;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -556,6 +575,7 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
       l$operator_qr_image_link,
       l$customer_deep_link,
       l$customer_qr_image_link,
+      l$customer_flyer_links,
       l$$__typename,
     ]);
   }
@@ -605,6 +625,11 @@ class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
     if (l$customer_qr_image_link != lOther$customer_qr_image_link) {
       return false;
     }
+    final l$customer_flyer_links = customer_flyer_links;
+    final lOther$customer_flyer_links = other.customer_flyer_links;
+    if (l$customer_flyer_links != lOther$customer_flyer_links) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -646,6 +671,7 @@ abstract class CopyWith$Query$getServiceProviderLinks$service_provider_service_l
     String? operator_qr_image_link,
     String? customer_deep_link,
     String? customer_qr_image_link,
+    dynamic? customer_flyer_links,
     String? $__typename,
   });
 }
@@ -676,6 +702,7 @@ class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_
     Object? operator_qr_image_link = _undefined,
     Object? customer_deep_link = _undefined,
     Object? customer_qr_image_link = _undefined,
+    Object? customer_flyer_links = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServiceProviderLinks$service_provider_service_link_by_pk(
@@ -698,6 +725,9 @@ class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_
         customer_qr_image_link: customer_qr_image_link == _undefined
             ? _instance.customer_qr_image_link
             : (customer_qr_image_link as String?),
+        customer_flyer_links: customer_flyer_links == _undefined
+            ? _instance.customer_flyer_links
+            : (customer_flyer_links as dynamic?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -722,6 +752,7 @@ class _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_l
     String? operator_qr_image_link,
     String? customer_deep_link,
     String? customer_qr_image_link,
+    dynamic? customer_flyer_links,
     String? $__typename,
   }) =>
       _res;
@@ -5305,6 +5336,13 @@ const documentNodeQuerygetServiceInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'unique_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'phone_number'),
             alias: null,
             arguments: [],
@@ -5533,6 +5571,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     required this.image,
     this.is_open,
     required this.name,
+    required this.unique_id,
     this.phone_number,
     required this.language,
     required this.service_provider_type,
@@ -5549,6 +5588,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$image = json['image'];
     final l$is_open = json['is_open'];
     final l$name = json['name'];
+    final l$unique_id = json['unique_id'];
     final l$phone_number = json['phone_number'];
     final l$language = json['language'];
     final l$service_provider_type = json['service_provider_type'];
@@ -5562,6 +5602,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
       image: (l$image as String),
       is_open: (l$is_open as bool?),
       name: (l$name as String),
+      unique_id: (l$unique_id as String),
       phone_number: (l$phone_number as String?),
       language: mapFromJson(l$language),
       service_provider_type: (l$service_provider_type as String),
@@ -5587,6 +5628,8 @@ class Query$getServiceInfo$service_provider_details_by_pk {
   final bool? is_open;
 
   final String name;
+
+  final String unique_id;
 
   final String? phone_number;
 
@@ -5615,6 +5658,8 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     _resultData['is_open'] = l$is_open;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$unique_id = unique_id;
+    _resultData['unique_id'] = l$unique_id;
     final l$phone_number = phone_number;
     _resultData['phone_number'] = l$phone_number;
     final l$language = language;
@@ -5638,6 +5683,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$image = image;
     final l$is_open = is_open;
     final l$name = name;
+    final l$unique_id = unique_id;
     final l$phone_number = phone_number;
     final l$language = language;
     final l$service_provider_type = service_provider_type;
@@ -5651,6 +5697,7 @@ class Query$getServiceInfo$service_provider_details_by_pk {
       l$image,
       l$is_open,
       l$name,
+      l$unique_id,
       l$phone_number,
       l$language,
       l$service_provider_type,
@@ -5697,6 +5744,11 @@ class Query$getServiceInfo$service_provider_details_by_pk {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$unique_id = unique_id;
+    final lOther$unique_id = other.unique_id;
+    if (l$unique_id != lOther$unique_id) {
       return false;
     }
     final l$phone_number = phone_number;
@@ -5762,6 +5814,7 @@ abstract class CopyWith$Query$getServiceInfo$service_provider_details_by_pk<
     String? image,
     bool? is_open,
     String? name,
+    String? unique_id,
     String? phone_number,
     dynamic? language,
     String? service_provider_type,
@@ -5798,6 +5851,7 @@ class _CopyWithImpl$Query$getServiceInfo$service_provider_details_by_pk<TRes>
     Object? image = _undefined,
     Object? is_open = _undefined,
     Object? name = _undefined,
+    Object? unique_id = _undefined,
     Object? phone_number = _undefined,
     Object? language = _undefined,
     Object? service_provider_type = _undefined,
@@ -5820,6 +5874,9 @@ class _CopyWithImpl$Query$getServiceInfo$service_provider_details_by_pk<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        unique_id: unique_id == _undefined || unique_id == null
+            ? _instance.unique_id
+            : (unique_id as String),
         phone_number: phone_number == _undefined
             ? _instance.phone_number
             : (phone_number as String?),
@@ -5876,6 +5933,7 @@ class _CopyWithStubImpl$Query$getServiceInfo$service_provider_details_by_pk<
     String? image,
     bool? is_open,
     String? name,
+    String? unique_id,
     String? phone_number,
     dynamic? language,
     String? service_provider_type,

@@ -74,7 +74,8 @@ export interface ServiceLink{
   operatorDeepLink?: string; 
   operatorQrImageLink?: string;
   driverDeepLink?: string; 
-  driverQrImageLink?: string; 
+  driverQrImageLink?: string;
+  customerFlyerLinks?: Record<Language, string>;
 }
 export enum ServiceProviderType {
   Restaurant = "restaurant",

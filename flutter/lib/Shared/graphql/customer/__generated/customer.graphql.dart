@@ -4006,9 +4006,9 @@ extension ClientExtension$Query$get_customer_orders on graphql.GraphQLClient {
 class Query$get_customer_orders$customer_minimal_orders {
   Query$get_customer_orders$customer_minimal_orders({
     required this.id,
-    required this.image,
+    this.image,
     required this.in_process,
-    required this.name,
+    this.name,
     required this.delivery_cost,
     this.to_address,
     required this.order_time,
@@ -4035,9 +4035,9 @@ class Query$get_customer_orders$customer_minimal_orders {
     final l$$__typename = json['__typename'];
     return Query$get_customer_orders$customer_minimal_orders(
       id: (l$id as int),
-      image: (l$image as String),
+      image: (l$image as String?),
       in_process: (l$in_process as bool),
-      name: (l$name as String),
+      name: (l$name as String?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       to_address: (l$to_address as String?),
       order_time: (l$order_time as String),
@@ -4051,11 +4051,11 @@ class Query$get_customer_orders$customer_minimal_orders {
 
   final int id;
 
-  final String image;
+  final String? image;
 
   final bool in_process;
 
-  final String name;
+  final String? name;
 
   final double delivery_cost;
 
@@ -4273,15 +4273,11 @@ class _CopyWithImpl$Query$get_customer_orders$customer_minimal_orders<TRes>
   }) =>
       _then(Query$get_customer_orders$customer_minimal_orders(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
+        image: image == _undefined ? _instance.image : (image as String?),
         in_process: in_process == _undefined || in_process == null
             ? _instance.in_process
             : (in_process as bool),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
+        name: name == _undefined ? _instance.name : (name as String?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -4861,9 +4857,9 @@ extension ClientExtension$Subscription$listen_on_customer_orders
 class Subscription$listen_on_customer_orders$customer_minimal_orders {
   Subscription$listen_on_customer_orders$customer_minimal_orders({
     required this.id,
-    required this.image,
+    this.image,
     required this.in_process,
-    required this.name,
+    this.name,
     required this.delivery_cost,
     this.to_address,
     required this.order_time,
@@ -4890,9 +4886,9 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_orders$customer_minimal_orders(
       id: (l$id as int),
-      image: (l$image as String),
+      image: (l$image as String?),
       in_process: (l$in_process as bool),
-      name: (l$name as String),
+      name: (l$name as String?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       to_address: (l$to_address as String?),
       order_time: (l$order_time as String),
@@ -4906,11 +4902,11 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
 
   final int id;
 
-  final String image;
+  final String? image;
 
   final bool in_process;
 
-  final String name;
+  final String? name;
 
   final double delivery_cost;
 
@@ -5135,15 +5131,11 @@ class _CopyWithImpl$Subscription$listen_on_customer_orders$customer_minimal_orde
   }) =>
       _then(Subscription$listen_on_customer_orders$customer_minimal_orders(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
+        image: image == _undefined ? _instance.image : (image as String?),
         in_process: in_process == _undefined || in_process == null
             ? _instance.in_process
             : (in_process as bool),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
+        name: name == _undefined ? _instance.name : (name as String?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -6999,10 +6991,14 @@ class Variables$Query$getCustomerOrdersByType {
   factory Variables$Query$getCustomerOrdersByType({
     required int custId,
     required String orderType,
+    int? limit,
+    int? offset,
   }) =>
       Variables$Query$getCustomerOrdersByType._({
         r'custId': custId,
         r'orderType': orderType,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
       });
 
   Variables$Query$getCustomerOrdersByType._(this._$data);
@@ -7014,6 +7010,14 @@ class Variables$Query$getCustomerOrdersByType {
     result$data['custId'] = (l$custId as int);
     final l$orderType = data['orderType'];
     result$data['orderType'] = (l$orderType as String);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
     return Variables$Query$getCustomerOrdersByType._(result$data);
   }
 
@@ -7021,12 +7025,22 @@ class Variables$Query$getCustomerOrdersByType {
 
   int get custId => (_$data['custId'] as int);
   String get orderType => (_$data['orderType'] as String);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$custId = custId;
     result$data['custId'] = l$custId;
     final l$orderType = orderType;
     result$data['orderType'] = l$orderType;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
     return result$data;
   }
 
@@ -7055,6 +7069,22 @@ class Variables$Query$getCustomerOrdersByType {
     if (l$orderType != lOther$orderType) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
@@ -7062,9 +7092,13 @@ class Variables$Query$getCustomerOrdersByType {
   int get hashCode {
     final l$custId = custId;
     final l$orderType = orderType;
+    final l$limit = limit;
+    final l$offset = offset;
     return Object.hashAll([
       l$custId,
       l$orderType,
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
     ]);
   }
 }
@@ -7081,6 +7115,8 @@ abstract class CopyWith$Variables$Query$getCustomerOrdersByType<TRes> {
   TRes call({
     int? custId,
     String? orderType,
+    int? limit,
+    int? offset,
   });
 }
 
@@ -7100,12 +7136,16 @@ class _CopyWithImpl$Variables$Query$getCustomerOrdersByType<TRes>
   TRes call({
     Object? custId = _undefined,
     Object? orderType = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
   }) =>
       _then(Variables$Query$getCustomerOrdersByType._({
         ..._instance._$data,
         if (custId != _undefined && custId != null) 'custId': (custId as int),
         if (orderType != _undefined && orderType != null)
           'orderType': (orderType as String),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
       }));
 }
 
@@ -7118,6 +7158,8 @@ class _CopyWithStubImpl$Variables$Query$getCustomerOrdersByType<TRes>
   call({
     int? custId,
     String? orderType,
+    int? limit,
+    int? offset,
   }) =>
       _res;
 }
@@ -7300,6 +7342,24 @@ const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -7318,16 +7378,7 @@ const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
                     value: VariableNode(name: NameNode(value: 'orderType')),
                   )
                 ]),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'in_process'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: BooleanValueNode(value: true),
-                  )
-                ]),
-              ),
+              )
             ]),
           ),
           ArgumentNode(
@@ -7338,6 +7389,14 @@ const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
                 value: VariableNode(name: NameNode(value: 'custId')),
               )
             ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
           ),
         ],
         directives: [],

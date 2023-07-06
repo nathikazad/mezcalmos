@@ -82,7 +82,7 @@ async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrde
         linkUrl: `/deliveryOrders/${deliveryId}`
     };
     mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, adminNotification, m.notificationInfo, ParticipantType.MezAdmin);
+        pushNotification(m.firebaseId!, adminNotification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
     if(courierOrder.deliveryOrder.serviceProviderId) {
         let deliveryOperators: Operator[] = await getDeliveryOperators(courierOrder.deliveryOrder.serviceProviderId);

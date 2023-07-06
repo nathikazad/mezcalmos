@@ -29,6 +29,9 @@
     "shared_pubspec": {
       "dependencies": {
         "ensure_visible_when_focused": "^1.1.1",
+        "open_file": "^3.3.2",
+        "social_share": "^2.3.1",
+
 
         "cupertino_icons": "^1.0.2",
         "google_api_availability": "^5.0.0",
@@ -54,7 +57,7 @@
         "cloud_functions": "^4.0.7",
         "flutter_local_notifications": "^13.0.0",
         "sliding_up_panel": "^2.0.0+1",
-        "location": "^4.2.0",
+        "location": "^4.4.0",
         "shimmer": "^2.0.0",
         "pin_code_fields": "^7.2.0",
         "sizer": "^2.0.15",
@@ -337,6 +340,10 @@
     },
     "MezAdminApp": {
       "folderName": "MezAdminApp",
+      "appPermissions": [
+        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>",
+        "<uses-permission android:name='android.permission.MANAGE_EXTERNAL_STORAGE' /> tools:ignore='ScopedStorage'"
+      ],
       "packages": {
         "stage": {
           "appName": "MezAdmin Stage",
@@ -365,7 +372,9 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0"
+          "agora_rtc_engine": "6.1.0",
+          "open_file": "^3.3.2",
+          "share_plus": "^7.0.2"
         },
         "assets": [
           "assets/images/",
@@ -708,6 +717,11 @@
       }
     },
     "BusinessApp": {
+      "appPermissions": [
+        "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>",
+        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>",
+        "<uses-permission android:name='android.permission.MANAGE_EXTERNAL_STORAGE' /> tools:ignore='ScopedStorage'"
+      ],
       "folderName": "BusinessApp",
       "packages": {
         "stage": {
@@ -737,7 +751,9 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0"
+          "agora_rtc_engine": "6.1.0",
+          "open_file": "^3.3.2",
+          "share_plus": "^7.0.2"
         },
         "assets": [
           "assets/images/",

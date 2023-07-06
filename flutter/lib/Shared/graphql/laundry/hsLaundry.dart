@@ -69,6 +69,7 @@ Future<Laundry?> get_laundry_store_by_id(
         deliveryCost: DeliveryCost(
           id: data.delivery_details_of_deliverer!.first.id,
           selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
+          costPerKmFromBase: data.delivery_details_of_deliverer!.first.cost_per_km_from_base,
           freeDeliveryMinimumCost: data
               .delivery_details_of_deliverer!.first.free_delivery_minimum_cost,
           costPerKm: data.delivery_details_of_deliverer!.first.cost_per_km,
@@ -381,6 +382,8 @@ Future<List<Laundry>> get_laundries(
         deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(
           id: data.delivery_details_of_deliverer!.first.id,
+                    costPerKmFromBase: data.delivery_details_of_deliverer!.first.cost_per_km_from_base,
+
           selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
           freeDeliveryMinimumCost: data
               .delivery_details_of_deliverer!.first.free_delivery_minimum_cost,

@@ -2,11 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/controllers/CustClassesListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -56,6 +57,11 @@ class _CustClassesListViewState extends State<CustClassesListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
+         actionIcons: [
+          FloatingCartComponent(
+            cartType: CartType.business,
+          ),
+        ],
         onClick: MezRouter.back,
         title: '${_i18n()['classes']}',
       ),
@@ -236,16 +242,31 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                             SizedBox(
                               width: 2,
                             ),
-                            Text(
-                                '${viewController.businesses[index].avgRating}',
-                                style: context.textTheme.bodySmall),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 2),
-                              child: Text(
-                                '(${viewController.businesses[index].reviewCount})',
-                                style: context.textTheme.bodyMedium,
+                            Container(
+                              alignment: Alignment.center,
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: Text(
+                                            '${viewController.businesses[index].avgRating}',
+                                            style:
+                                                context.textTheme.bodySmall)),
+                                    WidgetSpan(
+                                      alignment: PlaceholderAlignment.middle,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 1),
+                                        child: Text(
+                                            '(${viewController.businesses[index].reviewCount})',
+                                            style: context.textTheme.bodySmall
+                                                ?.copyWith(fontSize: 7.mezSp)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -335,6 +356,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 if (viewController.classes[index].scheduleType ==
                     ScheduleType.OneTime)
                   oneTimeBuilder(viewController.classes[index]),
+                SizedBox(height: 3),
                 Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

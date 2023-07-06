@@ -30479,6 +30479,554 @@ const documentNodeQuerygetHomeRentalOrderRequest = DocumentNode(definitions: [
                 ]),
               ),
               FieldNode(
+                name: NameNode(value: 'home'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'event'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'service'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'product'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
                 name: NameNode(value: 'time'),
                 alias: null,
                 arguments: [],
@@ -31587,6 +32135,10 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
     required this.id,
     required this.parameters,
     this.rental,
+    this.home,
+    this.event,
+    this.service,
+    this.product,
     this.time,
     required this.$__typename,
   });
@@ -31601,6 +32153,10 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
     final l$id = json['id'];
     final l$parameters = json['parameters'];
     final l$rental = json['rental'];
+    final l$home = json['home'];
+    final l$event = json['event'];
+    final l$service = json['service'];
+    final l$product = json['product'];
     final l$time = json['time'];
     final l$$__typename = json['__typename'];
     return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items(
@@ -31615,6 +32171,22 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
           ? null
           : Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental
               .fromJson((l$rental as Map<String, dynamic>)),
+      home: l$home == null
+          ? null
+          : Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home
+              .fromJson((l$home as Map<String, dynamic>)),
+      event: l$event == null
+          ? null
+          : Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event
+              .fromJson((l$event as Map<String, dynamic>)),
+      service: l$service == null
+          ? null
+          : Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service
+              .fromJson((l$service as Map<String, dynamic>)),
+      product: l$product == null
+          ? null
+          : Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product
+              .fromJson((l$product as Map<String, dynamic>)),
       time: (l$time as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -31636,6 +32208,18 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
 
   final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental?
       rental;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home?
+      home;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event?
+      event;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service?
+      service;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product?
+      product;
 
   final String? time;
 
@@ -31659,6 +32243,14 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
     _resultData['parameters'] = mapToJson(l$parameters);
     final l$rental = rental;
     _resultData['rental'] = l$rental?.toJson();
+    final l$home = home;
+    _resultData['home'] = l$home?.toJson();
+    final l$event = event;
+    _resultData['event'] = l$event?.toJson();
+    final l$service = service;
+    _resultData['service'] = l$service?.toJson();
+    final l$product = product;
+    _resultData['product'] = l$product?.toJson();
     final l$time = time;
     _resultData['time'] = l$time;
     final l$$__typename = $__typename;
@@ -31676,6 +32268,10 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
     final l$id = id;
     final l$parameters = parameters;
     final l$rental = rental;
+    final l$home = home;
+    final l$event = event;
+    final l$service = service;
+    final l$product = product;
     final l$time = time;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -31687,6 +32283,10 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
       l$id,
       l$parameters,
       l$rental,
+      l$home,
+      l$event,
+      l$service,
+      l$product,
       l$time,
       l$$__typename,
     ]);
@@ -31742,6 +32342,26 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items {
     if (l$rental != lOther$rental) {
       return false;
     }
+    final l$home = home;
+    final lOther$home = other.home;
+    if (l$home != lOther$home) {
+      return false;
+    }
+    final l$event = event;
+    final lOther$event = other.event;
+    if (l$event != lOther$event) {
+      return false;
+    }
+    final l$service = service;
+    final lOther$service = other.service;
+    if (l$service != lOther$service) {
+      return false;
+    }
+    final l$product = product;
+    final lOther$product = other.product;
+    if (l$product != lOther$product) {
+      return false;
+    }
     final l$time = time;
     final lOther$time = other.time;
     if (l$time != lOther$time) {
@@ -31790,11 +32410,27 @@ abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_b
     dynamic? parameters,
     Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental?
         rental,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home?
+        home,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event?
+        event,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service?
+        service,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product?
+        product,
     String? time,
     String? $__typename,
   });
   CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental<
       TRes> get rental;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+      TRes> get home;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+      TRes> get event;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+      TRes> get service;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+      TRes> get product;
 }
 
 class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items<
@@ -31824,6 +32460,10 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
     Object? id = _undefined,
     Object? parameters = _undefined,
     Object? rental = _undefined,
+    Object? home = _undefined,
+    Object? event = _undefined,
+    Object? service = _undefined,
+    Object? product = _undefined,
     Object? time = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -31852,6 +32492,22 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
             ? _instance.rental
             : (rental
                 as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental?),
+        home: home == _undefined
+            ? _instance.home
+            : (home
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home?),
+        event: event == _undefined
+            ? _instance.event
+            : (event
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event?),
+        service: service == _undefined
+            ? _instance.service
+            : (service
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service?),
+        product: product == _undefined
+            ? _instance.product
+            : (product
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product?),
         time: time == _undefined ? _instance.time : (time as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -31865,6 +32521,46 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
             .stub(_then(_instance))
         : CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental(
             local$rental, (e) => call(rental: e));
+  }
+
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+      TRes> get home {
+    final local$home = _instance.home;
+    return local$home == null
+        ? CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home
+            .stub(_then(_instance))
+        : CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+            local$home, (e) => call(home: e));
+  }
+
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+      TRes> get event {
+    final local$event = _instance.event;
+    return local$event == null
+        ? CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event
+            .stub(_then(_instance))
+        : CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+            local$event, (e) => call(event: e));
+  }
+
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+      TRes> get service {
+    final local$service = _instance.service;
+    return local$service == null
+        ? CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service
+            .stub(_then(_instance))
+        : CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+            local$service, (e) => call(service: e));
+  }
+
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+      TRes> get product {
+    final local$product = _instance.product;
+    return local$product == null
+        ? CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product
+            .stub(_then(_instance))
+        : CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+            local$product, (e) => call(product: e));
   }
 }
 
@@ -31888,6 +32584,14 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
     dynamic? parameters,
     Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental?
         rental,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home?
+        home,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event?
+        event,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service?
+        service,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product?
+        product,
     String? time,
     String? $__typename,
   }) =>
@@ -31896,6 +32600,26 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
           TRes>
       get rental =>
           CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$rental
+              .stub(_res);
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+          TRes>
+      get home =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home
+              .stub(_res);
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+          TRes>
+      get event =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event
+              .stub(_res);
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+          TRes>
+      get service =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service
+              .stub(_res);
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+          TRes>
+      get product =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product
               .stub(_res);
 }
 
@@ -32751,6 +33475,3418 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
       _res;
 }
 
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home({
+    required this.id,
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+      id: (l$id as int),
+      details: l$details == null
+          ? null
+          : Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home;
+
+  TRes call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+              .stub(_res);
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details({
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+      id: (l$id as int),
+      name:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details;
+
+  TRes call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+              .stub(_res);
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name;
+
+  TRes call({
+    List<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+                      Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+                          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+      id: (l$id as int),
+      details:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event;
+
+  TRes call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+              .stub(_res);
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details({
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+      id: (l$id as int),
+      name:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details;
+
+  TRes call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+              .stub(_res);
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name;
+
+  TRes call({
+    List<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+                      Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+                          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+      id: (l$id as int),
+      details:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service;
+
+  TRes call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+              .stub(_res);
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details({
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+      id: (l$id as int),
+      name:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details;
+
+  TRes call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+              .stub(_res);
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name;
+
+  TRes call({
+    List<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+                      Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+                          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+      id: (l$id as int),
+      details:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product;
+
+  TRes call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+              .stub(_res);
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details({
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+      id: (l$id as int),
+      name:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details;
+
+  TRes call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+          TRes>
+      get name =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+              .stub(_res);
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name;
+
+  TRes call({
+    List<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+                      Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+                          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations {
+  Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations
+    on Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations {
+  CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+    Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations
+        instance,
+    TRes Function(
+            Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations;
+
+  factory CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Subscription$listenHomeRentalOrderRequest {
   factory Variables$Subscription$listenHomeRentalOrderRequest(
           {required int orderId}) =>
@@ -33249,6 +37385,554 @@ const documentNodeSubscriptionlistenHomeRentalOrderRequest =
               ),
               FieldNode(
                 name: NameNode(value: 'rental'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'home'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'event'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'service'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'additional_parameters'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category1'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'category2'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'position'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'tags'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'product'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -34468,6 +39152,10 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
     required this.id,
     required this.parameters,
     this.rental,
+    this.home,
+    this.event,
+    this.service,
+    this.product,
     this.time,
     required this.$__typename,
   });
@@ -34482,6 +39170,10 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
     final l$id = json['id'];
     final l$parameters = json['parameters'];
     final l$rental = json['rental'];
+    final l$home = json['home'];
+    final l$event = json['event'];
+    final l$service = json['service'];
+    final l$product = json['product'];
     final l$time = json['time'];
     final l$$__typename = json['__typename'];
     return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items(
@@ -34496,6 +39188,22 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
           ? null
           : Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$rental
               .fromJson((l$rental as Map<String, dynamic>)),
+      home: l$home == null
+          ? null
+          : Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home
+              .fromJson((l$home as Map<String, dynamic>)),
+      event: l$event == null
+          ? null
+          : Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event
+              .fromJson((l$event as Map<String, dynamic>)),
+      service: l$service == null
+          ? null
+          : Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service
+              .fromJson((l$service as Map<String, dynamic>)),
+      product: l$product == null
+          ? null
+          : Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product
+              .fromJson((l$product as Map<String, dynamic>)),
       time: (l$time as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -34517,6 +39225,18 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
 
   final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$rental?
       rental;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home?
+      home;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event?
+      event;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service?
+      service;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product?
+      product;
 
   final String? time;
 
@@ -34540,6 +39260,14 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
     _resultData['parameters'] = mapToJson(l$parameters);
     final l$rental = rental;
     _resultData['rental'] = l$rental?.toJson();
+    final l$home = home;
+    _resultData['home'] = l$home?.toJson();
+    final l$event = event;
+    _resultData['event'] = l$event?.toJson();
+    final l$service = service;
+    _resultData['service'] = l$service?.toJson();
+    final l$product = product;
+    _resultData['product'] = l$product?.toJson();
     final l$time = time;
     _resultData['time'] = l$time;
     final l$$__typename = $__typename;
@@ -34557,6 +39285,10 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
     final l$id = id;
     final l$parameters = parameters;
     final l$rental = rental;
+    final l$home = home;
+    final l$event = event;
+    final l$service = service;
+    final l$product = product;
     final l$time = time;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -34568,6 +39300,10 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
       l$id,
       l$parameters,
       l$rental,
+      l$home,
+      l$event,
+      l$service,
+      l$product,
       l$time,
       l$$__typename,
     ]);
@@ -34623,6 +39359,26 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
     if (l$rental != lOther$rental) {
       return false;
     }
+    final l$home = home;
+    final lOther$home = other.home;
+    if (l$home != lOther$home) {
+      return false;
+    }
+    final l$event = event;
+    final lOther$event = other.event;
+    if (l$event != lOther$event) {
+      return false;
+    }
+    final l$service = service;
+    final lOther$service = other.service;
+    if (l$service != lOther$service) {
+      return false;
+    }
+    final l$product = product;
+    final lOther$product = other.product;
+    if (l$product != lOther$product) {
+      return false;
+    }
     final l$time = time;
     final lOther$time = other.time;
     if (l$time != lOther$time) {
@@ -34672,11 +39428,27 @@ abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order
     dynamic? parameters,
     Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$rental?
         rental,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home?
+        home,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event?
+        event,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service?
+        service,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product?
+        product,
     String? time,
     String? $__typename,
   });
   CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$rental<
       TRes> get rental;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+      TRes> get home;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+      TRes> get event;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+      TRes> get service;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+      TRes> get product;
 }
 
 class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items<
@@ -34707,6 +39479,10 @@ class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_req
     Object? id = _undefined,
     Object? parameters = _undefined,
     Object? rental = _undefined,
+    Object? home = _undefined,
+    Object? event = _undefined,
+    Object? service = _undefined,
+    Object? product = _undefined,
     Object? time = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -34736,6 +39512,22 @@ class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_req
             ? _instance.rental
             : (rental
                 as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$rental?),
+        home: home == _undefined
+            ? _instance.home
+            : (home
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home?),
+        event: event == _undefined
+            ? _instance.event
+            : (event
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event?),
+        service: service == _undefined
+            ? _instance.service
+            : (service
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service?),
+        product: product == _undefined
+            ? _instance.product
+            : (product
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product?),
         time: time == _undefined ? _instance.time : (time as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -34749,6 +39541,46 @@ class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_req
             .stub(_then(_instance))
         : CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$rental(
             local$rental, (e) => call(rental: e));
+  }
+
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+      TRes> get home {
+    final local$home = _instance.home;
+    return local$home == null
+        ? CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+            local$home, (e) => call(home: e));
+  }
+
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+      TRes> get event {
+    final local$event = _instance.event;
+    return local$event == null
+        ? CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+            local$event, (e) => call(event: e));
+  }
+
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+      TRes> get service {
+    final local$service = _instance.service;
+    return local$service == null
+        ? CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+            local$service, (e) => call(service: e));
+  }
+
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+      TRes> get product {
+    final local$product = _instance.product;
+    return local$product == null
+        ? CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+            local$product, (e) => call(product: e));
   }
 }
 
@@ -34772,6 +39604,14 @@ class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order
     dynamic? parameters,
     Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$rental?
         rental,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home?
+        home,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event?
+        event,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service?
+        service,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product?
+        product,
     String? time,
     String? $__typename,
   }) =>
@@ -34780,6 +39620,26 @@ class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order
           TRes>
       get rental =>
           CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$rental
+              .stub(_res);
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+          TRes>
+      get home =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home
+              .stub(_res);
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+          TRes>
+      get event =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event
+              .stub(_res);
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+          TRes>
+      get service =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service
+              .stub(_res);
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+          TRes>
+      get product =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product
               .stub(_res);
 }
 
@@ -35630,6 +40490,4014 @@ class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order
   call({
     String? language_id,
     String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home({
+    required this.id,
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+      id: (l$id as int),
+      details: l$details == null
+          ? null
+          : Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home;
+
+  TRes call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+          TRes>
+      get details =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+              .stub(_res);
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details({
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+      id: (l$id as int),
+      name:
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details;
+
+  TRes call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+          TRes>
+      get name =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+              .stub(_res);
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name;
+
+  TRes call({
+    List<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+                      Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+                          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+      id: (l$id as int),
+      details:
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event;
+
+  TRes call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+          TRes>
+      get details =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+              .stub(_res);
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details({
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+      id: (l$id as int),
+      name:
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details;
+
+  TRes call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+          TRes>
+      get name =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+              .stub(_res);
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name;
+
+  TRes call({
+    List<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+                      Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+                          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$event$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+      id: (l$id as int),
+      details:
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service;
+
+  TRes call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+          TRes>
+      get details =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+              .stub(_res);
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details({
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+      id: (l$id as int),
+      name:
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details;
+
+  TRes call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+          TRes>
+      get name =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+              .stub(_res);
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name;
+
+  TRes call({
+    List<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+                      Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+                          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$service$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+      id: (l$id as int),
+      details:
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product;
+
+  TRes call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+          TRes>
+      get details =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+              .stub(_res);
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details({
+    required this.id,
+    required this.name,
+    this.additional_parameters,
+    required this.category1,
+    required this.category2,
+    required this.cost,
+    this.image,
+    required this.position,
+    required this.tags,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$additional_parameters = json['additional_parameters'];
+    final l$category1 = json['category1'];
+    final l$category2 = json['category2'];
+    final l$cost = json['cost'];
+    final l$image = json['image'];
+    final l$position = json['position'];
+    final l$tags = json['tags'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+      id: (l$id as int),
+      name:
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+              .fromJson((l$name as Map<String, dynamic>)),
+      additional_parameters: l$additional_parameters == null
+          ? null
+          : mapFromJson(l$additional_parameters),
+      category1: (l$category1 as String),
+      category2: (l$category2 as String),
+      cost: mapFromJson(l$cost),
+      image: l$image == null ? null : mapFromJson(l$image),
+      position: (l$position as int),
+      tags: mapFromJson(l$tags),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+      name;
+
+  final dynamic? additional_parameters;
+
+  final String category1;
+
+  final String category2;
+
+  final dynamic cost;
+
+  final dynamic? image;
+
+  final int position;
+
+  final dynamic tags;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$additional_parameters = additional_parameters;
+    _resultData['additional_parameters'] = l$additional_parameters == null
+        ? null
+        : mapToJson(l$additional_parameters);
+    final l$category1 = category1;
+    _resultData['category1'] = l$category1;
+    final l$category2 = category2;
+    _resultData['category2'] = l$category2;
+    final l$cost = cost;
+    _resultData['cost'] = mapToJson(l$cost);
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$position = position;
+    _resultData['position'] = l$position;
+    final l$tags = tags;
+    _resultData['tags'] = mapToJson(l$tags);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$additional_parameters = additional_parameters;
+    final l$category1 = category1;
+    final l$category2 = category2;
+    final l$cost = cost;
+    final l$image = image;
+    final l$position = position;
+    final l$tags = tags;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$additional_parameters,
+      l$category1,
+      l$category2,
+      l$cost,
+      l$image,
+      l$position,
+      l$tags,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$additional_parameters = additional_parameters;
+    final lOther$additional_parameters = other.additional_parameters;
+    if (l$additional_parameters != lOther$additional_parameters) {
+      return false;
+    }
+    final l$category1 = category1;
+    final lOther$category1 = other.category1;
+    if (l$category1 != lOther$category1) {
+      return false;
+    }
+    final l$category2 = category2;
+    final lOther$category2 = other.category2;
+    if (l$category2 != lOther$category2) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$position = position;
+    final lOther$position = other.position;
+    if (l$position != lOther$position) {
+      return false;
+    }
+    final l$tags = tags;
+    final lOther$tags = other.tags;
+    if (l$tags != lOther$tags) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details;
+
+  TRes call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+      TRes> get name;
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? additional_parameters = _undefined,
+    Object? category1 = _undefined,
+    Object? category2 = _undefined,
+    Object? cost = _undefined,
+    Object? image = _undefined,
+    Object? position = _undefined,
+    Object? tags = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name),
+        additional_parameters: additional_parameters == _undefined
+            ? _instance.additional_parameters
+            : (additional_parameters as dynamic?),
+        category1: category1 == _undefined || category1 == null
+            ? _instance.category1
+            : (category1 as String),
+        category2: category2 == _undefined || category2 == null
+            ? _instance.category2
+            : (category2 as String),
+        cost: cost == _undefined || cost == null
+            ? _instance.cost
+            : (cost as dynamic),
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        position: position == _undefined || position == null
+            ? _instance.position
+            : (position as int),
+        tags: tags == _undefined || tags == null
+            ? _instance.tags
+            : (tags as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+      TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name?
+        name,
+    dynamic? additional_parameters,
+    String? category1,
+    String? category2,
+    dynamic? cost,
+    dynamic? image,
+    int? position,
+    dynamic? tags,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+          TRes>
+      get name =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+              .stub(_res);
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name;
+
+  TRes call({
+    List<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+                      Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+                          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations {
+  Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations
+    on Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations {
+  CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations>
+      get copyWith =>
+          CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+    TRes> {
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+    Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations
+        instance,
+    TRes Function(
+            Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations;
+
+  factory CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations
+      _instance;
+
+  final TRes Function(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$product$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_home_category1 {
+  factory Variables$Mutation$update_home_category1({
+    required int detailsId,
+    required String category,
+  }) =>
+      Variables$Mutation$update_home_category1._({
+        r'detailsId': detailsId,
+        r'category': category,
+      });
+
+  Variables$Mutation$update_home_category1._(this._$data);
+
+  factory Variables$Mutation$update_home_category1.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$detailsId = data['detailsId'];
+    result$data['detailsId'] = (l$detailsId as int);
+    final l$category = data['category'];
+    result$data['category'] = (l$category as String);
+    return Variables$Mutation$update_home_category1._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get detailsId => (_$data['detailsId'] as int);
+  String get category => (_$data['category'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$detailsId = detailsId;
+    result$data['detailsId'] = l$detailsId;
+    final l$category = category;
+    result$data['category'] = l$category;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_home_category1<
+          Variables$Mutation$update_home_category1>
+      get copyWith => CopyWith$Variables$Mutation$update_home_category1(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_home_category1) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$detailsId = detailsId;
+    final lOther$detailsId = other.detailsId;
+    if (l$detailsId != lOther$detailsId) {
+      return false;
+    }
+    final l$category = category;
+    final lOther$category = other.category;
+    if (l$category != lOther$category) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$detailsId = detailsId;
+    final l$category = category;
+    return Object.hashAll([
+      l$detailsId,
+      l$category,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_home_category1<TRes> {
+  factory CopyWith$Variables$Mutation$update_home_category1(
+    Variables$Mutation$update_home_category1 instance,
+    TRes Function(Variables$Mutation$update_home_category1) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_home_category1;
+
+  factory CopyWith$Variables$Mutation$update_home_category1.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_home_category1;
+
+  TRes call({
+    int? detailsId,
+    String? category,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_home_category1<TRes>
+    implements CopyWith$Variables$Mutation$update_home_category1<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_home_category1(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_home_category1 _instance;
+
+  final TRes Function(Variables$Mutation$update_home_category1) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? detailsId = _undefined,
+    Object? category = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_home_category1._({
+        ..._instance._$data,
+        if (detailsId != _undefined && detailsId != null)
+          'detailsId': (detailsId as int),
+        if (category != _undefined && category != null)
+          'category': (category as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_home_category1<TRes>
+    implements CopyWith$Variables$Mutation$update_home_category1<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_home_category1(this._res);
+
+  TRes _res;
+
+  call({
+    int? detailsId,
+    String? category,
+  }) =>
+      _res;
+}
+
+class Mutation$update_home_category1 {
+  Mutation$update_home_category1({
+    this.update_business_item_details,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_category1.fromJson(Map<String, dynamic> json) {
+    final l$update_business_item_details = json['update_business_item_details'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_category1(
+      update_business_item_details: l$update_business_item_details == null
+          ? null
+          : Mutation$update_home_category1$update_business_item_details
+              .fromJson(
+                  (l$update_business_item_details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_home_category1$update_business_item_details?
+      update_business_item_details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_item_details = update_business_item_details;
+    _resultData['update_business_item_details'] =
+        l$update_business_item_details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_item_details = update_business_item_details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_item_details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_home_category1) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_item_details = update_business_item_details;
+    final lOther$update_business_item_details =
+        other.update_business_item_details;
+    if (l$update_business_item_details != lOther$update_business_item_details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_category1
+    on Mutation$update_home_category1 {
+  CopyWith$Mutation$update_home_category1<Mutation$update_home_category1>
+      get copyWith => CopyWith$Mutation$update_home_category1(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_category1<TRes> {
+  factory CopyWith$Mutation$update_home_category1(
+    Mutation$update_home_category1 instance,
+    TRes Function(Mutation$update_home_category1) then,
+  ) = _CopyWithImpl$Mutation$update_home_category1;
+
+  factory CopyWith$Mutation$update_home_category1.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_category1;
+
+  TRes call({
+    Mutation$update_home_category1$update_business_item_details?
+        update_business_item_details,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_home_category1$update_business_item_details<TRes>
+      get update_business_item_details;
+}
+
+class _CopyWithImpl$Mutation$update_home_category1<TRes>
+    implements CopyWith$Mutation$update_home_category1<TRes> {
+  _CopyWithImpl$Mutation$update_home_category1(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_category1 _instance;
+
+  final TRes Function(Mutation$update_home_category1) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_item_details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_home_category1(
+        update_business_item_details: update_business_item_details == _undefined
+            ? _instance.update_business_item_details
+            : (update_business_item_details
+                as Mutation$update_home_category1$update_business_item_details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_home_category1$update_business_item_details<TRes>
+      get update_business_item_details {
+    final local$update_business_item_details =
+        _instance.update_business_item_details;
+    return local$update_business_item_details == null
+        ? CopyWith$Mutation$update_home_category1$update_business_item_details
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_home_category1$update_business_item_details(
+            local$update_business_item_details,
+            (e) => call(update_business_item_details: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_home_category1<TRes>
+    implements CopyWith$Mutation$update_home_category1<TRes> {
+  _CopyWithStubImpl$Mutation$update_home_category1(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_home_category1$update_business_item_details?
+        update_business_item_details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_home_category1$update_business_item_details<TRes>
+      get update_business_item_details =>
+          CopyWith$Mutation$update_home_category1$update_business_item_details
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_home_category1 = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_home_category1'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'detailsId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'category')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_item_details'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'detailsId')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'category1'),
+                value: VariableNode(name: NameNode(value: 'category')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_home_category1 _parserFn$Mutation$update_home_category1(
+        Map<String, dynamic> data) =>
+    Mutation$update_home_category1.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_home_category1 = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_home_category1?,
+);
+
+class Options$Mutation$update_home_category1
+    extends graphql.MutationOptions<Mutation$update_home_category1> {
+  Options$Mutation$update_home_category1({
+    String? operationName,
+    required Variables$Mutation$update_home_category1 variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_home_category1? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_home_category1>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_home_category1(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_home_category1,
+          parserFn: _parserFn$Mutation$update_home_category1,
+        );
+
+  final OnMutationCompleted$Mutation$update_home_category1?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_home_category1
+    extends graphql.WatchQueryOptions<Mutation$update_home_category1> {
+  WatchOptions$Mutation$update_home_category1({
+    String? operationName,
+    required Variables$Mutation$update_home_category1 variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_home_category1,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_home_category1,
+        );
+}
+
+extension ClientExtension$Mutation$update_home_category1
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_home_category1>>
+      mutate$update_home_category1(
+              Options$Mutation$update_home_category1 options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_home_category1>
+      watchMutation$update_home_category1(
+              WatchOptions$Mutation$update_home_category1 options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_home_category1$update_business_item_details {
+  Mutation$update_home_category1$update_business_item_details({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_home_category1$update_business_item_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_home_category1$update_business_item_details(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_home_category1$update_business_item_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_home_category1$update_business_item_details
+    on Mutation$update_home_category1$update_business_item_details {
+  CopyWith$Mutation$update_home_category1$update_business_item_details<
+          Mutation$update_home_category1$update_business_item_details>
+      get copyWith =>
+          CopyWith$Mutation$update_home_category1$update_business_item_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_home_category1$update_business_item_details<
+    TRes> {
+  factory CopyWith$Mutation$update_home_category1$update_business_item_details(
+    Mutation$update_home_category1$update_business_item_details instance,
+    TRes Function(Mutation$update_home_category1$update_business_item_details)
+        then,
+  ) = _CopyWithImpl$Mutation$update_home_category1$update_business_item_details;
+
+  factory CopyWith$Mutation$update_home_category1$update_business_item_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_home_category1$update_business_item_details;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_home_category1$update_business_item_details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_category1$update_business_item_details<
+            TRes> {
+  _CopyWithImpl$Mutation$update_home_category1$update_business_item_details(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_home_category1$update_business_item_details _instance;
+
+  final TRes Function(
+      Mutation$update_home_category1$update_business_item_details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_home_category1$update_business_item_details(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_home_category1$update_business_item_details<
+        TRes>
+    implements
+        CopyWith$Mutation$update_home_category1$update_business_item_details<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_home_category1$update_business_item_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
     String? $__typename,
   }) =>
       _res;

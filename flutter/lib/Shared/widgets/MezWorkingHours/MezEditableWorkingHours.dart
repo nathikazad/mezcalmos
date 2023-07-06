@@ -85,7 +85,7 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
           ),
           Flexible(
               fit: FlexFit.tight,
-              flex: 3,
+              // flex: 3,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(workingDay.openHours.length,

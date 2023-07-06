@@ -1,22 +1,24 @@
 import 'dart:math';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRentalCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/constants/mapConstants.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
-import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['RentalsView']['CustHomeRentalListView'];
@@ -25,6 +27,9 @@ class CustHomeRentalsListViewController {
   RxList<HomeCard> _rentals = <HomeCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
   // RxList<BusinessCard> _filtredBusiness = <BusinessCard>[].obs;
+  MGoogleMapController mapController = MGoogleMapController(
+    enableMezSmartPointer: true,
+  );
 
   RxBool _isLoading = false.obs;
   RxBool showBusiness = false.obs;
@@ -57,8 +62,9 @@ class CustHomeRentalsListViewController {
   List<HomeCard> get rentals => _rentals;
   List<BusinessCard> get businesses => _businesses;
 
+  late FilterInput _filterInput;
+
   // Map view //
-  GoogleMapController? _googleMapController;
 
   RxBool _showFetchButton = false.obs;
   RxBool get showFetchButton => _showFetchButton;
@@ -66,22 +72,21 @@ class CustHomeRentalsListViewController {
   LatLng _currentLocation = LatLng(19.4326, -99.1332);
   LatLng get currentLocation => _currentLocation;
 
-  LatLng? _screenToWorldPosition;
 
   List<HomeCard> get mapViewRentals => _rentals;
   RxList<HomeCard> _mapViewRentals = <HomeCard>[].obs;
 
-  RxSet<Marker> _allMarkers = <Marker>{}.obs;
-  RxSet<Marker> get allMarkers => _allMarkers;
+  RxSet<MezMarker> _allMarkers = <MezMarker>{}.obs;
+  RxSet<MezMarker> get allMarkers => _allMarkers;
 
-  RxSet<Marker> _perDayMarkers = <Marker>{}.obs;
-  RxSet<Marker> get perDayMarkers => _perDayMarkers;
+  RxSet<MezMarker> _perDayMarkers = <MezMarker>{}.obs;
+  RxSet<MezMarker> get perDayMarkers => _perDayMarkers;
 
-  RxSet<Marker> _perWeekMarkers = <Marker>{}.obs;
+  RxSet<MezMarker> _perWeekMarkers = <MezMarker>{}.obs;
   RxSet<Marker> get perWeekMarkers => _perWeekMarkers;
 
-  RxSet<Marker> _perMonthMarkers = <Marker>{}.obs;
-  RxSet<Marker> get perMonthMarkers => _perMonthMarkers;
+  RxSet<MezMarker> _perMonthMarkers = <MezMarker>{}.obs;
+  RxSet<MezMarker> get perMonthMarkers => _perMonthMarkers;
 
   Rx<TimeUnit> _filterTag = TimeUnit.PerDay.obs;
   TimeUnit get filterTag => _filterTag.value;
@@ -100,16 +105,30 @@ class CustHomeRentalsListViewController {
   // Map view //
 
 // methods //
+
+  FilterInput get filterInput => _filterInput;
+
+  FilterInput defaultFilters() {
+    return {
+      "categories": [],
+      "schedule": [],
+      "onlineOrder": ["false"],
+    };
+  }
+
   Future<void> init(BuildContext context) async {
     try {
       ctx = context;
       _isLoading.value = true;
-      await locPkg.Location().getLocation().then((location) {
+      await locPkg.Location()
+          .getLocation()
+          .then((locPkg.LocationData location) {
         if (location.latitude != null && location.longitude != null)
           _currentLocation = LatLng(location.latitude!, location.longitude!);
       });
 
       // todo @ChiragKr04 fix the location thing
+      _filterInput = defaultFilters();
 
       final locPkg.LocationData location =
           await locPkg.Location().getLocation();
@@ -145,6 +164,8 @@ class CustHomeRentalsListViewController {
         withCache: false,
         offset: _rentalCurrentOffset,
         limit: rentalFetchSize,
+        onlineOrdering:
+            _filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _rentals.value += newList;
       if (newList.length == 0) {
@@ -189,29 +210,19 @@ class CustHomeRentalsListViewController {
   // Map view //
   void switchView() => _isMapView.value = !_isMapView.value;
 
-  Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
+  Future<void> fetchMapViewRentals(
+      {required LatLng? fromLoc, required double? distance}) async {
     try {
-      if (currentPostitionBased) {
-        _mapViewRentals.value = await get_home_rentals(
-          distance: getFetchDistance,
-          fromLocation: _fromLocation!,
-          offset: 0,
-          limit: 25,
-          withCache: false,
-        );
-      } else {
-        _mapViewRentals.value = await get_home_rentals(
-          distance: _calculateDistance(
-              await _googleMapController!.getVisibleRegion()),
-          fromLocation: Location(
-              lat: _screenToWorldPosition!.latitude,
-              lng: _screenToWorldPosition!.longitude,
-              address: ''),
-          offset: 0,
-          limit: 25,
-          withCache: false,
-        );
-      }
+      _mapViewRentals.value = await get_home_rentals(
+        distance: distance ?? getFetchDistance,
+        fromLocation: fromLoc != null
+            ? Location(
+                lat: fromLoc.latitude, lng: fromLoc.longitude, address: "")
+            : _fromLocation!,
+        offset: 0,
+        limit: 25,
+        withCache: false,
+      );
     } catch (e) {
       mezDbgPrint(e);
     } finally {
@@ -221,86 +232,69 @@ class CustHomeRentalsListViewController {
   }
 
   Future<void> _fillMapsMarkers() async {
-    _perDayMarkers = <Marker>{}.obs;
-    _perWeekMarkers = <Marker>{}.obs;
-    _perMonthMarkers = <Marker>{}.obs;
+    _perDayMarkers = <MezMarker>{}.obs;
+    _perWeekMarkers = <MezMarker>{}.obs;
+    _perMonthMarkers = <MezMarker>{}.obs;
 
     for (HomeCard rental in _mapViewRentals) {
-      await _allMarkers.addLabelMarker(LabelMarker(
+      _allMarkers.add(MezMarker(
         flat: true,
-        label: rental.details.cost[TimeUnit.PerDay] != null
-            ? rental.details.cost[TimeUnit.PerDay]?.toPriceString()
-            : null,
-        altIconPath: mezHomeIconMarker,
+        icon: await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
+            70,
+            70,
+            isBytes: true),
         markerId: MarkerId(rental.id.toString()),
-        backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble()),
+        position: LatLng(rental.location.location.lat.toDouble(),
+            rental.location.location.lng.toDouble()),
       ));
-      await _perDayMarkers.addLabelMarker(LabelMarker(
+      _perDayMarkers.add(MezMarker(
         flat: true,
-        label: rental.details.cost[TimeUnit.PerDay] != null
-            ? rental.details.cost[TimeUnit.PerDay]?.toPriceString()
-            : null,
-        altIconPath: mezHomeIconMarker,
+        icon: await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
+            70,
+            70,
+            isBytes: true),
         markerId: MarkerId(rental.id.toString()),
-        backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble()),
-      ));
-
-      await _perWeekMarkers.addLabelMarker(LabelMarker(
-        flat: true,
-        label: rental.details.cost[TimeUnit.PerWeek] != null
-            ? rental.details.cost[TimeUnit.PerWeek]?.toPriceString()
-            : null,
-        altIconPath: mezHomeIconMarker,
-        markerId: MarkerId(rental.id.toString()),
-        backgroundColor: Colors.white,
-        onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble()),
+        position: LatLng(rental.location.location.lat.toDouble(),
+            rental.location.location.lng.toDouble()),
       ));
 
-      await _perMonthMarkers.addLabelMarker(LabelMarker(
+      _perWeekMarkers.add(MezMarker(
         flat: true,
-        label: rental.details.cost[TimeUnit.PerMonth] != null
-            ? rental.details.cost[TimeUnit.PerMonth]?.toPriceString()
-            : null,
-        altIconPath: mezHomeIconMarker,
+        icon: await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
+            70,
+            70,
+            isBytes: true),
         markerId: MarkerId(rental.id.toString()),
-        backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.gpsLocation!.lat.toDouble(),
-            rental.gpsLocation!.lng.toDouble()),
+        position: LatLng(rental.location.location.lat.toDouble(),
+            rental.location.location.lng.toDouble()),
+      ));
+
+      _perMonthMarkers.add(MezMarker(
+        flat: true,
+        icon: await bitmapDescriptorLoader(
+            (await cropRonded(
+                (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
+            70,
+            70,
+            isBytes: true),
+        markerId: MarkerId(rental.id.toString()),
+        onTap: () => _onSelectRentalTag(rental),
+        position: LatLng(rental.location.location.lat.toDouble(),
+            rental.location.location.lng.toDouble()),
       ));
     }
   }
 
-  Future<void> fetchMapViewRentals() async {
-    await _fetchMapViewRentals(currentPostitionBased: false);
-    _showFetchButton.value = false;
-    _filterTag.refresh();
-  }
-
-  void recenterMap() {
-    _googleMapController?.moveCamera(CameraUpdate.newLatLng(_currentLocation));
-  }
-
   void setFilter(TimeUnit tag) => _filterTag.value = tag;
-
-  Future<void> onMapCreated(GoogleMapController? gMapController) async {
-    _googleMapController = gMapController;
-    await _googleMapController?.setMapStyle(mezMapStyle);
-    await _fetchMapViewRentals();
-  }
-
-  void onCameraMove(CameraPosition cameraPosition) {
-    _screenToWorldPosition = cameraPosition.target;
-    _showFetchButton.value = true;
-  }
 
   void _onSelectRentalTag(HomeCard rental) {
     showModalBottomSheet<OnMapRentalCard>(
@@ -332,17 +326,19 @@ class CustHomeRentalsListViewController {
 
   // Map view //
 
-  void filter() {
-    // selectedCategories.value = List.from(previewCategories);
-
-    // _resetRentals();
-    // _fetchRentals();
+  void filter(FilterInput newData) {
+    _filterInput.clear();
+    newData.forEach((String key, List<String> value) {
+      _filterInput[key] = List.from(value);
+    });
+    mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
+    _resetRentals();
+    _fetchRentals();
   }
 
   void resetFilter() {
-    // previewCategories.value = List.from(filterCategories);
-    // selectedCategories.value = List.from(filterCategories);
-    // _fetchRentals();
+    _filterInput = defaultFilters();
+    _fetchRentals();
   }
 
   void switchFilterCategory(bool? value, int index) {

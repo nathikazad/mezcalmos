@@ -873,16 +873,20 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
               Obx(
                 () => Column(
                   children: List.generate(
-                      realEstate.length,
-                      (int index) => BsHomeRentalCard(
-                            showUnit: false,
-                            home: realEstate[index],
-                            viewController: viewController,
-                            onClick: () {
-                              viewController.navigateToRealEstate(
-                                  id: realEstate[index].id!.toInt());
-                            },
-                          )),
+                    realEstate.length,
+                    (int index) {
+                      mezDbgPrint("$index ${realEstate[index]}");
+                      return BsHomeRentalCard(
+                        showUnit: false,
+                        home: realEstate[index],
+                        viewController: viewController,
+                        onClick: () {
+                          viewController.navigateToRealEstate(
+                              id: realEstate[index].id!.toInt());
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
               bigSeperator,

@@ -72,6 +72,7 @@ class _MezButtonState extends State<MezButton> {
                             ?.call()
                             .whenComplete(() => isLoading.value = false)
                             .onError((Object? e, StackTrace stk) {
+                          mezDbgPrint(e);
                           mezDbgPrint(stk);
                         });
                       }

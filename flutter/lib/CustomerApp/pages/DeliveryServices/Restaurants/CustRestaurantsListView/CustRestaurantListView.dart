@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/RestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/RestaurantShimmerList.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/SearchItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -16,10 +18,7 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
-
-import 'components/SearchItemCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
@@ -64,36 +63,35 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         // ),
 
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-            onClick: MezRouter.back, title: "${_i18n()['restaurants']}"),
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(0),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: MezButton(
-                    width: 52.5.mezW,
-                    height: 42.5,
-                    onClick: () async {
-                      viewController.switchView();
-                    },
-                    icon: viewController.isMapView ? Icons.list : Icons.room,
-                    label: viewController.isMapView
-                        ? '${_i18n()['viewAsList']}'
-                        : '${_i18n()['viewOnMap']}',
-                    borderRadius: 50,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingCartComponent()),
+            onClick: MezRouter.back,
+            actionIcons: [
+              FloatingCartComponent(
+                cartType: CartType.restaurant,
               ),
             ],
+            titleWidget: Obx(() => Text(
+                  viewController.isMapView
+                      ? '${_i18n()['map']}'
+                      : '${_i18n()['restaurants']}',
+                ))),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 30),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Obx(
+              () => MezButton(
+                width: 52.5.mezW,
+                height: 42.5,
+                onClick: () async {
+                  viewController.switchView();
+                },
+                icon: viewController.isMapView ? Icons.list : Icons.room,
+                label: viewController.isMapView
+                    ? '${_i18n()['viewAsList']}'
+                    : '${_i18n()['viewOnMap']}',
+                borderRadius: 50,
+              ),
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -107,10 +105,12 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             return SingleChildScrollView(
                 padding: const EdgeInsets.all(8),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _searchInput(),
                     _searchFilter(),
-                    _sortingSwitcher(),
+                    // _sortingSwitcher(),
+                    _filterButton(context),
                     Obx(() {
                       if (viewController.byRestaurants)
                         return Padding(
@@ -126,74 +126,78 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         }));
   }
 
+  Widget _filterButton(BuildContext context) {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.only(top: 10),
+      color: Color(0xFFF0F0F0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () async {
+          FilterInput? data = await cusShowBusinessFilerSheet(
+              isRestaurant: true,
+              context: context,
+              filterInput: viewController.filterInput,
+              defaultFilterInput: viewController.defaultFilters());
+          if (data != null) {
+            viewController.filter(data);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.filter_alt,
+                color: Colors.black,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${_i18n()['filter']}:',
+              ),
+              SizedBox(
+                width: 3,
+              ),
+              Flexible(
+                child: Text(
+                  "${_i18n()["offerOnly"]}",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _mapView() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Obx(() => Expanded(
-                child: CustSwitchOpenService(
-                  label: '${_i18n()["showOnlyOpenRestaurants"]}',
-                  showOnlyOpen: viewController.showOnlyOpen.value,
-                  onChange: (bool value) {},
-                ),
-              ))),
-      Expanded(
-          child: Stack(
-        children: [
-          Obx(() {
-            viewController.allMarkers.isNotEmpty;
-            return GoogleMap(
-                compassEnabled: false,
-                mapToolbarEnabled: false,
-                zoomControlsEnabled: false,
-                markers: viewController.restaurantsMarkers,
-                onMapCreated: viewController.onMapCreated,
-                onCameraMove: viewController.onCameraMove,
-                initialCameraPosition: CameraPosition(
-                  target: viewController.currentLocation,
-                  zoom: 14,
-                ));
-          }),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Obx(
-                () => viewController.showFetchButton.value
-                    ? InkWell(
-                        onTap: () => viewController.fetchMapViewRentals(),
-                        child: Material(
-                            color: Colors.white,
-                            elevation: 1,
-                            borderRadius: BorderRadius.circular(25),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 20),
-                              child: Text(
-                                '${_i18n()['fetchHomesInThisArea']}',
-                                style: context.textTheme.bodyLarge
-                                    ?.copyWith(color: primaryBlueColor),
-                              ),
-                            )),
-                      )
-                    : SizedBox.shrink(),
-              ),
-            ),
+      Obx(() => CustSwitchOpenService(
+            label: '${_i18n()["showOnlyOpenRestaurants"]}',
+            showOnlyOpen: viewController.showOnlyOpenOnMap,
+            onChange: (bool value) async {
+              await viewController.setOnlyOpenOnMap();
+            },
+          )),
+      Obx(
+        () => Expanded(
+          child: MezServicesMapView(
+            mGoogleMapController: viewController.mapController,
+            fetchNewData: (LatLng? mapCenter, double? distance) async {
+              await viewController.fetchMapViewRentals(
+                  fromLoc: mapCenter, distance: distance);
+              return viewController.restaurantsMarkers.toList();
+            },
+            markers: viewController.restaurantsMarkers.value,
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 20),
-              child: MezIconButton(
-                icon: Icons.my_location,
-                iconColor: Colors.black,
-                backgroundColor: Colors.white,
-                onTap: () => viewController.recenterMap(),
-              ),
-            ),
-          )
-        ],
-      ))
+        ),
+      ),
     ]);
   }
 
@@ -288,7 +292,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
     // );
 
     return Obx(() => Container(
-          margin: const EdgeInsets.only(top: 15),
+          margin: const EdgeInsets.only(bottom: 10, top: 15),
           child: Row(
             children: [
               Flexible(
@@ -355,39 +359,41 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
           }),
         );
       } else {
-        return Column(
-          children: [
-            //give space when its bigger size.
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              child: Image.asset(
-                "assets/images/customer/restaurants/noOpenRestaurants.png",
-                height: 35.h,
-                width: 65.w,
+        return Center(
+          child: Column(
+            children: [
+              //give space when its bigger size.
+              SizedBox(
+                height: 20,
               ),
-            ),
-            Text(
-              '${_i18n()["noOpenRestaurant"]}',
-              style: context.txt.bodyLarge,
-            )
-          ],
+              Container(
+                child: Image.asset(
+                  "assets/images/customer/restaurants/noOpenRestaurants.png",
+                  height: 35.h,
+                  width: 65.w,
+                ),
+              ),
+              Text(
+                '${_i18n()["noOpenRestaurant"]}',
+                style: context.txt.bodyLarge,
+              )
+            ],
+          ),
         );
       }
     });
   }
 
-  Widget _sortingSwitcher() {
-    return Obx(() => CustSwitchOpenService(
-          label: '${_i18n()["showOnlyOpenRestaurants"]}',
-          showOnlyOpen: viewController.showOnlyOpen.value,
-          onChange: (bool value) {
-            viewController.changeAlwaysOpenSwitch(value);
-            viewController.filter();
-          },
-        ));
-  }
+  // Widget _sortingSwitcher() {
+  //   return Obx(() => CustSwitchOpenService(
+  //         label: '${_i18n()["showOnlyOpenRestaurants"]}',
+  //         showOnlyOpen: viewController.showOnlyOpen.value,
+  //         onChange: (bool value) {
+  //           viewController.changeAlwaysOpenSwitch(value);
+  //           viewController.filter(viewController.filterInput);
+  //         },
+  //       ));
+  // }
 
   Widget _searchInput() {
     return TextFormField(
@@ -395,7 +401,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
       style: context.txt.bodyLarge,
       onChanged: (String value) {
         viewController.searchQuery.value = value;
-        viewController.filter();
+        viewController.filter(viewController.filterInput);
         mezDbgPrint(viewController.searchQuery);
       },
       decoration: InputDecoration(

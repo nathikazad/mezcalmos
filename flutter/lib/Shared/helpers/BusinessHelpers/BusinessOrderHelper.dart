@@ -36,17 +36,17 @@ extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
   String toReadableString() {
     switch (this) {
       case BusinessOrderRequestStatus.RequestReceived:
-        return "Pending";
+        return "pending";
       case BusinessOrderRequestStatus.ModificationRequestByBusiness:
-        return "Waiting for customer";
+        return "waitingCustomer";
       case BusinessOrderRequestStatus.CancelledByCustomer:
       case BusinessOrderRequestStatus.CancelledByBusiness:
-        return "Cancelled";
+        return "cancelled";
       case BusinessOrderRequestStatus.Confirmed:
-        return "Confirmed";
+        return "confirmed";
 
       case BusinessOrderRequestStatus.Completed:
-        return "Completed";
+        return "completed";
       default:
         return "";
     }

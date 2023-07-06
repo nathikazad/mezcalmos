@@ -218,9 +218,9 @@ class _CustBusinessScheduleBuilderState
     if (day.contains("-")) {
       final List<String> twoDays = day.split("-");
       if (widget.scheduleType == ScheduleType.Scheduled) {
-        return "${_i18n()["weekDays"][twoDays[0].toLowerCase()]}s-${_i18n()["weekDays"][twoDays[1].toLowerCase()]}s";
+        return "${_i18n()["weekDays"][twoDays[0].toLowerCase()]}s - ${_i18n()["weekDays"][twoDays[1].toLowerCase()]}s";
       }
-      return "${_i18n()["weekDays"][twoDays[0].toLowerCase()]}-${_i18n()["weekDays"][twoDays[1].toLowerCase()]}";
+      return "${_i18n()["weekDays"][twoDays[0].toLowerCase()]} - ${_i18n()["weekDays"][twoDays[1].toLowerCase()]}";
     } else {
       if (widget.scheduleType == ScheduleType.Scheduled) {
         return "${_i18n()["weekDays"][day.toLowerCase()]}s";

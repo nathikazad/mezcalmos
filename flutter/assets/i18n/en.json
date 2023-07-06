@@ -2,9 +2,26 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
+        "BsOrdersListViews": {
+          "BsOrdersListView": {
+            "orders": "Orders",
+            "pending": "Pending",
+            "upcoming": "Upcoming",
+            "past": "Past",
+            "pendingOrders": "Pending orders",
+            "upcomingOrders": "Upcoming orders",
+            "pastOrders": "Past orders"
+          }
+        },
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
+              "pending": "Pending",
+              "waitingCustomer": "Waiting for customer",
+              "cancelled": "Cancelled",
+              "confirmed": "Confirmed",
+              "completed": "Completed",
+
               "error": "Error",
               "edit": "Edit",
               "markAsUnavailable": "Mark as unavailable",
@@ -21,6 +38,9 @@
         }
       },
       "Components": {
+        "BsOrderCard": {
+          "items": "Items"
+        },
         "BsRentalCard": {
           "hour": "hour",
           "day": "day",
@@ -510,6 +530,9 @@
       "savedCards": "My cards"
     },
     "components": {
+      "CustOrderCostCard": {
+        "orderCost": "Order cost"
+      },
       "NoOpenServiceComponent": {
         "title": "No open services",
         "desc": "There are no open services in your area. Please try again later.",
@@ -549,14 +572,120 @@
       }
     },
     "pages": {
+      "CustOrderView": {
+        "CustOrderView": {
+          "order": "Order",
+          "notes": "Notes",
+          "writeNotesHere": "Write your notes here.",
+          "summary": "Summary",
+          "orderCost": "Order cost",
+          "notComfirmed": "Reservation not confirmed yet",
+          "businessModifications": "Business has made modifications, please revise if everything okay click on accept.",
+          "acceptChange": "Accept Change",
+          "cancelRequest": "Cancel request",
+          "pending": "Pending",
+          "waitingCustomer": "Waiting...",
+          "cancelled": "Cancelled",
+          "confirmed": "Confirmed",
+          "completed": "Completed"
+        }
+      },
       "CustCartView": {
+        "components": {
+          "HomeCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          },
+          "ProductCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          },
+          "ServiceCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          },
+          "EventCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          },
+          "RentalCartItemCard": {
+            "item": "Item",
+            "remove": "Remove",
+            "noDate": "No date",
+            "perHour": "Hour",
+            "perDay": "Day",
+            "perWeek": "Week",
+            "perMonth": "Month",
+            "perPerson": "Person",
+            "unit": "Unit",
+            "roomType": {
+              "singleBed": "Single Bed",
+              "doubleBed": "Double Bed",
+              "dormRoom": "Dorm Room",
+              "suite": "Suite"
+            }
+          }
+        },
         "CustCartView": {
           "myCart": "My cart",
           "request": "Request",
           "notes": "Notes",
+          "myOrders": "My orders",
           "writeNotesHere": "Write your notes here.",
           "summary": "Summary",
-          "orderCost": "Order Cost",
+          "orderCost": "Order cost",
           "disclaimer": "Disclaimer",
           "disclaimerPartOneText": "Mezkala is only relaying your order request to the business",
           "disclaimerPartTwoText": " and is not responsible for the quality or the actions of the business.",
@@ -565,6 +694,8 @@
       },
       "JoinUsView": {
         "joinUs": "Join us",
+        "whichBusinessDoYouHave": "Which business you have?",
+        "growYourBusiness": "With our help, grow your online business and increase your profits.",
         "restaurantBusiness": {
           "title": "Restaurant",
           "subtitle": "If you own a restaurant and want to expand it online."
@@ -648,6 +779,7 @@
       },
       "Offerings": {
         "hour": "hour",
+        "hours": "Hours",
         "day": "day",
         "week": "week",
         "month": "month",
@@ -664,8 +796,10 @@
         "free": "FREE",
         "bedrooms": "Bedrooms",
         "bathrooms": "Bathrooms",
+        "petFriendly": "Pet Friendly",
         "apartment": "Apartment",
         "villa": "Villa",
+        "choostTime": "Choose time",
         "condo": "Condo",
         "bungalow": "Bungalow",
         "hotel": "Hotel",
@@ -674,12 +808,19 @@
         "doubleBed": "Double Bed",
         "dormRoom": "Dorm Room",
         "suite": "Suite",
+        "startDate": "Start date",
+        "selectATime": "Please select a time",
+        "updateItem": "Update item",
+        "addToCart": "Add item",
+        "notes": "Notes",
+        "writeNotesHere": "Write your notes here.",
         "components": {
           "loading": "Loading",
           "schedule": "Schedule",
           "availability": "Availability",
           "time": "Time",
           "noBooking": "Online booking is not available, you can message the business for any inquiries.",
+          "inqury": "You can message the business regarding any inquiries.",
           "weekDays": {
             "monday": "Monday",
             "tuesday": "Tuesday",
@@ -700,7 +841,12 @@
           "organizer": "Organizer",
           "studio": "Studio",
           "view": "View",
-          "agency": "Agency"
+          "agency": "Agency",
+          "days": "days",
+          "hours": "hours",
+          "min": "min",
+          "ago": "ago",
+          "active": "Active"
         }
       },
       "cards": {
@@ -718,6 +864,8 @@
           "title": "Delivery companies arround you",
           "courier": "Open Delivery",
           "min": "Min",
+          "offerOnly": "Offers only",
+          "filter": "Filter",
           "showOnlyOpenCompanies": "Show only open companies",
           "search": "Search"
         },
@@ -874,6 +1022,8 @@
             "emptRestaurantList": "Sorry no restaurant found.",
             "noOpenRestaurant": "No open restaurants founds",
             "meals": "Meals",
+            "offerOnly": "Online booking",
+            "filter": "Filter",
             "noItemTitle": "No result found",
             "noItemDesc": "Sorry, we couldn’t find what you’re looking for please try a new keyword.",
             "map": "Map",
@@ -1318,13 +1468,41 @@
         "AllServiceView": {
           "AllServiceView": {
             "welcomeText": "Welcome to MEZKALA 👋",
-            "appDescription": "Your one stop place to find all your local businesses. If you have a business and want to advertise it, you can ",
+            "appDescription": "Your one stop place to find all your local businesses.\nIf you have a business and want to advertise it, you can ",
             "clickHere": "click here",
             "services": "Services"
           }
         }
       },
       "Businesses": {
+        "Offerings": {
+          "CustEventView": {
+            "hour": "hour",
+            "hours": "Hours",
+            "description": "Description",
+            "noDescription": "No Description",
+            "startDate": "Start date",
+            "selectATime": "Please select a time",
+            "updateItem": "Update item",
+            "addToCart": "Add item",
+            "notes": "Notes",
+            "writeNotesHere": "Write your notes here.",
+            "day": "day",
+            "week": "week",
+            "month": "month",
+            "person": "person",
+            "total": "total",
+            "unit": "unit",
+            "perHour": "hour",
+            "perDay": "day",
+            "perWeek": "week",
+            "perMonth": "month",
+            "perPerson": "person",
+            "perUnit": "unit",
+            "none": "none",
+            "free": "FREE"
+          }
+        },
         "LocallyMadeView": {
           "CustLocallyMadeListView": {
             "localMade": "Made locally",
@@ -1333,6 +1511,8 @@
             "product": "Products",
             "noPetServiceFound": "No services were found",
             "art": "Art",
+            "offerOnly": "Offers only",
+            "filter": "Filter",
             "noBusinessesFound": "No business was found",
             "store": "Store",
             "services": "Services",
@@ -1390,7 +1570,17 @@
             "person": "person",
             "total": "total",
             "unit": "unit",
-            "free": "FREE"
+            "free": "FREE",
+            "filter": "Filter",
+            "weekly": "Weekly",
+            "workshop": "Workshop",
+            "private": "Private",
+            "surf": "Surf",
+            "yoga": "Yoga",
+            "fitness": "Fitness",
+            "dance": "Dance",
+            "therapy": "Therapy",
+            "social": "Social"
           },
           "CustBusinessRentalCost": {
             "hour": "hour",
@@ -1420,6 +1610,8 @@
             "unit": "unit"
           },
           "cusShowBusinessFilerSheet": {
+            "canBookOnline": "Show only items that can be booked online.",
+            "showOnlyOpenRestaurants": "Show only open restaurants",
             "confirm": "Confirm",
             "cancel": "Cancel",
             "filter": "Filter",
@@ -1474,6 +1666,8 @@
             "hour": "hour",
             "day": "day",
             "week": "week",
+            "filter": "Filter",
+            "offerOnly": "Offers only",
             "month": "month",
             "person": "person",
             "perHour": "Per hour",
@@ -1508,6 +1702,7 @@
             "fetchHomesInThisArea": "Fetch rentals in this area",
             "uncategorized": "Uncategorized",
             "surf": "Surf",
+            "offerOnly": "Offers only",
             "homes": "Homes",
             "vehicle": "Vehicles",
             "noRentalsFound": "No rentals found",
@@ -1537,8 +1732,9 @@
           "home": "Home",
           "map": "Map",
           "realEstate": "Realestate",
-          "properties": "Properties",
+          "properties": "Property",
           "store": "Agency",
+          "offerOnly": "Offers only",
           "viewOnMap": "View on map",
           "viewAsList": "View as list",
           "showCost": "Show cost",
@@ -1653,6 +1849,7 @@
             "confirm": "Confirm",
             "hour": "hour",
             "day": "day",
+            "offerOnly": "Offers only",
             "week": "week",
             "month": "month",
             "person": "person",
@@ -1695,6 +1892,8 @@
             "noBusinessesFound": "No businesses found",
             "store": "Store",
             "services": "Services",
+            "offerOnly": "Offers only",
+            "filter": "Filter",
             "service": "Service",
             "mealPlanning": "Meal planning",
             "meal": "Meal",
@@ -1799,7 +1998,9 @@
         "onDemandClasses": "Private Lessons",
         "weeklyEvents": "Weekly Events",
         "oneTimeEvents": "Upcoming Events",
-        "onDemandEvents": "Experiences"
+        "onDemandEvents": "Experiences",
+        "description": "Description",
+        "noDescription": "No description"
       },
       "CustomerWrapper": {
         "orders": "Orders",
@@ -1971,6 +2172,8 @@
               "startingFrom": "Starting"
             }
           },
+          "offerOnly": "Online booking",
+          "filter": "Filter",
           "laundries": "Laundries",
           "title": "Laundries arround you ",
           "noLaundaryFound": "No laundry found",
@@ -2223,7 +2426,13 @@
         "businessId": "Business ID",
         "onlySevenDays": "You can change your ID only once every 7 days.",
         "cancel": "Cancel",
-        "save": "Save"
+        "copyLink": "Copy link",
+        "whatsapp": "WhatsApp",
+        "status": "Status",
+        "instagram": "Instagram",
+        "story": "Story",
+        "facebook": "Facebook",
+        "save": "Sa e"
       },
       "CreateServiceView": {
         "pages": {
@@ -2409,7 +2618,8 @@
         "save": "Save",
         "saved": "Saved",
         "error": "Error",
-        "savedSuccess": "Your information has been successfully saved "
+        "savedSuccess": "Your information has been successfully saved ",
+        "uniqueId": "Unique ID"
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No restaurant found on your operator",
@@ -3079,7 +3289,7 @@
           },
           "LaundryOrderScreen": {
             "notes": "Notes",
-            "deliveryLocation": "Delivery Location"
+            "deliveryLocation": "Delivery location"
           }
         },
         "ListOrdersScreen": {
@@ -3625,19 +3835,19 @@
           },
           "LaundryOpOrderSummaryCard": {
             "orderSummary": "Summary",
-            "orderCost": "Order Cost",
-            "deliveryCost": "Delivery Cost",
-            "totalCost": "Total Cost",
-            "deliveryLocation": "Delivery Location",
-            "laundryPricing": "Laundry Pricing",
-            "fixedRate": "Cost Per Kilo",
-            "orderWeight": "Order Weight",
+            "orderCost": "Order cost",
+            "deliveryCost": "Delivery cost",
+            "totalCost": "Total cost",
+            "deliveryLocation": "Delivery location",
+            "laundryPricing": "Laundry pricing",
+            "fixedRate": "Cost per kilo",
+            "orderWeight": "Order weight",
             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
           }
         },
         "LaundryOpOrderView": {
-          "customer": "Customer Info",
-          "orderDate": "Order Date",
+          "customer": "Customer info",
+          "orderDate": "Order date",
           "total": "Total",
           "toBeCalculated": "To be calculated",
           "orderReady": "Order ready for delivery"
@@ -3834,6 +4044,7 @@
             "totalCost": "Total cost",
             "waiting": "In process",
             "delivered": "Delivered",
+            "confirmed": "Confirmed",
             "canceled": "Cancelled"
           }
         },

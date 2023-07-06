@@ -51,7 +51,9 @@ query getDeliveryCompanyById($id: Int!) {
   }
 }
 query getDeliveryCompanies($is_open: Boolean!) {
-  delivery_company(where: {details: {is_open: {_eq: $is_open}}}) {
+  delivery_company(where: {details: {is_open: {_eq: $is_open}}}
+  order_by: { details: { referral_points: desc_nulls_last } }
+  ) {
     id
     reviews_aggregate {
       aggregate {

@@ -18,7 +18,6 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -125,7 +124,7 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   Widget mezListOfServices() {
     Future<void> navigateToListView(MezService mezService) async {
       if (Get.find<AuthController>().hasuraUserId != null) {
-        int? orderId = await get_customer_orders_by_type(
+        int? orderId = await get_customer_last_order_id(
             customerId: Get.find<AuthController>().hasuraUserId!,
             orderType: mezService.toOrderType());
         if (orderId != null && orderId > 0) {

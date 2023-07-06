@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
+import 'package:mezcalmos/MezAdminApp/pages/AdminMessagesView/AdminMessagesView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/AdminOrdersListView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/AdminServiceView.dart';
@@ -8,9 +9,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
@@ -57,10 +56,7 @@ class _AdminTabsViewState extends State<AdminTabsView>
           adminTabsViewController: viewController,
         );
       case 2:
-        return MessagesListView(
-          entityType: EntityType.Admin,
-          showAppbar: false,
-        );
+        return AdminMessagesView();
 
       default:
         return Scaffold(
@@ -99,7 +95,9 @@ class _AdminTabsViewState extends State<AdminTabsView>
         ]);
   }
 
-  PreferredSizeWidget _appBar() {
+  PreferredSizeWidget? _appBar() {
+    // we don't show the appbar from here in the chat view
+    if (viewController.bottomTabIndex == 2) return null;
     return PreferredSize(
       preferredSize: Size.fromHeight(viewController.getAppbarHeight),
       child: MezcalmosAppBar(

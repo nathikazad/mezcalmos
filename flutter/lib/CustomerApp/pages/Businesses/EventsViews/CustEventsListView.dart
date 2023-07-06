@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/controllers/CustEventsListViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -44,6 +45,11 @@ class _CustEventsListViewState extends State<CustEventsListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
+         actionIcons: [
+          FloatingCartComponent(
+            cartType: CartType.business,
+          ),
+        ],
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
         title: '${_i18n()['events']}',
@@ -87,12 +93,12 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
-                                              style:
-                                                  context.textTheme.bodyLarge,
-                                            ),
-                                            smallSepartor,
+                                            // Text(
+                                            //   "${_i18n()["scheduled"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                            //   style:
+                                            //       context.textTheme.bodyLarge,
+                                            // ),
+                                            // smallSepartor,
                                             _buildEvents(
                                                 ScheduleType.Scheduled),
                                           ],
@@ -103,12 +109,12 @@ class _CustEventsListViewState extends State<CustEventsListView> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
-                                              style:
-                                                  context.textTheme.bodyLarge,
-                                            ),
-                                            smallSepartor,
+                                            // Text(
+                                            //   "${_i18n()["oneTime"]} ${_i18n()['events'].toString().toLowerCase()}",
+                                            //   style:
+                                            //       context.textTheme.bodyLarge,
+                                            // ),
+                                            // smallSepartor,
                                             _buildEvents(ScheduleType.OneTime),
                                           ],
                                         ),

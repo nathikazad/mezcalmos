@@ -102,13 +102,14 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
+        - big_image
+        - creation_time
         - deleted
         - email
         - firebase_id
         - id
         - image
         - language_id
-        - creation_time
         - name
         - phone
       filter: {}

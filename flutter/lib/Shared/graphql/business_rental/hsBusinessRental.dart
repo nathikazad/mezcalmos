@@ -23,9 +23,9 @@ Future<List<RentalCard>> get_rental_by_category(
     int? limit,
     required bool withCache}) async {
   final List<RentalCard> _rentals = <RentalCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_rental_by_category> response = await _db
@@ -41,7 +41,7 @@ Future<List<RentalCard>> get_rental_by_category(
                   ["uncategorized"],
               tags: tags ?? [],
               distance: distance,
-              online_ordering: online_ordering_exp,
+              online_ordering: onlineOrderingExp,
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               offset: offset,
@@ -165,7 +165,8 @@ Future<HomeWithBusinessCard?> get_home_by_id(
   if (response.parsedData?.business_home_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {
-    mezDbgPrint("✅✅✅✅ Hasura query success ");
+    mezDbgPrint(
+        "✅✅✅✅ Hasura query success online ordering ====>${response.parsedData?.business_home_by_pk?.business?.details.online_ordering} ");
     final Query$get_home_by_id$business_home_by_pk? data =
         response.parsedData?.business_home_by_pk!;
 
@@ -201,11 +202,6 @@ Future<HomeWithBusinessCard?> get_home_by_id(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           ),
           business: BusinessCard(
             phoneNo: data.business!.details.phone_number,
@@ -326,11 +322,6 @@ Future<List<HomeCard>> get_home_rentals(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -391,11 +382,6 @@ Future<List<HomeCard>> get_business_home_rentals(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -467,11 +453,6 @@ Future<List<HomeCard>> get_real_estate(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -533,11 +514,6 @@ Future<List<HomeCard>> get_business_real_estate(
             ),
             bathrooms: data.bathrooms,
             bedrooms: data.bedrooms,
-            gpsLocation: Location(
-              lat: data.location!.gps.latitude,
-              lng: data.location!.gps.longitude,
-              address: data.location!.address,
-            ),
           )));
     });
     return _homes;
@@ -682,6 +658,7 @@ Future<int?> add_one_home_rental({required Home rental}) async {
               data: Input$business_home_location_insert_input(
                 address: rental.location.name,
                 name: rental.location.name,
+                business_id: rental.details.businessId.toInt(),
                 gps: Geography(
                   rental.location.location.lat.toDouble(),
                   rental.location.location.lng.toDouble(),
@@ -763,7 +740,7 @@ Future<Home?> update_business_home_rental(
     Options$Mutation$update_home_location(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$update_home_location(
-        id: rental.id!.toInt(),
+        id: rental.locationId!.toInt(),
         address: rental.location.location.address,
         name: rental.location.name,
         gps: Geography(
@@ -773,9 +750,18 @@ Future<Home?> update_business_home_rental(
       ),
     ),
   );
-  if (res.hasException || res2.hasException) {
+  final QueryResult<Mutation$update_home_category1> res3 =
+      await _db.graphQLClient.mutate$update_home_category1(
+    Options$Mutation$update_home_category1(
+      variables: Variables$Mutation$update_home_category1(
+        detailsId: rental.details.id.toInt(),
+        category: rental.category1.toFirebaseFormatString(),
+      ),
+    ),
+  );
+  if (res.hasException || res2.hasException || res3.hasException) {
     mezDbgPrint(
-        "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data}");
+        "🚨🚨🚨 Hasura update home rental mutation exception =>${res.data} ${res2.data} ${res3.data}");
     throwError(res.exception);
   } else if (res.parsedData?.update_business_home_by_pk != null &&
       res2.parsedData?.update_business_home_location != null) {
@@ -812,14 +798,6 @@ Future<Home?> update_business_home_rental(
       ),
       bathrooms: data.bathrooms,
       bedrooms: data.bedrooms,
-      gpsLocation: Location(
-        lat: res2.parsedData!.update_business_home_location!.returning.first.gps
-            .latitude,
-        lng: res2.parsedData!.update_business_home_location!.returning.first.gps
-            .longitude,
-        address: res2
-            .parsedData!.update_business_home_location!.returning.first.address,
-      ),
     );
   }
 
@@ -906,6 +884,90 @@ Future<BusinessOrder?> get_home_rental_order_req(
       res.parsedData?.business_order_request_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${res.exception}");
   }
+
+  BusinessItemDetails? buildItemDetails(
+      Query$getHomeRentalOrderRequest$business_order_request_by_pk$items item,
+      Query$getHomeRentalOrderRequest$business_order_request_by_pk data) {
+    switch (item.offering_type.toOfferingType()) {
+      case OfferingType.Home:
+        return BusinessItemDetails(
+          id: item.id,
+          name: toLanguageMap(
+              translations: item.home!.details!.name.translations),
+          position: item.home!.details!.position,
+          businessId: data.business_id,
+          available: item.available,
+          image: item.home?.details!.image
+                  ?.map<String>((e) => e.toString())
+                  .toList() ??
+              [],
+          cost: constructBusinessServiceCost(item.home!.details!.cost),
+          additionalParameters: item.home!.details!.additional_parameters,
+        );
+
+      case OfferingType.Rental:
+        return BusinessItemDetails(
+          id: item.id,
+          name: toLanguageMap(
+              translations: item.rental!.details.name.translations),
+          position: item.rental!.details.position,
+          businessId: data.business_id,
+          available: item.available,
+          image: item.rental?.details.image
+                  ?.map<String>((e) => e.toString())
+                  .toList() ??
+              [],
+          cost: constructBusinessServiceCost(item.rental!.details.cost),
+          additionalParameters: item.rental!.details.additional_parameters,
+        );
+      case OfferingType.Event:
+        return BusinessItemDetails(
+          id: item.id,
+          name: toLanguageMap(
+              translations: item.event!.details.name.translations),
+          position: item.event!.details.position,
+          businessId: data.business_id,
+          available: item.available,
+          image: item.event?.details.image
+                  ?.map<String>((e) => e.toString())
+                  .toList() ??
+              [],
+          cost: constructBusinessServiceCost(item.event!.details.cost),
+          additionalParameters: item.event!.details.additional_parameters,
+        );
+      case OfferingType.Service:
+        return BusinessItemDetails(
+          id: item.id,
+          name: toLanguageMap(
+              translations: item.service!.details.name.translations),
+          position: item.service!.details.position,
+          businessId: data.business_id,
+          available: item.available,
+          image: item.service?.details.image
+                  ?.map<String>((e) => e.toString())
+                  .toList() ??
+              [],
+          cost: constructBusinessServiceCost(item.service!.details.cost),
+          additionalParameters: item.service!.details.additional_parameters,
+        );
+      case OfferingType.Product:
+        return BusinessItemDetails(
+          id: item.id,
+          name: toLanguageMap(
+              translations: item.product!.details.name.translations),
+          position: item.product!.details.position,
+          businessId: data.business_id,
+          available: item.available,
+          image: item.product?.details.image
+                  ?.map<String>((e) => e.toString())
+                  .toList() ??
+              [],
+          cost: constructBusinessServiceCost(item.product!.details.cost),
+          additionalParameters: item.product!.details.additional_parameters,
+        );
+    }
+  }
+
   mezDbgPrint(
       "✅✅✅✅ Hasura query success $orderId =====>${res.parsedData?.business_order_request_by_pk?.items.length}");
   final Query$getHomeRentalOrderRequest$business_order_request_by_pk data =
@@ -935,22 +997,7 @@ Future<BusinessOrder?> get_home_rental_order_req(
                     itemId: item.id,
                     offeringType: item.offering_type.toOfferingType(),
                     parameters: businessItemParamsFromData(item.parameters),
-                    item: BusinessItemDetails(
-                      id: item.id,
-                      name: toLanguageMap(
-                          translations: item.rental!.details.name.translations),
-                      position: item.rental!.details.position,
-                      businessId: data.business_id,
-                      available: item.available,
-                      image: item.rental?.details.image
-                              ?.map<String>((e) => e.toString())
-                              .toList() ??
-                          [],
-                      cost: constructBusinessServiceCost(
-                          item.rental!.details.cost),
-                      additionalParameters:
-                          item.rental!.details.additional_parameters,
-                    ),
+                    item: buildItemDetails(item, data),
                   ))
           .toList(),
       cost: data.cost?.toDouble() ?? 0,
@@ -967,6 +1014,91 @@ Stream<BusinessOrder?> listen_home_rental_order_req({required int id}) {
           (QueryResult<Subscription$listenHomeRentalOrderRequest> event) {
     Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk?
         data = event.parsedData?.business_order_request_by_pk;
+    BusinessItemDetails? buildItemDetails(
+        Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items
+            item,
+        Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk
+            data) {
+      switch (item.offering_type.toOfferingType()) {
+        case OfferingType.Home:
+          return BusinessItemDetails(
+            id: item.id,
+            name: toLanguageMap(
+                translations: item.home!.details!.name.translations),
+            position: item.home!.details!.position,
+            businessId: data.business_id,
+            available: item.available,
+            image: item.home?.details!.image
+                    ?.map<String>((e) => e.toString())
+                    .toList() ??
+                [],
+            cost: constructBusinessServiceCost(item.home!.details!.cost),
+            additionalParameters: item.home!.details!.additional_parameters,
+          );
+
+        case OfferingType.Rental:
+          return BusinessItemDetails(
+            id: item.id,
+            name: toLanguageMap(
+                translations: item.rental!.details.name.translations),
+            position: item.rental!.details.position,
+            businessId: data.business_id,
+            available: item.available,
+            image: item.rental?.details.image
+                    ?.map<String>((e) => e.toString())
+                    .toList() ??
+                [],
+            cost: constructBusinessServiceCost(item.rental!.details.cost),
+            additionalParameters: item.rental!.details.additional_parameters,
+          );
+        case OfferingType.Event:
+          return BusinessItemDetails(
+            id: item.id,
+            name: toLanguageMap(
+                translations: item.event!.details.name.translations),
+            position: item.event!.details.position,
+            businessId: data.business_id,
+            available: item.available,
+            image: item.event?.details.image
+                    ?.map<String>((e) => e.toString())
+                    .toList() ??
+                [],
+            cost: constructBusinessServiceCost(item.event!.details.cost),
+            additionalParameters: item.event!.details.additional_parameters,
+          );
+        case OfferingType.Service:
+          return BusinessItemDetails(
+            id: item.id,
+            name: toLanguageMap(
+                translations: item.service!.details.name.translations),
+            position: item.service!.details.position,
+            businessId: data.business_id,
+            available: item.available,
+            image: item.service?.details.image
+                    ?.map<String>((e) => e.toString())
+                    .toList() ??
+                [],
+            cost: constructBusinessServiceCost(item.service!.details.cost),
+            additionalParameters: item.service!.details.additional_parameters,
+          );
+        case OfferingType.Product:
+          return BusinessItemDetails(
+            id: item.id,
+            name: toLanguageMap(
+                translations: item.product!.details.name.translations),
+            position: item.product!.details.position,
+            businessId: data.business_id,
+            available: item.available,
+            image: item.product?.details.image
+                    ?.map<String>((e) => e.toString())
+                    .toList() ??
+                [],
+            cost: constructBusinessServiceCost(item.product!.details.cost),
+            additionalParameters: item.product!.details.additional_parameters,
+          );
+      }
+    }
+
     if (data != null) {
       return BusinessOrder(
           orderId: data.id,
@@ -993,23 +1125,7 @@ Stream<BusinessOrder?> listen_home_rental_order_req({required int id}) {
                         available: item.available,
                         offeringType: item.offering_type.toOfferingType(),
                         parameters: businessItemParamsFromData(item.parameters),
-                        item: BusinessItemDetails(
-                          id: item.id,
-                          name: toLanguageMap(
-                              translations:
-                                  item.rental!.details.name.translations),
-                          position: item.rental!.details.position,
-                          businessId: data.business_id,
-                          available: item.available,
-                          image: item.rental?.details.image
-                                  ?.map<String>((e) => e.toString())
-                                  .toList() ??
-                              [],
-                          cost: constructBusinessServiceCost(
-                              item.rental!.details.cost),
-                          additionalParameters:
-                              item.rental!.details.additional_parameters,
-                        ),
+                        item: buildItemDetails(item, data),
                       ))
               .toList(),
           cost: data.cost?.toDouble() ?? 0,

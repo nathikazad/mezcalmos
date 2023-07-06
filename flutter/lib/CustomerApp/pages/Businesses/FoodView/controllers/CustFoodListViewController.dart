@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
+import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 class CustFoodListViewController {
   // variables //
@@ -56,8 +54,20 @@ class CustFoodListViewController {
 
   late List<ServiceCategory1> _currentServicesCategory;
 
+  late FilterInput _filterInput;
+  FilterInput get filterInput => _filterInput;
+
+  FilterInput defaultFilters() {
+    return {
+      "categories": [],
+      "schedule": [],
+      "onlineOrder": ["false"],
+    };
+  }
+
 // methods //
   Future<void> init({required ServiceCategory1 serviceCategory}) async {
+    _filterInput = defaultFilters();
     _currentServicesCategory = [serviceCategory];
 
     filterCategories.add(
@@ -108,6 +118,8 @@ class CustFoodListViewController {
         withCache: false,
         offset: _servicesCurrentOffset,
         limit: servicesFetchSize,
+        onlineOrdering:
+            _filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _services.value += newList;
       if (newList.length == 0) {
@@ -151,16 +163,20 @@ class CustFoodListViewController {
     // }
   }
 
-  void filter() {
-    selectedCategories.value = List.from(previewCategories);
-
-    _resetRentals();
+  void filter(FilterInput newData) {
+    _filterInput.clear();
+    newData.forEach((String key, List<String> value) {
+      _filterInput[key] = List.from(value);
+    });
+    mezDbgPrint("new data :::::::::=====>_filterInput $_filterInput");
     _fetchServices();
+    _resetFilter();
   }
 
-  void resetFilter() {
+  void _resetFilter() {
     previewCategories.value = List.from(filterCategories);
     selectedCategories.value = List.from(filterCategories);
+    _services.clear();
     _fetchServices();
   }
 
@@ -170,11 +186,5 @@ class CustFoodListViewController {
     } else {
       previewCategories.remove(filterCategories[index]);
     }
-  }
-
-  void _resetRentals() {
-    _services.clear();
-    _servicesCurrentOffset = 0;
-    _servicesReachedEndOfData = false;
   }
 }

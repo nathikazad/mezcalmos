@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:math' show cos, sqrt, sin, pi, atan2, pow;
+import 'dart:math' show asin, atan2, cos, pi, pow, sin, sqrt;
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
@@ -9,6 +9,7 @@ import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -17,6 +18,24 @@ import 'package:mezcalmos/env.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["General"];
 
 typedef LocationChangesNotifier = void Function(LocModel.MezLocation? location);
+double calculateDistanceFromBounds(LatLngBounds bounds) {
+  final double centerLat =
+      (bounds.northeast.latitude + bounds.southwest.latitude) / 2;
+  final double centerLng =
+      (bounds.northeast.longitude + bounds.southwest.longitude) / 2;
+  final LatLng center = LatLng(centerLat, centerLng);
+
+  final double p = 0.017453292519943295;
+  final double a = 0.5 -
+      cos((bounds.northeast.latitude - center.latitude) * p) / 2 +
+      cos(center.latitude * p) *
+          cos(bounds.northeast.latitude * p) *
+          (1 - cos((bounds.northeast.longitude - center.longitude) * p)) /
+          2;
+
+  return (12742 * asin(sqrt(a))) * 1000;
+}
+
 double get getFetchDistance =>
     MezEnv.appLaunchMode == AppLaunchMode.prod ? 25000 : 10000000000000;
 
@@ -272,6 +291,10 @@ double calculateDistance(LocationData from, LocationData to) {
 
   return res;
 }
+
+LocModel.MezLocation alitasLoc = LocModel.MezLocation.fromHasura(
+    Geography(15.87259551891018, -97.0804708551),
+    "Costa Chica, 71984 Puerto Escondido, Oaxaca");
 
 /// Don't use thid directly , Use [encodePolyLine()]!
 String _encode(double current, double previous, int factor) {

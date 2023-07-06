@@ -341,6 +341,9 @@ const LinearGradient bluePurpleGradient = LinearGradient(
 
 const String mezPackageMarker =
     "assets/images/shared/markers/packageMarker.png";
+const String mezHomeMarker = "assets/images/shared/markers/homeMarker.png";
+const String mezRestaurantMarker =
+    "assets/images/shared/markers/restaurantMarker.png";
 const String mezDestinationMarker =
     "assets/images/shared/markers/destinationMarker.png";
 const String mezHomeIconMarker = "assets/images/shared/markers/homeIcon.png";
@@ -351,6 +354,14 @@ const String mezVehicleRentalIconMarker =
     "assets/images/shared/markers/vehicleRentalIcon.png";
 const String mezLaundryIcon = "assets/images/shared/markers/laundryIcon.png";
 const String mezLookingAsset = "assets/images/shared/looking.png";
+
+const String copyLinkAsset = "assets/images/shared/copyLink.png";
+const String instaAsset = "assets/images/shared/insta.png";
+const String instaStoryAsset = "assets/images/shared/instaStory.png";
+const String whatsappAsset = "assets/images/shared/whatsappIcon2.png";
+const String whatsappStatusAsset = "assets/images/shared/whatsappStatus.png";
+const String facebookAsset = "assets/images/shared/facebook.png";
+const String facebookStoryAsset = "assets/images/shared/facebookStory.png";
 
 const String customImageUrl =
     "https://villaexperience.com/wp-content/uploads/2019/09/zacilna-rivieramaya-1-3.jpg";
@@ -370,6 +381,11 @@ Future<void> launchAppStoreLink() async {
   }
   //
 }
+
+const String businessStoryEn =
+    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/business_story_en.png?alt=media&token=af61a530-5977-49e3-a322-769ba5c617b1";
+const String businessStoryEs =
+    "https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/business_story_es.png?alt=media&token=41a6bc91-e688-48cf-b975-830bea10fa95";
 
 Widget get smallSepartor => SizedBox(height: 8);
 Widget get meduimSeperator => SizedBox(height: 15);

@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings['BusinessApp']['pages']['Orders']
+        ['HomeRentalOrderView']['components']['BsHomeRentalOrderItemCard'];
 
 class BsHomeRentalOrderSatusCard extends StatelessWidget {
   const BsHomeRentalOrderSatusCard({super.key, required this.status});
@@ -32,7 +37,7 @@ class BsHomeRentalOrderSatusCard extends StatelessWidget {
             ),
             Expanded(
               child: Center(
-                child: Text(status.toReadableString(),
+                child: Text("${_i18n()[status.toReadableString()]}",
                     textAlign: TextAlign.center,
                     style: context.textTheme.bodyLarge),
               ),

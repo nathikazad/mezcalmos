@@ -6,12 +6,16 @@ import 'package:mezcalmos/BusinessApp/pages/Orders/OrdersListViews/components/Bs
 import 'package:mezcalmos/BusinessApp/pages/Orders/OrdersListViews/components/BsOrderCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/Orders/OrdersListViews/controllers/BsOrdersListViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/buisness_order/models/MinimumBsOrder.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
+    ['pages']['Orders']['BsOrdersListViews']['BsOrdersListView'];
 
 class BsOrdersListView extends StatefulWidget {
   const BsOrdersListView({super.key});
@@ -41,18 +45,18 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
       drawer: MezSideMenu(),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
-          title: 'Orders',
+          title: '${_i18n()['orders']}',
           tabBar: TabBar(
             controller: viewController.tabController,
             tabs: [
               Tab(
-                text: 'Pending',
+                text: '${_i18n()['pending']}',
               ),
               Tab(
-                text: 'Upcoming',
+                text: '${_i18n()['upcoming']}',
               ),
               Tab(
-                text: 'Past',
+                text: '${_i18n()['past']}',
               ),
             ],
           )),
@@ -76,7 +80,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
             children: [
               // pending orders
               Text(
-                "Pending orders (${viewController.pendingOrders.length})",
+                '${_i18n()['pendingOrders']} (${viewController.pendingOrders.length})',
                 style: context.textTheme.bodyLarge,
               ),
               meduimSeperator,
@@ -114,7 +118,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
           children: [
             // pending orders
             Text(
-              "Upcoming orders",
+              '${_i18n()['upcomingOrders']}',
               style: context.textTheme.bodyLarge,
             ),
             meduimSeperator,
@@ -129,6 +133,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
                       MinimumBusinessItem element2) =>
                   element2.time.compareTo(element1.time),
               physics: NeverScrollableScrollPhysics(),
+              reverse: true,
               groupHeaderBuilder: (MinimumBusinessItem element) {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 8),
@@ -165,7 +170,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
             children: [
               // pending orders
               Text(
-                "Past orders",
+                '${_i18n()['pastOrders']}',
                 style: context.textTheme.bodyLarge,
               ),
               meduimSeperator,

@@ -92,33 +92,61 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
             SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 businessLastActiveTimeAgo(),
                 // _getAcceptedPaymentIcons(widget.business.acceptedPayments),
-                Flexible(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.star,
-                        size: 17.5.mezSp,
-                        color: Color(0xFF6779FE),
-                      ),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Text('${widget.business.avgRating ?? '0'}',
-                          style: context.textTheme.bodySmall),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 2),
-                        child: Text(
-                          '(${widget.business.reviewCount})',
-                          style: context.textTheme.bodyMedium,
+                if (widget.business.avgRating != null &&
+                    widget.business.avgRating != 0)
+                  Flexible(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: 17.5.mezSp,
+                          color: Color(0xFF6779FE),
                         ),
-                      )
-                    ],
-                  ),
-                )
+                        SizedBox(
+                          width: 2,
+                        ),
+                        // Text('${widget.business.avgRating ?? '0'}',
+                        //     style: context.textTheme.bodySmall),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 2),
+                        //   child: Text(
+                        //     '(${widget.business.reviewCount})',
+                        //     style: context.textTheme.bodyMedium,
+                        //   ),
+                        // )
+
+                        Container(
+                          alignment: Alignment.center,
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                    alignment: PlaceholderAlignment.middle,
+                                    child: Text(
+                                        '${widget.business.avgRating ?? '0'}',
+                                        style: context.textTheme.bodySmall)),
+                                WidgetSpan(
+                                  alignment: PlaceholderAlignment.middle,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 1),
+                                    child: Text(
+                                        '(${widget.business.reviewCount ?? '0'})',
+                                        style: context.textTheme.bodySmall
+                                            ?.copyWith(fontSize: 7.mezSp)),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
               ],
             )
           ],
@@ -134,21 +162,22 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
       final DateTime lastActiveTime = widget.business.lastActive!;
       final Duration difference = now.difference(lastActiveTime);
       if (difference.inDays > 0) {
-        return '${difference.inDays} days';
+        return '${difference.inDays} ${_i18n()['days']}';
       } else if (difference.inHours > 0) {
-        return '${difference.inHours} hours';
+        return '${difference.inHours} ${_i18n()['hours']}';
       } else if (difference.inMinutes > 0) {
-        return '${difference.inMinutes} min';
+        return '${difference.inMinutes} ${_i18n()['min']}';
       } else {
-        return '${difference.inMinutes} min';
+        return 'less than a min';
       }
     }
 
     return Padding(
       padding: const EdgeInsets.only(right: 12.0),
       child: Text(
-        'Active ${createTimeAgoString()} ago',
+        '${_i18n()['active']} ${createTimeAgoString()} ${_i18n()['ago']}',
         style: Theme.of(context).textTheme.bodyMedium,
+        textAlign: TextAlign.center,
       ),
     );
   }

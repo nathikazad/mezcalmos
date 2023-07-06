@@ -70,7 +70,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   let delivery: DeliveryOrder = {
     packageReady: response.delivery_order_by_pk.package_ready,
     deliveryId: deliveryId,
-    serviceProviderId: response.delivery_order_by_pk.service_provider_id,
+    serviceProviderId: response.delivery_order_by_pk.service_provider_id!,
     orderType: response.delivery_order_by_pk.order_type as OrderType,
     pickupLocation:  (response.delivery_order_by_pk.pickup_gps && response.delivery_order_by_pk.pickup_gps.coordinates && response.delivery_order_by_pk.pickup_address ) ? {
       lat: response.delivery_order_by_pk.pickup_gps.coordinates[1],

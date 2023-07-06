@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapBusinessCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessFilterSheet.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
@@ -127,6 +127,7 @@ class CustRentalsListViewController {
           .map((RentalCategory2 e) => e.toFirebaseFormatString())
           .toList(),
       "schedule": [],
+      "onlineOrder": ["false"],
     };
   }
 
@@ -150,6 +151,9 @@ class CustRentalsListViewController {
       _filterInput = defaultFilters();
       selectedCategories.value = List.from(filterCategories);
       previewCategories.value = List.from(filterCategories);
+    } else {
+      filterCategories.addAll([]);
+      _filterInput = defaultFilters();
     }
     try {
       _isLoading.value = true;
@@ -197,6 +201,8 @@ class CustRentalsListViewController {
         withCache: false,
         offset: _rentalCurrentOffset,
         limit: rentalFetchSize,
+        online_ordering:
+            filterInput["onlineOrder"]!.contains("true") ? true : null,
       );
       _rentals.value += newList;
       if (newList.length == 0) {

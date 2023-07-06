@@ -8,11 +8,12 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustCartView']['components']['HomeCartItemCard'];
 
 class HomeCartItemCard extends StatelessWidget {
   const HomeCartItemCard({
@@ -35,27 +36,34 @@ class HomeCartItemCard extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Item ${index + 1}",
-              style: context.textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Text(
+                '${_i18n()['item']} ${index + 1}',
+                style: context.textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             isEditable
                 ? InkWell(
                     onTap: () async {
                       await controller.deleteCartItem(item.id!.toInt());
+                      if (controller.cart.value == null ||
+                          controller.cart.value!.items.isEmpty) {
+                        await MezRouter.back();
+                      }
                     },
                     child: Row(
                       children: [
                         Icon(
-                          Icons.delete,
+                          Icons.delete_outline,
                           color: Colors.red,
                         ),
                         Text(
-                          "Remove",
+                          '${_i18n()['remove']}',
                           style: context.textTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                             color: Colors.red,
                           ),
                         ),
@@ -68,6 +76,7 @@ class HomeCartItemCard extends StatelessWidget {
         Stack(
           children: [
             MezCard(
+              elevation: .5,
               contentPadding: const EdgeInsets.only(top: 6, bottom: 6),
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +100,7 @@ class HomeCartItemCard extends StatelessWidget {
                               ),
                               if (item.parameters.roomType != null)
                                 Text(
-                                  "${_i18n()[item.parameters.roomType]}",
+                                  "${_i18n()['roomType'][item.parameters.roomType]}",
                                   style: context.textTheme.bodyMedium,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
@@ -107,7 +116,7 @@ class HomeCartItemCard extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toFirebaseFormatString()}",
+                                    "${item.parameters.numberOfUnits} ${_i18n()[item.parameters.timeUnit?.toFirebaseFormatString()]}",
                                     style:
                                         context.textTheme.bodyMedium!.copyWith(
                                       fontWeight: FontWeight.bold,
@@ -161,7 +170,8 @@ class HomeCartItemCard extends StatelessWidget {
   }
 
   Widget costBuilder(BuildContext context) {
-    if (item.parameters.previousCost != null) {
+    if (item.parameters.previousCost != null &&
+        item.parameters.previousCost != item.cost) {
       return Row(
         children: [
           Image.asset(aPriceCheck),
@@ -211,7 +221,7 @@ class HomeCartItemCard extends StatelessWidget {
           ),
           Text(
             item.parameters.previoustime == null
-                ? "No Date"
+                ? '${_i18n()['noDate']}'
                 : "${DateTime.parse(item.parameters.previoustime!).getOrderTime()}",
             style: context.textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.bold,
@@ -231,7 +241,7 @@ class HomeCartItemCard extends StatelessWidget {
           ),
           Text(
             item.time == null
-                ? "No Date"
+                ? '${_i18n()['noDate']}'
                 : "${DateTime.parse(item.time!).getOrderTime()}",
             style: context.textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.bold,
@@ -250,7 +260,7 @@ class HomeCartItemCard extends StatelessWidget {
         ),
         Text(
           item.time == null
-              ? "No Date"
+              ? '${_i18n()['noDate']}'
               : "${DateTime.parse(item.time!).getOrderTime()}",
           style: context.textTheme.bodyMedium!.copyWith(
             fontWeight: FontWeight.bold,

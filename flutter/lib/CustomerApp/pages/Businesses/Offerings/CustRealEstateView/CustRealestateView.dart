@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealEstateView/controllers/CustRealestateViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -90,17 +91,19 @@ class _CustRealestateViewState extends State<CustRealestateView> {
                             ],
                           ),
                           _description(context),
-                          if (viewController.realEstate?.gpsLocation != null)
+                          if (viewController.realEstate?.location.location !=
+                              null)
                             ServiceLocationCard(
                               height: 20.h,
                               location: MezLocation(
                                 viewController
-                                        .realEstate!.gpsLocation?.address ??
-                                    "",
+                                    .realEstate!.location.location.address,
                                 MezLocation.buildLocationData(
-                                  viewController.realEstate!.gpsLocation!.lat
+                                  viewController
+                                      .realEstate!.location.location.lat
                                       .toDouble(),
-                                  viewController.realEstate!.gpsLocation!.lng
+                                  viewController
+                                      .realEstate!.location.location.lng
                                       .toDouble(),
                                 ),
                               ),
@@ -111,6 +114,7 @@ class _CustRealestateViewState extends State<CustRealestateView> {
                             business: viewController.realEstate!.business,
                             offering: viewController.realEstate!.details,
                           ),
+                          CustBusinessInquryBanner(),
                         ])),
               )
             ],
@@ -155,7 +159,6 @@ class _CustBusinessAdditionalData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String wholeAdditionalParamString() {
-      final String circle = "•";
       final Map<String, String> additionalValues = {
         'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
         'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
@@ -170,18 +173,18 @@ class _CustBusinessAdditionalData extends StatelessWidget {
       additionalValues.addAll(
         moreAdditionalValues,
       );
-      final StringBuffer wholeString = StringBuffer();
-      additionalValues.map(
-        (key, value) {
-          if (additionalValues.keys.toList().indexOf(key) == 0) {
-            wholeString.write("$value ");
-          } else {
-            wholeString.write("$circle $value ");
-          }
-          return MapEntry(key, value);
-        },
-      );
-      return wholeString.toString();
+
+      String additionalData = '';
+
+      for (String key in additionalValues.keys) {
+        additionalData += additionalValues[key]!;
+
+        if (additionalValues.keys.toList().indexOf(key) !=
+            additionalValues.length - 1) {
+          additionalData += ' • ';
+        }
+      }
+      return additionalData;
     }
 
     return Text(

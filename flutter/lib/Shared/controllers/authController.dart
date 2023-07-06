@@ -113,19 +113,19 @@ class AuthController extends GetxController {
                     .millisecondsSinceEpoch) <
             120 * 1000) {
           if (GetStorage().read('uniqueId') != null) {
-            try {
-              // final cModels.AddReferralResponse res =
-              //     await CloudFunctions.serviceProvider_addReferral(
-              //         uniqueId: GetStorage().read('uniqueId'));
+            // try {
+            //   final cModels.AddReferralResponse res =
+            //       await CloudFunctions.serviceProvider_addReferral(
+            //           uniqueId: GetStorage().read('uniqueId'));
 
-              // if (res.success == false) {
-              //   mezDbgPrint(res.error);
-              // }
-              // GetStorage().remove('uniqueId');
-            } catch (e, stk) {
-              mezDbgPrint(e);
-              mezDbgPrint(stk);
-            }
+            //   if (res.success == false) {
+            //     mezDbgPrint(res.error);
+            //   }
+            //   // GetStorage().remove('uniqueId');
+            // } catch (e, stk) {
+            //   mezDbgPrint(e);
+            //   mezDbgPrint(stk);
+            // }
           }
         }
       }

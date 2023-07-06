@@ -2,20 +2,21 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/CustRentalView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView/CustServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/businessCart/hsBusinessCart.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/graphql/customer/businessCart/hsBusinessCart.dart';
+import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class CustBusinessCartController extends GetxController {
 // instances //
@@ -29,20 +30,25 @@ class CustBusinessCartController extends GetxController {
 
   Rxn<List<CustBusinessCart>?> previousOrders = Rxn<List<CustBusinessCart>?>();
   RxBool get hasPendingOrder => previousOrders.value != null
-      ? previousOrders.value!.any((element) => element.status!.isPending).obs
+      ? previousOrders.value!
+          .any((CustBusinessCart element) => element.status!.isPending)
+          .obs
       : false.obs;
   RxBool get hasPastOrder => previousOrders.value != null
-      ? previousOrders.value!.any((element) => element.status!.isPast).obs
+      ? previousOrders.value!
+          .any((CustBusinessCart element) => element.status!.isPast)
+          .obs
       : false.obs;
   RxList<CustBusinessCart>? get pastOrders => previousOrders.value != null
       ? previousOrders.value!
-          .where((element) => element.status!.isPast)
+          .where((CustBusinessCart element) => element.status!.isPast)
           .toList()
           .obs
       : <CustBusinessCart>[].obs;
   // streams //
   StreamSubscription<List<CustBusinessCart>?>? cartStream;
   String? subscriptionId;
+  int _numberOfOldBusinessOrders = 0;
 
   @override
   Future<void> onInit() async {
@@ -53,8 +59,19 @@ class CustBusinessCartController extends GetxController {
 
       cart.refresh();
     }
+    unawaited(_getPastBusinessOrdersCount());
     mezDbgPrint("[+] CustBusinessCartController::onInit -> Callback Executed.");
     super.onInit();
+  }
+
+  Future<void> _getPastBusinessOrdersCount() async {
+    await get_customer_orders_count(
+            customerId: _auth.hasuraUserId!, orderType: OrderType.Business)
+        .then((int? value) {
+      if (value != null) {
+        _numberOfOldBusinessOrders = value;
+      }
+    });
   }
 
   @override
@@ -101,16 +118,37 @@ class CustBusinessCartController extends GetxController {
     });
   }
 
+  Future<bool> showDisclaimerPopup() async {
+    final int? numberOfOrders = await get_customer_orders_count(
+        customerId: _auth.hasuraUserId!, orderType: OrderType.Business);
+
+    print('dddddddddddddddddddddddd $numberOfOrders');
+    return numberOfOrders == null || _numberOfOldBusinessOrders < 5;
+  }
+
   void setCurrentOrderInView(int orderId) {
     currentOrderIdInView.value = orderId;
     if (previousOrders.value != null) {
-      final CustBusinessCart? order = previousOrders.value!
-          .firstWhere((CustBusinessCart element) => element.id == orderId);
+      final CustBusinessCart? order = previousOrders.value?.firstWhereOrNull(
+          (CustBusinessCart element) => element.id == orderId);
       if (order != null) {
         currentOrderInView.value = order;
         currentOrderInView.refresh();
       }
     }
+  }
+
+  bool get isCanceled => <BusinessOrderRequestStatus>[
+        BusinessOrderRequestStatus.CancelledByBusiness,
+        BusinessOrderRequestStatus.CancelledByCustomer
+      ].contains(currentOrderInView.value!.status!);
+
+  Future<void> clearCart() async {
+    cart.value!.items = [];
+    cart.refresh();
+    await clear_business_cart(
+      customer_id: _auth.hasuraUserId!,
+    );
   }
 
   Future<void> fetchCart() async {
@@ -153,9 +191,15 @@ class CustBusinessCartController extends GetxController {
   }
 
   Future<int?> addCartItem(BusinessCartItem cartItem) async {
-    await setCartBusinessId(cartItem.businessId!.toInt());
-
     try {
+      final CustBusinessCart? cartData = await get_business_cart(
+        customerId: _auth.hasuraUserId!,
+      );
+      if (cartData == null) {
+        await create_business_cart(businessId: cartItem.businessId!.toInt());
+      } else if (cartData.businessId == null) {
+        await setCartBusinessId(cartItem.businessId!.toInt());
+      }
       final int res = await add_item_to_business_cart(
         cartItem: cartItem,
       );
@@ -197,16 +241,31 @@ class CustBusinessCartController extends GetxController {
 
   Future<bool?> requestOrder() async {
     try {
+      final CustBusinessCart? cartData = await get_business_cart(
+        customerId: _auth.hasuraUserId!,
+      );
+      if (cartData != null &&
+          cartData.businessId == null &&
+          cartData.businessId != cart.value!.businessId) {
+        await setCartBusinessId(cart.value!.businessId!.toInt());
+      }
+      if (cartData != null &&
+          cartData.businessId == null &&
+          cart.value!.businessId == null) {
+        await setCartBusinessId(cart.value!.businessId!.toInt());
+      }
       if (cart.value != null && cart.value!.items.isNotEmpty) {
-        var requestData = await CloudFunctions.business_requestOrder(
-          businessId: cart.value!.businessId!.toInt(),
+        final OrderReqResponse requestData =
+            await CloudFunctions.business_requestOrder(
           customerAppType: CustomerAppType.Native,
         );
-        mezDbgPrint("requestOrder: ${requestData.success}");
+        mezDbgPrint(
+            "requestOrder: ${requestData.success} ${requestData.orderId}");
         if (requestData.success) {
-          cart.value = null;
+          cart.value?.items = [];
           cart.refresh();
-          await MezRouter.back();
+          // await MezRouter.back();
+          await CustOrderView.navigate(orderId: requestData.orderId!.toInt());
         }
         return requestData.success;
       }

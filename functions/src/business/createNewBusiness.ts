@@ -31,7 +31,8 @@ export interface BusinessResponse {
 export enum BusinessError {
   UnhandledError = "unhandledError",
   UserNotFound = "userNotFound",
-  BusinessCreationError = "businessCreationError"
+  BusinessCreationError = "businessCreationError",
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
 }
 
 export async function createNewBusiness(userId: number, businessDetails: BusinessDetails): Promise<BusinessResponse> {
@@ -91,6 +92,6 @@ function notifyAdmins(business: Business, mezAdmins: MezAdmin[]) {
       linkUrl: businessUrl(business.details.id)
     };
     mezAdmins.forEach((m) => {
-      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
   }

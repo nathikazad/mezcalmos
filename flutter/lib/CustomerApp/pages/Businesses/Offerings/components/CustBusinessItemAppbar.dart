@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -12,7 +13,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezImageslider.dart';
-import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessImageScreen.dart';
@@ -46,17 +46,25 @@ class CustBusinessItemAppbar extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 1),
             child: !isCollapsed
-                ? Padding(
-                    padding: const EdgeInsets.only(
-                      left: 50,
-                    ),
-                    child: Text(
-                      itemDetails.name.getTranslation(userLanguage)!,
-                      style: context.textTheme.displayMedium!
-                          .copyWith(color: Colors.white),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                // ? Padding(
+                //         padding: const EdgeInsets.only(
+                //           left: 50,
+                //         ),
+                //         child: Text(
+                //           itemDetails.name.getTranslation(userLanguage)!,
+                //           style: context.textTheme.displayMedium!
+                //               .copyWith(color: Colors.white),
+                //           maxLines: 1,
+                //           overflow: TextOverflow.ellipsis,
+                //         ),
+                //       )
+                ? Text(
+                    itemDetails.name.getTranslation(userLanguage)!,
+                    style: context.textTheme.displayMedium!
+                        .copyWith(color: Colors.white, fontSize: 14.mezSp),
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -244,7 +252,16 @@ class CustBusinessItemAppbar extends StatelessWidget {
         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
         if (Get.find<AuthController>().isUserSignedIn)
           _notificationAppBarIcon(),
-        // if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        FloatingCartComponent(
+          backgroundColor: Colors.white,
+          iconColor: primaryBlueColor,
+          cartType: CartType.business,
+          withGradient: false,
+          badgePosition: badge.BadgePosition.topEnd(),
+        ),
+        SizedBox(
+          width: 15,
+        )
       ],
     );
   }

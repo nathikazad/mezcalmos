@@ -2,10 +2,11 @@ import { getHasura } from "../../../utilities/hasura";
 import { DeepLinkType, generateDeepLinks, IDeepLink } from "../../../utilities/links/deeplink";
 import { ServiceProviderStripeInfo } from "../../models/stripe";
 import { SetupStripeError, UpdateStripeError } from "../../../utilities/stripe/serviceProvider";
-import { ChangeUniqueIdError } from "../../changeUniqueId";
+import { ChangeUniqueIdError } from "../../../serviceProvider/changeUniqueId";
 import { AppType, MezError } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
+import { QRFlyerLinks, createQRFlyerPDF } from "../../../utilities/links/flyer";
 
 export async function createServiceProviderStripe(serviceProvider: ServiceProvider) {
     let chain = getHasura();
@@ -130,7 +131,8 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
         default:
             throw new MezError(ChangeUniqueIdError.InvalidServiceProviderType);
     }
-    let deepLinks: Record<DeepLinkType, IDeepLink> = await generateDeepLinks(newUniqueId, appType);
+    let deepLinks: Partial<Record<DeepLinkType, IDeepLink>> = await generateDeepLinks(newUniqueId, appType);
+    let QRflyer: QRFlyerLinks = await createQRFlyerPDF(newUniqueId);
     
     await chain.mutation({
         update_service_provider_service_link_by_pk: [{
@@ -138,15 +140,17 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
                 id: response.update_service_provider_details_by_pk.service_link_id
             },
             _set: {
-                customer_deep_link: deepLinks[DeepLinkType.Customer].url,
-                customer_qr_image_link: deepLinks[DeepLinkType.Customer].urlQrImage,
-                operator_deep_link: deepLinks[DeepLinkType.AddOperator].url,
-                operator_qr_image_link: deepLinks[DeepLinkType.AddOperator].urlQrImage,
-                driver_deep_link: deepLinks[DeepLinkType.AddDriver].url,
-                driver_qr_image_link: deepLinks[DeepLinkType.AddDriver].urlQrImage,
+                customer_qr_image_link: QRflyer.customerQRImageLink,
+                operator_deep_link: deepLinks[DeepLinkType.AddOperator]?.url,
+                operator_qr_image_link: deepLinks[DeepLinkType.AddOperator]?.urlQrImage,
+                driver_deep_link: deepLinks[DeepLinkType.AddDriver]?.url,
+                driver_qr_image_link: deepLinks[DeepLinkType.AddDriver]?.urlQrImage,
+                customer_flyer_links: $`customer_flyer_links`,
             }
         }, {
             id: true,
         }]
+    }, {
+        "customer_flyer_links": QRflyer.flyerLinks
     });
 }

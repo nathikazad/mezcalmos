@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
@@ -7,11 +8,9 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
@@ -70,6 +69,9 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                 if (viewController.currentService ==
                     ServiceProviderType.Laundry)
                   _buildLaundryOrders(),
+                if (viewController.currentService ==
+                    ServiceProviderType.Business)
+                  _buildBusinessOrders(),
                 _buildPastOrders(),
                 if (viewController.enableShowMoreButton)
                   MezButton(
@@ -107,6 +109,10 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                         DvCompanyOrderView.navigate(
                             orderId: viewController.pastOrders[index].id);
                         break;
+                      case ServiceProviderType.Business:
+                        CustOrderView.navigate(
+                            orderId: viewController.pastOrders[index].id);
+                        break;
                       default:
                     }
                   }),
@@ -129,8 +135,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                                 .restaurantOrders.value![index].id);
                       })),
             )
-          : (viewController.restaurantPastOrders.value == null ||
-                  viewController.restaurantPastOrders.value.isEmpty == true)
+          : (viewController.restaurantPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,
@@ -153,8 +158,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                                 viewController.deliveryOrders.value![index].id);
                       })),
             )
-          : (viewController.dvPastOrders.value == null ||
-                  viewController.dvPastOrders.value.isEmpty == true)
+          : (viewController.dvPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,
@@ -177,8 +181,31 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                                 viewController.laundryOrders.value![index].id);
                       })),
             )
-          : (viewController.laundryPastOrders.value == null ||
-                  viewController.laundryPastOrders.value.isEmpty == true)
+          : (viewController.laundryPastOrders.value.isEmpty == true)
+              ? Container(
+                  margin: EdgeInsets.only(top: 10.h),
+                  alignment: Alignment.center,
+                  child: Center(child: NoOrdersComponent()))
+              : Container(),
+    );
+  }
+
+  Widget _buildBusinessOrders() {
+    return Container(
+      child: (viewController.businessOrders.value?.isNotEmpty == true)
+          ? Column(
+              children: List.generate(
+                  viewController.businessOrders.value!.length,
+                  (int index) => MinimalOrderCard(
+                      order: viewController.businessOrders.value![index],
+                      onTap: () {
+                        CustOrderView.navigate(
+                            entityType: EntityType.Admin,
+                            orderId:
+                                viewController.businessOrders.value![index].id);
+                      })),
+            )
+          : (viewController.businessPastOrders.value.isEmpty == true)
               ? Container(
                   margin: EdgeInsets.only(top: 10.h),
                   alignment: Alignment.center,

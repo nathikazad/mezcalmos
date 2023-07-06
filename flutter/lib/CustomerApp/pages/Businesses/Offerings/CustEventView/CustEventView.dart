@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessAdditionalData.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
@@ -11,7 +13,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/Cust
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustCircularLoader.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/controllers/OfferingViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/controllers/CustEventViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -29,8 +31,8 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() =>
-    Get.find<LanguageController>().strings['CustomerApp']['pages']['Offerings'];
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Businesses']['Offerings']['CustEventView'];
 
 class CustEventView extends StatefulWidget {
   const CustEventView({super.key});
@@ -45,7 +47,9 @@ class CustEventView extends StatefulWidget {
     Map<TimeUnit, num>? timeCost,
     int? duration,
   }) async {
-    final String route = constructRoute(eventId);
+    final String route = cartId != null
+        ? CustBusinessRoutes.custEventRouteEdit.replaceFirst(":id", "$eventId")
+        : constructRoute(eventId);
     return MezRouter.toPath(route, arguments: {
       "startDate": startDate,
       "timeCost": timeCost,
@@ -121,15 +125,13 @@ class _CustEventViewState extends State<CustEventView> {
         () => viewController.isOnlineOrdering.value!
             ? MezButton(
                 label: viewController.isEditingMode.value
-                    ? "Update Item"
-                    : "Add to cart",
+                    ? '${_i18n()['updateItem']}'
+                    : '${_i18n()['addToCart']}',
                 withGradient: true,
                 borderRadius: 0,
-                onClick: viewController.isValidated.value
-                    ? () async {
-                        await viewController.bookOffering();
-                      }
-                    : null,
+                onClick: () async {
+                  await viewController.bookOffering();
+                },
               )
             : SizedBox.shrink(),
       ),
@@ -185,75 +187,88 @@ class _CustEventViewState extends State<CustEventView> {
                           ),
                         ),
                       CustBusinessMessageCard(
-                        margin: EdgeInsets.only(top: 15),
+                        margin: EdgeInsets.only(top: 15, bottom: 15),
                         contentPadding: EdgeInsets.symmetric(vertical: 10),
                         business: viewController.event!.business,
                         offering: viewController.event!.details,
                       ),
                       if (!viewController.isOnlineOrdering.value!)
                         CustBusinessNoOrderBanner(),
+                      if (viewController.isOnlineOrdering.value!)
+                        CustBusinessInquryBanner(),
 
                       /// Booking
                       if (viewController.isOnlineOrdering.value!)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (viewController.event!.scheduleType !=
-                                ScheduleType.OneTime)
-                              BsOpDateTimePicker(
-                                fillColor: Colors.white,
-                                onNewPeriodSelected: (DateTime v) {
-                                  viewController.startDate.value = v;
-                                },
-                                label: "Start Date",
-                                validator: (DateTime? p0) {
-                                  if (p0 == null) return "Please select a time";
-
-                                  return null;
-                                },
-                                time: viewController.startDate.value,
-                              ),
-                            if (viewController.event!.scheduleType ==
-                                ScheduleType.OnDemand)
-                              Column(
-                                children: [
-                                  CustGuestPicker(
-                                    label: "Hours",
-                                    icon: Icons.hourglass_bottom,
-                                    onNewGuestSelected: (int v) {
-                                      viewController.setTotalHours(v);
-                                    },
-                                    value: viewController.totalHours.value,
-                                    lowestValue: 1,
-                                  ),
-                                  bigSeperator,
-                                ],
-                              ),
-                            if (viewController.event!.scheduleType ==
-                                ScheduleType.OnDemand)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Notes",
-                                    style: context.textTheme.bodyLarge,
-                                  ),
-                                  smallSepartor,
-                                  TextFormField(
-                                    maxLines: 5,
-                                    minLines: 3,
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      hintText: "Write your notes here.",
+                        Form(
+                          key: viewController.formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (viewController.event!.scheduleType !=
+                                  ScheduleType.OneTime)
+                                BsOpDateTimePicker(
+                                  fillColor: Colors.white,
+                                  onNewPeriodSelected: (DateTime v) {
+                                    viewController.startDate.value = v;
+                                  },
+                                  label: '${_i18n()['startDate']}',
+                                  validator: (DateTime? p0) {
+                                    if (p0 == null) {
+                                      BotToast.showText(
+                                          text: _i18n()['selectATime'],
+                                          duration: Duration(seconds: 5));
+                                      return '${_i18n()['selectATime']}';
+                                    }
+                                    return null;
+                                  },
+                                  time: viewController.startDate.value,
+                                ),
+                              if (viewController.event!.scheduleType ==
+                                  ScheduleType.OnDemand)
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
                                     ),
-                                  ),
-                                ],
+                                    CustGuestPicker(
+                                      label: '${_i18n()['hours']}',
+                                      onNewGuestSelected: (int v) {
+                                        viewController.setTotalHours(v);
+                                      },
+                                      value: viewController.totalHours.value,
+                                      lowestValue: 1,
+                                    ),
+                                    bigSeperator,
+                                  ],
+                                ),
+                              if (viewController.event!.scheduleType ==
+                                  ScheduleType.OnDemand)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${_i18n()['notes']}',
+                                      style: context.textTheme.bodyLarge,
+                                    ),
+                                    smallSepartor,
+                                    TextFormField(
+                                      maxLines: 5,
+                                      minLines: 3,
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        hintText:
+                                            '${_i18n()['writeNotesHere']}',
+                                      ),
+                                    ),
+                                    bigSeperator
+                                  ],
+                                ),
+                              CustOrderCostCard(
+                                orderCostString:
+                                    viewController.orderString.value,
                               ),
-                            bigSeperator,
-                            CustOrderCostCard(
-                              orderCostString: viewController.orderString.value,
-                            ),
-                          ],
+                            ],
+                          ),
                         )
                     ],
                   ),
