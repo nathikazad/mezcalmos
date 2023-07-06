@@ -1,51 +1,49 @@
-import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRentalOrderView.dart'
-    deferred as bsHomeRentalOrderView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/CustAdventureListView.dart'
+    deferred as custAdventureView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart'
+    deferred as custClassesView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/EventsViews/CustEventsListView.dart'
     deferred as custEventsListView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodListView.dart'
+    deferred as custFoodView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.dart'
+    deferred as custFoodWrapperView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart'
+    deferred as custLocallyMadeView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart'
+    deferred as custLocallyMadeWrapperView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart'
     deferred as custEventView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart'
     deferred as custHomeRentalView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView/CustProductView.dart'
     deferred as custProducView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealEstateView/CustRealestateView.dart'
+    deferred as custRealestateView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/CustRentalView.dart'
     deferred as custRentalView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView/CustServiceView.dart'
     deferred as custServiceView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart'
-    deferred as custHomeRentalsListView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustCoWorkingListView.dart'
-    deferred as custCoWorkingListView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessImageScreen.dart'
+    deferred as custImageView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RealEstateView/CustRealEstateListView.dart'
     deferred as custRealEstateListView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRealEstateView/CustRealestateView.dart'
-    deferred as custRealestateView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustCoWorkingListView.dart'
+    deferred as custCoWorkingListView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustHomeRentalListView.dart'
+    deferred as custHomeRentalsListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsListView.dart'
     deferred as custRentalsListView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/CustRentalsWrapper.dart'
     deferred as custRentalsWrapperView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart'
-    deferred as custServicesWrapperView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart'
     deferred as custServicesListView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/ClassView/CustClassesListView.dart'
-    deferred as custClassesView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesWrapper.dart'
+    deferred as custServicesWrapperView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyListView.dart'
     deferred as custTherapyView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart'
     deferred as custVolunteerView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/AdevntureView/CustAdventureListView.dart'
-    deferred as custAdventureView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart'
-    deferred as custLocallyMadeWrapperView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocallyMadeListView.dart'
-    deferred as custLocallyMadeView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodWrapper.dart'
-    deferred as custFoodWrapperView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/FoodView/CustFoodListView.dart'
-    deferred as custFoodView;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessImageScreen.dart'
-    deferred as custImageView;
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart'
     deferred as custCartView;
 import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart'
@@ -77,9 +75,8 @@ class CustBusinessRoutes {
   static String custFoodRoute = "/customer/food";
   static String custImageViewRoute = "/customer/imageView";
   static String custCartRoute = "/customer/cart";
-  static String custOrderViewRoute = "/customer/orderView/:id";
+  static String custOrderViewRoute = '/businessOrders/:id';
   static String custCoWorkingListRoute = "/customer/coWorking";
-  static const String kBsOpBusinessOrder = '/businessOrders/:id';
 
   // wrappers //
   static String custRentalsWrapperRoute = "/rentalsWrapper";
@@ -324,14 +321,6 @@ class CustBusinessRoutes {
       middleware: <QMiddleware>[
         DefferedLoader(custOrderView.loadLibrary),
       ],
-    ),
-    QRoute(
-      path: kBsOpBusinessOrder,
-      name: kBsOpBusinessOrder,
-      builder: () => bsHomeRentalOrderView.BsHomeRentalOrderView(),
-      middleware: <QMiddleware>[
-        DefferedLoader(bsHomeRentalOrderView.loadLibrary),
-      ],
-    ),
+    )
   ];
 }
