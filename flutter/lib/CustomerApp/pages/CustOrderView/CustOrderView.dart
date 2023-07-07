@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/EventCartItemCard.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustOrderView/controllers/AdminOrder
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -32,8 +32,12 @@ class CustOrderView extends StatefulWidget {
   State<CustOrderView> createState() => _CustOrderViewState();
 
   static Future<void> navigate({required int orderId, EntityType? entityType}) {
-    return MezRouter.toPath(CustBusinessRoutes.custOrderViewRoute,
-        arguments: {"orderId": orderId, "entityType": entityType});
+    return MezRouter.toPath(constructPath(orderId));
+  }
+
+  static String constructPath(int orderId) {
+    return CustBusinessRoutes.custOrderViewRoute
+        .replaceFirst(":orderId", orderId.toString());
   }
 }
 
@@ -45,8 +49,13 @@ class _CustOrderViewState extends State<CustOrderView> {
 
   @override
   void initState() {
-    orderId = MezRouter.bodyArguments!["orderId"] as int;
-    entityType = MezRouter.bodyArguments!["entityType"] as EntityType?;
+    orderId = int.parse(MezRouter.urlArguments['orderId'].toString());
+    entityType = MezRouter.bodyArguments?["entityType"] as EntityType?;
+    MezRouter.registerReturnToViewCallback(CustOrderView.constructPath(orderId),
+        () {
+      clearNotifications(orderId);
+    });
+
     if (entityType == EntityType.Admin) {
       custBusinessCartController = AdminOrderViewController();
       custBusinessCartController.setCurrentOrderInView(orderId);
@@ -55,6 +64,11 @@ class _CustOrderViewState extends State<CustOrderView> {
       custBusinessCartController.setCurrentOrderInView(orderId);
     }
     super.initState();
+  }
+
+  void clearNotifications(int orderId) {
+    Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
+        orderType: OrderType.Business, orderId: orderId);
   }
 
   @override
@@ -72,20 +86,19 @@ class _CustOrderViewState extends State<CustOrderView> {
           : Obx(() {
               if (custBusinessCartController.currentOrderInView.value == null) {
                 return SizedBox.shrink();
-              } else if (custBusinessCartController
-                          .currentOrderInView.value!.status ==
-                      BusinessOrderRequestStatus.Confirmed ||
-                  custBusinessCartController.currentOrderInView.value!.status ==
-                      BusinessOrderRequestStatus.Completed) {
-                return CustAddReviewButton(
-                  orderId:
-                      custBusinessCartController.currentOrderInView.value!.id!,
-                  toEntityId: custBusinessCartController
-                      .currentOrderInView.value!.businessId!
-                      .toInt(),
-                  toEntityType: ServiceProviderType.Business,
-                );
-              } else {
+              }
+              // else if (custBusinessCartController
+              //     .currentOrderInView.value!.showReviewButton) {
+              //   return CustAddReviewButton(
+              //     orderId:
+              //         custBusinessCartController.currentOrderInView.value!.id!,
+              //     toEntityId: custBusinessCartController
+              //         .currentOrderInView.value!.businessId!
+              //         .toInt(),
+              //     toEntityType: ServiceProviderType.Business,
+              //   );
+              // }
+              else {
                 return SizedBox.shrink();
               }
             }),

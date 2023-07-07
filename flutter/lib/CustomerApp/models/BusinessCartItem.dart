@@ -30,6 +30,32 @@ class CustBusinessCart {
       "discountValue": discountValue,
     };
   }
+
+  bool get showReviewButton =>
+      (status == BusinessOrderRequestStatus.Confirmed ||
+          status == BusinessOrderRequestStatus.Completed) &&
+      furtherItemDate.isBefore(DateTime.now().toLocal());
+
+  bool get inProcess =>
+      status != BusinessOrderRequestStatus.CancelledByBusiness &&
+      status != BusinessOrderRequestStatus.CancelledByCustomer &&
+      status != BusinessOrderRequestStatus.Completed;
+  DateTime get furtherItemDate {
+    return items.map((BusinessCartItem e) => DateTime.parse(e.time!)).reduce(
+        (DateTime value, DateTime element) =>
+            value.toLocal().isAfter(element.toLocal()) ? value : element);
+  }
+
+  bool get isPending => status == BusinessOrderRequestStatus.RequestReceived;
+  bool get isUpcoming =>
+      status != BusinessOrderRequestStatus.CancelledByBusiness &&
+      status != BusinessOrderRequestStatus.CancelledByCustomer &&
+      furtherItemDate.isAfter(DateTime.now().toLocal());
+  bool get isPast =>
+      status == BusinessOrderRequestStatus.CancelledByBusiness ||
+      status == BusinessOrderRequestStatus.CancelledByCustomer ||
+      (status == BusinessOrderRequestStatus.Confirmed &&
+          furtherItemDate.isBefore(DateTime.now().toLocal()));
 }
 
 class BusinessCartItem {

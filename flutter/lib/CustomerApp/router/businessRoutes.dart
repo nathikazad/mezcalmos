@@ -75,7 +75,7 @@ class CustBusinessRoutes {
   static String custFoodRoute = "/customer/food";
   static String custImageViewRoute = "/customer/imageView";
   static String custCartRoute = "/customer/cart";
-  static String custOrderViewRoute = '/businessOrders/:id';
+  static String custOrderViewRoute = '/businessOrders/:orderId';
   static String custCoWorkingListRoute = "/customer/coWorking";
 
   // wrappers //

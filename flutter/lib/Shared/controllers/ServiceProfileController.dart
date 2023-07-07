@@ -46,29 +46,6 @@ class ServiceProfileController extends GetxController {
 
   bool get isAvailable => _service.value!.state.isOpen;
 
-  final List<SocialShareData> shareIconData = [
-    SocialShareData(
-      icon: copyLinkAsset,
-      label: "copyLink",
-      type: ShareType.CopyLink,
-    ),
-    SocialShareData(
-      icon: whatsappAsset,
-      label: "whatsapp",
-      type: ShareType.WhatsApp,
-    ),
-    SocialShareData(
-      icon: instaStoryAsset,
-      label: "story",
-      type: ShareType.InstagramStory,
-    ),
-    SocialShareData(
-      icon: facebookStoryAsset,
-      label: "story",
-      type: ShareType.FacebookStory,
-    ),
-  ];
-
   @override
   void onInit() {
     super.onInit();
@@ -192,47 +169,43 @@ class ServiceProfileController extends GetxController {
       if (kIsWeb) {
         return;
       }
-      final File? file = await getFilePath();
-      final String filePath = file!.path;
+      File? file;
+      final String fileName = "business_flyer_${DateTime.now()}.pdf";
+      // Get the application documents directory
+      if (Platform.isIOS) {
+        final Directory dir = await getTemporaryDirectory();
+        file = File('${dir.path}/$fileName');
+      } else if (Platform.isAndroid) {
+        final Map<pHandler.Permission, pHandler.PermissionStatus> statuses =
+            await [
+          pHandler.Permission.storage,
+          pHandler.Permission.manageExternalStorage,
+          pHandler.Permission.accessMediaLocation,
+        ].request();
 
+        var storage = statuses[pHandler.Permission.storage];
+        var manageExternalStorage =
+            statuses[pHandler.Permission.manageExternalStorage];
+        var accessMediaLocation =
+            statuses[pHandler.Permission.accessMediaLocation];
+        if (storage!.isGranted ||
+            manageExternalStorage!.isGranted ||
+            accessMediaLocation!.isGranted) {
+          final Directory dir = await getTemporaryDirectory();
+          file = File('${dir.path}/$fileName');
+        }
+      }
       // Download the PDF file
       final http.Response response = await http.get(Uri.parse(url));
 
       // Save the file to the specified path
-      // File file = File(filePath);
-      await file.writeAsBytes(response.bodyBytes);
-
+      await file!.writeAsBytes(response.bodyBytes);
+      final String filePath = file.path;
       print('PDF downloaded successfully. File path: $filePath');
       await OpenFile.open(filePath);
     } catch (e) {
       print('Failed to download PDF: $e');
     }
-  }
-
-  Future<File?> getFilePath() async {
-    final String fileName = "business_flyer_${DateTime.now()}.pdf";
-    // Get the application documents directory
-    File? file;
-    if (Platform.isIOS) {
-      final Directory dir = await getApplicationDocumentsDirectory();
-      file = File('${dir.path}/$fileName');
-    } else if (Platform.isAndroid) {
-      final Map<pHandler.Permission, pHandler.PermissionStatus> statuses =
-          await [
-        pHandler.Permission.storage,
-        pHandler.Permission.manageExternalStorage,
-      ].request();
-
-      var storage = statuses[pHandler.Permission.storage];
-      var manageExternalStorage =
-          statuses[pHandler.Permission.manageExternalStorage];
-      if (storage!.isGranted || manageExternalStorage!.isGranted) {
-        final String downloadsFolderPath = '/storage/emulated/0/Download';
-        final Directory dir = Directory(downloadsFolderPath);
-        file = File('${dir.path}/$fileName');
-      }
-    }
-    return file;
   }
 
   Future<File?> getDownloadedBusinessImage() async {
@@ -249,16 +222,13 @@ class ServiceProfileController extends GetxController {
       final Map<pHandler.Permission, pHandler.PermissionStatus> statuses =
           await [
         pHandler.Permission.storage,
-        pHandler.Permission.manageExternalStorage,
       ].request();
 
-      var storage = statuses[pHandler.Permission.storage];
-      var manageExternalStorage =
-          statuses[pHandler.Permission.manageExternalStorage];
-      if (storage!.isGranted || manageExternalStorage!.isGranted) {
-        final String downloadsFolderPath = '/storage/emulated/0/Download';
-        final Directory dir = Directory(downloadsFolderPath);
-        file = File('${dir.path}/$fileName');
+      final storage = statuses[pHandler.Permission.storage];
+      if (storage!.isGranted) {
+        // final String downloadsFolderPath = ;
+        final Directory? dir = await getExternalStorageDirectory();
+        file = File('${dir!.path}/$fileName');
       }
     }
     try {
@@ -272,28 +242,9 @@ class ServiceProfileController extends GetxController {
       await file.writeAsBytes(response.bodyBytes);
 
       print('Story Image downloaded successfully. File path: $filePath');
-      await OpenFile.open(filePath);
     } catch (e) {
       print('Failed to download Story Image: $e');
     }
     return file;
   }
-}
-
-enum ShareType {
-  CopyLink,
-  WhatsApp,
-  InstagramStory,
-  FacebookStory,
-}
-
-class SocialShareData {
-  String icon;
-  String label;
-  ShareType type;
-  SocialShareData({
-    required this.icon,
-    required this.label,
-    required this.type,
-  });
 }

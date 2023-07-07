@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/BusinessApp/pages/Orders/OrdersListViews/BsOrdersListView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/BsOpServicesListView.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -33,14 +32,13 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
 
   Rx<BusinessOpTabView> currentView = Rx(BusinessOpTabView.Services);
   RxInt currentIndex = 0.obs;
-  bool get haveOrders =>
-      opAuthController.businessProfile == BusinessProfile.HomeRental;
+
   late List<BusinessOpTabView> _visibleTabs;
   @override
   void initState() {
     _visibleTabs = [
       BusinessOpTabView.Services,
-      if (haveOrders) BusinessOpTabView.Orders,
+      if (opAuthController.isOnlineOrdering) BusinessOpTabView.Orders,
       BusinessOpTabView.Messages,
       BusinessOpTabView.Profile,
     ];
@@ -113,7 +111,7 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
                 icon: Icon(Icons.business_center),
                 label: '${_i18n()["services"]}',
               ),
-              if (haveOrders)
+              if (opAuthController.isOnlineOrdering)
                 BottomNavigationBarItem(
                   icon: Icon(Icons.watch_later_outlined),
                   label: '${_i18n()["orders"]}',
