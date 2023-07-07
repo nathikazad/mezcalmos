@@ -80,7 +80,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: (restaurant.deliveryDetails.selfDelivery) 
               ? restaurant.id 
-              : 7,
+              : 1,
             service_provider_type: (restaurant.deliveryDetails.selfDelivery) 
               ? DeliveryServiceProviderType.Restaurant
               : DeliveryServiceProviderType.DeliveryCompany,
@@ -202,7 +202,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         ? DeliveryServiceProviderType.DeliveryCompany 
         : DeliveryServiceProviderType.Restaurant,
       serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false) 
-        ? 7
+        ? 1
         : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,
@@ -229,7 +229,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         ? DeliveryServiceProviderType.DeliveryCompany 
         : DeliveryServiceProviderType.Restaurant,
       serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false) 
-        ? 7
+        ? 1
         : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,

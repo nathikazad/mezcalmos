@@ -67,7 +67,7 @@ export async function createLaundryToCustomerDeliveryOrder(
                 status: DeliveryOrderStatus.OrderReceived,
                 service_provider_id: (laundryStore.deliveryDetails.selfDelivery) 
                     ? laundryStore.id 
-                    : 7,
+                    : 1,
                 service_provider_type: (laundryStore.deliveryDetails.selfDelivery) 
                     ? DeliveryServiceProviderType.Laundry
                     : DeliveryServiceProviderType.DeliveryCompany,
@@ -128,7 +128,7 @@ export async function createLaundryToCustomerDeliveryOrder(
         serviceProviderType: (laundryStore.deliveryDetails.selfDelivery == false) 
             ? DeliveryServiceProviderType.DeliveryCompany 
             : DeliveryServiceProviderType.Laundry,
-        serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false) ? 7 : laundryStore.id,
+        serviceProviderId: (laundryStore.deliveryDetails.selfDelivery == false) ? 1 : laundryStore.id,
         direction: DeliveryDirection.ToCustomer,
         packageReady: true,
     }

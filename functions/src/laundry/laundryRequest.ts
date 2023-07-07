@@ -76,7 +76,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
         // assign delivery company 
         if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
-            updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, 7);
+            updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, 1);
             notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder)
         }
 
