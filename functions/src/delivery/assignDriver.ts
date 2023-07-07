@@ -2,18 +2,14 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
+import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, CounterOfferStatus } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { deleteDeliveryChatMessagesAndParticipant } from "../shared/graphql/chat/deleteChatMessages";
-import { getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator/getDeliveryOperator";
-import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { isMezAdmin } from "../shared/helper";
 import { AuthorizationStatus, MezError } from "../shared/models/Generic/Generic"
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operator/getLaundryOperator";
-import { Operator } from "../shared/models/Services/Service";
 import { clearLock, setLockTime } from "../shared/graphql/delivery/updateDelivery";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 
@@ -37,7 +33,8 @@ export enum AssignDriverError {
   UnauthorizedDriver = "unauthorizedDriver",
   ServiceProviderDeliveryChatNotFound = "serviceProviderDeliveryChatNotFound",
   DriverAlreadyAssigned = "driverAlreadyAssigned",
-  DeliveryOrderNotFound = "deliveryOrderNotFound"
+  IncorrectOrderId = "incorrectOrderId",
+  NoCustomerOffer = "noCustomerOffer",
 }
 
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails): Promise<AssignDriverResponse> {
@@ -54,7 +51,10 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
 
     if((await isMezAdmin(userId)) == false  && deliveryDriver.userId != userId) {
 
-      await checkIfOperatorAuthorized(deliveryOrder, userId);
+      // await checkIfOperatorAuthorized(deliveryOrder, userId);
+      if(userId != deliveryOrder.customerId) {
+        throw new MezError(AssignDriverError.IncorrectOrderId);
+      }
     }
     if(deliveryDriver.status != AuthorizationStatus.Authorized) {
       throw new MezError(AssignDriverError.UnauthorizedDriver);
@@ -66,10 +66,25 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
         throw new MezError(AssignDriverError.DriverAlreadyAssigned);
       }
     }
-    
-    await assignDeliveryDriver(assignDriverDetails, deliveryDriver.userId);
+    if(deliveryOrder.customerOffer == null) {
+      throw new MezError(AssignDriverError.NoCustomerOffer);
+    }
+    deliveryOrder.deliveryCost = deliveryOrder.customerOffer;
+    for (let driverId in deliveryOrder.counterOffers) {
+      if(deliveryOrder.counterOffers[parseInt(driverId)].status == CounterOfferStatus.Requested) {
+        if(parseInt(driverId) != assignDriverDetails.deliveryDriverId) {
+          deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Rejected;
+        } else {
+          deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Accepted;
+          deliveryOrder.deliveryCost = deliveryOrder.counterOffers[parseInt(driverId)].price;
+        }
+      }
+    }
+    await assignDeliveryDriver(deliveryOrder, deliveryDriver);
 
     setDeliveryChatInfo(deliveryOrder, deliveryDriver, deliveryOrder.orderType);
+
+    
     
     if( deliveryDriver.userId != userId)
       sendNotificationToDriver(deliveryDriver, deliveryOrder);
@@ -123,27 +138,27 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, deliveryOrder:
     );
 }
 
-async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: number) {
-  switch (deliveryOrder.serviceProviderType) {
-    case DeliveryServiceProviderType.DeliveryCompany:
-      let deliveryOperator: Operator = await getDeliveryOperatorByUserId(userId);
-      if (deliveryOperator.status != AuthorizationStatus.Authorized || deliveryOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
-        throw new MezError(AssignDriverError.InvalidOperator);
-      }
-      break;
-    case DeliveryServiceProviderType.Restaurant:
-      let restaurantOperator: Operator = await getRestaurantOperatorByUserId(userId);
-      if (restaurantOperator.status != AuthorizationStatus.Authorized || restaurantOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
-        throw new MezError(AssignDriverError.InvalidOperator);
-      }
-      break;
-      case DeliveryServiceProviderType.Laundry:
-        let laundryOperator: Operator = await getLaundryOperatorByUserId(userId);
-        if (laundryOperator.status != AuthorizationStatus.Authorized || laundryOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
-          throw new MezError(AssignDriverError.InvalidOperator);
-        }
-        break;
-    default:
-      break;
-  }
-}
+// async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: number) {
+//   switch (deliveryOrder.serviceProviderType) {
+//     case DeliveryServiceProviderType.DeliveryCompany:
+//       let deliveryOperator: Operator = await getDeliveryOperatorByUserId(userId);
+//       if (deliveryOperator.status != AuthorizationStatus.Authorized || deliveryOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
+//         throw new MezError(AssignDriverError.InvalidOperator);
+//       }
+//       break;
+//     case DeliveryServiceProviderType.Restaurant:
+//       let restaurantOperator: Operator = await getRestaurantOperatorByUserId(userId);
+//       if (restaurantOperator.status != AuthorizationStatus.Authorized || restaurantOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
+//         throw new MezError(AssignDriverError.InvalidOperator);
+//       }
+//       break;
+//       case DeliveryServiceProviderType.Laundry:
+//         let laundryOperator: Operator = await getLaundryOperatorByUserId(userId);
+//         if (laundryOperator.status != AuthorizationStatus.Authorized || laundryOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
+//           throw new MezError(AssignDriverError.InvalidOperator);
+//         }
+//         break;
+//     default:
+//       break;
+//   }
+// }

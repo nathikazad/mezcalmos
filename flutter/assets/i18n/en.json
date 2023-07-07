@@ -156,6 +156,7 @@
           "petSitting": "Pet Sitting",
           "mealPlanning": "Meal Planning",
           "consumable": "Consumable",
+          "coWorking": "Co-working Space",
           "art": "Art",
           "personalCare": "Personal Care",
           "class": "Class",
@@ -237,6 +238,20 @@
           "priceType": "Price Type",
           "add": "Add",
           "cancel": "Cancel"
+        },
+        "coWorking": {
+          "coWorkingTitle": "Service",
+          "title": "Co-working Space",
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
+          "homeLocation": "Pick house location",
+          "coWorkingType": "Co-working type",
+          "homeType": "Co-working type",
+          "homeTypeError": "Please select co-working type",
+          "dedicatedDesk": "Dedicated Desk",
+          "privateRoom": "Private Room",
+          "fullFloorOffice": "Full Floor Office",
+          "coWorkingSubtitle": "Advertise your pet sitting service."
         },
         "surfShop": {
           "otherServicesTitle": "Other services",
@@ -781,6 +796,7 @@
         "free": "FREE",
         "bedrooms": "Bedrooms",
         "bathrooms": "Bathrooms",
+        "petFriendly": "Pet Friendly",
         "apartment": "Apartment",
         "villa": "Villa",
         "choostTime": "Choose time",
@@ -866,6 +882,9 @@
           "title": "Open Delivery",
           "from": "From",
           "to": "To",
+          "chooseCompany" :"Choose your delivery company",
+          "chooseCompanyInfo" :"If you choose multiple the first company to accept your order will receive the order.",
+
           "thisFieldCanBeEmpty": "This field can be empty",
           "next": "Next",
           "orderNow": "Order now",
@@ -2475,6 +2494,7 @@
               "photography": "Photography",
               "beautySalon": "Beauty Salon",
               "tattooArtist": "Tattoo Artist",
+              "coWorking": "Co-working Space",
               "realEstate": "Real Estate"
             }
           }

@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -48,18 +47,20 @@ Future<DeliveryOrder?> get_driver_order_by_id(
     _paymentInfo = StripeOrderPaymentInfo.fromJson(
         orderData.restaurant_order!.stripe_info);
   }
+  mezlog(orderData.customer_offer);
   return DeliveryOrder(
     orderId: orderData.id,
     scheduleTime: (orderData.schedule_time != null)
         ? DateTime.tryParse(orderData.schedule_time!)
         : null,
     packageReady: orderData.package_ready,
+    customerOffer: orderData.customer_offer,
 
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
     serviceOrderId: orderData.restaurant_order?.id,
-    deliveryCompany: _getDeliveryCompany(orderData)!,
-    serviceProvider: _getServiceInfo(orderData)!,
+    deliveryCompany: _getDeliveryCompany(orderData),
+    serviceProvider: _getServiceInfo(orderData),
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
         image: orderData.customer.user.image,
@@ -356,6 +357,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
   return DeliveryOrder(
       deliveryDirection: cModels.DeliveryDirection.FromCustomer,
       packageReady: false,
+      customerOffer: orderData.customer_offer,
       scheduleTime: null,
       orderId: orderData.id,
       orderType: orderData.order_type.toOrderType(),
@@ -450,10 +452,13 @@ UserInfo? _getDeliveryCompany(
       orderData.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {
     case cModels.ServiceProviderType.DeliveryCompany:
-      return UserInfo(
-          hasuraId: orderData.delivery_company!.id,
-          name: orderData.delivery_company!.details!.name,
-          image: orderData.delivery_company!.details!.image);
+      if (orderData.delivery_company != null) {
+        return UserInfo(
+            hasuraId: orderData.delivery_company!.id,
+            name: orderData.delivery_company!.details!.name,
+            image: orderData.delivery_company!.details!.image);
+      }
+      break;
     case cModels.ServiceProviderType.Restaurant:
       return UserInfo(
           hasuraId: orderData.restaurant!.id,
@@ -499,13 +504,16 @@ ServiceInfo? _getServiceInfo(
           image: laundryOrder.store.details.image,
           name: laundryOrder.store.details.name);
     case cModels.OrderType.Courier:
-      return ServiceInfo(
-          location: MezLocation.fromHasura(
-              orderData.delivery_company!.details!.location.gps,
-              orderData.delivery_company!.details!.location.address),
-          hasuraId: orderData.delivery_company!.id,
-          image: orderData.delivery_company!.details!.image,
-          name: orderData.delivery_company!.details!.name);
+      if (orderData.delivery_company != null) {
+        return ServiceInfo(
+            location: MezLocation.fromHasura(
+                orderData.delivery_company!.details!.location.gps,
+                orderData.delivery_company!.details!.location.address),
+            hasuraId: orderData.delivery_company!.id,
+            image: orderData.delivery_company!.details!.image,
+            name: orderData.delivery_company!.details!.name);
+      }
+      break;
 
     default:
   }

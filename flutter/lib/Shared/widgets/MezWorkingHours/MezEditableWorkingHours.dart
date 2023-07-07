@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/SingleDayScheduleView.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezWorkingHours/controllers/MezWorkingHoursController.dart';
@@ -96,9 +97,9 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
                           children: [
                             Text(
                               convertToAmPm(
-                                  workingDay.openHours[hourIndex].from[0]
+                                  workingDay.openHours[hourIndex].fromOld[0]
                                       .toInt(),
-                                  workingDay.openHours[hourIndex].from[1]
+                                  workingDay.openHours[hourIndex].fromOld[1]
                                       .toInt()),
                               textAlign: TextAlign.center,
                             ),
@@ -107,8 +108,9 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
                             ),
                             Text(
                               convertToAmPm(
-                                  workingDay.openHours[hourIndex].to[0].toInt(),
-                                  workingDay.openHours[hourIndex].to[1]
+                                  workingDay.openHours[hourIndex].toOld[0]
+                                      .toInt(),
+                                  workingDay.openHours[hourIndex].toOld[1]
                                       .toInt()),
                               textAlign: TextAlign.center,
                             ),

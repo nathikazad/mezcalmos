@@ -201,7 +201,6 @@ export async function createRestaurant(
     image: restaurantDetails.image,
     location: restaurantDetails.location,
     schedule: restaurantDetails.schedule,
-    deliveryPartnerId: restaurantDetails.deliveryPartnerId,
     deliveryDetails: restaurantDetails.deliveryDetails,
     language: restaurantDetails.language,
     firebaseId: restaurantDetails.firebaseId,

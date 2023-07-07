@@ -237,6 +237,20 @@
           "add": "Añada",
           "cancel": "Cancelar"
         },
+        "coWorking": {
+          "coWorkingTitle": "Servicio",
+          "otherServicesTitle": "Otros servicios",
+          "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.cto o un servicio.",
+          "coWorkingSubtitle": "Anuncie su servicio de sentado para mascotas.",
+          "title": "Espacio de trabajo conjunto",
+          "homeLocation": "Elige la ubicación de la casa",
+          "coWorkingType": "Tipo de trabajo",
+          "homeType": "Tipo de trabajo",
+          "dedicatedDesk": "Escritorio dedicado",
+          "privateRoom": "Habitación privada",
+          "fullFloorOffice": "Oficina de piso completo",
+          "homeTypeError": "Seleccione el tipo de trabajo conjunto"
+        },
         "surfShop": {
           "otherServicesTitle": "Otros servicios",
           "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.cto o un servicio.",
@@ -556,11 +570,6 @@
         "CustOrderView": {
           "order": "Orden",
           "notes": "Notas",
-          "pending": "Pendiente",
-          "waitingCustomer": "Esperando su aprobación",
-          "cancelled": "Cancelada",
-          "confirmed": "Confirmada",
-          "completed": "Terminada",
           "writeNotesHere": "Escribe tus notas aquí.",
           "summary": "Resumen",
           "orderCost": "Costo de la orden",
@@ -781,6 +790,7 @@
         "perUnit": "unidad",
         "bedrooms": "Dormitorios",
         "bathrooms": "Baños",
+        "petFriendly": "Mascota amigable",
         "apartment": "Departamento",
         "choostTime": "Elige el tiempo",
         "villa": "Villa",
@@ -866,6 +876,9 @@
           "title": "Entrega abierta",
           "from": "De",
           "to": "A",
+          "chooseCompany" :"Elija su empresa de entrega",
+          "chooseCompanyInfo" :"Si elige múltiples, la primera compañía para aceptar su pedido recibirá el pedido.",
+
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
           "next": "Próxima",
           "orderNow": "Ordenar ahora",
@@ -2542,6 +2555,7 @@
               "photography": "Fotografía",
               "beautySalon": "Salón de belleza",
               "tattooArtist": "Tatuador",
+              "coWorking": "Espacio de trabajo conjunto",
               "realEstate": "Bienes raíces"
             }
           }

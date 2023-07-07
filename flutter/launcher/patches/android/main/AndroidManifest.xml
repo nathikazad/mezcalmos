@@ -16,6 +16,7 @@
     <application
       android:label="@string/appName"
       android:icon="@mipmap/launcher_icon"
+      android:requestLegacyExternalStorage="true"
     >
       <!-- Don't delete the meta-data below.
         This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
@@ -39,17 +40,6 @@
       <activity android:name="com.facebook.FacebookActivity"
           android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
           android:label="@string/app_name" />
-
-      <provider
-        android:name="androidx.core.content.FileProvider"
-        android:authorities="${applicationId}.com.shekarmudaliyar.social_share"
-        android:exported="false"
-        android:grantUriPermissions="true"
-        tools:replace="android:authorities">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/filepaths" />
-      </provider>
       
       <activity
           android:name="com.facebook.CustomTabActivity"

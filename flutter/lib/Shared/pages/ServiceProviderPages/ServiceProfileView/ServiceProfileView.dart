@@ -23,12 +23,14 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
-import 'package:social_share/social_share.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:share_plus_platform_interface/share_plus_platform_interface.dart'
+    as share;
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["ServiceProfileView"];
@@ -425,29 +427,18 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
   }
 
   void _showQrPdfModal() {
-    Future<void> shareToSocial(ShareType type) async {
+    Future<void> shareToSocial() async {
       final File? file = await _viewController.getDownloadedBusinessImage();
       final String filePath = file?.path ?? "";
 
-      switch (type) {
-        case ShareType.CopyLink:
-          final String text =
-              "https://mezkala.app/${_viewController.service.uniqueId.toString()}";
-          Clipboard.setData(ClipboardData(text: text)).then(
-              (value) => showSavedSnackBar(title: "Copied", subtitle: text));
-          return;
-        case ShareType.WhatsApp:
-          await SocialShare.shareWhatsapp("content");
-          return;
-        case ShareType.InstagramStory:
-          await SocialShare.shareInstagramStory(
-              appId: "content", imagePath: filePath);
-          return;
-        case ShareType.FacebookStory:
-          await SocialShare.shareFacebookStory(
-              appId: "content", imagePath: filePath);
-          return;
+      Future<void> shareContent() async {
+        await Share.shareXFiles(
+          [share.XFile(filePath)],
+          text: "Mezkala App",
+        );
       }
+
+      await shareContent();
     }
 
     showModalBottomSheet<void>(
@@ -485,63 +476,40 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
               SizedBox(height: 4),
               Divider(),
               SizedBox(height: 4),
-              SizedBox(
-                height: 40.sp,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: _viewController.shareIconData.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: Builder(builder: (context) {
-                        bool isLoading = false;
-                        return StatefulBuilder(builder: (context, setState) {
-                          return GestureDetector(
-                            onTap: () async {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              await shareToSocial(
-                                _viewController.shareIconData[index].type,
-                              );
-                              setState(() {
-                                isLoading = false;
-                              });
-                            },
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 2.0),
-                                  child: SizedBox(
-                                    height: 40,
-                                    width: 40,
-                                    child: isLoading
-                                        ? CircularProgressIndicator()
-                                        : CircleAvatar(
-                                            backgroundColor: Colors.transparent,
-                                            radius: 40,
-                                            backgroundImage: AssetImage(
-                                              _viewController
-                                                  .shareIconData[index].icon,
-                                            ),
-                                          ),
-                                  ),
-                                ),
-                                Text(
-                                  "${_i18n()[_viewController.shareIconData[index].label]}",
-                                  style: context.textTheme.labelSmall!.copyWith(
-                                    letterSpacing: 0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        });
-                      }),
-                    );
-                  },
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: MezButton(
+                      label: "Copy Link",
+                      icon: Icons.link,
+                      backgroundColor: Colors.white,
+                      textColor: purpleColor,
+                      borderColor: purpleColor,
+                      onClick: () async {
+                        final String text =
+                            "https://mezkala.app/${_viewController.service.uniqueId.toString()}";
+                        await Clipboard.setData(ClipboardData(text: text)).then(
+                            (value) => showSavedSnackBar(
+                                title: "Copied", subtitle: text));
+                        return;
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 6),
+                  Expanded(
+                    child: MezButton(
+                      label: "Share",
+                      icon: Icons.share,
+                      backgroundColor: purpleColor,
+                      textColor: Colors.white,
+                      borderColor: purpleColor,
+                      onClick: () async {
+                        await shareToSocial();
+                      },
+                    ),
+                  ),
+                ],
               ),
               Row(
                 children: [

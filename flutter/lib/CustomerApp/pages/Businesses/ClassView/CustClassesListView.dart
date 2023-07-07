@@ -305,8 +305,9 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                             imageUrl: viewController
                                     .classes[index].details.firstImage ??
                                 defaultUserImgUrl,
-                            errorWidget: (BuildContext context, url, error) =>
-                                Icon(Icons.error),
+                            errorWidget:
+                                (BuildContext context, String url, error) =>
+                                    Icon(Icons.error),
                             imageBuilder: (BuildContext context,
                                     ImageProvider<Object> imageProvider) =>
                                 CircleAvatar(
@@ -347,7 +348,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                           period: viewController.classes[index].period,
                           showTitle: false,
                           showIcons: false,
-                          schedule: viewController.classes[index].schedule,
+                          schedule: viewController.classes[index].schedule!,
                           scheduleType:
                               viewController.classes[index].scheduleType)
                     ],

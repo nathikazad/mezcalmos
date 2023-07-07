@@ -51,22 +51,22 @@ class OrderPositionedFromToTopBar {
     );
   }
 
-  static Widget _topOrderTimeBar(TaxiOrder order) {
-    return Positioned(
-      top: 90, //isSmallDevice(context) ? 90 : 65,
-      left: 10,
-      right: 10,
-      child: OrderTimeTopBar(
-        barText: DateFormat('EEEE dd / MM / y').format(
-              order.scheduledTime ?? order.orderTime,
-            ) +
-            ' at ' +
-            DateFormat('hh:mm a').format(
-              order.scheduledTime?.toLocal() ?? order.orderTime.toLocal(),
-            ),
-      ),
-    );
-  }
+  // static Widget _topOrderTimeBar(TaxiOrder order) {
+  //   return Positioned(
+  //     top: 90, //isSmallDevice(context) ? 90 : 65,
+  //     left: 10,
+  //     right: 10,
+  //     child: OrderTimeTopBar(
+  //       barText: DateFormat('EEEE dd / MM / y').format(
+  //             order.scheduledTime ?? order.orderTime,
+  //           ) +
+  //           ' at ' +
+  //           DateFormat('hh:mm a').format(
+  //             order.scheduledTime?.toLocal() ?? order.orderTime.toLocal(),
+  //           ),
+  //     ),
+  //   );
+  // }
 
   static List<Widget> buildwithWidgets({
     required Widget fromWidget,
@@ -174,7 +174,7 @@ class OrderPositionedFromToTopBar {
 
   static List<Widget> build({
     required BuildContext context,
-    required TaxiOrder order,
+ //   required TaxiOrder order,
   }) {
     return [
       Positioned(
@@ -217,26 +217,26 @@ class OrderPositionedFromToTopBar {
                       ),
                     ),
                     SizedBox(width: 5),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => MezSnackbar(
-                          i18n()["from"],
-                          order.from.address,
-                        ),
-                        child: Text(
-                          order.from.address.replaceAll(' ', '\u00a0'),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w400,
-                          ),
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: GestureDetector(
+                    //     onTap: () => MezSnackbar(
+                    //       i18n()["from"],
+                    //       order.from.address,
+                    //     ),
+                    //     child: Text(
+                    //       order.from.address.replaceAll(' ', '\u00a0'),
+                    //       textAlign: TextAlign.left,
+                    //       style: TextStyle(
+                    //         fontSize: 13,
+                    //         fontFamily: 'Nunito',
+                    //         fontWeight: FontWeight.w400,
+                    //       ),
+                    //       maxLines: 1,
+                    //       softWrap: false,
+                    //       overflow: TextOverflow.ellipsis,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -281,27 +281,27 @@ class OrderPositionedFromToTopBar {
                       ),
                     ),
                     SizedBox(width: 5),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => MezSnackbar(
-                            i18n()["to"], order.dropOffLocation.address),
-                        child: Text(
-                          order.dropOffLocation.address
-                              .replaceAll(' ', '\u00a0')
-                              .toUpperCase(),
-                          textAlign: TextAlign.left,
-                          textWidthBasis: TextWidthBasis.longestLine,
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontFamily: 'Nunito',
-                            fontWeight: FontWeight.w400,
-                          ),
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: GestureDetector(
+                    //     onTap: () => MezSnackbar(
+                    //         i18n()["to"], order.dropOffLocation.address),
+                    //     child: Text(
+                    //       order.dropOffLocation.address
+                    //           .replaceAll(' ', '\u00a0')
+                    //           .toUpperCase(),
+                    //       textAlign: TextAlign.left,
+                    //       textWidthBasis: TextWidthBasis.longestLine,
+                    //       style: TextStyle(
+                    //         fontSize: 13,
+                    //         fontFamily: 'Nunito',
+                    //         fontWeight: FontWeight.w400,
+                    //       ),
+                    //       maxLines: 1,
+                    //       softWrap: false,
+                    //       overflow: TextOverflow.ellipsis,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -313,10 +313,10 @@ class OrderPositionedFromToTopBar {
     ];
   }
 
-  static List<Widget> buildWithOrderTimeBar({
-    required BuildContext context,
-    required TaxiOrder order,
-  }) {
-    return [...build(context: context, order: order), _topOrderTimeBar(order)];
-  }
+  // static List<Widget> buildWithOrderTimeBar({
+  //   required BuildContext context,
+  //   //required TaxiOrder order,
+  // }) {
+  //   return [...build(context: context, order: order), _topOrderTimeBar(order)];
+  // }
 }

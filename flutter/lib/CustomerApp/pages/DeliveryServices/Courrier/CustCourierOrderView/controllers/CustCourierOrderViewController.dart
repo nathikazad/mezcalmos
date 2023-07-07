@@ -44,6 +44,8 @@ class CustCourierOrderViewController {
   StreamSubscription<CourierOrder?>? orderStream;
   String? subscriptionId;
 
+  get sawNotifDrivers => null;
+
   // init
   Future<void> init(
       {required int orderId, required BuildContext context}) async {
@@ -194,15 +196,15 @@ class CustCourierOrderViewController {
 
   Future<void> _priceChangeResponse({required bool accepted}) async {
     try {
-      cModels.ChangePriceResResponse res =
-          await CloudFunctions.delivery3_changeDeliveryPriceResponse(
-              accepted: accepted,
-              orderId: order.orderId,
-              orderType: cModels.OrderType.Courier);
-      if (res.success == false) {
-        mezDbgPrint(res.error);
-        showErrorSnackBar(errorText: res.error.toString());
-      }
+      // cModels.ChangePriceResResponse res =
+      //     await CloudFunctions.delivery3_changeDeliveryPriceResponse(
+      //         accepted: accepted,
+      //         orderId: order.orderId,
+      //         orderType: cModels.OrderType.Courier);
+      // if (res.success == false) {
+      //   mezDbgPrint(res.error);
+      //   showErrorSnackBar(errorText: res.error.toString());
+      // }
     } on FirebaseFunctionsException catch (e) {
       showErrorSnackBar(errorText: e.message.toString());
       mezDbgPrint(e);
@@ -246,4 +248,8 @@ class CustCourierOrderViewController {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     _order.close();
   }
+
+  acceptOffer({required int id}) {}
+
+  rejectOffer({required int id}) {}
 }

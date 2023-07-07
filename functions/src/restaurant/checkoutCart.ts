@@ -20,15 +20,15 @@ import { applyDiscount } from "./applyOffer";
 import { updateOffersApplied } from "../shared/graphql/offer/updateOffer";
 import { updateStoreCredit } from "../shared/graphql/offer/updateStoreCredit";
 import { ServiceProviderType } from "../shared/models/Services/Service";
-import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
-import { ServiceProvider } from '../shared/models/Services/Service';
-import { notifyDeliveryCompany } from '../shared/helper';
 import { DiscountType } from '../shared/models/Services/Offer';
+import { ServiceProvider } from '../shared/models/Services/Service';
+import { notifyDeliveryDrivers } from '../shared/helper';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
   customerLocation: Location,
-  deliveryCost: number,
+  customerDeliveryOffer?: number,
+  chosenCompanies?: Array<number>,
   paymentType: PaymentType,
   notes?: string,
   restaurantId: number,
@@ -89,8 +89,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
 
-      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, 7);
-      notifyDeliveryCompany(orderResponse.deliveryOrder);
+      notifyDeliveryDrivers(orderResponse.deliveryOrder);
     }
     
     if(checkoutRequest.paymentType == PaymentType.Card) {
@@ -151,10 +150,8 @@ function errorChecks(restaurant: ServiceProvider, checkoutRequest: CheckoutReque
     throw new MezError(CheckoutResponseError.CartEmpty);
 
   }
-  if(checkoutRequest.deliveryType == undefined || checkoutRequest.deliveryType == DeliveryType.Delivery) {
-    if(restaurant.deliveryDetails.deliveryAvailable == false) {
-      throw new MezError(CheckoutResponseError.NotAcceptingDeliveryOrders);
-    }
+  if(checkoutRequest.deliveryType != DeliveryType.Pickup && restaurant.deliveryDetails.deliveryAvailable == false) {
+    throw new MezError(CheckoutResponseError.NotAcceptingDeliveryOrders);
   }
 }
 

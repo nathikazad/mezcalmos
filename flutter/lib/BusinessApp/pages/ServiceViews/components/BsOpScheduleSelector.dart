@@ -193,13 +193,13 @@ class _BsOpScheduleSelectorState extends State<BsOpScheduleSelector> {
                                                             .value
                                                             .openHours[
                                                                 hourIndex]
-                                                            .from[0]
+                                                            .fromOld[0]
                                                             .toInt(),
                                                         entry
                                                             .value
                                                             .openHours[
                                                                 hourIndex]
-                                                            .from[1]
+                                                            .fromOld[1]
                                                             .toInt()),
                                                     textAlign: TextAlign.center,
                                                   ),
@@ -212,13 +212,13 @@ class _BsOpScheduleSelectorState extends State<BsOpScheduleSelector> {
                                                             .value
                                                             .openHours[
                                                                 hourIndex]
-                                                            .to[0]
+                                                            .toOld[0]
                                                             .toInt(),
                                                         entry
                                                             .value
                                                             .openHours[
                                                                 hourIndex]
-                                                            .to[1]
+                                                            .toOld[1]
                                                             .toInt()),
                                                     textAlign: TextAlign.center,
                                                   ),

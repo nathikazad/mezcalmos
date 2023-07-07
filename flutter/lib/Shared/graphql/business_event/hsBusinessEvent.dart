@@ -247,7 +247,7 @@ Future<EventWithBusinessCard?> get_event_by_id(
             phoneNo: data.business.details.phone_number,
             onlineOrdering: data.business.details.online_ordering,
             lastActive: data.business.details.last_active_time != null
-                ? DateTime.parse(data.business.details.last_active_time!)
+                ? DateTime.parse(data.business.details.last_active_time)
                 : null,
             id: data.business.id,
             detailsId: data.business.details.id,

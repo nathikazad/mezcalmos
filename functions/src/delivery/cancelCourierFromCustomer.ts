@@ -67,9 +67,7 @@ export async function cancelCourierFromCustomer(userId: number, cancelOrderDetai
 }
 
 async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrderDetails, deliveryId: number) {
-    let promiseResponse = await Promise.all([getMezAdmins(), getDeliveryOperators(courierOrder.deliveryOrder.serviceProviderId)]);
-    let mezAdmins: MezAdmin[] = promiseResponse[0];
-    let deliveryOperators: Operator[] = promiseResponse[1];
+    let mezAdmins: MezAdmin[] = await getMezAdmins();
 
     let adminNotification: Notification = {
         foreground: <CourierOrderStatusChangeNotification>{
@@ -86,17 +84,17 @@ async function notify(courierOrder: CourierOrder, cancelOrderDetails: CancelOrde
     mezAdmins.forEach((m) => {
         pushNotification(m.firebaseId!, adminNotification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
     });
-    deliveryOperators.forEach((d) => {
-        pushNotification(d.user?.firebaseId!,
-            adminNotification,
-            d.notificationInfo,
-            ParticipantType.DeliveryOperator,
-            d.user?.language
-        );
-    });
-
-    
-
+    if(courierOrder.deliveryOrder.serviceProviderId) {
+        let deliveryOperators: Operator[] = await getDeliveryOperators(courierOrder.deliveryOrder.serviceProviderId);
+        deliveryOperators.forEach((d) => {
+            pushNotification(d.user?.firebaseId!,
+                adminNotification,
+                d.notificationInfo,
+                ParticipantType.DeliveryOperator,
+                d.user?.language
+            );
+        });
+    }
 
     let driverNotification: Notification = {
         foreground: <CourierOrderStatusChangeNotification>{

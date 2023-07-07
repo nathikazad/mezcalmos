@@ -1,5 +1,4 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class BusinessCard {
   int id;

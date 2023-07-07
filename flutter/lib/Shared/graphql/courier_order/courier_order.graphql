@@ -40,6 +40,9 @@ query get_courier_order_by_id($orderId: Int!) {
         language_id
       }
     }
+    counter_offers
+    notified_drivers
+    customer_offer
      driver_review_by_customer {
        from_name,
     from_image,
@@ -196,11 +199,17 @@ subscription listen_on_courier_order_by_id($orderId: Int!) {
       unavailable
     }
     delivery_order {
+      
+     counter_offers,
+          customer_offer,
+
+    notified_drivers,
        driver_review_by_customer {
+           to_image,
          from_name,
     from_image,
     to_name,
-    to_image,
+ 
       created_at
       from_entity_id
       from_entity_type

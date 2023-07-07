@@ -102,6 +102,8 @@ select_permissions:
       columns:
         - id
         - stripe_info
+        - delivery_id
+
       filter:
         delivery:
           delivery_company:

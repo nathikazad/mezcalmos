@@ -4,10 +4,11 @@ export interface WorkingDay{
     isOpen: boolean;
     openHours: Array<OpenHours>;
 }
-export interface OpenHours{
-  to: Array<number>;
-  from: Array<number>;
+interface OpenHours {
+    to: string;
+    from: string;
 }
+
 export enum Weekday {
     Monday = "monday",
     Tuesday = "tuesday",

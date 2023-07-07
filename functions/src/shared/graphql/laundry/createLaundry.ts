@@ -133,7 +133,6 @@ export async function createLaundryStore(
         image: laundryDetails.image,
         location: laundryDetails.location,
         schedule: laundryDetails.schedule,
-        deliveryPartnerId: laundryDetails.deliveryPartnerId,
         deliveryDetails: laundryDetails.deliveryDetails,
         language: laundryDetails.language,
         firebaseId: laundryDetails.firebaseId,

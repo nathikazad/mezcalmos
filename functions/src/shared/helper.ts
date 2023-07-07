@@ -2,7 +2,8 @@ import { deliveryNewOrderMessage } from "../delivery/bgNotificationMessages";
 import { RemoveDriverError } from "../delivery/removeDriver";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getDeliveryDrivers } from "./graphql/delivery/driver/getDeliveryDriver";
-import { getDeliveryOperatorByUserId, getDeliveryOperators } from "./graphql/delivery/operator/getDeliveryOperator";
+import { getDeliveryOperatorByUserId } from "./graphql/delivery/operator/getDeliveryOperator";
+import { setNotifiedDrivers } from "./graphql/delivery/updateDelivery";
 import { getLaundryOperatorByUserId } from "./graphql/laundry/operator/getLaundryOperator";
 import { getRestaurantOperatorByUserId } from "./graphql/restaurant/operators/getRestaurantOperators";
 import { getMezAdmin } from "./graphql/user/mezAdmin/getMezAdmin";
@@ -21,63 +22,63 @@ export async function isMezAdmin(userId: number): Promise<boolean> {
     }
 }
 
-export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder) {
-    let deliveryOperators: Operator[] = await getDeliveryOperators(deliveryOrder.serviceProviderId);
-    let deliveryDrivers: DeliveryDriver[] = await getDeliveryDrivers(deliveryOrder.serviceProviderId);
+export async function notifyDeliveryDrivers(deliveryOrder: DeliveryOrder) {
+
+  let deliveryDrivers: DeliveryDriver[] = await getDeliveryDrivers(deliveryOrder.chosenCompanies!);
+
+  let notification: Notification = {
+    foreground: <OrderNotification>{
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.NewOrder,
+      orderType: deliveryOrder.orderType,
+      notificationAction: NotificationAction.ShowPopUp,
+      orderId: deliveryOrder.deliveryId
+    },
+    background: deliveryNewOrderMessage,
+    linkUrl: `/deliveryOrders/${deliveryOrder.deliveryId}`
+  }
   
-    let notification: Notification = {
-      foreground: <OrderNotification>{
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.NewOrder,
-        orderType: deliveryOrder.orderType,
-        notificationAction: NotificationAction.ShowPopUp,
-        orderId: deliveryOrder.deliveryId
-      },
-      background: deliveryNewOrderMessage,
-      linkUrl: `/deliveryOrders/${deliveryOrder.deliveryId}`
-    }
-  
-    deliveryOperators.forEach((d) => {
-      pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator, d.user?.language);
-    });
-    
-    deliveryDrivers.filter((d) => (d.status == AuthorizationStatus.Authorized && d.online));
-  
-    if(deliveryDrivers.length > 10) {
-      for(let i=0; i<10; i++) {
-        for(let j=10; j<deliveryDrivers.length; j++) {
-          if(!(deliveryDrivers[i].currentLocation)) {
-            deliveryDrivers[i] = deliveryDrivers[j];
-            continue;
-          }
-          if(!(deliveryDrivers[j].currentLocation))
-            continue;
-          
-          let dist1 = distance(
-            deliveryOrder.pickupLocation?.lat ?? deliveryOrder.dropoffLocation.lat, 
-            deliveryOrder.pickupLocation?.lng ?? deliveryOrder.dropoffLocation.lng,
-            deliveryDrivers[i].currentLocation!.lat,
-            deliveryDrivers[i].currentLocation!.lng
-          )
-          let dist2 = distance(
-            deliveryOrder.pickupLocation?.lat ?? deliveryOrder.dropoffLocation.lat, 
-            deliveryOrder.pickupLocation?.lng ?? deliveryOrder.dropoffLocation.lng,
-            deliveryDrivers[j].currentLocation!.lat,
-            deliveryDrivers[j].currentLocation!.lng
-          )
-          if(dist1 > dist2) {
-            let temp = deliveryDrivers[i];
-            deliveryDrivers[i] = deliveryDrivers[j];
-            deliveryDrivers[j] = temp;
-          }
+  deliveryDrivers.filter((d) => (d.status == AuthorizationStatus.Authorized && d.online));
+
+  if(deliveryDrivers.length > 10) {
+    for(let i=0; i<10; i++) {
+      for(let j=10; j<deliveryDrivers.length; j++) {
+        if(!(deliveryDrivers[i].currentLocation)) {
+          deliveryDrivers[i] = deliveryDrivers[j];
+          continue;
+        }
+        if(!(deliveryDrivers[j].currentLocation))
+          continue;
+        
+        let dist1 = distance(
+          deliveryOrder.pickupLocation?.lat ?? deliveryOrder.dropoffLocation.lat, 
+          deliveryOrder.pickupLocation?.lng ?? deliveryOrder.dropoffLocation.lng,
+          deliveryDrivers[i].currentLocation!.lat,
+          deliveryDrivers[i].currentLocation!.lng
+        )
+        let dist2 = distance(
+          deliveryOrder.pickupLocation?.lat ?? deliveryOrder.dropoffLocation.lat, 
+          deliveryOrder.pickupLocation?.lng ?? deliveryOrder.dropoffLocation.lng,
+          deliveryDrivers[j].currentLocation!.lat,
+          deliveryDrivers[j].currentLocation!.lng
+        )
+        if(dist1 > dist2) {
+          let temp = deliveryDrivers[i];
+          deliveryDrivers[i] = deliveryDrivers[j];
+          deliveryDrivers[j] = temp;
         }
       }
     }
-    deliveryDrivers = deliveryDrivers.slice(0, 10);
-    notification.linkUrl = `/orders/${deliveryOrder.deliveryId}`
-    deliveryDrivers.forEach((d) => {
-      pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user?.language);
-    });
+  }
+  deliveryDrivers = deliveryDrivers.slice(0, 10);
+  notification.linkUrl = `/orders/${deliveryOrder.deliveryId}`
+  deliveryDrivers.forEach((d) => {
+    pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryDriver);
+  });
+  deliveryDrivers.forEach((d) => {
+    deliveryOrder.notifiedDrivers[d.id] = false;
+  });
+  setNotifiedDrivers(deliveryOrder)
 }
   
 function distance(lat1: number, lon1: number, lat2: number, lon2: number) {

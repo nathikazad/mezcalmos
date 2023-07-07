@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -15,11 +16,13 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderBillImage.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
@@ -28,7 +31,6 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustCourierOrderView"];
@@ -106,6 +108,109 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  if (viewController.order.notifiedDrivers != null)
+                    Card(
+                      margin: EdgeInsets.only(top: 15),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Flexible(
+                                  fit: FlexFit.tight,
+                                  child: Text(
+                                    "Your offered delivery price",
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                ),
+                                Text(
+                                  viewController.order.customerOffer
+                                          ?.toPriceString() ??
+                                      "-",
+                                  style: context.textTheme.bodyLarge,
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                MezIconButton(
+                                  icon: Icons.add,
+                                  iconSize: 22,
+                                  padding: EdgeInsets.all(3),
+                                  onTap: () async {},
+                                ),
+                              ],
+                            ),
+                            smallSepartor,
+                            Text(
+                                "${viewController.order.driversSawOfferCount} out of ${viewController.order.notifiedDrivers?.length} drivers have seen your order and not accepted it")
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (viewController.order.counterOffers?.isNotEmpty ==
+                      true) ...[
+                    meduimSeperator,
+                    Text(
+                      "Counter offers (${viewController.order.counterOffers?.length})",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    smallSepartor,
+                    Column(
+                      children: viewController.order.counterOffers!.entries
+                          .map((MapEntry<int, cModels.CounterOffer> entry) {
+                        final int key = entry.key;
+                        final cModels.CounterOffer counterOffer = entry.value;
+
+                        return MezCard(
+                            firstAvatarBgImage: (counterOffer.image != null)
+                                ? CachedNetworkImageProvider(
+                                    counterOffer.image!)
+                                : null,
+                            action: Row(
+                              children: [
+                                MezInkwell(
+                                  borderRadius: 5,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 12),
+                                  backgroundColor: Colors.white,
+                                  textColor: redAccentColor,
+                                  borderColor: redAccentColor,
+                                  onClick: () async {
+                                    await viewController.rejectOffer(id: key);
+                                  },
+                                  label: "Reject",
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                MezInkwell(
+                                  borderRadius: 5,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 12),
+                                  onClick: () async {
+                                    await viewController.acceptOffer(id: key);
+                                  },
+                                  label: "Accept",
+                                ),
+                              ],
+                            ),
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  counterOffer.name ?? "error",
+                                  style: context.textTheme.bodyLarge,
+                                ),
+                                Text(
+                                  counterOffer.price.toPriceString(),
+                                  style: context.textTheme.bodyLarge,
+                                )
+                              ],
+                            ));
+                      }).toList(),
+                    )
+                  ],
                   if (viewController.order.estimatedArrivalAtDropoff != null)
                     _estTime(),
                   _driverCard(),
@@ -393,7 +498,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
           viewController.order.deliveryOrderId != null) {
         return CustAddReviewButton(
           orderId: viewController.order.deliveryOrderId!,
-          toEntityId: viewController.order.serviceProvider.hasuraId,
+          toEntityId: viewController.order.serviceProvider!.hasuraId,
           toEntityType: cModels.ServiceProviderType.DeliveryCompany,
         );
       } else {

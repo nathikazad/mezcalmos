@@ -115,7 +115,6 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
     if (order.deliveryType == DeliveryType.Delivery && order.fromCustomerDeliveryId) {
 
       let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId);
-      let deliveryOperators: Operator[] = await getDeliveryOperators(fromCustomerDeliveryOrder.serviceProviderId);
 
       // switch (prevStatus) {
       //   case LaundryOrderStatus.OrderReceived:
@@ -137,14 +136,18 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
         background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
         linkUrl: `/orders/${order.fromCustomerDeliveryId}`
       };
-      deliveryOperators.forEach((d) => {
-        pushNotification(d.user?.firebaseId!,
-          notification,
-          d.notificationInfo,
-          ParticipantType.DeliveryOperator,
-          d.user?.language
-        );
-      })
+      if(fromCustomerDeliveryOrder.serviceProviderId) {
+        let deliveryOperators: Operator[] = await getDeliveryOperators(fromCustomerDeliveryOrder.serviceProviderId);
+
+        deliveryOperators.forEach((d) => {
+          pushNotification(d.user?.firebaseId!,
+            notification,
+            d.notificationInfo,
+            ParticipantType.DeliveryOperator,
+            d.user?.language
+          );
+        })
+      }
       if(fromCustomerDeliveryOrder.deliveryDriver) 
         pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId!,
           notification,

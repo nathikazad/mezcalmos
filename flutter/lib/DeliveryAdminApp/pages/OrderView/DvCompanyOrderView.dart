@@ -111,7 +111,9 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                           .order.value!.routeInformation?.polyline,
                       from: viewController.order.value!.pickupLocation,
                       to: viewController.order.value!.dropOffLocation),
-                if (MezEnv.appType == AppType.MezAdmin) _serviceCard(),
+                if (MezEnv.appType == AppType.MezAdmin &&
+                    viewController.order.value?.serviceProvider != null)
+                  _serviceCard(),
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
@@ -330,7 +332,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
         margin: const EdgeInsets.only(top: 20),
         contentPadding: const EdgeInsets.all(8),
         firstAvatarBgImage: CachedNetworkImageProvider(
-            viewController.order.value!.serviceProvider.image),
+            viewController.order.value!.serviceProvider!.image),
         action: MessageButton(
           chatId: 55,
           onTap: () {},
@@ -339,7 +341,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              viewController.order.value!.serviceProvider.name,
+              viewController.order.value!.serviceProvider!.name,
               style: context.txt.bodyLarge,
             ),
           ],

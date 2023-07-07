@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsCoWorkingView/BsCoWorkingView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/BsEventView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/BsHomeRentalView.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsOtherServiceView/controller/BsOtherServiceViewController.dart';
@@ -147,6 +148,7 @@ class BsServicesListViewController {
         case BusinessProfile.Photography:
         case BusinessProfile.BeautySalon:
         case BusinessProfile.TattooArtist:
+        case BusinessProfile.CoWorking:
           return OtherServiceType.Service;
       }
     }
@@ -174,6 +176,8 @@ class BsServicesListViewController {
     final String serviceSubtitleLangKey = "serviceSubtitle";
     final String productTitleLangKey = "productTitle";
     final String productSubTitleLangKey = "productSubtitle";
+    final String coWorkingTitleLangKey = "coWorkingTitle";
+    final String coWorkingSubtitleLangKey = "coWorkingSubtitle";
 
     switch (businessProfile) {
       case BusinessProfile.SurfShop:
@@ -452,6 +456,18 @@ class BsServicesListViewController {
           ),
           otherServices(),
         ];
+      case BusinessProfile.CoWorking:
+        return [
+          BusinessProfileItem(
+            title: coWorkingTitleLangKey,
+            subtitle: coWorkingSubtitleLangKey,
+            route: () async {
+              mezDbgPrint("Details id here ========$businessDetailsId");
+              await navigateToCoWorking();
+            },
+          ),
+          otherServices(),
+        ];
     }
   }
 
@@ -487,6 +503,14 @@ class BsServicesListViewController {
     bool? refetch = await BsOpHomeRentalView.navigate(
         businessDetailsId: businessDetailsId, businessId: businessId, id: id);
     if (refetch == true) unawaited(_fetchHomeRentals());
+  }
+
+  Future<void> navigateToCoWorking({
+    int? id,
+  }) async {
+    bool? refetch = await BsCoWorkingView.navigate(
+        businessDetailsId: businessDetailsId, businessId: businessId, id: id);
+    if (refetch == true) unawaited(_fetchCoWorking());
   }
 
   Future<void> navigateToRealEstate({
@@ -578,6 +602,15 @@ class BsServicesListViewController {
       busniessId: businessId,
       withCache: false,
     );
+    _isFetchingSingle.value = false;
+  }
+
+  Future<void> _fetchCoWorking() async {
+    _isFetchingSingle.value = true;
+    // homeRentals.value = await get_business_home_rentals(
+    //   busniessId: businessId,
+    //   withCache: false,
+    // );
     _isFetchingSingle.value = false;
   }
 

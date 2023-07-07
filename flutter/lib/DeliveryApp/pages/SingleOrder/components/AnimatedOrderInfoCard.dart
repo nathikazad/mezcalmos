@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -271,12 +270,13 @@ class AnimatedOrderInfoCard extends StatelessWidget {
             ),
           ),
         if (order.status == cModels.DeliveryOrderStatus.Delivered &&
-            order.serviceReviewByDriver == null)
+            order.serviceReviewByDriver == null &&
+            order.serviceProvider != null)
           InkWell(
             onTap: () async {
               int? resviewId = await addReviewDialog(
                   context: context,
-                  toEntityId: order.serviceProvider.hasuraId,
+                  toEntityId: order.serviceProvider!.hasuraId,
                   toEntityType: order.orderType.toServiceProviderType(),
                   fromEntityId: Get.find<AuthController>().hasuraUserId!,
                   fromEntityType: cModels.ServiceProviderType.DeliveryDriver,
@@ -451,28 +451,44 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "${order.costs.totalCost?.toPriceString(rounded: true)}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13.sp,
+              if (order.costs.deliveryCost != null &&
+                  order.costs.deliveryCost! > 0) ...[
+                Text(
+                  "${order.costs.totalCost?.toPriceString(rounded: true)}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13.sp,
+                  ),
                 ),
-              ),
-              Text(
-                "${order.costs.itemCostsWithTax.toPriceString(rounded: true)} + ${order.costs.deliveryCost?.toPriceString(rounded: true)}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: Colors.grey.shade700,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 11.sp,
+                Text(
+                  "${order.costs.itemCostsWithTax.toPriceString(rounded: true)} + ${order.costs.deliveryCost?.toPriceString(rounded: true)}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 11.sp,
+                  ),
                 ),
-              ),
+              ] else if (order.customerOffer != null) ...[
+                Row(
+                  children: [
+                    Icon(Icons.delivery_dining),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      order.customerOffer!.toPriceString(),
+                      style: context.textTheme.bodyLarge,
+                    )
+                  ],
+                )
+              ],
               Text(
                   "${_i18n()["${order.paymentType.toNormalString().toLowerCase()}"]}")
             ],

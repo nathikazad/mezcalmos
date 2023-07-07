@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/src/intl/date_format.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:intl/src/intl/date_format.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Offerings']['components'];
@@ -107,7 +107,7 @@ class _CustBusinessScheduleBuilderState
             return Builder(
               builder: (BuildContext context) {
                 final bool isOpen = workingDays.value.isOpen;
-                final isLastDay =
+                final bool isLastDay =
                     concatenatedSchedule.entries.last.key == workingDays.key;
                 return isOpen
                     ? Column(
@@ -149,15 +149,16 @@ class _CustBusinessScheduleBuilderState
                                     ),
                               Column(
                                 children: [
-                                  ...workingDays.value.openHours.map((element) {
+                                  ...workingDays.value.openHours
+                                      .map((OpenHours element) {
                                     final String fromHour =
-                                        element.from.first.toString();
+                                        element.fromOld.first.toString();
                                     final String fromMinute =
-                                        element.from.last.toString();
+                                        element.fromOld.last.toString();
                                     final String toHour =
-                                        element.to.first.toString();
+                                        element.toOld.first.toString();
                                     final String toMinute =
-                                        element.to.last.toString();
+                                        element.toOld.last.toString();
                                     return Text(
                                       "${formatTime(fromHour, fromMinute)} - ${formatTime(toHour, toMinute)}",
                                     );

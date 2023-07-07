@@ -376,14 +376,6 @@ class _CustBusinessAdditionalData extends StatelessWidget {
         'houseType':
             '${_i18n()[homeRental?.category1.name.toLowerCase()] ?? ''}',
       };
-      final Map<String, String> moreAdditionalValues = homeRental
-              ?.details.additionalParameters
-              ?.map((key, value) => MapEntry(key, value.toString())) ??
-          {};
-
-      additionalValues.addAll(
-        moreAdditionalValues,
-      );
 
       String additionalData = '';
 
@@ -395,6 +387,9 @@ class _CustBusinessAdditionalData extends StatelessWidget {
           additionalData += ' • ';
         }
       }
+      additionalData += homeRental?.details.additionalParameters?["petFriendly"] != null
+              ? ' • ${_i18n()["petFriendly"] ?? ''}'
+              : "";
       return additionalData;
     }
 

@@ -1,106 +1,106 @@
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
+// import 'package:mezcalmos/Shared/constants/global.dart';
+// import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+// import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+// import 'package:mezcalmos/Shared/models/User.dart';
 
-class CounterOffer {
-  num price;
-  DateTime offerValidTime;
-  CounterOfferStatus counterOfferStatus;
-  // this is needed
-  UserInfo driverInfo;
+// class CounterOffer {
+//   num price;
+//   DateTime offerValidTime;
+//   CounterOfferStatus counterOfferStatus;
+//   // this is needed
+//   UserInfo driverInfo;
 
-  CounterOffer({
-    required this.price,
-    this.counterOfferStatus = CounterOfferStatus.Submitted,
-    required this.offerValidTime,
-    required this.driverInfo,
-  });
+//   CounterOffer({
+//     required this.price,
+//     this.counterOfferStatus = CounterOfferStatus.Submitted,
+//     required this.offerValidTime,
+//     required this.driverInfo,
+//   });
 
-  /// Builds a counter offer with 30 second validity by default
-  /// validTime in seconds
-  factory CounterOffer.buildWithExpiration({
-    required num price,
-    required UserInfo taxiUserInfo,
-    int validTimeInSeconds = nDefaultCounterOfferValidExpireTimeInSeconds,
-  }) {
-    return CounterOffer(
-        price: price,
-        driverInfo: taxiUserInfo,
-        offerValidTime:
-            DateTime.now().toUtc().add(Duration(seconds: validTimeInSeconds)));
-  }
+//   /// Builds a counter offer with 30 second validity by default
+//   /// validTime in seconds
+//   factory CounterOffer.buildWithExpiration({
+//     required num price,
+//     required UserInfo taxiUserInfo,
+//     int validTimeInSeconds = nDefaultCounterOfferValidExpireTimeInSeconds,
+//   }) {
+//     return CounterOffer(
+//         price: price,
+//         driverInfo: taxiUserInfo,
+//         offerValidTime:
+//             DateTime.now().toUtc().add(Duration(seconds: validTimeInSeconds)));
+//   }
 
-  factory CounterOffer.fromData(data, {required UserInfo taxiUserInfo}) {
-    return CounterOffer(
-        price: data["price"],
-        offerValidTime: DateTime.parse(data["offerValidTime"]),
-        counterOfferStatus: data["status"].toString().toCounterOfferStatus(),
-        driverInfo: taxiUserInfo);
-  }
+//   factory CounterOffer.fromData(data, {required UserInfo taxiUserInfo}) {
+//     return CounterOffer(
+//         price: data["price"],
+//         offerValidTime: DateTime.parse(data["offerValidTime"]),
+//         counterOfferStatus: data["status"].toString().toCounterOfferStatus(),
+//         driverInfo: taxiUserInfo);
+//   }
 
-  bool get isValid => counterOfferStatus == CounterOfferStatus.Submitted;
+//   bool get isValid => counterOfferStatus == CounterOfferStatus.Submitted;
 
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "driverInfo": driverInfo.toFirebaseFormatJson(),
-      "price": price,
-      "offerValidTime": offerValidTime.toIso8601String(),
-      "offerValidTimeEpoch": offerValidTime.millisecondsSinceEpoch,
-      "status": counterOfferStatus.toFirebaseFormatString()
-    };
-  }
+//   Map<String, dynamic> toFirebaseFormattedJson() {
+//     return <String, dynamic>{
+//       "driverInfo": driverInfo.toFirebaseFormatJson(),
+//       "price": price,
+//       "offerValidTime": offerValidTime.toIso8601String(),
+//       "offerValidTimeEpoch": offerValidTime.millisecondsSinceEpoch,
+//       "status": counterOfferStatus.toFirebaseFormatString()
+//     };
+//   }
 
-  /// this function calculates the diffrence in seconds between the [offerValidTime] and [DateTime.now()]  (negative number till 0)
-  ///
-  /// basically if the return == 0 , it means that this Offer is expired.
-  int validityTimeDifference() {
-    mezDbgPrint(
-        "offerTime => ${offerValidTime.toUtc()}  | now => ${DateTime.now()}");
-    int r = DateTime.now().toUtc().difference(offerValidTime.toUtc()).inSeconds;
-    mezDbgPrint("validityTimeDifference ===> $r");
-    return r;
-  }
-}
+//   /// this function calculates the diffrence in seconds between the [offerValidTime] and [DateTime.now()]  (negative number till 0)
+//   ///
+//   /// basically if the return == 0 , it means that this Offer is expired.
+//   int validityTimeDifference() {
+//     mezDbgPrint(
+//         "offerTime => ${offerValidTime.toUtc()}  | now => ${DateTime.now()}");
+//     int r = DateTime.now().toUtc().difference(offerValidTime.toUtc()).inSeconds;
+//     mezDbgPrint("validityTimeDifference ===> $r");
+//     return r;
+//   }
+// }
 
+// // enum CounterOfferStatus { Submitted, Accepted, Rejected, Expired, Cancelled }
 // enum CounterOfferStatus { Submitted, Accepted, Rejected, Expired, Cancelled }
-enum CounterOfferStatus { Submitted, Accepted, Rejected, Expired, Cancelled }
 
-extension ParseCounterOfferStatusToString on CounterOfferStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
+// extension ParseCounterOfferStatusToString on CounterOfferStatus {
+//   String toFirebaseFormatString() {
+//     final String str = toString().split('.').last;
+//     return str[0].toLowerCase() + str.substring(1);
+//   }
+// }
 
-extension ParseStringToCounterOfferStatus on String {
-  CounterOfferStatus toCounterOfferStatus() {
-    return CounterOfferStatus.values.firstWhere(
-        (CounterOfferStatus e) => e.toFirebaseFormatString() == this);
-  }
-}
+// extension ParseStringToCounterOfferStatus on String {
+//   CounterOfferStatus toCounterOfferStatus() {
+//     return CounterOfferStatus.values.firstWhere(
+//         (CounterOfferStatus e) => e.toFirebaseFormatString() == this);
+//   }
+// }
 
-class CounterOfferNotificationForQueue extends NotificationForQueue {
-  UserInfo driver;
-  String orderId;
-  String customerId;
-  num price;
-  CounterOfferNotificationForQueue(
-      {required this.driver,
-      required this.orderId,
-      required this.customerId,
-      required this.price})
-      : super(
-            notificationType: NotificationType.NewCounterOffer,
-            timeStamp: DateTime.now().toUtc());
+// class CounterOfferNotificationForQueue extends NotificationForQueue {
+//   UserInfo driver;
+//   String orderId;
+//   String customerId;
+//   num price;
+//   CounterOfferNotificationForQueue(
+//       {required this.driver,
+//       required this.orderId,
+//       required this.customerId,
+//       required this.price})
+//       : super(
+//             notificationType: NotificationType.NewCounterOffer,
+//             timeStamp: DateTime.now().toUtc());
 
-  Map<String, dynamic> toFirebaseFormatJson() => {
-        ...super.toFirebaseFormatJson(),
-        "driver": driver.toFirebaseFormatJson(),
-        "timestamp": DateTime.now().toUtc().toString(),
-        "orderId": orderId,
-        "customerId": customerId,
-        "price": price,
-        "notificationType": notificationType.toFirebaseFormatString()
-      };
-}
+//   Map<String, dynamic> toFirebaseFormatJson() => {
+//         ...super.toFirebaseFormatJson(),
+//         "driver": driver.toFirebaseFormatJson(),
+//         "timestamp": DateTime.now().toUtc().toString(),
+//         "orderId": orderId,
+//         "customerId": customerId,
+//         "price": price,
+//         "notificationType": notificationType.toFirebaseFormatString()
+//       };
+// }

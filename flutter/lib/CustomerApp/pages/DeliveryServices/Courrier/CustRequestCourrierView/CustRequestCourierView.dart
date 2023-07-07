@@ -1,22 +1,21 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/components/CustRequestCourierItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezOrderDeliverySelector/MezOrderDeliverySelector.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,11 +23,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustRequestCourierView"];
 
 class CustRequestCourierView extends StatefulWidget {
-  static Future<void> navigate(
-    int courierId,
-  ) {
-    return MezRouter.toPath(CourierRoutes.kCourierRequestRoute
-        .replaceFirst(":courierId", courierId.toString()));
+  static Future<void> navigate() {
+    return MezRouter.toPath(CourierRoutes.kCourierRequestRoute);
   }
 
   const CustRequestCourierView({super.key});
@@ -40,13 +36,10 @@ class CustRequestCourierView extends StatefulWidget {
 class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   CustRequestCourierViewController viewController =
       CustRequestCourierViewController();
-  int? courierId;
   @override
   void initState() {
-    courierId = int.tryParse(MezRouter.urlArguments["courierId"].toString());
-    if (courierId != null) {
-      viewController.init(courierId: courierId!);
-    }
+    viewController.init();
+
     super.initState();
   }
 
@@ -61,19 +54,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
       ),
       body: Obx(
         () {
-          if (viewController.company.value != null) {
-            return PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: viewController.pageController,
-                children: [
-                  _itemsPage(),
-                  _deliveryPage(context),
-                ]);
-          } else
-            return Container(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
-            );
+          return PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: viewController.pageController,
+              children: [
+                _itemsPage(),
+                _deliveryPage(context),
+              ]);
         },
       ),
       bottomSheet: Obx(
@@ -98,43 +85,41 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '${_i18n()["deliveryCompany"]}',
-            style: context.txt.bodyLarge,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          if (viewController.company.value != null)
-            MezCard(
-                firstAvatarBgImage: CachedNetworkImageProvider(
-                    viewController.company.value!.info.image),
-                content: Text(
-                  viewController.company.value!.info.name,
-                  style: context.txt.bodyLarge,
-                )),
-
-          Form(
-            key: viewController.secondFormKey,
-            child: DeliveryTimePicker(
-              fixed7days: true,
-              deliveryTime: viewController.deliveryTime.value,
-              isServiceOpen: viewController.company.value?.isOpen ?? true,
-              numberOfDays: 7,
-              onValue: (DateTime? value) {
-                if (value != null &&
-                    viewController.secondFormKey.currentState?.validate() ==
-                        true) {
-                  viewController.deliveryTime.value = value;
-                }
+          Obx(
+            () => MezOrderDeliverySelector(
+              deliveryCompanies: viewController.deliveryCompanies,
+              selectedCompanies: viewController.selectedCompanies,
+              estDeliveryPrice: viewController.estDeliveryCost.value,
+              onCompanySelect: (DeliveryCompany value) {
+                viewController.selectCompany(id: value.info.hasuraId);
               },
-              onClear: () {
-                viewController.deliveryTime.value = null;
+              onEstDeliveryPriceChange: (double value) {
+                viewController.estDeliveryCost.value = value;
               },
-              periodOfTime: null,
-              schedule: viewController.company.value!.schedule,
             ),
           ),
+
+          // Form(
+          //   key: viewController.secondFormKey,
+          //   child: DeliveryTimePicker(
+          //     fixed7days: true,
+          //     deliveryTime: viewController.deliveryTime.value,
+          //     isServiceOpen: viewController.company.value?.isOpen ?? true,
+          //     numberOfDays: 7,
+          //     onValue: (DateTime? value) {
+          //       if (value != null &&
+          //           viewController.secondFormKey.currentState?.validate() ==
+          //               true) {
+          //         viewController.deliveryTime.value = value;
+          //       }
+          //     },
+          //     onClear: () {
+          //       viewController.deliveryTime.value = null;
+          //     },
+          //     periodOfTime: null,
+          //     schedule: viewController.company.value!.schedule,
+          //   ),
+          // ),
 
           // Text(
           //   'Payment method',
@@ -143,7 +128,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
           OrderSummaryCard(
               margin: EdgeInsets.only(top: 20),
               costs: OrderCosts(
-                  deliveryCost: viewController.shippingCost.value,
+                  deliveryCost: viewController.estDeliveryCost.value,
                   refundAmmount: null,
                   tax: null,
                   orderItemsCost: null,

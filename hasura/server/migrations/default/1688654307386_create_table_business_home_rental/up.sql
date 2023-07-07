@@ -1,0 +1,1 @@
+CREATE TABLE "business"."home_rental" ("rental_id" integer NOT NULL, "bedrooms" integer NOT NULL DEFAULT 1, "bathrooms" integer NOT NULL DEFAULT 1, "gps_location" geography NOT NULL, "home_type" text NOT NULL, "address" text NOT NULL, PRIMARY KEY ("rental_id") , FOREIGN KEY ("rental_id") REFERENCES "business"."rental"("id") ON UPDATE restrict ON DELETE cascade);

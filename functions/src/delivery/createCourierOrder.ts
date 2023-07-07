@@ -2,7 +2,7 @@ import { setCourierChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { createNewCourierOrder } from "../shared/graphql/delivery/courier/createOrder";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
-import { notifyDeliveryCompany } from "../shared/helper";
+import { notifyDeliveryDrivers } from "../shared/helper";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { CustomerAppType, Language, Location, MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
@@ -17,8 +17,8 @@ export interface CourierRequest {
     fromLocationGps?: Location,
     fromLocationText?: string,
     items: Array<CourierItem>;
-    deliveryCompanyId: number;
-    deliveryCost?: number,
+    deliveryCompanyIds: Array<number>,
+    customerOffer?: number,
     customerAppType: CustomerAppType,
     tax?: number,
     scheduledTime?: string,
@@ -40,8 +40,8 @@ export enum CreateCourierError {
     UnhandledError = "unhandledError",
     CustomerNotFound = "customerNotFound",
     OrderCreationError = "orderCreationError",
-    DeliveryCompanyNotFound = "deliveryCompanyNotFound",
-    DeliveryCompanyHasNoDrivers = "deliveryCompanyHasNoDrivers",
+    NoDeliveryCompanyFound = "noDeliveryCompanyFound",
+    DeliveryCompaniesHaveNoDrivers = "deliveryCompaniesHaveNoDrivers",
 }
 export async function createCourierOrder(customerId: number, courierRequest: CourierRequest): Promise<CreateCourierResponse> {
     try {
@@ -51,10 +51,11 @@ export async function createCourierOrder(customerId: number, courierRequest: Cou
 
         let courierOrder: CourierOrder = await createNewCourierOrder(customerId, courierRequest, mezAdmins);
 
-        setCourierChatInfo(courierOrder, customer)
-
-        notifyDeliveryCompany(courierOrder.deliveryOrder)
-        notifyAdmins(mezAdmins, courierOrder.id)
+        setCourierChatInfo(courierOrder, customer);
+        
+        await notifyDeliveryDrivers(courierOrder.deliveryOrder);
+        
+        notifyAdmins(mezAdmins, courierOrder.id);
         
         return {
             success: true,
