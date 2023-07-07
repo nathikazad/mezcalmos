@@ -71,15 +71,11 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(
-            flex: 2,
-            fit: FlexFit.loose,
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              child: Text(
-                "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
-                style: context.textTheme.bodyLarge,
-              ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 5),
+            child: Text(
+              "${_i18n()["weekDays"]["${weekday.toFirebaseFormatString()}"]}",
+              style: context.textTheme.bodyLarge,
             ),
           ),
           Flexible(
@@ -116,27 +112,27 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
                     } else
                       return SizedBox.shrink();
                   }))),
-          Flexible(
-            flex: 2,
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35),
-                color: workingDay.isOpen
-                    ? Color.fromRGBO(237, 255, 222, 0.86)
-                    : Color(0xFFFFD6DC),
-              ),
-              child: Center(
-                  child: Text(
-                workingDay.isOpen
-                    ? "${_i18n()["workingHoursCard"]["open"]}"
-                    : "${_i18n()["workingHoursCard"]["closed"]}",
-                textAlign: TextAlign.center,
-                style: context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: workingDay.isOpen ? Colors.green : redAccentColor),
-              )),
+          Container(
+            margin: EdgeInsets.only(right: 15),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5.5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(35),
+              color: workingDay.isOpen
+                  ? Color.fromRGBO(237, 255, 222, 0.86)
+                  : Color(0xFFFFD6DC),
             ),
+            child: Center(
+                child: Text(
+              workingDay.isOpen
+                  ? "${_i18n()["workingHoursCard"]["open"]}"
+                  : "${_i18n()["workingHoursCard"]["closed"]}",
+              textAlign: TextAlign.center,
+              style: context.textTheme.bodyMedium?.copyWith(
+                  height: 0,
+                  fontWeight: FontWeight.bold,
+                  color: workingDay.isOpen ? Colors.green : redAccentColor),
+            )),
           ),
           MezIconButton(
               onTap: () async {
@@ -148,8 +144,9 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
                       day: weekday, workingDay: newWorkingDay);
                 }
               },
-              padding: EdgeInsets.all(3),
-              iconSize: 25,
+              elevation: 0,
+              padding: EdgeInsets.all(4),
+              iconSize: 20,
               iconColor: Colors.grey.shade600,
               backgroundColor: Colors.grey.shade200,
               icon: Icons.edit_outlined)

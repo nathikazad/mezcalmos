@@ -81,7 +81,8 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          if (item.parameters.guests != null) ...[
+                          if (item.offeringType == OfferingType.Home &&
+                              item.parameters.guests != null) ...[
                             Icon(
                               Icons.people,
                               color: (item.available == true)
@@ -159,7 +160,9 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                       ),
                       SizedBox(width: 3),
                       Text(
-                        item.cost.toPriceString(),
+                        item.cost.toPriceString() == '-'
+                            ? '${_i18n()['free']}'
+                            : item.cost.toPriceString(),
                         style: context.textTheme.bodyLarge?.copyWith(
                           color: (item.available == true)
                               ? Colors.black
@@ -171,6 +174,8 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                 ),
                 if (viewController.orderIsRequested && item.available == true)
                   MezIconButton(
+                    iconSize: 18,
+                    padding: EdgeInsets.all(5),
                     onTap: () async {
                       await _showPriceSheet(
                           context: context, initPrice: item.cost.toDouble());
@@ -228,7 +233,9 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                                     : Colors.grey.shade400,
                               ),
                             Icon(
-                              Icons.event_available_rounded,
+                              item.parameters.previoustime == null
+                                  ? Icons.watch_later_outlined
+                                  : Icons.event_available,
                               color: (item.available == true)
                                   ? Colors.black
                                   : Colors.grey.shade400,
@@ -251,6 +258,8 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                   ),
                   if (viewController.orderIsRequested && item.available == true)
                     MezIconButton(
+                      iconSize: 18,
+                      padding: EdgeInsets.all(5),
                       onTap: () async {
                         await _showTimeSheet(
                             context: context,
@@ -266,7 +275,9 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
               ),
               Divider(),
             ],
-            if (viewController.orderIsRequested) ...[
+            if (<OfferingType>[OfferingType.Rental, OfferingType.Product]
+                    .contains(item.offeringType) &&
+                viewController.orderIsRequested) ...[
               MezInkwell(
                 icon: Icons.remove_circle_outlined,
                 textColor: (item.available != true) ? null : redAccentColor,
@@ -355,6 +366,20 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                           Expanded(
                             child: MezButton(
                               height: 45,
+                              label: "${_i18n()['cancel']}",
+                              backgroundColor: offRedColor,
+                              textColor: Colors.red,
+                              onClick: () async {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: MezButton(
+                              height: 45,
                               label: "${_i18n()['save']}",
                               onClick: () async {
                                 if (formKey.currentState?.validate() == true) {
@@ -365,21 +390,7 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
                                 }
                               },
                             ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: MezButton(
-                              height: 45,
-                              label: "${_i18n()['cancel']}",
-                              backgroundColor: offRedColor,
-                              textColor: Colors.red,
-                              onClick: () async {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ),
+                          )
                         ],
                       ),
                     ],
@@ -406,118 +417,118 @@ class BsHomeRentalOrderItemCard extends StatelessWidget {
         context: context,
         builder: (BuildContext ctx) {
           return Padding(
-            padding:
-                EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
-            child: Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "${_i18n()['updateTimeTitle']}",
-                          style: context.textTheme.bodyLarge,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Text("${_i18n()['startFrom']}",
-                          style: context.textTheme.bodyLarge),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: dateText,
-                        onTap: () {
-                          getDatePicker(
-                            context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime.now().add(Duration(days: 30)),
-                          ).then((DateTime? dateValue) {
-                            if (dateValue != null) {
-                              getTimePicker(context,
-                                      initialTime: TimeOfDay.now())
-                                  .then((TimeOfDay? timeValue) {
-                                if (timeValue != null) {
-                                  newDate = DateTime(
-                                      dateValue.year,
-                                      dateValue.month,
-                                      dateValue.day,
-                                      timeValue.hour,
-                                      timeValue.minute);
-                                  dateText.text = newDate.getOrderTime();
+              padding:
+                  EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+              child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  child: Form(
+                      key: formKey,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "${_i18n()['updateTimeTitle']}",
+                                style: context.textTheme.bodyLarge,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 25,
+                            ),
+                            Text("${_i18n()['startFrom']}",
+                                style: context.textTheme.bodyLarge),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            TextFormField(
+                              controller: dateText,
+                              onTap: () {
+                                getDatePicker(
+                                  context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now(),
+                                  lastDate:
+                                      DateTime.now().add(Duration(days: 30)),
+                                ).then((DateTime? dateValue) {
+                                  if (dateValue != null) {
+                                    getTimePicker(context,
+                                            initialTime: TimeOfDay.now())
+                                        .then((TimeOfDay? timeValue) {
+                                      if (timeValue != null) {
+                                        newDate = DateTime(
+                                            dateValue.year,
+                                            dateValue.month,
+                                            dateValue.day,
+                                            timeValue.hour,
+                                            timeValue.minute);
+                                        dateText.text = newDate.getOrderTime();
+                                      }
+                                    });
+                                  }
+                                });
+                              },
+                              style: context.textTheme.bodyLarge,
+                              textAlignVertical: TextAlignVertical.center,
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.calendar_today_rounded,
+                                  color: Colors.black,
+                                ),
+                                suffixIcon: Icon(
+                                  Icons.chevron_right,
+                                  size: 30,
+                                ),
+                              ),
+                              readOnly: true,
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp('[0-9.,]')),
+                              ],
+                              validator: (String? v) {
+                                if (v == null || v.isEmpty) {
+                                  return "${_i18n()['required']}";
                                 }
-                              });
-                            }
-                          });
-                        },
-                        style: context.textTheme.bodyLarge,
-                        textAlignVertical: TextAlignVertical.center,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.calendar_today_rounded,
-                            color: Colors.black,
-                          ),
-                        ),
-                        readOnly: true,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
-                        ],
-                        validator: (String? v) {
-                          if (v == null || v.isEmpty) {
-                            return "${_i18n()['required']}";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: MezButton(
-                              height: 45,
-                              label: "${_i18n()['save']}",
-                              onClick: () async {
-                                if (formKey.currentState?.validate() == true) {
-                                  await viewController.updateItemTime(
-                                      itemId: item.itemId.toInt(),
-                                      newTime: newDate);
-                                  Navigator.pop(context);
-                                }
+                                return null;
                               },
                             ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: MezButton(
-                              height: 45,
-                              label: "${_i18n()['cancel']}",
-                              backgroundColor: offRedColor,
-                              textColor: Colors.red,
-                              onClick: () async {
-                                Navigator.pop(context);
-                              },
+                            SizedBox(
+                              height: 15,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )),
-          );
+                            Row(children: [
+                              Expanded(
+                                child: MezButton(
+                                  height: 45,
+                                  label: "${_i18n()['cancel']}",
+                                  backgroundColor: offRedColor,
+                                  textColor: Colors.red,
+                                  onClick: () async {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                  child: MezButton(
+                                      height: 45,
+                                      label: "${_i18n()['save']}",
+                                      onClick: () async {
+                                        if (formKey.currentState?.validate() ==
+                                            true) {
+                                          await viewController.updateItemTime(
+                                              itemId: item.itemId.toInt(),
+                                              newTime: newDate);
+                                          Navigator.pop(context);
+                                        }
+                                      }))
+                            ])
+                          ]))));
         });
   }
 }

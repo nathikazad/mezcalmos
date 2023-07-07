@@ -59,13 +59,13 @@ extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
       case BusinessOrderRequestStatus.ModificationRequestByBusiness:
         return Icons.hourglass_top;
       case BusinessOrderRequestStatus.CancelledByBusiness:
-        return Icons.cancel;
+        return Icons.close;
       case BusinessOrderRequestStatus.Confirmed:
-        return Icons.check_circle;
+        return Icons.check;
       case BusinessOrderRequestStatus.CancelledByCustomer:
-        return Icons.cancel;
+        return Icons.close;
       case BusinessOrderRequestStatus.Completed:
-        return Icons.check_circle;
+        return Icons.check;
       default:
         return Icons.error_outline;
     }

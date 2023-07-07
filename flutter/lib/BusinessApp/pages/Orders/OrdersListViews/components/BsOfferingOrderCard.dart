@@ -86,6 +86,8 @@ class BsOfferingOrderCard extends StatelessWidget {
                         fit: FlexFit.tight,
                         child: Text(
                           item.customerName,
+                          style: context.textTheme.bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                       ),
                       Row(
@@ -96,6 +98,8 @@ class BsOfferingOrderCard extends StatelessWidget {
                           Text(
                             DateFormat("HH:mm aa").format(item.time),
                             textAlign: TextAlign.right,
+                            style: context.textTheme.bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           SizedBox(width: 5),
                           Container(
@@ -109,6 +113,8 @@ class BsOfferingOrderCard extends StatelessWidget {
                           SizedBox(width: 5),
                           Text(
                             "${item.parameters.numberOfUnits} ${item.parameters.timeUnit?.toReadableString()}",
+                            style: context.textTheme.bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           SizedBox(
                             width: 5,
