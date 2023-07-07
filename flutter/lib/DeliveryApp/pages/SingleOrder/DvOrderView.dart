@@ -88,7 +88,7 @@ class _DvOrderViewState extends State<DvOrderView> {
             )),
       ),
       bottomNavigationBar: Obx(
-        () => (viewController.hasData)
+        () => (viewController.hasData && !viewController.showSendOfferButton)
             ? DvOrderStatusControllButtons(
                 viewController: viewController,
               )
