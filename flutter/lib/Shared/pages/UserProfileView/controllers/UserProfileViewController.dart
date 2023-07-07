@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -67,8 +68,8 @@ class UserProfileViewController {
 
   Future<void> setInfo() async {
     await _setImage();
-    _authController.setUserInfo =
-        _authController.user?.clone(image: newImageUrl.value, name: name.value);
+    _authController.setUserInfo = _authController.user
+        ?.clone(image: newImageUrl.value, name: name.value.capitalize);
 
     await _authController.updateUserProfile();
 
