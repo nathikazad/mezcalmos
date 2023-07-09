@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/C
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustServiceView/CustServiceView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustBusinessOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -138,11 +138,6 @@ class CustBusinessCartController extends GetxController {
     }
   }
 
-  bool get isCanceled => <BusinessOrderRequestStatus>[
-        BusinessOrderRequestStatus.CancelledByBusiness,
-        BusinessOrderRequestStatus.CancelledByCustomer
-      ].contains(currentOrderInView.value!.status!);
-
   Future<void> clearCart() async {
     cart.value!.items = [];
     cart.refresh();
@@ -265,7 +260,8 @@ class CustBusinessCartController extends GetxController {
           cart.value?.items = [];
           cart.refresh();
           // await MezRouter.back();
-          await CustOrderView.navigate(orderId: requestData.orderId!.toInt());
+          await CustBusinessOrderView.navigate(
+              orderId: requestData.orderId!.toInt());
         }
         return requestData.success;
       }
@@ -276,25 +272,6 @@ class CustBusinessCartController extends GetxController {
     return null;
   }
 
-  Future<void> acceptOrderRequest() async {
-    await CloudFunctions.business_handleOrderRequestFromCustomer(
-      orderRequestId: currentOrderIdInView.value!,
-      newStatus: BusinessOrderRequestStatus.Confirmed,
-    );
-    showSavedSnackBar(
-      title: "You have accepted the order request",
-    );
-  }
-
-  Future<void> cancelOrderRequest() async {
-    await CloudFunctions.business_handleOrderRequestFromCustomer(
-      orderRequestId: currentOrderIdInView.value!,
-      newStatus: BusinessOrderRequestStatus.CancelledByCustomer,
-    );
-    showSavedSnackBar(
-      title: "You have cancelled the order request",
-    );
-  }
 
   Future<void> updateProductItemCount({
     required BusinessCartItem item,

@@ -314,39 +314,100 @@ class _BsCoWorkingViewState extends State<BsCoWorkingView>
             ),
           ),
           smallSepartor,
-          Obx(() {
-            List<CoWorkingCategory1> possibleItems = [
-              ...CoWorkingCategory1.values
-            ];
-            return MezStringDropDown(
-              validator: (String? value) {
-                if (viewController.homeType.value == null) {
-                  return _i18n()["coWorking"]["homeTypeError"];
-                }
-                return null;
-              },
-              langPath: _i18n()["coWorking"],
-              items: possibleItems
-                  .map((CoWorkingCategory1 e) => e.toFirebaseFormatString())
-                  .toList(),
-              value: viewController.homeType.value?.toFirebaseFormatString(),
-              onChanged: (String? newHomeType) {
-                if (newHomeType != null) {
-                  viewController
-                      .changeHomeType(newHomeType.toCoWorkingCategory1());
-                }
-              },
-              labelText: _i18n()["coWorking"]["homeType"],
-            );
-          }),
-          bigSeperator,
+          // Obx(() {
+          //   List<CoWorkingCategory1> possibleItems = [
+          //     ...CoWorkingCategory1.values
+          //   ];
+          //   return MezStringDropDown(
+          //     validator: (String? value) {
+          //       if (viewController.homeType.value == null) {
+          //         return _i18n()["coWorking"]["homeTypeError"];
+          //       }
+          //       return null;
+          //     },
+          //     langPath: _i18n()["coWorking"],
+          //     items: possibleItems
+          //         .map((CoWorkingCategory1 e) => e.toFirebaseFormatString())
+          //         .toList(),
+          //     value: viewController.homeType.value?.toFirebaseFormatString(),
+          //     onChanged: (String? newHomeType) {
+          //       if (newHomeType != null) {
+          //         viewController
+          //             .changeHomeType(newHomeType.toCoWorkingCategory1());
+          //       }
+          //     },
+          //     labelText: _i18n()["coWorking"]["homeType"],
+          //   );
+          // }),
+          // bigSeperator,
 
-          if (viewController.homeType == CoWorkingCategory1.DedicatedDesk)
-            _singlePriceView(),
+          // if (viewController.homeType == CoWorkingCategory1.DedicatedDesk)
+          //   _singlePriceView(),
 
-          if (viewController.homeType == CoWorkingCategory1.PrivateRoom ||
-              viewController.homeType == CoWorkingCategory1.FullFloorOffice)
-            _multipleRoomPriceView(),
+          // if (viewController.homeType == CoWorkingCategory1.PrivateRoom ||
+          //     viewController.homeType == CoWorkingCategory1.FullFloorOffice)
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${_i18n()["coWorking"]["coWorkingType"]} 1",
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                  InkWell(
+                      onTap: () async {
+                        viewController.addNewRoom();
+                      },
+                      child: Ink(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.add_circle_outline,
+                              size: 20,
+                              color: primaryBlueColor,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              "Add additional room",
+                              style: context.textTheme.bodyLarge
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+              smallSepartor,
+              MezCard(
+                content: Column(
+                  children: [
+                    Obx(
+                      () => BsOpOfferingPricesList(
+                        availbleUnits: viewController.avalbleUnits,
+                        onAddPrice: (TimeUnit unit) {
+                          viewController.detailsController
+                              .addPriceTimeUnit(timeUnit: unit);
+                        },
+                        onRemovePrice: (TimeUnit unit) {
+                          viewController.detailsController.removeTimeUnit(unit);
+                        },
+                        seletedPrices:
+                            viewController.detailsController.priceTimeUnitMap,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          _multipleRoomPriceView(),
 
           if (viewController.isEditing)
             BsDeleteOfferButton(
@@ -363,67 +424,6 @@ class _BsCoWorkingViewState extends State<BsCoWorkingView>
   Widget _multipleRoomPriceView() {
     return Column(
       children: [
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Co-working Type 1",
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-                InkWell(
-                    onTap: () async {
-                      viewController.addNewRoom();
-                    },
-                    child: Ink(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add_circle_outline,
-                            size: 20,
-                            color: primaryBlueColor,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "Add additional room",
-                            style: context.textTheme.bodyLarge
-                                ?.copyWith(color: primaryBlueColor),
-                          ),
-                        ],
-                      ),
-                    )),
-              ],
-            ),
-            smallSepartor,
-            MezCard(
-              content: Column(
-                children: [
-                  Obx(
-                    () => BsOpOfferingPricesList(
-                      availbleUnits: viewController.avalbleUnits,
-                      onAddPrice: (TimeUnit unit) {
-                        viewController.detailsController
-                            .addPriceTimeUnit(timeUnit: unit);
-                      },
-                      onRemovePrice: (TimeUnit unit) {
-                        viewController.detailsController.removeTimeUnit(unit);
-                      },
-                      seletedPrices:
-                          viewController.detailsController.priceTimeUnitMap,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
         ...viewController.additionalRooms.asMap().entries.map(
           (data) {
             final int index = data.key;
@@ -434,7 +434,7 @@ class _BsCoWorkingViewState extends State<BsCoWorkingView>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Co-working Type ${index + 2}",
+                      "${_i18n()["coWorking"]["coWorkingType"]} ${index + 2}",
                       style: context.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: Colors.black,

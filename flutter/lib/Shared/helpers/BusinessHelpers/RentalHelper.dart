@@ -27,3 +27,19 @@ extension ParseStringToRoomType on String {
         roomType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
+
+enum CoWorkingRoomType { FullFloorOffice, PrivateRoom, DedicatedDesk }
+
+extension ParseCoWorkingRoomTypeToString on CoWorkingRoomType {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToCoWorkingRoomType on String {
+  CoWorkingRoomType toCoWorkingRoomType() {
+    return CoWorkingRoomType.values.firstWhere((CoWorkingRoomType roomType) =>
+        roomType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}

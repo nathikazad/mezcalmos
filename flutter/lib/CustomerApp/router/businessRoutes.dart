@@ -46,7 +46,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunte
     deferred as custVolunteerView;
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart'
     deferred as custCartView;
-import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart'
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustBusinessOrderView.dart'
     deferred as custOrderView;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -88,7 +88,7 @@ class CustBusinessRoutes {
     QRoute(
       name: custOrderViewRoute,
       path: custOrderViewRoute,
-      builder: () => custOrderView.CustOrderView(),
+      builder: () => custOrderView.CustBusinessOrderView(),
       middleware: <QMiddleware>[
         DefferedLoader(custOrderView.loadLibrary),
       ],
@@ -317,7 +317,7 @@ class CustBusinessRoutes {
     QRoute(
       name: custOrderViewRoute,
       path: custOrderViewRoute,
-      builder: () => custOrderView.CustOrderView(),
+      builder: () => custOrderView.CustBusinessOrderView(),
       middleware: <QMiddleware>[
         DefferedLoader(custOrderView.loadLibrary),
       ],

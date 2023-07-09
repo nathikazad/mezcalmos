@@ -61,7 +61,7 @@ class BsCoWorkingViewController {
   bool get isEditing => _rental.value != null;
 
   RxList<Map<String, dynamic>> additionalRooms = RxList();
-  Rxn<RoomType> roomType = Rxn<RoomType>();
+  Rxn<CoWorkingRoomType> roomType = Rxn<CoWorkingRoomType>();
 
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
         // TimeUnit.PerHour,
@@ -117,11 +117,11 @@ class BsCoWorkingViewController {
               .trim() ??
           "";
       petFriendly.value = rental!.details.additionalParameters?["petFriendly"];
-      homeLocation.value = rental!.gpsLocation;
+      // homeLocation.value = rental!.gpsLocation;
       // homeType.value = rental!.category1;
       final String? roomType1 =
           rental!.details.additionalParameters?["roomType1"];
-      roomType.value = roomType1?.toRoomType();
+      roomType.value = roomType1?.toCoWorkingRoomType();
       additionalRooms.value = rental!
               .details.additionalParameters?["additionalRooms"]
               ?.map<Map<String, dynamic>>(
@@ -158,7 +158,7 @@ class BsCoWorkingViewController {
     final BusinessItemDetailsController ctrl = BusinessItemDetailsController();
     ctrl.addPriceTimeUnit(timeUnit: newRoomAvaiableUnits(ctrl).first);
     additionalRooms.add({
-      "roomType": RoomType.SingleBed.toFirebaseFormatString(),
+      "roomType": CoWorkingRoomType.FullFloorOffice.toFirebaseFormatString(),
       "controller": ctrl,
     });
   }
@@ -183,7 +183,7 @@ class BsCoWorkingViewController {
       location: HomeLocation(
           name: homeLocation.value!.address, location: homeLocation.value!),
       category1: HomeCategory1.Room,
-      gpsLocation: homeLocation.value,
+      // gpsLocation: homeLocation.value,
       details: details,
       bathrooms: int.tryParse(bathroomsController.text),
       bedrooms: int.tryParse(bedroomsController.text),
@@ -199,7 +199,7 @@ class BsCoWorkingViewController {
       ),
       category1: HomeCategory1.Room,
       availableFor: HomeAvailabilityOption.Rent,
-      gpsLocation: homeLocation.value,
+      // gpsLocation: homeLocation.value,
       bathrooms: int.tryParse(bathroomsController.text),
       bedrooms: int.tryParse(bedroomsController.text),
       details: detailsController.details!,

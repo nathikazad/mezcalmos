@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/HomeCartItem
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ProductCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ServiceCartItemCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderView/controllers/AdminOrderViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/controllers/CustBusinessOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -25,11 +25,11 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustOrderView']['CustOrderView'];
 
-class CustOrderView extends StatefulWidget {
-  const CustOrderView({super.key});
+class CustBusinessOrderView extends StatefulWidget {
+  const CustBusinessOrderView({super.key});
 
   @override
-  State<CustOrderView> createState() => _CustOrderViewState();
+  State<CustBusinessOrderView> createState() => _CustBusinessOrderViewState();
 
   static Future<void> navigate({required int orderId, EntityType? entityType}) {
     return MezRouter.toPath(constructPath(orderId));
@@ -41,8 +41,10 @@ class CustOrderView extends StatefulWidget {
   }
 }
 
-class _CustOrderViewState extends State<CustOrderView> {
-  late CustBusinessCartController custBusinessCartController;
+class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
+  late CustBusinessOrderViewController custBusinessOrderController;
+  final CustBusinessCartController cartController =
+      Get.find<CustBusinessCartController>();
 
   late int orderId;
   late EntityType? entityType;
@@ -51,17 +53,17 @@ class _CustOrderViewState extends State<CustOrderView> {
   void initState() {
     orderId = int.parse(MezRouter.urlArguments['orderId'].toString());
     entityType = MezRouter.bodyArguments?["entityType"] as EntityType?;
-    MezRouter.registerReturnToViewCallback(CustOrderView.constructPath(orderId),
-        () {
+    MezRouter.registerReturnToViewCallback(
+        CustBusinessOrderView.constructPath(orderId), () {
       clearNotifications(orderId);
     });
 
     if (entityType == EntityType.Admin) {
-      custBusinessCartController = AdminOrderViewController();
-      custBusinessCartController.setCurrentOrderInView(orderId);
+      custBusinessOrderController = AdminOrderViewController();
+      custBusinessOrderController.setCurrentOrderInView(orderId);
     } else {
-      custBusinessCartController = Get.find<CustBusinessCartController>();
-      custBusinessCartController.setCurrentOrderInView(orderId);
+      custBusinessOrderController = CustBusinessOrderViewController();
+      custBusinessOrderController.setCurrentOrderInView(orderId);
     }
     super.initState();
   }
@@ -77,22 +79,22 @@ class _CustOrderViewState extends State<CustOrderView> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
-        title: (custBusinessCartController.currentOrderInView.value == null)
+        title: (custBusinessOrderController.currentOrderInView.value == null)
             ? '${_i18n()['order']}'
-            : "${custBusinessCartController.currentOrderInView.value!.getBusinessName()}",
+            : "${custBusinessOrderController.currentOrderInView.value!.getBusinessName()}",
       ),
       bottomNavigationBar: entityType == EntityType.Admin
           ? null
           : Obx(() {
-              if (custBusinessCartController.currentOrderInView.value == null) {
+              if (custBusinessOrderController.currentOrderInView.value == null) {
                 return SizedBox.shrink();
               }
-              // else if (custBusinessCartController
+              // else if (custBusinessOrderController
               //     .currentOrderInView.value!.showReviewButton) {
               //   return CustAddReviewButton(
               //     orderId:
-              //         custBusinessCartController.currentOrderInView.value!.id!,
-              //     toEntityId: custBusinessCartController
+              //         custBusinessOrderController.currentOrderInView.value!.id!,
+              //     toEntityId: custBusinessOrderController
               //         .currentOrderInView.value!.businessId!
               //         .toInt(),
               //     toEntityType: ServiceProviderType.Business,
@@ -111,7 +113,7 @@ class _CustOrderViewState extends State<CustOrderView> {
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(8.0),
-          child: (custBusinessCartController.currentOrderInView.value == null)
+          child: (custBusinessOrderController.currentOrderInView.value == null)
               ? Center(
                   child: CircularProgressIndicator(),
                 )
@@ -142,24 +144,24 @@ class _CustOrderViewState extends State<CustOrderView> {
                                   ),
                                 ),
                                 MessageButton(
-                                  chatId: custBusinessCartController
+                                  chatId: custBusinessOrderController
                                       .currentOrderInView.value!.chatId!
                                       .toInt(),
                                   onTap: () async {
                                     await BaseMessagingScreen.navigate(
-                                        chatId: custBusinessCartController
+                                        chatId: custBusinessOrderController
                                             .currentOrderInView.value!.chatId!
                                             .toInt());
                                   },
                                 ),
                               ],
                             )),
-                            if (custBusinessCartController
+                            if (custBusinessOrderController
                                 .currentOrderInView.value!.items.isNotEmpty)
                               smallSepartor,
-                            if (custBusinessCartController
+                            if (custBusinessOrderController
                                 .currentOrderInView.value!.items.isNotEmpty)
-                              ...custBusinessCartController
+                              ...custBusinessOrderController
                                   .currentOrderInView.value!.items
                                   .asMap()
                                   .entries
@@ -172,35 +174,35 @@ class _CustOrderViewState extends State<CustOrderView> {
                                       return HomeCartItemCard(
                                         index: index,
                                         item: item,
-                                        controller: custBusinessCartController,
+                                        controller: cartController,
                                         isEditable: false,
                                       );
                                     case OfferingType.Rental:
                                       return RentalCartItemCard(
                                         index: index,
                                         item: item,
-                                        controller: custBusinessCartController,
+                                        controller: cartController,
                                         isEditable: false,
                                       );
                                     case OfferingType.Event:
                                       return EventCartItemCard(
                                         index: index,
                                         item: item,
-                                        controller: custBusinessCartController,
+                                        controller: cartController,
                                         isEditable: false,
                                       );
                                     case OfferingType.Service:
                                       return ServiceCartItemCard(
                                         index: index,
                                         item: item,
-                                        controller: custBusinessCartController,
+                                        controller: cartController,
                                         isEditable: false,
                                       );
                                     case OfferingType.Product:
                                       return ProductCartItemCard(
                                         index: index,
                                         item: item,
-                                        controller: custBusinessCartController,
+                                        controller: cartController,
                                         isEditable: false,
                                       );
                                   }
@@ -243,7 +245,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                                         style: context.textTheme.bodyMedium,
                                       ),
                                       Text(
-                                        "\$${custBusinessCartController.currentOrderInView.value?.cost.toDouble().toStringAsFixed(0)}",
+                                        "\$${custBusinessOrderController.currentOrderInView.value?.cost.toDouble().toStringAsFixed(0)}",
                                         style: context.textTheme.bodyMedium,
                                       ),
                                     ],
@@ -267,54 +269,54 @@ class _CustOrderViewState extends State<CustOrderView> {
   }
 
   String getBusinessImage() {
-    switch (custBusinessCartController
+    switch (custBusinessOrderController
         .currentOrderInView.value!.items.first.offeringType) {
       case OfferingType.Rental:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.rental!.business.image;
       case OfferingType.Event:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.event!.business.image;
       case OfferingType.Service:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.service!.business.image;
       case OfferingType.Product:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.product!.business.image;
       case OfferingType.Home:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.home!.business.image;
     }
   }
 
   String getBusinessName() {
-    switch (custBusinessCartController
+    switch (custBusinessOrderController
         .currentOrderInView.value!.items.first.offeringType) {
       case OfferingType.Rental:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.rental!.business.name;
       case OfferingType.Event:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.event!.business.name;
       case OfferingType.Service:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.service!.business.name;
       case OfferingType.Product:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.product!.business.name;
       case OfferingType.Home:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.home!.business.name;
     }
   }
 
   Widget bottomButtons(BuildContext context) {
-    if (custBusinessCartController.currentOrderInView.value == null) {
+    if (custBusinessOrderController.currentOrderInView.value == null) {
       return SizedBox.shrink();
     }
-    if (custBusinessCartController.currentOrderInView.value!.status ==
+    if (custBusinessOrderController.currentOrderInView.value!.status ==
             BusinessOrderRequestStatus.CancelledByCustomer ||
-        custBusinessCartController.currentOrderInView.value!.status ==
+        custBusinessOrderController.currentOrderInView.value!.status ==
             BusinessOrderRequestStatus.CancelledByBusiness) {
       return SizedBox.shrink();
     }
@@ -322,9 +324,9 @@ class _CustOrderViewState extends State<CustOrderView> {
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (custBusinessCartController.currentOrderInView.value!.status !=
+        if (custBusinessOrderController.currentOrderInView.value!.status !=
                 BusinessOrderRequestStatus.Confirmed &&
-            custBusinessCartController.currentOrderInView.value!.status !=
+            custBusinessOrderController.currentOrderInView.value!.status !=
                 BusinessOrderRequestStatus.Completed)
           MezCard(
             content: Row(
@@ -336,7 +338,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                     color: primaryBlueColor,
                   ),
                 ),
-                if (custBusinessCartController
+                if (custBusinessOrderController
                         .currentOrderInView.value!.status ==
                     BusinessOrderRequestStatus.RequestReceived)
                   Expanded(
@@ -347,7 +349,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                       ),
                     ),
                   ),
-                if (custBusinessCartController
+                if (custBusinessOrderController
                         .currentOrderInView.value!.status ==
                     BusinessOrderRequestStatus.ModificationRequestByBusiness)
                   Expanded(
@@ -361,25 +363,25 @@ class _CustOrderViewState extends State<CustOrderView> {
               ],
             ),
           ),
-        if (custBusinessCartController.currentOrderInView.value!.status ==
+        if (custBusinessOrderController.currentOrderInView.value!.status ==
             BusinessOrderRequestStatus.ModificationRequestByBusiness)
           MezButton(
             label: '${_i18n()['acceptChange']}',
             onClick: () async {
-              await custBusinessCartController.acceptOrderRequest();
+              await custBusinessOrderController.acceptOrderRequest();
             },
           ),
         smallSepartor,
-        if (custBusinessCartController.currentOrderInView.value!.status ==
+        if (custBusinessOrderController.currentOrderInView.value!.status ==
                 BusinessOrderRequestStatus.RequestReceived ||
-            custBusinessCartController.currentOrderInView.value!.status ==
+            custBusinessOrderController.currentOrderInView.value!.status ==
                 BusinessOrderRequestStatus.ModificationRequestByBusiness)
           MezButton(
             label: '${_i18n()['cancelRequest']}',
             textColor: Colors.red,
             backgroundColor: Colors.red.shade100,
             onClick: () async {
-              await custBusinessCartController.cancelOrderRequest();
+              await custBusinessOrderController.cancelOrderRequest();
             },
           ),
       ],
@@ -393,15 +395,15 @@ class _CustOrderViewState extends State<CustOrderView> {
         child: Row(
           children: [
             Icon(
-              custBusinessCartController.currentOrderInView.value!.status!
+              custBusinessOrderController.currentOrderInView.value!.status!
                   .getIcon(),
-              color: custBusinessCartController.isCanceled
+              color: custBusinessOrderController.isCanceled
                   ? redAccentColor
                   : primaryBlueColor,
             ),
             Expanded(
               child: Text(
-                "${_i18n()[custBusinessCartController.currentOrderInView.value!.status!.toReadableString()]}",
+                "${_i18n()[custBusinessOrderController.currentOrderInView.value!.status!.toReadableString()]}",
                 style: context.textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
