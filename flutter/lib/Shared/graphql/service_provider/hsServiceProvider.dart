@@ -485,3 +485,36 @@ Future<bool> update_business_online_ordering({
   }
   return res.parsedData!.update_service_provider_details_by_pk!.online_ordering;
 }
+
+Future<List<cModels.Offer>> get_service_provider_offers(
+    {required int serviceProviderId,
+    required cModels.ServiceProviderType serviceProviderType,
+    bool withCache = true}) async {
+  QueryResult<Query$get_service_provider_offers> res =
+      await _db.graphQLClient.query$get_service_provider_offers(
+    Options$Query$get_service_provider_offers(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$get_service_provider_offers(
+          service_provider_id: serviceProviderId,
+          service_provider_type: serviceProviderType.toFirebaseFormatString()),
+    ),
+  );
+  mezDbgPrint("👋 called get service provider offers ===========>${res.data}");
+  // if (res.parsedData?.service_provider_offer == null) {
+  //   throwError(res.exception);
+  // }
+  final List<cModels.Offer> offers = [];
+  res.parsedData?.service_provider_offer.forEach((data) {
+    offers.add(cModels.Offer(
+        id: data.id,
+        name: toLanguageMap(translations: data.name.translations),
+        serviceProviderId: serviceProviderId,
+        serviceProviderType: serviceProviderType,
+        offerType: data.offer_type.toOfferType(),
+        details: data.details,
+        status: data.status.toOfferStatus(),
+        couponCode: data.coupon_code));
+  });
+  return offers;
+}

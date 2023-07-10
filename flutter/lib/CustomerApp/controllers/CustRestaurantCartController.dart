@@ -135,6 +135,7 @@ class CustRestaurantCartController extends GetxController {
       await setCartRestaurantId(cartItem.restaurantId);
     }
     try {
+      
       final int res = await add_item_to_cart(
         cartItem: cartItem,
       );

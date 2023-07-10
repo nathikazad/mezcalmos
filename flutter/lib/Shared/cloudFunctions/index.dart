@@ -286,6 +286,7 @@ class CloudFunctions {
       String? scheduledTime,
       String? stripePaymentId,
       num? stripeFees,
+      String? couponCode,
       num? distanceFromBase,
       num? tax,
       num? discountValue}  ) async {
@@ -306,6 +307,7 @@ class CloudFunctions {
         "scheduledTime": scheduledTime,
         "stripePaymentId": stripePaymentId,
         "stripeFees": stripeFees,
+        "couponCode": couponCode,
         "distanceFromBase": distanceFromBase,
         "tax": tax,
         "discountValue": discountValue,

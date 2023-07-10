@@ -209,3 +209,19 @@ mutation update_business_online_ordering(
     online_ordering
   }
 }
+
+query get_service_provider_offers($service_provider_id: Int, $service_provider_type: String) {
+  service_provider_offer(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
+    id
+    details
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+    status
+    coupon_code
+    offer_type
+  }
+}

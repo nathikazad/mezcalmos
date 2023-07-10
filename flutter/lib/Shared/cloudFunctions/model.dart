@@ -1497,6 +1497,126 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 
 }
 
+class Offer {
+  num id;
+  Map<Language, String>? name;
+  num serviceProviderId;
+  ServiceProviderType serviceProviderType;
+  OfferType offerType;
+  String? couponCode;
+  OfferDetails details;
+  OfferStatus status;
+  Offer({
+    required this.id, this.name, required this.serviceProviderId, required this.serviceProviderType, required this.offerType, this.couponCode, required this.details, required this.status});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "name": name,
+      "serviceProviderId": serviceProviderId,
+      "serviceProviderType": serviceProviderType,
+      "offerType": offerType,
+      "couponCode": couponCode,
+      "details": details,
+      "status": status,
+    };
+  }
+
+}
+
+enum OfferType { Promotion, Coupon, MonthlySubscription }
+extension ParseOfferTypeToString on OfferType {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToOfferType on String {
+  OfferType toOfferType() {
+    return OfferType.values.firstWhere(
+        (OfferType offerType) =>
+            offerType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum OfferStatus { Active, Inactive }
+extension ParseOfferStatusToString on OfferStatus {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToOfferStatus on String {
+  OfferStatus toOfferStatus() {
+    return OfferStatus.values.firstWhere(
+        (OfferStatus offerStatus) =>
+            offerStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+class Discount {
+  DiscountType discountType;
+  num discountAmount;
+  Discount({
+    required this.discountType, required this.discountAmount});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "discountType": discountType,
+      "discountAmount": discountAmount,
+    };
+  }
+
+}
+
+class OfferDetails {
+  String offerForOrder;
+  String? offerForItems;
+  DiscountType discountType;
+  num discountValue;
+  num? minimumOrderAmount;
+  List<num>? items;
+  List<num>? categories;
+  String? validityRangeStart;
+  String? validityRangeEnd;
+  bool weeklyRepeat;
+  bool? couponReusable;
+  OfferDetails({
+    required this.offerForOrder, this.offerForItems, required this.discountType, required this.discountValue, this.minimumOrderAmount, this.items, this.categories, this.validityRangeStart, this.validityRangeEnd, required this.weeklyRepeat, this.couponReusable});
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "offerForOrder": offerForOrder,
+      "offerForItems": offerForItems,
+      "discountType": discountType,
+      "discountValue": discountValue,
+      "minimumOrderAmount": minimumOrderAmount,
+      "items": items,
+      "categories": categories,
+      "validityRangeStart": validityRangeStart,
+      "validityRangeEnd": validityRangeEnd,
+      "weeklyRepeat": weeklyRepeat,
+      "couponReusable": couponReusable,
+    };
+  }
+
+}
+
+enum DiscountType { FlatAmount, Percentage, AnotherSameFlat, AnotherSamePercentage, StoreCredit }
+extension ParseDiscountTypeToString on DiscountType {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToDiscountType on String {
+  DiscountType toDiscountType() {
+    return DiscountType.values.firstWhere(
+        (DiscountType discountType) =>
+            discountType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
 class ServiceProvider {
   num id;
   num serviceProviderDetailsId;
@@ -2322,14 +2442,16 @@ class Cart {
   num? restaurantId;
   num cost;
   List<CartItem> items;
+  num discountValue;
   Cart({
-    required this.customerId, this.restaurantId, required this.cost, required this.items});
+    required this.customerId, this.restaurantId, required this.cost, required this.items, required this.discountValue});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "customerId": customerId,
       "restaurantId": restaurantId,
       "cost": cost,
       "items": items,
+      "discountValue": discountValue,
     };
   }
 
@@ -2345,8 +2467,9 @@ class CartItem {
   String? notes;
   Map<Language, String> name;
   String? image;
+  num? categoryId;
   CartItem({
-    this.cartItemId, required this.itemId, required this.customerId, this.selectedOptions, required this.quantity, required this.costPerOne, this.notes, required this.name, this.image});
+    this.cartItemId, required this.itemId, required this.customerId, this.selectedOptions, required this.quantity, required this.costPerOne, this.notes, required this.name, this.image, this.categoryId});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "cartItemId": cartItemId,
@@ -2358,6 +2481,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "notes": notes,
       "name": name,
       "image": image,
+      "categoryId": categoryId,
     };
   }
 
