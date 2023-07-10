@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 
-typedef MezServicesMapViewCallBack = Future<List<MezMarker>> Function(
+typedef MezServicesMapViewCallBack = Future<List<Marker>> Function(
     LatLng? mapCenter, double distance);
 
 class MezServicesMapView extends StatefulWidget {
@@ -62,7 +62,8 @@ class _MezServicesMapViewState extends State<MezServicesMapView> {
               _controller.onMapMove(p0);
             },
           ),
-          if (_controller.showRefetchButton)
+          if (_controller.showRefetchButton &&
+              _controller.mGoogleMapController.isMapReady)
             Align(
               alignment: Alignment.topCenter,
               child: MezInkwell(
@@ -142,17 +143,24 @@ class MezServicesMapController {
 
     mezlog("Fetch with new center ${mapCenter?.toJson()}");
     if (mapCenter != null) {
-      List<MezMarker> newMarkers = await fetchNewData(mapCenter, distance);
+      List<Marker> newMarkers = await fetchNewData(mapCenter, distance);
       mezDbgPrint("👊new markers ========>${newMarkers.length}");
 
       // add new markers to markers in controller but only new ones check if dosent exist
       mGoogleMapController.markers.addAll(newMarkers
-          .where((MezMarker newMarker) => !mGoogleMapController.markers.any(
+          .where((Marker newMarker) => !mGoogleMapController.markers.any(
               (MezMarker oldMarker) =>
                   oldMarker.markerId.value == newMarker.markerId.value))
-          .map((MezMarker newMarker) => newMarker));
-      mGoogleMapController.markers.value =
-          mGoogleMapController.markers.toSet().toList();
+          .map((Marker newMarker) => MezMarker(
+                markerId: newMarker.markerId,
+                icon: newMarker.icon,
+                onTap: newMarker.onTap,
+                anchor: newMarker.anchor,
+                position: newMarker.position,
+                
+                consumeTapEvents: true,
+              )));
+     
 
       mezDbgPrint(
           "✅ markers in child component =====>${mGoogleMapController.markers.value.length}");

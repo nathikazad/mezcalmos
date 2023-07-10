@@ -2,6 +2,14 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
+        "BsHomeRentalOrderView": {
+          "BsHomeRentalOrderView": {
+            "invalidOrderId": "Invalid order ID",
+            "requestChanges": "Request changes",
+            "acceptOrder": "Accept request",
+            "cancelOrder": "Cancel request"
+          }
+        },
         "BsOrdersListViews": {
           "BsOrdersListView": {
             "orders": "Orders",
@@ -16,30 +24,30 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
-              "pending": "Pending",
+              "pending": "Requested",
               "waitingCustomer": "Waiting for customer",
               "cancelled": "Cancelled",
               "confirmed": "Confirmed",
               "completed": "Completed",
-
               "error": "Error",
               "edit": "Edit",
               "markAsUnavailable": "Mark as unavailable",
               "markAsAvailable": "Mark as available",
-              "updatePrice": "Update Price",
+              "updatePrice": "Update price",
               "required": "Required",
-              "notValid": "Not Valid",
+              "notValid": "Not valid",
               "save": "Save",
               "cancel": "Cancel",
-              "startFrom": "Start From",
-              "updateTimeTitle": "Update Time"
+              "startFrom": "Start from",
+              "updateTimeTitle": "Update time",
+              "free": "FREE"
             }
           }
         }
       },
       "Components": {
         "BsOrderCard": {
-          "items": "Items"
+          "item": "Item"
         },
         "BsRentalCard": {
           "hour": "hour",
@@ -1610,7 +1618,7 @@
             "unit": "unit"
           },
           "cusShowBusinessFilerSheet": {
-            "canBookOnline": "Show only items that can be booked online.",
+            "canBookOnline": "Show businesses with online ordering only",
             "showOnlyOpenRestaurants": "Show only open restaurants",
             "confirm": "Confirm",
             "cancel": "Cancel",
