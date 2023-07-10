@@ -44,6 +44,7 @@ class CustCourierServicesListViewController {
     await get_dv_companies(isOpen: true).then((List<DeliveryCompany>? list) {
       if (list != null) {
         _services = list;
+        filter(_filterInput);
       }
       _getCustomerCurrentLocation();
     }).whenComplete(() {

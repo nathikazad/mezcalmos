@@ -72,7 +72,6 @@ class CustHomeRentalsListViewController {
   LatLng _currentLocation = LatLng(19.4326, -99.1332);
   LatLng get currentLocation => _currentLocation;
 
-
   List<HomeCard> get mapViewRentals => _rentals;
   RxList<HomeCard> _mapViewRentals = <HomeCard>[].obs;
 

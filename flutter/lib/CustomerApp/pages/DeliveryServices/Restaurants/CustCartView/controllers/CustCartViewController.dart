@@ -10,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRes
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 // import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
@@ -233,7 +234,7 @@ class CustCartViewController {
   }
 
   Future<void> checkoutActionButton() async {
-    cart.notes = noteText.text;
+    cart.notes = noteText.text.inCaps;
     num? newOrderId;
     try {
       // if (cart.paymentType == PaymentType.Card) {

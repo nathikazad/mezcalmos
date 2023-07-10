@@ -8,6 +8,7 @@ import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/component
 import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/controllers/BsHomeRentalOrderViewController.dart';
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
@@ -18,6 +19,9 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
+    ['pages']['Orders']['BsHomeRentalOrderView']['BsHomeRentalOrderView'];
 
 class BsHomeRentalOrderView extends StatefulWidget {
   const BsHomeRentalOrderView({super.key});
@@ -39,7 +43,8 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
     orderId = int.tryParse(MezRouter.urlArguments["id"].toString());
     if (orderId == null) {
       showErrorSnackBar(
-          errorText: "Invalid order id", duration: const Duration(seconds: 3));
+          errorText: '${_i18n()['invalidOrderId']}',
+          duration: const Duration(seconds: 3));
     } else {
       viewController.init(orderId: orderId!);
     }
@@ -59,8 +64,8 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
               height: 75,
               borderRadius: 0,
               label: (viewController.hasChanges)
-                  ? "Request changes"
-                  : "Accept order",
+                  ? '${_i18n()['requestChanges']}'
+                  : '${_i18n()['acceptOrder']}',
               withGradient: true,
               onClick: () async {
                 await viewController.handleRequestedOrder();
@@ -107,12 +112,13 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
                 // OrderPaymentMethod(
                 //     paymentType: PaymentType.Card,
                 //     stripeOrderPaymentInfo: null),
-                meduimSeperator,
+                if (viewController.order?.notes != null) meduimSeperator,
                 OrderNoteCard(
                   note: viewController.order?.notes,
                 ),
-                meduimSeperator,
+                // meduimSeperator,
                 OrderSummaryCard(
+                    margin: EdgeInsets.zero,
                     showNullValues: false,
                     costs: OrderCosts(
                         deliveryCost: null,
@@ -124,7 +130,7 @@ class _BsHomeRentalOrderViewState extends State<BsHomeRentalOrderView> {
                 meduimSeperator,
                 if (viewController.canCancel)
                   MezButton(
-                    label: "Cancel order",
+                    label: '${_i18n()['cancelOrder']}',
                     onClick: () async {
                       unawaited(
                           showConfirmationDialog(context, onYesClick: () async {

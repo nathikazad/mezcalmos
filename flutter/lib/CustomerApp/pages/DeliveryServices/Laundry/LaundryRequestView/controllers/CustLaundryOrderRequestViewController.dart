@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -154,7 +155,7 @@ class CustLaundryOrderRequestViewController {
     _laundryRequest.laundryId = laundry.value!.info.hasuraId;
     _laundryRequest.from = laundry.value!.info.location;
     _laundryRequest.to = customerLoc.value!;
-    _laundryRequest.notes = orderNote.text;
+    _laundryRequest.notes = orderNote.text.inCaps;
     _laundryRequest.paymentType = PaymentType.Cash;
     return _laundryRequest;
   }

@@ -1,8 +1,9 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'dart:ui' as ui;
 
 class LabelMarker {
   final String? label;
@@ -63,7 +64,7 @@ extension AddExtension on Set<Marker> {
       altIconPath: labelMarker.altIconPath,
       backgroundColor: labelMarker.backgroundColor,
       textStyle: labelMarker.textStyle,
-    ).then((value) {
+    ).then((BitmapDescriptor value) {
       add(Marker(
           markerId: labelMarker.markerId,
           position: labelMarker.position,
@@ -87,11 +88,16 @@ extension AddExtension on Set<Marker> {
   }
 }
 
-Future<BitmapDescriptor> createCustomMarkerBitmap(
-    {String? title,
-    String? altIconPath,
-    required TextStyle textStyle,
-    Color backgroundColor = Colors.blueAccent}) async {
+Future<BitmapDescriptor> createCustomMarkerBitmap({
+  String? title,
+  String? altIconPath,
+  required TextStyle textStyle,
+  Color backgroundColor = secondaryLightBlueColor,
+}) async {
+  final double circleSize = 80.0;
+  final double imageSize = 80.0;
+  final double padding = 15.0;
+
   final TextSpan span = TextSpan(
     style: textStyle,
     text: title ?? '       ',
@@ -99,49 +105,128 @@ Future<BitmapDescriptor> createCustomMarkerBitmap(
   final TextPainter painter = TextPainter(
     text: span,
     textAlign: TextAlign.center,
-    textDirection: ui.TextDirection.ltr,
+    textDirection: TextDirection.ltr,
   );
   painter.text = TextSpan(
     text: title ?? '       ',
     style: textStyle,
   );
+  painter.layout();
+
   final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
   final Canvas canvas = Canvas(pictureRecorder);
-  painter.layout();
-  painter.paint(canvas, const Offset(20.0, 10.0));
-  final int textWidth = painter.width.toInt();
-  final int textHeight = painter.height.toInt();
 
-  final Path path = Path();
-  final Paint myPaint = Paint();
+  final Paint circlePaint = Paint()..color = backgroundColor;
+  final double circleRadius = circleSize / 2.0;
 
-  myPaint.color = Colors.white;
+  final double contentSize = imageSize + (2 * padding);
+  final double contentOffsetX = (circleSize - contentSize) / 2.0;
+  final double contentOffsetY = (circleSize - contentSize) / 2.0;
 
-  final ByteData imageData = await rootBundle.load(altIconPath!);
-  final ui.Image assetImage =
-      await decodeImageFromList(imageData.buffer.asUint8List());
+  final Rect circleRect = Rect.fromCircle(
+    center: Offset(circleRadius, circleRadius),
+    radius: circleRadius,
+  );
 
-  path.addRRect(RRect.fromLTRBAndCorners(0, 0, textWidth + 40, textHeight + 20,
-      bottomLeft: const Radius.circular(50),
-      bottomRight: const Radius.circular(50),
-      topLeft: const Radius.circular(50),
-      topRight: const Radius.circular(50)));
+  canvas.drawCircle(
+    circleRect.center,
+    circleRadius,
+    circlePaint,
+  );
 
-  canvas.drawShadow(path, Color(0xff000000), 2, true);
-  canvas.drawPath(path, myPaint);
+  if (title == null && altIconPath != null) {
+    final ByteData imageData = await rootBundle.load(altIconPath);
+    final ui.Image assetImage =
+        await decodeImageFromList(imageData.buffer.asUint8List());
 
-  painter.layout();
+    final Rect imageRect = Rect.fromLTWH(
+      circleRect.left + contentOffsetX + padding,
+      circleRect.top + contentOffsetY + padding,
+      imageSize,
+      imageSize,
+    );
+    canvas.drawShadow(
+      Path()..addOval(circleRect),
+      Colors.black.withOpacity(0.3), // Adjust the shadow color and opacity
+      3, // Adjust the elevation value
+      true,
+    );
 
-  if (title == null) {
-    canvas.drawImage(assetImage, Offset(30, 12.5), Paint());
+    canvas.drawImageRect(
+      assetImage,
+      Rect.fromLTWH(
+          0, 0, assetImage.width.toDouble(), assetImage.height.toDouble()),
+      imageRect,
+      Paint(),
+    );
   }
 
-  painter.paint(canvas, const Offset(20.0, 10.0));
+  painter.paint(canvas, const Offset(0.0, 0.0));
 
   final ui.Picture p = pictureRecorder.endRecording();
-  final ByteData? pngBytes = await (await p.toImage(
-          painter.width.toInt() + 40, painter.height.toInt() + 50))
-      .toByteData(format: ui.ImageByteFormat.png);
+  final ByteData? pngBytes =
+      await (await p.toImage(circleSize.toInt(), circleSize.toInt()))
+          .toByteData(format: ui.ImageByteFormat.png);
   final Uint8List data = Uint8List.view(pngBytes!.buffer);
+
   return BitmapDescriptor.fromBytes(data);
 }
+
+// Future<BitmapDescriptor> createCustomMarkerBitmap(
+//     {String? title,
+//     String? altIconPath,
+//     required TextStyle textStyle,
+//     Color backgroundColor = Colors.blueAccent}) async {
+//   final TextSpan span = TextSpan(
+//     style: textStyle,
+//     text: title ?? '       ',
+//   );
+//   final TextPainter painter = TextPainter(
+//     text: span,
+//     textAlign: TextAlign.center,
+//     textDirection: ui.TextDirection.ltr,
+//   );
+//   painter.text = TextSpan(
+//     text: title ?? '       ',
+//     style: textStyle,
+//   );
+//   final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+//   final Canvas canvas = Canvas(pictureRecorder);
+//   painter.layout();
+//   painter.paint(canvas, const Offset(20.0, 15.0));
+//   final int textWidth = painter.width.toInt();
+//   final int textHeight = painter.height.toInt();
+
+//   final Path path = Path();
+//   final Paint myPaint = Paint();
+
+//   myPaint.color = backgroundColor;
+
+//   final ByteData imageData = await rootBundle.load(altIconPath!);
+//   final ui.Image assetImage =
+//       await decodeImageFromList(imageData.buffer.asUint8List());
+
+//   path.addRRect(RRect.fromLTRBAndCorners(0, 0, textWidth + 20, textHeight + 20,
+//       bottomLeft: const Radius.circular(50),
+//       bottomRight: const Radius.circular(50),
+//       topLeft: const Radius.circular(50),
+//       topRight: const Radius.circular(50)));
+
+//   canvas.drawShadow(path, Color(0xff000000), 2, true);
+//   canvas.drawPath(path, myPaint);
+
+//   painter.layout();
+
+//   if (title == null) {
+//     canvas.drawImage(assetImage, Offset(20, 15), Paint());
+//   }
+
+//   painter.paint(canvas, const Offset(20.0, 15.0));
+
+//   final ui.Picture p = pictureRecorder.endRecording();
+//   final ByteData? pngBytes =
+//       await (await p.toImage(painter.width.toInt(), painter.height.toInt()))
+//           .toByteData(format: ui.ImageByteFormat.png);
+//   final Uint8List data = Uint8List.view(pngBytes!.buffer);
+//   return BitmapDescriptor.fromBytes(data);
+// }

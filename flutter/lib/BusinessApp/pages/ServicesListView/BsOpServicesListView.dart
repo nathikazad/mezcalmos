@@ -826,11 +826,15 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
 
   Widget _homeRentals(BuildContext context) {
     final RxList<HomeCard> homeRentals = viewController.homeRentals
-        .where((HomeCard e) => e.forRent)
+        .where((HomeCard e) => e.forRent && !e.isOfficeSpace)
         .toList()
         .obs;
     final RxList<HomeCard> realEstate = viewController.homeRentals
-        .where((HomeCard e) => e.forSale)
+        .where((HomeCard e) => e.forSale && !e.isOfficeSpace)
+        .toList()
+        .obs;
+    final RxList<HomeCard> officeSpace = viewController.homeRentals
+        .where((HomeCard element) => element.isOfficeSpace)
         .toList()
         .obs;
     return Column(
@@ -887,6 +891,32 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
                       );
                     },
                   ),
+                ),
+              ),
+              bigSeperator,
+            ],
+          ),
+        if (officeSpace.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _i18n()["officeSpace"],
+                style: context.textTheme.bodyLarge,
+              ),
+              // smallSepartor,
+              Obx(
+                () => Column(
+                  children: List.generate(
+                      officeSpace.length,
+                      (int index) => BsHomeRentalCard(
+                          viewController: viewController,
+                          home: officeSpace[index],
+                          onClick: () {
+                            viewController.navigateToCoWorking(
+                              id: officeSpace[index].id!.toInt(),
+                            );
+                          })),
                 ),
               ),
               bigSeperator,
