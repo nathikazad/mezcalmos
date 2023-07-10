@@ -229,7 +229,7 @@ class BusinessItemDetailsController {
 
   LanguageMap constructDesc() {
     final LanguageMap _desc = {
-      languages.value!.primary: descriptionController.text
+      languages.value!.primary: descriptionController.text.inCaps
     };
     if (languages.value!.secondary != null) {
       _desc[languages.value!.secondary!] = scDescriptionController.text.inCaps;
@@ -238,7 +238,9 @@ class BusinessItemDetailsController {
   }
 
   LanguageMap constructName() {
-    final LanguageMap _name = {languages.value!.primary: nameController.text};
+    final LanguageMap _name = {
+      languages.value!.primary: nameController.text.inCaps
+    };
     if (languages.value!.secondary != null) {
       _name[languages.value!.secondary!] = scNameController.text.inCaps;
     }

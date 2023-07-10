@@ -81,7 +81,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
 
-      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, 7);
+      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, 1);
       notifyDeliveryCompany(orderResponse.deliveryOrder);
     }
     

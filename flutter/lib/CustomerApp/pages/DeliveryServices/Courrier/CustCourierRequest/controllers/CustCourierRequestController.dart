@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -152,10 +153,10 @@ class CustCourierRequestController {
             .entries
             .map(
               (MapEntry<int, CourierItem> e) => cModels.CourierItem(
-                name: itemsNames[e.key].text,
+                name: itemsNames[e.key].text.inCaps,
                 image: e.value.image,
                 estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
-                notes: itemsNotes[e.key].text,
+                notes: itemsNotes[e.key].text.inCaps,
               ),
             )
             .toList(),

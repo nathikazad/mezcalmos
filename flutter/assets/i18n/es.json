@@ -2,6 +2,14 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
+        "BsHomeRentalOrderView": {
+          "BsHomeRentalOrderView": {
+            "invalidOrderId": "ID de pedido no válido",
+            "requestChanges": "Solicitar cambios",
+            "acceptOrder": "Aceptar pedido",
+            "cancelOrder": "Cancelar pedido"
+          }
+        },
         "BsOrdersListViews": {
           "BsOrdersListView": {
             "orders": "Pedidos",
@@ -16,7 +24,7 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
-              "pending": "Pendiente",
+              "pending": "Solicitada",
               "waitingCustomer": "Esperando a un cliente",
               "cancelled": "Cancelada",
               "confirmed": "Confirmada",
@@ -31,14 +39,15 @@
               "save": "Guardar",
               "cancel": "Cancelar",
               "startFrom": "Comienza desde",
-              "updateTimeTitle": "Tiempo de actualizacion"
+              "updateTimeTitle": "Tiempo de actualizacion",
+              "free": "GRATIS"
             }
           }
         }
       },
       "Components": {
         "BsOrderCard": {
-          "items": "Elementos"
+          "item": "Elemento"
         },
         "BsRentalCard": {
           "hour": "hora",
