@@ -92,6 +92,10 @@ class BsCoWorkingViewController {
       // homeType.value = rental!.category1;
       final String? roomType1 =
           rental!.details.additionalParameters?["roomType1"];
+      deskController.text =
+          rental!.details.additionalParameters?["deskCount1"].toString() ?? "";
+      areaController.text =
+          rental!.details.additionalParameters?["area1"].toString() ?? "";
       roomType.value = roomType1?.toCoWorkingRoomType();
       additionalRooms.value = rental!
               .details.additionalParameters?["additionalRooms"]
@@ -104,9 +108,10 @@ class BsCoWorkingViewController {
               return RxMap<String, dynamic>({
                 "roomType": e["roomType"],
                 "controller": ctrl,
-                "deskController":
-                    TextEditingController(text: e["deskCount"] ?? ""),
-                "areaController": TextEditingController(text: e["area"] ?? ""),
+                "deskController": TextEditingController(
+                    text: e["deskCount"].toString() ?? ""),
+                "areaController":
+                    TextEditingController(text: e["area"].toString() ?? ""),
               });
             },
           )?.toList() as List<RxMap<String, dynamic>>? ??
@@ -152,6 +157,8 @@ class BsCoWorkingViewController {
         await detailsController.contructDetails();
     details.additionalParameters = {
       "roomType1": roomType.value?.toFirebaseFormatString(),
+      "deskCount1": int.tryParse(deskController.text),
+      "area1": areaController.text,
       "additionalRooms": [
         for (final Map<String, dynamic> room in additionalRooms)
           {
@@ -202,6 +209,8 @@ class BsCoWorkingViewController {
             id: rental!.details.id.toInt(),
             additionalParams: {
               "roomType1": roomType.value?.toFirebaseFormatString(),
+              "deskCount1": int.tryParse(deskController.text),
+              "area1": areaController.text,
               "additionalRooms": [
                 for (final Map<String, dynamic> room in additionalRooms)
                   {
