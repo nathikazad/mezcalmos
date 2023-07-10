@@ -151,6 +151,10 @@ class BsOtherServiceViewController {
             navigate: () => _navigateToSerice(
                 serviceCategory: ServiceCategory1.MealPlanning),
           ),
+          OtherCategoryItems(
+            title: "coWorking",
+            navigate: () => _navigateToCoWorking(),
+          ),
         ],
         subTitle: "serviceSub",
       ),
@@ -199,6 +203,10 @@ class BsOtherServiceViewController {
 
   void _navigateToSerice({required ServiceCategory1 serviceCategory}) {
     controller.navigateToService(serviceCategory: serviceCategory);
+  }
+
+  void _navigateToCoWorking() {
+    controller.navigateToCoWorking();
   }
 
   void _navigateToProduct() {

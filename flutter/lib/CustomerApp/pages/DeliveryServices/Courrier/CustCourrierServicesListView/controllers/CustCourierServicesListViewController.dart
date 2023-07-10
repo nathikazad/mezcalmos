@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 class CustCourierServicesListViewController {
@@ -36,27 +36,12 @@ class CustCourierServicesListViewController {
     _filterInput = defaultFilters();
     isLoading.value = true;
 
-    get_dv_companies(
-      onlineOrdering:
-          _filterInput['onlineOrder']!.last.contains('true') ? true : null,
-    ).then((List<DeliveryCompany>? list) {
-      if (list != null) {
-        _services = list;
-
-        filter(_filterInput);
-      }
-      _getCustomerCurrentLocation();
-    }).whenComplete(() {
-      isLoading.value = false;
-    });
+    _getDvCompanies();
   }
 
   Future<void> _getDvCompanies() async {
     isLoading.value = true;
-    await get_dv_companies(
-      onlineOrdering:
-          _filterInput['onlineOrder']!.last.contains('true') ? true : null,
-    ).then((List<DeliveryCompany>? list) {
+    await get_dv_companies(isOpen: true).then((List<DeliveryCompany>? list) {
       if (list != null) {
         _services = list;
       }

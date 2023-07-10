@@ -1,11 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/User.dart' as user;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/User.dart' as user;
 
 class DeliveryOrder extends DeliverableOrder {
   int? serviceOrderId;
+  double? customerOffer;
+  Map<int, CounterOffer>? counterOffers;
+  Map<int, bool>? notifiedDrivers;
 
   DeliveryOrderStatus status;
 
@@ -17,9 +20,12 @@ class DeliveryOrder extends DeliverableOrder {
       required super.paymentType,
       required super.deliveryOrderId,
       required super.orderTime,
+      required this.customerOffer,
       super.stripePaymentInfo,
       super.customerReviewByDriver,
       super.serviceReviewByDriver,
+      this.counterOffers,
+      this.notifiedDrivers,
       required super.costs,
       required this.packageReady,
       required this.serviceOrderId,
@@ -74,6 +80,30 @@ class DeliveryOrder extends DeliverableOrder {
   bool get driverCanReviewCustomer {
     return status == DeliveryOrderStatus.Delivered &&
         customerReviewByDriver == null;
+  }
+
+  bool hasSentOffer(int driverId) {
+    return counterOffers?.containsKey(driverId) ?? false;
+  }
+
+  int get driversSawOfferCount {
+    if (notifiedDrivers == null) {
+      return 0;
+    }
+
+    return notifiedDrivers!.values.where((bool value) => value == true).length;
+  }
+
+  num? driverOffer(int driverId) {
+    return counterOffers?[driverId]?.price;
+  }
+
+  bool waitingForOffer(int driverId) {
+    return driverInfo == null &&
+        counterOffers?.containsKey(driverId) == true &&
+        DateTime.parse(counterOffers![driverId]!.expiryTime)
+            .toLocal()
+            .isBefore(DateTime.now().toLocal());
   }
 
   @override
@@ -139,6 +169,7 @@ class DeliveryOrderVariables {
   DateTime? cancellationTime;
   DeliveryOrderStatus status;
   user.UserInfo? driverInfo;
+  Map<int, CounterOffer>? counterOffers;
   bool packageReady;
   DeliveryOrderVariables(
       {required this.status,
@@ -147,6 +178,7 @@ class DeliveryOrderVariables {
       this.estimatedArrivalAtDropoff,
       this.estimatedPackageReadyTime,
       this.scheduleTime,
+      this.counterOffers,
       this.cancellationTime,
       this.driverInfo});
 }

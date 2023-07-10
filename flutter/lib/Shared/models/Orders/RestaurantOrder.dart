@@ -86,7 +86,9 @@ class RestaurantOrder extends DeliverableOrder {
   }
 
   bool get canAddReview {
-    return review == null && status == cModels.RestaurantOrderStatus.Delivered;
+    return review == null &&
+        status == cModels.RestaurantOrderStatus.Delivered &&
+        serviceProvider?.hasuraId != null;
   }
 
   @override

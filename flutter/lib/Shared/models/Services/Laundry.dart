@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 class Laundry extends Service {
   LaundryCosts laundryCosts;
@@ -19,7 +18,7 @@ class Laundry extends Service {
 
   Laundry({
     required ServiceInfo userInfo,
-    required cModels.Schedule? schedule,
+    required super.schedule,
     required PaymentInfo paymentInfo,
     required ServiceState laundryState,
     super.rate,
@@ -38,7 +37,6 @@ class Laundry extends Service {
     required cModels.ServiceProviderLanguage languages,
   }) : super(
             info: userInfo,
-            schedule: schedule,
             languages: languages,
             state: laundryState,
             paymentInfo: paymentInfo);

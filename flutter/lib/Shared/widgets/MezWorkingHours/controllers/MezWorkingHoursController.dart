@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 class MezWorkingHoursController {
   final Rxn<Schedule> _workingHours = Rxn<Schedule>();

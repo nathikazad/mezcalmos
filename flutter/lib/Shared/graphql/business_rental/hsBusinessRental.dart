@@ -173,7 +173,6 @@ Future<HomeWithBusinessCard?> get_home_by_id(
     if (data != null) {
       final HomeWithBusinessCard returnedRental = HomeWithBusinessCard(
           home: Home(
-            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -294,7 +293,6 @@ Future<List<HomeCard>> get_home_rentals(
           businessName: data.business!.details.name,
           currency: data.business!.details.currency.toCurrency(),
           home: Home(
-            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -355,7 +353,6 @@ Future<List<HomeCard>> get_business_home_rentals(
           businessName: data.business!.details.name,
           currency: data.business!.details.currency.toCurrency(),
           home: Home(
-            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -427,7 +424,6 @@ Future<List<HomeCard>> get_real_estate(
           businessName: data.business!.details.name,
           currency: data.business!.details.currency.toCurrency(),
           home: Home(
-            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -489,7 +485,6 @@ Future<List<HomeCard>> get_business_real_estate(
           businessName: data.business!.details.name,
           currency: data.business!.details.currency.toCurrency(),
           home: Home(
-            locationId: data.location_id,
             location: HomeLocation(
               name: data.location!.name,
               location: Location(
@@ -773,8 +768,6 @@ Future<Home?> update_business_home_rental(
     final Mutation$update_home_by_id$update_business_home_by_pk data =
         res.parsedData!.update_business_home_by_pk!;
     return Home(
-      locationId:
-          res2.parsedData!.update_business_home_location!.returning.first.id,
       location: HomeLocation(
         name: res2
             .parsedData!.update_business_home_location!.returning.first.name,

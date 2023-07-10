@@ -35,6 +35,9 @@ class CourierOrder extends DeliveryOrder {
       required super.chatId,
       this.billImage,
       required super.customer,
+      required super.customerOffer,
+      super.counterOffers,
+      super.notifiedDrivers,
       required super.dropOffLocation,
       required super.serviceProviderDriverChatId,
       required super.customerDriverChatId,
@@ -42,6 +45,8 @@ class CourierOrder extends DeliveryOrder {
       required super.pickupLocation});
 
   bool get canAddReview {
-    return review == null && status == cModels.DeliveryOrderStatus.Delivered;
+    return review == null &&
+        status == cModels.DeliveryOrderStatus.Delivered &&
+        serviceProvider?.hasuraId != null;
   }
 }

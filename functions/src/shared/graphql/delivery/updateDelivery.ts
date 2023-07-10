@@ -1,7 +1,7 @@
-// import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
+import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
-import { ChangePriceStatus, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus } from "../../models/Generic/Delivery";
 import { MezError } from "../../models/Generic/Generic";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
@@ -22,84 +22,25 @@ export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   });
 }
 
-export async function updateDeliveryOrderCompany(deliveryOrderId: number, deliveryCompanyId: number) {
-  let chain = getHasura();
+// export async function updateDeliveryOrderCompany(deliveryOrderId: number, deliveryCompanyId: number) {
+//   let chain = getHasura();
 
-  await chain.mutation({
-    update_delivery_order_by_pk: [{ 
-      pk_columns: {
-        id: deliveryOrderId
-      },
-      _set: {
-        service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
-        service_provider_id: deliveryCompanyId
-      }
-    }, {
-      delivery_company: {
-        id: true
-      }
-    }]
-  })
-}
-
-export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOrder) {
-  let chain = getHasura();
-
-  switch (deliveryOrder.changePriceRequest!.status) {
-    case ChangePriceStatus.Requested:
-      await chain.mutation({
-        update_delivery_order_by_pk: [{
-          pk_columns: {
-            id: deliveryOrder.deliveryId
-          },
-          _set: {
-            
-          //  change_price_request: $`change_price_request`
-          }
-        }, {
-          delivery_cost: true
-        }]
-      }, {
-        // "change_price_request": deliveryOrder.changePriceRequest
-      })
-      break;
-    case ChangePriceStatus.Accepted:
-      await chain.mutation({
-        update_delivery_order_by_pk: [{
-          pk_columns: {
-            id: deliveryOrder.deliveryId
-          },
-          _set: {
-            // change_price_request: $`change_price_request`,
-            delivery_cost: deliveryOrder.deliveryCost
-          }
-        }, {
-          delivery_cost: true
-        }]
-      }, {
-        // "change_price_request": deliveryOrder.changePriceRequest
-      })
-      break;
-    default:
-      await chain.mutation({
-        update_delivery_order_by_pk: [{
-          pk_columns: {
-            id: deliveryOrder.deliveryId
-          },
-          _set: {
-            // change_price_request: $`change_price_request`,
-            delivery_driver_id: null!,
-          }
-        }, {
-          delivery_cost: true
-        }]
-      }, {
-        // "change_price_request": deliveryOrder.changePriceRequest
-      })
-      break;
-  }
-  
-}
+//   await chain.mutation({
+//     update_delivery_order_by_pk: [{ 
+//       pk_columns: {
+//         id: deliveryOrderId
+//       },
+//       _set: {
+//         service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
+//         service_provider_id: deliveryCompanyId
+//       }
+//     }, {
+//       delivery_company: {
+//         id: true
+//       }
+//     }]
+//   })
+// }
 
 export async function setLockTime(deliveryOrderId: number) {
   let chain = getHasura();
@@ -178,4 +119,45 @@ export async function unassignDriver(deliveryOrderId: number) {
     
     }]
   });
+}
+
+
+export async function updateDeliveryCounterOffers(deliveryOrder: DeliveryOrder) {
+  let chain = getHasura();
+
+  await chain.mutation({
+    update_delivery_order_by_pk: [{
+      pk_columns: {
+        id: deliveryOrder.deliveryId
+      },
+      _set: {
+        counter_offers: $`counter_offers`
+      }
+    }, {
+      delivery_cost: true
+    }]
+  }, {
+    "counter_offers": deliveryOrder.counterOffers
+  })
+  
+}
+
+export async function setNotifiedDrivers(deliveryOrder: DeliveryOrder) {
+  let chain = getHasura();
+
+  await chain.mutation({
+    update_delivery_order_by_pk: [{
+      pk_columns: {
+        id: deliveryOrder.deliveryId
+      },
+      _set: {
+        notified_drivers: $`notified_drivers`
+      }
+    }, {
+      delivery_cost: true
+    }]
+  }, {
+    "notified_drivers": deliveryOrder.notifiedDrivers
+  })
+  
 }

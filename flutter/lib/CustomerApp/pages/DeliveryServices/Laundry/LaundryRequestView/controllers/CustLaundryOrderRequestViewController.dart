@@ -193,7 +193,7 @@ class CustLaundryOrderRequestViewController {
             lat: laundryRequest.to!.latitude,
             lng: laundryRequest.to!.longitude,
             address: laundryRequest.to!.address),
-        deliveryCost: shippingCost.value! * 2,
+       // deliveryCost: shippingCost.value! * 2,
         paymentType: laundryRequest.paymentType.toFirebaseFormatEnum(),
         notes: laundryRequest.notes,
         tripDistance:

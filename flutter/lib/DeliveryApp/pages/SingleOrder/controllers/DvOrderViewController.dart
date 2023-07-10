@@ -65,6 +65,19 @@ class DvOrderViewcontroller {
   // streams //
   StreamSubscription<DeliveryOrderVariables?>? orderStream;
   String? subscriptionId;
+
+  bool get showSendOfferButton =>
+      order.isDriverAssigned == false &&
+      order.counterOffers?.containsKey(
+              deliveryAuthAuthController.driver!.deliveryDriverId) ==
+          false;
+
+  bool get isWaitingForOffer => order
+      .waitingForOffer(deliveryAuthAuthController.driver!.deliveryDriverId);
+
+  num? get driverOffer =>
+      order.driverOffer(deliveryAuthAuthController.driver!.deliveryDriverId);
+
   // map vars //
 
   // init
@@ -75,8 +88,7 @@ class DvOrderViewcontroller {
     });
     clearNotifications(orderId);
     _order.value = await get_driver_order_by_id(orderId: orderId);
-    mezDbgPrint(
-        "TIME FROM QUERY ========>${_order.value?.estimatedArrivalAtDropoff}");
+    mezDbgPrint("TIME FROM QUERY ========>${_order.value?.customerOffer}");
 
     if (_order.value == null) {
       mezDbgPrint(
@@ -97,6 +109,7 @@ class DvOrderViewcontroller {
             _order.value!.status = event.status;
             _order.value!.packageReady = event.packageReady;
             _order.value!.driverInfo = event.driverInfo;
+            _order.value!.counterOffers = event.counterOffers;
             // _order.value = null;
             // _order.value = event;
 
@@ -149,7 +162,7 @@ class DvOrderViewcontroller {
       cModels.DeliveryOrderStatus status) async {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
-      cModels.ChangeDeliveryStatusResponse res =
+      final cModels.ChangeDeliveryStatusResponse res =
           await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.orderId,
         newStatus: status,
@@ -203,7 +216,7 @@ class DvOrderViewcontroller {
 
   Future<void> acceptOpenOrder() async {
     try {
-      cModels.AssignDriverResponse res =
+      final cModels.AssignDriverResponse res =
           await CloudFunctions.delivery3_assignDriver(
               deliveryOrderId: order.orderId,
               deliveryDriverId:
@@ -266,4 +279,25 @@ class DvOrderViewcontroller {
     }
     return null;
   }
+
+  Future<void> sendCounterOffer({required double newPrice}) async {
+    try {
+      final cModels.CounterOfferResponse res =
+          await CloudFunctions.delivery3_requestCounterOffer(
+              deliveryOrderId: order.orderId,
+              deliveryDriverId:
+                  deliveryAuthAuthController.driver!.deliveryDriverId,
+              newPrice: newPrice);
+      if (res.success) {}
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezlog(e);
+      mezlog(stk);
+    } catch (e, stk) {
+      mezlog(e);
+      mezlog(stk);
+    }
+  }
+
+  cancelOffer() {}
 }

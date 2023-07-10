@@ -24,6 +24,9 @@ query get_driver_order($orderId: Int!) {
     customer_id
     customer_review_by_driver_id
     delivery_cost
+    customer_offer
+    counter_offers
+    notified_drivers
     dropoff_address
     dropoff_gps
     estimated_arrival_at_dropoff_time
@@ -130,6 +133,7 @@ query get_driver_order($orderId: Int!) {
     order_time
     package_cost_comp
     total_cost
+    customer_offer
     package_ready
     payment_type
     pickup_address
@@ -206,6 +210,8 @@ subscription listen_on_driver_order_variables($orderId: Int!) {
     estimated_arrival_at_pickup_time
     estimated_package_ready_time
     status
+       
+    counter_offers
     package_ready
     delivery_driver{
       user {
@@ -255,7 +261,7 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
     total_cost
     package_ready
     order_type
-    delivery_cost
+    customer_offer
     dropoff_address
     delivery_cost
     dropoff_gps
@@ -285,7 +291,7 @@ query get_past_driver_orders($driverId: Int!, $offset: Int, $limit: Int) {
     package_cost_comp
     total_cost
     delivery_cost
-
+customer_offer
     dropoff_address
     dropoff_gps
     customer {
@@ -323,7 +329,9 @@ query get_inprocess_driver_orders($driverId: Int!) {
     package_cost_comp
     total_cost
     package_ready
-    delivery_cost
+    customer_offer
+    
+    customer_offer
     dropoff_address
     delivery_cost
     dropoff_gps
@@ -367,6 +375,7 @@ query get_open_driver_orders($in_process: Boolean!) {
     package_ready
     dropoff_address
     delivery_cost
+    customer_offer
     dropoff_gps
     customer {
       user {
@@ -408,6 +417,8 @@ subscription listen_open_driver_orders($in_process: Boolean!) {
     total_cost
     dropoff_address
     delivery_cost
+    customer_offer
+ 
     dropoff_gps
     customer {
       user {
@@ -446,6 +457,7 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     package_ready
     total_cost
     dropoff_address
+    customer_offer
     delivery_cost
     order_type
     dropoff_gps
@@ -492,7 +504,7 @@ query get_delivery_company_past_orders(
     package_cost_comp
     total_cost
     dropoff_address
-    delivery_cost
+    customer_offer
     dropoff_gps
     delivery_cost
     order_type
@@ -534,6 +546,7 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
     order_type
     dropoff_address
     delivery_cost
+    customer_offer
     package_ready
     dropoff_gps
     customer {
@@ -585,7 +598,7 @@ query get_pick_driver_order($orderId: Int!) {
       }
     }
 
-    delivery_cost
+    customer_offer
     dropoff_address
     dropoff_gps
 
@@ -668,6 +681,7 @@ subscription listen_driver_order_prices($orderId: Int!) {
     total_cost
     tax
     delivery_cost
+    customer_offer
     package_cost_comp
     # change_price_request
   }

@@ -32,7 +32,7 @@ export interface DeliveryOrder {
   serviceProviderReviewBydriverId?: number;
   customerReviewByDriverId?: number;
   customerId: number;
-  serviceProviderId: number;
+  serviceProviderId?: number;
   serviceProviderType: DeliveryServiceProviderType;
   tripPolyline?: string;
   deliveryCost: number;
@@ -46,8 +46,21 @@ export interface DeliveryOrder {
   orderType: OrderType;
   direction: DeliveryDirection;
   distanceFromBase?: number;
-  changePriceRequest?: DeliveryChangePriceRequest
+  chosenCompanies?: Array<number>;
+  customerOffer?: number;
+  counterOffers?: Record<number, CounterOffer>;
+  notifiedDrivers: Record<number, boolean>;
 }
+
+export interface CounterOffer {
+  price: number;
+  time: string;
+  name?: string;
+  image?: string;
+  status: CounterOfferStatus;
+  expiryTime: string;
+}
+
 export enum DeliveryDirection {
   FromCustomer = "fromCustomer",
   ToCustomer = "toCustomer",
@@ -56,8 +69,8 @@ export enum DeliveryDirection {
 export interface DeliveryDriver {
   id: number;
   userId: number;
-  deliveryCompanyType?: DeliveryServiceProviderType;
-  deliveryCompanyId?: number;
+  deliveryCompanyType: DeliveryServiceProviderType;
+  deliveryCompanyId: number;
   status: AuthorizationStatus;
   appVersion?: string;
   currentLocation?: Location;
@@ -79,16 +92,12 @@ export interface DeliveryDetails {
     customerPickup: boolean;
     selfDelivery: boolean;
 }
-export interface DeliveryChangePriceRequest {
-  status: ChangePriceStatus,
-  newPrice: number,
-  oldPrice: number,
-  reason: string
-}
-export enum ChangePriceStatus {
+
+export enum CounterOfferStatus {
   Requested = "requested",
   Accepted = "accepted",
   Rejected = "rejected",
+  Cancelled = "cancelled",
 }
 export enum DeliveryOrderStatus {
   OrderReceived = "orderReceived",

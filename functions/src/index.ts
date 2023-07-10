@@ -22,8 +22,8 @@ import { changeDeliveryStatus } from "./delivery/statusChange";
 import { addOperator } from "./serviceProvider/addOperator";
 import { authorizeOperator } from "./serviceProvider/authorizeOperator";
 import { createCourierOrder } from "./delivery/createCourierOrder";
-import { changeDeliveryPrice, changeDeliveryPriceResponse } from "./delivery/changeDeliveryPrice";
 import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
+import { requestCounterOffer } from "./delivery/counterOffer";
 import { createNewBusiness } from "./business/createNewBusiness";
 import { createNewMezAdminChat, createServiceProviderChat } from "./shared/chat/createChat";
 import { authorizeDriver } from "./serviceProvider/authorizeDriver";
@@ -115,10 +115,10 @@ export const delivery3 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
   changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
   createCourierOrder: authenticatedCall((userId, data) => createCourierOrder(userId, data)),
-  changeDeliveryPrice: authenticatedCall((userId, data) => changeDeliveryPrice(userId, data)),
-  changeDeliveryPriceResponse: authenticatedCall((userId, data) => changeDeliveryPriceResponse(userId, data)),
+  // changeDeliveryPrice: authenticatedCall((userId, data) => changeDeliveryPrice(userId, data)),
+  // changeDeliveryPriceResponse: authenticatedCall((userId, data) => changeDeliveryPriceResponse(userId, data)),
   cancelCourierFromCustomer: authenticatedCall((userId, data) => cancelCourierFromCustomer(userId, data)),
-
+  requestCounterOffer: authenticatedCall((userId, data) => requestCounterOffer(userId, data)),
   // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
   // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
   // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),

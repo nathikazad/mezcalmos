@@ -2841,9 +2841,9 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
 }
 
 class Variables$Query$getDeliveryCompanies {
-  factory Variables$Query$getDeliveryCompanies({bool? online_ordering}) =>
+  factory Variables$Query$getDeliveryCompanies({required bool is_open}) =>
       Variables$Query$getDeliveryCompanies._({
-        if (online_ordering != null) r'online_ordering': online_ordering,
+        r'is_open': is_open,
       });
 
   Variables$Query$getDeliveryCompanies._(this._$data);
@@ -2851,22 +2851,18 @@ class Variables$Query$getDeliveryCompanies {
   factory Variables$Query$getDeliveryCompanies.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    if (data.containsKey('online_ordering')) {
-      final l$online_ordering = data['online_ordering'];
-      result$data['online_ordering'] = (l$online_ordering as bool?);
-    }
+    final l$is_open = data['is_open'];
+    result$data['is_open'] = (l$is_open as bool);
     return Variables$Query$getDeliveryCompanies._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  bool? get online_ordering => (_$data['online_ordering'] as bool?);
+  bool get is_open => (_$data['is_open'] as bool);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    if (_$data.containsKey('online_ordering')) {
-      final l$online_ordering = online_ordering;
-      result$data['online_ordering'] = l$online_ordering;
-    }
+    final l$is_open = is_open;
+    result$data['is_open'] = l$is_open;
     return result$data;
   }
 
@@ -2885,13 +2881,9 @@ class Variables$Query$getDeliveryCompanies {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$online_ordering = online_ordering;
-    final lOther$online_ordering = other.online_ordering;
-    if (_$data.containsKey('online_ordering') !=
-        other._$data.containsKey('online_ordering')) {
-      return false;
-    }
-    if (l$online_ordering != lOther$online_ordering) {
+    final l$is_open = is_open;
+    final lOther$is_open = other.is_open;
+    if (l$is_open != lOther$is_open) {
       return false;
     }
     return true;
@@ -2899,9 +2891,8 @@ class Variables$Query$getDeliveryCompanies {
 
   @override
   int get hashCode {
-    final l$online_ordering = online_ordering;
-    return Object.hashAll(
-        [_$data.containsKey('online_ordering') ? l$online_ordering : const {}]);
+    final l$is_open = is_open;
+    return Object.hashAll([l$is_open]);
   }
 }
 
@@ -2914,7 +2905,7 @@ abstract class CopyWith$Variables$Query$getDeliveryCompanies<TRes> {
   factory CopyWith$Variables$Query$getDeliveryCompanies.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$getDeliveryCompanies;
 
-  TRes call({bool? online_ordering});
+  TRes call({bool? is_open});
 }
 
 class _CopyWithImpl$Variables$Query$getDeliveryCompanies<TRes>
@@ -2930,11 +2921,11 @@ class _CopyWithImpl$Variables$Query$getDeliveryCompanies<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? online_ordering = _undefined}) =>
+  TRes call({Object? is_open = _undefined}) =>
       _then(Variables$Query$getDeliveryCompanies._({
         ..._instance._$data,
-        if (online_ordering != _undefined)
-          'online_ordering': (online_ordering as bool?),
+        if (is_open != _undefined && is_open != null)
+          'is_open': (is_open as bool),
       }));
 }
 
@@ -2944,7 +2935,7 @@ class _CopyWithStubImpl$Variables$Query$getDeliveryCompanies<TRes>
 
   TRes _res;
 
-  call({bool? online_ordering}) => _res;
+  call({bool? is_open}) => _res;
 }
 
 class Query$getDeliveryCompanies {
@@ -3110,10 +3101,10 @@ const documentNodeQuerygetDeliveryCompanies = DocumentNode(definitions: [
     name: NameNode(value: 'getDeliveryCompanies'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'online_ordering')),
+        variable: VariableNode(name: NameNode(value: 'is_open')),
         type: NamedTypeNode(
           name: NameNode(value: 'Boolean'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -3132,12 +3123,11 @@ const documentNodeQuerygetDeliveryCompanies = DocumentNode(definitions: [
                 name: NameNode(value: 'details'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
-                    name: NameNode(value: 'online_ordering'),
+                    name: NameNode(value: 'is_open'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
                         name: NameNode(value: '_eq'),
-                        value: VariableNode(
-                            name: NameNode(value: 'online_ordering')),
+                        value: VariableNode(name: NameNode(value: 'is_open')),
                       )
                     ]),
                   )
@@ -3514,7 +3504,7 @@ class Options$Query$getDeliveryCompanies
     extends graphql.QueryOptions<Query$getDeliveryCompanies> {
   Options$Query$getDeliveryCompanies({
     String? operationName,
-    Variables$Query$getDeliveryCompanies? variables,
+    required Variables$Query$getDeliveryCompanies variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -3522,7 +3512,7 @@ class Options$Query$getDeliveryCompanies
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -3539,7 +3529,7 @@ class WatchOptions$Query$getDeliveryCompanies
     extends graphql.WatchQueryOptions<Query$getDeliveryCompanies> {
   WatchOptions$Query$getDeliveryCompanies({
     String? operationName,
-    Variables$Query$getDeliveryCompanies? variables,
+    required Variables$Query$getDeliveryCompanies variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -3550,7 +3540,7 @@ class WatchOptions$Query$getDeliveryCompanies
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -3570,10 +3560,10 @@ class FetchMoreOptions$Query$getDeliveryCompanies
     extends graphql.FetchMoreOptions {
   FetchMoreOptions$Query$getDeliveryCompanies({
     required graphql.UpdateQuery updateQuery,
-    Variables$Query$getDeliveryCompanies? variables,
+    required Variables$Query$getDeliveryCompanies variables,
   }) : super(
           updateQuery: updateQuery,
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           document: documentNodeQuerygetDeliveryCompanies,
         );
 }
@@ -3581,35 +3571,35 @@ class FetchMoreOptions$Query$getDeliveryCompanies
 extension ClientExtension$Query$getDeliveryCompanies on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$getDeliveryCompanies>>
       query$getDeliveryCompanies(
-              [Options$Query$getDeliveryCompanies? options]) async =>
-          await this.query(options ?? Options$Query$getDeliveryCompanies());
+              Options$Query$getDeliveryCompanies options) async =>
+          await this.query(options);
   graphql.ObservableQuery<Query$getDeliveryCompanies>
       watchQuery$getDeliveryCompanies(
-              [WatchOptions$Query$getDeliveryCompanies? options]) =>
-          this.watchQuery(options ?? WatchOptions$Query$getDeliveryCompanies());
+              WatchOptions$Query$getDeliveryCompanies options) =>
+          this.watchQuery(options);
   void writeQuery$getDeliveryCompanies({
     required Query$getDeliveryCompanies data,
-    Variables$Query$getDeliveryCompanies? variables,
+    required Variables$Query$getDeliveryCompanies variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation: graphql.Operation(
               document: documentNodeQuerygetDeliveryCompanies),
-          variables: variables?.toJson() ?? const {},
+          variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
   Query$getDeliveryCompanies? readQuery$getDeliveryCompanies({
-    Variables$Query$getDeliveryCompanies? variables,
+    required Variables$Query$getDeliveryCompanies variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
         operation:
             graphql.Operation(document: documentNodeQuerygetDeliveryCompanies),
-        variables: variables?.toJson() ?? const {},
+        variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );

@@ -81,8 +81,9 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
         onTap: () async {
           TimeOfDay? newTime = await getTimePicker(context,
               initialTime: TimeOfDay(
-                  hour: viewController.workingHours![index].from[0].toInt(),
-                  minute: viewController.workingHours![index].from[1].toInt()));
+                  hour: viewController.workingHours![index].fromOld[0].toInt(),
+                  minute:
+                      viewController.workingHours![index].fromOld[1].toInt()));
           if (newTime != null) {
             viewController.updateFromTime(
                 index: index, hour: newTime.hour, minute: newTime.minute);
@@ -117,8 +118,9 @@ class _SingleDayScheduleViewState extends State<SingleDayScheduleView> {
         onTap: () async {
           TimeOfDay? newTime = await getTimePicker(context,
               initialTime: TimeOfDay(
-                  hour: viewController.workingHours![index].to[0].toInt(),
-                  minute: viewController.workingHours![index].to[1].toInt()));
+                  hour: viewController.workingHours![index].toOld[0].toInt(),
+                  minute:
+                      viewController.workingHours![index].toOld[1].toInt()));
           if (newTime != null) {
             viewController.updateToTime(
                 index: index, hour: newTime.hour, minute: newTime.minute);

@@ -11,7 +11,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
-import { isMezAdmin, notifyDeliveryCompany } from "../shared/helper";
+import { isMezAdmin, notifyDeliveryDrivers } from "../shared/helper";
 import { MezError } from "../shared/models/Generic/Generic";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
@@ -99,7 +99,7 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
         switch (deliveryOrder.status) {
           case DeliveryOrderStatus.CancelledByDeliverer:
             unassignDriver(deliveryOrder.deliveryId);
-            notifyDeliveryCompany(deliveryOrder)
+            notifyDeliveryDrivers(deliveryOrder)
             break;
           case DeliveryOrderStatus.CancelledByAdmin:
             cancelCourierFromDelivery(deliveryOrder.deliveryId);

@@ -274,7 +274,8 @@ class CloudFunctions {
   static Future<CheckoutResponse> restaurant3_checkoutCart(
       {required CustomerAppType customerAppType,
       required Location customerLocation,
-      required num deliveryCost,
+      num? customerDeliveryOffer,
+      List<num>? chosenCompanies,
       required PaymentType paymentType,
       String? notes,
       required num restaurantId,
@@ -293,7 +294,8 @@ class CloudFunctions {
       parameters: <String, dynamic>{
         "customerAppType":customerAppType.toFirebaseFormatString(),
         "customerLocation":customerLocation.toFirebaseFormattedJson(),
-        "deliveryCost": deliveryCost,
+        "customerDeliveryOffer": customerDeliveryOffer,
+        "chosenCompanies": chosenCompanies,
         "paymentType":paymentType.toFirebaseFormatString(),
         "notes": notes,
         "restaurantId": restaurantId,
@@ -423,7 +425,6 @@ class CloudFunctions {
       required Schedule schedule,
       String? laundryOperatorNotificationToken,
       String? firebaseId,
-      num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
       required ServiceProviderLanguage language,
       String? uniqueId}  ) async {
@@ -437,7 +438,6 @@ class CloudFunctions {
         "schedule":schedule.toFirebaseFormattedJson(),
         "laundryOperatorNotificationToken": laundryOperatorNotificationToken,
         "firebaseId": firebaseId,
-        "deliveryPartnerId": deliveryPartnerId,
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
         "language":language.toFirebaseFormattedJson(),
         "uniqueId": uniqueId,
@@ -449,7 +449,8 @@ class CloudFunctions {
       required PaymentType paymentType,
       required DeliveryType deliveryType,
       required Location customerLocation,
-      required num deliveryCost,
+      num? fromCustomerDeliveryOffer,
+      List<num>? chosenCompanies,
       required CustomerAppType customerAppType,
       String? notes,
       num? tax,
@@ -468,7 +469,8 @@ class CloudFunctions {
         "paymentType":paymentType.toFirebaseFormatString(),
         "deliveryType":deliveryType.toFirebaseFormatString(),
         "customerLocation":customerLocation.toFirebaseFormattedJson(),
-        "deliveryCost": deliveryCost,
+        "fromCustomerDeliveryOffer": fromCustomerDeliveryOffer,
+        "chosenCompanies": chosenCompanies,
         "customerAppType":customerAppType.toFirebaseFormatString(),
         "notes": notes,
         "tax": tax,
@@ -539,8 +541,8 @@ class CloudFunctions {
       Location? fromLocationGps,
       String? fromLocationText,
       required List<CourierItem> items,
-      required num deliveryCompanyId,
-      num? deliveryCost,
+      required List<num> deliveryCompanyIds,
+      num? customerOffer,
       required CustomerAppType customerAppType,
       num? tax,
       String? scheduledTime,
@@ -562,8 +564,8 @@ class CloudFunctions {
             value.add(element.toFirebaseFormattedJson());
             return value;
           }),
-        "deliveryCompanyId": deliveryCompanyId,
-        "deliveryCost": deliveryCost,
+        "deliveryCompanyIds": deliveryCompanyIds,
+        "customerOffer": customerOffer,
         "customerAppType":customerAppType.toFirebaseFormatString(),
         "tax": tax,
         "scheduledTime": scheduledTime,
@@ -577,38 +579,25 @@ class CloudFunctions {
       }));
   }
 
-  static Future<ChangePriceReqResponse> delivery3_changeDeliveryPrice(
-      {required num deliveryOrderId,
-      required num newPrice,
-      required String reason}  ) async {
-    return ChangePriceReqResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "delivery3-changeDeliveryPrice",
-      parameters: <String, dynamic>{
-        "deliveryOrderId": deliveryOrderId,
-        "newPrice": newPrice,
-        "reason": reason,
-      }));
-  }
-
-  static Future<ChangePriceResResponse> delivery3_changeDeliveryPriceResponse(
-      {required bool accepted,
-      required num orderId,
-      required OrderType orderType}  ) async {
-    return ChangePriceResResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "delivery3-changeDeliveryPriceResponse",
-      parameters: <String, dynamic>{
-        "accepted": accepted,
-        "orderId": orderId,
-        "orderType":orderType.toFirebaseFormatString(),
-      }));
-  }
-
   static Future<CancelCourierResponse> delivery3_cancelCourierFromCustomer(
       {required num orderId}  ) async {
     return CancelCourierResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "delivery3-cancelCourierFromCustomer",
       parameters: <String, dynamic>{
         "orderId": orderId,
+      }));
+  }
+
+  static Future<CounterOfferResponse> delivery3_requestCounterOffer(
+      {required num deliveryOrderId,
+      required num deliveryDriverId,
+      required num newPrice}  ) async {
+    return CounterOfferResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "delivery3-requestCounterOffer",
+      parameters: <String, dynamic>{
+        "deliveryOrderId": deliveryOrderId,
+        "deliveryDriverId": deliveryDriverId,
+        "newPrice": newPrice,
       }));
   }
 

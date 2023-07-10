@@ -28,7 +28,7 @@ class OrderLaundryCard extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundImage:
-                  CachedNetworkImageProvider(order.serviceProvider.image),
+                  CachedNetworkImageProvider(order.serviceProvider!.image),
               radius: 23,
             ),
             SizedBox(
@@ -41,7 +41,7 @@ class OrderLaundryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      order.serviceProvider.name,
+                      order.serviceProvider!.name,
                       style: context.txt.bodyLarge,
                     ),
                     SizedBox(

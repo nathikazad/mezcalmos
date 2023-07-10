@@ -47,7 +47,6 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
             }
           }
         },
-        delivery_cost: checkoutReq.deliveryCost,
         delivery: (checkoutReq.deliveryType == DeliveryType.Delivery) ? {
           data: {
             customer_id: customerCart.customerId,
@@ -75,12 +74,12 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
               }
             },
             payment_type: checkoutReq.paymentType,
-            delivery_cost: checkoutReq.deliveryCost,
-          
+            customer_offer: checkoutReq.customerDeliveryOffer,
+            chosen_companies: checkoutReq.chosenCompanies,
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: (restaurant.deliveryDetails.selfDelivery) 
               ? restaurant.id 
-              : 7,
+              : null!,
             service_provider_type: (restaurant.deliveryDetails.selfDelivery) 
               ? DeliveryServiceProviderType.Restaurant
               : DeliveryServiceProviderType.DeliveryCompany,
@@ -171,7 +170,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
     items: orderItems,
     itemsCost: customerCart.cost,
     notes: checkoutReq.notes,
-    deliveryCost: checkoutReq.deliveryCost,
+    deliveryCost: 0,
     scheduledTime: checkoutReq.scheduledTime,
     chatId: response.insert_restaurant_order_one.chat_id
     
@@ -192,18 +191,21 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       paymentType: checkoutReq.paymentType,
       status: DeliveryOrderStatus.OrderReceived,
       customerId: customerCart.customerId,
-      deliveryCost: checkoutReq.deliveryCost,
+      deliveryCost: 0,
+      notifiedDrivers: [],
       packageCost: checkoutReq.paymentType == PaymentType.Cash ? customerCart.cost : 0,
       orderTime: response.insert_restaurant_order_one.order_time,
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
+      customerOffer: checkoutReq.customerDeliveryOffer,
+      chosenCompanies: checkoutReq.chosenCompanies,
       serviceProviderType: (restaurant.deliveryDetails.selfDelivery == false) 
         ? DeliveryServiceProviderType.DeliveryCompany 
         : DeliveryServiceProviderType.Restaurant,
-      serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false) 
-        ? 7
-        : restaurant.id,
+      serviceProviderId: (restaurant.deliveryDetails.selfDelivery) 
+        ? restaurant.id 
+        : undefined,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,
       distanceFromBase: checkoutReq.distanceFromBase
@@ -219,7 +221,8 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       paymentType: checkoutReq.paymentType,
       status: DeliveryOrderStatus.OrderReceived,
       customerId: customerCart.customerId,
-      deliveryCost: checkoutReq.deliveryCost,
+      deliveryCost: 0,
+      notifiedDrivers: [],
       packageCost: checkoutReq.paymentType == PaymentType.Cash ? customerCart.cost : 0,
       orderTime: response.insert_restaurant_order_one.order_time,
       tripDistance : checkoutReq.tripDistance,
@@ -229,7 +232,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         ? DeliveryServiceProviderType.DeliveryCompany 
         : DeliveryServiceProviderType.Restaurant,
       serviceProviderId: (restaurant.deliveryDetails.selfDelivery == false) 
-        ? 7
+        ? undefined
         : restaurant.id,
       direction: DeliveryDirection.ToCustomer,
       packageReady:false,

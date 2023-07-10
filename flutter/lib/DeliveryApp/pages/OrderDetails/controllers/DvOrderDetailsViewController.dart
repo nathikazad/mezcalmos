@@ -119,18 +119,20 @@ class DvOrderDetailsViewController {
   }
 
   Future<void> _fetchOrdersCountAndReviews() async {
-    serviceOrdersCount.value = await fetch_delivery_orders_count(
-        entityId: order.value!.serviceProvider.hasuraId,
-        serviceProviderType: order.value!.orderType.toServiceProviderType());
+    if (order.value?.serviceProvider != null) {
+      serviceOrdersCount.value = await fetch_delivery_orders_count(
+          entityId: order.value!.serviceProvider!.hasuraId,
+          serviceProviderType: order.value!.orderType.toServiceProviderType());
+      serviceReview.value = await get_service_review_average(
+          serviceId: order.value!.serviceProvider!.hasuraId,
+          serviceProviderType: order.value!.orderType.toServiceProviderType());
+    }
     customerOrdersCount.value = await fetch_delivery_orders_count(
         entityId: order.value!.customer.hasuraId,
         serviceProviderType: cModels.ServiceProviderType.Customer);
     customerReview.value = await get_service_review_average(
         serviceId: order.value!.customer.hasuraId,
         serviceProviderType: cModels.ServiceProviderType.Customer);
-    serviceReview.value = await get_service_review_average(
-        serviceId: order.value!.serviceProvider.hasuraId,
-        serviceProviderType: order.value!.orderType.toServiceProviderType());
   }
 
   Future<void> markItemAvailable(
@@ -199,21 +201,21 @@ class DvOrderDetailsViewController {
   Future<void> requestPriceChange(BuildContext context) async {
     if (updatePriceFormKey.currentState?.validate() == true) {
       try {
-        final cModels.ChangePriceReqResponse res =
-            await CloudFunctions.delivery3_changeDeliveryPrice(
-                deliveryOrderId: order.value!.orderId,
-                newPrice: double.parse(openOrderPriceText.text),
-                reason: openOrderReasonText.text);
+        // cModels.ChangePriceReqResponse res =
+        //     await CloudFunctions.delivery3_changeDeliveryPrice(
+        //         deliveryOrderId: order.value!.orderId,
+        //         newPrice: double.parse(openOrderPriceText.text),
+        //         reason: openOrderReasonText.text);
 
-        if (res.success == false) {
-          mezDbgPrint(res.error);
-          mezDbgPrint("ERRORRRR ========>${res.unhandledError}");
-          showErrorSnackBar(errorText: res.error.toString());
-        } else {
-          showSavedSnackBar(
-              title: "Sended", subtitle: "Price change request sended");
-          Navigator.pop(context);
-        }
+        // if (res.success == false) {
+        //   mezDbgPrint(res.error);
+        //   mezDbgPrint("ERRORRRR ========>${res.unhandledError}");
+        //   showErrorSnackBar(errorText: res.error.toString());
+        // } else {
+        //   showSavedSnackBar(
+        //       title: "Sended", subtitle: "Price change request sended");
+        //   Navigator.pop(context);
+        // }
       } on FirebaseFunctionsException catch (e, stk) {
         showErrorSnackBar(errorText: e.message.toString());
         mezDbgPrint(e);

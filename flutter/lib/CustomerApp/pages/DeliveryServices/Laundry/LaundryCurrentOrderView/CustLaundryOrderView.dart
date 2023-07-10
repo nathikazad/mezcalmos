@@ -214,7 +214,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       autoBack: true,
       titleWidget: Obx(
         () => Text(
-          '${viewController.order.value?.serviceProvider.name ?? ""}',
+          '${viewController.order.value?.serviceProvider?.name ?? ""}',
           style: context.txt.displaySmall,
         ),
       ),
@@ -228,7 +228,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       if (viewController.order.value?.canAddReview == true) {
         return CustAddReviewButton(
           orderId: viewController.order.value!.orderId,
-          toEntityId: viewController.order.value!.serviceProvider.hasuraId,
+          toEntityId: viewController.order.value!.serviceProvider!.hasuraId,
           toEntityType: cModels.ServiceProviderType.Laundry,
         );
       } else {

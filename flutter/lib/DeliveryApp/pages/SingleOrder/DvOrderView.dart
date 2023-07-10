@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
@@ -7,10 +8,12 @@ import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderStatus
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -93,95 +96,189 @@ class _DvOrderViewState extends State<DvOrderView> {
       ),
       body: Obx(
         () => viewController.hasData
-            ? Stack(
-                children: [
-                  OrderMapWidget(
-                      mapPadding: _mapPadding,
-                      recenterBtnBottomPadding: getRecenterBtnBottomPadding,
-                      height: double.infinity,
-                      deliveryOrderId: viewController.order.orderId,
-                      updateDriver: true,
-                      polyline: viewController.order.routeInformation?.polyline,
-                      from: viewController.order.pickupLocation,
-                      to: viewController.order.dropOffLocation),
-                  Positioned(
-                    bottom: 2,
-                    left: 5,
-                    right: 4,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10, bottom: 10),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                              onTap: () async {
-                                final LatLng _destination = LatLng(
-                                    viewController
-                                        .order.dropOffLocation.latitude,
-                                    viewController
-                                        .order.dropOffLocation.longitude);
+            ? Stack(children: [
+                OrderMapWidget(
+                    mapPadding: _mapPadding,
+                    recenterBtnBottomPadding: getRecenterBtnBottomPadding,
+                    height: double.infinity,
+                    deliveryOrderId: viewController.order.orderId,
+                    updateDriver: true,
+                    polyline: viewController.order.routeInformation?.polyline,
+                    from: viewController.order.pickupLocation,
+                    to: viewController.order.dropOffLocation),
+                Positioned(
+                  bottom: 2,
+                  left: 5,
+                  right: 4,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10, bottom: 10),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            onTap: () async {
+                              final LatLng _destination = LatLng(
+                                  viewController.order.dropOffLocation.latitude,
+                                  viewController
+                                      .order.dropOffLocation.longitude);
 
-                                final String url =
-                                    "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
+                              final String url =
+                                  "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
 
-                                try {
-                                  await launchUrlString(url);
-                                } catch (e) {
-                                  await launchUrlString(url);
-                                }
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black.withOpacity(.5),
-                                        offset: Offset(-1, 0),
-                                        spreadRadius: 1,
-                                        blurRadius: 10)
-                                  ],
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Icon(
-                                  Icons.navigation_rounded,
-                                  color: Colors.black,
-                                ),
+                              try {
+                                await launchUrlString(url);
+                              } catch (e) {
+                                await launchUrlString(url);
+                              }
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(.5),
+                                      offset: Offset(-1, 0),
+                                      spreadRadius: 1,
+                                      blurRadius: 10)
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Icon(
+                                Icons.navigation_rounded,
+                                color: Colors.black,
                               ),
                             ),
                           ),
                         ),
-                        Card(
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            child: DvOrderBottomCard(
-                              viewcontroller: viewController,
-                              onCardStateChange: (OrderInfoCardState state) {
-                                setState(() {
-                                  if (state == OrderInfoCardState.Maximized) {
-                                    _recenterBtnBottomPadding = 300;
-                                    _mapPadding =
-                                        EdgeInsets.only(top: 10, bottom: 220);
-                                  } else {
-                                    _recenterBtnBottomPadding = 180;
-                                    _mapPadding =
-                                        EdgeInsets.only(top: 10, bottom: 120);
-                                  }
-                                });
-                              },
-                            ),
+                      ),
+                      Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          child: DvOrderBottomCard(
+                            viewcontroller: viewController,
+                            onCardStateChange: (OrderInfoCardState state) {
+                              setState(() {
+                                if (state == OrderInfoCardState.Maximized) {
+                                  _recenterBtnBottomPadding = 300;
+                                  _mapPadding =
+                                      EdgeInsets.only(top: 10, bottom: 220);
+                                } else {
+                                  _recenterBtnBottomPadding = 180;
+                                  _mapPadding =
+                                      EdgeInsets.only(top: 10, bottom: 120);
+                                }
+                              });
+                            },
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              )
+                      ),
+                      if (viewController.showSendOfferButton) ...[
+                        smallSepartor,
+                        MezButton(
+                          label: "Send offer",
+                          onClick: () async {
+                            double? newPrice = await _showCostSheet(context);
+                            if (newPrice != null) {
+                              await viewController.sendCounterOffer(
+                                  newPrice: newPrice);
+                            }
+                          },
+                        ),
+                        smallSepartor
+                      ]
+                    ],
+                  ),
+                ),
+              ])
             : MezLogoAnimation(
                 centered: true,
               ),
       ),
     );
   }
+}
+
+Future<double?> _showCostSheet(BuildContext context) {
+  final TextEditingController _textEditingController = TextEditingController();
+  return showModalBottomSheet<double?>(
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(15),
+        topRight: Radius.circular(15),
+      )),
+      context: context,
+      builder: (BuildContext ctx) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+          child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "${_i18n()['actualCost']}",
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: _textEditingController,
+                    style: context.textTheme.bodyLarge,
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.attach_money_rounded,
+                        color: Colors.black,
+                      ),
+                    ),
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: MezButton(
+                          height: 45,
+                          label: "${_i18n()['cancel']}",
+                          backgroundColor: offRedColor,
+                          textColor: Colors.red,
+                          onClick: () async {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Flexible(
+                        child: MezButton(
+                          height: 45,
+                          label: "${_i18n()['save']}",
+                          onClick: () async {
+                            Navigator.pop(context,
+                                double.tryParse(_textEditingController.text));
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                ],
+              )),
+        );
+      });
 }

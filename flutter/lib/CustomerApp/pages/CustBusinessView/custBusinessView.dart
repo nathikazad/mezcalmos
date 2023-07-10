@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -125,8 +126,8 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     _description(context),
                     if (_viewController.business!.details.schedule != null)
                       MezServiceOpenHours(
-                          schedule:
-                              _viewController.business!.details.schedule!),
+                          schedule: _viewController.business!.details.schedule!
+                              ),
                     ServiceLocationCard(
                         location: MezLocation(
                             _viewController.business!.details.location.address,
@@ -151,8 +152,8 @@ class _CustBusinessViewState extends State<CustBusinessView>
 
                     if (_viewController.business!.details.schedule != null)
                       MezServiceOpenHours(
-                          schedule:
-                              _viewController.business!.details.schedule!),
+                          schedule: _viewController.business!.details.schedule!
+                              ),
                     _reviewsList(context),
                   ],
                 ),

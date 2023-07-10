@@ -33,6 +33,7 @@ export async function createNewCourierOrder(
             "type": "Point",
             "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat],
         },
+        "chosen_companies": courierRequest.deliveryCompanyIds,
         "from_location_gps": undefined
     }
     if (courierRequest.fromLocationGps != null)
@@ -83,16 +84,17 @@ export async function createNewCourierOrder(
                                 }
                             }
                         },
-                        delivery_cost: courierRequest.deliveryCost ?? 0,
-
+                        // delivery_cost: courierRequest.deliveryCost ?? 0,
+                        chosen_companies: $`chosen_companies`,
                         status: DeliveryOrderStatus.OrderReceived,
-                        service_provider_id: courierRequest.deliveryCompanyId,
+                        // service_provider_id: courierRequest.deliveryCompanyId,
                         service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
                         trip_distance: courierRequest.tripDistance,
                         trip_duration: courierRequest.tripDuration,
                         trip_polyline: courierRequest.tripPolyline,
                         package_cost: packageCost,
-                        distance_from_base: courierRequest.distanceFromBase
+                        distance_from_base: courierRequest.distanceFromBase,
+                        customer_offer: courierRequest.customerOffer,
                     }
                 }
             }
@@ -134,17 +136,20 @@ export async function createNewCourierOrder(
             paymentType: PaymentType.Cash,
             status: DeliveryOrderStatus.OrderReceived,
             customerId,
-            deliveryCost: courierRequest.deliveryCost ?? 0,
+            deliveryCost: 0,
             packageCost,
             orderTime: response.insert_delivery_courier_order_one.order_time,
             tripDistance: courierRequest.tripDistance,
             tripDuration: courierRequest.tripDuration,
             tripPolyline: courierRequest.tripPolyline,
-            serviceProviderId: courierRequest.deliveryCompanyId,
+            // serviceProviderId: courierRequest.deliveryCompanyId,
             serviceProviderType: DeliveryServiceProviderType.DeliveryCompany,
             direction: DeliveryDirection.ToCustomer,
             packageReady: true,
-            distanceFromBase: courierRequest.distanceFromBase
+            distanceFromBase: courierRequest.distanceFromBase,
+            chosenCompanies: courierRequest.deliveryCompanyIds,
+            customerOffer: courierRequest.customerOffer,
+            notifiedDrivers: {},
         }
     }
 }

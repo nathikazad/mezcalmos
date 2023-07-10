@@ -1,4 +1,3 @@
-import { ChangePriceError } from "../../../../delivery/changeDeliveryPrice";
 import { getHasura } from "../../../../utilities/hasura";
 import { OrderStripeInfo } from "../../../models/stripe";
 import { MezError } from "../../../models/Generic/Generic";
@@ -48,22 +47,22 @@ export async function updateRestaurantOrderStripe(orderId: number, orderStripePa
   }
 }
 
-export async function updateRestaurantOrderDeliveryCost(orderId: number, newDeliveryCost: number) {
-  let chain = getHasura();
+// export async function updateRestaurantOrderDeliveryCost(orderId: number, newDeliveryCost: number) {
+//   let chain = getHasura();
   
-  let response = await chain.mutation({
-    update_restaurant_order_by_pk: [{
-      pk_columns: {
-        id: orderId
-      }, 
-      _set: {
-        delivery_cost: newDeliveryCost
-      }
-    }, { 
-      delivery_id: true
-    }]
-  });
-  if(!(response.update_restaurant_order_by_pk)) {
-    throw new MezError(ChangePriceError.UpdateOrderError);
-  }
-}
+//   let response = await chain.mutation({
+//     update_restaurant_order_by_pk: [{
+//       pk_columns: {
+//         id: orderId
+//       }, 
+//       _set: {
+//         delivery_cost: newDeliveryCost
+//       }
+//     }, { 
+//       delivery_id: true
+//     }]
+//   });
+//   if(!(response.update_restaurant_order_by_pk)) {
+//     throw new MezError(ChangePriceError.UpdateOrderError);
+//   }
+// }

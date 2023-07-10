@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/CustomerRestaurantOrderEst.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/OrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/OrderRestaurantCard.dart';
@@ -8,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRes
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
-import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
@@ -199,7 +199,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       if (viewController.order.value?.canAddReview == true) {
         return CustAddReviewButton(
           orderId: viewController.order.value!.orderId,
-          toEntityId: viewController.order.value!.serviceProvider.hasuraId,
+          toEntityId: viewController.order.value!.serviceProvider!.hasuraId,
           toEntityType: cModels.ServiceProviderType.Restaurant,
         );
       } else {
