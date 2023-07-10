@@ -1600,7 +1600,7 @@
             "unit": "unit"
           },
           "cusShowBusinessFilerSheet": {
-            "canBookOnline": "Show only items that can be booked online.",
+            "canBookOnline": "Show businesses with online ordering only",
             "showOnlyOpenRestaurants": "Show only open restaurants",
             "confirm": "Confirm",
             "cancel": "Cancel",
