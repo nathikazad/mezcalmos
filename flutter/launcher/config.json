@@ -32,7 +32,6 @@
         "open_file": "^3.3.2",
         "social_share": "^2.3.1",
 
-
         "cupertino_icons": "^1.0.2",
         "google_api_availability": "^5.0.0",
         "flutter_datetime_picker": "^1.5.1",
@@ -752,7 +751,6 @@
       "pubspec": {
         "dependencies": {
           "agora_rtc_engine": "6.1.0",
-          "open_file": "^3.3.2",
           "share_plus": "^7.0.2"
         },
         "assets": [

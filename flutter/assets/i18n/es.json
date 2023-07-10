@@ -2,14 +2,6 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
-        "BsHomeRentalOrderView": {
-          "BsHomeRentalOrderView": {
-            "invalidOrderId": "ID de pedido no válido",
-            "requestChanges": "Solicitar cambios",
-            "acceptOrder": "Aceptar pedido",
-            "cancelOrder": "Cancelar pedido"
-          }
-        },
         "BsOrdersListViews": {
           "BsOrdersListView": {
             "orders": "Pedidos",
@@ -24,7 +16,7 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
-              "pending": "Solicitada",
+              "pending": "Pendiente",
               "waitingCustomer": "Esperando a un cliente",
               "cancelled": "Cancelada",
               "confirmed": "Confirmada",
@@ -39,8 +31,7 @@
               "save": "Guardar",
               "cancel": "Cancelar",
               "startFrom": "Comienza desde",
-              "updateTimeTitle": "Tiempo de actualizacion",
-              "free": "GRATIS"
+              "updateTimeTitle": "Tiempo de actualizacion"
             }
           }
         }
@@ -245,6 +236,20 @@
           "priceType": "Tipo de precio",
           "add": "Añada",
           "cancel": "Cancelar"
+        },
+        "coWorking": {
+          "coWorkingTitle": "Servicio",
+          "otherServicesTitle": "Otros servicios",
+          "otherServicesSubtitle": "El uso de otros servicios le permite agregar un servicio como un evento, una clase, un alquiler (automóvil, surf o hogar), un producto o un servicio.cto o un servicio.",
+          "coWorkingSubtitle": "Anuncie su servicio de sentado para mascotas.",
+          "title": "Espacio de trabajo conjunto",
+          "homeLocation": "Elige la ubicación de la casa",
+          "coWorkingType": "Tipo de trabajo",
+          "homeType": "Tipo de trabajo",
+          "dedicatedDesk": "Escritorio dedicado",
+          "privateRoom": "Habitación privada",
+          "fullFloorOffice": "Oficina de piso completo",
+          "homeTypeError": "Seleccione el tipo de trabajo conjunto"
         },
         "surfShop": {
           "otherServicesTitle": "Otros servicios",
@@ -705,6 +710,10 @@
           "title": "Alquiler de vehículos",
           "subtitle": "Si posee una tienda de alquiler de vehículos, desea expandirlo en línea."
         },
+        "coWorking": {
+          "title": "Espacio de trabajo conjunto",
+          "subtitle": "Si posee un espacio de trabajo conjunto y desea expandirlo en línea."
+        },
         "yogaStudio": {
           "title": "Estudio de yoga",
           "subtitle": "Si posee Yoga Studio, quiere expandirlo en línea."
@@ -871,6 +880,9 @@
           "title": "Entrega abierta",
           "from": "De",
           "to": "A",
+          "chooseCompany": "Elija su empresa de entrega",
+          "chooseCompanyInfo": "Si elige múltiples, la primera compañía para aceptar su pedido recibirá el pedido.",
+
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
           "next": "Próxima",
           "orderNow": "Ordenar ahora",
@@ -1601,7 +1613,9 @@
             "yoga": "Yoga",
             "fitness": "Fitness",
             "dance": "Dance",
-            "therapy": "Terapia"
+            "therapy": "Terapia",
+            "social": "Social",
+            "session": "Sesión"
           },
           "CustBusinessRentalCost": {
             "hour": "hora",
@@ -1819,7 +1833,8 @@
             "surf": "Surf",
             "yoga": "yoga",
             "fitness": "Aptitud física",
-            "dance": "Bailar"
+            "dance": "Bailar",
+            "session": "Sesión"
           }
         },
         "TherapyView": {
@@ -2547,6 +2562,7 @@
               "photography": "Fotografía",
               "beautySalon": "Salón de belleza",
               "tattooArtist": "Tatuador",
+              "coWorking": "Espacio de trabajo conjunto",
               "realEstate": "Bienes raíces"
             }
           }

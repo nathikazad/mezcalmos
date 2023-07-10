@@ -204,6 +204,7 @@ const String aTourismAgency = "assets/images/customer/tourismAgency.png";
 const String aMealPlanning = "assets/images/customer/mealPlanning.png";
 const String aRealEstate = "assets/images/customer/realEstate.png";
 const String aLanguageSchool = "assets/images/customer/languageSchool.png";
+const String aCoWorking = "assets/images/customer/coWorking.png";
 
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";

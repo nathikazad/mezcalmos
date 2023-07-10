@@ -2,14 +2,6 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
-        "BsHomeRentalOrderView": {
-          "BsHomeRentalOrderView": {
-            "invalidOrderId": "Invalid order ID",
-            "requestChanges": "Request changes",
-            "acceptOrder": "Accept request",
-            "cancelOrder": "Cancel request"
-          }
-        },
         "BsOrdersListViews": {
           "BsOrdersListView": {
             "orders": "Orders",
@@ -24,23 +16,23 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
-              "pending": "Requested",
+              "pending": "Pending",
               "waitingCustomer": "Waiting for customer",
               "cancelled": "Cancelled",
               "confirmed": "Confirmed",
               "completed": "Completed",
+
               "error": "Error",
               "edit": "Edit",
               "markAsUnavailable": "Mark as unavailable",
               "markAsAvailable": "Mark as available",
-              "updatePrice": "Update price",
+              "updatePrice": "Update Price",
               "required": "Required",
-              "notValid": "Not valid",
+              "notValid": "Not Valid",
               "save": "Save",
               "cancel": "Cancel",
-              "startFrom": "Start from",
-              "updateTimeTitle": "Update time",
-              "free": "FREE"
+              "startFrom": "Start From",
+              "updateTimeTitle": "Update Time"
             }
           }
         }
@@ -164,6 +156,7 @@
           "petSitting": "Pet Sitting",
           "mealPlanning": "Meal Planning",
           "consumable": "Consumable",
+          "coWorking": "Co-working Space",
           "art": "Art",
           "personalCare": "Personal Care",
           "class": "Class",
@@ -245,6 +238,20 @@
           "priceType": "Price Type",
           "add": "Add",
           "cancel": "Cancel"
+        },
+        "coWorking": {
+          "coWorkingTitle": "Service",
+          "title": "Co-working Space",
+          "otherServicesTitle": "Other services",
+          "otherServicesSubtitle": "Using other services allows you to add a service such as an event, a class, a rental (car, surf, or home), a product, or a service.",
+          "homeLocation": "Pick house location",
+          "coWorkingType": "Co-working type",
+          "homeType": "Co-working type",
+          "homeTypeError": "Please select co-working type",
+          "dedicatedDesk": "Dedicated Desk",
+          "privateRoom": "Private Room",
+          "fullFloorOffice": "Full Floor Office",
+          "coWorkingSubtitle": "Advertise your pet sitting service."
         },
         "surfShop": {
           "otherServicesTitle": "Other services",
@@ -709,6 +716,10 @@
           "title": "Vehicle Rental",
           "subtitle": "If you own vehicle rental store want to expand it online."
         },
+        "coWorking": {
+          "title": "Co-working Space",
+          "subtitle": "If you own Co-working space and want to expand it online."
+        },
         "yogaStudio": {
           "title": "Yoga Studio",
           "subtitle": "If you own Yoga Studio want to expand it online."
@@ -875,6 +886,9 @@
           "title": "Open Delivery",
           "from": "From",
           "to": "To",
+          "chooseCompany": "Choose your delivery company",
+          "chooseCompanyInfo": "If you choose multiple the first company to accept your order will receive the order.",
+
           "thisFieldCanBeEmpty": "This field can be empty",
           "next": "Next",
           "orderNow": "Order now",
@@ -1570,7 +1584,8 @@
             "fitness": "Fitness",
             "dance": "Dance",
             "therapy": "Therapy",
-            "social": "Social"
+            "social": "Social",
+            "session": "Session"
           },
           "CustBusinessRentalCost": {
             "hour": "hour",
@@ -1794,7 +1809,8 @@
             "surf": "Surf",
             "yoga": "Yoga",
             "fitness": "Fitness",
-            "dance": "Dance"
+            "dance": "Dance",
+            "session": "Session"
           }
         },
         "TherapyView": {
@@ -2484,6 +2500,7 @@
               "photography": "Photography",
               "beautySalon": "Beauty Salon",
               "tattooArtist": "Tattoo Artist",
+              "coWorking": "Co-working Space",
               "realEstate": "Real Estate"
             }
           }
