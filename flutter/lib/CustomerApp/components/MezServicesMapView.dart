@@ -18,7 +18,7 @@ typedef MezServicesMapViewCallBack = Future<List<MezMarker>> Function(
     LatLng? mapCenter, double distance);
 
 class MezServicesMapView extends StatefulWidget {
-  final Set<Marker> markers;
+  final Set<MezMarker> markers;
   final MezServicesMapViewCallBack fetchNewData;
   final MGoogleMapController mGoogleMapController;
 
