@@ -87,10 +87,21 @@ class _RestaurantCardState extends State<RestaurantCard> {
                             //  fit: FlexFit.loose,
                             child: Row(
                               children: [
-                                Icon(
-                                  Icons.delivery_dining,
-                                  color: Colors.black,
-                                  //   size: 24,
+                                Stack(
+                                  children: [
+                                    Icon(
+                                      Icons.delivery_dining,
+                                      color: Colors.black,
+                                      //   size: 24,
+                                    ),
+                                    if (widget.restaurant.onlineOrdering ==
+                                        false)
+                                      Icon(
+                                        Icons.close,
+                                        color: Colors.black,
+                                        //   size: 24,
+                                      ),
+                                  ],
                                 ),
                                 SizedBox(width: 3),
                                 Flexible(
