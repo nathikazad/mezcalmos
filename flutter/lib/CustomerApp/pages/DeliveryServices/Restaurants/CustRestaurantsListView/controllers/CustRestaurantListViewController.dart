@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -9,11 +10,13 @@ import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRestaurantCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -255,13 +258,13 @@ class CustRestaurantListViewController {
         flat: true,
         fitWithinBounds: false,
         markerId: MarkerId(restaurant.info.hasuraId.toString()),
-        // icon: await bitmapDescriptorLoader(
-        //     (await cropRonded((await rootBundle.load(mezRestaurantMarker))
-        //         .buffer
-        //         .asUint8List())),
-        //     70,
-        //     70,
-        //     isBytes: true),
+        icon: await bitmapDescriptorLoader(
+            (await cropRonded((await rootBundle.load(mezRestaurantMarker))
+                .buffer
+                .asUint8List())),
+            70,
+            70,
+            isBytes: true),
         onTap: () => _onSelectRentalTag(restaurant),
         position: LatLng(restaurant.info.location.position.latitude!,
             restaurant.info.location.position.longitude!),
