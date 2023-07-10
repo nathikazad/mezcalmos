@@ -304,3 +304,9 @@ mutation updateRestaurantCartItem(
     id
   }
 }
+
+mutation update_cart_discount($customer_id: Int!, $applied_offers: jsonb, $discount_value: money) {
+  update_restaurant_cart_by_pk(pk_columns: {customer_id: $customer_id}, _set: {applied_offers: $applied_offers, discount_value: $discount_value}) {
+    discount_value
+  }
+}
