@@ -37,8 +37,8 @@ class CustCourierServicesListViewController {
     isLoading.value = true;
 
     get_dv_companies(
-      onlineOrdering:
-          _filterInput['onlineOrder']!.last.contains('true') ? true : null,
+      // onlineOrdering:
+      //     _filterInput['onlineOrder']!.last.contains('true') ? true : null,
     ).then((List<DeliveryCompany>? list) {
       if (list != null) {
         _services = list;

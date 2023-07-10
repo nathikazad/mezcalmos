@@ -60,7 +60,7 @@ class _CustCourierServicesListViewState
                 children: [
                   _searchCoomponent(context),
                   _sortingSwitcher(),
-                  _filterButton(context),
+                  // _filterButton(context),
                   (_controller.filteredServices.isEmpty)
                       ? NoOpenServiceComponent(
                           showOnlyOpen: _controller.showOnlyOpen.value,
@@ -90,54 +90,54 @@ class _CustCourierServicesListViewState
     );
   }
 
-  Widget _filterButton(BuildContext context) {
-    return Card(
-      elevation: 0,
-      margin: EdgeInsets.only(top: 0),
-      color: Color(0xFFF0F0F0),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: () async {
-          FilterInput? data = await cusShowBusinessFilerSheet(
-              context: context,
-              filterInput: _controller.filterInput,
-              defaultFilterInput: _controller.defaultFilters());
-          if (data != null) {
-            _controller.filter(data);
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.filter_alt,
-                color: Colors.black,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                '${_i18n()['filter']}:',
-              ),
-              SizedBox(
-                width: 3,
-              ),
-              Flexible(
-                child: Text(
-                  "${_i18n()["offerOnly"]}",
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _filterButton(BuildContext context) {
+  //   return Card(
+  //     elevation: 0,
+  //     margin: EdgeInsets.only(top: 0),
+  //     color: Color(0xFFF0F0F0),
+  //     child: InkWell(
+  //       borderRadius: BorderRadius.circular(10),
+  //       onTap: () async {
+  //         FilterInput? data = await cusShowBusinessFilerSheet(
+  //             context: context,
+  //             filterInput: _controller.filterInput,
+  //             defaultFilterInput: _controller.defaultFilters());
+  //         if (data != null) {
+  //           _controller.filter(data);
+  //         }
+  //       },
+  //       child: Padding(
+  //         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+  //         child: Row(
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             Icon(
+  //               Icons.filter_alt,
+  //               color: Colors.black,
+  //             ),
+  //             SizedBox(
+  //               width: 5,
+  //             ),
+  //             Text(
+  //               '${_i18n()['filter']}:',
+  //             ),
+  //             SizedBox(
+  //               width: 3,
+  //             ),
+  //             Flexible(
+  //               child: Text(
+  //                 "${_i18n()["offerOnly"]}",
+  //                 style: TextStyle(
+  //                     color: Colors.black, fontWeight: FontWeight.bold),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _sortingSwitcher() {
     return Obx(() => CustSwitchOpenService(
