@@ -2472,6 +2472,7 @@
         "operators": "Operadoras",
         "drivers": "Conductoras",
         "schedule": "Horarios",
+        "offers": "Oferta",
         "payments": "Pagos",
         "delivery": "Entrega",
         "onlineOrdering": "Pedidos en línea",
@@ -2648,6 +2649,10 @@
         "shrWhatsapp": "Compartir en WhatsApp",
         "copied": "Copiada",
         "copiedText": "Enlace copiado con éxito"
+      },
+      "ServiceOfferView": {
+        "offers": "Oferta",
+        "addOffer": "Añadir oferta"
       },
       "ServiceDriversListView": {
         "drivers": "Conductoras",

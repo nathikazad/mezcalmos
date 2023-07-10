@@ -2412,6 +2412,7 @@
         "drivers": "Drivers",
         "schedule": "Schedule",
         "payments": "Payments",
+        "offers": "Offers",
         "delivery": "Delivery",
         "reviews": "Reviews",
         "share": "Share",
@@ -2589,6 +2590,10 @@
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",
         "copiedText": "Link copied successfuly"
+      },
+      "ServiceOfferView": {
+        "offers": "Offers",
+        "addOffer": "Add offer"
       },
       "ServiceDriversListView": {
         "drivers": "Drivers",
