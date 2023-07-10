@@ -6,12 +6,15 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
+    as MapHelper;
 
 import '../../../../../../Shared/cloudFunctions/model.dart';
 
@@ -192,17 +195,18 @@ class _RestaurantCardState extends State<RestaurantCard> {
   }
 
   num? _getShippingPrice() {
-    if (widget.customerLocation != null) {
-      final num customerDistance = calculateDistance(widget.customerLocation!,
-              widget.restaurant.info.location.toLocationData()) /
-          1000;
-      final num deliveryCost =
-          ((customerDistance * widget.restaurant.deliveryCost!.costPerKm) / 5)
-                  .round() *
-              5;
-      return max(widget.restaurant.deliveryCost!.minimumCost, deliveryCost);
+    double result = 0;
+    if (widget.restaurant.deliveryCost?.costPerKmFromBase != null) {
+      final double dist = MapHelper.calculateDistance(
+          MapHelper.alitasLoc.toLocationData(),
+          widget.restaurant.info.location.toLocationData());
+      mezDbgPrint("distance from base ========>$dist");
+      final double cost =
+          dist * widget.restaurant.deliveryCost!.costPerKmFromBase!;
+      result = cost;
     }
-    return null;
+    mezDbgPrint("shipping cost from base ==========>$result");
+    return result;
   }
 
   Container mezRestuarntCardImage() {
