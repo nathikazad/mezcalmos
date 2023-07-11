@@ -4,11 +4,16 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezPeriodPicker/MezPeriodPicker.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['ServiceOfferView'];
@@ -45,6 +50,19 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
     );
   }
 
+  void showAvailability() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return MezPeriodPicker(
+          startDate: DateTime.now(),
+          numberOfDaysInterval: 0,
+          serviceSchedule: Schedule(openHours: {}),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -54,6 +72,11 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
             title: viewController.isEditMode.value
                 ? viewController.currentOffer!.value!.name.toString()
                 : "Add Offer"),
+        bottomNavigationBar: MezButton(
+          label: "Add",
+          withGradient: true,
+          onClick: () async {},
+        ),
         body: Form(
           key: viewController.formKey,
           child: SingleChildScrollView(
@@ -107,12 +130,14 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                 MezStringDropDown(
                   labelText: "Select your offer",
                   langPath: _i18n(),
+                  value: viewController.selectedOfferOrderType.value
+                      ?.toFirebaseFormatString(),
                   items: OfferOrderType.values
                       .map((e) => e.toFirebaseFormatString())
                       .toList(),
                   onChanged: (value) {
                     if (value == null) return;
-                    viewController.selectedOrderType.value =
+                    viewController.selectedOfferOrderType.value =
                         value.toOfferOrderType();
                   },
                 ),
@@ -123,33 +148,93 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                 smallSepartor,
                 Row(
                   children: [
-                    MezStringDropDown(
-                      labelText: "Select your offer",
-                      langPath: _i18n(),
-                      items: OfferOrderType.values
-                          .map((e) => e.toFirebaseFormatString())
-                          .toList(),
-                      onChanged: (value) {
-                        if (value == null) return;
-                        viewController.selectedOrderType.value =
-                            value.toOfferOrderType();
-                      },
-                    ),
-                    TextFormField(
-                      controller: viewController.offerNameController,
-                      decoration: InputDecoration(
-                        hintText: "Enter your Coupon Code",
+                    Expanded(
+                      child: MezStringDropDown(
+                        labelText: "Select discount type",
+                        value: viewController.selectedDiscountType.value
+                            .toFirebaseFormatString(),
+                        langPath: _i18n(),
+                        items: [
+                          DiscountType.FlatAmount,
+                          DiscountType.Percentage,
+                          DiscountType.AnotherSameFlat
+                        ].map((e) => e.toFirebaseFormatString()).toList(),
+                        onChanged: (value) {
+                          if (value == null) return;
+                          viewController.selectedDiscountType.value =
+                              value.toDiscountType();
+                        },
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter your Coupon Code";
-                        }
-                        return null;
-                      },
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: TextFormField(
+                        controller: viewController.discountController,
+                        decoration: InputDecoration(
+                          hintText: "0",
+                          suffixIcon:
+                              viewController.selectedDiscountType.value ==
+                                      DiscountType.Percentage
+                                  ? Text("%")
+                                  : Text("\$"),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your Coupon Code";
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ],
                 ),
                 smallSepartor,
+                Text(
+                  "Select your availability",
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                InkWell(
+                  onTap: () async {
+                    showAvailability();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      color: Colors.grey.shade200,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.access_time_filled),
+                        viewController.selectedStartDate.value != null &&
+                                viewController.selectedEndDate.value != null
+                            ? Text(
+                                "${viewController.selectedStartDate.value!.getEstimatedTime()}")
+                            : Text(
+                                "Select your time",
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+                smallSepartor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Repeat this offer every week",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    Switch(
+                      value: viewController.repeatOffer.value,
+                      onChanged: (value) {
+                        viewController.repeatOffer.value = value;
+                      },
+                    )
+                  ],
+                ),
                 if (viewController.selectedOfferType.value == OfferType.Coupon)
                   Column(),
                 if (viewController.selectedOfferType.value ==

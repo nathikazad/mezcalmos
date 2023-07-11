@@ -2608,7 +2608,10 @@
         "anyOrder": "Any Order",
         "firstOrderOnly": "First Order Only",
         "particularService": "Particular Service",
-        "particularCategory": "Particular Category"
+        "particularCategory": "Particular Category",
+        "flatAmount": "Flat",
+        "percentage": "Percentage",
+        "anotherSameFlat": "Another Same"
       },
       "ServiceDriversListView": {
         "drivers": "Drivers",

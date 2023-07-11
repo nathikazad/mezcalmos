@@ -12,7 +12,7 @@ Future<void> apply_restaurant_coupon(
     required String couponCode}) async {
   final cModels.Offer coupon = await check_coupon(
       couponCode: couponCode,
-      serviceProviderId: cart.restaurant.restaurantId,
+      serviceProviderId: cart.restaurant!.restaurantId,
       serviceProviderType: cModels.ServiceProviderType.Restaurant);
   bool isValid = true;
   if (coupon.details.validityRangeStart != null &&
@@ -48,7 +48,8 @@ Future<void> apply_restaurant_coupon(
   if (coupon.details.offerForOrder == "firstOrder") {
     final int numberOfCustomerRestaurantOrders =
         await number_of_customer_restaurant_orders(
-            customerId: customerId, restaurantId: cart.restaurant.restaurantId);
+            customerId: customerId,
+            restaurantId: cart.restaurant!.restaurantId);
     if (numberOfCustomerRestaurantOrders > 0)
       throwError('Coupon only usable on first order');
   }
@@ -59,8 +60,8 @@ Future<void> apply_restaurant_coupon(
     }
   }
   cart.cartItems.forEach((i) {
-    cart.discountValue += calculateDiscount(cart, i, coupon);d
-  })
+    cart.discountValue += calculateDiscount(cart, i, coupon);
+  });
 }
 
 // go through list of restaurant offers

@@ -141,7 +141,7 @@ class CustRestaurantCartController extends GetxController {
       );
       await apply_offers_to_item(
           customerId: _auth.hasuraUserId!,
-          cart: cart.value,
+          cart: cart.value!,
           cartItem: cartItem);
       return res;
     } catch (e, stk) {

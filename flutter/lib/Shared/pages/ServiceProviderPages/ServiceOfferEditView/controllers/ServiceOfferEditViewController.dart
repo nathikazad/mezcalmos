@@ -11,13 +11,18 @@ class ServiceOfferEditViewController {
   Rxn<Offer>? currentOffer = Rxn<Offer>();
   Rxn<OfferType> selectedOfferType = Rxn<OfferType>();
   TextEditingController offerNameController = TextEditingController();
-  Rxn<OfferOrderType> selectedOrderType = Rxn<OfferOrderType>();
+  Rxn<OfferOrderType> selectedOfferOrderType =
+      Rxn<OfferOrderType>(OfferOrderType.AnyOrder);
   Rx<DiscountType> selectedDiscountType =
       Rx<DiscountType>(DiscountType.FlatAmount);
   TextEditingController discountController = TextEditingController();
   TextEditingController minAmountController = TextEditingController();
+  Rxn<DateTime> selectedStartDate = Rxn<DateTime>();
+  Rxn<DateTime> selectedEndDate = Rxn<DateTime>();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  RxBool repeatOffer = RxBool(false);
 
   void init({
     required int? offerId,
