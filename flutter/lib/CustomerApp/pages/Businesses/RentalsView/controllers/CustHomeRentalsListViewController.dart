@@ -158,7 +158,7 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<HomeCard> newList = await get_home_rentals(
-        distance: getFetchDistance,
+        distance: defaultDistance,
         fromLocation: _fromLocation!,
         withCache: false,
         offset: _rentalCurrentOffset,
@@ -188,7 +188,7 @@ class CustHomeRentalsListViewController {
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_home(
           homeType: HomeAvailabilityOption.Rent,
-          distance: getFetchDistance,
+          distance: defaultDistance,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,

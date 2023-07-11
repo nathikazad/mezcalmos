@@ -393,3 +393,6 @@ Widget get bigSeperator => SizedBox(height: 25);
 Widget get hSmallSepartor => SizedBox(width: 8);
 Widget get hMeduimSeperator => SizedBox(width: 15);
 Widget get hBigSeperator => SizedBox(width: 25);
+
+//
+const double defaultDistance = 1000000;

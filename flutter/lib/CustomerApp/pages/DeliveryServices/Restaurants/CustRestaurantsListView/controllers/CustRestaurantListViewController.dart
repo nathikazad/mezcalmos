@@ -117,7 +117,7 @@ class CustRestaurantListViewController {
             online_ordering: _filterInput["onlineOrder"]!.last.contains("true")
                 ? true
                 : null,
-            distance: getFetchDistance)
+            distance: defaultDistance)
         .then((List<Restaurant> list) {
       _restaurants = list;
 
@@ -160,7 +160,7 @@ class CustRestaurantListViewController {
             online_ordering: _filterInput["onlineOrder"]!.last.contains("true")
                 ? true
                 : null,
-            distance: getFetchDistance)
+            distance: defaultDistance)
         .then((List<Restaurant> list) {
       _restaurants = list;
 

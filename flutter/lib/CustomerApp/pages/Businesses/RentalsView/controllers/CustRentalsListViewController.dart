@@ -194,7 +194,7 @@ class CustRentalsListViewController {
                 ?.map((String e) => e.toRentalCategory2())
                 .toList()
             : null,
-        distance: 1000000000000,
+        distance: defaultDistance,
         fromLocation: _fromLocation!,
         tags: [],
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
@@ -226,7 +226,7 @@ class CustRentalsListViewController {
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_rental_category1(
           categories1: [_currentRentalCategory],
-          distance: 1000000000000,
+          distance: defaultDistance,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,
