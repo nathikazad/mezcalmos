@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -40,11 +41,17 @@ class CustCourierOrderViewController {
     return _order.value!.status;
   }
 
+  bool get showOffers {
+    return order.counterOffers?.isNotEmpty == true;
+    //  &&
+    //     order.isDriverAssigned == false;
+  }
+
   // streams //
   StreamSubscription<CourierOrder?>? orderStream;
   String? subscriptionId;
 
-  get sawNotifDrivers => null;
+  Null get sawNotifDrivers => null;
 
   // init
   Future<void> init(
@@ -249,7 +256,35 @@ class CustCourierOrderViewController {
     _order.close();
   }
 
-  acceptOffer({required int id}) {}
+  Future<void> acceptOffer({required int id}) async {
+    mezDbgPrint("Assigning to order : ${order.deliveryOrderId!}");
+    try {
+      final cModels.AssignDriverResponse res =
+          await CloudFunctions.delivery3_assignDriver(
+              deliveryOrderId: order.deliveryOrderId!, deliveryDriverId: id);
+      mezDbgPrint("response ===>${res.toFirebaseFormattedJson()}");
+      if (res.success) {
+        showSavedSnackBar(
+            title: "Picked", subtitle: "Driver picked successfully");
+      } else {
+        mezDbgPrint("🔴 Error =>${res.error} ");
+        mezDbgPrint("🔴 Error =>${res.unhandledError} ");
+      }
+    } on FirebaseFunctionsException catch (e) {
+      mezDbgPrint(e);
+      showErrorSnackBar(errorText: e.message.toString());
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
 
-  rejectOffer({required int id}) {}
+  Future<void> rejectOffer({required int id}) async {
+    Map<int, cModels.CounterOffer>? offers = _order.value!.counterOffers;
+    if (offers != null) {
+      offers[id]?.status = cModels.CounterOfferStatus.Rejected;
+      await update_delivery_order_offers(
+          offers: offers, orderId: order.deliveryOrderId!);
+    }
+  }
 }

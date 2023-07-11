@@ -16,7 +16,6 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -148,8 +147,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         ),
                       ),
                     ),
-                  if (viewController.order.counterOffers?.isNotEmpty ==
-                      true) ...[
+                  if (viewController.showOffers) ...[
                     meduimSeperator,
                     Text(
                       "Counter offers (${viewController.order.counterOffers?.length})",
@@ -167,33 +165,37 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                                 ? CachedNetworkImageProvider(
                                     counterOffer.image!)
                                 : null,
-                            action: Row(
-                              children: [
-                                MezInkwell(
-                                  borderRadius: 5,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 12),
-                                  backgroundColor: Colors.white,
-                                  textColor: redAccentColor,
-                                  borderColor: redAccentColor,
-                                  onClick: () async {
-                                    await viewController.rejectOffer(id: key);
-                                  },
-                                  label: "Reject",
-                                ),
-                                SizedBox(
-                                  width: 12,
-                                ),
-                                MezInkwell(
-                                  borderRadius: 5,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 12),
-                                  onClick: () async {
-                                    await viewController.acceptOffer(id: key);
-                                  },
-                                  label: "Accept",
-                                ),
-                              ],
+                            action: Flexible(
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: MezButton(
+                                      borderRadius: 5,
+                                      backgroundColor: Colors.white,
+                                      textColor: redAccentColor,
+                                      borderColor: redAccentColor,
+                                      onClick: () async {
+                                        await viewController.rejectOffer(
+                                            id: key);
+                                      },
+                                      label: "Reject",
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 12,
+                                  ),
+                                  Flexible(
+                                    child: MezButton(
+                                      borderRadius: 5,
+                                      onClick: () async {
+                                        await viewController.acceptOffer(
+                                            id: key);
+                                      },
+                                      label: "Accept",
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             content: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,7 +207,9 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                                 Text(
                                   counterOffer.price.toPriceString(),
                                   style: context.textTheme.bodyLarge,
-                                )
+                                ),
+                                Text(
+                                    "Expires at: ${DateTime.parse(counterOffer.expiryTime)}")
                               ],
                             ));
                       }).toList(),
