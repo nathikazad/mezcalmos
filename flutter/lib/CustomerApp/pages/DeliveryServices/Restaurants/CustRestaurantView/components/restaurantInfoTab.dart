@@ -15,6 +15,8 @@ import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
+    as MapHelper;
 
 final DateFormat f = new DateFormat('hh:mma');
 
@@ -223,17 +225,27 @@ class RestaurantInfoTab extends StatelessWidget {
             fit: FlexFit.tight,
             child: Row(
               children: [
-                Icon(
-                  Icons.delivery_dining,
-                  size: 3.4.h,
-                  color: Colors.black,
+                Stack(
+                  children: [
+                    Icon(
+                      Icons.delivery_dining,
+                      color: Colors.black,
+                      //   size: 24,
+                    ),
+                    if (restaurant.onlineOrdering == false)
+                      Icon(
+                        Icons.close,
+                        color: Colors.black,
+                        //   size: 24,
+                      ),
+                  ],
                 ),
                 SizedBox(
                   width: 1.w,
                 ),
                 Flexible(
                   child: ShippingCostComponent(
-                      shippingCost: controller.basShippingPrice.value,
+                      shippingCost: _getShippingPrice(),
                       alignment: MainAxisAlignment.start,
                       textStyle: context.txt.bodyLarge),
                 ),
@@ -293,6 +305,21 @@ class RestaurantInfoTab extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  num? _getShippingPrice() {
+    double result = 0;
+    if (restaurant.deliveryCost?.costPerKmFromBase != null) {
+      final double dist = MapHelper.calculateDistance(
+          MapHelper.alitasLoc.toLocationData(),
+          restaurant.info.location.toLocationData());
+      mezDbgPrint("distance from base ========>$dist");
+      final double cost =
+          dist * restaurant.deliveryCost!.costPerKmFromBase!;
+      result = cost;
+    }
+    mezDbgPrint("shipping cost from base ==========>$result");
+    return result;
   }
 
   Widget _reviewsChip(BuildContext context) {

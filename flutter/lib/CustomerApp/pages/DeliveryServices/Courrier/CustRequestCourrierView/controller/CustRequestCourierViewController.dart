@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -74,7 +75,7 @@ class CustRequestCourierViewController {
   }
 
   void _fetchCompanies() {
-    get_dv_companies(isOpen: true).then((List<DeliveryCompany>? value) {
+    get_dv_companies(isOpen: false).then((List<DeliveryCompany>? value) {
       if (value != null) {
         deliveryCompanies.value = value;
         selectedCompanies.value = deliveryCompanies
@@ -151,7 +152,8 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _callCloudFunc() async {
-    mezDbgPrint("Calling cloud func with from text : ${fromLocText.text}");
+    mezDbgPrint(
+        "Calling cloud func with from text : ${selectedCompanies.length}");
     try {
       await _uploadItemsImages();
       final cModels.CreateCourierResponse res =
@@ -165,10 +167,10 @@ class CustRequestCourierViewController {
             .entries
             .map(
               (MapEntry<int, CourierItem> e) => cModels.CourierItem(
-                name: itemsNames[e.key].text,
+                name: itemsNames[e.key].text.inCaps,
                 image: e.value.image,
                 estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
-                notes: itemsNotes[e.key].text,
+                notes: itemsNotes[e.key].text.inCaps,
               ),
             )
             .toList(),
@@ -184,7 +186,7 @@ class CustRequestCourierViewController {
         // deliveryCompanyId: 0,
         // deliveryCost: shippingCost.value,
         customerOffer: estDeliveryCost.value,
-        deliveryCompanyIds: selectedCompanies,
+        deliveryCompanyIds: selectedCompanies.value,
         scheduledTime: deliveryTime.value?.toUtc().toString(),
         customerAppType: cModels.CustomerAppType.Native,
         tripDistance: routeInfo?.distance.distanceInMeters,

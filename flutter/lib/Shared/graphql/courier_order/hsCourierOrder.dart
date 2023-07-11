@@ -155,7 +155,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
                   .toCurrency())
           : null,
       notifiedDrivers: orderData.delivery_order.notified_drivers
-          .map<int, bool>((key, value) {
+          ?.map<int, bool>((key, value) {
         return MapEntry<int, bool>(int.parse(key), value as bool);
       }),
       counterOffers: orderData.delivery_order.counter_offers
@@ -344,7 +344,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                     .toCurrency())
             : null,
         notifiedDrivers: orderData.delivery_order.notified_drivers
-            .map<int, bool>((key, value) {
+            ?.map<int, bool>((key, value) {
           return MapEntry<int, bool>(int.parse(key), value as bool);
         }),
         counterOffers: orderData.delivery_order.counter_offers

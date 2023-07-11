@@ -103,7 +103,7 @@ class DeliveryOrder extends DeliverableOrder {
         counterOffers?.containsKey(driverId) == true &&
         DateTime.parse(counterOffers![driverId]!.expiryTime)
             .toLocal()
-            .isBefore(DateTime.now().toLocal());
+            .isAfter(DateTime.now().toLocal());
   }
 
   @override

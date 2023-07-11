@@ -26,14 +26,19 @@ class BsHomeRentalOrderSatusCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
-              radius: 18,
-              backgroundColor: (status.isCancelled) ? offRedColor : null,
-              child: Icon(
-                status.getIcon(),
-                size: 15,
-                color: status.isCancelled ? redAccentColor : Colors.white,
-              ),
+            // CircleAvatar(
+            //   radius: 18,
+            //   backgroundColor: (status.isCancelled) ? offRedColor : null,
+            //   child: Icon(
+            //     status.getIcon(),
+            //     size: 15,
+            //     color: status.isCancelled ? redAccentColor : Colors.white,
+            //   ),
+            // ),
+            Icon(
+              status.getIcon(),
+              size: 27.5,
+              color: status.isCancelled ? redAccentColor : primaryBlueColor,
             ),
             Expanded(
               child: Center(

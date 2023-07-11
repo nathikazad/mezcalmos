@@ -515,3 +515,25 @@ List<Option> _convertOptionFromQuerry(
   }).toList();
   return options;
 }
+
+Future<void> update_cart_discount(
+    {required int customerId,
+    required List<int> appliedOffers,
+    required num discountValue}) async {
+  final QueryResult<Mutation$update_cart_discount> response =
+      await _hasuraDb.graphQLClient.mutate$update_cart_discount(
+    Options$Mutation$update_cart_discount(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$update_cart_discount(
+          customer_id: customerId,
+          applied_offers: appliedOffers,
+          discount_value: discountValue.toDouble()),
+    ),
+  );
+  if (response.parsedData?.update_restaurant_cart_by_pk == null) {
+    throw Exception(
+        " 🛑🛑 update cart discount exceptions 🛑🛑 \n ${response.exception}");
+  } //else {
+  //   return response.parsedData?.update_restaurant_cart_by_pk
+  // }
+}

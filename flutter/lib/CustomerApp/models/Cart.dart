@@ -22,7 +22,7 @@ class Cart {
   DateTime? deliveryTime;
   cModels.DeliveryType? deliveryType;
   num discountValue = 0;
-  List<num> offersApplied = <num>[];
+  List<int> offersApplied = <int>[];
   String? notes;
   cModels.PaymentType paymentType = cModels.PaymentType.Cash;
 

@@ -2,20 +2,35 @@ table:
   name: offer_applied
   schema: service_provider
 object_relationships:
-  - name: offer
+  - name: business_order
     using:
       manual_configuration:
         column_mapping:
-          offer_id: id
+          order_id: id
+          order_type: order_type
         insertion_order: null
         remote_table:
-          name: offer
-          schema: service_provider
+          name: order_request
+          schema: business
+  - name: laundry_order
+    using:
+      manual_configuration:
+        column_mapping:
+          order_id: id
+          order_type: order_type
+        insertion_order: null
+        remote_table:
+          name: order
+          schema: laundry
+  - name: offer
+    using:
+      foreign_key_constraint_on: offer_id
   - name: restaurant_order
     using:
       manual_configuration:
         column_mapping:
           order_id: id
+          order_type: order_type
         insertion_order: null
         remote_table:
           name: order

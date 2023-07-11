@@ -140,8 +140,7 @@ export function calculateDiscount(cart: Cart, offer: Offer/*, applyStoreCredit: 
     //             offer.details.discountValue
     //         );
         discountValue = offer.details.discountValue;
-    } else 
-    if(offer.details.discountType == DiscountType.FlatAmount) {
+    } else if(offer.details.discountType == DiscountType.FlatAmount) {
         if(offer.details.offerForItems) {
             if(offer.details.offerForItems == "particularItems") {
                 cart.items.forEach((i) => {

@@ -4072,6 +4072,7 @@ type business_order_request {
   ): business_order_request_item_aggregate!
   notes: String
   order_time: timestamptz!
+  order_type: String!
   review_id: Int
   status: String!
 }
@@ -4131,6 +4132,7 @@ input business_order_request_bool_exp {
   items_aggregate: business_order_request_item_aggregate_bool_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
+  order_type: String_comparison_exp
   review_id: Int_comparison_exp
   status: String_comparison_exp
 }
@@ -4172,6 +4174,7 @@ input business_order_request_insert_input {
   items: business_order_request_item_arr_rel_insert_input
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4773,6 +4776,7 @@ type business_order_request_max_fields {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4787,6 +4791,7 @@ type business_order_request_min_fields {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4836,6 +4841,7 @@ input business_order_request_order_by {
   items_aggregate: business_order_request_item_aggregate_order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   review_id: order_by
   status: order_by
 }
@@ -4874,6 +4880,9 @@ enum business_order_request_select_column {
   order_time
 
   """column name"""
+  order_type
+
+  """column name"""
   review_id
 
   """column name"""
@@ -4892,6 +4901,7 @@ input business_order_request_set_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4944,6 +4954,7 @@ input business_order_request_stream_cursor_value_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4984,6 +4995,9 @@ enum business_order_request_update_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   review_id
@@ -16699,6 +16713,7 @@ type laundry_order {
   items_cost: money
   notes: String
   order_time: timestamptz!
+  order_type: String!
   payment_type: String!
   refund_amount: money!
 
@@ -16804,6 +16819,7 @@ input laundry_order_bool_exp {
   items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
+  order_type: String_comparison_exp
   payment_type: String_comparison_exp
   refund_amount: money_comparison_exp
   review: review_bool_exp
@@ -17449,6 +17465,7 @@ input laundry_order_insert_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review: review_obj_rel_insert_input
@@ -17481,6 +17498,7 @@ type laundry_order_max_fields {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review_id: Int
@@ -17509,6 +17527,7 @@ type laundry_order_min_fields {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review_id: Int
@@ -17574,6 +17593,7 @@ input laundry_order_order_by {
   items_cost: order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   payment_type: order_by
   refund_amount: order_by
   review: review_order_by
@@ -17653,6 +17673,9 @@ enum laundry_order_select_column {
   order_time
 
   """column name"""
+  order_type
+
+  """column name"""
   payment_type
 
   """column name"""
@@ -17703,6 +17726,7 @@ input laundry_order_set_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review_id: Int
@@ -17792,6 +17816,7 @@ input laundry_order_stream_cursor_value_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review_id: Int
@@ -17871,6 +17896,9 @@ enum laundry_order_update_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   payment_type
@@ -19991,7 +20019,7 @@ type mutation_root {
   """
   delete single row from the table: "service_provider.offer_applied"
   """
-  delete_service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, service_provider_type: String!): service_provider_offer_applied
+  delete_service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, order_type: String!): service_provider_offer_applied
 
   """
   delete single row from the table: "service_provider.offer"
@@ -28317,7 +28345,7 @@ type query_root {
   """
   fetch data from the table: "service_provider.offer_applied" using primary key columns
   """
-  service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, service_provider_type: String!): service_provider_offer_applied
+  service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, order_type: String!): service_provider_offer_applied
 
   """
   fetch data from the table: "service_provider.offer" using primary key columns
@@ -33539,6 +33567,7 @@ type restaurant_order {
   items_cost: money
   notes: String
   order_time: timestamptz!
+  order_type: String!
   payment_type: String!
   refund_amount: money!
 
@@ -33711,6 +33740,7 @@ input restaurant_order_bool_exp {
   items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
+  order_type: String_comparison_exp
   payment_type: String_comparison_exp
   refund_amount: money_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -33826,6 +33856,7 @@ input restaurant_order_insert_input {
   items: restaurant_order_item_arr_rel_insert_input
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant: restaurant_restaurant_obj_rel_insert_input
@@ -34420,6 +34451,7 @@ type restaurant_order_max_fields {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant_id: Int
@@ -34453,6 +34485,7 @@ input restaurant_order_max_order_by {
   id: order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   payment_type: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -34484,6 +34517,7 @@ type restaurant_order_min_fields {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant_id: Int
@@ -34517,6 +34551,7 @@ input restaurant_order_min_order_by {
   id: order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   payment_type: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -34584,6 +34619,7 @@ input restaurant_order_order_by {
   items_cost: order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   payment_type: order_by
   refund_amount: order_by
   restaurant: restaurant_restaurant_order_by
@@ -34949,6 +34985,9 @@ enum restaurant_order_select_column {
   order_time
 
   """column name"""
+  order_type
+
+  """column name"""
   payment_type
 
   """column name"""
@@ -35000,6 +35039,7 @@ input restaurant_order_set_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant_id: Int
@@ -35147,6 +35187,7 @@ input restaurant_order_stream_cursor_value_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant_id: Int
@@ -35248,6 +35289,9 @@ enum restaurant_order_update_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   payment_type
@@ -38023,16 +38067,21 @@ input service_provider_offer_append_input {
 columns and relationships of "service_provider.offer_applied"
 """
 type service_provider_offer_applied {
+  """An object relationship"""
+  business_order: business_order_request
+
+  """An object relationship"""
+  laundry_order: laundry_order
   loss: money!
 
   """An object relationship"""
-  offer: service_provider_offer
+  offer: service_provider_offer!
   offer_id: Int!
   order_id: Int!
+  order_type: String!
 
   """An object relationship"""
   restaurant_order: restaurant_order
-  service_provider_type: String!
 }
 
 """
@@ -38075,12 +38124,14 @@ input service_provider_offer_applied_bool_exp {
   _and: [service_provider_offer_applied_bool_exp!]
   _not: service_provider_offer_applied_bool_exp
   _or: [service_provider_offer_applied_bool_exp!]
+  business_order: business_order_request_bool_exp
+  laundry_order: laundry_order_bool_exp
   loss: money_comparison_exp
   offer: service_provider_offer_bool_exp
   offer_id: Int_comparison_exp
   order_id: Int_comparison_exp
+  order_type: String_comparison_exp
   restaurant_order: restaurant_order_bool_exp
-  service_provider_type: String_comparison_exp
 }
 
 """
@@ -38088,7 +38139,7 @@ unique or primary key constraints on table "service_provider.offer_applied"
 """
 enum service_provider_offer_applied_constraint {
   """
-  unique or primary key constraint on columns "offer_id", "service_provider_type", "order_id"
+  unique or primary key constraint on columns "order_type", "offer_id", "order_id"
   """
   offer_applied_pkey
 }
@@ -38106,12 +38157,14 @@ input service_provider_offer_applied_inc_input {
 input type for inserting data into table "service_provider.offer_applied"
 """
 input service_provider_offer_applied_insert_input {
+  business_order: business_order_request_obj_rel_insert_input
+  laundry_order: laundry_order_obj_rel_insert_input
   loss: money
   offer: service_provider_offer_obj_rel_insert_input
   offer_id: Int
   order_id: Int
+  order_type: String
   restaurant_order: restaurant_order_obj_rel_insert_input
-  service_provider_type: String
 }
 
 """aggregate max on columns"""
@@ -38119,7 +38172,7 @@ type service_provider_offer_applied_max_fields {
   loss: money
   offer_id: Int
   order_id: Int
-  service_provider_type: String
+  order_type: String
 }
 
 """aggregate min on columns"""
@@ -38127,7 +38180,7 @@ type service_provider_offer_applied_min_fields {
   loss: money
   offer_id: Int
   order_id: Int
-  service_provider_type: String
+  order_type: String
 }
 
 """
@@ -38154,19 +38207,21 @@ input service_provider_offer_applied_on_conflict {
 Ordering options when selecting data from "service_provider.offer_applied".
 """
 input service_provider_offer_applied_order_by {
+  business_order: business_order_request_order_by
+  laundry_order: laundry_order_order_by
   loss: order_by
   offer: service_provider_offer_order_by
   offer_id: order_by
   order_id: order_by
+  order_type: order_by
   restaurant_order: restaurant_order_order_by
-  service_provider_type: order_by
 }
 
 """primary key columns input for table: service_provider.offer_applied"""
 input service_provider_offer_applied_pk_columns_input {
   offer_id: Int!
   order_id: Int!
-  service_provider_type: String!
+  order_type: String!
 }
 
 """
@@ -38183,7 +38238,7 @@ enum service_provider_offer_applied_select_column {
   order_id
 
   """column name"""
-  service_provider_type
+  order_type
 }
 
 """
@@ -38193,7 +38248,7 @@ input service_provider_offer_applied_set_input {
   loss: money
   offer_id: Int
   order_id: Int
-  service_provider_type: String
+  order_type: String
 }
 
 """aggregate stddev on columns"""
@@ -38233,7 +38288,7 @@ input service_provider_offer_applied_stream_cursor_value_input {
   loss: money
   offer_id: Int
   order_id: Int
-  service_provider_type: String
+  order_type: String
 }
 
 """aggregate sum on columns"""
@@ -38257,7 +38312,7 @@ enum service_provider_offer_applied_update_column {
   order_id
 
   """column name"""
-  service_provider_type
+  order_type
 }
 
 input service_provider_offer_applied_updates {
@@ -44833,7 +44888,7 @@ type subscription_root {
   """
   fetch data from the table: "service_provider.offer_applied" using primary key columns
   """
-  service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, service_provider_type: String!): service_provider_offer_applied
+  service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, order_type: String!): service_provider_offer_applied
 
   """
   fetch data from the table in a streaming manner: "service_provider.offer_applied"

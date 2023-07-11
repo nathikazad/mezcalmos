@@ -518,3 +518,56 @@ Future<List<cModels.Offer>> get_service_provider_offers(
   });
   return offers;
 }
+
+Future<cModels.Offer> check_coupon(
+    {required String couponCode,
+    required int serviceProviderId,
+    required cModels.ServiceProviderType serviceProviderType,
+    bool withCache = true}) async {
+  QueryResult<Query$check_coupon> res =
+      await _db.graphQLClient.query$check_coupon(
+    Options$Query$check_coupon(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$check_coupon(
+          coupon_code: couponCode,
+          service_provider_id: serviceProviderId,
+          service_provider_type: serviceProviderType.toFirebaseFormatString()),
+    ),
+  );
+  mezDbgPrint("👋 called check coupon ===========>${res.data}");
+  if (res.parsedData?.service_provider_offer.length == 0) {
+    throwError(res.exception);
+  }
+  final Query$check_coupon$service_provider_offer data =
+      res.parsedData!.service_provider_offer[0];
+  return cModels.Offer(
+      id: data.id,
+      // name: toLanguageMap(translations: data.name.translations),
+      serviceProviderId: serviceProviderId,
+      serviceProviderType: serviceProviderType,
+      offerType: cModels.OfferType.Coupon,
+      details: data.details,
+      status: cModels.OfferStatus.Active,
+      couponCode: couponCode);
+}
+
+Future<bool> check_offer_applied(
+    {required int customerId,
+    required int offerId,
+    bool withCache = true}) async {
+  QueryResult<Query$check_offer_applied> res =
+      await _db.graphQLClient.query$check_offer_applied(
+    Options$Query$check_offer_applied(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$check_offer_applied(
+          customer_id: customerId, offer_id: offerId),
+    ),
+  );
+  mezDbgPrint("👋 called check offer applied ===========>${res.data}");
+  if (res.parsedData?.service_provider_offer_applied.length == 0) {
+    return false;
+  }
+  return true;
+}

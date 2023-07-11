@@ -111,7 +111,7 @@ class CustItemViewController {
 
   // handling items and cart methods //
   Future<void> handleEditItem() async {
-    cartItem.value?.notes = notesController.text;
+    cartItem.value?.notes = notesController.text.inCaps;
 
     await cartController?.updateCartItem(cartItem.value!);
   }
@@ -121,7 +121,7 @@ class CustItemViewController {
   // }
 
   Future<int?> handleAddItem() async {
-    cartItem.value?.notes = notesController.text;
+    cartItem.value?.notes = notesController.text.inCaps;
     if (Get.find<AuthController>().isUserSignedIn) {
       cartController = Get.find<CustRestaurantCartController>();
     }

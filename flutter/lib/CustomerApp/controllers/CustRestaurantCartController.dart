@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/helpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
@@ -135,10 +136,13 @@ class CustRestaurantCartController extends GetxController {
       await setCartRestaurantId(cartItem.restaurantId);
     }
     try {
-      
       final int res = await add_item_to_cart(
         cartItem: cartItem,
       );
+      await apply_offers_to_item(
+          customerId: _auth.hasuraUserId!,
+          cart: cart.value,
+          cartItem: cartItem);
       return res;
     } catch (e, stk) {
       mezDbgPrint(e);
