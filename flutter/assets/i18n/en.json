@@ -1695,6 +1695,10 @@
             "home": {
               "title": "Homes",
               "description": "Discover the best homes in your city."
+            },
+            "coWorking": {
+              "title": "Co-working",
+              "description": "Work from dedicated desks, private rooms & full-floor office at nearby locations."
             }
           },
           "CustRentalsListView": {

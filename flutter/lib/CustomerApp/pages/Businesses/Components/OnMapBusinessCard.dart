@@ -74,15 +74,17 @@ class OnMapBusinessCard extends StatelessWidget {
                               SizedBox(
                                 width: 2,
                               ),
-                              Text('${business.avgRating ?? '0'}',
-                                  style: context.textTheme.bodySmall),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 2),
-                                child: Text(
-                                  '(${business.reviewCount})',
-                                  style: context.textTheme.bodyMedium,
-                                ),
-                              )
+                              if (business.avgRating != 0)
+                                Text('${business.avgRating ?? '0'}',
+                                    style: context.textTheme.bodySmall),
+                              if (business.avgRating != 0)
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 2),
+                                  child: Text(
+                                    '(${business.reviewCount})',
+                                    style: context.textTheme.bodyMedium,
+                                  ),
+                                )
                             ],
                           ),
                         )

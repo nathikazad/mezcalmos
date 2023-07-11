@@ -1725,6 +1725,10 @@
             "home": {
               "title": "Casas",
               "description": "Descubre las mejores casas de su ciudad."
+            },
+            "coWorking": {
+              "title": "Trabajo colaborativo",
+              "description": "Trabajo desde escritorios dedicados, habitaciones privadas y oficina de piso completo en lugares cercanos."
             }
           },
           "CustRentalsListView": {

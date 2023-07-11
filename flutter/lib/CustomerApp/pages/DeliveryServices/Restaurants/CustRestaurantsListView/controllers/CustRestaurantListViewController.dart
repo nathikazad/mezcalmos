@@ -237,7 +237,7 @@ class CustRestaurantListViewController {
               lat: fromLoc?.latitude ?? _currentLocation.latitude,
               lng: fromLoc?.longitude ?? _currentLocation.longitude,
               address: ''),
-          is_open: showOnlyOpenOnMap,
+          is_open: false,
           withCache: false,
           online_ordering:
               _filterInput["onlineOrder"]!.last.contains("true") ? true : null,
