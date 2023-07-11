@@ -15,7 +15,7 @@ export interface Offer {
   
 export enum OfferType {
     Promotion = "promotion",
-    Coupon = "Coupon",
+    Coupon = "coupon",
     MonthlySubscription = "monthlySubscription",
 }
 export enum OfferStatus {

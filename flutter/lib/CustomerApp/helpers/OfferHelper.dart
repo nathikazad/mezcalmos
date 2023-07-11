@@ -1,16 +1,74 @@
-// go through list of restaurant offers
-// if an offer is a promotion, then check if it is valid
-// if it is valid, then apply discount
-// go through list of offers applied
-// if an offer is a coupon, then check if it is valid
-// if it is valid, then apply discount
-
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
+Future<void> apply_restaurant_coupon(
+    {required int customerId,
+    required Cart cart,
+    required String couponCode}) async {
+  final cModels.Offer coupon = await check_coupon(
+      couponCode: couponCode,
+      serviceProviderId: cart.restaurant.restaurantId,
+      serviceProviderType: cModels.ServiceProviderType.Restaurant);
+  bool isValid = true;
+  if (coupon.details.validityRangeStart != null &&
+      coupon.details.validityRangeEnd != null) {
+    DateTime currentTime = DateTime.now();
+    DateTime validityRangeStart =
+        DateTime.parse(coupon.details.validityRangeStart!);
+    DateTime validityRangeEnd =
+        DateTime.parse(coupon.details.validityRangeEnd!);
+
+    if (coupon.details.weeklyRepeat) {
+      if (currentTime.weekday < validityRangeStart.weekday ||
+          currentTime.weekday > validityRangeEnd.weekday) {
+        isValid = false;
+      } else if (currentTime.weekday == validityRangeStart.weekday) {
+        if (currentTime.hour < validityRangeStart.hour) isValid = false;
+        if ((currentTime.hour == validityRangeStart.hour) &&
+            (currentTime.minute < validityRangeStart.minute)) isValid = false;
+      } else if (currentTime.weekday == validityRangeEnd.weekday) {
+        if (currentTime.hour > validityRangeEnd.hour) isValid = false;
+        if ((currentTime.hour == validityRangeEnd.hour) &&
+            (currentTime.minute > validityRangeEnd.minute)) isValid = false;
+      }
+    } else if (currentTime.isBefore(validityRangeStart) ||
+        currentTime.isAfter(validityRangeEnd)) {
+      isValid = false;
+    }
+  }
+  if (isValid == false) {
+    throwError('Coupon unavailable or expired');
+  }
+
+  if (coupon.details.offerForOrder == "firstOrder") {
+    final int numberOfCustomerRestaurantOrders =
+        await number_of_customer_restaurant_orders(
+            customerId: customerId, restaurantId: cart.restaurant.restaurantId);
+    if (numberOfCustomerRestaurantOrders > 0)
+      throwError('Coupon only usable on first order');
+  }
+  if (coupon.details.couponReusable != true) {
+    if (await check_offer_applied(
+        customerId: customerId, offerId: coupon.id.toInt())) {
+      throwError('Coupon cannot be reused');
+    }
+  }
+  cart.cartItems.forEach((i) {
+    cart.discountValue += calculateDiscount(cart, i, coupon);d
+  })
+}
+
+// go through list of restaurant offers
+// if an offer is a promotion, then check if it is valid
+// if it is valid, then apply discount
+// go through list of offers applied
+// if an offer is a coupon, then check if it is valid
+// if it is valid, then apply discount
 
 Future<void> apply_offers_to_item(
     {required int customerId,
@@ -107,14 +165,14 @@ num calculateDiscount(Cart cart, CartItem cartItem, cModels.Offer offer) {
       if (offer.details.offerForItems == "particularItems") {
         offer.details.items!.forEach((c) => {
               if (c == cartItem.item.id)
-                {discount = offer.details.discountValue}
+                {discount = offer.details.discountValue * cartItem.quantity}
             });
       } else if (offer.details.offerForItems == "particularCategories") {
         offer.details.categories!.forEach((c) => {
               if (c == cartItem.item.categoryId)
-                {discount = offer.details.discountValue}
+                {discount = offer.details.discountValue * cartItem.quantity}
             });
-      } else {
+      } else if (cart.cartItems.length == 1) {
         discount = offer.details.discountValue;
       }
       break;
@@ -123,20 +181,27 @@ num calculateDiscount(Cart cart, CartItem cartItem, cModels.Offer offer) {
         offer.details.items!.forEach((c) => {
               if (c == cartItem.item.id)
                 {
-                  discount =
-                      cartItem.item.cost * offer.details.discountValue / 100
+                  discount = cartItem.item.cost *
+                      offer.details.discountValue /
+                      100.0 *
+                      cartItem.quantity
                 }
             });
       } else if (offer.details.offerForItems == "particularCategories") {
         offer.details.categories!.forEach((c) => {
               if (c == cartItem.item.categoryId)
                 {
-                  discount =
-                      cartItem.item.cost * offer.details.discountValue / 100
+                  discount = cartItem.item.cost *
+                      offer.details.discountValue /
+                      100.0 *
+                      cartItem.quantity
                 }
             });
       } else {
-        discount = cartItem.item.cost * offer.details.discountValue / 100;
+        discount = cartItem.item.cost *
+            offer.details.discountValue /
+            100.0 *
+            cartItem.quantity;
       }
       break;
     case cModels.DiscountType.AnotherSameFlat:
@@ -151,6 +216,9 @@ num calculateDiscount(Cart cart, CartItem cartItem, cModels.Offer offer) {
             });
             if (sameItems % 2 == 0) {
               discount = offer.details.discountValue;
+              if (cartItem.quantity > 2)
+                discount +=
+                    offer.details.discountValue * ((cartItem.quantity - 1) / 2);
             }
             break;
           }
@@ -165,6 +233,9 @@ num calculateDiscount(Cart cart, CartItem cartItem, cModels.Offer offer) {
             });
             if (sameItems % 2 == 0) {
               discount = offer.details.discountValue;
+              if (cartItem.quantity > 2)
+                discount +=
+                    offer.details.discountValue * ((cartItem.quantity - 1) / 2);
             }
             break;
           }
@@ -182,7 +253,12 @@ num calculateDiscount(Cart cart, CartItem cartItem, cModels.Offer offer) {
               }
             });
             if (sameItems % 2 == 0) {
-              discount = cartItem.item.cost * offer.details.discountValue / 100;
+              discount =
+                  cartItem.item.cost * offer.details.discountValue / 100.0;
+              if (cartItem.quantity > 2)
+                discount +=
+                    (cartItem.item.cost * offer.details.discountValue / 100.0) *
+                        ((cartItem.quantity - 1) / 2);
             }
             break;
           }
@@ -196,7 +272,12 @@ num calculateDiscount(Cart cart, CartItem cartItem, cModels.Offer offer) {
               }
             });
             if (sameItems % 2 == 0) {
-              discount = cartItem.item.cost * offer.details.discountValue / 100;
+              discount =
+                  cartItem.item.cost * offer.details.discountValue / 100.0;
+              if (cartItem.quantity > 2)
+                discount +=
+                    (cartItem.item.cost * offer.details.discountValue / 100.0) *
+                        ((cartItem.quantity - 1) / 2);
             }
             break;
           }
