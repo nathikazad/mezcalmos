@@ -164,13 +164,13 @@ Future<List<DeliveryCompany>> get_nearby_companies(
   return returnedList;
 }
 
-Future<List<DeliveryCompany>?> get_dv_companies({bool? onlineOrdering}) async {
+Future<List<DeliveryCompany>?> get_dv_companies() async {
   final QueryResult<Query$getDeliveryCompanies> res =
       await _hasuraDb.graphQLClient.query$getDeliveryCompanies(
     Options$Query$getDeliveryCompanies(
         fetchPolicy: FetchPolicy.noCache,
         variables: Variables$Query$getDeliveryCompanies(
-          online_ordering: onlineOrdering,
+          online_ordering: true,
         )),
   );
   mezDbgPrint(
