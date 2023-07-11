@@ -12,9 +12,12 @@ class ServiceOfferEditViewController {
   Rxn<OfferType> selectedOfferType = Rxn<OfferType>();
   TextEditingController offerNameController = TextEditingController();
   Rxn<OfferOrderType> selectedOrderType = Rxn<OfferOrderType>();
-  Rx<DiscountType> selectedDiscountType = Rx<DiscountType>(DiscountType.FlatAmount);
+  Rx<DiscountType> selectedDiscountType =
+      Rx<DiscountType>(DiscountType.FlatAmount);
   TextEditingController discountController = TextEditingController();
   TextEditingController minAmountController = TextEditingController();
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   void init({
     required int? offerId,

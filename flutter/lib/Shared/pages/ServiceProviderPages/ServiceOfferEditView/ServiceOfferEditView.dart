@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -53,34 +54,109 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
             title: viewController.isEditMode.value
                 ? viewController.currentOffer!.value!.name.toString()
                 : "Add Offer"),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Text(
-                "Select your offer",
-                style: context.textTheme.bodyLarge,
-              ),
-              smallSepartor,
-              Builder(builder: (context) {
-                return MezStringDropDown(
+        body: Form(
+          key: viewController.formKey,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Select your offer",
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Builder(builder: (context) {
+                  return MezStringDropDown(
+                    labelText: "Select your offer",
+                    langPath: _i18n(),
+                    items: [OfferType.Coupon, OfferType.Promotion]
+                        .map((e) => e.toFirebaseFormatString())
+                        .toList(),
+                    icons: [Icons.local_offer, Icons.attach_money],
+                    onChanged: (value) {
+                      if (value == null) return;
+                      viewController.selectedOfferType.value =
+                          value.toOfferType();
+                    },
+                  );
+                }),
+                Text(
+                  "Coupon Code",
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                TextFormField(
+                  controller: viewController.offerNameController,
+                  decoration: InputDecoration(
+                    hintText: "Enter your Coupon Code",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your Coupon Code";
+                    }
+                    return null;
+                  },
+                ),
+                smallSepartor,
+                Text(
+                  "Select type of order",
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                MezStringDropDown(
                   labelText: "Select your offer",
                   langPath: _i18n(),
-                  items: [OfferType.Coupon, OfferType.Promotion]
+                  items: OfferOrderType.values
                       .map((e) => e.toFirebaseFormatString())
                       .toList(),
                   onChanged: (value) {
                     if (value == null) return;
-                    viewController.selectedOfferType.value =
-                        value.toOfferType();
+                    viewController.selectedOrderType.value =
+                        value.toOfferOrderType();
                   },
-                );
-              }),
-              if (viewController.selectedOfferType.value == OfferType.Coupon)
-                Column(),
-              if (viewController.selectedOfferType.value == OfferType.Promotion)
-                Column(),
-            ],
+                ),
+                Text(
+                  "Discount type",
+                  style: context.textTheme.bodyLarge,
+                ),
+                smallSepartor,
+                Row(
+                  children: [
+                    MezStringDropDown(
+                      labelText: "Select your offer",
+                      langPath: _i18n(),
+                      items: OfferOrderType.values
+                          .map((e) => e.toFirebaseFormatString())
+                          .toList(),
+                      onChanged: (value) {
+                        if (value == null) return;
+                        viewController.selectedOrderType.value =
+                            value.toOfferOrderType();
+                      },
+                    ),
+                    TextFormField(
+                      controller: viewController.offerNameController,
+                      decoration: InputDecoration(
+                        hintText: "Enter your Coupon Code",
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter your Coupon Code";
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+                smallSepartor,
+                if (viewController.selectedOfferType.value == OfferType.Coupon)
+                  Column(),
+                if (viewController.selectedOfferType.value ==
+                    OfferType.Promotion)
+                  Column(),
+              ],
+            ),
           ),
         ),
       ),
