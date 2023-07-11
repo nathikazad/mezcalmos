@@ -1,24 +1,28 @@
 import 'dart:math';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapBusinessCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapBusinessCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/constants/mapConstants.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 class CustRentalsListViewController {
+  //GoogleMapController? _googleMapController;
+  MGoogleMapController mapController = MGoogleMapController(
+    enableMezSmartPointer: true,
+  );
   // variables //
   RxList<RentalCard> _rentals = <RentalCard>[].obs;
   RxList<BusinessCard> _businesses = <BusinessCard>[].obs;
@@ -137,7 +141,7 @@ class CustRentalsListViewController {
       required BuildContext context}) async {
     _currentRentalCategory = rentalCategory;
     ctx = context;
-    await locPkg.Location().getLocation().then((location) {
+    await locPkg.Location().getLocation().then((locPkg.LocationData location) {
       if (location.latitude != null && location.longitude != null)
         _currentLocation = LatLng(location.latitude!, location.longitude!);
     });
@@ -158,7 +162,8 @@ class CustRentalsListViewController {
     try {
       _isLoading.value = true;
 
-      locPkg.LocationData location = await locPkg.Location().getLocation();
+      final locPkg.LocationData location =
+          await locPkg.Location().getLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
           lat: location.latitude!,
@@ -281,29 +286,17 @@ class CustRentalsListViewController {
   // Map view //
   void switchView() => _isMapView.value = !_isMapView.value;
 
-  Future<void> _fetchMapViewRentals({bool currentPostitionBased = true}) async {
+  Future<void> fetchMapViewRentals(
+      {required LatLng? fromLoc, required double? distance}) async {
     try {
-      if (currentPostitionBased) {
-        _mapViewBusinesses.value = await get_business_by_rental_category1(
-            categories1: [_currentRentalCategory],
-            distance: getFetchDistance,
-            fromLocation: _fromLocation!,
-            offset: 0,
-            limit: 25,
-            withCache: false);
-      } else {
-        _mapViewBusinesses.value = await get_business_by_rental_category1(
-            categories1: [_currentRentalCategory],
-            distance: _calculateDistance(
-                await _googleMapController!.getVisibleRegion()),
-            fromLocation: Location(
-                lat: _screenToWorldPosition!.latitude,
-                lng: _screenToWorldPosition!.longitude,
-                address: ''),
-            offset: 0,
-            limit: 25,
-            withCache: false);
-      }
+      _mapViewBusinesses.value = await get_business_by_rental_category1(
+          categories1: [_currentRentalCategory],
+          distance: distance ?? getFetchDistance,
+          fromLocation: Location(
+              lat: fromLoc?.latitude ?? _currentLocation.latitude,
+              lng: fromLoc?.longitude ?? _currentLocation.longitude,
+              address: ''),
+          withCache: false);
     } catch (e) {
       mezDbgPrint(e);
     } finally {
@@ -315,52 +308,32 @@ class CustRentalsListViewController {
     _buisinessesMarkers = <Marker>{}.obs;
 
     final String iconPath = _currentRentalCategory == RentalCategory1.Surf
-        ? mezSurfIconMarker
-        : mezVehicleRentalIconMarker;
+        ? mezSurfMarker
+        : mezMotoMarker;
     for (BusinessCard business in _mapViewBusinesses) {
-      await _allMarkers.addLabelMarker(LabelMarker(
-        flat: true,
-        label: null,
-        altIconPath: iconPath,
-        markerId: MarkerId(business.id.toString()),
-        backgroundColor: Colors.white,
-        onTap: () => _onSelectRentalTag(business),
-        position: LatLng(business.location!.lat.toDouble(),
-            business.location!.lng.toDouble()),
-      ));
+      // await _allMarkers.addLabelMarker(LabelMarker(
+      //   flat: true,
+      //   label: null,
+      //   altIconPath: iconPath,
+      //   markerId: MarkerId(business.id.toString()),
+      //   backgroundColor: Colors.white,
+      //   onTap: () => _onSelectRentalTag(business),
+      //   position: LatLng(business.location!.lat.toDouble(),
+      //       business.location!.lng.toDouble()),
+      // ));
       await _buisinessesMarkers.addLabelMarker(LabelMarker(
-        flat: true,
+        flat: false,
         label: null,
+        anchor: Offset(0.5, 0.5),
         altIconPath: iconPath,
         markerId: MarkerId(business.id.toString()),
-        backgroundColor: Colors.white,
         onTap: () => _onSelectRentalTag(business),
         position: LatLng(business.location!.lat.toDouble(),
             business.location!.lng.toDouble()),
       ));
     }
-    _buisinessesMarkers.update((value) {});
+    _buisinessesMarkers.update((Iterable<Marker>? value) {});
     _buisinessesMarkers.refresh();
-  }
-
-  void fetchMapViewRentals() {
-    _fetchMapViewRentals(currentPostitionBased: false);
-    _showFetchButton.value = false;
-  }
-
-  void recenterMap() {
-    _googleMapController?.moveCamera(CameraUpdate.newLatLng(_currentLocation));
-  }
-
-  Future<void> onMapCreated(GoogleMapController? gMapController) async {
-    _googleMapController = gMapController;
-    await _googleMapController?.setMapStyle(mezMapStyle);
-    await _fetchMapViewRentals();
-  }
-
-  void onCameraMove(CameraPosition cameraPosition) {
-    _screenToWorldPosition = cameraPosition.target;
-    _showFetchButton.value = true;
   }
 
   void _onSelectRentalTag(BusinessCard business) {

@@ -106,6 +106,7 @@ class MezServicesMapController {
     mGoogleMapController.initialZoomLevel = 12;
     mGoogleMapController.periodicRerendering.value = false;
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
+    mGoogleMapController.recenterButtonEnabled.value = true;
     // mGoogleMapController.setZoomLvl(zoomLvl: 14.0);
 
     unawaited(locPkg.Location()
@@ -157,10 +158,8 @@ class MezServicesMapController {
                 onTap: newMarker.onTap,
                 anchor: newMarker.anchor,
                 position: newMarker.position,
-                
                 consumeTapEvents: true,
               )));
-     
 
       mezDbgPrint(
           "✅ markers in child component =====>${mGoogleMapController.markers.value.length}");
