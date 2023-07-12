@@ -1,15 +1,16 @@
 import { getHasura } from "../../../utilities/hasura";
-import { Discount } from "../../models/Services/Offer";
+import { OrderType } from "../../models/Generic/Order";
 
-export async function updateOffersApplied(orderId: number, offerIdsAndDiscount: Record<number, Discount>) {
+export async function updateOffersApplied(orderId: number, appliedOffers: Array<number>, totalDiscountValue: number, orderType: OrderType) {
     let chain = getHasura();
 
     let objects = [];
-    for(let offerId in offerIdsAndDiscount) {
+    for(let offerId of appliedOffers) {
         objects.push({
             order_id: orderId,
-            offer_id: parseInt(offerId),
-            loss: offerIdsAndDiscount[offerId].discountAmount
+            offer_id: offerId,
+            loss: totalDiscountValue,
+            order_type: orderType
         })
     }
 

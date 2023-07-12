@@ -1,6 +1,12 @@
 
 -- Could not auto-generate a down migration.
 -- Please write an appropriate down migration for the SQL below:
+-- alter table "business"."cart" add column "applied_offers" jsonb
+--  not null default jsonb_build_array();
+
+
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
 -- alter table "business"."order_request" add column "order_type" text
 --  not null default 'business';
 

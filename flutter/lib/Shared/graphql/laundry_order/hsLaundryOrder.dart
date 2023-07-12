@@ -465,3 +465,21 @@ Future<void> set_laundry_est_ready_time(
         "🚨set fod est ready time exceptions => ${response.exception}");
   }
 }
+
+Future<int> number_of_customer_laundry_orders(
+    {required int storeId, required int customerId}) async {
+  final QueryResult<Query$number_of_customer_laundry_orders> queryResult =
+      await _hasuraDb.graphQLClient.query$number_of_customer_laundry_orders(
+    Options$Query$number_of_customer_laundry_orders(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$number_of_customer_laundry_orders(
+          store_id: storeId, customer_id: customerId),
+    ),
+  );
+  if (queryResult.parsedData?.laundry_order_aggregate.aggregate != null) {
+    return queryResult.parsedData!.laundry_order_aggregate.aggregate!.count;
+  } else {
+    throw Exception(
+        "🚨 Getting number_of_customer_laundry_orders exceptions \n ${queryResult.exception}");
+  }
+}

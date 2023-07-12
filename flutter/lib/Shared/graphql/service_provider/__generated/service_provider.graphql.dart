@@ -14758,10 +14758,12 @@ class Variables$Query$check_offer_applied {
   factory Variables$Query$check_offer_applied({
     int? offer_id,
     int? customer_id,
+    String? order_type,
   }) =>
       Variables$Query$check_offer_applied._({
         if (offer_id != null) r'offer_id': offer_id,
         if (customer_id != null) r'customer_id': customer_id,
+        if (order_type != null) r'order_type': order_type,
       });
 
   Variables$Query$check_offer_applied._(this._$data);
@@ -14777,6 +14779,10 @@ class Variables$Query$check_offer_applied {
       final l$customer_id = data['customer_id'];
       result$data['customer_id'] = (l$customer_id as int?);
     }
+    if (data.containsKey('order_type')) {
+      final l$order_type = data['order_type'];
+      result$data['order_type'] = (l$order_type as String?);
+    }
     return Variables$Query$check_offer_applied._(result$data);
   }
 
@@ -14784,6 +14790,7 @@ class Variables$Query$check_offer_applied {
 
   int? get offer_id => (_$data['offer_id'] as int?);
   int? get customer_id => (_$data['customer_id'] as int?);
+  String? get order_type => (_$data['order_type'] as String?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('offer_id')) {
@@ -14793,6 +14800,10 @@ class Variables$Query$check_offer_applied {
     if (_$data.containsKey('customer_id')) {
       final l$customer_id = customer_id;
       result$data['customer_id'] = l$customer_id;
+    }
+    if (_$data.containsKey('order_type')) {
+      final l$order_type = order_type;
+      result$data['order_type'] = l$order_type;
     }
     return result$data;
   }
@@ -14830,6 +14841,15 @@ class Variables$Query$check_offer_applied {
     if (l$customer_id != lOther$customer_id) {
       return false;
     }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (_$data.containsKey('order_type') !=
+        other._$data.containsKey('order_type')) {
+      return false;
+    }
+    if (l$order_type != lOther$order_type) {
+      return false;
+    }
     return true;
   }
 
@@ -14837,9 +14857,11 @@ class Variables$Query$check_offer_applied {
   int get hashCode {
     final l$offer_id = offer_id;
     final l$customer_id = customer_id;
+    final l$order_type = order_type;
     return Object.hashAll([
       _$data.containsKey('offer_id') ? l$offer_id : const {},
       _$data.containsKey('customer_id') ? l$customer_id : const {},
+      _$data.containsKey('order_type') ? l$order_type : const {},
     ]);
   }
 }
@@ -14856,6 +14878,7 @@ abstract class CopyWith$Variables$Query$check_offer_applied<TRes> {
   TRes call({
     int? offer_id,
     int? customer_id,
+    String? order_type,
   });
 }
 
@@ -14875,11 +14898,13 @@ class _CopyWithImpl$Variables$Query$check_offer_applied<TRes>
   TRes call({
     Object? offer_id = _undefined,
     Object? customer_id = _undefined,
+    Object? order_type = _undefined,
   }) =>
       _then(Variables$Query$check_offer_applied._({
         ..._instance._$data,
         if (offer_id != _undefined) 'offer_id': (offer_id as int?),
         if (customer_id != _undefined) 'customer_id': (customer_id as int?),
+        if (order_type != _undefined) 'order_type': (order_type as String?),
       }));
 }
 
@@ -14892,6 +14917,7 @@ class _CopyWithStubImpl$Variables$Query$check_offer_applied<TRes>
   call({
     int? offer_id,
     int? customer_id,
+    String? order_type,
   }) =>
       _res;
 }
@@ -15089,6 +15115,15 @@ const documentNodeQuerycheck_offer_applied = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'order_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -15113,26 +15148,64 @@ const documentNodeQuerycheck_offer_applied = DocumentNode(definitions: [
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
                     name: NameNode(value: '_eq'),
-                    value: StringValueNode(
-                      value: 'restaurant',
-                      isBlock: false,
-                    ),
+                    value: VariableNode(name: NameNode(value: 'order_type')),
                   )
                 ]),
               ),
               ObjectFieldNode(
-                name: NameNode(value: 'restaurant_order'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'customer_id'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value:
-                            VariableNode(name: NameNode(value: 'customer_id')),
-                      )
-                    ]),
-                  )
+                name: NameNode(value: '_or'),
+                value: ListValueNode(values: [
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'business_order'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: 'customer_id'),
+                          value: ObjectValueNode(fields: [
+                            ObjectFieldNode(
+                              name: NameNode(value: '_eq'),
+                              value: VariableNode(
+                                  name: NameNode(value: 'customer_id')),
+                            )
+                          ]),
+                        )
+                      ]),
+                    )
+                  ]),
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'restaurant_order'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: 'customer_id'),
+                          value: ObjectValueNode(fields: [
+                            ObjectFieldNode(
+                              name: NameNode(value: '_eq'),
+                              value: VariableNode(
+                                  name: NameNode(value: 'customer_id')),
+                            )
+                          ]),
+                        )
+                      ]),
+                    )
+                  ]),
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'laundry_order'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: 'customer_id'),
+                          value: ObjectValueNode(fields: [
+                            ObjectFieldNode(
+                              name: NameNode(value: '_eq'),
+                              value: VariableNode(
+                                  name: NameNode(value: 'customer_id')),
+                            )
+                          ]),
+                        )
+                      ]),
+                    )
+                  ]),
                 ]),
               ),
             ]),

@@ -7,6 +7,7 @@ export interface Cart {
   cost: number;
   items: Array<CartItem>;
   discountValue: number;
+  appliedOffers: Array<number>;
 }
 
 export interface CartItem {

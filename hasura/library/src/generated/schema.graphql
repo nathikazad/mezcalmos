@@ -601,6 +601,10 @@ type business_business_variance_fields {
 columns and relationships of "business.cart"
 """
 type business_cart {
+  applied_offers(
+    """JSON select path"""
+    path: String
+  ): jsonb!
   business_id: Int
 
   """
@@ -672,6 +676,11 @@ type business_cart_aggregate_fields {
   variance: business_cart_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input business_cart_append_input {
+  applied_offers: jsonb
+}
+
 """aggregate avg on columns"""
 type business_cart_avg_fields {
   business_id: Float
@@ -686,6 +695,7 @@ input business_cart_bool_exp {
   _and: [business_cart_bool_exp!]
   _not: business_cart_bool_exp
   _or: [business_cart_bool_exp!]
+  applied_offers: jsonb_comparison_exp
   business_id: Int_comparison_exp
   cost: money_comparison_exp
   customer_id: Int_comparison_exp
@@ -705,6 +715,28 @@ enum business_cart_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input business_cart_delete_at_path_input {
+  applied_offers: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input business_cart_delete_elem_input {
+  applied_offers: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input business_cart_delete_key_input {
+  applied_offers: String
+}
+
+"""
 input type for incrementing numeric columns in table "business.cart"
 """
 input business_cart_inc_input {
@@ -717,6 +749,7 @@ input business_cart_inc_input {
 input type for inserting data into table "business.cart"
 """
 input business_cart_insert_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1291,6 +1324,7 @@ input business_cart_on_conflict {
 
 """Ordering options when selecting data from "business.cart"."""
 input business_cart_order_by {
+  applied_offers: order_by
   business_id: order_by
   cost: order_by
   customer_id: order_by
@@ -1303,10 +1337,18 @@ input business_cart_pk_columns_input {
   customer_id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input business_cart_prepend_input {
+  applied_offers: jsonb
+}
+
 """
 select columns of table "business.cart"
 """
 enum business_cart_select_column {
+  """column name"""
+  applied_offers
+
   """column name"""
   business_id
 
@@ -1321,6 +1363,7 @@ enum business_cart_select_column {
 input type for updating data in table "business.cart"
 """
 input business_cart_set_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1360,6 +1403,7 @@ input business_cart_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input business_cart_stream_cursor_value_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1377,6 +1421,9 @@ update columns of table "business.cart"
 """
 enum business_cart_update_column {
   """column name"""
+  applied_offers
+
+  """column name"""
   business_id
 
   """column name"""
@@ -1387,8 +1434,30 @@ enum business_cart_update_column {
 }
 
 input business_cart_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: business_cart_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: business_cart_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: business_cart_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: business_cart_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: business_cart_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: business_cart_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_set_input
@@ -21839,8 +21908,30 @@ type mutation_root {
   update data of the table: "business.cart"
   """
   update_business_cart(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_cart_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_cart_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_cart_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_cart_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: business_cart_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_cart_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: business_cart_set_input
@@ -21853,8 +21944,30 @@ type mutation_root {
   update single row of the table: "business.cart"
   """
   update_business_cart_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_cart_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_cart_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_cart_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_cart_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: business_cart_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_cart_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: business_cart_set_input

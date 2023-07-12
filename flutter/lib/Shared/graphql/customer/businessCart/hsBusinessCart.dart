@@ -58,6 +58,8 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
     customerId: cartData.customer_id,
     businessId: cartData.business_id?.toInt(),
     cost: cartData.cost ?? 0,
+    discountValue: cartData.discount_value,
+    appliedOffers: cartData.applied_offers,
     items: cartData.items
         .map(
           (Query$getBusinessCart$business_cart$items data) => BusinessCartItem(
@@ -1210,4 +1212,26 @@ Future<CustBusinessCart?> get_business_order_request(
       return null;
     }
   }
+}
+
+Future<void> update_business_cart_discount(
+    {required int customerId,
+    required List<int> appliedOffers,
+    required num discountValue}) async {
+  final QueryResult<Mutation$update_business_cart_discount> response =
+      await _hasuraDb.graphQLClient.mutate$update_business_cart_discount(
+    Options$Mutation$update_business_cart_discount(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$update_business_cart_discount(
+          customer_id: customerId,
+          applied_offers: appliedOffers,
+          discount_value: discountValue.toDouble()),
+    ),
+  );
+  if (response.parsedData?.update_business_cart_by_pk == null) {
+    throw Exception(
+        " 🛑🛑 update cart discount exceptions 🛑🛑 \n ${response.exception}");
+  } //else {
+  //   return response.parsedData?.update_restaurant_cart_by_pk
+  // }
 }

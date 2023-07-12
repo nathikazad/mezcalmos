@@ -519,7 +519,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
   return offers;
 }
 
-Future<cModels.Offer> check_coupon(
+Future<cModels.Offer?> check_coupon(
     {required String couponCode,
     required int serviceProviderId,
     required cModels.ServiceProviderType serviceProviderType,
@@ -537,7 +537,7 @@ Future<cModels.Offer> check_coupon(
   );
   mezDbgPrint("👋 called check coupon ===========>${res.data}");
   if (res.parsedData?.service_provider_offer.length == 0) {
-    throwError(res.exception);
+    return null;
   }
   final Query$check_coupon$service_provider_offer data =
       res.parsedData!.service_provider_offer[0];
@@ -555,6 +555,7 @@ Future<cModels.Offer> check_coupon(
 Future<bool> check_offer_applied(
     {required int customerId,
     required int offerId,
+    required cModels.OrderType orderType,
     bool withCache = true}) async {
   QueryResult<Query$check_offer_applied> res =
       await _db.graphQLClient.query$check_offer_applied(
@@ -562,7 +563,9 @@ Future<bool> check_offer_applied(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
       variables: Variables$Query$check_offer_applied(
-          customer_id: customerId, offer_id: offerId),
+          customer_id: customerId,
+          offer_id: offerId,
+          order_type: orderType.toFirebaseFormatString()),
     ),
   );
   mezDbgPrint("👋 called check offer applied ===========>${res.data}");

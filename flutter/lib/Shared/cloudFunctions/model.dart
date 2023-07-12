@@ -1577,12 +1577,13 @@ class OfferDetails {
   num? minimumOrderAmount;
   List<num>? items;
   List<num>? categories;
+  List<OfferingType>? offeringTypes;
   String? validityRangeStart;
   String? validityRangeEnd;
   bool weeklyRepeat;
   bool? couponReusable;
   OfferDetails({
-    required this.offerForOrder, this.offerForItems, required this.discountType, required this.discountValue, this.minimumOrderAmount, this.items, this.categories, this.validityRangeStart, this.validityRangeEnd, required this.weeklyRepeat, this.couponReusable});
+    required this.offerForOrder, this.offerForItems, required this.discountType, required this.discountValue, this.minimumOrderAmount, this.items, this.categories, this.offeringTypes, this.validityRangeStart, this.validityRangeEnd, required this.weeklyRepeat, this.couponReusable});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "offerForOrder": offerForOrder,
@@ -1592,6 +1593,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "minimumOrderAmount": minimumOrderAmount,
       "items": items,
       "categories": categories,
+      "offeringTypes": offeringTypes,
       "validityRangeStart": validityRangeStart,
       "validityRangeEnd": validityRangeEnd,
       "weeklyRepeat": weeklyRepeat,

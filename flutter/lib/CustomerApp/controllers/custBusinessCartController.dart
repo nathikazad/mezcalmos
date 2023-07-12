@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/helpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
@@ -154,6 +155,8 @@ class CustBusinessCartController extends GetxController {
       mezDbgPrint("Cart value ============> $value");
       if (value != null && value.items.isNotEmpty && value.businessId != null) {
         cart.value = value;
+        await applyOffersToBusinessCart(
+            cart: cart.value!, customerId: _auth.hasuraUserId!);
         cart.refresh();
       } else {
         cart.value = value;
@@ -271,7 +274,6 @@ class CustBusinessCartController extends GetxController {
     }
     return null;
   }
-
 
   Future<void> updateProductItemCount({
     required BusinessCartItem item,

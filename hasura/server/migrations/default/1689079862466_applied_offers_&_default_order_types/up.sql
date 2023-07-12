@@ -1,4 +1,5 @@
 
+
 alter table "service_provider"."offer_applied"
   add constraint "offer_applied_offer_id_fkey"
   foreign key ("offer_id")
@@ -16,3 +17,6 @@ alter table "laundry"."order" add column "order_type" text
 
 alter table "business"."order_request" add column "order_type" text
  not null default 'business';
+
+alter table "business"."cart" add column "applied_offers" jsonb
+ not null default jsonb_build_array();
