@@ -107,7 +107,6 @@ class MezServicesMapController {
     mGoogleMapController.periodicRerendering.value = false;
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
     mGoogleMapController.recenterButtonEnabled.value = true;
-    // mGoogleMapController.setZoomLvl(zoomLvl: 14.0);
 
     unawaited(locPkg.Location()
         .getLocation()
@@ -147,19 +146,30 @@ class MezServicesMapController {
       List<Marker> newMarkers = await fetchNewData(mapCenter, distance);
       mezDbgPrint("👊new markers ========>${newMarkers.length}");
 
-      // add new markers to markers in controller but only new ones check if dosent exist
-      mGoogleMapController.markers.addAll(newMarkers
-          .where((Marker newMarker) => !mGoogleMapController.markers.any(
-              (MezMarker oldMarker) =>
-                  oldMarker.markerId.value == newMarker.markerId.value))
-          .map((Marker newMarker) => MezMarker(
-                markerId: newMarker.markerId,
-                icon: newMarker.icon,
-                onTap: newMarker.onTap,
-                anchor: newMarker.anchor,
-                position: newMarker.position,
-                consumeTapEvents: true,
-              )));
+      List<MezMarker> newMarkersToAdd = [];
+
+      for (Marker newMarker in newMarkers) {
+        // if (newMarkersToAdd.length >= 10) {
+        //   break;
+        // }
+
+        final bool markerExists = mGoogleMapController.markers.any(
+            (MezMarker oldMarker) =>
+                oldMarker.markerId.value == newMarker.markerId.value);
+
+        if (!markerExists) {
+          newMarkersToAdd.add(MezMarker(
+            markerId: newMarker.markerId,
+            icon: newMarker.icon,
+            onTap: newMarker.onTap,
+            anchor: newMarker.anchor,
+            position: newMarker.position,
+            consumeTapEvents: true,
+          ));
+        }
+      }
+
+      mGoogleMapController.markers.addAll(newMarkersToAdd);
 
       mezDbgPrint(
           "✅ markers in child component =====>${mGoogleMapController.markers.value.length}");

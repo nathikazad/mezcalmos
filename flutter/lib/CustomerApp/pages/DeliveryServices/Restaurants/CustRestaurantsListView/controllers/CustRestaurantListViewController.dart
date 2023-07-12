@@ -72,6 +72,10 @@ class CustRestaurantListViewController {
   RxSet<MezMarker> _allMarkers = <MezMarker>{}.obs;
   RxSet<MezMarker> get allMarkers => _allMarkers;
 
+  int mapMarkersOffset = 0;
+  int mapMarkersFetchSize = 10;
+  bool _hasReachedEndOfMarkers = false;
+
   BuildContext? ctx;
   // Map view //
 
@@ -230,29 +234,41 @@ class CustRestaurantListViewController {
 
   Future<void> fetchMapViewRentals(
       {required LatLng? fromLoc, required double? distance}) async {
+    // if (_hasReachedEndOfMarkers) {
+    //   return;
+    // }
     try {
-      _mapViewRestaurants.value = await fetch_restaurants(
+      List<Restaurant> newList = await fetch_restaurants(
           fromLocation: cModels.Location(
               lat: fromLoc?.latitude ?? _currentLocation.latitude,
               lng: fromLoc?.longitude ?? _currentLocation.longitude,
               address: ''),
           is_open: showOnlyOpenOnMap,
           withCache: false,
+          limit: mapMarkersFetchSize,
+          offset: mapMarkersOffset,
           online_ordering:
               _filterInput["onlineOrder"]!.last.contains("true") ? true : null,
           distance: distance ?? getFetchDistance);
+      _mapViewRestaurants += newList;
+      await _fillMapsMarkers(newData: newList);
+      if (newList.length == 0) {
+        _hasReachedEndOfMarkers = true;
+      }
+      mapMarkersOffset += mapMarkersFetchSize;
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
     } finally {
-      await _fillMapsMarkers();
+      mezDbgPrint("MapView restaurants ====>${_mapViewRestaurants.length}");
+
       mezDbgPrint(
           "Restaurant markers =======>${restaurantsMarkers.value.length}");
     }
   }
 
-  Future<void> _fillMapsMarkers() async {
-    for (Restaurant restaurant in _mapViewRestaurants) {
+  Future<void> _fillMapsMarkers({required List<Restaurant> newData}) async {
+    for (Restaurant restaurant in newData) {
       await _restaurantsMarkers.addLabelMarker(LabelMarker(
         flat: false,
         label: null,
