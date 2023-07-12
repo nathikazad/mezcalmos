@@ -2658,11 +2658,20 @@
         "copyLink": "Copiar link",
         "shrWhatsapp": "Compartir en WhatsApp",
         "copied": "Copiada",
-        "copiedText": "Enlace copiado con éxito"
+        "copiedText": "Enlace copiado con éxito",
+        "flatAmount": "Departamento",
+        "percentage": "Porcentaje",
+        "anotherSameFlat": "Otro mismo"
       },
       "ServiceOfferView": {
         "offers": "Oferta",
-        "addOffer": "Añadir oferta"
+        "addOffer": "Añadir oferta",
+        "coupon": "Cupón",
+        "promotion": "Promoción",
+        "anyOrder": "Cualquier orden",
+        "firstOrderOnly": "Solo de primer orden",
+        "particularService": "Servicio particular",
+        "particularCategory": "Categoría particular"
       },
       "ServiceDriversListView": {
         "drivers": "Conductoras",

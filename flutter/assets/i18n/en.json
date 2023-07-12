@@ -891,8 +891,8 @@
           "title": "Open Delivery",
           "from": "From",
           "to": "To",
-          "chooseCompany" :"Choose your delivery company",
-          "chooseCompanyInfo" :"If you choose multiple the first company to accept your order will receive the order.",
+          "chooseCompany": "Choose your delivery company",
+          "chooseCompanyInfo": "If you choose multiple the first company to accept your order will receive the order.",
 
           "thisFieldCanBeEmpty": "This field can be empty",
           "next": "Next",
@@ -2602,7 +2602,16 @@
       },
       "ServiceOfferView": {
         "offers": "Offers",
-        "addOffer": "Add offer"
+        "addOffer": "Add offer",
+        "coupon": "Coupon",
+        "promotion": "Promotion",
+        "anyOrder": "Any Order",
+        "firstOrderOnly": "First Order Only",
+        "particularService": "Particular Service",
+        "particularCategory": "Particular Category",
+        "flatAmount": "Flat",
+        "percentage": "Percentage",
+        "anotherSameFlat": "Another Same"
       },
       "ServiceDriversListView": {
         "drivers": "Drivers",
