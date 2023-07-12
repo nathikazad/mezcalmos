@@ -8,7 +8,6 @@ extension RentalHelper on Rental {
 
 extension HomeHelper on Home {
   bool get forRent => availableFor == HomeAvailabilityOption.Rent;
-  // bool get isHome => category1 == RentalCategory1.Home;
   bool get forSale => availableFor == HomeAvailabilityOption.Sale;
 }
 
