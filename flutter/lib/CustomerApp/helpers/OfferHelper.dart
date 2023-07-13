@@ -55,7 +55,7 @@ Future<void> apply_restaurant_coupon(
   }
   if (coupon.details.couponReusable != true) {
     if (await check_offer_applied(
-        customerId: customerId, offerId: coupon.id.toInt())) {
+        customerId: customerId, offerId: coupon.id!.toInt())) {
       throwError('Coupon cannot be reused');
     }
   }
@@ -288,7 +288,7 @@ num calculateDiscount(Cart cart, CartItem cartItem, cModels.Offer offer) {
   }
   if (discount > 0) {
     if (cart.offersApplied.firstWhereOrNull((o) => o == offer.id) == null) {
-      cart.offersApplied.add(offer.id.toInt());
+      cart.offersApplied.add(offer.id!.toInt());
     }
   }
   return discount;

@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
+import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -512,7 +513,20 @@ Future<List<cModels.Offer>> get_service_provider_offers(
         serviceProviderId: serviceProviderId,
         serviceProviderType: serviceProviderType,
         offerType: data.offer_type.toOfferType(),
-        details: data.details,
+        details: cModels.OfferDetails(
+          offerForOrder: data.details["offerForOrder"],
+          discountType:
+              data.details["discountType"].toString().toDiscountType(),
+          discountValue: data.details["discountValue"],
+          weeklyRepeat: data.details["weeklyRepeat"],
+          categories: data.details["categories"],
+          couponReusable: data.details["couponReusable"],
+          items: data.details["items"],
+          minimumOrderAmount: data.details["minimumOrderAmount"],
+          offerForItems: data.details["offerForItems"],
+          validityRangeEnd: data.details["validityRangeEnd"],
+          validityRangeStart: data.details["validityRangeStart"],
+        ),
         status: data.status.toOfferStatus(),
         couponCode: data.coupon_code));
   });
@@ -570,4 +584,120 @@ Future<bool> check_offer_applied(
     return false;
   }
   return true;
+}
+
+Future<cModels.Offer?> get_offer_by_id({
+  required int id,
+}) async {
+  QueryResult<Query$get_offer_by_id> res = await _db.graphQLClient
+      .query$get_offer_by_id(Options$Query$get_offer_by_id(
+    variables: Variables$Query$get_offer_by_id(id: id),
+  ));
+
+  mezDbgPrint("get_offer_by_id ===========>${res.data}");
+  if (res.parsedData == null) {
+    throwError(res.exception);
+  }
+  var data = res.parsedData!.service_provider_offer_by_pk;
+  if (data == null) {
+    return null;
+  }
+  return cModels.Offer(
+      id: data.id,
+      name: toLanguageMap(translations: data.name.translations),
+      serviceProviderId: data.service_provider_id,
+      serviceProviderType: data.service_provider_type.toServiceProviderType(),
+      offerType: data.offer_type.toOfferType(),
+      nameId: data.name_id,
+      details: cModels.OfferDetails(
+        offerForOrder: data.details["offerForOrder"],
+        discountType: data.details["discountType"].toString().toDiscountType(),
+        discountValue: data.details["discountValue"],
+        weeklyRepeat: data.details["weeklyRepeat"],
+        categories: data.details["categories"],
+        couponReusable: data.details["couponReusable"],
+        items: data.details["items"],
+        minimumOrderAmount: data.details["minimumOrderAmount"],
+        offerForItems: data.details["offerForItems"],
+        validityRangeEnd: data.details["validityRangeEnd"],
+        validityRangeStart: data.details["validityRangeStart"],
+      ),
+      status: data.status.toOfferStatus(),
+      couponCode: data.coupon_code);
+}
+
+Future<int?> add_service_offer({
+  required cModels.Offer offer,
+  required int serviceProviderId,
+}) async {
+  QueryResult<Mutation$add_new_offer> res =
+      await _db.graphQLClient.mutate$add_new_offer(
+    Options$Mutation$add_new_offer(
+        variables: Variables$Mutation$add_new_offer(
+      object: Input$service_provider_offer_insert_input(
+        name: Input$translation_obj_rel_insert_input(
+          data: Input$translation_insert_input(
+            service_provider_id: serviceProviderId,
+            service_provider_type:
+                offer.serviceProviderType.toFirebaseFormatString(),
+            translations: Input$translation_value_arr_rel_insert_input(
+                data: offer.name == null
+                    ? []
+                    : offer.name!.entries.map((e) {
+                        return Input$translation_value_insert_input(
+                            language_id: e.key.toFirebaseFormatString(),
+                            value: e.value);
+                      }).toList()),
+          ),
+        ),
+        service_provider_id: serviceProviderId,
+        service_provider_type:
+            offer.serviceProviderType.toFirebaseFormatString(),
+        offer_type: offer.offerType.toFirebaseFormatString(),
+        details: offer.details.toFirebaseFormattedJson(),
+        status: offer.status.toFirebaseFormatString(),
+        coupon_code: offer.couponCode,
+      ),
+    )),
+  );
+
+  mezDbgPrint("new Offer added ===========>${res.data}");
+  if (res.parsedData == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData!.insert_service_provider_offer_one?.id;
+}
+
+Future<int?> update_service_offer({
+  required cModels.Offer offer,
+  required int serviceProviderId,
+}) async {
+  QueryResult<Mutation$update_offer> res =
+      await _db.graphQLClient.mutate$update_offer(
+    Options$Mutation$update_offer(
+        variables: Variables$Mutation$update_offer(
+      id: offer.id!.toInt(),
+      service_provider_id: serviceProviderId,
+      offer: Input$service_provider_offer_set_input(
+        service_provider_id: serviceProviderId,
+        service_provider_type:
+            offer.serviceProviderType.toFirebaseFormatString(),
+        offer_type: offer.offerType.toFirebaseFormatString(),
+        details: offer.details.toFirebaseFormattedJson(),
+        status: offer.status.toFirebaseFormatString(),
+        coupon_code: offer.couponCode,
+      ),
+    )),
+  );
+
+  offer.name!.forEach((key, value) async {
+    await update_translation(
+        langType: key, value: value, translationId: offer.nameId!);
+  });
+
+  mezDbgPrint("update_service_offer ===========>${res.data}");
+  if (res.parsedData == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData!.update_service_provider_offer?.returning[0].id;
 }

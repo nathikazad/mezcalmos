@@ -238,3 +238,47 @@ query check_offer_applied($offer_id: Int, $customer_id: Int) {
     order_id
   }
 }
+
+mutation add_new_offer($object: service_provider_offer_insert_input!) {
+  insert_service_provider_offer_one(object: $object) {
+    id
+  }
+}
+
+query get_offer_by_id($id: Int!) {
+  service_provider_offer_by_pk(id: $id) {
+    status
+    service_provider_type
+    service_provider_id
+    offer_type
+    id
+    details
+    coupon_code
+    name_id
+    name {
+      translations {
+        value
+        language_id
+      }
+    }
+  }
+}
+
+mutation update_offer(
+  $id: Int!
+  $service_provider_id: Int!
+  $offer: service_provider_offer_set_input
+) {
+  update_service_provider_offer(
+    where: {
+      id: { _eq: $id }
+      service_provider_id: { _eq: $service_provider_id }
+    }
+    _set: $offer
+  ) {
+    returning {
+      id
+    }
+  }
+}
+

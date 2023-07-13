@@ -69,6 +69,9 @@ class _ServiceOfferViewState extends State<ServiceOfferView> {
 
     serviceProviderType = widget.serviceProviderType ??
         MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType;
+
+    mezDbgPrint(
+        "Body args ::::::========>$serviceProviderId $serviceLinkId $serviceProviderType");
   }
 
   @override
@@ -84,6 +87,8 @@ class _ServiceOfferViewState extends State<ServiceOfferView> {
               onClick: () async {
                 await ServiceOfferEditView.navigate(
                   offerId: null,
+                  serviceProviderId: serviceProviderId!,
+                  serviceProviderType: serviceProviderType!,
                 );
               },
               title: "${_i18n()['addOffer']}",
@@ -103,7 +108,14 @@ class _ServiceOfferViewState extends State<ServiceOfferView> {
                           "${viewController.serviceOffers[index].couponCode}"),
                       trailing: IconButton(
                         icon: Icon(Icons.edit),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          await ServiceOfferEditView.navigate(
+                            offerId:
+                                viewController.serviceOffers[index].id!.toInt(),
+                            serviceProviderId: serviceProviderId!,
+                            serviceProviderType: serviceProviderType!,
+                          );
+                        },
                       ),
                     );
                   },
