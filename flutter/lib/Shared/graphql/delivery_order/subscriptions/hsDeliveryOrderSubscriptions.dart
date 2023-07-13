@@ -276,7 +276,7 @@ Stream<LatLng?> listen_order_driver_location({required int orderId}) {
   });
 }
 
-Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
+Stream<OrderCosts?> listen_on_driver_order_costs({required int orderId}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_driver_order_prices(
           Options$Subscription$listen_driver_order_prices(
@@ -284,9 +284,6 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
                   orderId: orderId)))
       .map((QueryResult<Subscription$listen_driver_order_prices> event) {
     mezDbgPrint("Event =======>$event");
-
-    // table
-    // name_of_subscription, date, total_size, user_id
 
     if (event.parsedData?.delivery_order_by_pk != null) {
       if (Get.find<HasuraDb>()
@@ -308,13 +305,60 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
       return OrderCosts(
           deliveryCost: data.delivery_cost.toDouble(),
           refundAmmount: null,
-          // changePriceRequest: (data.change_price_request != null)
-          //     ? ChangePriceRequest.fromMap(data.change_price_request)
-          //     : null,
           tax: data.tax,
           orderItemsCost: data.package_cost_comp,
           totalCost: data.total_cost);
     }
     return null;
+  });
+}
+
+Future<Map<int, cModels.CounterOffer>?> get_dv_order_offers(
+    {required int orderId}) async {
+  QueryResult<Query$getOrderOffers> res = await _hasuraDb.graphQLClient
+      .query$getOrderOffers(Options$Query$getOrderOffers(
+          variables: Variables$Query$getOrderOffers(orderId: orderId)));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.delivery_order_by_pk?.counter_offers
+      ?.map<int, cModels.CounterOffer>((String id, value) {
+    return MapEntry(
+        int.parse(id),
+        cModels.CounterOffer(
+          price: value["price"],
+          status: value["status"].toString().toCounterOfferStatus(),
+          time: value["time"],
+          name: value["name"],
+          image: value["image"],
+          expiryTime: value["expiryTime"],
+        ));
+  });
+}
+
+Stream<Map<int, cModels.CounterOffer>?> listen_on_dv_order_offers(
+    {required int orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listenOnOrderOffers(Options$Subscription$listenOnOrderOffers(
+          variables:
+              Variables$Subscription$listenOnOrderOffers(orderId: orderId)))
+      .map<Map<int, cModels.CounterOffer>>(
+          (QueryResult<Subscription$listenOnOrderOffers> event) {
+    if (event.hasException) {
+      throwError(event.exception);
+    }
+    return event.parsedData?.delivery_order_by_pk?.counter_offers
+        ?.map<int, cModels.CounterOffer>((String id, value) {
+      return MapEntry(
+          int.parse(id),
+          cModels.CounterOffer(
+            price: value["price"],
+            status: value["status"].toString().toCounterOfferStatus(),
+            time: value["time"],
+            name: value["name"],
+            image: value["image"],
+            expiryTime: value["expiryTime"],
+          ));
+    });
   });
 }

@@ -49,6 +49,9 @@ class CustRequestCourierViewController {
   RxDouble estDeliveryCost = RxDouble(40);
 
   MapHelper.RouteInformation? routeInfo;
+  RxnDouble ditanceInKm = RxnDouble();
+  num? _orderDistanceInKm;
+  num? get orderDistanceInKm => _orderDistanceInKm;
   RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
   RxList<int> selectedCompanies = RxList.empty();
 
@@ -225,7 +228,6 @@ class CustRequestCourierViewController {
   }
 
   Future<void> updateShippingPrice() async {
-    num? _orderDistanceInKm;
     if (fromLoc.value != null && toLoc.value != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         toLoc.value!,
@@ -234,27 +236,29 @@ class CustRequestCourierViewController {
 
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
+        ditanceInKm.value = _orderDistanceInKm?.toDouble();
+        mezDbgPrint("Order Distance ==========>$ditanceInKm");
         mezDbgPrint("🤣  ${routeInfo.distance.distanceInMeters}");
-        if (_orderDistanceInKm <= 15) {
-          final num shippingCost =
-              deliveryCost!.costPerKm * (_orderDistanceInKm);
-          mezDbgPrint(
-              "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
-          if (shippingCost < deliveryCost!.minimumCost) {
-            mezDbgPrint(
-                "LESS THAN MINIMUM COST ===================== $shippingCost << ${deliveryCost!.minimumCost}");
-            this.shippingCost.value = deliveryCost!.minimumCost.ceil();
-          } else {
-            this.shippingCost.value = shippingCost.ceil();
-          }
-          this.routeInfo = MapHelper.RouteInformation(
-            polyline: routeInfo.encodedPolyLine,
-            distance: routeInfo.distance,
-            duration: routeInfo.duration,
-          );
+        // if (_orderDistanceInKm! <= 15) {
+        //   final num shippingCost =
+        //       deliveryCost!.costPerKm * _orderDistanceInKm!;
+        //   mezDbgPrint(
+        //       "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
+        //   if (shippingCost < deliveryCost!.minimumCost) {
+        //     mezDbgPrint(
+        //         "LESS THAN MINIMUM COST ===================== $shippingCost << ${deliveryCost!.minimumCost}");
+        //     this.shippingCost.value = deliveryCost!.minimumCost.ceil();
+        //   } else {
+        //     this.shippingCost.value = shippingCost.ceil();
+        //   }
+        //   this.routeInfo = MapHelper.RouteInformation(
+        //     polyline: routeInfo.encodedPolyLine,
+        //     distance: routeInfo.distance,
+        //     duration: routeInfo.duration,
+        //   );
 
-          // await saveCart();
-        } else {}
+        //   // await saveCart();
+        // } else {}
       } else {}
     } else {}
   }

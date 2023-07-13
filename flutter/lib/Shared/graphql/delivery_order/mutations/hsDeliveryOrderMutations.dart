@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -77,23 +78,35 @@ Future<DateTime?> dv_update_est_dropoff_time(
 
 Future<bool> update_delivery_order_offers(
     {required int orderId,
-    required Map<int, cModels.CounterOffer>? offers}) async {
+    required Map<int, cModels.CounterOffer> offers}) async {
   final QueryResult<Mutation$updateDeliveryOrder> res = await _hasuraDb
       .graphQLClient
       .mutate$updateDeliveryOrder(Options$Mutation$updateDeliveryOrder(
           variables: Variables$Mutation$updateDeliveryOrder(
               orderId: orderId,
               data: Input$delivery_order_set_input(
-                counter_offers: offers,
+                counter_offers: offers.map(
+                    (int key, cModels.CounterOffer value) =>
+                        MapEntry(key, value.toFirebaseFormattedJson())),
               ))));
-  if (res.parsedData?.update_delivery_order_by_pk
-          ?.estimated_arrival_at_dropoff_time ==
-      null) {
-    throw Exception(
-        " 🛑🛑🛑 Update delivery order exceptions ${res.exception}");
+  if (res.parsedData?.update_delivery_order_by_pk == null) {
+    mezDbgPrint("res =>$res");
+    //  throwError(res.exception);
   }
   return res.parsedData?.update_delivery_order_by_pk != null;
 }
-// company //
 
-
+Future<num?> update_delivery_order_customer_offer(
+    {required int orderId, required num customerOffer}) async {
+  final QueryResult<Mutation$updateDeliveryOrder> res = await _hasuraDb
+      .graphQLClient
+      .mutate$updateDeliveryOrder(Options$Mutation$updateDeliveryOrder(
+          variables: Variables$Mutation$updateDeliveryOrder(
+              orderId: orderId,
+              data: Input$delivery_order_set_input(
+                  customer_offer: customerOffer.toDouble()))));
+  if (res.parsedData?.update_delivery_order_by_pk == null) {
+    mezDbgPrint(res);
+  }
+  return res.parsedData?.update_delivery_order_by_pk?.customer_offer;
+}

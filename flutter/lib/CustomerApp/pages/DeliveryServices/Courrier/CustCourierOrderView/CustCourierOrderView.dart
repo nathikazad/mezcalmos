@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
+import 'package:mezcalmos/CustomerApp/components/DeliveryOffersList/CustDeliveryOffersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/controllers/CustCourierOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
@@ -147,74 +148,10 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                         ),
                       ),
                     ),
-                  if (viewController.showOffers) ...[
-                    meduimSeperator,
-                    Text(
-                      "Counter offers (${viewController.order.counterOffers?.length})",
-                      style: context.textTheme.bodyLarge,
+                  if (viewController.order.isDriverAssigned)
+                    CustDeliveryOffersList(
+                      deliveryOrderId: viewController.order.deliveryOrderId!,
                     ),
-                    smallSepartor,
-                    Column(
-                      children: viewController.order.counterOffers!.entries
-                          .map((MapEntry<int, cModels.CounterOffer> entry) {
-                        final int key = entry.key;
-                        final cModels.CounterOffer counterOffer = entry.value;
-
-                        return MezCard(
-                            firstAvatarBgImage: (counterOffer.image != null)
-                                ? CachedNetworkImageProvider(
-                                    counterOffer.image!)
-                                : null,
-                            action: Flexible(
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    child: MezButton(
-                                      borderRadius: 5,
-                                      backgroundColor: Colors.white,
-                                      textColor: redAccentColor,
-                                      borderColor: redAccentColor,
-                                      onClick: () async {
-                                        await viewController.rejectOffer(
-                                            id: key);
-                                      },
-                                      label: "Reject",
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  Flexible(
-                                    child: MezButton(
-                                      borderRadius: 5,
-                                      onClick: () async {
-                                        await viewController.acceptOffer(
-                                            id: key);
-                                      },
-                                      label: "Accept",
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            content: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  counterOffer.name ?? "error",
-                                  style: context.textTheme.bodyLarge,
-                                ),
-                                Text(
-                                  counterOffer.price.toPriceString(),
-                                  style: context.textTheme.bodyLarge,
-                                ),
-                                Text(
-                                    "Expires at: ${DateTime.parse(counterOffer.expiryTime)}")
-                              ],
-                            ));
-                      }).toList(),
-                    )
-                  ],
                   if (viewController.order.estimatedArrivalAtDropoff != null)
                     _estTime(),
                   _driverCard(),
