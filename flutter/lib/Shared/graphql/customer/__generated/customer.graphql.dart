@@ -6993,12 +6993,14 @@ class Variables$Query$getCustomerOrdersByType {
     required String orderType,
     int? limit,
     int? offset,
+    bool? inProcess,
   }) =>
       Variables$Query$getCustomerOrdersByType._({
         r'custId': custId,
         r'orderType': orderType,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
+        if (inProcess != null) r'inProcess': inProcess,
       });
 
   Variables$Query$getCustomerOrdersByType._(this._$data);
@@ -7018,6 +7020,10 @@ class Variables$Query$getCustomerOrdersByType {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
+    if (data.containsKey('inProcess')) {
+      final l$inProcess = data['inProcess'];
+      result$data['inProcess'] = (l$inProcess as bool?);
+    }
     return Variables$Query$getCustomerOrdersByType._(result$data);
   }
 
@@ -7027,6 +7033,7 @@ class Variables$Query$getCustomerOrdersByType {
   String get orderType => (_$data['orderType'] as String);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
+  bool? get inProcess => (_$data['inProcess'] as bool?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$custId = custId;
@@ -7040,6 +7047,10 @@ class Variables$Query$getCustomerOrdersByType {
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
       result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('inProcess')) {
+      final l$inProcess = inProcess;
+      result$data['inProcess'] = l$inProcess;
     }
     return result$data;
   }
@@ -7085,6 +7096,15 @@ class Variables$Query$getCustomerOrdersByType {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$inProcess = inProcess;
+    final lOther$inProcess = other.inProcess;
+    if (_$data.containsKey('inProcess') !=
+        other._$data.containsKey('inProcess')) {
+      return false;
+    }
+    if (l$inProcess != lOther$inProcess) {
+      return false;
+    }
     return true;
   }
 
@@ -7094,11 +7114,13 @@ class Variables$Query$getCustomerOrdersByType {
     final l$orderType = orderType;
     final l$limit = limit;
     final l$offset = offset;
+    final l$inProcess = inProcess;
     return Object.hashAll([
       l$custId,
       l$orderType,
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('inProcess') ? l$inProcess : const {},
     ]);
   }
 }
@@ -7117,6 +7139,7 @@ abstract class CopyWith$Variables$Query$getCustomerOrdersByType<TRes> {
     String? orderType,
     int? limit,
     int? offset,
+    bool? inProcess,
   });
 }
 
@@ -7138,6 +7161,7 @@ class _CopyWithImpl$Variables$Query$getCustomerOrdersByType<TRes>
     Object? orderType = _undefined,
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? inProcess = _undefined,
   }) =>
       _then(Variables$Query$getCustomerOrdersByType._({
         ..._instance._$data,
@@ -7146,6 +7170,7 @@ class _CopyWithImpl$Variables$Query$getCustomerOrdersByType<TRes>
           'orderType': (orderType as String),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
+        if (inProcess != _undefined) 'inProcess': (inProcess as bool?),
       }));
 }
 
@@ -7160,6 +7185,7 @@ class _CopyWithStubImpl$Variables$Query$getCustomerOrdersByType<TRes>
     String? orderType,
     int? limit,
     int? offset,
+    bool? inProcess,
   }) =>
       _res;
 }
@@ -7360,6 +7386,15 @@ const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'inProcess')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -7378,7 +7413,16 @@ const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
                     value: VariableNode(name: NameNode(value: 'orderType')),
                   )
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'in_process'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'inProcess')),
+                  )
+                ]),
+              ),
             ]),
           ),
           ArgumentNode(

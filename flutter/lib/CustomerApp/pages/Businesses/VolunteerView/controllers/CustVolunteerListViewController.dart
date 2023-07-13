@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -104,7 +105,7 @@ class CustVolunteerListViewController {
           "👋 _fetchTherapy called selected categories : schedule type : ${filterInput["schedule"]!.map((String e) => e.toScheduleType()).toList()} \n ${filterInput["categories"]!.map((String e) => e.toEventCategory1()).toList()} \n ferchSize : $volunteerFetchSize \n offset: $_volunteerCurrentOffset");
       List<EventCard> newList = await get_event_by_category(
         categories1: [EventCategory1.Volunteer],
-        distance: 100000000000,
+        distance: defaultDistance,
         categories2: _categories2,
         fromLocation: _fromLocation!,
         tags: [],
@@ -143,7 +144,7 @@ class CustVolunteerListViewController {
                   ?.map((String e) => e.toEventCategory1())
                   .toList() ??
               _filterCategories,
-          distance: 1000000000000,
+          distance: defaultDistance,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,
