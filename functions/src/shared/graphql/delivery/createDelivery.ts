@@ -77,6 +77,7 @@ export async function createLaundryToCustomerDeliveryOrder(
                 scheduled_time: laundryOrder.scheduledTime,
                 chosen_companies: deliveryRequestDetails.chosenCompanies,
                 customer_offer: deliveryRequestDetails.customerOffer,
+                delivery_cost: deliveryRequestDetails.customerOffer,
                 trip_distance: fromCustomerDelivery.tripDistance,
                 trip_duration: fromCustomerDelivery.tripDuration,
                 trip_polyline: fromCustomerDelivery.tripPolyline,

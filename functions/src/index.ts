@@ -34,6 +34,7 @@ import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest
 import { requestOrder } from "./business/orderRequest";
 import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
+import { requestLaundryDelivery } from "./laundry/deliveryRequest";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -109,6 +110,7 @@ export const laundry3 = {
   readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
   cancelFromCustomer: authenticatedCall((userId, data) => cancelLaundryFromCustomer(userId, data)),
   cancelFromAdmin: authenticatedCall((userId, data) => laundryStatusChange.cancelOrder(userId, data)),
+  requestLaundryDelivery: authenticatedCall((userId, data) => requestLaundryDelivery(userId, data)),
 }
 
 export const delivery3 = {

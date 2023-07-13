@@ -18,7 +18,7 @@ export interface CourierRequest {
     fromLocationText?: string,
     items: Array<CourierItem>;
     deliveryCompanyIds: Array<number>,
-    customerOffer?: number,
+    customerOffer: number,
     customerAppType: CustomerAppType,
     tax?: number,
     scheduledTime?: string,

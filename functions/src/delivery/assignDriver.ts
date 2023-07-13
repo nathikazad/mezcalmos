@@ -2,7 +2,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, CounterOfferStatus } from "../shared/models/Generic/Delivery";
+import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, CounterOfferStatus, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
@@ -11,6 +11,7 @@ import { isMezAdmin } from "../shared/helper";
 import { AuthorizationStatus, MezError } from "../shared/models/Generic/Generic"
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { clearLock, setLockTime } from "../shared/graphql/delivery/updateDelivery";
+import { checkOperator } from "../shared/graphql/operator/updateOperatorStatus";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 
 export interface AssignDriverDetails {
@@ -49,12 +50,13 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
     let deliveryOrder: DeliveryOrder = promiseResponse[0];
     let deliveryDriver: DeliveryDriver = promiseResponse[1];
 
-    if((await isMezAdmin(userId)) == false  && deliveryDriver.userId != userId) {
-
+    if((await isMezAdmin(userId)) == false  && deliveryDriver.userId != userId && deliveryOrder.customerId != userId) {
       // await checkIfOperatorAuthorized(deliveryOrder, userId);
-      if(userId != deliveryOrder.customerId) {
+      
+      if(deliveryOrder.serviceProviderType != DeliveryServiceProviderType.DeliveryCompany)
+        checkOperator(userId, deliveryOrder.serviceProviderId!, deliveryOrder.serviceProviderType);
+      else
         throw new MezError(AssignDriverError.IncorrectOrderId);
-      }
     }
     if(deliveryDriver.status != AuthorizationStatus.Authorized) {
       throw new MezError(AssignDriverError.UnauthorizedDriver);
