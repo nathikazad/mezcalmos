@@ -294,6 +294,42 @@ type business_business {
     """filter the rows returned"""
     where: business_service_bool_exp
   ): business_service_aggregate!
+
+  """An array relationship"""
+  subscribers(
+    """distinct select on columns"""
+    distinct_on: [service_provider_subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_subscriber_bool_exp
+  ): [service_provider_subscriber!]!
+
+  """An aggregate relationship"""
+  subscribers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_subscriber_bool_exp
+  ): service_provider_subscriber_aggregate!
 }
 
 """
@@ -353,6 +389,8 @@ input business_business_bool_exp {
   service_provider_type: String_comparison_exp
   services: business_service_bool_exp
   services_aggregate: business_service_aggregate_bool_exp
+  subscribers: service_provider_subscriber_bool_exp
+  subscribers_aggregate: service_provider_subscriber_aggregate_bool_exp
 }
 
 """
@@ -398,6 +436,7 @@ input business_business_insert_input {
   reviews: review_arr_rel_insert_input
   service_provider_type: String
   services: business_service_arr_rel_insert_input
+  subscribers: service_provider_subscriber_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -468,6 +507,7 @@ input business_business_order_by {
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
   services_aggregate: business_service_aggregate_order_by
+  subscribers_aggregate: service_provider_subscriber_aggregate_order_by
 }
 
 """primary key columns input for table: business.business"""
@@ -603,6 +643,10 @@ type business_business_variance_fields {
 columns and relationships of "business.cart"
 """
 type business_cart {
+  applied_offers(
+    """JSON select path"""
+    path: String
+  ): jsonb!
   business_id: Int
 
   """
@@ -674,6 +718,11 @@ type business_cart_aggregate_fields {
   variance: business_cart_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input business_cart_append_input {
+  applied_offers: jsonb
+}
+
 """aggregate avg on columns"""
 type business_cart_avg_fields {
   business_id: Float
@@ -693,6 +742,7 @@ input business_cart_bool_exp {
   _and: [business_cart_bool_exp!]
   _not: business_cart_bool_exp
   _or: [business_cart_bool_exp!]
+  applied_offers: jsonb_comparison_exp
   business_id: Int_comparison_exp
   cost: money_comparison_exp
   customer_id: Int_comparison_exp
@@ -712,6 +762,28 @@ enum business_cart_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input business_cart_delete_at_path_input {
+  applied_offers: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input business_cart_delete_elem_input {
+  applied_offers: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input business_cart_delete_key_input {
+  applied_offers: String
+}
+
+"""
 input type for incrementing numeric columns in table "business.cart"
 """
 input business_cart_inc_input {
@@ -724,6 +796,7 @@ input business_cart_inc_input {
 input type for inserting data into table "business.cart"
 """
 input business_cart_insert_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1310,6 +1383,7 @@ input business_cart_on_conflict {
 
 """Ordering options when selecting data from "business.cart"."""
 input business_cart_order_by {
+  applied_offers: order_by
   business_id: order_by
   cost: order_by
   customer_id: order_by
@@ -1322,10 +1396,18 @@ input business_cart_pk_columns_input {
   customer_id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input business_cart_prepend_input {
+  applied_offers: jsonb
+}
+
 """
 select columns of table "business.cart"
 """
 enum business_cart_select_column {
+  """column name"""
+  applied_offers
+
   """column name"""
   business_id
 
@@ -1340,6 +1422,7 @@ enum business_cart_select_column {
 input type for updating data in table "business.cart"
 """
 input business_cart_set_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1394,6 +1477,7 @@ input business_cart_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input business_cart_stream_cursor_value_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1416,6 +1500,9 @@ update columns of table "business.cart"
 """
 enum business_cart_update_column {
   """column name"""
+  applied_offers
+
+  """column name"""
   business_id
 
   """column name"""
@@ -1426,8 +1513,30 @@ enum business_cart_update_column {
 }
 
 input business_cart_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: business_cart_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: business_cart_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: business_cart_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: business_cart_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: business_cart_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: business_cart_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_set_input
@@ -10330,6 +10439,42 @@ type delivery_company {
     where: review_bool_exp
   ): review_aggregate!
   service_provider_type: String!
+
+  """An array relationship"""
+  subscribers(
+    """distinct select on columns"""
+    distinct_on: [service_provider_subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_subscriber_bool_exp
+  ): [service_provider_subscriber!]!
+
+  """An aggregate relationship"""
+  subscribers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_subscriber_bool_exp
+  ): service_provider_subscriber_aggregate!
 }
 
 """
@@ -10383,6 +10528,8 @@ input delivery_company_bool_exp {
   reviews: review_bool_exp
   reviews_aggregate: review_aggregate_bool_exp
   service_provider_type: String_comparison_exp
+  subscribers: service_provider_subscriber_bool_exp
+  subscribers_aggregate: service_provider_subscriber_aggregate_bool_exp
 }
 
 """
@@ -10427,6 +10574,7 @@ input delivery_company_insert_input {
   id: Int
   reviews: review_arr_rel_insert_input
   service_provider_type: String
+  subscribers: service_provider_subscriber_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -10486,6 +10634,7 @@ input delivery_company_order_by {
   id: order_by
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
+  subscribers_aggregate: service_provider_subscriber_aggregate_order_by
 }
 
 """primary key columns input for table: delivery.company"""
@@ -18720,6 +18869,42 @@ type laundry_store {
     where: review_bool_exp
   ): review_aggregate!
   service_provider_type: String!
+
+  """An array relationship"""
+  subscribers(
+    """distinct select on columns"""
+    distinct_on: [service_provider_subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_subscriber_bool_exp
+  ): [service_provider_subscriber!]!
+
+  """An aggregate relationship"""
+  subscribers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_subscriber_bool_exp
+  ): service_provider_subscriber_aggregate!
 }
 
 """
@@ -18780,6 +18965,8 @@ input laundry_store_bool_exp {
   reviews: review_bool_exp
   reviews_aggregate: review_aggregate_bool_exp
   service_provider_type: String_comparison_exp
+  subscribers: service_provider_subscriber_bool_exp
+  subscribers_aggregate: service_provider_subscriber_aggregate_bool_exp
 }
 
 """
@@ -18832,6 +19019,7 @@ input laundry_store_insert_input {
   operators: laundry_operator_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   service_provider_type: String
+  subscribers: service_provider_subscriber_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -18902,6 +19090,7 @@ input laundry_store_order_by {
   operators_aggregate: laundry_operator_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
+  subscribers_aggregate: service_provider_subscriber_aggregate_order_by
 }
 
 """primary key columns input for table: laundry.store"""
@@ -22412,8 +22601,30 @@ type mutation_root {
   update data of the table: "business.cart"
   """
   update_business_cart(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_cart_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_cart_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_cart_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_cart_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: business_cart_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_cart_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: business_cart_set_input
@@ -22426,8 +22637,30 @@ type mutation_root {
   update single row of the table: "business.cart"
   """
   update_business_cart_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_cart_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_cart_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_cart_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_cart_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: business_cart_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_cart_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: business_cart_set_input
@@ -36462,6 +36695,42 @@ type restaurant_restaurant {
     """filter the rows returned"""
     where: restaurant_item_bool_exp
   ): [restaurant_item!]
+
+  """An array relationship"""
+  subscribers(
+    """distinct select on columns"""
+    distinct_on: [service_provider_subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_subscriber_bool_exp
+  ): [service_provider_subscriber!]!
+
+  """An aggregate relationship"""
+  subscribers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_subscriber_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_subscriber_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_subscriber_bool_exp
+  ): service_provider_subscriber_aggregate!
 }
 
 type restaurant_restaurant_aggregate {
@@ -36518,6 +36787,8 @@ input restaurant_restaurant_bool_exp {
   reviews_aggregate: review_aggregate_bool_exp
   service_provider_type: String_comparison_exp
   specials: restaurant_item_bool_exp
+  subscribers: service_provider_subscriber_bool_exp
+  subscribers_aggregate: service_provider_subscriber_aggregate_bool_exp
 }
 
 """
@@ -36564,6 +36835,7 @@ input restaurant_restaurant_insert_input {
   restaurant_operators: restaurant_operator_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   service_provider_type: String
+  subscribers: service_provider_subscriber_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -36627,6 +36899,7 @@ input restaurant_restaurant_order_by {
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
   specials_aggregate: restaurant_item_aggregate_order_by
+  subscribers_aggregate: service_provider_subscriber_aggregate_order_by
 }
 
 """primary key columns input for table: restaurant.restaurant"""
@@ -38817,7 +39090,12 @@ type service_provider_location_variance_fields {
 columns and relationships of "service_provider.offer"
 """
 type service_provider_offer {
+  """An object relationship"""
+  business: business_business
   coupon_code: String
+
+  """An object relationship"""
+  delivery_company: delivery_company
 
   """
   { "offerForOrder":"any_order/first_order "offerForItems":
@@ -38835,9 +39113,15 @@ type service_provider_offer {
   id: Int!
 
   """An object relationship"""
+  laundry: laundry_store
+
+  """An object relationship"""
   name: translation!
   name_id: Int!
   offer_type: String!
+
+  """An object relationship"""
+  restaurant: restaurant_restaurant
   service_provider_id: Int!
   service_provider_type: String!
   status: String!
@@ -39169,12 +39453,16 @@ input service_provider_offer_bool_exp {
   _and: [service_provider_offer_bool_exp!]
   _not: service_provider_offer_bool_exp
   _or: [service_provider_offer_bool_exp!]
+  business: business_business_bool_exp
   coupon_code: String_comparison_exp
+  delivery_company: delivery_company_bool_exp
   details: jsonb_comparison_exp
   id: Int_comparison_exp
+  laundry: laundry_store_bool_exp
   name: translation_bool_exp
   name_id: Int_comparison_exp
   offer_type: String_comparison_exp
+  restaurant: restaurant_restaurant_bool_exp
   service_provider_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
   status: String_comparison_exp
@@ -39252,7 +39540,9 @@ input service_provider_offer_inc_input {
 input type for inserting data into table "service_provider.offer"
 """
 input service_provider_offer_insert_input {
+  business: business_business_obj_rel_insert_input
   coupon_code: String
+  delivery_company: delivery_company_obj_rel_insert_input
 
   """
   { "offerForOrder":"any_order/first_order "offerForItems":
@@ -39265,9 +39555,11 @@ input service_provider_offer_insert_input {
   """
   details: jsonb
   id: Int
+  laundry: laundry_store_obj_rel_insert_input
   name: translation_obj_rel_insert_input
   name_id: Int
   offer_type: String
+  restaurant: restaurant_restaurant_obj_rel_insert_input
   service_provider_id: Int
   service_provider_type: String
   status: String
@@ -39327,12 +39619,16 @@ input service_provider_offer_on_conflict {
 
 """Ordering options when selecting data from "service_provider.offer"."""
 input service_provider_offer_order_by {
+  business: business_business_order_by
   coupon_code: order_by
+  delivery_company: delivery_company_order_by
   details: order_by
   id: order_by
+  laundry: laundry_store_order_by
   name: translation_order_by
   name_id: order_by
   offer_type: order_by
+  restaurant: restaurant_restaurant_order_by
   service_provider_id: order_by
   service_provider_type: order_by
   status: order_by
@@ -39891,13 +40187,22 @@ type service_provider_operator_details_variance_fields {
 columns and relationships of "service_provider.post"
 """
 type service_provider_post {
+  """An object relationship"""
+  business: business_business
+
   """Array of { message, date, Array of customerIds }"""
   comments(
     """JSON select path"""
     path: String
   ): jsonb
+
+  """An object relationship"""
+  delivery_company: delivery_company
   id: Int!
   image: String
+
+  """An object relationship"""
+  laundry: laundry_store
 
   """Array of customerIds"""
   likes(
@@ -39961,9 +40266,12 @@ input service_provider_post_bool_exp {
   _and: [service_provider_post_bool_exp!]
   _not: service_provider_post_bool_exp
   _or: [service_provider_post_bool_exp!]
+  business: business_business_bool_exp
   comments: jsonb_comparison_exp
+  delivery_company: delivery_company_bool_exp
   id: Int_comparison_exp
   image: String_comparison_exp
+  laundry: laundry_store_bool_exp
   likes: jsonb_comparison_exp
   link: String_comparison_exp
   message: String_comparison_exp
@@ -40029,10 +40337,14 @@ input service_provider_post_inc_input {
 input type for inserting data into table "service_provider.post"
 """
 input service_provider_post_insert_input {
+  business: business_business_obj_rel_insert_input
+
   """Array of { message, date, Array of customerIds }"""
   comments: jsonb
+  delivery_company: delivery_company_obj_rel_insert_input
   id: Int
   image: String
+  laundry: laundry_store_obj_rel_insert_input
 
   """Array of customerIds"""
   likes: jsonb
@@ -40088,9 +40400,12 @@ input service_provider_post_on_conflict {
 
 """Ordering options when selecting data from "service_provider.post"."""
 input service_provider_post_order_by {
+  business: business_business_order_by
   comments: order_by
+  delivery_company: delivery_company_order_by
   id: order_by
   image: order_by
+  laundry: laundry_store_order_by
   likes: order_by
   link: order_by
   message: order_by
@@ -41565,6 +41880,17 @@ type service_provider_subscriber_aggregate {
   nodes: [service_provider_subscriber!]!
 }
 
+input service_provider_subscriber_aggregate_bool_exp {
+  count: service_provider_subscriber_aggregate_bool_exp_count
+}
+
+input service_provider_subscriber_aggregate_bool_exp_count {
+  arguments: [service_provider_subscriber_select_column!]
+  distinct: Boolean
+  filter: service_provider_subscriber_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "service_provider.subscriber"
 """
@@ -41582,11 +41908,47 @@ type service_provider_subscriber_aggregate_fields {
   variance: service_provider_subscriber_variance_fields
 }
 
+"""
+order by aggregate values of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_aggregate_order_by {
+  avg: service_provider_subscriber_avg_order_by
+  count: order_by
+  max: service_provider_subscriber_max_order_by
+  min: service_provider_subscriber_min_order_by
+  stddev: service_provider_subscriber_stddev_order_by
+  stddev_pop: service_provider_subscriber_stddev_pop_order_by
+  stddev_samp: service_provider_subscriber_stddev_samp_order_by
+  sum: service_provider_subscriber_sum_order_by
+  var_pop: service_provider_subscriber_var_pop_order_by
+  var_samp: service_provider_subscriber_var_samp_order_by
+  variance: service_provider_subscriber_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "service_provider.subscriber"
+"""
+input service_provider_subscriber_arr_rel_insert_input {
+  data: [service_provider_subscriber_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: service_provider_subscriber_on_conflict
+}
+
 """aggregate avg on columns"""
 type service_provider_subscriber_avg_fields {
   customer_id: Float
   id: Float
   service_provider_id: Float
+}
+
+"""
+order by avg() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_avg_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
 }
 
 """
@@ -41651,12 +42013,32 @@ type service_provider_subscriber_max_fields {
   service_provider_type: String
 }
 
+"""
+order by max() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_max_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
+}
+
 """aggregate min on columns"""
 type service_provider_subscriber_min_fields {
   customer_id: Int
   id: Int
   service_provider_id: Int
   service_provider_type: String
+}
+
+"""
+order by min() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_min_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
 }
 
 """
@@ -41731,6 +42113,15 @@ type service_provider_subscriber_stddev_fields {
   service_provider_id: Float
 }
 
+"""
+order by stddev() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_stddev_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type service_provider_subscriber_stddev_pop_fields {
   customer_id: Float
@@ -41738,11 +42129,29 @@ type service_provider_subscriber_stddev_pop_fields {
   service_provider_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_stddev_pop_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type service_provider_subscriber_stddev_samp_fields {
   customer_id: Float
   id: Float
   service_provider_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_stddev_samp_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
 }
 
 """
@@ -41769,6 +42178,15 @@ type service_provider_subscriber_sum_fields {
   customer_id: Int
   id: Int
   service_provider_id: Int
+}
+
+"""
+order by sum() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_sum_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
 }
 
 """
@@ -41806,6 +42224,15 @@ type service_provider_subscriber_var_pop_fields {
   service_provider_id: Float
 }
 
+"""
+order by var_pop() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_var_pop_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
+}
+
 """aggregate var_samp on columns"""
 type service_provider_subscriber_var_samp_fields {
   customer_id: Float
@@ -41813,11 +42240,29 @@ type service_provider_subscriber_var_samp_fields {
   service_provider_id: Float
 }
 
+"""
+order by var_samp() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_var_samp_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
+}
+
 """aggregate variance on columns"""
 type service_provider_subscriber_variance_fields {
   customer_id: Float
   id: Float
   service_provider_id: Float
+}
+
+"""
+order by variance() on columns of table "service_provider.subscriber"
+"""
+input service_provider_subscriber_variance_order_by {
+  customer_id: order_by
+  id: order_by
+  service_provider_id: order_by
 }
 
 input st_d_within_geography_input {

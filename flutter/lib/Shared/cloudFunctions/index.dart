@@ -286,10 +286,8 @@ class CloudFunctions {
       String? scheduledTime,
       String? stripePaymentId,
       num? stripeFees,
-      String? couponCode,
       num? distanceFromBase,
-      num? tax,
-      num? discountValue}  ) async {
+      num? tax}  ) async {
     return CheckoutResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "restaurant3-checkoutCart",
       parameters: <String, dynamic>{
@@ -307,10 +305,8 @@ class CloudFunctions {
         "scheduledTime": scheduledTime,
         "stripePaymentId": stripePaymentId,
         "stripeFees": stripeFees,
-        "couponCode": couponCode,
         "distanceFromBase": distanceFromBase,
         "tax": tax,
-        "discountValue": discountValue,
       }));
   }
 

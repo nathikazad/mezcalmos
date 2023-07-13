@@ -1507,19 +1507,23 @@ class Offer {
   String? couponCode;
   OfferDetails details;
   OfferStatus status;
+  String? serviceProviderName;
+  String? serviceProviderImage;
   Offer({
     required this.id, this.name, required this.serviceProviderId, required this.serviceProviderType, required this.offerType, this.couponCode, required this.details, required this.status, this.nameId});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
       "name": name,
+      "nameId": nameId,
       "serviceProviderId": serviceProviderId,
       "serviceProviderType": serviceProviderType,
       "offerType": offerType,
       "couponCode": couponCode,
       "details": details,
       "status": status,
-      "nameId": nameId,
+      "serviceProviderName": serviceProviderName,
+      "serviceProviderImage": serviceProviderImage,
     };
   }
 
@@ -1579,12 +1583,13 @@ class OfferDetails {
   num? minimumOrderAmount;
   List<num>? items;
   List<num>? categories;
+  List<OfferingType>? offeringTypes;
   String? validityRangeStart;
   String? validityRangeEnd;
   bool weeklyRepeat;
   bool? couponReusable;
   OfferDetails({
-    required this.offerForOrder, this.offerForItems, required this.discountType, required this.discountValue, this.minimumOrderAmount, this.items, this.categories, this.validityRangeStart, this.validityRangeEnd, required this.weeklyRepeat, this.couponReusable});
+    required this.offerForOrder, this.offerForItems, required this.discountType, required this.discountValue, this.minimumOrderAmount, this.items, this.categories, this.offeringTypes, this.validityRangeStart, this.validityRangeEnd, required this.weeklyRepeat, this.couponReusable});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "offerForOrder": offerForOrder,
@@ -1594,6 +1599,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "minimumOrderAmount": minimumOrderAmount,
       "items": items,
       "categories": categories,
+      "offeringTypes": offeringTypes,
       "validityRangeStart": validityRangeStart,
       "validityRangeEnd": validityRangeEnd,
       "weeklyRepeat": weeklyRepeat,
@@ -2445,8 +2451,9 @@ class Cart {
   num cost;
   List<CartItem> items;
   num discountValue;
+  List<num> appliedOffers;
   Cart({
-    required this.customerId, this.restaurantId, required this.cost, required this.items, required this.discountValue});
+    required this.customerId, this.restaurantId, required this.cost, required this.items, required this.discountValue, required this.appliedOffers});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "customerId": customerId,
@@ -2454,6 +2461,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "cost": cost,
       "items": items,
       "discountValue": discountValue,
+      "appliedOffers": appliedOffers,
     };
   }
 

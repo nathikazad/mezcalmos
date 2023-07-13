@@ -39,7 +39,7 @@ class CustRestaurantCartController extends GetxController {
     await _handlerRestaurantId();
     subscriptionId = _hasuraDb.createSubscription(start: () {
       cartStream = listen_on_customer_cart(customer_id: _auth.hasuraUserId!)
-          .listen((Cart? event) {
+          .listen((Cart? event) async {
         if (event != null) {
           mezDbgPrint(
               "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length} \n restaurant isOpen =====> ${event.restaurant?.isOpen}");
@@ -55,8 +55,11 @@ class CustRestaurantCartController extends GetxController {
             mezDbgPrint(
                 " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
           }
-
-          _handlerRestaurantId();
+          if (event.restaurant == null && event.cartItems.isNotEmpty) {
+            await _handlerRestaurantId();
+          }
+          await applyOffersToRestaurantCart(
+              customerId: _auth.hasuraUserId!, cart: cart.value!);
           mezDbgPrint(
               "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
           cart.refresh();
@@ -139,10 +142,6 @@ class CustRestaurantCartController extends GetxController {
       final int res = await add_item_to_cart(
         cartItem: cartItem,
       );
-      await apply_offers_to_item(
-          customerId: _auth.hasuraUserId!,
-          cart: cart.value!,
-          cartItem: cartItem);
       return res;
     } catch (e, stk) {
       mezDbgPrint(e);

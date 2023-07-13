@@ -16,6 +16,7 @@ export async function getCart(customerId: number): Promise<Cart> {
             restaurant_id: true,
             cost: true,
             discount_value: true,
+            applied_offers: [{}, true],
             items: [{}, {
                 id: true,
                 restaurant_item_id: true,
@@ -65,6 +66,7 @@ export async function getCart(customerId: number): Promise<Cart> {
         restaurantId: response.restaurant_cart[0].restaurant_id,
         cost: response.restaurant_cart[0].cost,
         items,
-        discountValue: response.restaurant_cart[0].discount_value
+        discountValue: response.restaurant_cart[0].discount_value,
+        appliedOffers: response.restaurant_cart[0].applied_offers
     }
 }

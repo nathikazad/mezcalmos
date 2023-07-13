@@ -5,12 +5,15 @@ import { ServiceProviderType } from "./Service"
 export interface Offer {
     id: number,
     name?: Record<Language, string>,
+    nameId?: number,
     serviceProviderId: number,
     serviceProviderType: ServiceProviderType,
     offerType: OfferType,
     couponCode?: string,
     details: OfferDetails,
     status: OfferStatus,
+    serviceProviderName?: string,
+    serviceProviderImage?: string,
 }
   
 export enum OfferType {
@@ -38,10 +41,11 @@ export interface OfferDetails {
     minimumOrderAmount?: number,
     // Array<itemsIds>,
     items?: Array<number>, 
-     // Array<categoryIds>,
+    // Array<categoryIds>,
     categories?: Array<number>,
-    // date_time both for coupon and promo
+    // Array<offeringTypes>,
     offeringTypes?: Array<OfferingType>,
+    // date_time both for coupon and promo
     validityRangeStart?: string 
     // date_time
     validityRangeEnd?: string 

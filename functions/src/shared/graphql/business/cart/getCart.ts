@@ -12,6 +12,7 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         }, {
             business_id: true,
             discount_value: true,
+            applied_offers: [{}, true],
             cost: true,
             items: [{}, {
                 id: true,
@@ -44,5 +45,6 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         businessId: response.business_cart_by_pk.business_id,
         items,
         cost: response.business_cart_by_pk.cost,
+        discountValue: response.business_cart_by_pk.discount_value,
     }
 }

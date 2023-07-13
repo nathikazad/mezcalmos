@@ -16,11 +16,7 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
-import { applyDiscount } from "./applyOffer";
 import { updateOffersApplied } from "../shared/graphql/offer/updateOffer";
-import { updateStoreCredit } from "../shared/graphql/offer/updateStoreCredit";
-import { ServiceProviderType } from "../shared/models/Services/Service";
-import { DiscountType } from '../shared/models/Services/Offer';
 import { ServiceProvider } from '../shared/models/Services/Service';
 import { notifyDeliveryDrivers } from '../shared/helper';
 
@@ -38,11 +34,9 @@ export interface CheckoutRequest {
   tripPolyline: string,
   scheduledTime?: string,
   stripePaymentId?: string,
-  stripeFees?: number,
-  couponCode?: string
+  stripeFees?: number
   distanceFromBase?: number
-  tax?: number,
-  discountValue?: number
+  tax?: number
 }
 export interface CheckoutResponse {
   success: boolean,
@@ -77,8 +71,6 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     let mezAdmins: MezAdmin[] = response[3];
     errorChecks(restaurant, checkoutRequest, customerId, customerCart);
 
-    let appliedOffers = await applyDiscount(customerId, checkoutRequest.couponCode);
-
     let orderResponse = await createRestaurantOrder(restaurant, checkoutRequest, customerCart, mezAdmins);
 
     setRestaurantOrderChatInfo(orderResponse.restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
@@ -103,14 +95,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     // clear user cart 
     clearCart(customerId);
 
-    updateOffersApplied(orderResponse.restaurantOrder.orderId!, appliedOffers);
-    for(let offerId in appliedOffers) {
-      if(appliedOffers[offerId].discountType == DiscountType.StoreCredit) {
-        updateStoreCredit(customerCart.restaurantId!, ServiceProviderType.Restaurant, customerId,
-          appliedOffers[offerId].discountAmount
-        );
-      }
-    }
+    updateOffersApplied(orderResponse.restaurantOrder.orderId!, customerCart.appliedOffers, customerCart.discountValue, OrderType.Restaurant);
+
     return {
       success: true,
       orderId: orderResponse.restaurantOrder.orderId
