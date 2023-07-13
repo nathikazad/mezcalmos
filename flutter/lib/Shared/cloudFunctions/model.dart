@@ -1500,24 +1500,30 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 class Offer {
   num id;
   Map<Language, String>? name;
+  num? nameId;
   num serviceProviderId;
   ServiceProviderType serviceProviderType;
   OfferType offerType;
   String? couponCode;
   OfferDetails details;
   OfferStatus status;
+  String? serviceProviderName;
+  String? serviceProviderImage;
   Offer({
-    required this.id, this.name, required this.serviceProviderId, required this.serviceProviderType, required this.offerType, this.couponCode, required this.details, required this.status});
+    required this.id, this.name, this.nameId, required this.serviceProviderId, required this.serviceProviderType, required this.offerType, this.couponCode, required this.details, required this.status, this.serviceProviderName, this.serviceProviderImage});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
       "name": name,
+      "nameId": nameId,
       "serviceProviderId": serviceProviderId,
       "serviceProviderType": serviceProviderType,
       "offerType": offerType,
       "couponCode": couponCode,
       "details": details,
       "status": status,
+      "serviceProviderName": serviceProviderName,
+      "serviceProviderImage": serviceProviderImage,
     };
   }
 
@@ -2445,8 +2451,9 @@ class Cart {
   num cost;
   List<CartItem> items;
   num discountValue;
+  List<num> appliedOffers;
   Cart({
-    required this.customerId, this.restaurantId, required this.cost, required this.items, required this.discountValue});
+    required this.customerId, this.restaurantId, required this.cost, required this.items, required this.discountValue, required this.appliedOffers});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "customerId": customerId,
@@ -2454,6 +2461,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "cost": cost,
       "items": items,
       "discountValue": discountValue,
+      "appliedOffers": appliedOffers,
     };
   }
 

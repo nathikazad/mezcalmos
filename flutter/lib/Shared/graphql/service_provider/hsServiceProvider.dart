@@ -486,91 +486,24 @@ Future<bool> update_business_online_ordering({
   return res.parsedData!.update_service_provider_details_by_pk!.online_ordering;
 }
 
-Future<List<cModels.Offer>> get_service_provider_offers(
-    {required int serviceProviderId,
-    required cModels.ServiceProviderType serviceProviderType,
-    bool withCache = true}) async {
-  QueryResult<Query$get_service_provider_offers> res =
-      await _db.graphQLClient.query$get_service_provider_offers(
-    Options$Query$get_service_provider_offers(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
-      variables: Variables$Query$get_service_provider_offers(
-          service_provider_id: serviceProviderId,
-          service_provider_type: serviceProviderType.toFirebaseFormatString()),
+Future<int> subscribe_service_provider({
+  required int customerId,
+  required int serviceProviderId,
+  required cModels.ServiceProviderType serviceProviderType,
+}) async {
+  QueryResult<Mutation$subscribe_service_provider> res =
+      await _db.graphQLClient.mutate$subscribe_service_provider(
+    Options$Mutation$subscribe_service_provider(
+      variables: Variables$Mutation$subscribe_service_provider(
+        customer_id: customerId,
+        service_provider_id: serviceProviderId,
+        service_provider_type: serviceProviderType.toFirebaseFormatString()
+      ),
     ),
   );
-  mezDbgPrint("👋 called get service provider offers ===========>${res.data}");
-  // if (res.parsedData?.service_provider_offer == null) {
-  //   throwError(res.exception);
-  // }
-  final List<cModels.Offer> offers = [];
-  res.parsedData?.service_provider_offer.forEach((data) {
-    offers.add(cModels.Offer(
-        id: data.id,
-        name: toLanguageMap(translations: data.name.translations),
-        serviceProviderId: serviceProviderId,
-        serviceProviderType: serviceProviderType,
-        offerType: data.offer_type.toOfferType(),
-        details: data.details,
-        status: data.status.toOfferStatus(),
-        couponCode: data.coupon_code));
-  });
-  return offers;
-}
-
-Future<cModels.Offer?> check_coupon(
-    {required String couponCode,
-    required int serviceProviderId,
-    required cModels.ServiceProviderType serviceProviderType,
-    bool withCache = true}) async {
-  QueryResult<Query$check_coupon> res =
-      await _db.graphQLClient.query$check_coupon(
-    Options$Query$check_coupon(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
-      variables: Variables$Query$check_coupon(
-          coupon_code: couponCode,
-          service_provider_id: serviceProviderId,
-          service_provider_type: serviceProviderType.toFirebaseFormatString()),
-    ),
-  );
-  mezDbgPrint("👋 called check coupon ===========>${res.data}");
-  if (res.parsedData?.service_provider_offer.length == 0) {
-    return null;
+  mezDbgPrint("subscribe_service_provider: ${res.data}");
+  if (res.parsedData?.insert_service_provider_subscriber_one == null) {
+    throwError(res.exception);
   }
-  final Query$check_coupon$service_provider_offer data =
-      res.parsedData!.service_provider_offer[0];
-  return cModels.Offer(
-      id: data.id,
-      // name: toLanguageMap(translations: data.name.translations),
-      serviceProviderId: serviceProviderId,
-      serviceProviderType: serviceProviderType,
-      offerType: cModels.OfferType.Coupon,
-      details: data.details,
-      status: cModels.OfferStatus.Active,
-      couponCode: couponCode);
-}
-
-Future<bool> check_offer_applied(
-    {required int customerId,
-    required int offerId,
-    required cModels.OrderType orderType,
-    bool withCache = true}) async {
-  QueryResult<Query$check_offer_applied> res =
-      await _db.graphQLClient.query$check_offer_applied(
-    Options$Query$check_offer_applied(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
-      variables: Variables$Query$check_offer_applied(
-          customer_id: customerId,
-          offer_id: offerId,
-          order_type: orderType.toFirebaseFormatString()),
-    ),
-  );
-  mezDbgPrint("👋 called check offer applied ===========>${res.data}");
-  if (res.parsedData?.service_provider_offer_applied.length == 0) {
-    return false;
-  }
-  return true;
+  return res.parsedData!.insert_service_provider_subscriber_one!.id;
 }

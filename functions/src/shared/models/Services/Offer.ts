@@ -5,12 +5,15 @@ import { ServiceProviderType } from "./Service"
 export interface Offer {
     id: number,
     name?: Record<Language, string>,
+    nameId?: number,
     serviceProviderId: number,
     serviceProviderType: ServiceProviderType,
     offerType: OfferType,
     couponCode?: string,
     details: OfferDetails,
     status: OfferStatus,
+    serviceProviderName?: string,
+    serviceProviderImage?: string,
 }
   
 export enum OfferType {

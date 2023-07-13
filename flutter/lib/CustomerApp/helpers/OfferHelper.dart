@@ -6,8 +6,8 @@ import 'package:mezcalmos/Shared/graphql/buisness_order/hsBusinessOrder.dart';
 import 'package:mezcalmos/Shared/graphql/customer/businessCart/hsBusinessCart.dart';
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
+import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
-import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 
 enum CouponError {
   UnavailableOrExpired,
