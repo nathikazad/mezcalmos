@@ -129,6 +129,10 @@ class BsOtherServiceViewController {
             navigate: () =>
                 _navigateToRental(rentalCategory: RentalCategory1.Vehicle),
           ),
+          OtherCategoryItems(
+            title: "coWorking",
+            navigate: () => _navigateToCoWorking(),
+          ),
         ],
         subTitle: "rentalSub",
       ),
@@ -150,10 +154,6 @@ class BsOtherServiceViewController {
             title: "mealPlanning",
             navigate: () => _navigateToSerice(
                 serviceCategory: ServiceCategory1.MealPlanning),
-          ),
-          OtherCategoryItems(
-            title: "coWorking",
-            navigate: () => _navigateToCoWorking(),
           ),
         ],
         subTitle: "serviceSub",

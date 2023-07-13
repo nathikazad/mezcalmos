@@ -125,7 +125,7 @@ class CustRealEstateListViewController {
           "👋 _fetchRentals called  \n ferchSize : $realEstateFetchSize \n offset: $_realEstateCurrentOffset");
       List<HomeCard> newList = await get_real_estate(
         fromLocation: _fromLocation!,
-        distance: 1000000000000,
+        distance: defaultDistance,
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
         withCache: false,
         offset: _realEstateCurrentOffset,
@@ -153,7 +153,7 @@ class CustRealEstateListViewController {
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_home(
           homeType: HomeAvailabilityOption.Sale,
-          distance: 1000000000000,
+          distance: defaultDistance,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,

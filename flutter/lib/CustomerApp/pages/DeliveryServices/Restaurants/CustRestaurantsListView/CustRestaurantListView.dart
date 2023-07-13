@@ -96,33 +96,32 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Obx(() {
-          if (viewController.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            if (viewController.isMapView) {
-              return _mapView();
-            }
-            return SingleChildScrollView(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _searchInput(),
-                    _searchFilter(),
-                    // _sortingSwitcher(),
-                    _filterButton(context),
-                    Obx(() {
-                      if (viewController.byRestaurants)
-                        return Padding(
-                          padding: EdgeInsets.only(top: 4),
-                          child: _restaurantList(),
-                        );
-                      else
-                        return _searchedItemsList();
-                    })
-                  ],
-                ));
+          if (viewController.isMapView) {
+            return _mapView();
           }
+          return SingleChildScrollView(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _searchInput(),
+                  _searchFilter(),
+                  // _sortingSwitcher(),
+                  _filterButton(context),
+                  Obx(() {
+                    if (viewController.isLoading.value) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (viewController.byRestaurants)
+                      return Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: _restaurantList(),
+                      );
+                    else
+                      return _searchedItemsList();
+                  })
+                ],
+              ));
         }));
   }
 

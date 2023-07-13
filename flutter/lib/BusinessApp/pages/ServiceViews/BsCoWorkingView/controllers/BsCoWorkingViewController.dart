@@ -15,26 +15,6 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 
 typedef OfferingPricesMap = Map<TimeUnit, TextEditingController>;
 
-enum CoWorkingCategory1{
-  DedicatedDesk,
-  PrivateRoom,
-  FullFloorOffice
-}
-
-extension ParseHomeCategory1ToString on CoWorkingCategory1 {
-  String toFirebaseFormatString() {
-    String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToCoWorkingCategory1 on String {
-  CoWorkingCategory1 toCoWorkingCategory1() {
-    return CoWorkingCategory1.values.firstWhere((CoWorkingCategory1 homeCategory1) =>
-        homeCategory1.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
-
 class BsCoWorkingViewController {
   // instances //
 
@@ -44,8 +24,7 @@ class BsCoWorkingViewController {
   bool secondFormValid = false;
   BusinessItemDetailsController detailsController =
       BusinessItemDetailsController();
-  TextEditingController bedroomsController = TextEditingController();
-  TextEditingController bathroomsController = TextEditingController();
+  TextEditingController deskController = TextEditingController();
   TextEditingController areaController = TextEditingController();
 
   // vars //
@@ -54,14 +33,14 @@ class BsCoWorkingViewController {
   // state variables //
   Rxn<Home> _rental = Rxn<Home>();
   Rxn<Location> homeLocation = Rxn<Location>();
-  Rxn<CoWorkingCategory1> homeType = Rxn<CoWorkingCategory1>();
+  Rxn<CoWorkingRoomType> homeType = Rxn<CoWorkingRoomType>();
   Rxn<String> petFriendly = Rxn<String>();
   // getters //
   Home? get rental => _rental.value;
   bool get isEditing => _rental.value != null;
 
-  RxList<Map<String, dynamic>> additionalRooms = RxList();
-  Rxn<RoomType> roomType = Rxn<RoomType>();
+  RxList<RxMap<String, dynamic>> additionalRooms = RxList();
+  Rxn<CoWorkingRoomType> roomType = Rxn<CoWorkingRoomType>();
 
   List<TimeUnit> get _possibleTimeUnits => List.unmodifiable([
         // TimeUnit.PerHour,
@@ -109,38 +88,38 @@ class BsCoWorkingViewController {
       detailsController.clearPrices();
       await detailsController.initEditMode(
           itemDetailsId: rental!.details.id.toInt());
-      bedroomsController.text = rental!.bedrooms.toString();
-      bathroomsController.text = rental!.bathrooms.toString();
-      areaController.text = rental!.details.additionalParameters?["area"]
-              .toString()
-              .replaceAll("sq ft", "")
-              .trim() ??
-          "";
-      petFriendly.value = rental!.details.additionalParameters?["petFriendly"];
-      homeLocation.value = rental!.location.location;
+      // homeLocation.value = rental!.gpsLocation;
       // homeType.value = rental!.category1;
       final String? roomType1 =
           rental!.details.additionalParameters?["roomType1"];
-      roomType.value = roomType1?.toRoomType();
+      deskController.text =
+          rental!.details.additionalParameters?["deskCount1"].toString() ?? "";
+      areaController.text =
+          rental!.details.additionalParameters?["area1"].toString() ?? "";
+      roomType.value = roomType1?.toCoWorkingRoomType();
       additionalRooms.value = rental!
               .details.additionalParameters?["additionalRooms"]
-              ?.map<Map<String, dynamic>>(
+              ?.map<RxMap<String, dynamic>>(
             (dynamic e) {
               final BusinessItemDetailsController ctrl =
                   BusinessItemDetailsController();
               ctrl.constructNewRoomsCost(
                   constructBusinessServiceCost(e["cost"]));
-              return {
+              return RxMap<String, dynamic>({
                 "roomType": e["roomType"],
                 "controller": ctrl,
-              };
+                "deskController": TextEditingController(
+                    text: e["deskCount"].toString() ?? ""),
+                "areaController":
+                    TextEditingController(text: e["area"].toString() ?? ""),
+              });
             },
-          )?.toList() as List<Map<String, dynamic>>? ??
+          )?.toList() as List<RxMap<String, dynamic>>? ??
           [];
     }
   }
 
-  void changeHomeType(CoWorkingCategory1 newHomeType) {
+  void changeHomeType(CoWorkingRoomType newHomeType) {
     homeType.value = newHomeType;
   }
 
@@ -157,10 +136,12 @@ class BsCoWorkingViewController {
   void addNewRoom() {
     final BusinessItemDetailsController ctrl = BusinessItemDetailsController();
     ctrl.addPriceTimeUnit(timeUnit: newRoomAvaiableUnits(ctrl).first);
-    additionalRooms.add({
-      "roomType": RoomType.SingleBed.toFirebaseFormatString(),
+    additionalRooms.add(RxMap({
+      "roomType": CoWorkingRoomType.FullFloorOffice.toFirebaseFormatString(),
       "controller": ctrl,
-    });
+      "deskController": TextEditingController(),
+      "areaController": TextEditingController(),
+    }));
   }
 
   void deleteNewRoom(int index) {
@@ -175,18 +156,30 @@ class BsCoWorkingViewController {
     final BusinessItemDetails details =
         await detailsController.contructDetails();
     details.additionalParameters = {
-      "area": areaController.text.trim() + " sq ft",
-      "petFriendly": petFriendly.value,
+      "roomType1": roomType.value?.toFirebaseFormatString(),
+      "deskCount1": int.tryParse(deskController.text),
+      "area1": areaController.text,
+      "additionalRooms": [
+        for (final Map<String, dynamic> room in additionalRooms)
+          {
+            "roomType": room["roomType"],
+            "cost": (room["controller"] as BusinessItemDetailsController)
+                .priceTimeUnitMap
+                .map((TimeUnit key, TextEditingController value) => MapEntry(
+                    key.toFirebaseFormatString(), double.parse(value.text))),
+            "deskCount": int.tryParse(
+                (room["deskController"] as TextEditingController).text),
+            "area": (room["areaController"] as TextEditingController).text
+          },
+      ],
     };
     final Home rental = Home(
       availableFor: HomeAvailabilityOption.Rent,
       location: HomeLocation(
           name: homeLocation.value!.address, location: homeLocation.value!),
       category1: HomeCategory1.Room,
-    
+      // gpsLocation: homeLocation.value,
       details: details,
-      bathrooms: int.tryParse(bathroomsController.text),
-      bedrooms: int.tryParse(bedroomsController.text),
     );
     return rental;
   }
@@ -199,9 +192,7 @@ class BsCoWorkingViewController {
       ),
       category1: HomeCategory1.Room,
       availableFor: HomeAvailabilityOption.Rent,
-
-      bathrooms: int.tryParse(bathroomsController.text),
-      bedrooms: int.tryParse(bedroomsController.text),
+      // gpsLocation: homeLocation.value,
       details: detailsController.details!,
     );
     return rental;
@@ -217,17 +208,23 @@ class BsCoWorkingViewController {
           await update_item_additional_params(
             id: rental!.details.id.toInt(),
             additionalParams: {
-              "area": areaController.text.trim() + " sq ft",
-              "petFriendly": petFriendly.value,
               "roomType1": roomType.value?.toFirebaseFormatString(),
+              "deskCount1": int.tryParse(deskController.text),
+              "area1": areaController.text,
               "additionalRooms": [
                 for (final Map<String, dynamic> room in additionalRooms)
                   {
                     "roomType": room["roomType"],
-                    "cost": room["controller"].priceTimeUnitMap.value.map(
-                        (TimeUnit key, TextEditingController value) => MapEntry(
-                            key.toFirebaseFormatString(),
-                            double.parse(value.text))),
+                    "cost":
+                        (room["controller"] as BusinessItemDetailsController)
+                            .priceTimeUnitMap
+                            .map((TimeUnit key, TextEditingController value) =>
+                                MapEntry(key.toFirebaseFormatString(),
+                                    double.parse(value.text))),
+                    "deskCount": int.tryParse(
+                        (room["deskController"] as TextEditingController).text),
+                    "area":
+                        (room["areaController"] as TextEditingController).text
                   },
               ],
             },
