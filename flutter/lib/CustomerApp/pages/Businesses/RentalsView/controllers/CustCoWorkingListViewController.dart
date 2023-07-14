@@ -157,7 +157,7 @@ class CustCoWorkingListViewController {
       _rentalFetchingData = true;
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
-      List<HomeCard> newList = await get_home_rentals(
+      List<HomeCard> newList = await get_co_workings(
         distance: getFetchDistance,
         fromLocation: _fromLocation!,
         withCache: false,
@@ -212,7 +212,7 @@ class CustCoWorkingListViewController {
   Future<void> fetchMapViewRentals(
       {required LatLng? fromLoc, required double? distance}) async {
     try {
-      _mapViewRentals.value = await get_home_rentals(
+      _mapViewRentals.value = await get_co_workings(
         distance: distance ?? getFetchDistance,
         fromLocation: fromLoc != null
             ? Location(

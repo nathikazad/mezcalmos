@@ -14,6 +14,8 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/LocallyMadeView/CustLocal
     deferred as custLocallyMadeWrapperView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart'
     deferred as custEventView;
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustCoWorkingView/CustCoWorkingView.dart'
+    deferred as custCoWorkingView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart'
     deferred as custHomeRentalView;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustProductView/CustProductView.dart'
@@ -56,6 +58,7 @@ class CustBusinessRoutes {
   static String custServiceRouteEdit = "/serviceEdit/:id";
   static String custProductRoute = "/product/:id";
   static String custEventRoute = "/event/:id";
+  static String custCoWorkingRoute = "/coWorking/:id";
   static String custEventRouteEdit = "/eventEdit/:id";
   static String custHomeRentalRoute = "/homeRental/:id";
   static String custHomeRentalRouteEdit = "/homeRentalEdit/:id";
@@ -130,6 +133,13 @@ class CustBusinessRoutes {
         builder: () => custEventView.CustEventView(),
         middleware: <QMiddleware>[
           DefferedLoader(custEventView.loadLibrary),
+        ]),
+    QRoute(
+        name: custCoWorkingRoute,
+        path: custCoWorkingRoute,
+        builder: () => custCoWorkingView.CustCoWorkingView(),
+        middleware: <QMiddleware>[
+          DefferedLoader(custCoWorkingView.loadLibrary),
         ]),
     QRoute(
         name: custServicesListRoute,

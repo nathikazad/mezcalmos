@@ -1658,8 +1658,8 @@
         },
         "RentalsView": {
           "CustHomeRentalListView": {
-            "homes": "Homes",
-            "home": "Home",
+            "coWorking": "Co-working",
+            "coWorkings": "Co-workings",
             "map": "Map",
             "viewOnMap": "View on map",
             "viewAsList": "View as list",

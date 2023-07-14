@@ -330,6 +330,77 @@ Future<List<HomeCard>> get_home_rentals(
   }
 }
 
+Future<List<HomeCard>> get_co_workings(
+    {required double distance,
+    required Location fromLocation,
+    int? offset,
+    int? limit,
+    bool? onlineOrdering,
+    required bool withCache}) async {
+  final List<HomeCard> _homes = <HomeCard>[];
+  Input$Boolean_comparison_exp? onlineOrderingExp;
+  if (onlineOrdering != null) {
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: onlineOrdering);
+  }
+  mezDbgPrint(
+      "distance $distance location ${fromLocation.lat.toDouble()} ${fromLocation.lng.toDouble()}");
+  final QueryResult<Query$get_coworking> response = await _db.graphQLClient
+      .query$get_coworking(Options$Query$get_coworking(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$get_coworking(
+              distance: distance,
+              location: Geography(
+                  fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
+              online_ordering: onlineOrderingExp,
+              offset: offset,
+              limit: limit)));
+
+  mezDbgPrint("get_home_rentals $response");
+
+  if (response.parsedData?.business_home != null) {
+    response.parsedData?.business_home
+        .forEach((Query$get_coworking$business_home data) async {
+      _homes.add(HomeCard(
+          businessName: data.business!.details.name,
+          currency: data.business!.details.currency.toCurrency(),
+          home: Home(
+            location: HomeLocation(
+              name: data.location!.name,
+              location: Location(
+                lat: data.location!.gps.latitude,
+                lng: data.location!.gps.longitude,
+                address: data.location!.address,
+              ),
+            ),
+            availableFor: data.available_for.toHomeAvailabilityOption(),
+            id: data.id,
+            category1: data.details!.category1.toHomeCategory1(),
+            details: BusinessItemDetails(
+              id: data.id,
+              nameId: data.details!.name_id,
+              descriptionId: data.details!.description_id,
+              name:
+                  toLanguageMap(translations: data.details!.name.translations),
+              position: data.details!.position,
+              businessId: data.business!.id,
+              available: data.details!.available,
+              image: data.details!.image
+                      ?.map<String>((e) => e.toString())
+                      .toList() ??
+                  [],
+              cost: constructBusinessServiceCost(data.details!.cost),
+              additionalParameters: data.details!.additional_parameters,
+            ),
+            bathrooms: data.bathrooms,
+            bedrooms: data.bedrooms,
+          )));
+    });
+    return _homes;
+  } else {
+    return [];
+  }
+}
+
 Future<List<HomeCard>> get_business_home_rentals(
     {required int busniessId,
     int? offset,

@@ -74,10 +74,13 @@ class OnMapBusinessCard extends StatelessWidget {
                               SizedBox(
                                 width: 2,
                               ),
-                              if (business.avgRating != 0)
-                                Text('${business.avgRating ?? '0'}',
+                              if (business.avgRating != null &&
+                                  business.avgRating != 0)
+                                Text(
+                                    '${business.avgRating?.toStringAsFixed(1)}',
                                     style: context.textTheme.bodySmall),
-                              if (business.avgRating != 0)
+                              if (business.avgRating != null &&
+                                  business.avgRating != 0)
                                 Padding(
                                   padding: const EdgeInsets.only(left: 2),
                                   child: Text(

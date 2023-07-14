@@ -62,11 +62,11 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
-           actionIcons: [
-          FloatingCartComponent(
-            cartType: CartType.business,
-          ),
-        ],
+          actionIcons: [
+            FloatingCartComponent(
+              cartType: CartType.business,
+            ),
+          ],
           titleWidget: Obx(() => Text(
                 viewController.isMapView
                     ? '${_i18n()['map']}'
@@ -133,7 +133,6 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
 
   Widget _mapView() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-   
       Obx(
         () => Expanded(
           child: MezServicesMapView(
@@ -149,6 +148,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
       ),
     ]);
   }
+
   Widget _viewBusinessesSwitcher() {
     IconData firstButtonIcon = Icons.motorcycle;
     switch (viewController.rentalCategory) {
@@ -326,7 +326,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                               width: 2,
                             ),
                             Text(
-                                '${viewController.businesses[index].avgRating}',
+                                '${viewController.businesses[index].avgRating?.toStringAsFixed(1)}',
                                 style: context.textTheme.bodySmall),
                             Padding(
                               padding: const EdgeInsets.only(left: 2),

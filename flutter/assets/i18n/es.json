@@ -1688,8 +1688,8 @@
         },
         "RentalsView": {
           "CustHomeRentalListView": {
-            "homes": "Casas",
-            "home": "Hogar",
+            "coWorking": "Co-working",
+            "coWorkings": "Trabajo conjunto",
             "map": "Mapa",
             "filter": "Filtrar",
             "offerOnly": "Solo ofertas",
