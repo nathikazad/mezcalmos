@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
+import 'package:mezcalmos/CustomerApp/components/DeliveryOffersList/CustDeliveryOffersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/CustomerRestaurantOrderEst.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/OrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/OrderRestaurantCard.dart';
@@ -94,6 +95,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               order: viewController.order.value!,
                               ordersStates: viewController.order.value!.status,
                             ),
+                            if (viewController.order.value?.driverInfo == null)
+                              CustDeliveryOffersList(
+                                deliveryOrderId: viewController
+                                    .order.value!.deliveryOrderId!,
+                              ),
                             if (viewController.order.value!.paymentType ==
                                 cModels.PaymentType.BankTransfer)
                               RestaurantBankInfoCard(

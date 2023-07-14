@@ -130,7 +130,7 @@ query getCustomerOrdersByType(
   $orderType: String!
   $limit: Int
   $offset: Int
-  $inProcess: Boolean
+  $inProcess: Boolean!
 ) {
   customer_minimal_orders_aggregate(
     where: { order_type: { _eq: $orderType }, in_process: { _eq: $inProcess } }

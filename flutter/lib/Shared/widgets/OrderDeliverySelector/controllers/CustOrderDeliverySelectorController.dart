@@ -43,6 +43,7 @@ class CustOrderDeliverySelectorController {
         selectedCompanies.value = deliveryCompanies
             .map((DeliveryCompany element) => element.info.hasuraId)
             .toList();
+        _onSelectionUpdate.call(selectedCompanies);
         CalculateEstimatedCost();
       }
     } catch (e) {
