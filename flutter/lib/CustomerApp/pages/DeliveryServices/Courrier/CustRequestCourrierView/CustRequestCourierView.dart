@@ -9,14 +9,13 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezOrderDeliverySelector/MezOrderDeliverySelector.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/MezOrderDeliverySelector.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -41,6 +40,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
     viewController.init();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    //viewController.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -85,18 +91,14 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Obx(
-            () => MezOrderDeliverySelector(
-              deliveryCompanies: viewController.deliveryCompanies,
-              selectedCompanies: viewController.selectedCompanies,
-              estDeliveryPrice: viewController.estDeliveryCost.value,
-              onCompanySelect: (DeliveryCompany value) {
-                viewController.selectCompany(id: value.info.hasuraId);
-              },
-              onEstDeliveryPriceChange: (double value) {
-                viewController.estDeliveryCost.value = value;
-              },
-            ),
+          CustOrderDeliverySelector(
+            onSelectionUpdate: (List<int> value) {
+              viewController.selectedCompanies.value = value;
+            },
+            distanceInKm: viewController.ditanceInKm.value,
+            onEstDeliveryPriceChange: (double value) {
+              viewController.estDeliveryCost.value = value;
+            },
           ),
 
           // Form(

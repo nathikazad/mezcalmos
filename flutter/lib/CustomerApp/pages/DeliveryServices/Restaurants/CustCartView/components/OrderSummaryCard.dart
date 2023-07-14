@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -86,28 +85,28 @@ class CardSummaryCard extends StatelessWidget {
                             style: txt.bodyMedium),
                       ),
                     ),
-                    (controller.cart.shippingCost != null &&
-                            controller.isShippingSet.isTrue)
-                        ? Flexible(
-                            child: ShippingCostComponent(
-                            alignment: MainAxisAlignment.end,
-                            shippingCost: controller.cart.shippingCost!,
-                          ))
-                        : (controller.getOrderDistance > 10 ||
-                                controller.cart.shippingCost == null)
-                            ? Text("_")
-                            : Row(
-                                children: [
-                                  Transform.scale(
-                                      scale: 0.4,
-                                      child: CircularProgressIndicator(
-                                        color: primaryBlueColor,
-                                      )),
-                                  Text('${_i18n()["toBeCalc"]}',
-                                      style: txt.bodyMedium?.copyWith(
-                                          fontStyle: FontStyle.italic)),
-                                ],
-                              )
+
+                    Obx(
+                      () => Flexible(
+                          child: ShippingCostComponent(
+                        alignment: MainAxisAlignment.end,
+                        shippingCost: controller.estDeliveryCost.value,
+                      )),
+                    ),
+                    // : (controller.cart.shippingCost == null)
+                    //     ? Text("_")
+                    //     : Row(
+                    //         children: [
+                    //           Transform.scale(
+                    //               scale: 0.4,
+                    //               child: CircularProgressIndicator(
+                    //                 color: primaryBlueColor,
+                    //               )),
+                    //           Text('${_i18n()["toBeCalc"]}',
+                    //               style: txt.bodyMedium?.copyWith(
+                    //                   fontStyle: FontStyle.italic)),
+                    //         ],
+                    //       )
                   ],
                 ),
               ),
@@ -148,7 +147,7 @@ class CardSummaryCard extends StatelessWidget {
                       child: Container(
                         child: Text(
                           "${_i18n()["totalCost"]}",
-                          style: txt.headline4,
+                          style: txt.headlineMedium,
                         ),
                       ),
                     ),
@@ -156,7 +155,7 @@ class CardSummaryCard extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.centerRight,
                         child: Text(controller.cart.totalCost.toPriceString(),
-                            style: txt.headline5),
+                            style: txt.headlineSmall),
                       ),
                     ),
                   ],

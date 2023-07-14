@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -314,96 +315,101 @@ class _BsCoWorkingViewState extends State<BsCoWorkingView>
             ),
           ),
           smallSepartor,
-          Obx(() {
-            List<CoWorkingCategory1> possibleItems = [
-              ...CoWorkingCategory1.values
-            ];
-            return MezStringDropDown(
-              validator: (String? value) {
-                if (viewController.homeType.value == null) {
-                  return _i18n()["coWorking"]["homeTypeError"];
-                }
-                return null;
-              },
-              langPath: _i18n()["coWorking"],
-              items: possibleItems
-                  .map((CoWorkingCategory1 e) => e.toFirebaseFormatString())
-                  .toList(),
-              value: viewController.homeType.value?.toFirebaseFormatString(),
-              onChanged: (String? newHomeType) {
-                if (newHomeType != null) {
-                  viewController
-                      .changeHomeType(newHomeType.toCoWorkingCategory1());
-                }
-              },
-              labelText: _i18n()["coWorking"]["homeType"],
-            );
-          }),
-          bigSeperator,
+          // Obx(() {
+          //   List<CoWorkingCategory1> possibleItems = [
+          //     ...CoWorkingCategory1.values
+          //   ];
+          //   return MezStringDropDown(
+          //     validator: (String? value) {
+          //       if (viewController.homeType.value == null) {
+          //         return _i18n()["coWorking"]["homeTypeError"];
+          //       }
+          //       return null;
+          //     },
+          //     langPath: _i18n()["coWorking"],
+          //     items: possibleItems
+          //         .map((CoWorkingCategory1 e) => e.toFirebaseFormatString())
+          //         .toList(),
+          //     value: viewController.homeType.value?.toFirebaseFormatString(),
+          //     onChanged: (String? newHomeType) {
+          //       if (newHomeType != null) {
+          //         viewController
+          //             .changeHomeType(newHomeType.toCoWorkingCategory1());
+          //       }
+          //     },
+          //     labelText: _i18n()["coWorking"]["homeType"],
+          //   );
+          // }),
+          // bigSeperator,
 
-          if (viewController.homeType == CoWorkingCategory1.DedicatedDesk)
-            _singlePriceView(),
+          // if (viewController.homeType == CoWorkingCategory1.DedicatedDesk)
+          //   _singlePriceView(),
 
-          if (viewController.homeType == CoWorkingCategory1.PrivateRoom ||
-              viewController.homeType == CoWorkingCategory1.FullFloorOffice)
-            _multipleRoomPriceView(),
-
-          if (viewController.isEditing)
-            BsDeleteOfferButton(
-              onDelete: () async {
-                await viewController.deleteOffer();
-                await MezRouter.back(backResult: true);
-              },
-            )
-        ],
-      ),
-    );
-  }
-
-  Widget _multipleRoomPriceView() {
-    return Column(
-      children: [
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Co-working Type 1",
-                  style: context.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+          // if (viewController.homeType == CoWorkingCategory1.PrivateRoom ||
+          //     viewController.homeType == CoWorkingCategory1.FullFloorOffice)
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${_i18n()["coWorking"]["coWorkingType"]} 1",
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                InkWell(
-                    onTap: () async {
-                      viewController.addNewRoom();
-                    },
-                    child: Ink(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add_circle_outline,
-                            size: 20,
-                            color: primaryBlueColor,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            "Add additional room",
-                            style: context.textTheme.bodyLarge
-                                ?.copyWith(color: primaryBlueColor),
-                          ),
-                        ],
-                      ),
-                    )),
-              ],
-            ),
-            smallSepartor,
-            MezCard(
-              content: Column(
+                  InkWell(
+                      onTap: () async {
+                        viewController.addNewRoom();
+                      },
+                      child: Ink(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.add_circle_outline,
+                              size: 20,
+                              color: primaryBlueColor,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              "Add additional room",
+                              style: context.textTheme.bodyLarge
+                                  ?.copyWith(color: primaryBlueColor),
+                            ),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
+              Obx(() {
+                return MezStringDropDown(
+                  validator: (String? value) {
+                    if (viewController.roomType.value == null) {
+                      return _i18n()["coWorking"]["homeTypeError"];
+                    }
+                    return null;
+                  },
+                  langPath: _i18n()["coWorking"],
+                  items: CoWorkingRoomType.values
+                      .map((CoWorkingRoomType e) => e.toFirebaseFormatString())
+                      .toList(),
+                  value:
+                      viewController.roomType.value?.toFirebaseFormatString(),
+                  onChanged: (String? newRoomType) {
+                    if (newRoomType != null) {
+                      viewController.roomType.value =
+                          newRoomType.toCoWorkingRoomType();
+                    }
+                  },
+                  labelText: _i18n()["coWorking"]["homeType"],
+                );
+              }),
+              smallSepartor,
+              Column(
                 children: [
                   Obx(
                     () => BsOpOfferingPricesList(
@@ -421,54 +427,125 @@ class _BsCoWorkingViewState extends State<BsCoWorkingView>
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-        ...viewController.additionalRooms.asMap().entries.map(
-          (data) {
-            final int index = data.key;
-            return Column(
-              children: [
-                smallSepartor,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              smallSepartor,
+              if (viewController.roomType.value !=
+                  CoWorkingRoomType.PrivateRoom)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    smallSepartor,
                     Text(
-                      "Co-working Type ${index + 2}",
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                      "Number of desk",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    TextField(
+                      controller: viewController.deskController,
+                    ),
+                    smallSepartor,
+                    Text(
+                      "Surface area",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    TextField(
+                      controller: viewController.areaController,
+                      decoration: InputDecoration(
+                        suffix: Text("Sq ft"),
                       ),
                     ),
-                    InkWell(
-                        onTap: () async {
-                          viewController.deleteNewRoom(index);
-                        },
-                        child: Ink(
-                          padding: const EdgeInsets.all(5),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.delete_outline,
-                                size: 20,
-                                color: Colors.red,
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                "Remove",
-                                style: context.textTheme.bodyLarge
-                                    ?.copyWith(color: Colors.red),
-                              ),
-                            ],
-                          ),
-                        )),
                   ],
                 ),
-                smallSepartor,
-                MezCard(
-                  content: Column(
+            ],
+          ),
+          _multipleRoomPriceView(),
+
+          if (viewController.isEditing)
+            BsDeleteOfferButton(
+              onDelete: () async {
+                await viewController.deleteOffer();
+                await MezRouter.back(backResult: true);
+              },
+            )
+        ],
+      ),
+    );
+  }
+
+  Widget _multipleRoomPriceView() {
+    return Obx(() {
+      return Column(
+        children: [
+          ...viewController.additionalRooms.asMap().entries.map(
+            (data) {
+              final int index = data.key;
+              return Column(
+                children: [
+                  smallSepartor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${_i18n()["coWorking"]["coWorkingType"]} ${index + 2}",
+                        style: context.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                      InkWell(
+                          onTap: () async {
+                            viewController.deleteNewRoom(index);
+                          },
+                          child: Ink(
+                            padding: const EdgeInsets.all(5),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.delete_outline,
+                                  size: 20,
+                                  color: Colors.red,
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  "Remove",
+                                  style: context.textTheme.bodyLarge
+                                      ?.copyWith(color: Colors.red),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                  smallSepartor,
+                  Obx(() {
+                    return MezStringDropDown(
+                      validator: (String? value) {
+                        if (viewController.additionalRooms[index]["roomType"] ==
+                            null) {
+                          return _i18n()["coWorking"]["homeTypeError"];
+                        }
+                        return null;
+                      },
+                      langPath: _i18n()["coWorking"],
+                      items: CoWorkingRoomType.values
+                          .map((CoWorkingRoomType e) =>
+                              e.toFirebaseFormatString())
+                          .toList(),
+                      value: viewController.additionalRooms[index]["roomType"],
+                      onChanged: (String? newRoomType) {
+                        if (newRoomType != null) {
+                          viewController.additionalRooms[index]["roomType"] =
+                              newRoomType
+                                  .toCoWorkingRoomType()
+                                  .toFirebaseFormatString();
+                          mezDbgPrint(
+                              "newRoomType: ${viewController.additionalRooms[index]["roomType"]}");
+                        }
+                      },
+                      labelText: _i18n()["coWorking"]["homeType"],
+                    );
+                  }),
+                  Column(
                     children: [
                       Obx(
                         () => BsOpOfferingPricesList(
@@ -493,32 +570,44 @@ class _BsCoWorkingViewState extends State<BsCoWorkingView>
                       ),
                     ],
                   ),
-                ),
-              ],
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _singlePriceView() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Obx(
-          () => BsOpOfferingPricesList(
-            availbleUnits: viewController.avalbleUnits,
-            onAddPrice: (TimeUnit unit) {
-              viewController.detailsController.addPriceTimeUnit(timeUnit: unit);
+                  if (viewController.additionalRooms[index]["roomType"]
+                          .toString()
+                          .toCoWorkingRoomType() !=
+                      CoWorkingRoomType.PrivateRoom)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        smallSepartor,
+                        Text(
+                          "Number of desk",
+                          style: context.textTheme.bodyLarge,
+                        ),
+                        TextField(
+                          controller: viewController.additionalRooms[index]
+                              ["deskController"],
+                          keyboardType: TextInputType.number,
+                        ),
+                        smallSepartor,
+                        Text(
+                          "Surface area",
+                          style: context.textTheme.bodyLarge,
+                        ),
+                        TextField(
+                          controller: viewController.additionalRooms[index]
+                              ["areaController"],
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            suffix: Text("Sq ft"),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              );
             },
-            onRemovePrice: (TimeUnit unit) {
-              viewController.detailsController.removeTimeUnit(unit);
-            },
-            seletedPrices: viewController.detailsController.priceTimeUnitMap,
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }

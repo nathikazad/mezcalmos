@@ -27166,6 +27166,20 @@ const documentNodeMutationupdateDeliveryOrder = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'customer_offer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'counter_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -27283,6 +27297,8 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
     this.estimated_arrival_at_pickup_time,
     this.service_provider_review_by_driver_id,
     this.customer_review_by_driver_id,
+    this.customer_offer,
+    this.counter_offers,
     required this.$__typename,
   });
 
@@ -27295,6 +27311,8 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
     final l$service_provider_review_by_driver_id =
         json['service_provider_review_by_driver_id'];
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
+    final l$customer_offer = json['customer_offer'];
+    final l$counter_offers = json['counter_offers'];
     final l$$__typename = json['__typename'];
     return Mutation$updateDeliveryOrder$update_delivery_order_by_pk(
       estimated_arrival_at_dropoff_time:
@@ -27304,6 +27322,10 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
       service_provider_review_by_driver_id:
           (l$service_provider_review_by_driver_id as int?),
       customer_review_by_driver_id: (l$customer_review_by_driver_id as int?),
+      customer_offer:
+          l$customer_offer == null ? null : moneyFromJson(l$customer_offer),
+      counter_offers:
+          l$counter_offers == null ? null : mapFromJson(l$counter_offers),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -27315,6 +27337,10 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
   final int? service_provider_review_by_driver_id;
 
   final int? customer_review_by_driver_id;
+
+  final double? customer_offer;
+
+  final dynamic? counter_offers;
 
   final String $__typename;
 
@@ -27334,6 +27360,12 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
     _resultData['customer_review_by_driver_id'] =
         l$customer_review_by_driver_id;
+    final l$customer_offer = customer_offer;
+    _resultData['customer_offer'] =
+        l$customer_offer == null ? null : moneyToJson(l$customer_offer);
+    final l$counter_offers = counter_offers;
+    _resultData['counter_offers'] =
+        l$counter_offers == null ? null : mapToJson(l$counter_offers);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -27347,12 +27379,16 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
     final l$service_provider_review_by_driver_id =
         service_provider_review_by_driver_id;
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
+    final l$customer_offer = customer_offer;
+    final l$counter_offers = counter_offers;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$estimated_arrival_at_dropoff_time,
       l$estimated_arrival_at_pickup_time,
       l$service_provider_review_by_driver_id,
       l$customer_review_by_driver_id,
+      l$customer_offer,
+      l$counter_offers,
       l$$__typename,
     ]);
   }
@@ -27395,6 +27431,16 @@ class Mutation$updateDeliveryOrder$update_delivery_order_by_pk {
     if (l$customer_review_by_driver_id != lOther$customer_review_by_driver_id) {
       return false;
     }
+    final l$customer_offer = customer_offer;
+    final lOther$customer_offer = other.customer_offer;
+    if (l$customer_offer != lOther$customer_offer) {
+      return false;
+    }
+    final l$counter_offers = counter_offers;
+    final lOther$counter_offers = other.counter_offers;
+    if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -27432,6 +27478,8 @@ abstract class CopyWith$Mutation$updateDeliveryOrder$update_delivery_order_by_pk
     String? estimated_arrival_at_pickup_time,
     int? service_provider_review_by_driver_id,
     int? customer_review_by_driver_id,
+    double? customer_offer,
+    dynamic? counter_offers,
     String? $__typename,
   });
 }
@@ -27458,6 +27506,8 @@ class _CopyWithImpl$Mutation$updateDeliveryOrder$update_delivery_order_by_pk<
     Object? estimated_arrival_at_pickup_time = _undefined,
     Object? service_provider_review_by_driver_id = _undefined,
     Object? customer_review_by_driver_id = _undefined,
+    Object? customer_offer = _undefined,
+    Object? counter_offers = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateDeliveryOrder$update_delivery_order_by_pk(
@@ -27476,6 +27526,12 @@ class _CopyWithImpl$Mutation$updateDeliveryOrder$update_delivery_order_by_pk<
         customer_review_by_driver_id: customer_review_by_driver_id == _undefined
             ? _instance.customer_review_by_driver_id
             : (customer_review_by_driver_id as int?),
+        customer_offer: customer_offer == _undefined
+            ? _instance.customer_offer
+            : (customer_offer as double?),
+        counter_offers: counter_offers == _undefined
+            ? _instance.counter_offers
+            : (counter_offers as dynamic?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -27497,6 +27553,8 @@ class _CopyWithStubImpl$Mutation$updateDeliveryOrder$update_delivery_order_by_pk
     String? estimated_arrival_at_pickup_time,
     int? service_provider_review_by_driver_id,
     int? customer_review_by_driver_id,
+    double? customer_offer,
+    dynamic? counter_offers,
     String? $__typename,
   }) =>
       _res;
@@ -33685,6 +33743,1037 @@ class _CopyWithStubImpl$Subscription$listen_driver_order_prices$delivery_order_b
     double? delivery_cost,
     double? customer_offer,
     double? package_cost_comp,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Subscription$listenOnOrderOffers {
+  factory Variables$Subscription$listenOnOrderOffers({required int orderId}) =>
+      Variables$Subscription$listenOnOrderOffers._({
+        r'orderId': orderId,
+      });
+
+  Variables$Subscription$listenOnOrderOffers._(this._$data);
+
+  factory Variables$Subscription$listenOnOrderOffers.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    return Variables$Subscription$listenOnOrderOffers._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$listenOnOrderOffers<
+          Variables$Subscription$listenOnOrderOffers>
+      get copyWith => CopyWith$Variables$Subscription$listenOnOrderOffers(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$listenOnOrderOffers) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    return Object.hashAll([l$orderId]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$listenOnOrderOffers<TRes> {
+  factory CopyWith$Variables$Subscription$listenOnOrderOffers(
+    Variables$Subscription$listenOnOrderOffers instance,
+    TRes Function(Variables$Subscription$listenOnOrderOffers) then,
+  ) = _CopyWithImpl$Variables$Subscription$listenOnOrderOffers;
+
+  factory CopyWith$Variables$Subscription$listenOnOrderOffers.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listenOnOrderOffers;
+
+  TRes call({int? orderId});
+}
+
+class _CopyWithImpl$Variables$Subscription$listenOnOrderOffers<TRes>
+    implements CopyWith$Variables$Subscription$listenOnOrderOffers<TRes> {
+  _CopyWithImpl$Variables$Subscription$listenOnOrderOffers(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$listenOnOrderOffers _instance;
+
+  final TRes Function(Variables$Subscription$listenOnOrderOffers) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? orderId = _undefined}) =>
+      _then(Variables$Subscription$listenOnOrderOffers._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$listenOnOrderOffers<TRes>
+    implements CopyWith$Variables$Subscription$listenOnOrderOffers<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listenOnOrderOffers(this._res);
+
+  TRes _res;
+
+  call({int? orderId}) => _res;
+}
+
+class Subscription$listenOnOrderOffers {
+  Subscription$listenOnOrderOffers({
+    this.delivery_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenOnOrderOffers.fromJson(Map<String, dynamic> json) {
+    final l$delivery_order_by_pk = json['delivery_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenOnOrderOffers(
+      delivery_order_by_pk: l$delivery_order_by_pk == null
+          ? null
+          : Subscription$listenOnOrderOffers$delivery_order_by_pk.fromJson(
+              (l$delivery_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Subscription$listenOnOrderOffers$delivery_order_by_pk?
+      delivery_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    _resultData['delivery_order_by_pk'] = l$delivery_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listenOnOrderOffers) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    final lOther$delivery_order_by_pk = other.delivery_order_by_pk;
+    if (l$delivery_order_by_pk != lOther$delivery_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenOnOrderOffers
+    on Subscription$listenOnOrderOffers {
+  CopyWith$Subscription$listenOnOrderOffers<Subscription$listenOnOrderOffers>
+      get copyWith => CopyWith$Subscription$listenOnOrderOffers(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenOnOrderOffers<TRes> {
+  factory CopyWith$Subscription$listenOnOrderOffers(
+    Subscription$listenOnOrderOffers instance,
+    TRes Function(Subscription$listenOnOrderOffers) then,
+  ) = _CopyWithImpl$Subscription$listenOnOrderOffers;
+
+  factory CopyWith$Subscription$listenOnOrderOffers.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$listenOnOrderOffers;
+
+  TRes call({
+    Subscription$listenOnOrderOffers$delivery_order_by_pk? delivery_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk;
+}
+
+class _CopyWithImpl$Subscription$listenOnOrderOffers<TRes>
+    implements CopyWith$Subscription$listenOnOrderOffers<TRes> {
+  _CopyWithImpl$Subscription$listenOnOrderOffers(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenOnOrderOffers _instance;
+
+  final TRes Function(Subscription$listenOnOrderOffers) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listenOnOrderOffers(
+        delivery_order_by_pk: delivery_order_by_pk == _undefined
+            ? _instance.delivery_order_by_pk
+            : (delivery_order_by_pk
+                as Subscription$listenOnOrderOffers$delivery_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk {
+    final local$delivery_order_by_pk = _instance.delivery_order_by_pk;
+    return local$delivery_order_by_pk == null
+        ? CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk(
+            local$delivery_order_by_pk, (e) => call(delivery_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenOnOrderOffers<TRes>
+    implements CopyWith$Subscription$listenOnOrderOffers<TRes> {
+  _CopyWithStubImpl$Subscription$listenOnOrderOffers(this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$listenOnOrderOffers$delivery_order_by_pk? delivery_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk =>
+          CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk.stub(
+              _res);
+}
+
+const documentNodeSubscriptionlistenOnOrderOffers = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'listenOnOrderOffers'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'orderId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'counter_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$listenOnOrderOffers _parserFn$Subscription$listenOnOrderOffers(
+        Map<String, dynamic> data) =>
+    Subscription$listenOnOrderOffers.fromJson(data);
+
+class Options$Subscription$listenOnOrderOffers
+    extends graphql.SubscriptionOptions<Subscription$listenOnOrderOffers> {
+  Options$Subscription$listenOnOrderOffers({
+    String? operationName,
+    required Variables$Subscription$listenOnOrderOffers variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlistenOnOrderOffers,
+          parserFn: _parserFn$Subscription$listenOnOrderOffers,
+        );
+}
+
+class WatchOptions$Subscription$listenOnOrderOffers
+    extends graphql.WatchQueryOptions<Subscription$listenOnOrderOffers> {
+  WatchOptions$Subscription$listenOnOrderOffers({
+    String? operationName,
+    required Variables$Subscription$listenOnOrderOffers variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlistenOnOrderOffers,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$listenOnOrderOffers,
+        );
+}
+
+class FetchMoreOptions$Subscription$listenOnOrderOffers
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$listenOnOrderOffers({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$listenOnOrderOffers variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionlistenOnOrderOffers,
+        );
+}
+
+extension ClientExtension$Subscription$listenOnOrderOffers
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$listenOnOrderOffers>>
+      subscribe$listenOnOrderOffers(
+              Options$Subscription$listenOnOrderOffers options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$listenOnOrderOffers>
+      watchSubscription$listenOnOrderOffers(
+              WatchOptions$Subscription$listenOnOrderOffers options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$listenOnOrderOffers$delivery_order_by_pk {
+  Subscription$listenOnOrderOffers$delivery_order_by_pk({
+    this.counter_offers,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenOnOrderOffers$delivery_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$counter_offers = json['counter_offers'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenOnOrderOffers$delivery_order_by_pk(
+      counter_offers:
+          l$counter_offers == null ? null : mapFromJson(l$counter_offers),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? counter_offers;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$counter_offers = counter_offers;
+    _resultData['counter_offers'] =
+        l$counter_offers == null ? null : mapToJson(l$counter_offers);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$counter_offers = counter_offers;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$counter_offers,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listenOnOrderOffers$delivery_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$counter_offers = counter_offers;
+    final lOther$counter_offers = other.counter_offers;
+    if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenOnOrderOffers$delivery_order_by_pk
+    on Subscription$listenOnOrderOffers$delivery_order_by_pk {
+  CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<
+          Subscription$listenOnOrderOffers$delivery_order_by_pk>
+      get copyWith =>
+          CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<
+    TRes> {
+  factory CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk(
+    Subscription$listenOnOrderOffers$delivery_order_by_pk instance,
+    TRes Function(Subscription$listenOnOrderOffers$delivery_order_by_pk) then,
+  ) = _CopyWithImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk;
+
+  factory CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk;
+
+  TRes call({
+    dynamic? counter_offers,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk<TRes>
+    implements
+        CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<TRes> {
+  _CopyWithImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenOnOrderOffers$delivery_order_by_pk _instance;
+
+  final TRes Function(Subscription$listenOnOrderOffers$delivery_order_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? counter_offers = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listenOnOrderOffers$delivery_order_by_pk(
+        counter_offers: counter_offers == _undefined
+            ? _instance.counter_offers
+            : (counter_offers as dynamic?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk<
+        TRes>
+    implements
+        CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<TRes> {
+  _CopyWithStubImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? counter_offers,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getOrderOffers {
+  factory Variables$Query$getOrderOffers({required int orderId}) =>
+      Variables$Query$getOrderOffers._({
+        r'orderId': orderId,
+      });
+
+  Variables$Query$getOrderOffers._(this._$data);
+
+  factory Variables$Query$getOrderOffers.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    return Variables$Query$getOrderOffers._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getOrderOffers<Variables$Query$getOrderOffers>
+      get copyWith => CopyWith$Variables$Query$getOrderOffers(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getOrderOffers) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    return Object.hashAll([l$orderId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getOrderOffers<TRes> {
+  factory CopyWith$Variables$Query$getOrderOffers(
+    Variables$Query$getOrderOffers instance,
+    TRes Function(Variables$Query$getOrderOffers) then,
+  ) = _CopyWithImpl$Variables$Query$getOrderOffers;
+
+  factory CopyWith$Variables$Query$getOrderOffers.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getOrderOffers;
+
+  TRes call({int? orderId});
+}
+
+class _CopyWithImpl$Variables$Query$getOrderOffers<TRes>
+    implements CopyWith$Variables$Query$getOrderOffers<TRes> {
+  _CopyWithImpl$Variables$Query$getOrderOffers(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getOrderOffers _instance;
+
+  final TRes Function(Variables$Query$getOrderOffers) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? orderId = _undefined}) =>
+      _then(Variables$Query$getOrderOffers._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getOrderOffers<TRes>
+    implements CopyWith$Variables$Query$getOrderOffers<TRes> {
+  _CopyWithStubImpl$Variables$Query$getOrderOffers(this._res);
+
+  TRes _res;
+
+  call({int? orderId}) => _res;
+}
+
+class Query$getOrderOffers {
+  Query$getOrderOffers({
+    this.delivery_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getOrderOffers.fromJson(Map<String, dynamic> json) {
+    final l$delivery_order_by_pk = json['delivery_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getOrderOffers(
+      delivery_order_by_pk: l$delivery_order_by_pk == null
+          ? null
+          : Query$getOrderOffers$delivery_order_by_pk.fromJson(
+              (l$delivery_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getOrderOffers$delivery_order_by_pk? delivery_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    _resultData['delivery_order_by_pk'] = l$delivery_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getOrderOffers) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    final lOther$delivery_order_by_pk = other.delivery_order_by_pk;
+    if (l$delivery_order_by_pk != lOther$delivery_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getOrderOffers on Query$getOrderOffers {
+  CopyWith$Query$getOrderOffers<Query$getOrderOffers> get copyWith =>
+      CopyWith$Query$getOrderOffers(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getOrderOffers<TRes> {
+  factory CopyWith$Query$getOrderOffers(
+    Query$getOrderOffers instance,
+    TRes Function(Query$getOrderOffers) then,
+  ) = _CopyWithImpl$Query$getOrderOffers;
+
+  factory CopyWith$Query$getOrderOffers.stub(TRes res) =
+      _CopyWithStubImpl$Query$getOrderOffers;
+
+  TRes call({
+    Query$getOrderOffers$delivery_order_by_pk? delivery_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getOrderOffers$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk;
+}
+
+class _CopyWithImpl$Query$getOrderOffers<TRes>
+    implements CopyWith$Query$getOrderOffers<TRes> {
+  _CopyWithImpl$Query$getOrderOffers(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getOrderOffers _instance;
+
+  final TRes Function(Query$getOrderOffers) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getOrderOffers(
+        delivery_order_by_pk: delivery_order_by_pk == _undefined
+            ? _instance.delivery_order_by_pk
+            : (delivery_order_by_pk
+                as Query$getOrderOffers$delivery_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getOrderOffers$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk {
+    final local$delivery_order_by_pk = _instance.delivery_order_by_pk;
+    return local$delivery_order_by_pk == null
+        ? CopyWith$Query$getOrderOffers$delivery_order_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getOrderOffers$delivery_order_by_pk(
+            local$delivery_order_by_pk, (e) => call(delivery_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getOrderOffers<TRes>
+    implements CopyWith$Query$getOrderOffers<TRes> {
+  _CopyWithStubImpl$Query$getOrderOffers(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getOrderOffers$delivery_order_by_pk? delivery_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getOrderOffers$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk =>
+          CopyWith$Query$getOrderOffers$delivery_order_by_pk.stub(_res);
+}
+
+const documentNodeQuerygetOrderOffers = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getOrderOffers'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'orderId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'counter_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getOrderOffers _parserFn$Query$getOrderOffers(
+        Map<String, dynamic> data) =>
+    Query$getOrderOffers.fromJson(data);
+
+class Options$Query$getOrderOffers
+    extends graphql.QueryOptions<Query$getOrderOffers> {
+  Options$Query$getOrderOffers({
+    String? operationName,
+    required Variables$Query$getOrderOffers variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetOrderOffers,
+          parserFn: _parserFn$Query$getOrderOffers,
+        );
+}
+
+class WatchOptions$Query$getOrderOffers
+    extends graphql.WatchQueryOptions<Query$getOrderOffers> {
+  WatchOptions$Query$getOrderOffers({
+    String? operationName,
+    required Variables$Query$getOrderOffers variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetOrderOffers,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getOrderOffers,
+        );
+}
+
+class FetchMoreOptions$Query$getOrderOffers extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getOrderOffers({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getOrderOffers variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetOrderOffers,
+        );
+}
+
+extension ClientExtension$Query$getOrderOffers on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getOrderOffers>> query$getOrderOffers(
+          Options$Query$getOrderOffers options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$getOrderOffers> watchQuery$getOrderOffers(
+          WatchOptions$Query$getOrderOffers options) =>
+      this.watchQuery(options);
+  void writeQuery$getOrderOffers({
+    required Query$getOrderOffers data,
+    required Variables$Query$getOrderOffers variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetOrderOffers),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getOrderOffers? readQuery$getOrderOffers({
+    required Variables$Query$getOrderOffers variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(document: documentNodeQuerygetOrderOffers),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getOrderOffers.fromJson(result);
+  }
+}
+
+class Query$getOrderOffers$delivery_order_by_pk {
+  Query$getOrderOffers$delivery_order_by_pk({
+    this.counter_offers,
+    required this.$__typename,
+  });
+
+  factory Query$getOrderOffers$delivery_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$counter_offers = json['counter_offers'];
+    final l$$__typename = json['__typename'];
+    return Query$getOrderOffers$delivery_order_by_pk(
+      counter_offers:
+          l$counter_offers == null ? null : mapFromJson(l$counter_offers),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? counter_offers;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$counter_offers = counter_offers;
+    _resultData['counter_offers'] =
+        l$counter_offers == null ? null : mapToJson(l$counter_offers);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$counter_offers = counter_offers;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$counter_offers,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getOrderOffers$delivery_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$counter_offers = counter_offers;
+    final lOther$counter_offers = other.counter_offers;
+    if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getOrderOffers$delivery_order_by_pk
+    on Query$getOrderOffers$delivery_order_by_pk {
+  CopyWith$Query$getOrderOffers$delivery_order_by_pk<
+          Query$getOrderOffers$delivery_order_by_pk>
+      get copyWith => CopyWith$Query$getOrderOffers$delivery_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getOrderOffers$delivery_order_by_pk<TRes> {
+  factory CopyWith$Query$getOrderOffers$delivery_order_by_pk(
+    Query$getOrderOffers$delivery_order_by_pk instance,
+    TRes Function(Query$getOrderOffers$delivery_order_by_pk) then,
+  ) = _CopyWithImpl$Query$getOrderOffers$delivery_order_by_pk;
+
+  factory CopyWith$Query$getOrderOffers$delivery_order_by_pk.stub(TRes res) =
+      _CopyWithStubImpl$Query$getOrderOffers$delivery_order_by_pk;
+
+  TRes call({
+    dynamic? counter_offers,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getOrderOffers$delivery_order_by_pk<TRes>
+    implements CopyWith$Query$getOrderOffers$delivery_order_by_pk<TRes> {
+  _CopyWithImpl$Query$getOrderOffers$delivery_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getOrderOffers$delivery_order_by_pk _instance;
+
+  final TRes Function(Query$getOrderOffers$delivery_order_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? counter_offers = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getOrderOffers$delivery_order_by_pk(
+        counter_offers: counter_offers == _undefined
+            ? _instance.counter_offers
+            : (counter_offers as dynamic?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getOrderOffers$delivery_order_by_pk<TRes>
+    implements CopyWith$Query$getOrderOffers$delivery_order_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getOrderOffers$delivery_order_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? counter_offers,
     String? $__typename,
   }) =>
       _res;

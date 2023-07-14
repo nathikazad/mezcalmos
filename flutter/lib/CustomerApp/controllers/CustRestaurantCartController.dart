@@ -160,22 +160,25 @@ class CustRestaurantCartController extends GetxController {
     return null;
   }
 
-  Future<num?> checkout({String? stripePaymentId}) async {
+  Future<num?> checkout(
+      {String? stripePaymentId, required List<int> selectedComapnies}) async {
     final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
     if (nameAndImageChecker == true) {
       try {
         final Map<String, dynamic> payload = _contructCart(stripePaymentId);
         final String address = cart.value!.toLocation!.address;
-        mezDbgPrint("[+] -> payload :: $payload");
+        mezDbgPrint("[+] -> payload :: ${selectedComapnies.first}");
         final cloudFunctionModels.CheckoutResponse res =
             await CloudFunctions.restaurant3_checkoutCart(
+                chosenCompanies: selectedComapnies,
                 customerAppType: cloudFunctionModels.CustomerAppType.Native,
                 customerLocation: cloudFunctionModels.Location(
                     lat: cart.value!.toLocation!.latitude,
                     lng: cart.value!.toLocation!.longitude,
                     address: cart.value!.toLocation!.address),
                 // deliveryCost: cart.value!.shippingCost!,
+                customerDeliveryOffer: cart.value!.shippingCost!,
                 paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
                 notes: cart.value?.notes,
                 restaurantId: cart.value!.restaurant!.info.hasuraId,

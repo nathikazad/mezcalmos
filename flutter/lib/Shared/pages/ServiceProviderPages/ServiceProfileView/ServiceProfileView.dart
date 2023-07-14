@@ -1,10 +1,13 @@
 // ignore_for_file: unawaited_futures
 
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
@@ -22,15 +25,13 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
-import 'dart:io';
 import 'package:share_plus_platform_interface/share_plus_platform_interface.dart'
     as share;
+import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["ServiceProfileView"];
@@ -209,16 +210,17 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     ),
                                   ],
                                 ),
-                                trailingWidget: Builder(builder: (context) {
+                                trailingWidget:
+                                    Builder(builder: (BuildContext context) {
                                   bool toggle =
                                       _viewController.service.onlineOrdering;
-                                  return StatefulBuilder(
-                                      builder: (context, setState) {
+                                  return StatefulBuilder(builder:
+                                      (BuildContext context, setState) {
                                     return Switch(
                                       materialTapTargetSize:
                                           MaterialTapTargetSize.shrinkWrap,
                                       activeColor: primaryBlueColor,
-                                      onChanged: (value) {
+                                      onChanged: (bool value) {
                                         setState(() {
                                           toggle = value;
                                         });
@@ -449,7 +451,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
         topLeft: Radius.circular(15),
         topRight: Radius.circular(15),
       )),
-      builder: (context) {
+      builder: (BuildContext context) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

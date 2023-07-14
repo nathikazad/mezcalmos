@@ -107,6 +107,7 @@
           "saturday": "Sábado",
           "sunday": "Domingo"
         },
+        "officeSpace": "Espacio de oficina",
         "services": "Servicios",
         "service": "Servicio",
         "orders": "Pedidos",
@@ -1644,7 +1645,7 @@
             "unit": "unidad"
           },
           "cusShowBusinessFilerSheet": {
-            "canBookOnline": "Muestre solo artículos que se pueden reservar en línea.",
+            "canBookOnline": "Mostrar negocios solo con pedidos en línea",
             "showOnlyOpenRestaurants": "Show only open restaurants",
             "confirm": "Confirmar",
             "cancel": "Cancelar",

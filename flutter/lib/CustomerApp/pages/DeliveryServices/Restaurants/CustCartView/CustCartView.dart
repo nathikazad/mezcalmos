@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCar
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -16,7 +17,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/MezOrderDeliverySelector.dart';
 
 class ViewCartScreen extends StatefulWidget {
   static Future<void> navigate() {
@@ -73,6 +74,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   CartItemsBuilder(
                     viewController: viewController,
                   ),
+
                 Form(
                   key: viewController.formKey,
                   child: Column(
@@ -96,14 +98,31 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 15,
-                ),
+
                 // Container(
                 //   child: PaymentMethodPicker(
                 //     viewCartController: viewController,
                 //   ),
                 // ),
+
+                Obx(
+                  () => CustOrderDeliverySelector(
+                    onSelectionUpdate: (List<int> value) {
+                      viewController.selectedCompanies = value;
+                    },
+                    distanceInKm: viewController.orderDistanceInKm.value,
+                    onEstDeliveryPriceChange: (double value) {
+                      viewController.setShippingCost(value);
+                    },
+                  ),
+                ),
+
+                CardSummaryCard(
+                  controller: viewController,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
                 Container(
                   //alignment: Alignment.centerLeft,
                   child: Text("${_i18n()['notesTitle']}",
@@ -113,15 +132,9 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   height: 8,
                 ),
                 _notesComponent(context),
-                SizedBox(
-                  height: 20,
-                ),
-                CardSummaryCard(
-                  controller: viewController,
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
+                bigSeperator,
+                bigSeperator,
+                bigSeperator,
               ],
             ),
           );
@@ -181,7 +194,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           style: context.txt.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
           controller: viewController.noteText,
           maxLines: 7,
-          minLines: 2,
+          minLines: 4,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(
               bottom: MediaQuery.of(context).viewInsets.bottom / 5,

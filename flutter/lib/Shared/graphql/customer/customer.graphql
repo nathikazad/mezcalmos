@@ -124,14 +124,16 @@ mutation updateLaundryOrderReviewId($orderId: Int!, $reviewId: Int!) {
     review_id
   }
 }
+
 query getCustomerOrdersByType(
   $custId: Int!
   $orderType: String!
   $limit: Int
   $offset: Int
+  $inProcess: Boolean
 ) {
   customer_minimal_orders_aggregate(
-    where: { order_type: { _eq: $orderType } }
+    where: { order_type: { _eq: $orderType }, in_process: { _eq: $inProcess } }
     args: { cus_id: $custId }
     offset: $offset
     limit: $limit
