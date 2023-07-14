@@ -52,16 +52,23 @@ class _CustCourierServicesListViewState
           onClick: MezRouter.back),
       body: Obx(
         () {
-          if (_controller.isLoading == false) {
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _searchCoomponent(context),
-                  _sortingSwitcher(),
-                  // _filterButton(context),
-                  (_controller.filteredServices.isEmpty)
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _searchCoomponent(context),
+                _sortingSwitcher(),
+                // _filterButton(context),
+                Obx(() {
+                  if (_controller.isLoading.value) {
+                    return Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(16),
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return (_controller.filteredServices.isEmpty)
                       ? NoOpenServiceComponent(
                           showOnlyOpen: _controller.showOnlyOpen.value,
                           onClick: () {
@@ -75,16 +82,11 @@ class _CustCourierServicesListViewState
                               (int index) => _companyCard(
                                   _controller.filteredServices[index],
                                   context)),
-                        )
-                ],
-              ),
-            );
-          } else
-            return Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(16),
-              child: CircularProgressIndicator(),
-            );
+                        );
+                })
+              ],
+            ),
+          );
         },
       ),
     );

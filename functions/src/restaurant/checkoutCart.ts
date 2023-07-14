@@ -23,8 +23,8 @@ import { notifyDeliveryDrivers } from '../shared/helper';
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
   customerLocation: Location,
-  customerDeliveryOffer?: number,
-  chosenCompanies?: Array<number>,
+  customerDeliveryOffer: number,
+  chosenCompanies: Array<number>,
   paymentType: PaymentType,
   notes?: string,
   restaurantId: number,

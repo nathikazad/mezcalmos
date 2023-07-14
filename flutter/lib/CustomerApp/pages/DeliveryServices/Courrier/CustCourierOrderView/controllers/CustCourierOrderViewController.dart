@@ -11,9 +11,11 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/courier_order/hsCourierOrder.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/services/DeliveryOfferHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -40,11 +42,34 @@ class CustCourierOrderViewController {
     return _order.value!.status;
   }
 
+  bool get showOffers {
+    return order.counterOffers?.isNotEmpty == true &&
+        order.counterOffers!.entries
+                .where((MapEntry<int, cModels.CounterOffer> element) =>
+                    element.value.isExpired == false &&
+                    element.value.isRequested == true)
+                .isNotEmpty ==
+            true &&
+        order.isDriverAssigned == false;
+  }
+
+  Map<int, cModels.CounterOffer> get counterOffers {
+    return order.counterOffers!.entries
+        .where((MapEntry<int, cModels.CounterOffer> element) =>
+            element.value.isExpired == false &&
+            element.value.isRequested == true)
+        .fold({}, (Map<int, cModels.CounterOffer> map,
+            MapEntry<int, cModels.CounterOffer> entry) {
+      map[entry.key] = entry.value;
+      return map;
+    });
+  }
+
   // streams //
   StreamSubscription<CourierOrder?>? orderStream;
   String? subscriptionId;
 
-  get sawNotifDrivers => null;
+  Null get sawNotifDrivers => null;
 
   // init
   Future<void> init(
@@ -249,7 +274,49 @@ class CustCourierOrderViewController {
     _order.close();
   }
 
-  acceptOffer({required int id}) {}
+  Future<void> acceptOffer({required int id}) async {
+    mezDbgPrint("Assigning to order : ${order.deliveryOrderId!}");
+    MapEntry<int, cModels.CounterOffer>? offer = order.counterOffers?.entries
+        .firstWhere(
+            (MapEntry<int, cModels.CounterOffer> element) => element.key == id);
+    if (offer == null) {
+      return;
+    }
+    if (offer.value.isExpired) {
+      showErrorSnackBar(errorText: "This offer have been expired");
+      return;
+    }
+    try {
+      final cModels.AssignDriverResponse res =
+          await CloudFunctions.delivery3_assignDriver(
+              deliveryOrderId: order.deliveryOrderId!, deliveryDriverId: id);
+      mezDbgPrint("response ===>${res.toFirebaseFormattedJson()}");
+      if (res.success) {
+        showSavedSnackBar(
+            title: "Picked", subtitle: "Driver picked successfully");
+      } else {
+        mezDbgPrint("🔴 Error =>${res.error} ");
+        mezDbgPrint("🔴 Error =>${res.unhandledError} ");
+      }
+    } on FirebaseFunctionsException catch (e) {
+      mezDbgPrint(e);
+      showErrorSnackBar(errorText: e.message.toString());
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
 
-  rejectOffer({required int id}) {}
+  Future<void> rejectOffer({required int id}) async {
+    Map<int, cModels.CounterOffer>? offers = _order.value!.counterOffers;
+    if (offers != null) {
+      offers[id]?.status = cModels.CounterOfferStatus.Rejected;
+      final bool res = await update_delivery_order_offers(
+          offers: offers, orderId: order.deliveryOrderId!);
+      if (res == true) {
+        showSavedSnackBar(
+            title: "Rejected", subtitle: "Offer rejected successfully");
+      }
+    }
+  }
 }

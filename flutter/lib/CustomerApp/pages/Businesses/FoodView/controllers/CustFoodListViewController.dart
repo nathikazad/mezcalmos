@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
@@ -111,7 +112,7 @@ class CustFoodListViewController {
           "👋 _fetchRentals called selected categories : $selectedCategories \n ferchSize : $servicesFetchSize \n offset: $_servicesCurrentOffset");
       List<ServiceCard> newList = await get_service_by_category(
         categories1: serviceCategory,
-        distance: 1000000000000,
+        distance: defaultDistance,
         fromLocation: _fromLocation!,
         tags: [],
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],

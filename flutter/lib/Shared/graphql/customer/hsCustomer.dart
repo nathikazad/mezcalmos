@@ -302,6 +302,7 @@ Future<int?> addDriverOrderReviewId(
 Future<int?> get_customer_last_order_id(
     {required int customerId,
     required OrderType orderType,
+    bool? inProcess,
     int? limit,
     int? offset}) async {
   QueryResult<Query$getCustomerOrdersByType> res = await _graphClient
@@ -309,6 +310,7 @@ Future<int?> get_customer_last_order_id(
           fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Query$getCustomerOrdersByType(
               custId: customerId,
+              inProcess: inProcess,
               limit: limit,
               offset: offset,
               orderType: orderType.toFirebaseFormatString())));
@@ -327,6 +329,7 @@ Future<int?> get_customer_last_order_id(
 Future<int?> get_customer_orders_count(
     {required int customerId,
     required OrderType orderType,
+    bool? inProcess,
     int? limit,
     int? offset}) async {
   QueryResult<Query$getCustomerOrdersByType> res = await _graphClient
@@ -334,6 +337,7 @@ Future<int?> get_customer_orders_count(
           fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Query$getCustomerOrdersByType(
               custId: customerId,
+              inProcess: inProcess,
               limit: limit,
               offset: offset,
               orderType: orderType.toFirebaseFormatString())));

@@ -56,19 +56,20 @@ class CustCartViewController {
   //   return pickerChoice.value!.entries.first.key.toCardChoice();
   // }
 
+  RxDouble estDeliveryCost = RxDouble(40);
+
   DeliveryCost? get deliveryCost {
     return cart.restaurant?.deliveryCost;
   }
 
   RxBool isShippingSet = RxBool(false);
   RxBool hasData = RxBool(false);
-  num _orderDistanceInKm = 0;
+  RxnDouble orderDistanceInKm = RxnDouble();
+  List<int> selectedCompanies = [];
 
   Cart get cart => cartController.cart.value ?? Cart();
 
   Rxn<Cart> get _cartRxn => cartController.cart;
-
-  num get getOrderDistance => _orderDistanceInKm;
 
   // init //
   Future<void> init() async {
@@ -245,7 +246,8 @@ class CustCartViewController {
       //         await cartController.checkout(stripePaymentId: stripePaymentId);
       //   }
       // } else {
-      newOrderId = await cartController.checkout(stripePaymentId: null);
+      newOrderId = await cartController.checkout(
+          stripePaymentId: null, selectedComapnies: selectedCompanies);
       // }
 
       if (newOrderId != null) {
@@ -356,7 +358,7 @@ class CustCartViewController {
     await cartController.deleteCartItem(itemId);
   }
 
-  Future<bool> updateShippingPrice() async {
+  Future<void> updateShippingPrice() async {
     isShippingSet.value = false;
 
     if (cart.toLocation != null && cart.restaurant != null) {
@@ -366,51 +368,62 @@ class CustCartViewController {
       );
 
       if (routeInfo != null) {
-        _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
-        if (_orderDistanceInKm <= 10) {
-          final num shippingCost =
-              (deliveryCost!.costPerKm * (_orderDistanceInKm)) +
-                  getShippingCostFromBase();
-          if (shippingCost < deliveryCost!.minimumCost) {
-            mezDbgPrint(
-                " shipping cost is less than ${deliveryCost!.minimumCost} : $shippingCost ");
-            cart.shippingCost = deliveryCost!.minimumCost.ceil();
-            _cartRxn.refresh();
-          } else {
-            mezDbgPrint("Shipping cost ============>$shippingCost");
-            cart.shippingCost = shippingCost.ceil();
-            _cartRxn.refresh();
-          }
-          cart.setRouteInformation = MapHelper.RouteInformation(
-            polyline: routeInfo.encodedPolyLine,
-            distance: routeInfo.distance,
-            duration: routeInfo.duration,
-          );
+        orderDistanceInKm.value = routeInfo.distance.distanceInMeters / 1000;
+        cart.setRouteInformation = MapHelper.RouteInformation(
+          polyline: routeInfo.encodedPolyLine,
+          distance: routeInfo.distance,
+          duration: routeInfo.duration,
+        );
 
-          // await saveCart();
-          isShippingSet.value = true;
+        orderDistanceInKm.refresh();
+        // if (_orderDistanceInKm <= 10) {
+        //   final num shippingCost =
+        //       (deliveryCost!.costPerKm * (_orderDistanceInKm)) +
+        //           getShippingCostFromBase();
+        //   if (shippingCost < deliveryCost!.minimumCost) {
+        //     mezDbgPrint(
+        //         " shipping cost is less than ${deliveryCost!.minimumCost} : $shippingCost ");
+        //     cart.shippingCost = deliveryCost!.minimumCost.ceil();
+        //     _cartRxn.refresh();
+        //   } else {
+        //     mezDbgPrint("Shipping cost ============>$shippingCost");
+        //     cart.shippingCost = shippingCost.ceil();
+        //     _cartRxn.refresh();
+        //   }
+        //   cart.setRouteInformation = MapHelper.RouteInformation(
+        //     polyline: routeInfo.encodedPolyLine,
+        //     distance: routeInfo.distance,
+        //     duration: routeInfo.duration,
+        //   );
 
-          return true;
-        } else {
-          cart.shippingCost = null;
-          // await saveCart();
-          isShippingSet.value = false;
+        //   // await saveCart();
+        //   isShippingSet.value = true;
 
-          return false;
-        }
+        //   return true;
+        // } else {
+        //   cart.shippingCost = null;
+        //   // await saveCart();
+        //   isShippingSet.value = false;
+
+        //   return false;
+        // }
       } else {
         cart.shippingCost = null;
         // await saveCart();
         isShippingSet.value = false;
-        return false;
       }
     } else {
       cart.shippingCost = null;
       //   await saveCart();
       isShippingSet.value = false;
-
-      return false;
     }
+  }
+
+  void setShippingCost(double value) {
+    estDeliveryCost.value = value;
+    cart.shippingCost = value;
+    //  estDeliveryCost.refresh();
+    //  _cartRxn.refresh();
   }
 
   Future<CartItem?> incrementItem(
@@ -436,7 +449,7 @@ class CustCartViewController {
 
   void switchLocation(loc.MezLocation location) {
     _cartRxn.value?.toLocation = location;
-    _cartRxn.refresh();
+
     updateShippingPrice();
   }
 

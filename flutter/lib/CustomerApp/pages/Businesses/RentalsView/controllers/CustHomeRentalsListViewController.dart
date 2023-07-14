@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
@@ -13,7 +12,7 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
@@ -75,17 +74,17 @@ class CustHomeRentalsListViewController {
   List<HomeCard> get mapViewRentals => _rentals;
   RxList<HomeCard> _mapViewRentals = <HomeCard>[].obs;
 
-  RxSet<MezMarker> _allMarkers = <MezMarker>{}.obs;
-  RxSet<MezMarker> get allMarkers => _allMarkers;
+  RxSet<Marker> _allMarkers = <Marker>{}.obs;
+  RxSet<Marker> get allMarkers => _allMarkers;
 
-  RxSet<MezMarker> _perDayMarkers = <MezMarker>{}.obs;
-  RxSet<MezMarker> get perDayMarkers => _perDayMarkers;
+  RxSet<Marker> _perDayMarkers = <Marker>{}.obs;
+  RxSet<Marker> get perDayMarkers => _perDayMarkers;
 
-  RxSet<MezMarker> _perWeekMarkers = <MezMarker>{}.obs;
+  RxSet<Marker> _perWeekMarkers = <Marker>{}.obs;
   RxSet<Marker> get perWeekMarkers => _perWeekMarkers;
 
-  RxSet<MezMarker> _perMonthMarkers = <MezMarker>{}.obs;
-  RxSet<MezMarker> get perMonthMarkers => _perMonthMarkers;
+  RxSet<Marker> _perMonthMarkers = <Marker>{}.obs;
+  RxSet<Marker> get perMonthMarkers => _perMonthMarkers;
 
   Rx<TimeUnit> _filterTag = TimeUnit.PerDay.obs;
   TimeUnit get filterTag => _filterTag.value;
@@ -158,7 +157,7 @@ class CustHomeRentalsListViewController {
       mezDbgPrint(
           "👋 _fetchRentals called  \n ferchSize : $rentalFetchSize \n offset: $_rentalCurrentOffset");
       List<HomeCard> newList = await get_home_rentals(
-        distance: getFetchDistance,
+        distance: defaultDistance,
         fromLocation: _fromLocation!,
         withCache: false,
         offset: _rentalCurrentOffset,
@@ -188,7 +187,7 @@ class CustHomeRentalsListViewController {
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_home(
           homeType: HomeAvailabilityOption.Rent,
-          distance: getFetchDistance,
+          distance: defaultDistance,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,
@@ -236,60 +235,57 @@ class CustHomeRentalsListViewController {
     _perMonthMarkers = <MezMarker>{}.obs;
 
     for (HomeCard rental in _mapViewRentals) {
-      _allMarkers.add(MezMarker(
-        flat: true,
-        icon: await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
-            70,
-            70,
-            isBytes: true),
+      await _allMarkers.addLabelMarker(LabelMarker(
+        flat: false,
+        label: null,
+        anchor: Offset(0.5, 0.5),
+        altIconPath: mezHomeMarker,
         markerId: MarkerId(rental.id.toString()),
         onTap: () => _onSelectRentalTag(rental),
         position: LatLng(rental.location.location.lat.toDouble(),
             rental.location.location.lng.toDouble()),
       ));
-      _perDayMarkers.add(MezMarker(
-        flat: true,
-        icon: await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
-            70,
-            70,
-            isBytes: true),
-        markerId: MarkerId(rental.id.toString()),
-        onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.location.location.lat.toDouble(),
-            rental.location.location.lng.toDouble()),
-      ));
+      // _perDayMarkers.add(MezMarker(
+      //   flat: true,
+      //   icon: await bitmapDescriptorLoader(
+      //       (await cropRonded(
+      //           (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
+      //       70,
+      //       70,
+      //       isBytes: true),
+      //   markerId: MarkerId(rental.id.toString()),
+      //   onTap: () => _onSelectRentalTag(rental),
+      //   position: LatLng(rental.location.location.lat.toDouble(),
+      //       rental.location.location.lng.toDouble()),
+      // ));
 
-      _perWeekMarkers.add(MezMarker(
-        flat: true,
-        icon: await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
-            70,
-            70,
-            isBytes: true),
-        markerId: MarkerId(rental.id.toString()),
-        onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.location.location.lat.toDouble(),
-            rental.location.location.lng.toDouble()),
-      ));
+      // _perWeekMarkers.add(MezMarker(
+      //   flat: true,
+      //   icon: await bitmapDescriptorLoader(
+      //       (await cropRonded(
+      //           (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
+      //       70,
+      //       70,
+      //       isBytes: true),
+      //   markerId: MarkerId(rental.id.toString()),
+      //   onTap: () => _onSelectRentalTag(rental),
+      //   position: LatLng(rental.location.location.lat.toDouble(),
+      //       rental.location.location.lng.toDouble()),
+      // ));
 
-      _perMonthMarkers.add(MezMarker(
-        flat: true,
-        icon: await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
-            70,
-            70,
-            isBytes: true),
-        markerId: MarkerId(rental.id.toString()),
-        onTap: () => _onSelectRentalTag(rental),
-        position: LatLng(rental.location.location.lat.toDouble(),
-            rental.location.location.lng.toDouble()),
-      ));
+      // _perMonthMarkers.add(MezMarker(
+      //   flat: true,
+      //   icon: await bitmapDescriptorLoader(
+      //       (await cropRonded(
+      //           (await rootBundle.load(mezHomeMarker)).buffer.asUint8List())),
+      //       70,
+      //       70,
+      //       isBytes: true),
+      //   markerId: MarkerId(rental.id.toString()),
+      //   onTap: () => _onSelectRentalTag(rental),
+      //   position: LatLng(rental.location.location.lat.toDouble(),
+      //       rental.location.location.lng.toDouble()),
+      // ));
     }
   }
 

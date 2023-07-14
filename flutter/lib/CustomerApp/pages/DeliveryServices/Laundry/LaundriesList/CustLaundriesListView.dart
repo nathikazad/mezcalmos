@@ -97,25 +97,26 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
 
   Widget _mapView() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Obx(() => Expanded(
-                child: CustSwitchOpenService(
-                  label: '${_i18n()["showOnlyOpenLaundries"]}',
-                  showOnlyOpen: viewController.showOnlyOpen.value,
-                  onChange: (bool value) {},
-                ),
-              ))),
-                Obx(
+      Obx(() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CustSwitchOpenService(
+              label: '${_i18n()["showOnlyOpenLaundries"]}',
+              showOnlyOpen: viewController.showOnlyOpen.value,
+              onChange: (bool value) {
+                viewController.changeAlwaysOpenSwitch(value);
+              },
+            ),
+      )),
+      Obx(
         () => Expanded(
           child: MezServicesMapView(
             mGoogleMapController: viewController.mapController,
             fetchNewData: (LatLng? mapCenter, double? distance) async {
               await viewController.fetchMapViewLaundries(
                   fromLoc: mapCenter, distance: distance);
-              return viewController.allMarkers.toList();
+              return viewController.laundriesMarkers.toList();
             },
-            markers: viewController.allMarkers.value,
+            markers: viewController.laundriesMarkers.value,
           ),
         ),
       ),

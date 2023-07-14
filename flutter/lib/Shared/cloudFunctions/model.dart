@@ -804,6 +804,23 @@ factory CancelLaundryResponse.fromFirebaseFormattedJson(json) {
   }
 }
 
+class ReqDeliveryResponse {
+  bool success;
+  ReqDeliveryError? error;
+  String? unhandledError;
+  ReqDeliveryResponse(this.success, this.error, this.unhandledError);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+factory ReqDeliveryResponse.fromFirebaseFormattedJson(json) { 
+   return ReqDeliveryResponse(json["success"], json["error"]?.toString().toReqDeliveryError(), json["unhandledError"]);
+  }
+}
+
 class AssignDriverResponse {
   bool success;
   AssignDriverError? error;
@@ -1498,9 +1515,9 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 }
 
 class Offer {
-  num? id;
+  num id;
   Map<Language, String>? name;
-  int? nameId;
+  num? nameId;
   num serviceProviderId;
   ServiceProviderType serviceProviderType;
   OfferType offerType;
@@ -1510,7 +1527,7 @@ class Offer {
   String? serviceProviderName;
   String? serviceProviderImage;
   Offer({
-    required this.id, this.name, required this.serviceProviderId, required this.serviceProviderType, required this.offerType, this.couponCode, required this.details, required this.status, this.nameId});
+    required this.id, this.name, this.nameId, required this.serviceProviderId, required this.serviceProviderType, required this.offerType, this.couponCode, required this.details, required this.status, this.serviceProviderName, this.serviceProviderImage});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -1594,7 +1611,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "offerForOrder": offerForOrder,
       "offerForItems": offerForItems,
-      "discountType": discountType.toFirebaseFormatString(),
+      "discountType": discountType,
       "discountValue": discountValue,
       "minimumOrderAmount": minimumOrderAmount,
       "items": items,
@@ -3235,6 +3252,22 @@ extension ParseStringToCancelLaundryError on String {
     return CancelLaundryError.values.firstWhere(
         (CancelLaundryError cancelLaundryError) =>
             cancelLaundryError.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+
+enum ReqDeliveryError { UnhandledError, OrderNotFound, CustomerNotFound, IncorrectOrderId, IncorrectOrderStatus, LaundryStoreNotfound, OrderCreationError, NoDeliveryChatWithStoreId, NoDeliveryCompanyFound, DeliveryCompaniesHaveNoDrivers }
+extension ParseReqDeliveryErrorToString on ReqDeliveryError {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToReqDeliveryError on String {
+  ReqDeliveryError toReqDeliveryError() {
+    return ReqDeliveryError.values.firstWhere(
+        (ReqDeliveryError reqDeliveryError) =>
+            reqDeliveryError.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 

@@ -80,7 +80,7 @@ class AllServiceListViewController {
 
   Future<void> fetchServiceTree() async {
     var data = await get_service_tree(
-      distance: 1000000000,
+      distance: defaultDistance,
       lat: 15.8.toDouble(),
       lng: -97.toDouble(),
       withCache: true,

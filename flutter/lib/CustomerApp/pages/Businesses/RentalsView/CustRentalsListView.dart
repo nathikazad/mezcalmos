@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
@@ -131,64 +132,23 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
   }
 
   Widget _mapView() {
-    return Stack(
-      children: [
-        Obx(() {
-          viewController.allMarkers.isNotEmpty;
-          return GoogleMap(
-              compassEnabled: false,
-              mapToolbarEnabled: false,
-              zoomControlsEnabled: false,
-              markers: viewController.buisinessesMarkers,
-              onMapCreated: viewController.onMapCreated,
-              onCameraMove: viewController.onCameraMove,
-              initialCameraPosition: CameraPosition(
-                target: viewController.currentLocation,
-                zoom: 14,
-              ));
-        }),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Obx(
-              () => viewController.showFetchButton.value
-                  ? InkWell(
-                      onTap: () => viewController.fetchMapViewRentals(),
-                      child: Material(
-                          color: Colors.white,
-                          elevation: 1,
-                          borderRadius: BorderRadius.circular(25),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 20),
-                            child: Text(
-                              '${_i18n()['fetchHomesInThisArea']}',
-                              style: context.textTheme.bodyLarge
-                                  ?.copyWith(color: primaryBlueColor),
-                            ),
-                          )),
-                    )
-                  : SizedBox.shrink(),
-            ),
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+   
+      Obx(
+        () => Expanded(
+          child: MezServicesMapView(
+            mGoogleMapController: viewController.mapController,
+            fetchNewData: (LatLng? mapCenter, double? distance) async {
+              await viewController.fetchMapViewRentals(
+                  fromLoc: mapCenter, distance: distance);
+              return viewController.buisinessesMarkers.toList();
+            },
+            markers: viewController.buisinessesMarkers.value,
           ),
         ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 20, bottom: 20),
-            child: MezIconButton(
-              icon: Icons.my_location,
-              iconColor: Colors.black,
-              backgroundColor: Colors.white,
-              onTap: () => viewController.recenterMap(),
-            ),
-          ),
-        )
-      ],
-    );
+      ),
+    ]);
   }
-
   Widget _viewBusinessesSwitcher() {
     IconData firstButtonIcon = Icons.motorcycle;
     switch (viewController.rentalCategory) {
