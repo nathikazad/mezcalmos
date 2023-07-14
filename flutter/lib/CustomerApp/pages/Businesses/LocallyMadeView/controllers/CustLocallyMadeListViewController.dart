@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -120,7 +121,7 @@ class CustLocallyMadeListViewController {
           "👋 _fetchRentals called selected categories : $selectedCategories \n ferchSize : $productsFetchSize \n offset: $_productsCurrentOffset");
       List<ProductCard> newList = await get_product_by_category(
         categories1: productsCategory,
-        distance: 1000000000000,
+        distance: defaultDistance,
         fromLocation: _fromLocation!,
         tags: [],
         // scheduleType: [ScheduleType.Scheduled, ScheduleType.OneTime],
@@ -152,7 +153,7 @@ class CustLocallyMadeListViewController {
       _businessFetchingData = true;
       List<BusinessCard> newList = await get_business_by_product_category1(
           categories1: _currentProductCategory,
-          distance: 1000000000000,
+          distance: defaultDistance,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,

@@ -4,7 +4,7 @@ alter table "business"."home_rental" drop constraint "home_rental_rental_id_fkey
 
 alter table "business"."home_rental" rename column "rental_id" to "id";
 
-DROP FUNCTION "business"."get_home_rentals"("public"."geography");
+DROP FUNCTION "business"."get_home_rentals"("geography");
 
 alter table "business"."home_rental" rename to "home";
 

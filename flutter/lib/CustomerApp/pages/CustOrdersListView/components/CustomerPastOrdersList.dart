@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustBusinessOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -82,7 +82,7 @@ class CustomerPastOrdersList extends StatelessWidget {
                     CustLaundryOrderView.navigate(orderId: order.id);
                     break;
                   case OrderType.Business:
-                    CustOrderView.navigate(orderId: order.id);
+                    CustBusinessOrderView.navigate(orderId: order.id);
                     break;
                   default:
                 }

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -16,7 +15,7 @@ import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -67,11 +66,15 @@ class CustRestaurantListViewController {
   RxList<Restaurant> _mapViewRestaurants = <Restaurant>[].obs;
   List<Restaurant> get mapViewRestaurants => _mapViewRestaurants;
 
-  RxSet<MezMarker> _restaurantsMarkers = <MezMarker>{}.obs;
-  RxSet<MezMarker> get restaurantsMarkers => _restaurantsMarkers;
+  RxSet<Marker> _restaurantsMarkers = <Marker>{}.obs;
+  RxSet<Marker> get restaurantsMarkers => _restaurantsMarkers;
 
   RxSet<MezMarker> _allMarkers = <MezMarker>{}.obs;
   RxSet<MezMarker> get allMarkers => _allMarkers;
+
+  int mapMarkersOffset = 0;
+  int mapMarkersFetchSize = 10;
+  bool _hasReachedEndOfMarkers = false;
 
   BuildContext? ctx;
   // Map view //
@@ -118,7 +121,7 @@ class CustRestaurantListViewController {
             online_ordering: _filterInput["onlineOrder"]!.last.contains("true")
                 ? true
                 : null,
-            distance: getFetchDistance)
+            distance: defaultDistance)
         .then((List<Restaurant> list) {
       _restaurants = list;
 
@@ -161,7 +164,7 @@ class CustRestaurantListViewController {
             online_ordering: _filterInput["onlineOrder"]!.last.contains("true")
                 ? true
                 : null,
-            distance: getFetchDistance)
+            distance: defaultDistance)
         .then((List<Restaurant> list) {
       _restaurants = list;
 
@@ -231,44 +234,66 @@ class CustRestaurantListViewController {
 
   Future<void> fetchMapViewRentals(
       {required LatLng? fromLoc, required double? distance}) async {
+    // if (_hasReachedEndOfMarkers) {
+    //   return;
+    // }
     try {
-      _mapViewRestaurants.value = await fetch_restaurants(
+      List<Restaurant> newList = await fetch_restaurants(
           fromLocation: cModels.Location(
               lat: fromLoc?.latitude ?? _currentLocation.latitude,
               lng: fromLoc?.longitude ?? _currentLocation.longitude,
               address: ''),
           is_open: showOnlyOpenOnMap,
           withCache: false,
+          limit: mapMarkersFetchSize,
+          offset: mapMarkersOffset,
           online_ordering:
               _filterInput["onlineOrder"]!.last.contains("true") ? true : null,
           distance: distance ?? getFetchDistance);
+      _mapViewRestaurants += newList;
+      await _fillMapsMarkers(newData: newList);
+      if (newList.length == 0) {
+        _hasReachedEndOfMarkers = true;
+      }
+      mapMarkersOffset += mapMarkersFetchSize;
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
     } finally {
-      await _fillMapsMarkers();
+      mezDbgPrint("MapView restaurants ====>${_mapViewRestaurants.length}");
+
       mezDbgPrint(
           "Restaurant markers =======>${restaurantsMarkers.value.length}");
     }
   }
 
-  Future<void> _fillMapsMarkers() async {
-    for (Restaurant restaurant in _mapViewRestaurants) {
-      _restaurantsMarkers.add(MezMarker(
-        flat: true,
-        fitWithinBounds: false,
+  Future<void> _fillMapsMarkers({required List<Restaurant> newData}) async {
+    for (Restaurant restaurant in newData) {
+      await _restaurantsMarkers.addLabelMarker(LabelMarker(
+        flat: false,
+        label: null,
+        anchor: Offset(0.5, 0.5),
+        altIconPath: mezRestaurantMarker,
         markerId: MarkerId(restaurant.info.hasuraId.toString()),
-        icon: await bitmapDescriptorLoader(
-            (await cropRonded((await rootBundle.load(mezRestaurantMarker))
-                .buffer
-                .asUint8List())),
-            70,
-            70,
-            isBytes: true),
         onTap: () => _onSelectRentalTag(restaurant),
-        position: LatLng(restaurant.info.location.position.latitude!,
-            restaurant.info.location.position.longitude!),
+        position: LatLng(restaurant.info.location.latitude.toDouble(),
+            restaurant.info.location.longitude.toDouble()),
       ));
+      // _restaurantsMarkers.add(MezMarker(
+      //   flat: true,
+      //   fitWithinBounds: false,
+      //   markerId: MarkerId(restaurant.info.hasuraId.toString()),
+      //   icon: await bitmapDescriptorLoader(
+      //       (await cropRonded((await rootBundle.load(mezRestaurantMarker))
+      //           .buffer
+      //           .asUint8List())),
+      //       70,
+      //       70,
+      //       isBytes: true),
+      //   onTap: () => _onSelectRentalTag(restaurant),
+      //   position: LatLng(restaurant.info.location.position.latitude!,
+      //       restaurant.info.location.position.longitude!),
+      // ));
     }
   }
 
@@ -287,7 +312,13 @@ class CustRestaurantListViewController {
       distance: distance,
     );
     mapController.markers.clear();
-    mapController.markers.addAll(_restaurantsMarkers);
+    mapController.markers
+        .addAll(_restaurantsMarkers.map((Marker element) => MezMarker(
+              markerId: element.markerId,
+              icon: element.icon,
+              onTap: element.onTap,
+              consumeTapEvents: true,
+            )));
   }
 
   void onCameraMove(CameraPosition cameraPosition) {

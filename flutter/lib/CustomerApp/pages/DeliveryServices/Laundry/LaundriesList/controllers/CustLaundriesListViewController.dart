@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -14,11 +13,10 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
-import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 
 class CustLaundriesListViewController {
   MGoogleMapController mapController = MGoogleMapController(
@@ -56,11 +54,11 @@ class CustLaundriesListViewController {
   RxList<Laundry> _mapViewLaundries = <Laundry>[].obs;
   List<Laundry> get mapViewLaundries => _mapViewLaundries;
 
-  RxSet<MezMarker> _laundriesMarkers = <MezMarker>{}.obs;
-  RxSet<MezMarker> get laundriesMarkers => _laundriesMarkers;
+  RxSet<Marker> _laundriesMarkers = <Marker>{}.obs;
+  RxSet<Marker> get laundriesMarkers => _laundriesMarkers;
 
-  RxSet<MezMarker> _allMarkers = <MezMarker>{}.obs;
-  RxSet<MezMarker> get allMarkers => _allMarkers;
+  RxSet<Marker> _allMarkers = <Marker>{}.obs;
+  RxSet<Marker> get allMarkers => _allMarkers;
 
   BuildContext? ctx;
   // Map view //
@@ -175,34 +173,19 @@ class CustLaundriesListViewController {
   }
 
   Future<void> _fillMapsMarkers() async {
-    _laundriesMarkers = <MezMarker>{}.obs;
+    // _laundriesMarkers = <MezMarker>{}.obs;
 
     for (Laundry restaurant in _mapViewLaundries) {
-      _allMarkers.add(MezMarker(
-        flat: true,
-        icon: await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await rootBundle.load(mezLaundryIcon)).buffer.asUint8List())),
-            70,
-            70,
-            isBytes: true),
+      mezDbgPrint("Adding map marker to => ${restaurant.info.name}");
+      await _laundriesMarkers.addLabelMarker(LabelMarker(
+        flat: false,
+        label: null,
+        anchor: Offset(0.5, 0.5),
+        altIconPath: mezLaundryIcon,
         markerId: MarkerId(restaurant.info.hasuraId.toString()),
         onTap: () => _onSelectRentalTag(restaurant),
-        position: LatLng(restaurant.info.location.position.latitude!,
-            restaurant.info.location.position.longitude!),
-      ));
-      _laundriesMarkers.add(MezMarker(
-        icon: await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await rootBundle.load(mezLaundryIcon)).buffer.asUint8List())),
-            70,
-            70,
-            isBytes: true),
-        flat: true,
-        markerId: MarkerId(restaurant.info.hasuraId.toString()),
-        onTap: () => _onSelectRentalTag(restaurant),
-        position: LatLng(restaurant.info.location.position.latitude!,
-            restaurant.info.location.position.longitude!),
+        position: LatLng(restaurant.info.location.latitude.toDouble(),
+            restaurant.info.location.longitude.toDouble()),
       ));
     }
   }

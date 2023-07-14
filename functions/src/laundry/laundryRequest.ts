@@ -20,7 +20,7 @@ export interface LaundryRequestDetails {
     paymentType: PaymentType,  
     deliveryType: DeliveryType,
     customerLocation: Location,
-    fromCustomerDeliveryOffer?: number;
+    fromCustomerDeliveryOffer: number;
     chosenCompanies?: Array<number>,
     customerAppType: CustomerAppType,
     notes?: string,

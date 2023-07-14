@@ -47,6 +47,7 @@ class _BsOrdersListViewState extends State<BsOrdersListView>
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
           title: '${_i18n()['orders']}',
           tabBar: TabBar(
+            labelPadding: EdgeInsets.zero,
             controller: viewController.tabController,
             tabs: [
               Tab(

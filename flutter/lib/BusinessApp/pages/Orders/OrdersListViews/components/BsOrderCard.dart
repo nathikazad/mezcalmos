@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
@@ -35,50 +36,65 @@ class BsOrderCard extends StatelessWidget {
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(14),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: Column(
             children: [
-              Flexible(
-                  fit: FlexFit.tight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        customerName,
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.price_check_outlined,
-                            size: 18.sp,
-                            color: offShadeGreyColor,
-                          ),
-                          Text(price.toPriceString(),
-                              style: TextStyle(color: offShadeGreyColor)),
-                          hSmallSepartor,
-                          Icon(
-                            Icons.circle,
-                            size: 5.sp,
-                            color: offShadeGreyColor,
-                          ),
-                          hSmallSepartor,
-                          Text('$numItems ${_i18n()['items']}',
-                              style: TextStyle(color: offShadeGreyColor))
-                        ],
-                      ),
-                    ],
-                  )),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Text(
+                    customerName,
+                    style: context.textTheme.bodyLarge,
+                  ),
                   Text(time.getOrderTime(),
-                      style: TextStyle(color: offShadeGreyColor)),
-                  meduimSeperator,
+                      style: TextStyle(color: offShadeGreyColor))
+                ],
+              ),
+              smallSepartor,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: Icon(
+                              Icons.price_check_outlined,
+                              color: offShadeGreyColor,
+                            )),
+                        TextSpan(
+                          text: price.toPriceString(),
+                          style: context.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: offShadeGreyColor),
+                        ),
+                        WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: hSmallSepartor),
+                        WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: Icon(
+                              Icons.circle,
+                              size: 5.sp,
+                              color: offShadeGreyColor,
+                            )),
+                        WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: hSmallSepartor),
+                        TextSpan(
+                          text: '$numItems ' +
+                              '${_i18n()['item']}'
+                                  .toPlural(isPlural: numItems != 1),
+                          style: context.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: offShadeGreyColor),
+                        )
+                      ],
+                    ),
+                  ),
                   CircleAvatar(
-                    radius: 25,
+                    radius: 20,
                     backgroundImage: CachedNetworkImageProvider(imageUrl),
                   ),
                 ],

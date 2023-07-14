@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -49,6 +50,9 @@ class CustRequestCourierViewController {
   RxDouble estDeliveryCost = RxDouble(40);
 
   MapHelper.RouteInformation? routeInfo;
+  RxnDouble ditanceInKm = RxnDouble();
+  num? _orderDistanceInKm;
+  num? get orderDistanceInKm => _orderDistanceInKm;
   RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
   RxList<int> selectedCompanies = RxList.empty();
 
@@ -74,7 +78,7 @@ class CustRequestCourierViewController {
   }
 
   void _fetchCompanies() {
-    get_dv_companies(isOpen: true).then((List<DeliveryCompany>? value) {
+    get_dv_companies(isOpen: false).then((List<DeliveryCompany>? value) {
       if (value != null) {
         deliveryCompanies.value = value;
         selectedCompanies.value = deliveryCompanies
@@ -151,7 +155,8 @@ class CustRequestCourierViewController {
   }
 
   Future<void> _callCloudFunc() async {
-    mezDbgPrint("Calling cloud func with from text : ${fromLocText.text}");
+    mezDbgPrint(
+        "Calling cloud func with from text : ${selectedCompanies.length}");
     try {
       await _uploadItemsImages();
       final cModels.CreateCourierResponse res =
@@ -165,10 +170,10 @@ class CustRequestCourierViewController {
             .entries
             .map(
               (MapEntry<int, CourierItem> e) => cModels.CourierItem(
-                name: itemsNames[e.key].text,
+                name: itemsNames[e.key].text.inCaps,
                 image: e.value.image,
                 estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
-                notes: itemsNotes[e.key].text,
+                notes: itemsNotes[e.key].text.inCaps,
               ),
             )
             .toList(),
@@ -184,7 +189,7 @@ class CustRequestCourierViewController {
         // deliveryCompanyId: 0,
         // deliveryCost: shippingCost.value,
         customerOffer: estDeliveryCost.value,
-        deliveryCompanyIds: selectedCompanies,
+        deliveryCompanyIds: selectedCompanies.value,
         scheduledTime: deliveryTime.value?.toUtc().toString(),
         customerAppType: cModels.CustomerAppType.Native,
         tripDistance: routeInfo?.distance.distanceInMeters,
@@ -224,7 +229,6 @@ class CustRequestCourierViewController {
   }
 
   Future<void> updateShippingPrice() async {
-    num? _orderDistanceInKm;
     if (fromLoc.value != null && toLoc.value != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
         toLoc.value!,
@@ -233,27 +237,29 @@ class CustRequestCourierViewController {
 
       if (routeInfo != null) {
         _orderDistanceInKm = routeInfo.distance.distanceInMeters / 1000;
+        ditanceInKm.value = _orderDistanceInKm?.toDouble();
+        mezDbgPrint("Order Distance ==========>$ditanceInKm");
         mezDbgPrint("🤣  ${routeInfo.distance.distanceInMeters}");
-        if (_orderDistanceInKm <= 15) {
-          final num shippingCost =
-              deliveryCost!.costPerKm * (_orderDistanceInKm);
-          mezDbgPrint(
-              "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
-          if (shippingCost < deliveryCost!.minimumCost) {
-            mezDbgPrint(
-                "LESS THAN MINIMUM COST ===================== $shippingCost << ${deliveryCost!.minimumCost}");
-            this.shippingCost.value = deliveryCost!.minimumCost.ceil();
-          } else {
-            this.shippingCost.value = shippingCost.ceil();
-          }
-          this.routeInfo = MapHelper.RouteInformation(
-            polyline: routeInfo.encodedPolyLine,
-            distance: routeInfo.distance,
-            duration: routeInfo.duration,
-          );
+        // if (_orderDistanceInKm! <= 15) {
+        //   final num shippingCost =
+        //       deliveryCost!.costPerKm * _orderDistanceInKm!;
+        //   mezDbgPrint(
+        //       "[[+]] Calculated final ShippingCost  ========>>>>>>>$shippingCost");
+        //   if (shippingCost < deliveryCost!.minimumCost) {
+        //     mezDbgPrint(
+        //         "LESS THAN MINIMUM COST ===================== $shippingCost << ${deliveryCost!.minimumCost}");
+        //     this.shippingCost.value = deliveryCost!.minimumCost.ceil();
+        //   } else {
+        //     this.shippingCost.value = shippingCost.ceil();
+        //   }
+        //   this.routeInfo = MapHelper.RouteInformation(
+        //     polyline: routeInfo.encodedPolyLine,
+        //     distance: routeInfo.distance,
+        //     duration: routeInfo.duration,
+        //   );
 
-          // await saveCart();
-        } else {}
+        //   // await saveCart();
+        // } else {}
       } else {}
     } else {}
   }

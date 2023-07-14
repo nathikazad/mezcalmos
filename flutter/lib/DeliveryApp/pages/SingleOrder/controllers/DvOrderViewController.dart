@@ -66,11 +66,12 @@ class DvOrderViewcontroller {
   StreamSubscription<DeliveryOrderVariables?>? orderStream;
   String? subscriptionId;
 
-  bool get showSendOfferButton =>
-      order.isDriverAssigned == false &&
-      order.counterOffers?.containsKey(
-              deliveryAuthAuthController.driver!.deliveryDriverId) ==
-          false;
+  bool get showSendOfferButton {
+    return !order.isDriverAssigned &&
+        (order.counterOffers == null ||
+            !order.counterOffers!.containsKey(
+                deliveryAuthAuthController.driver!.deliveryDriverId));
+  }
 
   bool get isWaitingForOffer => order
       .waitingForOffer(deliveryAuthAuthController.driver!.deliveryDriverId);
@@ -88,7 +89,7 @@ class DvOrderViewcontroller {
     });
     clearNotifications(orderId);
     _order.value = await get_driver_order_by_id(orderId: orderId);
-    mezDbgPrint("TIME FROM QUERY ========>${_order.value?.customerOffer}");
+    mezDbgPrint("TIME FROM QUERY ========>${_order.value?.counterOffers}");
 
     if (_order.value == null) {
       mezDbgPrint(
@@ -282,13 +283,18 @@ class DvOrderViewcontroller {
 
   Future<void> sendCounterOffer({required double newPrice}) async {
     try {
+      mezDbgPrint("Sending new offer ======>$newPrice ...👊");
       final cModels.CounterOfferResponse res =
           await CloudFunctions.delivery3_requestCounterOffer(
               deliveryOrderId: order.orderId,
               deliveryDriverId:
                   deliveryAuthAuthController.driver!.deliveryDriverId,
               newPrice: newPrice);
-      if (res.success) {}
+
+      if (res.success) {
+      } else {
+        showErrorSnackBar(errorText: res.error.toString());
+      }
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
       mezlog(e);

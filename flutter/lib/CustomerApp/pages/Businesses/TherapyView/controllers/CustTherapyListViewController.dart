@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
@@ -136,7 +137,7 @@ class CustTherapyListViewController {
         categories1: filterInput["categories"]!
             .map((String e) => e.toEventCategory1())
             .toList(),
-        distance: 100000000000,
+        distance: defaultDistance,
         categories2: _categories2,
         fromLocation: _fromLocation!,
         tags: [],
@@ -174,7 +175,7 @@ class CustTherapyListViewController {
                   ?.map((String e) => e.toEventCategory1())
                   .toList() ??
               _filterCategories,
-          distance: 1000000000000,
+          distance: defaultDistance,
           fromLocation: _fromLocation!,
           offset: _businessCurrentOffset,
           limit: businessFetchSize,

@@ -49,7 +49,9 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
         mezService == MezService.Restaurants) {
       final int? orderId = await get_customer_last_order_id(
           customerId: Get.find<AuthController>().hasuraUserId!,
-          orderType: mezService.toOrderType());
+          orderType: mezService.toOrderType(),
+          inProcess: true);
+
       if (orderId != null && orderId > 0) {
         await ViewRestaurantOrderScreen.navigate(orderId: orderId);
         return;

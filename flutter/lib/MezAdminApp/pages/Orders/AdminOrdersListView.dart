@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustBusinessOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
@@ -110,7 +110,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                             orderId: viewController.pastOrders[index].id);
                         break;
                       case ServiceProviderType.Business:
-                        CustOrderView.navigate(
+                        CustBusinessOrderView.navigate(
                             orderId: viewController.pastOrders[index].id);
                         break;
                       default:
@@ -199,7 +199,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                   (int index) => MinimalOrderCard(
                       order: viewController.businessOrders.value![index],
                       onTap: () {
-                        CustOrderView.navigate(
+                        CustBusinessOrderView.navigate(
                             entityType: EntityType.Admin,
                             orderId:
                                 viewController.businessOrders.value![index].id);

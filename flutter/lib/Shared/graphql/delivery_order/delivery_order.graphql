@@ -6,7 +6,7 @@ query get_driver_order($orderId: Int!) {
     order_type
     direction
     chat_with_service_provider_id
-    # change_price_request
+
     delivery_company {
       id
       details {
@@ -37,17 +37,7 @@ query get_driver_order($orderId: Int!) {
     restaurant_order {
       id
       stripe_info
-      # stripe_info {
-      #   id
-      #   stripe_id
-      #   status
-      #   requirements
-      #   payouts_enabled
-      #   email
-      #   details_submitted
-      #   charges_enabled
-      #   charge_fees_on_customer
-      # }
+
       restaurant {
         id
         details {
@@ -79,17 +69,7 @@ query get_driver_order($orderId: Int!) {
     laundry_pickup_order {
       id
       stripe_info
-      # stripe_info {
-      #   id
-      #   stripe_id
-      #   status
-      #   requirements
-      #   payouts_enabled
-      #   email
-      #   details_submitted
-      #   charges_enabled
-      #   charge_fees_on_customer
-      # }
+
       store {
         id
         details {
@@ -106,17 +86,7 @@ query get_driver_order($orderId: Int!) {
     laundry_delivery_order {
       id
       stripe_info
-      # stripe_info {
-      #   id
-      #   stripe_id
-      #   status
-      #   requirements
-      #   payouts_enabled
-      #   email
-      #   details_submitted
-      #   charges_enabled
-      #   charge_fees_on_customer
-      # }
+
       store {
         id
         details {
@@ -210,10 +180,10 @@ subscription listen_on_driver_order_variables($orderId: Int!) {
     estimated_arrival_at_pickup_time
     estimated_package_ready_time
     status
-       
+
     counter_offers
     package_ready
-    delivery_driver{
+    delivery_driver {
       user {
         id
         image
@@ -222,7 +192,6 @@ subscription listen_on_driver_order_variables($orderId: Int!) {
     }
   }
 }
-
 
 subscription listen_on_order_driver_location($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
@@ -291,7 +260,7 @@ query get_past_driver_orders($driverId: Int!, $offset: Int, $limit: Int) {
     package_cost_comp
     total_cost
     delivery_cost
-customer_offer
+    customer_offer
     dropoff_address
     dropoff_gps
     customer {
@@ -330,7 +299,7 @@ query get_inprocess_driver_orders($driverId: Int!) {
     total_cost
     package_ready
     customer_offer
-    
+
     customer_offer
     dropoff_address
     delivery_cost
@@ -418,7 +387,7 @@ subscription listen_open_driver_orders($in_process: Boolean!) {
     dropoff_address
     delivery_cost
     customer_offer
- 
+
     dropoff_gps
     customer {
       user {
@@ -578,6 +547,8 @@ mutation updateDeliveryOrder($orderId: Int!, $data: delivery_order_set_input!) {
     estimated_arrival_at_pickup_time
     service_provider_review_by_driver_id
     customer_review_by_driver_id
+    customer_offer
+    counter_offers
   }
 }
 query get_pick_driver_order($orderId: Int!) {
@@ -666,16 +637,7 @@ query getCompanyOrdersCount($companyId: Int!) {
     }
   }
 }
-# querry listen_driver_order_prices($orderId: Int!) {
-#   delivery_order_by_pk(id :$orderId){
-#     total_cost,
-#     tax,
-#     delivery_cost,
-#     package_cost_comp,
-#     change_price_request,
 
-#   }
-# }
 subscription listen_driver_order_prices($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
     total_cost
@@ -683,6 +645,17 @@ subscription listen_driver_order_prices($orderId: Int!) {
     delivery_cost
     customer_offer
     package_cost_comp
-    # change_price_request
+  }
+}
+
+subscription listenOnOrderOffers($orderId: Int!) {
+  delivery_order_by_pk(id: $orderId) {
+   
+    counter_offers
+  }
+}query getOrderOffers($orderId: Int!) {
+  delivery_order_by_pk(id: $orderId) {
+   
+    counter_offers
   }
 }

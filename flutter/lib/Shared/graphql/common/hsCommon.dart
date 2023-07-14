@@ -233,10 +233,12 @@ Future<ServiceTree> get_service_tree(
         .add(servicesQuery(withCache, distance, lat, lng, element, services));
   });
   await Future.wait(futuresServices);
+
+  if (laundry != null) {
+    services.children.add(laundry);
+    services.count += laundry.count;
+  }
   if (services.count > 0) {
-    if (laundry != null) {
-      services.children.add(laundry);
-    }
     root.children.add(services);
   }
 

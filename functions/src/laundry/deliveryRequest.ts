@@ -23,8 +23,15 @@ export interface ReqDeliveryResponse {
 }
 export enum ReqDeliveryError {
     UnhandledError = "unhandledError",
+    OrderNotFound = "orderNotFound",
+    CustomerNotFound = "customerNotFound",
     IncorrectOrderId = "incorrectOrderId",
     IncorrectOrderStatus = "incorrectOrderStatus",
+    LaundryStoreNotfound = "laundryStoreNotfound",
+    OrderCreationError = "orderCreationError",
+    NoDeliveryChatWithStoreId = "noDeliveryChatWithStoreId",
+    NoDeliveryCompanyFound = "noDeliveryCompanyFound",
+    DeliveryCompaniesHaveNoDrivers = "deliveryCompaniesHaveNoDrivers",
 }
 
 export async function requestLaundryDelivery(customerId: number, deliveryRequestDetails: DeliveryRequestDetails): Promise<ReqDeliveryResponse> {
