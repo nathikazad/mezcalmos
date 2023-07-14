@@ -131,10 +131,10 @@ class _SignInViewState extends State<SignInView> {
         SizedBox(
           height: 20,
         ),
-        if (!kIsWeb) facebookLoginBtn(lmode),
-        SizedBox(
-          height: 10,
-        ),
+        // if (!kIsWeb) facebookLoginBtn(lmode),
+        // SizedBox(
+        //   height: 10,
+        // ),
         smsLoginBtn(),
         SizedBox(
           height: 10,
@@ -190,7 +190,7 @@ class _SignInViewState extends State<SignInView> {
         child: TextButton(
             onPressed: () {
               clickedLogin.value = true;
-              String email = '${generateString()}@mezc.com';
+              final String email = '${generateString()}@mezc.com';
               mezDbgPrint("$email signing up 📡📡📡📡🪢🪢🪢🪢🪢");
               signUp(email, 'password')
                   .whenComplete(() => clickedLogin.value = false);

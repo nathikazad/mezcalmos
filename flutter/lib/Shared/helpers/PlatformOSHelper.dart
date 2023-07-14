@@ -1,16 +1,19 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/instance_manager.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/env.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // ignore: constant_identifier_names
@@ -55,14 +58,14 @@ class PlatformOSHelper {
     }
 
     // // then check if we're in prod - check appUpdate
-    // if (MezEnv.appLaunchMode == AppLaunchMode.prod) {
-    //   _appVersionController = AppVersionController.instance(
-    //     onNewUpdateAvailable: _onNewUpdateAvailable,
-    //   );
-    //   // Delayed init of the appVersionController - that way we make sure that the NavigationStack is correct,
-    //   // Which makes it easy for us to push NeedUpdateScreen on top in case there is update.
-    //   Future<void>.delayed(Duration(seconds: 2), _appVersionController!.init);
-    // }
+    if (MezEnv.appLaunchMode == AppLaunchMode.prod) {
+      _appVersionController = AppVersionController.instance(
+        onNewUpdateAvailable: _onNewUpdateAvailable,
+      );
+      // Delayed init of the appVersionController - that way we make sure that the NavigationStack is correct,
+      // Which makes it easy for us to push NeedUpdateScreen on top in case there is update.
+      Future<void>.delayed(Duration(seconds: 2), _appVersionController!.init);
+    }
   }
 
   static Future<void> setupIosAppStoreId(String appName) async {
@@ -79,26 +82,26 @@ class PlatformOSHelper {
   }
 
   /// Called each time there is a new update.
-  // static void _onNewUpdateAvailable(
-  //     UpdateType updateType, VersionStatus status) {
-  //   switch (updateType) {
-  //     case UpdateType.Null:
-  //     case UpdateType.Patches:
-  //       MezUpdaterDialog.show(
-  //         context: context,
-  //         onUpdateClicked: _appVersionController.openStoreAppPage,
-  //       );
-  //       break;
-  //     default:
-  //       // Major/Minor - forcing the app to stay in AppNeedsUpdate
-  //       MezRouter.toNamed(
-  //         SharedRoutes.kAppNeedsUpdate,
-  //         arguments: <String, dynamic>{
-  //           "versionStatus": status,
-  //         },
-  //       );
-  //   }
-  // }
+  static void _onNewUpdateAvailable(
+      UpdateType updateType, VersionStatus status) {
+    switch (updateType) {
+      case UpdateType.Null:
+      case UpdateType.Patches:
+        MezUpdaterDialog.show(
+          context: context,
+          onUpdateClicked: _appVersionController.openStoreAppPage,
+        );
+        break;
+      default:
+        // Major/Minor - forcing the app to stay in AppNeedsUpdate
+        MezRouter.toNamed(
+          NativeOnlyRoutes.kAppNeedsUpdateRoute,
+          arguments: <String, dynamic>{
+            "versionStatus": status,
+          },
+        );
+    }
+  }
 }
 
 extension PlateformString on MezPlatform {
