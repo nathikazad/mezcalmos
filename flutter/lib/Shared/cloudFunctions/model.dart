@@ -1510,7 +1510,7 @@ class Offer {
   String? serviceProviderName;
   String? serviceProviderImage;
   Offer({
-    required this.id, this.name, required this.serviceProviderId, required this.serviceProviderType, required this.offerType, this.couponCode, required this.details, required this.status, this.nameId});
+    required this.id, this.name, required this.serviceProviderId, required this.serviceProviderType, required this.offerType, this.couponCode, required this.details, required this.status, this.nameId, this.serviceProviderName, this.serviceProviderImage});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,

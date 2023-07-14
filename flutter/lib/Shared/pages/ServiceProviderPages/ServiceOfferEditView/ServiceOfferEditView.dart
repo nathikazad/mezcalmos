@@ -7,6 +7,8 @@ import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dar
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferingsListView/OffersOfferingListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferingsListView/controller/OffersOfferingListViewController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -163,12 +165,41 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         items: OfferOrderType.values
                             .map((e) => e.toFirebaseFormatString())
                             .toList(),
-                        onChanged: (value) {
+                        onChanged: (value) async {
                           if (value == null) return;
                           viewController.selectedOfferOrderType.value =
                               value.toOfferOrderType();
+                          mezDbgPrint(
+                              "allOfferings ${viewController.allOfferings}");
+                          final List<OfferingData>? data =
+                              await OffersOfferingListView.navigate(
+                            selectedOfferingData: viewController.allOfferings,
+                          );
+                          mezDbgPrint(
+                              "allOfferings ${viewController.allOfferings}");
+                          viewController.allOfferings.value = data ?? [];
                         },
                       ),
+                      // ...viewController.allOfferings.map(
+                      //   (e) => !e.value
+                      //       ? SizedBox.shrink()
+                      //       : MezCard(
+                      //           content: ListTile(
+                      //             title: Text(
+                      //               e.name.getTranslation(
+                      //                       Get.find<LanguageController>()
+                      //                           .userLanguageKey) ??
+                      //                   "",
+                      //             ),
+                      //             // trailing: IconButton(
+                      //             //   icon: Icon(Icons.delete),
+                      //             //   onPressed: () {
+                      //             //     viewController.allOfferings.remove(e);
+                      //             //   },
+                      //             // ),
+                      //           ),
+                      //         ),
+                      // ),
                       Text(
                         "Discount type",
                         style: context.textTheme.bodyLarge,
