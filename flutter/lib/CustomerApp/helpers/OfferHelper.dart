@@ -74,7 +74,7 @@ Future<CouponError?> applyRestaurantCoupon(
   if (coupon.details.couponReusable != true) {
     if (await check_offer_applied(
         customerId: customerId,
-        offerId: coupon.id.toInt(),
+        offerId: coupon.id!.toInt(),
         orderType: cModels.OrderType.Restaurant)) {
       return CouponError.Notreusable;
     }
@@ -286,7 +286,7 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
   }
   if (discount > 0) {
     // if (cart.offersApplied.firstWhereOrNull((o) => o == offer.id) == null) {
-    cart.offersApplied.add(offer.id.toInt());
+    cart.offersApplied.add(offer.id!.toInt());
     // }
   }
   return discount;
@@ -347,7 +347,7 @@ Future<CouponError?> applyBusinessCoupon(
   if (coupon.details.couponReusable != true) {
     if (await check_offer_applied(
         customerId: customerId,
-        offerId: coupon.id.toInt(),
+        offerId: coupon.id!.toInt(),
         orderType: cModels.OrderType.Business)) {
       return CouponError.Notreusable;
     }
@@ -536,8 +536,8 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       break;
   }
   if (discount > 0) {
-    if (cart.offersApplied.firstWhereOrNull((o) => o == offer.id) == null) {
-      cart.offersApplied.add(offer.id!.toInt());
+    if (cart.appliedOffers.firstWhereOrNull((o) => o == offer.id) == null) {
+      cart.appliedOffers.add(offer.id!.toInt());
     }
   }
   return discount;
@@ -594,7 +594,7 @@ Future<CouponError?> checkLaundryCoupon(
   if (coupon.details.couponReusable != true) {
     if (await check_offer_applied(
         customerId: customerId,
-        offerId: coupon.id.toInt(),
+        offerId: coupon.id!.toInt(),
         orderType: cModels.OrderType.Laundry)) {
       return CouponError.Notreusable;
     }
