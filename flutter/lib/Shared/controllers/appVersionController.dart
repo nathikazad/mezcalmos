@@ -1,21 +1,20 @@
 // ignore_for_file: constant_identifier_names
 
 import 'dart:async';
-import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-// import 'package:new_version/new_version.dart';
-import 'package:store_redirect/store_redirect.dart';
 import 'dart:convert';
 import 'dart:io' show Platform;
 
-import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:get/get.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
+import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
+// import 'package:new_version/new_version.dart';
+import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class VersionSplit {
@@ -206,13 +205,13 @@ class VersionStatus {
 
   /// Returns `true` if the store version of the application is greater than the local version.
   bool get canUpdate {
-    final local = localVersion.split('.').map(int.parse).toList();
-    final store = storeVersion.split('.').map(int.parse).toList();
+    final List<int> local = localVersion.split('.').map(int.parse).toList();
+    final List<int> store = storeVersion.split('.').map(int.parse).toList();
 
     // Each consecutive field in the version notation is less significant than the previous one,
     // therefore only one comparison needs to yield `true` for it to be determined that the store
     // version is greater than the local version.
-    for (var i = 0; i < store.length; i++) {
+    for (int i = 0; i < store.length; i++) {
       // The store version field is newer than the local version.
       if (store[i] > local[i]) {
         return true;
@@ -267,10 +266,10 @@ class NewVersion {
 
   /// This checks the version status, then displays a platform-specific alert
   /// with buttons to dismiss the update alert, or go to the app store.
-  void showAlertIfNecessary({required BuildContext context}) async {
+  Future<void> showAlertIfNecessary({required BuildContext context}) async {
     final VersionStatus? versionStatus = await getVersionStatus();
     if (versionStatus != null && versionStatus.canUpdate) {
-      showUpdateDialog(context: context, versionStatus: versionStatus);
+      await showUpdateDialog(context: context, versionStatus: versionStatus);
     }
   }
 
@@ -278,7 +277,7 @@ class NewVersion {
   /// if you want to display a custom alert, or use the information in a different
   /// way.
   Future<VersionStatus?> getVersionStatus() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     if (Platform.isIOS) {
       return _getiOSStoreVersion(packageInfo);
     } else if (Platform.isAndroid) {
@@ -287,6 +286,7 @@ class NewVersion {
       // debugPrint(
       //     'The target platform "${Platform.operatingSystem}" is not yet supported by this package.');
     }
+    return null;
   }
 
   /// This function attempts to clean local version strings so they match the MAJOR.MINOR.PATCH
@@ -297,13 +297,13 @@ class NewVersion {
   /// iOS info is fetched by using the iTunes lookup API, which returns a
   /// JSON document.
   Future<VersionStatus?> _getiOSStoreVersion(PackageInfo packageInfo) async {
-    final id = iOSId ?? packageInfo.packageName;
-    final parameters = {"bundleId": "$id"};
+    final String id = iOSId ?? packageInfo.packageName;
+    final Map<String, String> parameters = {"bundleId": "$id"};
     if (iOSAppStoreCountry != null) {
       parameters.addAll({"country": iOSAppStoreCountry!});
     }
-    var uri = Uri.https("itunes.apple.com", "/lookup", parameters);
-    final response = await http.get(uri);
+    final Uri uri = Uri.https("itunes.apple.com", "/lookup", parameters);
+    final http.Response response = await http.get(uri);
     if (response.statusCode != 200) {
       debugPrint('Failed to query iOS App Store');
       return null;
@@ -326,41 +326,46 @@ class NewVersion {
   /// Android info is fetched by parsing the html of the app store page.
   Future<VersionStatus?> _getAndroidStoreVersion(
       PackageInfo packageInfo) async {
-    final id = androidId ?? packageInfo.packageName;
-    final uri = Uri.https(
+    final String id = androidId ?? packageInfo.packageName;
+    final Uri uri = Uri.https(
         "play.google.com", "/store/apps/details", {"id": "$id", "hl": "en"});
-    final response = await http.get(uri);
+    final http.Response response = await http.get(uri);
     if (response.statusCode != 200) {
       debugPrint('Can\'t find an app in the Play Store with the id: $id');
       return null;
     }
-    final document = parse(response.body);
+    final dom.Document document = parse(response.body);
 
     String storeVersion = '0.0.0';
     String? releaseNotes;
 
-    final additionalInfoElements = document.getElementsByClassName('hAyfc');
+    final List<dom.Element> additionalInfoElements =
+        document.getElementsByClassName('hAyfc');
     if (additionalInfoElements.isNotEmpty) {
-      final versionElement = additionalInfoElements.firstWhere(
-        (elm) => elm.querySelector('.BgcNfc')!.text == 'Current Version',
+      final dom.Element versionElement = additionalInfoElements.firstWhere(
+        (dom.Element elm) =>
+            elm.querySelector('.BgcNfc')!.text == 'Current Version',
       );
       storeVersion = versionElement.querySelector('.htlgb')!.text;
 
-      final sectionElements = document.getElementsByClassName('W4P4ne');
-      final releaseNotesElement = sectionElements.firstWhereOrNull(
-        (elm) => elm.querySelector('.wSaTQd')!.text == 'What\'s New',
+      final List<dom.Element> sectionElements =
+          document.getElementsByClassName('W4P4ne');
+      final dom.Element? releaseNotesElement = sectionElements.firstWhereOrNull(
+        (dom.Element elm) =>
+            elm.querySelector('.wSaTQd')!.text == 'What\'s New',
       );
       releaseNotes = releaseNotesElement
           ?.querySelector('.PHBdkd')
           ?.querySelector('.DWPxHb')
           ?.text;
     } else {
-      final scriptElements = document.getElementsByTagName('script');
-      final infoScriptElement = scriptElements.firstWhere(
-        (elm) => elm.text.contains('key: \'ds:5\''),
+      final List<dom.Element> scriptElements =
+          document.getElementsByTagName('script');
+      final dom.Element infoScriptElement = scriptElements.firstWhere(
+        (dom.Element elm) => elm.text.contains('key: \'ds:5\''),
       );
 
-      final param = infoScriptElement.text
+      final String param = infoScriptElement.text
           .substring(20, infoScriptElement.text.length - 2)
           .replaceAll('key:', '"key":')
           .replaceAll('hash:', '"hash":')
@@ -376,7 +381,7 @@ class NewVersion {
       storeVersion = data[1][2][140][0][0][0];
       releaseNotes = data[1]?[2]?[144]?[1]?[1];
       print(
-          '[MZL]------------------------------------------&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ${storeVersion}');
+          '[MZL]------------------------------------------&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& $storeVersion');
     }
 
     return VersionStatus._(
@@ -393,7 +398,7 @@ class NewVersion {
   /// To change the appearance and behavior of the update dialog, you can
   /// optionally provide [dialogTitle], [dialogText], [updateButtonText],
   /// [dismissButtonText], and [dismissAction] parameters.
-  void showUpdateDialog({
+  Future<void> showUpdateDialog({
     required BuildContext context,
     required VersionStatus versionStatus,
     String dialogTitle = 'Update Available',
@@ -403,14 +408,14 @@ class NewVersion {
     String dismissButtonText = 'Maybe Later',
     VoidCallback? dismissAction,
   }) async {
-    final dialogTitleWidget = Text(dialogTitle);
-    final dialogTextWidget = Text(
+    final Text dialogTitleWidget = Text(dialogTitle);
+    final Text dialogTextWidget = Text(
       dialogText ??
           'You can now update this app from ${versionStatus.localVersion} to ${versionStatus.storeVersion}',
     );
 
-    final updateButtonTextWidget = Text(updateButtonText);
-    final updateAction = () {
+    final Text updateButtonTextWidget = Text(updateButtonText);
+    final Null Function() updateAction = () {
       launchAppStore(versionStatus.appStoreLink);
       if (allowDismissal) {
         Navigator.of(context, rootNavigator: true).pop();
@@ -430,7 +435,7 @@ class NewVersion {
     ];
 
     if (allowDismissal) {
-      final dismissButtonTextWidget = Text(dismissButtonText);
+      final Text dismissButtonTextWidget = Text(dismissButtonText);
       dismissAction = dismissAction ??
           () => Navigator.of(context, rootNavigator: true).pop();
       actions.add(

@@ -12,8 +12,10 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // ignore: constant_identifier_names
@@ -84,13 +86,16 @@ class PlatformOSHelper {
   /// Called each time there is a new update.
   static void _onNewUpdateAvailable(
       UpdateType updateType, VersionStatus status) {
+    mezDbgPrint("New update type ====================>$updateType");
     switch (updateType) {
       case UpdateType.Null:
       case UpdateType.Patches:
-        MezUpdaterDialog.show(
-          context: context,
-          onUpdateClicked: _appVersionController.openStoreAppPage,
-        );
+        if (QR.context != null) {
+          MezUpdaterDialog.show(
+            context: QR.context!,
+            onUpdateClicked: _appVersionController!.openStoreAppPage,
+          );
+        }
         break;
       default:
         // Major/Minor - forcing the app to stay in AppNeedsUpdate
