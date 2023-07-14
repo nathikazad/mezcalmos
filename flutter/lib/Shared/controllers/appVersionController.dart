@@ -13,8 +13,6 @@ import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-// import 'package:new_version/new_version.dart';
-import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class VersionSplit {
@@ -174,12 +172,7 @@ class AppVersionController {
 
   /// Launch the appStore depending on which Platform!
   Future<void> openStoreAppPage() async {
-    await openOsStore(openIosStoreFunction: () async {
-      await StoreRedirect.redirect(
-        iOSAppId: getAppStoreId(),
-        androidAppId: PlatformOSHelper.getPackageName,
-      );
-    });
+    await openOsStore();
   }
 
   void dispose() {

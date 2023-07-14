@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qlevar_router/qlevar_router.dart';
+import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // ignore: constant_identifier_names
@@ -134,7 +135,7 @@ Future<int> getAndroidSdkVersion() async {
   return androidDeviceInfo.version.sdkInt;
 }
 
-Future<void> openOsStore({required Function openIosStoreFunction}) async {
+Future<void> openOsStore() async {
 //       startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
 // } catch (android.content.ActivityNotFoundException anfe) {
 //     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
@@ -151,6 +152,9 @@ Future<void> openOsStore({required Function openIosStoreFunction}) async {
     }
     await launchUrlString(uri);
   } else {
-    openIosStoreFunction();
+    await StoreRedirect.redirect(
+      iOSAppId: getAppStoreId(),
+      androidAppId: PlatformOSHelper.getPackageName,
+    );
   }
 }
