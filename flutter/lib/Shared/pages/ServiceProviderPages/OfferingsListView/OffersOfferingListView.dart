@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferingsListView/controller/OffersOfferingListViewController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
@@ -26,7 +27,7 @@ class OffersOfferingListView extends StatefulWidget {
         "selectedOfferingData": selectedOfferingData,
       },
     );
-    return MezRouter.backResult();
+    return MezRouter.backResult;
   }
 }
 
@@ -51,8 +52,8 @@ class _OffersOfferingListViewState extends State<OffersOfferingListView> {
       () => Scaffold(
         appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Back,
-          onClick: () {
-            MezRouter.back(
+          onClick: () async {
+            await MezRouter.back(
               backResult: viewController.allOfferings,
             );
           },
@@ -69,26 +70,27 @@ class _OffersOfferingListViewState extends State<OffersOfferingListView> {
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ...viewController.allOfferings.map(
-                (e) => MezCard(
+            children: List.generate(
+              viewController.allOfferings.length,
+              (index) {
+                return MezCard(
                   content: CheckboxListTile(
                     onChanged: (value) {
-                      viewController.allOfferings
-                          .firstWhere((element) => element == e)
-                          .value = value!;
-                      viewController.allOfferings.refresh();
+                      viewController.changeOfferingSelection(
+                        offeringData: viewController.allOfferings[index],
+                        value: value!,
+                      );
                     },
-                    value: e.value,
+                    value: viewController.allOfferings[index].value,
                     title: Text(
-                      e.name.getTranslation(
+                      viewController.allOfferings[index].name.getTranslation(
                               Get.find<LanguageController>().userLanguageKey) ??
                           "",
                     ),
                   ),
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           ),
         ),
       ),

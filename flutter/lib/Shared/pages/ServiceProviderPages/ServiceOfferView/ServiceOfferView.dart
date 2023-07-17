@@ -109,12 +109,17 @@ class _ServiceOfferViewState extends State<ServiceOfferView> {
                       trailing: IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () async {
-                          await ServiceOfferEditView.navigate(
+                          final bool? needRefetch =
+                              await ServiceOfferEditView.navigate(
                             offerId:
-                                viewController.serviceOffers[index].id!.toInt(),
+                                viewController.serviceOffers[index].id.toInt(),
                             serviceProviderId: serviceProviderId!,
                             serviceProviderType: serviceProviderType!,
                           );
+                          mezDbgPrint("needRefetch $needRefetch");
+                          if (needRefetch != null && needRefetch) {
+                            await viewController.fetchServiceOffers();
+                          }
                         },
                       ),
                     );

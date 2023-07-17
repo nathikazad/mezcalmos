@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,7 +19,6 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezPeriodPicker/MezPeriodPicker.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['ServiceOfferView'];
@@ -29,18 +30,19 @@ class ServiceOfferEditView extends StatefulWidget {
   @override
   State<ServiceOfferEditView> createState() => _ServiceOfferEditViewState();
 
-  static Future<void> navigate({
+  static Future<bool?> navigate({
     required int? offerId,
     required int serviceProviderId,
     required ServiceProviderType serviceProviderType,
-  }) {
+  }) async {
     final String route = SharedServiceProviderRoutes.kServiceEditOffersRoute
         .replaceFirst(":offerId", offerId.toString());
-    return MezRouter.toPath(route, arguments: <String, dynamic>{
+    await MezRouter.toPath(route, arguments: <String, dynamic>{
       "offerId": offerId,
       "serviceProviderId": serviceProviderId,
       "serviceProviderType": serviceProviderType,
     });
+    return MezRouter.backResult;
   }
 }
 
@@ -86,8 +88,9 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-            onClick: MezRouter.back,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+          MezRouter.back(backResult: viewController.shouldRefetch);
+        },
             title: viewController.currentOffer.value != null
                 ? viewController.currentOffer.value!.name!.getTranslation(
                     Get.find<LanguageController>().userLanguageKey)
@@ -159,47 +162,52 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       smallSepartor,
                       MezStringDropDown(
                         labelText: "Select your offer",
-                        langPath: _i18n(),
+                        langPath: Get.find<LanguageController>()
+                            .strings['Shared']['pages']['ServiceOfferView'],
                         value: viewController.selectedOfferOrderType.value
                             ?.toFirebaseFormatString(),
                         items: OfferOrderType.values
                             .map((e) => e.toFirebaseFormatString())
                             .toList(),
                         onChanged: (value) async {
-                          if (value == null) return;
                           viewController.selectedOfferOrderType.value =
-                              value.toOfferOrderType();
-                          mezDbgPrint(
-                              "allOfferings ${viewController.allOfferings}");
-                          final List<OfferingData>? data =
+                              value!.toOfferOrderType();
+                          final List<OfferingData> data =
                               await OffersOfferingListView.navigate(
                             selectedOfferingData: viewController.allOfferings,
                           );
-                          mezDbgPrint(
-                              "allOfferings ${viewController.allOfferings}");
-                          viewController.allOfferings.value = data ?? [];
+                          final List<OfferingData> newOfferingsList = [...data];
+                          viewController.allOfferings.value = newOfferingsList;
                         },
                       ),
-                      // ...viewController.allOfferings.map(
-                      //   (e) => !e.value
-                      //       ? SizedBox.shrink()
-                      //       : MezCard(
-                      //           content: ListTile(
-                      //             title: Text(
-                      //               e.name.getTranslation(
-                      //                       Get.find<LanguageController>()
-                      //                           .userLanguageKey) ??
-                      //                   "",
-                      //             ),
-                      //             // trailing: IconButton(
-                      //             //   icon: Icon(Icons.delete),
-                      //             //   onPressed: () {
-                      //             //     viewController.allOfferings.remove(e);
-                      //             //   },
-                      //             // ),
-                      //           ),
-                      //         ),
-                      // ),
+                      Column(
+                        children: List.generate(
+                          viewController.allOfferings.length,
+                          (index) {
+                            return !viewController.allOfferings[index].value
+                                ? SizedBox.shrink()
+                                : MezCard(
+                                    content: ListTile(
+                                      title: Text(
+                                        viewController.allOfferings[index].name
+                                                .getTranslation(Get.find<
+                                                        LanguageController>()
+                                                    .userLanguageKey) ??
+                                            "",
+                                      ),
+                                      trailing: IconButton(
+                                        icon: Icon(Icons.delete),
+                                        onPressed: () {
+                                          viewController.allOfferings[index]
+                                              .value = false;
+                                          viewController.allOfferings.refresh();
+                                        },
+                                      ),
+                                    ),
+                                  );
+                          },
+                        ),
+                      ),
                       Text(
                         "Discount type",
                         style: context.textTheme.bodyLarge,

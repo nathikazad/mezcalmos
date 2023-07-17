@@ -494,8 +494,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
   QueryResult<Query$get_service_provider_offers> res =
       await _db.graphQLClient.query$get_service_provider_offers(
     Options$Query$get_service_provider_offers(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Query$get_service_provider_offers(
           service_provider_id: serviceProviderId,
           service_provider_type: serviceProviderType.toFirebaseFormatString()),
@@ -521,7 +520,17 @@ Future<List<cModels.Offer>> get_service_provider_offers(
           weeklyRepeat: data.details["weeklyRepeat"],
           categories: data.details["categories"],
           couponReusable: data.details["couponReusable"],
-          items: data.details["items"],
+          offeringTypes: data.details["offeringTypes"] == null
+              ? <cModels.OfferingType>[]
+              : data.details["offeringTypes"]
+                  .map<cModels.OfferingType>(
+                      (e) => e.toString().toOfferingType())
+                  .toList(),
+          items: data.details["items"] == null
+              ? <num>[]
+              : data.details["items"]
+                  .map<int>((e) => int.parse(e.toString()))
+                  .toList(),
           minimumOrderAmount: data.details["minimumOrderAmount"],
           offerForItems: data.details["offerForItems"],
           validityRangeEnd: data.details["validityRangeEnd"],
@@ -616,7 +625,16 @@ Future<cModels.Offer?> get_offer_by_id({
         weeklyRepeat: data.details["weeklyRepeat"],
         categories: data.details["categories"],
         couponReusable: data.details["couponReusable"],
-        items: data.details["items"],
+        offeringTypes: data.details["offeringTypes"] == null
+            ? <cModels.OfferingType>[]
+            : data.details["offeringTypes"]
+                .map<cModels.OfferingType>((e) => e.toString().toOfferingType())
+                .toList(),
+        items: data.details["items"] == null
+            ? <num>[]
+            : data.details["items"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
         minimumOrderAmount: data.details["minimumOrderAmount"],
         offerForItems: data.details["offerForItems"],
         validityRangeEnd: data.details["validityRangeEnd"],
@@ -676,12 +694,9 @@ Future<int?> update_service_offer({
       await _db.graphQLClient.mutate$update_offer(
     Options$Mutation$update_offer(
         variables: Variables$Mutation$update_offer(
-      id: offer.id!.toInt(),
+      id: offer.id.toInt(),
       service_provider_id: serviceProviderId,
       offer: Input$service_provider_offer_set_input(
-        service_provider_id: serviceProviderId,
-        service_provider_type:
-            offer.serviceProviderType.toFirebaseFormatString(),
         offer_type: offer.offerType.toFirebaseFormatString(),
         details: offer.details.toFirebaseFormattedJson(),
         status: offer.status.toFirebaseFormatString(),
@@ -692,7 +707,7 @@ Future<int?> update_service_offer({
 
   offer.name!.forEach((key, value) async {
     await update_translation(
-        langType: key, value: value, translationId: offer.nameId!);
+        langType: key, value: value, translationId: offer.nameId!.toInt());
   });
 
   mezDbgPrint("update_service_offer ===========>${res.data}");
