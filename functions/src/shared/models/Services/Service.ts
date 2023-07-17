@@ -24,7 +24,7 @@ export interface ServiceProvider {
   creationTime?: string;
   language: ServiceProviderLanguage;
   schedule?: Schedule;
-  deliveryDetails: DeliveryDetails;
+  deliveryDetails?: DeliveryDetails;
   operators?: Array<Operator>;
   serviceProviderType: ServiceProviderType;
   uniqueId?: string;
@@ -83,7 +83,8 @@ export enum ServiceProviderType {
   Business = "business",
   DeliveryCompany = "deliveryCompany",
   Customer = "customer",
-  DeliveryDriver = "deliveryDriver"
+  DeliveryDriver = "deliveryDriver",
+  Taxi = "taxi",
 }
 
 export enum Currency {
@@ -110,6 +111,7 @@ export const ServiceProviderToAppType: Record<ServiceProviderType, AppType> = {
   [ServiceProviderType.DeliveryCompany]: AppType.DeliveryAdmin,
   [ServiceProviderType.Customer]: AppType.Customer,
   [ServiceProviderType.DeliveryDriver]: AppType.Delivery,
+  [ServiceProviderType.Taxi]: AppType.TaxiAdmin,
 }
 
 export interface ServiceProviderDeletedNotification extends ForegroundNotification {

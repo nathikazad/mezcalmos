@@ -1,0 +1,22 @@
+table:
+  name: order
+  schema: taxi
+object_relationships:
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
+  - name: driver
+    using:
+      foreign_key_constraint_on: driver_id
+  - name: driver_review_by_customer
+    using:
+      foreign_key_constraint_on: driver_review_by_customer_id
+  - name: review_by_driver
+    using:
+      foreign_key_constraint_on: customer_review_by_driver_id
+  - name: taxi_company
+    using:
+      foreign_key_constraint_on: taxi_company_id

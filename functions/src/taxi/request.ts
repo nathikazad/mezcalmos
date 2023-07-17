@@ -2,14 +2,45 @@ import * as functions from "firebase-functions";
 import * as customerNodes from "../shared/databaseNodes/customer";
 import * as rootNodes from "../shared/databaseNodes/root";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { CustomerAppType, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import {  OrderType } from "../shared/models/Generic/Order";
 import { TaxiOrderRequest } from "../shared/models/Services/Taxi/TaxiOrderRequest";
 import { constructTaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
 import { getUser } from "../shared/graphql/user/getUser";
 import { DeliveryAdmin } from "../shared/models/Generic/Delivery";
-// import { pushNotification } from "../utilities/senders/notifyUser";
+ 
 
+export interface TaxiRequestDetails {
+  toLocation: Location,
+  fromLocationGps?: Location,
+  fromLocationText?: string,
+  taxiCompanyIds: Array<number>,
+  customerOffer: number,
+  customerAppType: CustomerAppType,
+  tax?: number,
+  scheduledTime?: string,
+  stripeFees?: number,
+  discountValue?: number,
+  tripDistance?: number,
+  tripDuration?: number,
+  tripPolyline?: string
+  distanceFromBase?: number,
+  refundAmount?: number,
+}
+export interface TaxiRequestResponse {
+  success: boolean,
+  error?: TaxiRequestError
+  unhandledError?: string,
+  orderId?: number
+}
+export enum TaxiRequestError {
+  UnhandledError = "unhandledError",
+  CustomerNotFound = "customerNotFound",
+  OrderCreationError = "orderCreationError",
+  NoDeliveryCompanyFound = "noDeliveryCompanyFound",
+  DeliveryCompaniesHaveNoDrivers = "deliveryCompaniesHaveNoDrivers",
+
+}
 export async function requestRide(userId: string, data: any) {
   // let response = isSignedIn(userId)
   // if (response != undefined)

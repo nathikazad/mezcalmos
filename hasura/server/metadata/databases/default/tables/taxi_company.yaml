@@ -1,0 +1,15 @@
+table:
+  name: company
+  schema: taxi
+object_relationships:
+  - name: details
+    using:
+      foreign_key_constraint_on: details_id
+array_relationships:
+  - name: operators
+    using:
+      foreign_key_constraint_on:
+        column: company_id
+        table:
+          name: operator
+          schema: taxi

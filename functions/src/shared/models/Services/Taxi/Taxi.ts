@@ -1,4 +1,6 @@
 import { AuthorizationStatus, NotificationInfo } from "../../Generic/Generic";
+import { ForegroundNotification } from "../../Notification";
+import { ServiceProvider } from "../Service";
 
 export interface State {
   authorizationStatus: AuthorizationStatus;
@@ -14,4 +16,17 @@ export interface Taxi {
 
 export interface TaxiDetails {
   taxiNumber: string
+}
+
+export interface TaxiCompany {
+  id: number,
+  details: ServiceProvider,
+  minimumCost: number,
+  costPerKm: number,
+}
+
+export interface NewTaxiCompanyNotification extends ForegroundNotification {
+  name: string,
+  image: string,
+  id: number,
 }

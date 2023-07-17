@@ -19,7 +19,7 @@ export enum NotificationType {
   ServiceProviderDeleted = "serviceProviderDeleted",
   NewBusiness = "newBusiness",
   PriceChange = "priceChange",
- 
+  NewTaxiCompany = "newTaxiCompany",
   DriverRemoved = "driverRemoved",
 }
 
