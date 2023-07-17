@@ -46,6 +46,7 @@ class ServiceOfferEditViewController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   RxBool repeatOffer = RxBool(false);
+  bool shouldRefetch = false;
 
   void init({
     required int? offerId,
@@ -84,9 +85,25 @@ class ServiceOfferEditViewController {
     currentOffer.value = offerData;
   }
 
+  Map<String, List<dynamic>> _constructSelectedOfferingItems() {
+    final Map<String, List<dynamic>> selectedOfferingItems = {
+      "ids": <num>[],
+      "categories": <OfferingType>[],
+    };
+    allOfferings.forEach((element) {
+      if (element.value) {
+        selectedOfferingItems["ids"]!.add(element.id);
+        selectedOfferingItems["categories"]!.add(element.type);
+      }
+    });
+    return selectedOfferingItems;
+  }
+
   void _constructOffer() {
     currentOffer.value = Offer(
-      id: offerId,
+      serviceProviderImage: currentOffer.value?.serviceProviderImage ?? "",
+      serviceProviderName: currentOffer.value?.serviceProviderName ?? "",
+      id: currentOffer.value?.id ?? -1,
       offerType: selectedOfferType.value!,
       serviceProviderId: serviceProviderId,
       couponCode: offerNameController.text,
@@ -95,11 +112,21 @@ class ServiceOfferEditViewController {
       name: {
         Language.EN: offerNameController.text,
       },
+      nameId: currentOffer.value?.nameId ?? -1,
       details: OfferDetails(
+        categories: currentOffer.value?.details.categories,
+        couponReusable: currentOffer.value?.details.couponReusable,
+        minimumOrderAmount: currentOffer.value?.details.minimumOrderAmount,
+        offerForItems: currentOffer.value?.details.offerForItems,
         offerForOrder: selectedOfferOrderType.value!.toFirebaseFormatString(),
         discountType: selectedDiscountType.value,
         discountValue: double.parse(discountController.text),
         weeklyRepeat: repeatOffer.value,
+        items: _constructSelectedOfferingItems()["ids"] as List<num>,
+        offeringTypes: _constructSelectedOfferingItems()["categories"]
+            as List<OfferingType>?,
+        validityRangeStart: selectedStartDate.value?.toIso8601String(),
+        validityRangeEnd: selectedEndDate.value?.toIso8601String(),
       ),
     );
   }
@@ -109,18 +136,20 @@ class ServiceOfferEditViewController {
       return;
     }
     isLoading.value = true;
+    _constructOffer();
     if (isEditMode.value) {
       await update_service_offer(
         offer: currentOffer.value!,
         serviceProviderId: serviceProviderId,
       );
     } else {
-      _constructOffer();
       await add_service_offer(
         offer: currentOffer.value!,
         serviceProviderId: serviceProviderId,
       );
     }
+    shouldRefetch = true;
+    isLoading.value = false;
   }
 
   Future<void> _convertToOfferingData() async {
@@ -166,7 +195,7 @@ class ServiceOfferEditViewController {
     });
     _homeRentals.forEach((element) {
       allOfferings.add(OfferingData(
-        type: OfferingType.HomeRental,
+        type: OfferingType.Home,
         id: element.id!.toInt(),
         name: element.details.name,
         image: element.details.firstImage ?? defaultUserImgUrl,
@@ -231,14 +260,6 @@ class ServiceOfferEditViewController {
     );
     _isFetchingSingle.value = false;
   }
-}
-
-enum OfferingType {
-  Product,
-  Service,
-  Event,
-  Rental,
-  HomeRental,
 }
 
 class OfferingData {

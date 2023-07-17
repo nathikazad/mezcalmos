@@ -6993,14 +6993,14 @@ class Variables$Query$getCustomerOrdersByType {
     required String orderType,
     int? limit,
     int? offset,
-    bool? inProcess,
+    required bool inProcess,
   }) =>
       Variables$Query$getCustomerOrdersByType._({
         r'custId': custId,
         r'orderType': orderType,
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
-        if (inProcess != null) r'inProcess': inProcess,
+        r'inProcess': inProcess,
       });
 
   Variables$Query$getCustomerOrdersByType._(this._$data);
@@ -7020,10 +7020,8 @@ class Variables$Query$getCustomerOrdersByType {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
     }
-    if (data.containsKey('inProcess')) {
-      final l$inProcess = data['inProcess'];
-      result$data['inProcess'] = (l$inProcess as bool?);
-    }
+    final l$inProcess = data['inProcess'];
+    result$data['inProcess'] = (l$inProcess as bool);
     return Variables$Query$getCustomerOrdersByType._(result$data);
   }
 
@@ -7033,7 +7031,7 @@ class Variables$Query$getCustomerOrdersByType {
   String get orderType => (_$data['orderType'] as String);
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
-  bool? get inProcess => (_$data['inProcess'] as bool?);
+  bool get inProcess => (_$data['inProcess'] as bool);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$custId = custId;
@@ -7048,10 +7046,8 @@ class Variables$Query$getCustomerOrdersByType {
       final l$offset = offset;
       result$data['offset'] = l$offset;
     }
-    if (_$data.containsKey('inProcess')) {
-      final l$inProcess = inProcess;
-      result$data['inProcess'] = l$inProcess;
-    }
+    final l$inProcess = inProcess;
+    result$data['inProcess'] = l$inProcess;
     return result$data;
   }
 
@@ -7098,10 +7094,6 @@ class Variables$Query$getCustomerOrdersByType {
     }
     final l$inProcess = inProcess;
     final lOther$inProcess = other.inProcess;
-    if (_$data.containsKey('inProcess') !=
-        other._$data.containsKey('inProcess')) {
-      return false;
-    }
     if (l$inProcess != lOther$inProcess) {
       return false;
     }
@@ -7120,7 +7112,7 @@ class Variables$Query$getCustomerOrdersByType {
       l$orderType,
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
-      _$data.containsKey('inProcess') ? l$inProcess : const {},
+      l$inProcess,
     ]);
   }
 }
@@ -7170,7 +7162,8 @@ class _CopyWithImpl$Variables$Query$getCustomerOrdersByType<TRes>
           'orderType': (orderType as String),
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
-        if (inProcess != _undefined) 'inProcess': (inProcess as bool?),
+        if (inProcess != _undefined && inProcess != null)
+          'inProcess': (inProcess as bool),
       }));
 }
 
@@ -7390,7 +7383,7 @@ const documentNodeQuerygetCustomerOrdersByType = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'inProcess')),
         type: NamedTypeNode(
           name: NameNode(value: 'Boolean'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],

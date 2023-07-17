@@ -1,5 +1,7 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -8,16 +10,13 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferingsListView/OffersOfferingListView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferingsListView/controller/OffersOfferingListViewController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezPeriodPicker/MezPeriodPicker.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['ServiceOfferView'];
@@ -29,18 +28,19 @@ class ServiceOfferEditView extends StatefulWidget {
   @override
   State<ServiceOfferEditView> createState() => _ServiceOfferEditViewState();
 
-  static Future<void> navigate({
+  static Future<bool?> navigate({
     required int? offerId,
     required int serviceProviderId,
     required ServiceProviderType serviceProviderType,
-  }) {
+  }) async {
     final String route = SharedServiceProviderRoutes.kServiceEditOffersRoute
         .replaceFirst(":offerId", offerId.toString());
-    return MezRouter.toPath(route, arguments: <String, dynamic>{
+    await MezRouter.toPath(route, arguments: <String, dynamic>{
       "offerId": offerId,
       "serviceProviderId": serviceProviderId,
       "serviceProviderType": serviceProviderType,
     });
+    return MezRouter.backResult;
   }
 }
 
@@ -70,13 +70,49 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
   }
 
   void showAvailability() {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       builder: (context) {
-        return MezPeriodPicker(
-          startDate: DateTime.now(),
-          numberOfDaysInterval: 0,
-          serviceSchedule: Schedule(openHours: {}),
+        return Obx(
+          () => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              BsOpDateTimePicker(
+                fillColor: Colors.white,
+                onNewPeriodSelected: (DateTime v) {
+                  viewController.selectedStartDate.value = v;
+                },
+                label: "choostTime",
+                validator: (DateTime? p0) {
+                  if (p0 == null) {
+                    BotToast.showText(
+                        text: "Please select a time",
+                        duration: Duration(seconds: 5));
+                    return "Please select a time";
+                  }
+                  return null;
+                },
+                time: viewController.selectedStartDate.value,
+              ),
+              BsOpDateTimePicker(
+                fillColor: Colors.white,
+                onNewPeriodSelected: (DateTime v) {
+                  viewController.selectedEndDate.value = v;
+                },
+                label: "choostTime",
+                validator: (DateTime? p0) {
+                  if (p0 == null) {
+                    BotToast.showText(
+                        text: "Please select a time",
+                        duration: Duration(seconds: 5));
+                    return "Please select a time";
+                  }
+                  return null;
+                },
+                time: viewController.selectedEndDate.value,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -86,8 +122,9 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-            onClick: MezRouter.back,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+          MezRouter.back(backResult: viewController.shouldRefetch);
+        },
             title: viewController.currentOffer.value != null
                 ? viewController.currentOffer.value!.name!.getTranslation(
                     Get.find<LanguageController>().userLanguageKey)
@@ -127,6 +164,14 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                               .map((e) => e.toFirebaseFormatString())
                               .toList(),
                           icons: [Icons.local_offer, Icons.attach_money],
+                          validator: (value) {
+                            if (value == null ||
+                                viewController.selectedOfferType.value ==
+                                    null) {
+                              return "Please select your offer";
+                            }
+                            return null;
+                          },
                           onChanged: (value) {
                             if (value == null) return;
                             viewController.selectedOfferType.value =
@@ -159,47 +204,58 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       smallSepartor,
                       MezStringDropDown(
                         labelText: "Select your offer",
-                        langPath: _i18n(),
+                        langPath: Get.find<LanguageController>()
+                            .strings['Shared']['pages']['ServiceOfferView'],
                         value: viewController.selectedOfferOrderType.value
                             ?.toFirebaseFormatString(),
                         items: OfferOrderType.values
                             .map((e) => e.toFirebaseFormatString())
                             .toList(),
                         onChanged: (value) async {
-                          if (value == null) return;
                           viewController.selectedOfferOrderType.value =
-                              value.toOfferOrderType();
-                          mezDbgPrint(
-                              "allOfferings ${viewController.allOfferings}");
-                          final List<OfferingData>? data =
-                              await OffersOfferingListView.navigate(
-                            selectedOfferingData: viewController.allOfferings,
-                          );
-                          mezDbgPrint(
-                              "allOfferings ${viewController.allOfferings}");
-                          viewController.allOfferings.value = data ?? [];
+                              value!.toOfferOrderType();
+                          if (viewController.selectedOfferOrderType.value ==
+                              OfferOrderType.ParticularService) {
+                            final List<OfferingData> data =
+                                await OffersOfferingListView.navigate(
+                              selectedOfferingData: viewController.allOfferings,
+                            );
+                            final List<OfferingData> newOfferingsList = [
+                              ...data
+                            ];
+                            viewController.allOfferings.value =
+                                newOfferingsList;
+                          }
                         },
                       ),
-                      // ...viewController.allOfferings.map(
-                      //   (e) => !e.value
-                      //       ? SizedBox.shrink()
-                      //       : MezCard(
-                      //           content: ListTile(
-                      //             title: Text(
-                      //               e.name.getTranslation(
-                      //                       Get.find<LanguageController>()
-                      //                           .userLanguageKey) ??
-                      //                   "",
-                      //             ),
-                      //             // trailing: IconButton(
-                      //             //   icon: Icon(Icons.delete),
-                      //             //   onPressed: () {
-                      //             //     viewController.allOfferings.remove(e);
-                      //             //   },
-                      //             // ),
-                      //           ),
-                      //         ),
-                      // ),
+                      Column(
+                        children: List.generate(
+                          viewController.allOfferings.length,
+                          (index) {
+                            return !viewController.allOfferings[index].value
+                                ? SizedBox.shrink()
+                                : MezCard(
+                                    content: ListTile(
+                                      title: Text(
+                                        viewController.allOfferings[index].name
+                                                .getTranslation(Get.find<
+                                                        LanguageController>()
+                                                    .userLanguageKey) ??
+                                            "",
+                                      ),
+                                      trailing: IconButton(
+                                        icon: Icon(Icons.delete),
+                                        onPressed: () {
+                                          viewController.allOfferings[index]
+                                              .value = false;
+                                          viewController.allOfferings.refresh();
+                                        },
+                                      ),
+                                    ),
+                                  );
+                          },
+                        ),
+                      ),
                       Text(
                         "Discount type",
                         style: context.textTheme.bodyLarge,
@@ -253,32 +309,65 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
-                      InkWell(
-                        onTap: () async {
-                          showAvailability();
+                      FormField(
+                        validator: (value) {
+                          if (viewController.selectedStartDate.value == null ||
+                              viewController.selectedEndDate.value == null) {
+                            return "Please select your availability";
+                          }
+                          if (viewController.selectedStartDate.value!
+                              .isAfter(viewController.selectedEndDate.value!)) {
+                            return "Start date must be before end date";
+                          }
+                          return null;
                         },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: Colors.grey.shade200,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.access_time_filled),
-                              viewController.selectedStartDate.value != null &&
-                                      viewController.selectedEndDate.value !=
-                                          null
-                                  ? Text(
-                                      "${viewController.selectedStartDate.value!.getEstimatedTime()}")
-                                  : Text(
-                                      "Select your time",
+                        builder: (state) {
+                          return Obx(
+                            () => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  onTap: () async {
+                                    showAvailability();
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 20),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      color: Colors.grey.shade200,
                                     ),
-                            ],
-                          ),
-                        ),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.access_time_filled),
+                                        viewController.selectedStartDate
+                                                        .value !=
+                                                    null &&
+                                                viewController.selectedEndDate
+                                                        .value !=
+                                                    null
+                                            ? Text(
+                                                "${viewController.selectedStartDate.value!.getOrderTime()} - ${viewController.selectedEndDate.value!.getOrderTime()}")
+                                            : Text(
+                                                "Select your time",
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                if (state.hasError)
+                                  Text(
+                                    state.errorText!,
+                                    style:
+                                        context.textTheme.bodyMedium!.copyWith(
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                       smallSepartor,
                       Row(

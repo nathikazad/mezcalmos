@@ -39376,11 +39376,11 @@ type service_provider_post {
   """An object relationship"""
   business: business_business
 
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments(
     """JSON select path"""
     path: String
-  ): jsonb
+  ): jsonb!
 
   """An object relationship"""
   delivery_company: delivery_company
@@ -39394,7 +39394,7 @@ type service_provider_post {
   likes(
     """JSON select path"""
     path: String
-  ): jsonb
+  ): jsonb!
   link: String
   message: String!
   posted_on: timestamptz!
@@ -39432,7 +39432,7 @@ type service_provider_post_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_append_input {
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments: jsonb
 
   """Array of customerIds"""
@@ -39481,7 +39481,7 @@ enum service_provider_post_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input service_provider_post_delete_at_path_input {
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments: [String!]
 
   """Array of customerIds"""
@@ -39493,7 +39493,7 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input service_provider_post_delete_elem_input {
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments: Int
 
   """Array of customerIds"""
@@ -39504,7 +39504,7 @@ input service_provider_post_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input service_provider_post_delete_key_input {
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments: String
 
   """Array of customerIds"""
@@ -39525,7 +39525,7 @@ input type for inserting data into table "service_provider.post"
 input service_provider_post_insert_input {
   business: business_business_obj_rel_insert_input
 
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments: jsonb
   delivery_company: delivery_company_obj_rel_insert_input
   id: Int
@@ -39608,7 +39608,7 @@ input service_provider_post_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_prepend_input {
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments: jsonb
 
   """Array of customerIds"""
@@ -39651,7 +39651,7 @@ enum service_provider_post_select_column {
 input type for updating data in table "service_provider.post"
 """
 input service_provider_post_set_input {
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments: jsonb
   id: Int
   image: String
@@ -39696,7 +39696,7 @@ input service_provider_post_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_provider_post_stream_cursor_value_input {
-  """Array of { message, date, Array of customerIds }"""
+  """Array of { message, date }"""
   comments: jsonb
   id: Int
   image: String

@@ -29,11 +29,13 @@ class ServiceOfferViewController {
 
   Future<void> fetchServiceOffers() async {
     isLoading.value = true;
+    serviceOffers.clear();
     serviceOffers.value = await get_service_provider_offers(
       serviceProviderId: serviceProviderId,
       serviceProviderType: serviceProviderType,
     );
     mezDbgPrint("Offers fetched $serviceOffers");
+    serviceOffers.refresh();
     isLoading.value = false;
   }
 }
