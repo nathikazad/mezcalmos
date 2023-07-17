@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
+import 'package:mezcalmos/CustomerApp/components/DeliveryOffersList/CustDeliveryOffersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/components/CustomerLaundryEstTimes.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/components/LaundryOrderFooterCard.dart';
@@ -117,6 +118,11 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                 order: viewController.order.value!,
                               ),
                             ),
+                            if (viewController.order.value?.driverInfo == null)
+                              CustDeliveryOffersList(
+                                deliveryOrderId:
+                                    viewController.order.value!.deliveryOrderId,
+                              ),
                             CustomerLaundryOrderEst(
                               order: viewController.order.value!,
                             ),

@@ -40,6 +40,9 @@ class CustLaundryOrderRequestViewController {
     return laundry.value!.deliveryCost;
   }
 
+  List<int> selectedCompanies = [];
+  RxDouble estDeliveryCost = RxDouble(40);
+
   RxBool isShippingSet = RxBool(false);
   num _orderDistanceInKm = 0;
   bool get isUserSignedIn => authController.isUserSignedIn;
@@ -187,13 +190,15 @@ class CustLaundryOrderRequestViewController {
     try {
       final cloudFunctionModels.ReqLaundryResponse response =
           await CloudFunctions.laundry3_requestLaundry(
+        fromCustomerDeliveryOffer: estDeliveryCost.value,
+        chosenCompanies: selectedCompanies,
         storeId: laundryRequest.laundryId,
         customerAppType: cloudFunctionModels.CustomerAppType.Native,
         customerLocation: cloudFunctionModels.Location(
             lat: laundryRequest.to!.latitude,
             lng: laundryRequest.to!.longitude,
             address: laundryRequest.to!.address),
-       // deliveryCost: shippingCost.value! * 2,
+        // deliveryCost: shippingCost.value! * 2,
         paymentType: laundryRequest.paymentType.toFirebaseFormatEnum(),
         notes: laundryRequest.notes,
         tripDistance:
