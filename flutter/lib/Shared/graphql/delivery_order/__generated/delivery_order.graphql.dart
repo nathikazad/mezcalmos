@@ -8489,6 +8489,13 @@ const documentNodeSubscriptionlisten_on_driver_order_variables =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'customer_offer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'counter_offers'),
             alias: null,
             arguments: [],
@@ -8658,6 +8665,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     this.estimated_arrival_at_pickup_time,
     this.estimated_package_ready_time,
     required this.status,
+    this.customer_offer,
     this.counter_offers,
     required this.package_ready,
     this.delivery_driver,
@@ -8674,6 +8682,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
         json['estimated_arrival_at_pickup_time'];
     final l$estimated_package_ready_time = json['estimated_package_ready_time'];
     final l$status = json['status'];
+    final l$customer_offer = json['customer_offer'];
     final l$counter_offers = json['counter_offers'];
     final l$package_ready = json['package_ready'];
     final l$delivery_driver = json['delivery_driver'];
@@ -8687,6 +8696,8 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
           (l$estimated_arrival_at_pickup_time as String?),
       estimated_package_ready_time: (l$estimated_package_ready_time as String?),
       status: (l$status as String),
+      customer_offer:
+          l$customer_offer == null ? null : moneyFromJson(l$customer_offer),
       counter_offers:
           l$counter_offers == null ? null : mapFromJson(l$counter_offers),
       package_ready: (l$package_ready as bool),
@@ -8709,6 +8720,8 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
   final String? estimated_package_ready_time;
 
   final String status;
+
+  final double? customer_offer;
 
   final dynamic? counter_offers;
 
@@ -8737,6 +8750,9 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
         l$estimated_package_ready_time;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$customer_offer = customer_offer;
+    _resultData['customer_offer'] =
+        l$customer_offer == null ? null : moneyToJson(l$customer_offer);
     final l$counter_offers = counter_offers;
     _resultData['counter_offers'] =
         l$counter_offers == null ? null : mapToJson(l$counter_offers);
@@ -8758,6 +8774,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     final l$estimated_package_ready_time = estimated_package_ready_time;
     final l$status = status;
+    final l$customer_offer = customer_offer;
     final l$counter_offers = counter_offers;
     final l$package_ready = package_ready;
     final l$delivery_driver = delivery_driver;
@@ -8769,6 +8786,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
       l$estimated_arrival_at_pickup_time,
       l$estimated_package_ready_time,
       l$status,
+      l$customer_offer,
       l$counter_offers,
       l$package_ready,
       l$delivery_driver,
@@ -8820,6 +8838,11 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$customer_offer = customer_offer;
+    final lOther$customer_offer = other.customer_offer;
+    if (l$customer_offer != lOther$customer_offer) {
       return false;
     }
     final l$counter_offers = counter_offers;
@@ -8877,6 +8900,7 @@ abstract class CopyWith$Subscription$listen_on_driver_order_variables$delivery_o
     String? estimated_arrival_at_pickup_time,
     String? estimated_package_ready_time,
     String? status,
+    double? customer_offer,
     dynamic? counter_offers,
     bool? package_ready,
     Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?
@@ -8912,6 +8936,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order
     Object? estimated_arrival_at_pickup_time = _undefined,
     Object? estimated_package_ready_time = _undefined,
     Object? status = _undefined,
+    Object? customer_offer = _undefined,
     Object? counter_offers = _undefined,
     Object? package_ready = _undefined,
     Object? delivery_driver = _undefined,
@@ -8938,6 +8963,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        customer_offer: customer_offer == _undefined
+            ? _instance.customer_offer
+            : (customer_offer as double?),
         counter_offers: counter_offers == _undefined
             ? _instance.counter_offers
             : (counter_offers as dynamic?),
@@ -8980,6 +9008,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_o
     String? estimated_arrival_at_pickup_time,
     String? estimated_package_ready_time,
     String? status,
+    double? customer_offer,
     dynamic? counter_offers,
     bool? package_ready,
     Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?

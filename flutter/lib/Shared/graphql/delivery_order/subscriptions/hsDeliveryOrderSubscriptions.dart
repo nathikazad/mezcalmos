@@ -47,6 +47,7 @@ Stream<DeliveryOrderVariables?> listen_on_driver_order_variables(
       return DeliveryOrderVariables(
         status: orderData.status.toDeliveryOrderStatus(),
         packageReady: orderData.package_ready,
+        customerOffer: orderData.customer_offer,
         counterOffers: orderData.counter_offers
             ?.map<int, cModels.CounterOffer>((String id, value) {
           return MapEntry(
@@ -180,7 +181,7 @@ Stream<List<MinimalOrder>?> listen_on_open_driver_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          deliveryCost: orderData.delivery_cost,
+          deliveryCost: orderData.customer_offer,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost,
