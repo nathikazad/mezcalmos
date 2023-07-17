@@ -95,6 +95,7 @@ export async function createNewCourierOrder(
                         package_cost: packageCost,
                         distance_from_base: courierRequest.distanceFromBase,
                         customer_offer: courierRequest.customerOffer,
+                        delivery_cost: courierRequest.customerOffer
                     }
                 }
             }
@@ -136,7 +137,7 @@ export async function createNewCourierOrder(
             paymentType: PaymentType.Cash,
             status: DeliveryOrderStatus.OrderReceived,
             customerId,
-            deliveryCost: 0,
+            deliveryCost: courierRequest.customerOffer,
             packageCost,
             orderTime: response.insert_delivery_courier_order_one.order_time,
             tripDistance: courierRequest.tripDistance,

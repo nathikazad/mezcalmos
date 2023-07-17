@@ -72,12 +72,12 @@ export async function notifyDeliveryDrivers(deliveryOrder: DeliveryOrder) {
   }
   deliveryDrivers = deliveryDrivers.slice(0, 10);
   notification.linkUrl = `/orders/${deliveryOrder.deliveryId}`
+  let notifiedDrivers: Record<number, boolean> = {};
   deliveryDrivers.forEach((d) => {
     pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryDriver);
+    notifiedDrivers[d.id] = false;
   });
-  deliveryDrivers.forEach((d) => {
-    deliveryOrder.notifiedDrivers[d.id] = false;
-  });
+  deliveryOrder.notifiedDrivers = notifiedDrivers;
   setNotifiedDrivers(deliveryOrder)
 }
   
