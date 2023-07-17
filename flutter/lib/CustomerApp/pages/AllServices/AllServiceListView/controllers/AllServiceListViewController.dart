@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -79,10 +80,11 @@ class AllServiceListViewController {
   }
 
   Future<void> fetchServiceTree() async {
-    var data = await get_service_tree(
+    final locPkg.LocationData location = await locPkg.Location().getLocation();
+    final ServiceTree data = await get_service_tree(
       distance: defaultDistance,
-      lat: 15.8.toDouble(),
-      lng: -97.toDouble(),
+      lat: location.latitude ?? 15.8.toDouble(),
+      lng: location.longitude ?? -97.toDouble(),
       withCache: true,
     );
     serviceTreeData.value = data;
