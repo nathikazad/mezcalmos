@@ -650,12 +650,13 @@ subscription listen_driver_order_prices($orderId: Int!) {
 
 subscription listenOnOrderOffers($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-   
+   notified_drivers
     counter_offers
   }
 }query getOrderOffers($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-   
-    counter_offers
+   notified_drivers,
+    counter_offers,
+    customer_offer
   }
 }

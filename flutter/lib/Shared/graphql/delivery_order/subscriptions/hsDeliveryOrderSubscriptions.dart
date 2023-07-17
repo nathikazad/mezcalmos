@@ -4,6 +4,7 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrderModels.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -313,7 +314,7 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required int orderId}) {
   });
 }
 
-Future<Map<int, cModels.CounterOffer>?> get_dv_order_offers(
+Future<CustDeliveryOffersListVariables?> get_dv_order_offers(
     {required int orderId}) async {
   QueryResult<Query$getOrderOffers> res = await _hasuraDb.graphQLClient
       .query$getOrderOffers(Options$Query$getOrderOffers(
@@ -321,44 +322,67 @@ Future<Map<int, cModels.CounterOffer>?> get_dv_order_offers(
   if (res.hasException) {
     throwError(res.exception);
   }
-  return res.parsedData?.delivery_order_by_pk?.counter_offers
-      ?.map<int, cModels.CounterOffer>((String id, value) {
-    return MapEntry(
-        int.parse(id),
-        cModels.CounterOffer(
-          price: value["price"],
-          status: value["status"].toString().toCounterOfferStatus(),
-          time: value["time"],
-          name: value["name"],
-          image: value["image"],
-          expiryTime: value["expiryTime"],
-        ));
-  });
+  if (res.parsedData?.delivery_order_by_pk != null) {
+    return CustDeliveryOffersListVariables(
+      customerOffer: res.parsedData?.delivery_order_by_pk?.customer_offer,
+      offers: res.parsedData?.delivery_order_by_pk?.counter_offers
+          ?.map<int, cModels.CounterOffer>((String id, value) {
+        return MapEntry(
+            int.parse(id),
+            cModels.CounterOffer(
+              price: value["price"],
+              status: value["status"].toString().toCounterOfferStatus(),
+              time: value["time"],
+              name: value["name"],
+              image: value["image"],
+              expiryTime: value["expiryTime"],
+            ));
+      }),
+      notifiedDrivers: res.parsedData?.delivery_order_by_pk?.notified_drivers
+          ?.map<int, bool>((key, value) {
+        return MapEntry<int, bool>(int.parse(key), value as bool);
+      }),
+    );
+  }
+  return null;
 }
 
-Stream<Map<int, cModels.CounterOffer>?> listen_on_dv_order_offers(
+Stream<CustDeliveryOffersListVariables?> listen_on_dv_order_offers(
     {required int orderId}) {
   return _hasuraDb.graphQLClient
       .subscribe$listenOnOrderOffers(Options$Subscription$listenOnOrderOffers(
           variables:
               Variables$Subscription$listenOnOrderOffers(orderId: orderId)))
-      .map<Map<int, cModels.CounterOffer>>(
+      .map<CustDeliveryOffersListVariables?>(
           (QueryResult<Subscription$listenOnOrderOffers> event) {
     if (event.hasException) {
       throwError(event.exception);
     }
-    return event.parsedData?.delivery_order_by_pk?.counter_offers
-        ?.map<int, cModels.CounterOffer>((String id, value) {
-      return MapEntry(
-          int.parse(id),
-          cModels.CounterOffer(
-            price: value["price"],
-            status: value["status"].toString().toCounterOfferStatus(),
-            time: value["time"],
-            name: value["name"],
-            image: value["image"],
-            expiryTime: value["expiryTime"],
-          ));
-    });
+    mezDbgPrint(
+        "CustDeliveryOffersListVariables 🔴=========>${event.parsedData?.delivery_order_by_pk?.toJson()}");
+    if (event.parsedData?.delivery_order_by_pk != null) {
+      return CustDeliveryOffersListVariables(
+        customerOffer: null,
+        offers: event.parsedData?.delivery_order_by_pk?.counter_offers
+            ?.map<int, cModels.CounterOffer>((String id, value) {
+          return MapEntry<int, cModels.CounterOffer>(
+              int.parse(id),
+              cModels.CounterOffer(
+                price: value["price"],
+                status: value["status"].toString().toCounterOfferStatus(),
+                time: value["time"],
+                name: value["name"],
+                image: value["image"],
+                expiryTime: value["expiryTime"],
+              ));
+        }),
+        notifiedDrivers: event
+            .parsedData!.delivery_order_by_pk!.notified_drivers
+            ?.map<int, bool>((key, value) {
+          return MapEntry<int, bool>(int.parse(key), value as bool);
+        }),
+      );
+    } else
+      return null;
   });
 }

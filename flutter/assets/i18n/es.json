@@ -3661,7 +3661,7 @@
           }
         }
       },
-      "RestaurantOrderView": {
+      "DvOrderView": {
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -3684,7 +3684,10 @@
         "title": "Entrega",
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
-        "courier": "Entrega abierta"
+        "courier": "Entrega abierta",
+        "cancel" : "Cancelar",
+        "counterOffer" : "Contraoferta",
+        "reqCounterOffer" : "Solicitar cambio de precio"
       }
     },
     "notificationHandler": {

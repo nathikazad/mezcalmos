@@ -3470,7 +3470,7 @@
         "order": "Order",
         "viewImage": "View image"
       },
-      "RestaurantOrderView": {
+      "DvOrderView": {
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -3493,7 +3493,10 @@
         "title": "Delivery",
         "restaurant": "Restaurant",
         "laundry": "Laundry",
-        "courier": "Open Delivery"
+        "courier": "Open Delivery",
+        "cancel" : "Cancel",
+        "counterOffer" : "Counter Offer",
+        "reqCounterOffer" : "Request price change"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {

@@ -1,8 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(
@@ -287,7 +285,7 @@ class CloudFunctions {
       {required CustomerAppType customerAppType,
       required Location customerLocation,
       required num customerDeliveryOffer,
-      required List<num> chosenCompanies,
+      required List<int> chosenCompanies,
       required PaymentType paymentType,
       String? notes,
       required num restaurantId,
@@ -470,7 +468,7 @@ class CloudFunctions {
       required DeliveryType deliveryType,
       required Location customerLocation,
       required num fromCustomerDeliveryOffer,
-      List<num>? chosenCompanies,
+      List<int>? chosenCompanies,
       required CustomerAppType customerAppType,
       String? notes,
       num? tax,
@@ -537,7 +535,7 @@ class CloudFunctions {
 
   static Future<ReqDeliveryResponse> laundry3_requestLaundryDelivery(
       {required num orderId,
-      required List<num> chosenCompanies,
+      required List<int> chosenCompanies,
       required num customerOffer}) async {
     return ReqDeliveryResponse.fromFirebaseFormattedJson(
         await callCloudFunction(
@@ -579,7 +577,7 @@ class CloudFunctions {
       Location? fromLocationGps,
       String? fromLocationText,
       required List<CourierItem> items,
-      required List<num> deliveryCompanyIds,
+      required List<int> deliveryCompanyIds,
       required num customerOffer,
       required CustomerAppType customerAppType,
       num? tax,

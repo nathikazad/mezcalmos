@@ -108,46 +108,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  if (viewController.order.notifiedDrivers != null)
-                    Card(
-                      margin: EdgeInsets.only(top: 15),
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  fit: FlexFit.tight,
-                                  child: Text(
-                                    "Your offered delivery price",
-                                    style: context.textTheme.bodyLarge,
-                                  ),
-                                ),
-                                Text(
-                                  viewController.order.customerOffer
-                                          ?.toPriceString() ??
-                                      "-",
-                                  style: context.textTheme.bodyLarge,
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                MezIconButton(
-                                  icon: Icons.add,
-                                  iconSize: 22,
-                                  padding: EdgeInsets.all(3),
-                                  onTap: () async {},
-                                ),
-                              ],
-                            ),
-                            smallSepartor,
-                            Text(
-                                "${viewController.order.driversSawOfferCount} out of ${viewController.order.notifiedDrivers?.length} drivers have seen your order and not accepted it")
-                          ],
-                        ),
-                      ),
-                    ),
+                
                   if (viewController.order.isDriverAssigned)
                     CustDeliveryOffersList(
                       deliveryOrderId: viewController.order.deliveryOrderId!,

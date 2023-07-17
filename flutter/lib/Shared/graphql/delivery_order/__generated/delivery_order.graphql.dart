@@ -34020,6 +34020,13 @@ const documentNodeSubscriptionlistenOnOrderOffers = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'notified_drivers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'counter_offers'),
             alias: null,
             arguments: [],
@@ -34123,20 +34130,26 @@ extension ClientExtension$Subscription$listenOnOrderOffers
 
 class Subscription$listenOnOrderOffers$delivery_order_by_pk {
   Subscription$listenOnOrderOffers$delivery_order_by_pk({
+    this.notified_drivers,
     this.counter_offers,
     required this.$__typename,
   });
 
   factory Subscription$listenOnOrderOffers$delivery_order_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$notified_drivers = json['notified_drivers'];
     final l$counter_offers = json['counter_offers'];
     final l$$__typename = json['__typename'];
     return Subscription$listenOnOrderOffers$delivery_order_by_pk(
+      notified_drivers:
+          l$notified_drivers == null ? null : mapFromJson(l$notified_drivers),
       counter_offers:
           l$counter_offers == null ? null : mapFromJson(l$counter_offers),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final dynamic? notified_drivers;
 
   final dynamic? counter_offers;
 
@@ -34144,6 +34157,9 @@ class Subscription$listenOnOrderOffers$delivery_order_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$notified_drivers = notified_drivers;
+    _resultData['notified_drivers'] =
+        l$notified_drivers == null ? null : mapToJson(l$notified_drivers);
     final l$counter_offers = counter_offers;
     _resultData['counter_offers'] =
         l$counter_offers == null ? null : mapToJson(l$counter_offers);
@@ -34154,9 +34170,11 @@ class Subscription$listenOnOrderOffers$delivery_order_by_pk {
 
   @override
   int get hashCode {
+    final l$notified_drivers = notified_drivers;
     final l$counter_offers = counter_offers;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$notified_drivers,
       l$counter_offers,
       l$$__typename,
     ]);
@@ -34169,6 +34187,11 @@ class Subscription$listenOnOrderOffers$delivery_order_by_pk {
     }
     if (!(other is Subscription$listenOnOrderOffers$delivery_order_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$notified_drivers = notified_drivers;
+    final lOther$notified_drivers = other.notified_drivers;
+    if (l$notified_drivers != lOther$notified_drivers) {
       return false;
     }
     final l$counter_offers = counter_offers;
@@ -34208,6 +34231,7 @@ abstract class CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<
       _CopyWithStubImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk;
 
   TRes call({
+    dynamic? notified_drivers,
     dynamic? counter_offers,
     String? $__typename,
   });
@@ -34229,10 +34253,14 @@ class _CopyWithImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? notified_drivers = _undefined,
     Object? counter_offers = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listenOnOrderOffers$delivery_order_by_pk(
+        notified_drivers: notified_drivers == _undefined
+            ? _instance.notified_drivers
+            : (notified_drivers as dynamic?),
         counter_offers: counter_offers == _undefined
             ? _instance.counter_offers
             : (counter_offers as dynamic?),
@@ -34252,6 +34280,7 @@ class _CopyWithStubImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk<
   TRes _res;
 
   call({
+    dynamic? notified_drivers,
     dynamic? counter_offers,
     String? $__typename,
   }) =>
@@ -34524,7 +34553,21 @@ const documentNodeQuerygetOrderOffers = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'notified_drivers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'counter_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer_offer'),
             alias: null,
             arguments: [],
             directives: [],
@@ -34652,30 +34695,48 @@ extension ClientExtension$Query$getOrderOffers on graphql.GraphQLClient {
 
 class Query$getOrderOffers$delivery_order_by_pk {
   Query$getOrderOffers$delivery_order_by_pk({
+    this.notified_drivers,
     this.counter_offers,
+    this.customer_offer,
     required this.$__typename,
   });
 
   factory Query$getOrderOffers$delivery_order_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$notified_drivers = json['notified_drivers'];
     final l$counter_offers = json['counter_offers'];
+    final l$customer_offer = json['customer_offer'];
     final l$$__typename = json['__typename'];
     return Query$getOrderOffers$delivery_order_by_pk(
+      notified_drivers:
+          l$notified_drivers == null ? null : mapFromJson(l$notified_drivers),
       counter_offers:
           l$counter_offers == null ? null : mapFromJson(l$counter_offers),
+      customer_offer:
+          l$customer_offer == null ? null : moneyFromJson(l$customer_offer),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
+  final dynamic? notified_drivers;
+
   final dynamic? counter_offers;
+
+  final double? customer_offer;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$notified_drivers = notified_drivers;
+    _resultData['notified_drivers'] =
+        l$notified_drivers == null ? null : mapToJson(l$notified_drivers);
     final l$counter_offers = counter_offers;
     _resultData['counter_offers'] =
         l$counter_offers == null ? null : mapToJson(l$counter_offers);
+    final l$customer_offer = customer_offer;
+    _resultData['customer_offer'] =
+        l$customer_offer == null ? null : moneyToJson(l$customer_offer);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -34683,10 +34744,14 @@ class Query$getOrderOffers$delivery_order_by_pk {
 
   @override
   int get hashCode {
+    final l$notified_drivers = notified_drivers;
     final l$counter_offers = counter_offers;
+    final l$customer_offer = customer_offer;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$notified_drivers,
       l$counter_offers,
+      l$customer_offer,
       l$$__typename,
     ]);
   }
@@ -34700,9 +34765,19 @@ class Query$getOrderOffers$delivery_order_by_pk {
         runtimeType != other.runtimeType) {
       return false;
     }
+    final l$notified_drivers = notified_drivers;
+    final lOther$notified_drivers = other.notified_drivers;
+    if (l$notified_drivers != lOther$notified_drivers) {
+      return false;
+    }
     final l$counter_offers = counter_offers;
     final lOther$counter_offers = other.counter_offers;
     if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
+    final l$customer_offer = customer_offer;
+    final lOther$customer_offer = other.customer_offer;
+    if (l$customer_offer != lOther$customer_offer) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -34734,7 +34809,9 @@ abstract class CopyWith$Query$getOrderOffers$delivery_order_by_pk<TRes> {
       _CopyWithStubImpl$Query$getOrderOffers$delivery_order_by_pk;
 
   TRes call({
+    dynamic? notified_drivers,
     dynamic? counter_offers,
+    double? customer_offer,
     String? $__typename,
   });
 }
@@ -34753,13 +34830,21 @@ class _CopyWithImpl$Query$getOrderOffers$delivery_order_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? notified_drivers = _undefined,
     Object? counter_offers = _undefined,
+    Object? customer_offer = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOrderOffers$delivery_order_by_pk(
+        notified_drivers: notified_drivers == _undefined
+            ? _instance.notified_drivers
+            : (notified_drivers as dynamic?),
         counter_offers: counter_offers == _undefined
             ? _instance.counter_offers
             : (counter_offers as dynamic?),
+        customer_offer: customer_offer == _undefined
+            ? _instance.customer_offer
+            : (customer_offer as double?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -34773,7 +34858,9 @@ class _CopyWithStubImpl$Query$getOrderOffers$delivery_order_by_pk<TRes>
   TRes _res;
 
   call({
+    dynamic? notified_drivers,
     dynamic? counter_offers,
+    double? customer_offer,
     String? $__typename,
   }) =>
       _res;
