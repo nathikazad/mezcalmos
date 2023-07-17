@@ -12,4 +12,13 @@ class OffersOfferingListViewController {
     allOfferings.value = selectedOfferingData ?? [];
     mezDbgPrint("selectedOfferingData: ${selectedOfferingData?.length}");
   }
+
+  void changeOfferingSelection({
+    required OfferingData offeringData,
+    required bool value,
+  }) {
+    allOfferings.firstWhere((element) => element.id == offeringData.id).value =
+        value;
+    allOfferings.refresh();
+  }
 }

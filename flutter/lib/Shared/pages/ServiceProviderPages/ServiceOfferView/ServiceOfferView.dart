@@ -85,11 +85,14 @@ class _ServiceOfferViewState extends State<ServiceOfferView> {
           children: [
             MezAddButton(
               onClick: () async {
-                await ServiceOfferEditView.navigate(
+                final bool? needRefetch = await ServiceOfferEditView.navigate(
                   offerId: null,
                   serviceProviderId: serviceProviderId!,
                   serviceProviderType: serviceProviderType!,
                 );
+                if (needRefetch != null && needRefetch) {
+                  await viewController.fetchServiceOffers();
+                }
               },
               title: "${_i18n()['addOffer']}",
             ),
@@ -109,12 +112,16 @@ class _ServiceOfferViewState extends State<ServiceOfferView> {
                       trailing: IconButton(
                         icon: Icon(Icons.edit),
                         onPressed: () async {
-                          await ServiceOfferEditView.navigate(
+                          final bool? needRefetch =
+                              await ServiceOfferEditView.navigate(
                             offerId:
-                                viewController.serviceOffers[index].id!.toInt(),
+                                viewController.serviceOffers[index].id.toInt(),
                             serviceProviderId: serviceProviderId!,
                             serviceProviderType: serviceProviderType!,
                           );
+                          if (needRefetch != null && needRefetch) {
+                            await viewController.fetchServiceOffers();
+                          }
                         },
                       ),
                     );
