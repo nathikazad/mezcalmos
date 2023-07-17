@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['AppNeedsUpdateScreen'];
@@ -23,7 +26,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
 
   @override
   void initState() {
-    _versionStatus = Get.arguments?['versionStatus'];
+    _versionStatus = MezRouter.bodyArguments?['versionStatus'];
     super.initState();
   }
 
@@ -33,7 +36,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: Colors.white,
-        floatingActionButton: _floatingActionBtn(),
+        // floatingActionButton: _floatingActionBtn(),
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Lang, autoBack: false),
         body: Center(
           child: Padding(
@@ -74,6 +77,16 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
                           : _iosUpdateInfos(context),
                     ),
 
+                    MezButton(
+                      height: 50,
+                      width: 60.mezW,
+                      label: "${_i18n()['update']}",
+                      backgroundColor: Colors.purple.shade400,
+                      onClick: () async {
+                        await _controller.openStoreAppPage();
+                      },
+                    ),
+
                     //else
                   ],
                 ),
@@ -109,17 +122,17 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              "v${_versionStatus?.storeVersion} ${_i18n()['news']}",
+              "v${_versionStatus?.storeVersion} ",
               textAlign: TextAlign.center,
               style:
                   Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
             ),
-            const SizedBox(height: 25),
-            Text(
-              _versionStatus?.releaseNotes ?? "-",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.subtitle2!.copyWith(),
-            ),
+            // const SizedBox(height: 25),
+            // Text(
+            //   _versionStatus?.releaseNotes ?? "-",
+            //   textAlign: TextAlign.center,
+            //   style: Theme.of(context).textTheme.titleSmall!.copyWith(),
+            // ),
           ],
         ),
       ),
@@ -132,16 +145,16 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
         if (_versionStatus != null && _versionStatus!.releaseNotes != null) ...[
           Center(
             child: Text(
-              'v${_versionStatus?.storeVersion} ${_i18n()['news']}',
+              'v${_versionStatus?.storeVersion} ',
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 26),
-          Text(
-            _versionStatus?.releaseNotes ?? "-",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.subtitle2!.copyWith(),
-          )
+          // const SizedBox(height: 26),
+          // Text(
+          //   _versionStatus?.releaseNotes ?? "-",
+          //   textAlign: TextAlign.center,
+          //   style: Theme.of(context).textTheme.titleSmall!.copyWith(),
+          // )
         ],
         const SizedBox(height: 26),
         ElevatedButton(
