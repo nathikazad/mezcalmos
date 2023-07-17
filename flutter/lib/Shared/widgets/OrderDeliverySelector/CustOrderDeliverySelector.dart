@@ -45,7 +45,8 @@ class _CustOrderDeliverySelectorState extends State<CustOrderDeliverySelector> {
     mezDbgPrint(
         "🔥 called didUpdate widget with distance => ${widget.distanceInKm}");
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
-      if (widget.distanceInKm != null) {
+      if (widget.distanceInKm != null &&
+          widget.distanceInKm != _viewController.distance) {
         _viewController.distance = widget.distanceInKm;
         _viewController.CalculateEstimatedCost();
       }

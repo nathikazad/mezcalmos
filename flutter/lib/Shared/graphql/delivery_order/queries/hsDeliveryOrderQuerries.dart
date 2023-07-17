@@ -448,6 +448,8 @@ UserInfo? _getDeliveryCompany(
     Query$get_driver_order$delivery_order_by_pk orderData) {
   mezDbgPrint(
       "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.service_provider_type.toString()}");
+  mezDbgPrint(
+      "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.restaurant?.details}");
   final cModels.ServiceProviderType serviceProviderType =
       orderData.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {
