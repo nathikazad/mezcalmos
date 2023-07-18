@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/CustAddReviewButton.dart';
+import 'package:mezcalmos/CustomerApp/components/DeliveryOffersList/CustDeliveryOffersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/CustomerRestaurantOrderEst.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/OrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/components/OrderRestaurantCard.dart';
@@ -77,114 +78,120 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
       body: Obx(
         () {
           if (viewController.order.value != null) {
-            return LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraint) {
-                return SingleChildScrollView(
-                  padding: const EdgeInsets.all(8),
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraint.maxHeight),
-                    child: IntrinsicHeight(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            OrderStatusCard(
-                              order: viewController.order.value!,
-                              ordersStates: viewController.order.value!.status,
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          OrderStatusCard(
+                            order: viewController.order.value!,
+                            ordersStates: viewController.order.value!.status,
+                          ),
+                          if (viewController.order.value?.driverInfo == null)
+                            CustDeliveryOffersList(
+                              deliveryOrderId:
+                                  viewController.order.value!.deliveryOrderId!,
                             ),
-                            if (viewController.order.value!.paymentType ==
-                                cModels.PaymentType.BankTransfer)
-                              RestaurantBankInfoCard(
-                                  restaurantId:
-                                      viewController.order.value!.restaurantId),
-                            if (viewController.order.value!.inProcess())
-                              CustomerRestaurantOrderEst(
-                                  order: viewController.order.value!),
-
-                            RestaurantOrderDriverCard(
-                              order: viewController.order.value!,
-                            ),
-                            if (viewController.order.value!.inDeliveryPhase() &&
-                                viewController.order.value!.deliveryOrderId !=
-                                    null)
-                              OrderMapWidget(
-                                  deliveryOrderId: viewController
-                                      .order.value!.deliveryOrderId!,
-                                  updateDriver: viewController.order.value!
-                                      .inDeliveryPhase(),
-                                  polyline: viewController
-                                      .order.value!.routeInformation?.polyline,
-                                  from: viewController
-                                      .order.value!.restaurant.location,
-                                  to: viewController
-                                      .order.value!.dropOffLocation),
-                            OrderRestaurantCard(
+                          if (viewController.order.value!.paymentType ==
+                              cModels.PaymentType.BankTransfer)
+                            RestaurantBankInfoCard(
+                                restaurantId:
+                                    viewController.order.value!.restaurantId),
+                          if (viewController.order.value!.inProcess())
+                            CustomerRestaurantOrderEst(
                                 order: viewController.order.value!),
-                            OrderItemsCard(
-                              order: viewController.order.value!,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 15),
-                              child: Text(
-                                '${_i18n()["deliveryDet"]}',
-                                style: context.txt.bodyLarge,
-                              ),
-                            ),
-                            OrderScheduledTimeCard(
-                                time: viewController.order.value!.scheduleTime,
-                                margin: const EdgeInsets.only(top: 8)),
-                            // RestaurantOrderDeliveryTimeCard(
-                            //   order: viewController.order.value!,
-                            //   margin: const EdgeInsets.only(top: 8),
-                            // ),
-                            OrderDeliveryLocation(
-                              address: viewController
-                                  .order.value!.dropOffLocation.address,
-                              margin: const EdgeInsets.only(top: 8),
-                            ),
-                            OrderPaymentMethod(
-                              stripeOrderPaymentInfo:
-                                  viewController.order.value!.stripePaymentInfo,
-                              paymentType:
-                                  viewController.order.value!.paymentType,
-                            ),
-                            OrderNoteCard(
-                                note: viewController.order.value!.notes),
-                            if (viewController.order.value!.review != null)
-                              ReviewCard(
-                                  showReviewTitle: true,
-                                  review: viewController.order.value!.review!),
-                            OrderSummaryCard(
-                              margin: const EdgeInsets.only(top: 15),
-                              costs: viewController.order.value!.costs,
-                              stripeOrderPaymentInfo:
-                                  viewController.order.value!.stripePaymentInfo,
-                            ),
 
-                            //===============================>button cancel===========================
-                            //  Expanded(child: Container()),
-                            SizedBox(
-                              height: 9,
+                          RestaurantOrderDriverCard(
+                            order: viewController.order.value!,
+                          ),
+                          if (viewController.order.value!.inDeliveryPhase() &&
+                              viewController.order.value!.deliveryOrderId !=
+                                  null)
+                            OrderMapWidget(
+                                deliveryOrderId: viewController
+                                    .order.value!.deliveryOrderId!,
+                                updateDriver: viewController.order.value!
+                                    .inDeliveryPhase(),
+                                polyline: viewController
+                                    .order.value!.routeInformation?.polyline,
+                                from: viewController
+                                    .order.value!.restaurant.location,
+                                to: viewController
+                                    .order.value!.dropOffLocation),
+                          OrderRestaurantCard(
+                              order: viewController.order.value!),
+                          OrderItemsCard(
+                            order: viewController.order.value!,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 15),
+                            child: Text(
+                              '${_i18n()["deliveryDet"]}',
+                              style: context.txt.bodyLarge,
                             ),
-                            Flexible(
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: OrderFooterCard(
-                                  order: viewController.order.value!,
-                                  cancelOrderFunction:
-                                      viewController.cancelOrder,
-                                ),
-                              ),
+                          ),
+                          OrderScheduledTimeCard(
+                              time: viewController.order.value!.scheduleTime,
+                              margin: const EdgeInsets.only(top: 8)),
+                          // RestaurantOrderDeliveryTimeCard(
+                          //   order: viewController.order.value!,
+                          //   margin: const EdgeInsets.only(top: 8),
+                          // ),
+                          OrderDeliveryLocation(
+                            address: viewController
+                                .order.value!.dropOffLocation.address,
+                            margin: const EdgeInsets.only(top: 8),
+                          ),
+                          OrderPaymentMethod(
+                            stripeOrderPaymentInfo:
+                                viewController.order.value!.stripePaymentInfo,
+                            paymentType:
+                                viewController.order.value!.paymentType,
+                          ),
+                          OrderNoteCard(
+                              note: viewController.order.value!.notes),
+                          if (viewController.order.value!.review != null)
+                            ReviewCard(
+                                showReviewTitle: true,
+                                review: viewController.order.value!.review!),
+                          OrderSummaryCard(
+                            margin: const EdgeInsets.only(top: 15),
+                            costs: viewController.order.value!.costs,
+                            stripeOrderPaymentInfo:
+                                viewController.order.value!.stripePaymentInfo,
+                          ),
+
+                          SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: OrderFooterCard(
+                              order: viewController.order.value!,
+                              cancelOrderFunction: viewController.cancelOrder,
                             ),
-                          ],
-                        ),
+                          ),
+                          // Flexible(
+                          //   child: SizedBox(
+                          //     width: double.infinity,
+                          //     child: OrderFooterCard(
+                          //       order: viewController.order.value!,
+                          //       cancelOrderFunction:
+                          //           viewController.cancelOrder,
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
                       ),
                     ),
                   ),
-                );
-              },
+                ),
+              ],
             );
           } else {
             return Center(child: CircularProgressIndicator());

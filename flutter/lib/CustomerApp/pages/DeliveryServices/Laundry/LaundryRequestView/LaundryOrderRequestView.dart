@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryRequestView/controllers/CustLaundryOrderRequestViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -17,9 +18,8 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/CustOrderDeliverySelector.dart';
 import 'package:sizer/sizer.dart';
-
-import 'controllers/CustLaundryOrderRequestViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
@@ -175,71 +175,23 @@ class _CustLaundryOrderRequestViewState
                           SizedBox(
                             height: 15,
                           ),
-                          _orderNoteComponent(),
+                          CustOrderDeliverySelector(
+                            onSelectionUpdate: (List<int> value) {
+                              viewController.selectedCompanies = value;
+                            },
+                            distanceInKm: viewController.getOrderDistance,
+                            onEstDeliveryPriceChange: (double value) {
+                              viewController.estDeliveryCost.value = value;
+                            },
+                          ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
-                          Card(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Container(
-                                    alignment: Alignment.centerLeft,
-                                    width: Get.width,
-                                    child: Text(
-                                      "${_i18n()["summaryText"]}",
-                                      style: context.txt.bodyLarge,
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                      bottom: 4,
-                                    ),
-                                    width: Get.width,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Expanded(
-                                          child: Container(
-                                            child: Text(
-                                                "${_i18n()["deliveryCost"]}",
-                                                style: context.txt.bodyMedium),
-                                          ),
-                                        ),
-                                        (viewController.shippingCost.value !=
-                                                null)
-                                            ? Text(
-                                                "${(viewController.shippingCost.value!).toPriceString()} x 2",
-                                                style: context.txt.bodyMedium,
-                                              )
-                                            : Text(
-                                                "_",
-                                                style: context.txt.bodyMedium,
-                                              ),
-                                      ],
-                                    ),
-                                  ),
-                                  // SizedBox(
-                                  //   height: 8,
-                                  // ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          _summaryCard(context),
                           SizedBox(
                             height: 15,
                           ),
+                          _orderNoteComponent()
                         ],
                       ),
                     ),
@@ -255,6 +207,58 @@ class _CustLaundryOrderRequestViewState
             }
           },
         ));
+  }
+
+  Card _summaryCard(BuildContext context) {
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              width: Get.width,
+              child: Text(
+                "${_i18n()["summaryText"]}",
+                style: context.txt.bodyLarge,
+              ),
+            ),
+            SizedBox(height: 4),
+            Container(
+              padding: EdgeInsets.only(
+                bottom: 4,
+              ),
+              width: Get.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      child: Text("${_i18n()["deliveryCost"]}",
+                          style: context.txt.bodyMedium),
+                    ),
+                  ),
+                  Text(
+                    "${viewController.estDeliveryCost.value.toPriceString()} x 2",
+                    style: context.txt.bodyMedium,
+                  )
+                ],
+              ),
+            ),
+            // SizedBox(
+            //   height: 8,
+            // ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _orderNoteComponent() {

@@ -16,6 +16,7 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
+import { updateOffersApplied } from "../shared/graphql/offer/updateOffer";
 import { ServiceProvider } from '../shared/models/Services/Service';
 import { notifyDeliveryDrivers } from '../shared/helper';
 
@@ -33,10 +34,9 @@ export interface CheckoutRequest {
   tripPolyline: string,
   scheduledTime?: string,
   stripePaymentId?: string,
-  stripeFees?: number,
+  stripeFees?: number
   distanceFromBase?: number
-  tax?: number,
-  discountValue?: number
+  tax?: number
 }
 export interface CheckoutResponse {
   success: boolean,
@@ -94,6 +94,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     }
     // clear user cart 
     clearCart(customerId);
+
+    updateOffersApplied(orderResponse.restaurantOrder.orderId!, customerCart.appliedOffers, customerCart.discountValue, OrderType.Restaurant);
 
     return {
       success: true,

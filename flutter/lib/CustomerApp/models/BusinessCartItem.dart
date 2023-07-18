@@ -7,10 +7,11 @@ class CustBusinessCart {
   num? businessId;
   num cost;
   List<BusinessCartItem> items;
-  num? discountValue;
   String? cancellationTime;
   BusinessOrderRequestStatus? status;
   int? chatId;
+  num discountValue = 0;
+  List<int> appliedOffers = <int>[];
   CustBusinessCart(
       {required this.customerId,
       required this.businessId,
@@ -20,7 +21,8 @@ class CustBusinessCart {
       this.chatId,
       this.cancellationTime,
       this.status,
-      this.discountValue});
+      this.discountValue = 0,
+      this.appliedOffers = const <int>[]});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "customerId": customerId,

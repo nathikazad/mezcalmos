@@ -17270,3 +17270,831 @@ class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_
   }) =>
       _res;
 }
+
+class Variables$Query$number_of_customer_business_orders {
+  factory Variables$Query$number_of_customer_business_orders({
+    int? customer_id,
+    int? business_id,
+  }) =>
+      Variables$Query$number_of_customer_business_orders._({
+        if (customer_id != null) r'customer_id': customer_id,
+        if (business_id != null) r'business_id': business_id,
+      });
+
+  Variables$Query$number_of_customer_business_orders._(this._$data);
+
+  factory Variables$Query$number_of_customer_business_orders.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('customer_id')) {
+      final l$customer_id = data['customer_id'];
+      result$data['customer_id'] = (l$customer_id as int?);
+    }
+    if (data.containsKey('business_id')) {
+      final l$business_id = data['business_id'];
+      result$data['business_id'] = (l$business_id as int?);
+    }
+    return Variables$Query$number_of_customer_business_orders._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get customer_id => (_$data['customer_id'] as int?);
+  int? get business_id => (_$data['business_id'] as int?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('customer_id')) {
+      final l$customer_id = customer_id;
+      result$data['customer_id'] = l$customer_id;
+    }
+    if (_$data.containsKey('business_id')) {
+      final l$business_id = business_id;
+      result$data['business_id'] = l$business_id;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$number_of_customer_business_orders<
+          Variables$Query$number_of_customer_business_orders>
+      get copyWith =>
+          CopyWith$Variables$Query$number_of_customer_business_orders(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$number_of_customer_business_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (_$data.containsKey('customer_id') !=
+        other._$data.containsKey('customer_id')) {
+      return false;
+    }
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$business_id = business_id;
+    final lOther$business_id = other.business_id;
+    if (_$data.containsKey('business_id') !=
+        other._$data.containsKey('business_id')) {
+      return false;
+    }
+    if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_id = customer_id;
+    final l$business_id = business_id;
+    return Object.hashAll([
+      _$data.containsKey('customer_id') ? l$customer_id : const {},
+      _$data.containsKey('business_id') ? l$business_id : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$number_of_customer_business_orders<
+    TRes> {
+  factory CopyWith$Variables$Query$number_of_customer_business_orders(
+    Variables$Query$number_of_customer_business_orders instance,
+    TRes Function(Variables$Query$number_of_customer_business_orders) then,
+  ) = _CopyWithImpl$Variables$Query$number_of_customer_business_orders;
+
+  factory CopyWith$Variables$Query$number_of_customer_business_orders.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Query$number_of_customer_business_orders;
+
+  TRes call({
+    int? customer_id,
+    int? business_id,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$number_of_customer_business_orders<TRes>
+    implements
+        CopyWith$Variables$Query$number_of_customer_business_orders<TRes> {
+  _CopyWithImpl$Variables$Query$number_of_customer_business_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$number_of_customer_business_orders _instance;
+
+  final TRes Function(Variables$Query$number_of_customer_business_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? customer_id = _undefined,
+    Object? business_id = _undefined,
+  }) =>
+      _then(Variables$Query$number_of_customer_business_orders._({
+        ..._instance._$data,
+        if (customer_id != _undefined) 'customer_id': (customer_id as int?),
+        if (business_id != _undefined) 'business_id': (business_id as int?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$number_of_customer_business_orders<TRes>
+    implements
+        CopyWith$Variables$Query$number_of_customer_business_orders<TRes> {
+  _CopyWithStubImpl$Variables$Query$number_of_customer_business_orders(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? customer_id,
+    int? business_id,
+  }) =>
+      _res;
+}
+
+class Query$number_of_customer_business_orders {
+  Query$number_of_customer_business_orders({
+    required this.business_order_request_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_customer_business_orders.fromJson(
+      Map<String, dynamic> json) {
+    final l$business_order_request_aggregate =
+        json['business_order_request_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_customer_business_orders(
+      business_order_request_aggregate:
+          Query$number_of_customer_business_orders$business_order_request_aggregate
+              .fromJson(
+                  (l$business_order_request_aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_customer_business_orders$business_order_request_aggregate
+      business_order_request_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_order_request_aggregate = business_order_request_aggregate;
+    _resultData['business_order_request_aggregate'] =
+        l$business_order_request_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_order_request_aggregate = business_order_request_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_order_request_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$number_of_customer_business_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_order_request_aggregate = business_order_request_aggregate;
+    final lOther$business_order_request_aggregate =
+        other.business_order_request_aggregate;
+    if (l$business_order_request_aggregate !=
+        lOther$business_order_request_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_customer_business_orders
+    on Query$number_of_customer_business_orders {
+  CopyWith$Query$number_of_customer_business_orders<
+          Query$number_of_customer_business_orders>
+      get copyWith => CopyWith$Query$number_of_customer_business_orders(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_customer_business_orders<TRes> {
+  factory CopyWith$Query$number_of_customer_business_orders(
+    Query$number_of_customer_business_orders instance,
+    TRes Function(Query$number_of_customer_business_orders) then,
+  ) = _CopyWithImpl$Query$number_of_customer_business_orders;
+
+  factory CopyWith$Query$number_of_customer_business_orders.stub(TRes res) =
+      _CopyWithStubImpl$Query$number_of_customer_business_orders;
+
+  TRes call({
+    Query$number_of_customer_business_orders$business_order_request_aggregate?
+        business_order_request_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate<
+      TRes> get business_order_request_aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_customer_business_orders<TRes>
+    implements CopyWith$Query$number_of_customer_business_orders<TRes> {
+  _CopyWithImpl$Query$number_of_customer_business_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_customer_business_orders _instance;
+
+  final TRes Function(Query$number_of_customer_business_orders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_order_request_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$number_of_customer_business_orders(
+        business_order_request_aggregate: business_order_request_aggregate ==
+                    _undefined ||
+                business_order_request_aggregate == null
+            ? _instance.business_order_request_aggregate
+            : (business_order_request_aggregate
+                as Query$number_of_customer_business_orders$business_order_request_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate<
+      TRes> get business_order_request_aggregate {
+    final local$business_order_request_aggregate =
+        _instance.business_order_request_aggregate;
+    return CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate(
+        local$business_order_request_aggregate,
+        (e) => call(business_order_request_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_customer_business_orders<TRes>
+    implements CopyWith$Query$number_of_customer_business_orders<TRes> {
+  _CopyWithStubImpl$Query$number_of_customer_business_orders(this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_customer_business_orders$business_order_request_aggregate?
+        business_order_request_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate<
+          TRes>
+      get business_order_request_aggregate =>
+          CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate
+              .stub(_res);
+}
+
+const documentNodeQuerynumber_of_customer_business_orders =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'number_of_customer_business_orders'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'business_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_order_request_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'customer_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'business_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'business_id')),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$number_of_customer_business_orders
+    _parserFn$Query$number_of_customer_business_orders(
+            Map<String, dynamic> data) =>
+        Query$number_of_customer_business_orders.fromJson(data);
+
+class Options$Query$number_of_customer_business_orders
+    extends graphql.QueryOptions<Query$number_of_customer_business_orders> {
+  Options$Query$number_of_customer_business_orders({
+    String? operationName,
+    Variables$Query$number_of_customer_business_orders? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerynumber_of_customer_business_orders,
+          parserFn: _parserFn$Query$number_of_customer_business_orders,
+        );
+}
+
+class WatchOptions$Query$number_of_customer_business_orders extends graphql
+    .WatchQueryOptions<Query$number_of_customer_business_orders> {
+  WatchOptions$Query$number_of_customer_business_orders({
+    String? operationName,
+    Variables$Query$number_of_customer_business_orders? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerynumber_of_customer_business_orders,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$number_of_customer_business_orders,
+        );
+}
+
+class FetchMoreOptions$Query$number_of_customer_business_orders
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$number_of_customer_business_orders({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$number_of_customer_business_orders? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQuerynumber_of_customer_business_orders,
+        );
+}
+
+extension ClientExtension$Query$number_of_customer_business_orders
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$number_of_customer_business_orders>>
+      query$number_of_customer_business_orders(
+              [Options$Query$number_of_customer_business_orders?
+                  options]) async =>
+          await this.query(
+              options ?? Options$Query$number_of_customer_business_orders());
+  graphql.ObservableQuery<Query$number_of_customer_business_orders>
+      watchQuery$number_of_customer_business_orders(
+              [WatchOptions$Query$number_of_customer_business_orders?
+                  options]) =>
+          this.watchQuery(options ??
+              WatchOptions$Query$number_of_customer_business_orders());
+  void writeQuery$number_of_customer_business_orders({
+    required Query$number_of_customer_business_orders data,
+    Variables$Query$number_of_customer_business_orders? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerynumber_of_customer_business_orders),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$number_of_customer_business_orders?
+      readQuery$number_of_customer_business_orders({
+    Variables$Query$number_of_customer_business_orders? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerynumber_of_customer_business_orders),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$number_of_customer_business_orders.fromJson(result);
+  }
+}
+
+class Query$number_of_customer_business_orders$business_order_request_aggregate {
+  Query$number_of_customer_business_orders$business_order_request_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_customer_business_orders$business_order_request_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_customer_business_orders$business_order_request_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_customer_business_orders$business_order_request_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_customer_business_orders$business_order_request_aggregate
+    on Query$number_of_customer_business_orders$business_order_request_aggregate {
+  CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate<
+          Query$number_of_customer_business_orders$business_order_request_aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate(
+    Query$number_of_customer_business_orders$business_order_request_aggregate
+        instance,
+    TRes Function(
+            Query$number_of_customer_business_orders$business_order_request_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_customer_business_orders$business_order_request_aggregate;
+
+  factory CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_customer_business_orders$business_order_request_aggregate;
+
+  TRes call({
+    Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$number_of_customer_business_orders$business_order_request_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_customer_business_orders$business_order_request_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_customer_business_orders$business_order_request_aggregate
+      _instance;
+
+  final TRes Function(
+          Query$number_of_customer_business_orders$business_order_request_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$number_of_customer_business_orders$business_order_request_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$number_of_customer_business_orders$business_order_request_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_customer_business_orders$business_order_request_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate {
+  Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate
+    on Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate {
+  CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+          Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate(
+    Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate;
+
+  factory CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$number_of_customer_business_orders$business_order_request_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}

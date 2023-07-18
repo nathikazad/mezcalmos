@@ -117,7 +117,6 @@ select_permissions:
         - actual_package_ready_time
         - cancellation_time
         - customer_offer
-        
         - chat_with_customer_id
         - chat_with_service_provider_id
         - current_gps
@@ -175,7 +174,6 @@ select_permissions:
         - delivery_driver_id
         - customer_offer
         - counter_offers
-       
         - direction
         - distance_from_base
         - driver_review_by_customer_id
@@ -426,6 +424,7 @@ update_permissions:
   - role: customer
     permission:
       columns:
+        - customer_offer
         - driver_review_by_customer_id
       filter:
         customer_id:

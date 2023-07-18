@@ -2288,6 +2288,16 @@
         "onTheWayPickupBody": "Driver is on his way to pickup your order",
         "onTheWayDropoffTitle": "Delivery on the way",
         "onTheWayDropoffBody": "Driver is on the way to deliver you order"
+      },
+      "business": {
+        "modifReqTitle": "Changes Requested",
+        "modifReqBody": "Your order business is requesting some changes",
+        "confirmedTitle": "Confirmed",
+        "confirmedBody": "You order request is confirmed by the business provider"
+      },
+      "offers": {
+        "newOfferTitle": "New Offer",
+        "newOfferBody": "You received new delivery price offer"
       }
     }
   },
@@ -2422,6 +2432,7 @@
         "drivers": "Drivers",
         "schedule": "Schedule",
         "payments": "Payments",
+        "offers": "Offers",
         "delivery": "Delivery",
         "reviews": "Reviews",
         "share": "Share",
@@ -2599,6 +2610,19 @@
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",
         "copiedText": "Link copied successfuly"
+      },
+      "ServiceOfferView": {
+        "offers": "Offers",
+        "addOffer": "Add offer",
+        "coupon": "Coupon",
+        "promotion": "Promotion",
+        "anyOrder": "Any Order",
+        "firstOrderOnly": "First Order Only",
+        "particularService": "Particular Service",
+        "particularCategory": "Particular Category",
+        "flatAmount": "Flat",
+        "percentage": "Percentage",
+        "anotherSameFlat": "Another Same"
       },
       "ServiceDriversListView": {
         "drivers": "Drivers",
@@ -2812,7 +2836,7 @@
         "downloadNewVersion": "Download the new version!",
         "downloading": "A new version is being downloaded.",
         "news": "News",
-        "update": "Update now!"
+        "update": "Update now"
       },
       "ContactUsView": {
         "name": "Name",
@@ -3471,7 +3495,7 @@
         "order": "Order",
         "viewImage": "View image"
       },
-      "RestaurantOrderView": {
+      "DvOrderView": {
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -3494,7 +3518,10 @@
         "title": "Delivery",
         "restaurant": "Restaurant",
         "laundry": "Laundry",
-        "courier": "Open Delivery"
+        "courier": "Open Delivery",
+        "cancel": "Cancel",
+        "counterOffer": "Counter Offer",
+        "reqCounterOffer": "Request price change"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {

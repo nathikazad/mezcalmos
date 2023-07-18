@@ -451,7 +451,8 @@ class AnimatedOrderInfoCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (order.costs.deliveryCost != null &&
+              if (order.isDriverAssigned &&
+                  order.costs.deliveryCost != null &&
                   order.costs.deliveryCost! > 0) ...[
                 Text(
                   "${order.costs.totalCost?.toPriceString(rounded: true)}",

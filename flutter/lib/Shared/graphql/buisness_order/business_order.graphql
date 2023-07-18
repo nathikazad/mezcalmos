@@ -311,3 +311,11 @@ query getBsRentalPastOrdersItems(
     }
   }
 }
+
+query number_of_customer_business_orders($customer_id: Int, $business_id: Int) {
+  business_order_request_aggregate(where: {customer_id: {_eq: $customer_id}, business_id: {_eq: $business_id}}) {
+    aggregate {
+      count
+    }
+  }
+}

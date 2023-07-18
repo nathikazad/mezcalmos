@@ -363,3 +363,11 @@ query get_restaurant_order_items_by_id($deliveryOrderId: Int!) {
     }
   }
 }
+
+query number_of_customer_restaurant_orders($customer_id: Int, $restaurant_id: Int) {
+  restaurant_order_aggregate(where: {customer_id: {_eq: $customer_id}, restaurant_id: {_eq: $restaurant_id}}) {
+    aggregate {
+      count
+    }
+  }
+}

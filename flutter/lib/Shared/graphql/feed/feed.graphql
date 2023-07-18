@@ -11,23 +11,6 @@ mutation writePost($service_provider_id: Int, $message: String, $image: String, 
   }
 }
 
-query getFeed($_in: [Int!]) {
-  service_provider_post(where: {_and: {service_provider_type: {_eq: "restaurant"}}, service_provider_id: {_in: $_in}}, order_by: {posted_on: desc}) {
-    id
-    image
-    comments
-    likes
-    message
-    posted_on
-    restaurant {
-      details {
-        name
-        image
-      }
-    }
-  }
-}
-
 query getSubscribedRestaurants($_eq: Int) {
   service_provider_subscriber(where: {service_provider_type: {_eq: "restaurant"}, _and: {customer_id: {_eq: $_eq}}}) {
     id
@@ -46,5 +29,96 @@ mutation addFavouriteItem($customer_id: Int, $restaurant_id: Int, $restaurant_it
 query getFavouriteItems($_eq: Int) {
   customer_favourited_item(where: {customer_id: {_eq: $_eq}}) {
     restaurant_item_id
+  }
+}
+
+query fetch_subscribed_posts($customer_id: Int, $limit: Int, $offset: Int) {
+  service_provider_post(
+    limit: $limit, 
+    offset: $offset, 
+    where: {
+      _or: [{
+        business: {
+          subscribers: {
+            customer_id: {
+              _eq: $customer_id
+            }
+          }
+        }
+      }, {
+        laundry: {
+          subscribers: {
+            customer_id: {
+              _eq: $customer_id
+            }
+          }
+        }
+      }, {
+        delivery_company: {
+          subscribers: {
+            customer_id: {
+              _eq: $customer_id
+            }
+          }
+        }
+      }, {
+        restaurant: {
+          subscribers: {
+            customer_id: {
+              _eq: $customer_id
+            }
+          }
+        }
+      }]
+    }, 
+    order_by: {
+      posted_on: desc
+    }
+  ) {
+    comments
+    id
+    image
+    likes
+    link
+    message
+    posted_on
+    service_provider_id
+    service_provider_type
+    restaurant {
+      details {
+        name
+        image
+      }
+    }
+    laundry {
+      details {
+        name
+        image
+      }
+    }
+    delivery_company {
+      details {
+        name
+        image
+      }
+    }
+    business {
+      details {
+        name
+        image
+      }
+    }
+  }
+}
+
+mutation write_comment($id: Int, $comments: jsonb) {
+  update_service_provider_post_by_pk(pk_columns: {id: $id}, _append: {comments: $comments}) {
+    id
+  }
+}
+
+mutation like_post($id: Int, $likes: jsonb) {
+  update_service_provider_post_by_pk(pk_columns: {id: $id}, _append: {likes: $likes}) {
+    id
   }
 }

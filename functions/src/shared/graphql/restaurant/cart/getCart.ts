@@ -15,6 +15,8 @@ export async function getCart(customerId: number): Promise<Cart> {
         }, {
             restaurant_id: true,
             cost: true,
+            discount_value: true,
+            applied_offers: [{}, true],
             items: [{}, {
                 id: true,
                 restaurant_item_id: true,
@@ -30,12 +32,13 @@ export async function getCart(customerId: number): Promise<Cart> {
                         }], 
                     }, 
                     image: true,
+                    category_id: true,
                 }              
             }]
         }]
     });
 
-    if(response.restaurant_cart == null || response.restaurant_cart.length == 0) {
+    if(response.restaurant_cart == null || response.restaurant_cart.length == 0 || response.restaurant_cart[0].restaurant_id == null) {
         throw new MezError("cartNotFound");
     }
     // console.log("[GLOBAL[0]] SelectedOptions ===> ", response.restaurant_cart[0].items[0].selected_options);
@@ -54,7 +57,8 @@ export async function getCart(customerId: number): Promise<Cart> {
                 return prev;
             }, {}),
             image : i.restaurant_item.image,
-            note: i.note
+            note: i.note,
+            categoryId: i.restaurant_item.category_id
         }
     })
     return {
@@ -62,5 +66,7 @@ export async function getCart(customerId: number): Promise<Cart> {
         restaurantId: response.restaurant_cart[0].restaurant_id,
         cost: response.restaurant_cart[0].cost,
         items,
+        discountValue: response.restaurant_cart[0].discount_value,
+        appliedOffers: response.restaurant_cart[0].applied_offers
     }
 }

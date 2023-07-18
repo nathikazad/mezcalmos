@@ -2350,7 +2350,19 @@
         "onTheWayPickupBody": "El conductor está en camino de recoger su pedido",
         "onTheWayDropoffTitle": "Entrega en camino",
         "onTheWayDropoffBody": "El conductor está en camino a cumplir su pedido"
+      },
+      "business": {
+        "modifReqTitle" : "Cambios solicitados",
+        "modifReqBody" : "Su negocio de pedidos solicita algunos cambios",
+        "confirmedTitle" : "Confirmada",
+        "confirmedBody" : "El proveedor de negocios confirma su solicitud de pedido"
+      },
+      "offers" : {
+        "newOfferTitle" : "Nueva oferta",
+        "newOfferBody" : "Recibió una nueva oferta de precio de entrega"
+
       }
+
     }
   },
   "Shared": {
@@ -2483,6 +2495,7 @@
         "operators": "Operadoras",
         "drivers": "Conductoras",
         "schedule": "Horarios",
+        "offers": "Oferta",
         "payments": "Pagos",
         "delivery": "Entrega",
         "onlineOrdering": "Pedidos en línea",
@@ -2658,7 +2671,20 @@
         "copyLink": "Copiar link",
         "shrWhatsapp": "Compartir en WhatsApp",
         "copied": "Copiada",
-        "copiedText": "Enlace copiado con éxito"
+        "copiedText": "Enlace copiado con éxito",
+        "flatAmount": "Departamento",
+        "percentage": "Porcentaje",
+        "anotherSameFlat": "Otro mismo"
+      },
+      "ServiceOfferView": {
+        "offers": "Oferta",
+        "addOffer": "Añadir oferta",
+        "coupon": "Cupón",
+        "promotion": "Promoción",
+        "anyOrder": "Cualquier orden",
+        "firstOrderOnly": "Solo de primer orden",
+        "particularService": "Servicio particular",
+        "particularCategory": "Categoría particular"
       },
       "ServiceDriversListView": {
         "drivers": "Conductoras",
@@ -2878,7 +2904,7 @@
         "downloadNewVersion": "Descarga la nueva versión!",
         "downloading": "Se está descargando una nueva versión.",
         "news": "Noticias",
-        "update": "¡Actualizar ahora!"
+        "update": "Actualizar"
       },
       "ContactUsView": {
         "name": "Nombre",
@@ -3662,7 +3688,7 @@
           }
         }
       },
-      "RestaurantOrderView": {
+      "DvOrderView": {
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -3685,7 +3711,10 @@
         "title": "Entrega",
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
-        "courier": "Entrega abierta"
+        "courier": "Entrega abierta",
+        "cancel" : "Cancelar",
+        "counterOffer" : "Contraoferta",
+        "reqCounterOffer" : "Solicitar cambio de precio"
       }
     },
     "notificationHandler": {

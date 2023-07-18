@@ -218,3 +218,23 @@ Future<void> update_bs_order_item(
   }
   mezDbgPrint(res.data);
 }
+
+Future<int> number_of_customer_business_orders(
+    {required int businessId, required int customerId}) async {
+  final QueryResult<Query$number_of_customer_business_orders> queryResult =
+      await _db.graphQLClient.query$number_of_customer_business_orders(
+    Options$Query$number_of_customer_business_orders(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$number_of_customer_business_orders(
+          business_id: businessId, customer_id: customerId),
+    ),
+  );
+  if (queryResult.parsedData?.business_order_request_aggregate.aggregate !=
+      null) {
+    return queryResult
+        .parsedData!.business_order_request_aggregate.aggregate!.count;
+  } else {
+    throw Exception(
+        "🚨 Getting number_of_customer_business_orders exceptions \n ${queryResult.exception}");
+  }
+}

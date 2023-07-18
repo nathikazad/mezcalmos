@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDeliveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -111,6 +111,7 @@ class DvOrderViewcontroller {
             _order.value!.packageReady = event.packageReady;
             _order.value!.driverInfo = event.driverInfo;
             _order.value!.counterOffers = event.counterOffers;
+            _order.value!.customerOffer = event.customerOffer;
             // _order.value = null;
             // _order.value = event;
 

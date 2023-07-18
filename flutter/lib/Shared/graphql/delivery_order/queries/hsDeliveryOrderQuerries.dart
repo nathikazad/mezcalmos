@@ -219,7 +219,7 @@ Future<List<MinimalOrder>?> get_open_driver_orders(
         orderType: orderData.order_type.toOrderType(),
         toAdress: orderData.dropoff_address,
         orderTime: DateTime.parse(orderData.order_time),
-        deliveryCost: orderData.delivery_cost,
+        deliveryCost: orderData.customer_offer,
         title: orderData.customer.user.name!,
         image: orderData.customer.user.image,
         status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
@@ -448,6 +448,8 @@ UserInfo? _getDeliveryCompany(
     Query$get_driver_order$delivery_order_by_pk orderData) {
   mezDbgPrint(
       "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.service_provider_type.toString()}");
+  mezDbgPrint(
+      "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.restaurant?.details}");
   final cModels.ServiceProviderType serviceProviderType =
       orderData.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {

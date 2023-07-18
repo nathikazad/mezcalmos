@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOfferView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 
 import 'package:flutter/material.dart';
@@ -162,6 +163,14 @@ class ServiceProfileController extends GetxController {
           serviceProviderId: serviceId,
           controllerType: service.serviceProviderType!);
     }
+  }
+
+  Future<void> navigateToOffers() async {
+    // ignore: unawaited_futures
+    ServiceOfferView.navigate(
+        serviceProviderId: serviceId,
+        serviceLinkId: service.serviceLinkId,
+        serviceProviderType: service.serviceProviderType!);
   }
 
   Future<void> downloadPdfFromLink(String url) async {

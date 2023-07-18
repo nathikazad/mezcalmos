@@ -97,7 +97,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         to_location_address: checkoutReq.customerLocation.address,
         notes: checkoutReq.notes,
         status: RestaurantOrderStatus.OrderReceived,
-        discount_value: checkoutReq.discountValue ?? undefined,
+        discount_value: customerCart.discountValue,
         tax: checkoutReq.tax ?? undefined,
         items: {
           data: $`data` 
@@ -173,8 +173,8 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
     notes: checkoutReq.notes,
     deliveryCost: 0,
     scheduledTime: checkoutReq.scheduledTime,
-    chatId: response.insert_restaurant_order_one.chat_id
-    
+    chatId: response.insert_restaurant_order_one.chat_id,
+    discountValue: customerCart.discountValue,
   }
   let deliveryOrder: DeliveryOrder;
   if(checkoutReq.deliveryType == DeliveryType.Delivery) {

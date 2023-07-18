@@ -5,7 +5,7 @@ import { CustomerCard, StripeStatus } from '../../shared/models/stripe';
 import { PaymentType } from '../../shared/models/Generic/Order';
 import { getCustomer } from '../../shared/graphql/user/customer/getCustomer';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
-import { getCustomerRestaurantOrders } from '../../shared/graphql/restaurant/order/getRestaurantOrder';
+import { getCustomerAllRestaurantOrders } from '../../shared/graphql/restaurant/order/getRestaurantOrder';
 import { RestaurantOrder, RestaurantOrderStatus } from '../../shared/models/Services/Restaurant/RestaurantOrder';
 import { CustomerInfo } from '../../shared/models/Generic/User';
 import { verifyCustomerIdForServiceAccount } from './serviceProvider';
@@ -194,7 +194,7 @@ enum RemoveCardError {
 }
 export async function removeCard(userId: number, removeCardDetails: RemoveCardDetails): Promise<RemoveCardResponse> {
   try {
-    let response = await Promise.all([getCustomerRestaurantOrders(userId), getCustomerLaundryOrders(userId)])
+    let response = await Promise.all([getCustomerAllRestaurantOrders(userId), getCustomerLaundryOrders(userId)])
     let restaurantOrders: RestaurantOrder[] = response[0];
     let laundryOrders: LaundryOrder[] = response[1];
     restaurantOrders.filter((o) => ((o.status != RestaurantOrderStatus.Delivered) 
