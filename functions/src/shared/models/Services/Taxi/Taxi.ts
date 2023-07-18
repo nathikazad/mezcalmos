@@ -1,6 +1,21 @@
-import { AuthorizationStatus, NotificationInfo } from "../../Generic/Generic";
+import { AuthorizationStatus } from "../../Generic/Generic";
 import { ForegroundNotification } from "../../Notification";
-import { ServiceProvider } from "../Service";
+import { Business } from "../Business/Business";
+
+export interface TaxiCompany {
+  id: number,
+  businessId: number,
+  business: Business,
+  minimumCost: number,
+  costPerKm: number,
+  maximumDeliveryDistance: number,
+}
+
+export interface Taxi {
+  id: number,
+  carNumber: string,  
+  carName: string,
+}
 
 export interface State {
   authorizationStatus: AuthorizationStatus;
@@ -8,22 +23,8 @@ export interface State {
   currentOrderId?: string;
 }
 
-export interface Taxi {
-  state: State;
-  notificationInfo: NotificationInfo;
-  details: TaxiDetails
-}
 
-export interface TaxiDetails {
-  taxiNumber: string
-}
 
-export interface TaxiCompany {
-  id: number,
-  details: ServiceProvider,
-  minimumCost: number,
-  costPerKm: number,
-}
 
 export interface NewTaxiCompanyNotification extends ForegroundNotification {
   name: string,

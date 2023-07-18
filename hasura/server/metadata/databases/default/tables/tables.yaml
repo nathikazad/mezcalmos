@@ -74,5 +74,6 @@
 - "!include taxi_driver.yaml"
 - "!include taxi_operator.yaml"
 - "!include taxi_order.yaml"
+- "!include taxi_taxi.yaml"
 - "!include valid_types_app_type.yaml"
 - "!include valid_types_service_provider_type.yaml"

@@ -20320,6 +20320,19 @@ type mutation_root {
   delete_taxi_company_by_pk(id: Int!): taxi_company
 
   """
+  delete data from the table: "taxi.driver"
+  """
+  delete_taxi_driver(
+    """filter the rows which have to be deleted"""
+    where: taxi_driver_bool_exp!
+  ): taxi_driver_mutation_response
+
+  """
+  delete single row from the table: "taxi.driver"
+  """
+  delete_taxi_driver_by_pk(id: Int!): taxi_driver
+
+  """
   delete data from the table: "taxi.operator"
   """
   delete_taxi_operator(
@@ -20331,6 +20344,32 @@ type mutation_root {
   delete single row from the table: "taxi.operator"
   """
   delete_taxi_operator_by_pk(id: Int!): taxi_operator
+
+  """
+  delete data from the table: "taxi.order"
+  """
+  delete_taxi_order(
+    """filter the rows which have to be deleted"""
+    where: taxi_order_bool_exp!
+  ): taxi_order_mutation_response
+
+  """
+  delete single row from the table: "taxi.order"
+  """
+  delete_taxi_order_by_pk(id: Int!): taxi_order
+
+  """
+  delete data from the table: "taxi.taxi"
+  """
+  delete_taxi_taxi(
+    """filter the rows which have to be deleted"""
+    where: taxi_taxi_bool_exp!
+  ): taxi_taxi_mutation_response
+
+  """
+  delete single row from the table: "taxi.taxi"
+  """
+  delete_taxi_taxi_by_pk(id: Int!): taxi_taxi
 
   """
   delete data from the table: "translation"
@@ -21929,6 +21968,28 @@ type mutation_root {
   ): taxi_company
 
   """
+  insert data into the table: "taxi.driver"
+  """
+  insert_taxi_driver(
+    """the rows to be inserted"""
+    objects: [taxi_driver_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: taxi_driver_on_conflict
+  ): taxi_driver_mutation_response
+
+  """
+  insert a single row into the table: "taxi.driver"
+  """
+  insert_taxi_driver_one(
+    """the row to be inserted"""
+    object: taxi_driver_insert_input!
+
+    """upsert condition"""
+    on_conflict: taxi_driver_on_conflict
+  ): taxi_driver
+
+  """
   insert data into the table: "taxi.operator"
   """
   insert_taxi_operator(
@@ -21949,6 +22010,50 @@ type mutation_root {
     """upsert condition"""
     on_conflict: taxi_operator_on_conflict
   ): taxi_operator
+
+  """
+  insert data into the table: "taxi.order"
+  """
+  insert_taxi_order(
+    """the rows to be inserted"""
+    objects: [taxi_order_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: taxi_order_on_conflict
+  ): taxi_order_mutation_response
+
+  """
+  insert a single row into the table: "taxi.order"
+  """
+  insert_taxi_order_one(
+    """the row to be inserted"""
+    object: taxi_order_insert_input!
+
+    """upsert condition"""
+    on_conflict: taxi_order_on_conflict
+  ): taxi_order
+
+  """
+  insert data into the table: "taxi.taxi"
+  """
+  insert_taxi_taxi(
+    """the rows to be inserted"""
+    objects: [taxi_taxi_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: taxi_taxi_on_conflict
+  ): taxi_taxi_mutation_response
+
+  """
+  insert a single row into the table: "taxi.taxi"
+  """
+  insert_taxi_taxi_one(
+    """the row to be inserted"""
+    object: taxi_taxi_insert_input!
+
+    """upsert condition"""
+    on_conflict: taxi_taxi_on_conflict
+  ): taxi_taxi
 
   """
   insert data into the table: "translation"
@@ -25241,6 +25346,40 @@ type mutation_root {
   ): [taxi_company_mutation_response]
 
   """
+  update data of the table: "taxi.driver"
+  """
+  update_taxi_driver(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: taxi_driver_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: taxi_driver_set_input
+
+    """filter the rows which have to be updated"""
+    where: taxi_driver_bool_exp!
+  ): taxi_driver_mutation_response
+
+  """
+  update single row of the table: "taxi.driver"
+  """
+  update_taxi_driver_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: taxi_driver_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: taxi_driver_set_input
+    pk_columns: taxi_driver_pk_columns_input!
+  ): taxi_driver
+
+  """
+  update multiples rows of table: "taxi.driver"
+  """
+  update_taxi_driver_many(
+    """updates to execute, in order"""
+    updates: [taxi_driver_updates!]!
+  ): [taxi_driver_mutation_response]
+
+  """
   update data of the table: "taxi.operator"
   """
   update_taxi_operator(
@@ -25273,6 +25412,118 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [taxi_operator_updates!]!
   ): [taxi_operator_mutation_response]
+
+  """
+  update data of the table: "taxi.order"
+  """
+  update_taxi_order(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: taxi_order_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: taxi_order_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: taxi_order_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: taxi_order_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: taxi_order_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: taxi_order_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: taxi_order_set_input
+
+    """filter the rows which have to be updated"""
+    where: taxi_order_bool_exp!
+  ): taxi_order_mutation_response
+
+  """
+  update single row of the table: "taxi.order"
+  """
+  update_taxi_order_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: taxi_order_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: taxi_order_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: taxi_order_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: taxi_order_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: taxi_order_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: taxi_order_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: taxi_order_set_input
+    pk_columns: taxi_order_pk_columns_input!
+  ): taxi_order
+
+  """
+  update multiples rows of table: "taxi.order"
+  """
+  update_taxi_order_many(
+    """updates to execute, in order"""
+    updates: [taxi_order_updates!]!
+  ): [taxi_order_mutation_response]
+
+  """
+  update data of the table: "taxi.taxi"
+  """
+  update_taxi_taxi(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: taxi_taxi_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: taxi_taxi_set_input
+
+    """filter the rows which have to be updated"""
+    where: taxi_taxi_bool_exp!
+  ): taxi_taxi_mutation_response
+
+  """
+  update single row of the table: "taxi.taxi"
+  """
+  update_taxi_taxi_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: taxi_taxi_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: taxi_taxi_set_input
+    pk_columns: taxi_taxi_pk_columns_input!
+  ): taxi_taxi
+
+  """
+  update multiples rows of table: "taxi.taxi"
+  """
+  update_taxi_taxi_many(
+    """updates to execute, in order"""
+    updates: [taxi_taxi_updates!]!
+  ): [taxi_taxi_mutation_response]
 
   """
   update data of the table: "translation"
@@ -29082,6 +29333,49 @@ type query_root {
   taxi_company_by_pk(id: Int!): taxi_company
 
   """
+  fetch data from the table: "taxi.driver"
+  """
+  taxi_driver(
+    """distinct select on columns"""
+    distinct_on: [taxi_driver_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_driver_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_driver_bool_exp
+  ): [taxi_driver!]!
+
+  """
+  fetch aggregated fields from the table: "taxi.driver"
+  """
+  taxi_driver_aggregate(
+    """distinct select on columns"""
+    distinct_on: [taxi_driver_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_driver_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_driver_bool_exp
+  ): taxi_driver_aggregate!
+
+  """fetch data from the table: "taxi.driver" using primary key columns"""
+  taxi_driver_by_pk(id: Int!): taxi_driver
+
+  """
   fetch data from the table: "taxi.operator"
   """
   taxi_operator(
@@ -29123,6 +29417,92 @@ type query_root {
 
   """fetch data from the table: "taxi.operator" using primary key columns"""
   taxi_operator_by_pk(id: Int!): taxi_operator
+
+  """
+  fetch data from the table: "taxi.order"
+  """
+  taxi_order(
+    """distinct select on columns"""
+    distinct_on: [taxi_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_order_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_order_bool_exp
+  ): [taxi_order!]!
+
+  """
+  fetch aggregated fields from the table: "taxi.order"
+  """
+  taxi_order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [taxi_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_order_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_order_bool_exp
+  ): taxi_order_aggregate!
+
+  """fetch data from the table: "taxi.order" using primary key columns"""
+  taxi_order_by_pk(id: Int!): taxi_order
+
+  """
+  fetch data from the table: "taxi.taxi"
+  """
+  taxi_taxi(
+    """distinct select on columns"""
+    distinct_on: [taxi_taxi_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_taxi_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_taxi_bool_exp
+  ): [taxi_taxi!]!
+
+  """
+  fetch aggregated fields from the table: "taxi.taxi"
+  """
+  taxi_taxi_aggregate(
+    """distinct select on columns"""
+    distinct_on: [taxi_taxi_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_taxi_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_taxi_bool_exp
+  ): taxi_taxi_aggregate!
+
+  """fetch data from the table: "taxi.taxi" using primary key columns"""
+  taxi_taxi_by_pk(id: Int!): taxi_taxi
 
   """
   fetch data from the table: "translation"
@@ -46063,6 +46443,63 @@ type subscription_root {
   ): [taxi_company!]!
 
   """
+  fetch data from the table: "taxi.driver"
+  """
+  taxi_driver(
+    """distinct select on columns"""
+    distinct_on: [taxi_driver_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_driver_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_driver_bool_exp
+  ): [taxi_driver!]!
+
+  """
+  fetch aggregated fields from the table: "taxi.driver"
+  """
+  taxi_driver_aggregate(
+    """distinct select on columns"""
+    distinct_on: [taxi_driver_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_driver_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_driver_bool_exp
+  ): taxi_driver_aggregate!
+
+  """fetch data from the table: "taxi.driver" using primary key columns"""
+  taxi_driver_by_pk(id: Int!): taxi_driver
+
+  """
+  fetch data from the table in a streaming manner: "taxi.driver"
+  """
+  taxi_driver_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [taxi_driver_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: taxi_driver_bool_exp
+  ): [taxi_driver!]!
+
+  """
   fetch data from the table: "taxi.operator"
   """
   taxi_operator(
@@ -46118,6 +46555,120 @@ type subscription_root {
     """filter the rows returned"""
     where: taxi_operator_bool_exp
   ): [taxi_operator!]!
+
+  """
+  fetch data from the table: "taxi.order"
+  """
+  taxi_order(
+    """distinct select on columns"""
+    distinct_on: [taxi_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_order_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_order_bool_exp
+  ): [taxi_order!]!
+
+  """
+  fetch aggregated fields from the table: "taxi.order"
+  """
+  taxi_order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [taxi_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_order_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_order_bool_exp
+  ): taxi_order_aggregate!
+
+  """fetch data from the table: "taxi.order" using primary key columns"""
+  taxi_order_by_pk(id: Int!): taxi_order
+
+  """
+  fetch data from the table in a streaming manner: "taxi.order"
+  """
+  taxi_order_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [taxi_order_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: taxi_order_bool_exp
+  ): [taxi_order!]!
+
+  """
+  fetch data from the table: "taxi.taxi"
+  """
+  taxi_taxi(
+    """distinct select on columns"""
+    distinct_on: [taxi_taxi_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_taxi_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_taxi_bool_exp
+  ): [taxi_taxi!]!
+
+  """
+  fetch aggregated fields from the table: "taxi.taxi"
+  """
+  taxi_taxi_aggregate(
+    """distinct select on columns"""
+    distinct_on: [taxi_taxi_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [taxi_taxi_order_by!]
+
+    """filter the rows returned"""
+    where: taxi_taxi_bool_exp
+  ): taxi_taxi_aggregate!
+
+  """fetch data from the table: "taxi.taxi" using primary key columns"""
+  taxi_taxi_by_pk(id: Int!): taxi_taxi
+
+  """
+  fetch data from the table in a streaming manner: "taxi.taxi"
+  """
+  taxi_taxi_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [taxi_taxi_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: taxi_taxi_bool_exp
+  ): [taxi_taxi!]!
 
   """
   fetch data from the table: "translation"
@@ -46418,12 +46969,12 @@ type subscription_root {
 columns and relationships of "taxi.company"
 """
 type taxi_company {
-  cost_per_km: money!
-
   """An object relationship"""
-  details: service_provider_details!
-  details_id: Int!
+  business: business_business!
+  business_id: Int!
+  cost_per_km: money!
   id: Int!
+  maximum_delivery_distance: Int!
   minimum_cost: money!
 
   """An array relationship"""
@@ -46491,9 +47042,10 @@ type taxi_company_aggregate_fields {
 
 """aggregate avg on columns"""
 type taxi_company_avg_fields {
+  business_id: Float
   cost_per_km: Float
-  details_id: Float
   id: Float
+  maximum_delivery_distance: Float
   minimum_cost: Float
 }
 
@@ -46504,10 +47056,11 @@ input taxi_company_bool_exp {
   _and: [taxi_company_bool_exp!]
   _not: taxi_company_bool_exp
   _or: [taxi_company_bool_exp!]
+  business: business_business_bool_exp
+  business_id: Int_comparison_exp
   cost_per_km: money_comparison_exp
-  details: service_provider_details_bool_exp
-  details_id: Int_comparison_exp
   id: Int_comparison_exp
+  maximum_delivery_distance: Int_comparison_exp
   minimum_cost: money_comparison_exp
   operators: taxi_operator_bool_exp
   operators_aggregate: taxi_operator_aggregate_bool_exp
@@ -46519,7 +47072,7 @@ unique or primary key constraints on table "taxi.company"
 """
 enum taxi_company_constraint {
   """
-  unique or primary key constraint on columns "details_id"
+  unique or primary key constraint on columns "business_id"
   """
   company_details_id_key
 
@@ -46533,9 +47086,10 @@ enum taxi_company_constraint {
 input type for incrementing numeric columns in table "taxi.company"
 """
 input taxi_company_inc_input {
+  business_id: Int
   cost_per_km: money
-  details_id: Int
   id: Int
+  maximum_delivery_distance: Int
   minimum_cost: money
 }
 
@@ -46543,10 +47097,11 @@ input taxi_company_inc_input {
 input type for inserting data into table "taxi.company"
 """
 input taxi_company_insert_input {
+  business: business_business_obj_rel_insert_input
+  business_id: Int
   cost_per_km: money
-  details: service_provider_details_obj_rel_insert_input
-  details_id: Int
   id: Int
+  maximum_delivery_distance: Int
   minimum_cost: money
   operators: taxi_operator_arr_rel_insert_input
   service_provider_type: String
@@ -46554,18 +47109,20 @@ input taxi_company_insert_input {
 
 """aggregate max on columns"""
 type taxi_company_max_fields {
+  business_id: Int
   cost_per_km: money
-  details_id: Int
   id: Int
+  maximum_delivery_distance: Int
   minimum_cost: money
   service_provider_type: String
 }
 
 """aggregate min on columns"""
 type taxi_company_min_fields {
+  business_id: Int
   cost_per_km: money
-  details_id: Int
   id: Int
+  maximum_delivery_distance: Int
   minimum_cost: money
   service_provider_type: String
 }
@@ -46602,10 +47159,11 @@ input taxi_company_on_conflict {
 
 """Ordering options when selecting data from "taxi.company"."""
 input taxi_company_order_by {
+  business: business_business_order_by
+  business_id: order_by
   cost_per_km: order_by
-  details: service_provider_details_order_by
-  details_id: order_by
   id: order_by
+  maximum_delivery_distance: order_by
   minimum_cost: order_by
   operators_aggregate: taxi_operator_aggregate_order_by
   service_provider_type: order_by
@@ -46621,13 +47179,16 @@ select columns of table "taxi.company"
 """
 enum taxi_company_select_column {
   """column name"""
+  business_id
+
+  """column name"""
   cost_per_km
 
   """column name"""
-  details_id
+  id
 
   """column name"""
-  id
+  maximum_delivery_distance
 
   """column name"""
   minimum_cost
@@ -46640,34 +47201,38 @@ enum taxi_company_select_column {
 input type for updating data in table "taxi.company"
 """
 input taxi_company_set_input {
+  business_id: Int
   cost_per_km: money
-  details_id: Int
   id: Int
+  maximum_delivery_distance: Int
   minimum_cost: money
   service_provider_type: String
 }
 
 """aggregate stddev on columns"""
 type taxi_company_stddev_fields {
+  business_id: Float
   cost_per_km: Float
-  details_id: Float
   id: Float
+  maximum_delivery_distance: Float
   minimum_cost: Float
 }
 
 """aggregate stddev_pop on columns"""
 type taxi_company_stddev_pop_fields {
+  business_id: Float
   cost_per_km: Float
-  details_id: Float
   id: Float
+  maximum_delivery_distance: Float
   minimum_cost: Float
 }
 
 """aggregate stddev_samp on columns"""
 type taxi_company_stddev_samp_fields {
+  business_id: Float
   cost_per_km: Float
-  details_id: Float
   id: Float
+  maximum_delivery_distance: Float
   minimum_cost: Float
 }
 
@@ -46684,18 +47249,20 @@ input taxi_company_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input taxi_company_stream_cursor_value_input {
+  business_id: Int
   cost_per_km: money
-  details_id: Int
   id: Int
+  maximum_delivery_distance: Int
   minimum_cost: money
   service_provider_type: String
 }
 
 """aggregate sum on columns"""
 type taxi_company_sum_fields {
+  business_id: Int
   cost_per_km: money
-  details_id: Int
   id: Int
+  maximum_delivery_distance: Int
   minimum_cost: money
 }
 
@@ -46704,13 +47271,16 @@ update columns of table "taxi.company"
 """
 enum taxi_company_update_column {
   """column name"""
+  business_id
+
+  """column name"""
   cost_per_km
 
   """column name"""
-  details_id
+  id
 
   """column name"""
-  id
+  maximum_delivery_distance
 
   """column name"""
   minimum_cost
@@ -46730,26 +47300,391 @@ input taxi_company_updates {
 
 """aggregate var_pop on columns"""
 type taxi_company_var_pop_fields {
+  business_id: Float
   cost_per_km: Float
-  details_id: Float
   id: Float
+  maximum_delivery_distance: Float
   minimum_cost: Float
 }
 
 """aggregate var_samp on columns"""
 type taxi_company_var_samp_fields {
+  business_id: Float
   cost_per_km: Float
-  details_id: Float
   id: Float
+  maximum_delivery_distance: Float
   minimum_cost: Float
 }
 
 """aggregate variance on columns"""
 type taxi_company_variance_fields {
+  business_id: Float
   cost_per_km: Float
-  details_id: Float
   id: Float
+  maximum_delivery_distance: Float
   minimum_cost: Float
+}
+
+"""
+columns and relationships of "taxi.driver"
+"""
+type taxi_driver {
+  app_type_id: String!
+  app_version: String
+
+  """An object relationship"""
+  company: taxi_company!
+  current_location: geography
+  id: Int!
+  online: Boolean!
+  status: String!
+
+  """An object relationship"""
+  taxi: taxi_taxi!
+  taxi_company_id: Int!
+  taxi_id: Int!
+
+  """An object relationship"""
+  user: user!
+  user_id: Int!
+}
+
+"""
+aggregated selection of "taxi.driver"
+"""
+type taxi_driver_aggregate {
+  aggregate: taxi_driver_aggregate_fields
+  nodes: [taxi_driver!]!
+}
+
+"""
+aggregate fields of "taxi.driver"
+"""
+type taxi_driver_aggregate_fields {
+  avg: taxi_driver_avg_fields
+  count(columns: [taxi_driver_select_column!], distinct: Boolean): Int!
+  max: taxi_driver_max_fields
+  min: taxi_driver_min_fields
+  stddev: taxi_driver_stddev_fields
+  stddev_pop: taxi_driver_stddev_pop_fields
+  stddev_samp: taxi_driver_stddev_samp_fields
+  sum: taxi_driver_sum_fields
+  var_pop: taxi_driver_var_pop_fields
+  var_samp: taxi_driver_var_samp_fields
+  variance: taxi_driver_variance_fields
+}
+
+"""aggregate avg on columns"""
+type taxi_driver_avg_fields {
+  id: Float
+  taxi_company_id: Float
+  taxi_id: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "taxi.driver". All fields are combined with a logical 'AND'.
+"""
+input taxi_driver_bool_exp {
+  _and: [taxi_driver_bool_exp!]
+  _not: taxi_driver_bool_exp
+  _or: [taxi_driver_bool_exp!]
+  app_type_id: String_comparison_exp
+  app_version: String_comparison_exp
+  company: taxi_company_bool_exp
+  current_location: geography_comparison_exp
+  id: Int_comparison_exp
+  online: Boolean_comparison_exp
+  status: String_comparison_exp
+  taxi: taxi_taxi_bool_exp
+  taxi_company_id: Int_comparison_exp
+  taxi_id: Int_comparison_exp
+  user: user_bool_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "taxi.driver"
+"""
+enum taxi_driver_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  driver_pkey
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  driver_user_id_key
+}
+
+"""
+input type for incrementing numeric columns in table "taxi.driver"
+"""
+input taxi_driver_inc_input {
+  id: Int
+  taxi_company_id: Int
+  taxi_id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "taxi.driver"
+"""
+input taxi_driver_insert_input {
+  app_type_id: String
+  app_version: String
+  company: taxi_company_obj_rel_insert_input
+  current_location: geography
+  id: Int
+  online: Boolean
+  status: String
+  taxi: taxi_taxi_obj_rel_insert_input
+  taxi_company_id: Int
+  taxi_id: Int
+  user: user_obj_rel_insert_input
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type taxi_driver_max_fields {
+  app_type_id: String
+  app_version: String
+  id: Int
+  status: String
+  taxi_company_id: Int
+  taxi_id: Int
+  user_id: Int
+}
+
+"""aggregate min on columns"""
+type taxi_driver_min_fields {
+  app_type_id: String
+  app_version: String
+  id: Int
+  status: String
+  taxi_company_id: Int
+  taxi_id: Int
+  user_id: Int
+}
+
+"""
+response of any mutation on the table "taxi.driver"
+"""
+type taxi_driver_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [taxi_driver!]!
+}
+
+"""
+input type for inserting object relation for remote table "taxi.driver"
+"""
+input taxi_driver_obj_rel_insert_input {
+  data: taxi_driver_insert_input!
+
+  """upsert condition"""
+  on_conflict: taxi_driver_on_conflict
+}
+
+"""
+on_conflict condition type for table "taxi.driver"
+"""
+input taxi_driver_on_conflict {
+  constraint: taxi_driver_constraint!
+  update_columns: [taxi_driver_update_column!]! = []
+  where: taxi_driver_bool_exp
+}
+
+"""Ordering options when selecting data from "taxi.driver"."""
+input taxi_driver_order_by {
+  app_type_id: order_by
+  app_version: order_by
+  company: taxi_company_order_by
+  current_location: order_by
+  id: order_by
+  online: order_by
+  status: order_by
+  taxi: taxi_taxi_order_by
+  taxi_company_id: order_by
+  taxi_id: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: taxi.driver"""
+input taxi_driver_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "taxi.driver"
+"""
+enum taxi_driver_select_column {
+  """column name"""
+  app_type_id
+
+  """column name"""
+  app_version
+
+  """column name"""
+  current_location
+
+  """column name"""
+  id
+
+  """column name"""
+  online
+
+  """column name"""
+  status
+
+  """column name"""
+  taxi_company_id
+
+  """column name"""
+  taxi_id
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "taxi.driver"
+"""
+input taxi_driver_set_input {
+  app_type_id: String
+  app_version: String
+  current_location: geography
+  id: Int
+  online: Boolean
+  status: String
+  taxi_company_id: Int
+  taxi_id: Int
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type taxi_driver_stddev_fields {
+  id: Float
+  taxi_company_id: Float
+  taxi_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type taxi_driver_stddev_pop_fields {
+  id: Float
+  taxi_company_id: Float
+  taxi_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type taxi_driver_stddev_samp_fields {
+  id: Float
+  taxi_company_id: Float
+  taxi_id: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "taxi_driver"
+"""
+input taxi_driver_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: taxi_driver_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input taxi_driver_stream_cursor_value_input {
+  app_type_id: String
+  app_version: String
+  current_location: geography
+  id: Int
+  online: Boolean
+  status: String
+  taxi_company_id: Int
+  taxi_id: Int
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type taxi_driver_sum_fields {
+  id: Int
+  taxi_company_id: Int
+  taxi_id: Int
+  user_id: Int
+}
+
+"""
+update columns of table "taxi.driver"
+"""
+enum taxi_driver_update_column {
+  """column name"""
+  app_type_id
+
+  """column name"""
+  app_version
+
+  """column name"""
+  current_location
+
+  """column name"""
+  id
+
+  """column name"""
+  online
+
+  """column name"""
+  status
+
+  """column name"""
+  taxi_company_id
+
+  """column name"""
+  taxi_id
+
+  """column name"""
+  user_id
+}
+
+input taxi_driver_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: taxi_driver_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: taxi_driver_set_input
+  where: taxi_driver_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type taxi_driver_var_pop_fields {
+  id: Float
+  taxi_company_id: Float
+  taxi_id: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type taxi_driver_var_samp_fields {
+  id: Float
+  taxi_company_id: Float
+  taxi_id: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type taxi_driver_variance_fields {
+  id: Float
+  taxi_company_id: Float
+  taxi_id: Float
+  user_id: Float
 }
 
 """
@@ -47179,6 +48114,1133 @@ input taxi_operator_variance_order_by {
   details_id: order_by
   id: order_by
   user_id: order_by
+}
+
+"""
+columns and relationships of "taxi.order"
+"""
+type taxi_order {
+  actual_arrival_at_dropoff_time: timestamptz
+  actual_arrival_at_pickup_time: timestamptz
+  bill_image: String
+  cancellation_time: timestamptz
+
+  """An object relationship"""
+  chat: chat!
+  chat_id: Int!
+  chosen_companies(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  cost: money!
+  counter_offers(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  current_gps: geography
+
+  """An object relationship"""
+  customer: customer_customer!
+  customer_app_type: String!
+  customer_id: Int!
+  customer_review_by_driver_id: Int
+  discount_value: money!
+
+  """An object relationship"""
+  driver: taxi_driver
+  driver_id: Int
+
+  """An object relationship"""
+  driver_review_by_customer: review
+  driver_review_by_customer_id: Int
+  estimated_arrival_at_dropoff_time: timestamptz
+  estimated_arrival_at_pickup_time: timestamptz
+  from_location_gps: geography!
+  from_location_text: String!
+  id: Int!
+  notified_drivers(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  order_time: timestamptz!
+  payment_type: String!
+  refund_amount: money!
+
+  """An object relationship"""
+  review_by_driver: review
+  schedule_time: String
+  status: String!
+  stripe_fees: money!
+  stripe_info(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  tax: money!
+
+  """An object relationship"""
+  taxi_company: taxi_company
+  taxi_company_id: Int
+  to_location_address: String!
+  to_location_gps: geography!
+  trip_distance: Int
+  trip_duration: Int
+  trip_polyline: String
+}
+
+"""
+aggregated selection of "taxi.order"
+"""
+type taxi_order_aggregate {
+  aggregate: taxi_order_aggregate_fields
+  nodes: [taxi_order!]!
+}
+
+"""
+aggregate fields of "taxi.order"
+"""
+type taxi_order_aggregate_fields {
+  avg: taxi_order_avg_fields
+  count(columns: [taxi_order_select_column!], distinct: Boolean): Int!
+  max: taxi_order_max_fields
+  min: taxi_order_min_fields
+  stddev: taxi_order_stddev_fields
+  stddev_pop: taxi_order_stddev_pop_fields
+  stddev_samp: taxi_order_stddev_samp_fields
+  sum: taxi_order_sum_fields
+  var_pop: taxi_order_var_pop_fields
+  var_samp: taxi_order_var_samp_fields
+  variance: taxi_order_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input taxi_order_append_input {
+  chosen_companies: jsonb
+  counter_offers: jsonb
+  notified_drivers: jsonb
+  stripe_info: jsonb
+}
+
+"""aggregate avg on columns"""
+type taxi_order_avg_fields {
+  chat_id: Float
+  cost: Float
+  customer_id: Float
+  customer_review_by_driver_id: Float
+  discount_value: Float
+  driver_id: Float
+  driver_review_by_customer_id: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+  taxi_company_id: Float
+  trip_distance: Float
+  trip_duration: Float
+}
+
+"""
+Boolean expression to filter rows from the table "taxi.order". All fields are combined with a logical 'AND'.
+"""
+input taxi_order_bool_exp {
+  _and: [taxi_order_bool_exp!]
+  _not: taxi_order_bool_exp
+  _or: [taxi_order_bool_exp!]
+  actual_arrival_at_dropoff_time: timestamptz_comparison_exp
+  actual_arrival_at_pickup_time: timestamptz_comparison_exp
+  bill_image: String_comparison_exp
+  cancellation_time: timestamptz_comparison_exp
+  chat: chat_bool_exp
+  chat_id: Int_comparison_exp
+  chosen_companies: jsonb_comparison_exp
+  cost: money_comparison_exp
+  counter_offers: jsonb_comparison_exp
+  current_gps: geography_comparison_exp
+  customer: customer_customer_bool_exp
+  customer_app_type: String_comparison_exp
+  customer_id: Int_comparison_exp
+  customer_review_by_driver_id: Int_comparison_exp
+  discount_value: money_comparison_exp
+  driver: taxi_driver_bool_exp
+  driver_id: Int_comparison_exp
+  driver_review_by_customer: review_bool_exp
+  driver_review_by_customer_id: Int_comparison_exp
+  estimated_arrival_at_dropoff_time: timestamptz_comparison_exp
+  estimated_arrival_at_pickup_time: timestamptz_comparison_exp
+  from_location_gps: geography_comparison_exp
+  from_location_text: String_comparison_exp
+  id: Int_comparison_exp
+  notified_drivers: jsonb_comparison_exp
+  order_time: timestamptz_comparison_exp
+  payment_type: String_comparison_exp
+  refund_amount: money_comparison_exp
+  review_by_driver: review_bool_exp
+  schedule_time: String_comparison_exp
+  status: String_comparison_exp
+  stripe_fees: money_comparison_exp
+  stripe_info: jsonb_comparison_exp
+  tax: money_comparison_exp
+  taxi_company: taxi_company_bool_exp
+  taxi_company_id: Int_comparison_exp
+  to_location_address: String_comparison_exp
+  to_location_gps: geography_comparison_exp
+  trip_distance: Int_comparison_exp
+  trip_duration: Int_comparison_exp
+  trip_polyline: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "taxi.order"
+"""
+enum taxi_order_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  order_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input taxi_order_delete_at_path_input {
+  chosen_companies: [String!]
+  counter_offers: [String!]
+  notified_drivers: [String!]
+  stripe_info: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input taxi_order_delete_elem_input {
+  chosen_companies: Int
+  counter_offers: Int
+  notified_drivers: Int
+  stripe_info: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input taxi_order_delete_key_input {
+  chosen_companies: String
+  counter_offers: String
+  notified_drivers: String
+  stripe_info: String
+}
+
+"""
+input type for incrementing numeric columns in table "taxi.order"
+"""
+input taxi_order_inc_input {
+  chat_id: Int
+  cost: money
+  customer_id: Int
+  customer_review_by_driver_id: Int
+  discount_value: money
+  driver_id: Int
+  driver_review_by_customer_id: Int
+  id: Int
+  refund_amount: money
+  stripe_fees: money
+  tax: money
+  taxi_company_id: Int
+  trip_distance: Int
+  trip_duration: Int
+}
+
+"""
+input type for inserting data into table "taxi.order"
+"""
+input taxi_order_insert_input {
+  actual_arrival_at_dropoff_time: timestamptz
+  actual_arrival_at_pickup_time: timestamptz
+  bill_image: String
+  cancellation_time: timestamptz
+  chat: chat_obj_rel_insert_input
+  chat_id: Int
+  chosen_companies: jsonb
+  cost: money
+  counter_offers: jsonb
+  current_gps: geography
+  customer: customer_customer_obj_rel_insert_input
+  customer_app_type: String
+  customer_id: Int
+  customer_review_by_driver_id: Int
+  discount_value: money
+  driver: taxi_driver_obj_rel_insert_input
+  driver_id: Int
+  driver_review_by_customer: review_obj_rel_insert_input
+  driver_review_by_customer_id: Int
+  estimated_arrival_at_dropoff_time: timestamptz
+  estimated_arrival_at_pickup_time: timestamptz
+  from_location_gps: geography
+  from_location_text: String
+  id: Int
+  notified_drivers: jsonb
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  review_by_driver: review_obj_rel_insert_input
+  schedule_time: String
+  status: String
+  stripe_fees: money
+  stripe_info: jsonb
+  tax: money
+  taxi_company: taxi_company_obj_rel_insert_input
+  taxi_company_id: Int
+  to_location_address: String
+  to_location_gps: geography
+  trip_distance: Int
+  trip_duration: Int
+  trip_polyline: String
+}
+
+"""aggregate max on columns"""
+type taxi_order_max_fields {
+  actual_arrival_at_dropoff_time: timestamptz
+  actual_arrival_at_pickup_time: timestamptz
+  bill_image: String
+  cancellation_time: timestamptz
+  chat_id: Int
+  cost: money
+  customer_app_type: String
+  customer_id: Int
+  customer_review_by_driver_id: Int
+  discount_value: money
+  driver_id: Int
+  driver_review_by_customer_id: Int
+  estimated_arrival_at_dropoff_time: timestamptz
+  estimated_arrival_at_pickup_time: timestamptz
+  from_location_text: String
+  id: Int
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  schedule_time: String
+  status: String
+  stripe_fees: money
+  tax: money
+  taxi_company_id: Int
+  to_location_address: String
+  trip_distance: Int
+  trip_duration: Int
+  trip_polyline: String
+}
+
+"""aggregate min on columns"""
+type taxi_order_min_fields {
+  actual_arrival_at_dropoff_time: timestamptz
+  actual_arrival_at_pickup_time: timestamptz
+  bill_image: String
+  cancellation_time: timestamptz
+  chat_id: Int
+  cost: money
+  customer_app_type: String
+  customer_id: Int
+  customer_review_by_driver_id: Int
+  discount_value: money
+  driver_id: Int
+  driver_review_by_customer_id: Int
+  estimated_arrival_at_dropoff_time: timestamptz
+  estimated_arrival_at_pickup_time: timestamptz
+  from_location_text: String
+  id: Int
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  schedule_time: String
+  status: String
+  stripe_fees: money
+  tax: money
+  taxi_company_id: Int
+  to_location_address: String
+  trip_distance: Int
+  trip_duration: Int
+  trip_polyline: String
+}
+
+"""
+response of any mutation on the table "taxi.order"
+"""
+type taxi_order_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [taxi_order!]!
+}
+
+"""
+on_conflict condition type for table "taxi.order"
+"""
+input taxi_order_on_conflict {
+  constraint: taxi_order_constraint!
+  update_columns: [taxi_order_update_column!]! = []
+  where: taxi_order_bool_exp
+}
+
+"""Ordering options when selecting data from "taxi.order"."""
+input taxi_order_order_by {
+  actual_arrival_at_dropoff_time: order_by
+  actual_arrival_at_pickup_time: order_by
+  bill_image: order_by
+  cancellation_time: order_by
+  chat: chat_order_by
+  chat_id: order_by
+  chosen_companies: order_by
+  cost: order_by
+  counter_offers: order_by
+  current_gps: order_by
+  customer: customer_customer_order_by
+  customer_app_type: order_by
+  customer_id: order_by
+  customer_review_by_driver_id: order_by
+  discount_value: order_by
+  driver: taxi_driver_order_by
+  driver_id: order_by
+  driver_review_by_customer: review_order_by
+  driver_review_by_customer_id: order_by
+  estimated_arrival_at_dropoff_time: order_by
+  estimated_arrival_at_pickup_time: order_by
+  from_location_gps: order_by
+  from_location_text: order_by
+  id: order_by
+  notified_drivers: order_by
+  order_time: order_by
+  payment_type: order_by
+  refund_amount: order_by
+  review_by_driver: review_order_by
+  schedule_time: order_by
+  status: order_by
+  stripe_fees: order_by
+  stripe_info: order_by
+  tax: order_by
+  taxi_company: taxi_company_order_by
+  taxi_company_id: order_by
+  to_location_address: order_by
+  to_location_gps: order_by
+  trip_distance: order_by
+  trip_duration: order_by
+  trip_polyline: order_by
+}
+
+"""primary key columns input for table: taxi.order"""
+input taxi_order_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input taxi_order_prepend_input {
+  chosen_companies: jsonb
+  counter_offers: jsonb
+  notified_drivers: jsonb
+  stripe_info: jsonb
+}
+
+"""
+select columns of table "taxi.order"
+"""
+enum taxi_order_select_column {
+  """column name"""
+  actual_arrival_at_dropoff_time
+
+  """column name"""
+  actual_arrival_at_pickup_time
+
+  """column name"""
+  bill_image
+
+  """column name"""
+  cancellation_time
+
+  """column name"""
+  chat_id
+
+  """column name"""
+  chosen_companies
+
+  """column name"""
+  cost
+
+  """column name"""
+  counter_offers
+
+  """column name"""
+  current_gps
+
+  """column name"""
+  customer_app_type
+
+  """column name"""
+  customer_id
+
+  """column name"""
+  customer_review_by_driver_id
+
+  """column name"""
+  discount_value
+
+  """column name"""
+  driver_id
+
+  """column name"""
+  driver_review_by_customer_id
+
+  """column name"""
+  estimated_arrival_at_dropoff_time
+
+  """column name"""
+  estimated_arrival_at_pickup_time
+
+  """column name"""
+  from_location_gps
+
+  """column name"""
+  from_location_text
+
+  """column name"""
+  id
+
+  """column name"""
+  notified_drivers
+
+  """column name"""
+  order_time
+
+  """column name"""
+  payment_type
+
+  """column name"""
+  refund_amount
+
+  """column name"""
+  schedule_time
+
+  """column name"""
+  status
+
+  """column name"""
+  stripe_fees
+
+  """column name"""
+  stripe_info
+
+  """column name"""
+  tax
+
+  """column name"""
+  taxi_company_id
+
+  """column name"""
+  to_location_address
+
+  """column name"""
+  to_location_gps
+
+  """column name"""
+  trip_distance
+
+  """column name"""
+  trip_duration
+
+  """column name"""
+  trip_polyline
+}
+
+"""
+input type for updating data in table "taxi.order"
+"""
+input taxi_order_set_input {
+  actual_arrival_at_dropoff_time: timestamptz
+  actual_arrival_at_pickup_time: timestamptz
+  bill_image: String
+  cancellation_time: timestamptz
+  chat_id: Int
+  chosen_companies: jsonb
+  cost: money
+  counter_offers: jsonb
+  current_gps: geography
+  customer_app_type: String
+  customer_id: Int
+  customer_review_by_driver_id: Int
+  discount_value: money
+  driver_id: Int
+  driver_review_by_customer_id: Int
+  estimated_arrival_at_dropoff_time: timestamptz
+  estimated_arrival_at_pickup_time: timestamptz
+  from_location_gps: geography
+  from_location_text: String
+  id: Int
+  notified_drivers: jsonb
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  schedule_time: String
+  status: String
+  stripe_fees: money
+  stripe_info: jsonb
+  tax: money
+  taxi_company_id: Int
+  to_location_address: String
+  to_location_gps: geography
+  trip_distance: Int
+  trip_duration: Int
+  trip_polyline: String
+}
+
+"""aggregate stddev on columns"""
+type taxi_order_stddev_fields {
+  chat_id: Float
+  cost: Float
+  customer_id: Float
+  customer_review_by_driver_id: Float
+  discount_value: Float
+  driver_id: Float
+  driver_review_by_customer_id: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+  taxi_company_id: Float
+  trip_distance: Float
+  trip_duration: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type taxi_order_stddev_pop_fields {
+  chat_id: Float
+  cost: Float
+  customer_id: Float
+  customer_review_by_driver_id: Float
+  discount_value: Float
+  driver_id: Float
+  driver_review_by_customer_id: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+  taxi_company_id: Float
+  trip_distance: Float
+  trip_duration: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type taxi_order_stddev_samp_fields {
+  chat_id: Float
+  cost: Float
+  customer_id: Float
+  customer_review_by_driver_id: Float
+  discount_value: Float
+  driver_id: Float
+  driver_review_by_customer_id: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+  taxi_company_id: Float
+  trip_distance: Float
+  trip_duration: Float
+}
+
+"""
+Streaming cursor of the table "taxi_order"
+"""
+input taxi_order_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: taxi_order_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input taxi_order_stream_cursor_value_input {
+  actual_arrival_at_dropoff_time: timestamptz
+  actual_arrival_at_pickup_time: timestamptz
+  bill_image: String
+  cancellation_time: timestamptz
+  chat_id: Int
+  chosen_companies: jsonb
+  cost: money
+  counter_offers: jsonb
+  current_gps: geography
+  customer_app_type: String
+  customer_id: Int
+  customer_review_by_driver_id: Int
+  discount_value: money
+  driver_id: Int
+  driver_review_by_customer_id: Int
+  estimated_arrival_at_dropoff_time: timestamptz
+  estimated_arrival_at_pickup_time: timestamptz
+  from_location_gps: geography
+  from_location_text: String
+  id: Int
+  notified_drivers: jsonb
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  schedule_time: String
+  status: String
+  stripe_fees: money
+  stripe_info: jsonb
+  tax: money
+  taxi_company_id: Int
+  to_location_address: String
+  to_location_gps: geography
+  trip_distance: Int
+  trip_duration: Int
+  trip_polyline: String
+}
+
+"""aggregate sum on columns"""
+type taxi_order_sum_fields {
+  chat_id: Int
+  cost: money
+  customer_id: Int
+  customer_review_by_driver_id: Int
+  discount_value: money
+  driver_id: Int
+  driver_review_by_customer_id: Int
+  id: Int
+  refund_amount: money
+  stripe_fees: money
+  tax: money
+  taxi_company_id: Int
+  trip_distance: Int
+  trip_duration: Int
+}
+
+"""
+update columns of table "taxi.order"
+"""
+enum taxi_order_update_column {
+  """column name"""
+  actual_arrival_at_dropoff_time
+
+  """column name"""
+  actual_arrival_at_pickup_time
+
+  """column name"""
+  bill_image
+
+  """column name"""
+  cancellation_time
+
+  """column name"""
+  chat_id
+
+  """column name"""
+  chosen_companies
+
+  """column name"""
+  cost
+
+  """column name"""
+  counter_offers
+
+  """column name"""
+  current_gps
+
+  """column name"""
+  customer_app_type
+
+  """column name"""
+  customer_id
+
+  """column name"""
+  customer_review_by_driver_id
+
+  """column name"""
+  discount_value
+
+  """column name"""
+  driver_id
+
+  """column name"""
+  driver_review_by_customer_id
+
+  """column name"""
+  estimated_arrival_at_dropoff_time
+
+  """column name"""
+  estimated_arrival_at_pickup_time
+
+  """column name"""
+  from_location_gps
+
+  """column name"""
+  from_location_text
+
+  """column name"""
+  id
+
+  """column name"""
+  notified_drivers
+
+  """column name"""
+  order_time
+
+  """column name"""
+  payment_type
+
+  """column name"""
+  refund_amount
+
+  """column name"""
+  schedule_time
+
+  """column name"""
+  status
+
+  """column name"""
+  stripe_fees
+
+  """column name"""
+  stripe_info
+
+  """column name"""
+  tax
+
+  """column name"""
+  taxi_company_id
+
+  """column name"""
+  to_location_address
+
+  """column name"""
+  to_location_gps
+
+  """column name"""
+  trip_distance
+
+  """column name"""
+  trip_duration
+
+  """column name"""
+  trip_polyline
+}
+
+input taxi_order_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: taxi_order_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: taxi_order_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: taxi_order_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: taxi_order_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: taxi_order_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: taxi_order_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: taxi_order_set_input
+  where: taxi_order_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type taxi_order_var_pop_fields {
+  chat_id: Float
+  cost: Float
+  customer_id: Float
+  customer_review_by_driver_id: Float
+  discount_value: Float
+  driver_id: Float
+  driver_review_by_customer_id: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+  taxi_company_id: Float
+  trip_distance: Float
+  trip_duration: Float
+}
+
+"""aggregate var_samp on columns"""
+type taxi_order_var_samp_fields {
+  chat_id: Float
+  cost: Float
+  customer_id: Float
+  customer_review_by_driver_id: Float
+  discount_value: Float
+  driver_id: Float
+  driver_review_by_customer_id: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+  taxi_company_id: Float
+  trip_distance: Float
+  trip_duration: Float
+}
+
+"""aggregate variance on columns"""
+type taxi_order_variance_fields {
+  chat_id: Float
+  cost: Float
+  customer_id: Float
+  customer_review_by_driver_id: Float
+  discount_value: Float
+  driver_id: Float
+  driver_review_by_customer_id: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+  taxi_company_id: Float
+  trip_distance: Float
+  trip_duration: Float
+}
+
+"""
+columns and relationships of "taxi.taxi"
+"""
+type taxi_taxi {
+  car_name: String!
+  car_number: String!
+  id: Int!
+}
+
+"""
+aggregated selection of "taxi.taxi"
+"""
+type taxi_taxi_aggregate {
+  aggregate: taxi_taxi_aggregate_fields
+  nodes: [taxi_taxi!]!
+}
+
+"""
+aggregate fields of "taxi.taxi"
+"""
+type taxi_taxi_aggregate_fields {
+  avg: taxi_taxi_avg_fields
+  count(columns: [taxi_taxi_select_column!], distinct: Boolean): Int!
+  max: taxi_taxi_max_fields
+  min: taxi_taxi_min_fields
+  stddev: taxi_taxi_stddev_fields
+  stddev_pop: taxi_taxi_stddev_pop_fields
+  stddev_samp: taxi_taxi_stddev_samp_fields
+  sum: taxi_taxi_sum_fields
+  var_pop: taxi_taxi_var_pop_fields
+  var_samp: taxi_taxi_var_samp_fields
+  variance: taxi_taxi_variance_fields
+}
+
+"""aggregate avg on columns"""
+type taxi_taxi_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "taxi.taxi". All fields are combined with a logical 'AND'.
+"""
+input taxi_taxi_bool_exp {
+  _and: [taxi_taxi_bool_exp!]
+  _not: taxi_taxi_bool_exp
+  _or: [taxi_taxi_bool_exp!]
+  car_name: String_comparison_exp
+  car_number: String_comparison_exp
+  id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "taxi.taxi"
+"""
+enum taxi_taxi_constraint {
+  """
+  unique or primary key constraint on columns "car_number"
+  """
+  taxi_car_number_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  taxi_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "taxi.taxi"
+"""
+input taxi_taxi_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "taxi.taxi"
+"""
+input taxi_taxi_insert_input {
+  car_name: String
+  car_number: String
+  id: Int
+}
+
+"""aggregate max on columns"""
+type taxi_taxi_max_fields {
+  car_name: String
+  car_number: String
+  id: Int
+}
+
+"""aggregate min on columns"""
+type taxi_taxi_min_fields {
+  car_name: String
+  car_number: String
+  id: Int
+}
+
+"""
+response of any mutation on the table "taxi.taxi"
+"""
+type taxi_taxi_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [taxi_taxi!]!
+}
+
+"""
+input type for inserting object relation for remote table "taxi.taxi"
+"""
+input taxi_taxi_obj_rel_insert_input {
+  data: taxi_taxi_insert_input!
+
+  """upsert condition"""
+  on_conflict: taxi_taxi_on_conflict
+}
+
+"""
+on_conflict condition type for table "taxi.taxi"
+"""
+input taxi_taxi_on_conflict {
+  constraint: taxi_taxi_constraint!
+  update_columns: [taxi_taxi_update_column!]! = []
+  where: taxi_taxi_bool_exp
+}
+
+"""Ordering options when selecting data from "taxi.taxi"."""
+input taxi_taxi_order_by {
+  car_name: order_by
+  car_number: order_by
+  id: order_by
+}
+
+"""primary key columns input for table: taxi.taxi"""
+input taxi_taxi_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "taxi.taxi"
+"""
+enum taxi_taxi_select_column {
+  """column name"""
+  car_name
+
+  """column name"""
+  car_number
+
+  """column name"""
+  id
+}
+
+"""
+input type for updating data in table "taxi.taxi"
+"""
+input taxi_taxi_set_input {
+  car_name: String
+  car_number: String
+  id: Int
+}
+
+"""aggregate stddev on columns"""
+type taxi_taxi_stddev_fields {
+  id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type taxi_taxi_stddev_pop_fields {
+  id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type taxi_taxi_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "taxi_taxi"
+"""
+input taxi_taxi_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: taxi_taxi_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input taxi_taxi_stream_cursor_value_input {
+  car_name: String
+  car_number: String
+  id: Int
+}
+
+"""aggregate sum on columns"""
+type taxi_taxi_sum_fields {
+  id: Int
+}
+
+"""
+update columns of table "taxi.taxi"
+"""
+enum taxi_taxi_update_column {
+  """column name"""
+  car_name
+
+  """column name"""
+  car_number
+
+  """column name"""
+  id
+}
+
+input taxi_taxi_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: taxi_taxi_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: taxi_taxi_set_input
+  where: taxi_taxi_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type taxi_taxi_var_pop_fields {
+  id: Float
+}
+
+"""aggregate var_samp on columns"""
+type taxi_taxi_var_samp_fields {
+  id: Float
+}
+
+"""aggregate variance on columns"""
+type taxi_taxi_variance_fields {
+  id: Float
 }
 
 scalar timestamp

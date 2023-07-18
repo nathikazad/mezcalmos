@@ -37,6 +37,7 @@ export enum AppType {
   Business = "business",
   Laundry = "laundry",
   TaxiAdmin = "taxiAdmin",
+  Taxi = "taxi",
 }
 export enum CustomerAppType {
   Native = "native",

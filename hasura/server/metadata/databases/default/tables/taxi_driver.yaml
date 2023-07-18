@@ -1,3 +1,13 @@
 table:
   name: driver
   schema: taxi
+object_relationships:
+  - name: company
+    using:
+      foreign_key_constraint_on: taxi_company_id
+  - name: taxi
+    using:
+      foreign_key_constraint_on: taxi_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id

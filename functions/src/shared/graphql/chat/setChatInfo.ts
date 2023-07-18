@@ -11,6 +11,7 @@ import { CourierOrder } from "../../models/Services/Courier/Courier";
 import { LaundryOrder } from "../../models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
 import { ServiceProvider } from "../../models/Services/Service";
+import { TaxiOrder } from "../../models/Services/Taxi/TaxiOrder";
 
 export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: ServiceProvider, delivery: DeliveryOrder, customer: CustomerInfo) {
 
@@ -477,4 +478,44 @@ export async function setBusinessOrderRequestChatInfo(
       }
     }
   });
+}
+
+export async function setTaxiChatInfo(taxiOrder: TaxiOrder, customer: CustomerInfo) {
+
+  let chain = getHasura();
+  
+  chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: taxiOrder.chatId
+      },
+      _set: {
+        chat_info: $`chat_info`
+      }
+    }, {
+      id: true
+    },]
+  }, {
+    "chat_info": {
+      [ChatInfoAppName.TaxiApp]: {
+        chatTitle: customer.name ?? "Customer",
+        chatImage: customer.image,
+        phoneNumber: customer.phoneNumber,
+        participantType: ParticipantType.Customer,
+        parentLink: `/orders/${taxiOrder.id}`
+      },
+      [ChatInfoAppName.CustomerApp]: {
+        parentLink: `/taxiOrders/${taxiOrder.id}`,
+        participantType: ParticipantType.TaxiDriver
+      },
+      [ChatInfoAppName.MezAdminApp]: {
+        chatTitle: customer.name ?? "Customer",
+        chatImage: customer.image,
+        phoneNumber: customer.phoneNumber,
+        participantType: ParticipantType.Customer,
+        parentLink: `/taxiOrders/${taxiOrder.id}`
+      }
+    }
+  });
+  
 }

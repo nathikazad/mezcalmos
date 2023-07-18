@@ -1,149 +1,93 @@
-import * as functions from "firebase-functions";
-import * as customerNodes from "../shared/databaseNodes/customer";
-import * as rootNodes from "../shared/databaseNodes/root";
-import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { CustomerAppType, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import {  OrderType } from "../shared/models/Generic/Order";
-import { TaxiOrderRequest } from "../shared/models/Services/Taxi/TaxiOrderRequest";
-import { constructTaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
-import { getUser } from "../shared/graphql/user/getUser";
+import { CustomerAppType, Location, MezError, } from "../shared/models/Generic/Generic";
 import { DeliveryAdmin } from "../shared/models/Generic/Delivery";
+import { CreateCourierError } from "../delivery/createCourierOrder";
+import { setCourierChatInfo, setTaxiChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
+import { notifyDeliveryDrivers } from "../shared/helper";
+import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
+import { PaymentType } from "../shared/models/Generic/Order";
+import { createNewTaxiOrder } from "../shared/graphql/taxi/order/createOrder";
+import { TaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
  
 
 export interface TaxiRequestDetails {
-  toLocation: Location,
-  fromLocationGps?: Location,
-  fromLocationText?: string,
-  taxiCompanyIds: Array<number>,
-  customerOffer: number,
-  customerAppType: CustomerAppType,
-  tax?: number,
-  scheduledTime?: string,
-  stripeFees?: number,
-  discountValue?: number,
-  tripDistance?: number,
-  tripDuration?: number,
-  tripPolyline?: string
-  distanceFromBase?: number,
-  refundAmount?: number,
+    toLocation: Location,
+    fromLocation: Location,
+    chosenCompanies: Array<number>,
+    customerOffer: number,
+    paymentType: PaymentType,
+    customerAppType: CustomerAppType,
+    tax?: number,
+    scheduledTime?: string,
+    stripeFees?: number,
+    discountValue?: number,
+    tripDistance?: number,
+    tripDuration?: number,
+    tripPolyline?: string
+    distanceFromBase?: number,
+    refundAmount?: number,
 }
 export interface TaxiRequestResponse {
-  success: boolean,
-  error?: TaxiRequestError
-  unhandledError?: string,
-  orderId?: number
+    success: boolean,
+    error?: TaxiRequestError
+    unhandledError?: string,
+    orderId?: number
 }
 export enum TaxiRequestError {
-  UnhandledError = "unhandledError",
-  CustomerNotFound = "customerNotFound",
-  OrderCreationError = "orderCreationError",
-  NoDeliveryCompanyFound = "noDeliveryCompanyFound",
-  DeliveryCompaniesHaveNoDrivers = "deliveryCompaniesHaveNoDrivers",
+    UnhandledError = "unhandledError",
+    CustomerNotFound = "customerNotFound",
+    OrderCreationError = "orderCreationError",
+    NoDeliveryCompanyFound = "noDeliveryCompanyFound",
+    DeliveryCompaniesHaveNoDrivers = "deliveryCompaniesHaveNoDrivers",
 
 }
-export async function requestRide(userId: string, data: any) {
-  // let response = isSignedIn(userId)
-  // if (response != undefined)
-  //   return response;
+export async function requestTaxi(customerId: number, taxiRequestDetails: TaxiRequestDetails): Promise<TaxiRequestResponse> {
 
-  let customerId: string = userId;
-  let orderRequest: TaxiOrderRequest = <TaxiOrderRequest>data;
-  console.log(orderRequest);
+    try {
+        let response = await Promise.all([getCustomer(customerId), getMezAdmins()])
+        let customer: CustomerInfo = response[0];
+        let mezAdmins: MezAdmin[] = response[1];
 
-  let transactionResponse = await customerNodes.lock(customerId).transaction(function (lock) {
-    if (lock == true) {
-      return
-    } else {
-      return true
+        let order: TaxiOrder = await createNewTaxiOrder(customerId, taxiRequestDetails, mezAdmins);
+
+        setTaxiChatInfo(order, customer);
+        
+        await notifyDeliveryDrivers(courierOrder.deliveryOrder);
+        
+        notifyAdmins(mezAdmins, courierOrder.id);
+
+
+        // let userInfo = await getUser(parseInt(customerId));
+        // let order = constructTaxiOrder(orderRequest, userInfo);
+        // let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
+        // let orderId = orderRef.key!
+        // rootNodes.openOrders(OrderType.Taxi, orderId).set(order);
+
+        return {
+          success: true,
+          orderId: courierOrder.id
+        }
+    } catch(e: any) {
+        if (e instanceof MezError) {
+            if (Object.values(CreateCourierError).includes(e.message as any)) {
+                return {
+                    success: false,
+                    error: e.message as any
+                }
+            } else {
+                return {
+                    success: false,
+                    error: CreateCourierError.UnhandledError,
+                    unhandledError: e.message as any
+                }
+            }
+        } else {
+            throw e
+        }
     }
-  })
-
-  if (!transactionResponse.committed) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: 'Customer lock not available'
-    }
-  }
-
-  try {
-    // let customerInProcessOrders: Record<string, Order> = (await customerNodes.inProcessOrders(customerId).once('value')).val();
-    // check if customer is already in another taxi
-    // if (customerInProcessOrders != null && Object.values(customerInProcessOrders).filter(order => order.orderType == OrderType.Taxi).length > 0) {
-    //   return {
-    //     status: "Error",
-    //     errorMessage: "Customer is already in another taxi"
-    //   }
-    // }
-
-    let userInfo = await getUser(parseInt(customerId));
-    let order = constructTaxiOrder(orderRequest, userInfo);
-    let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
-    let orderId = orderRef.key!
-    rootNodes.openOrders(OrderType.Taxi, orderId).set(order);
-
-    // let chat: ChatObject = await buildChatForOrder(
-    //   orderId,
-    //   OrderType.Taxi,
-    // );
-
-    
-    // chat.addParticipant(
-    // {
-    //   ...userInfo,
-    //   particpantType: ParticipantType.Customer
-    // });
-
-    // await chatController.setChat(parseInt(orderId), chat.chatData);
-
-
-    deliveryAdminNodes.deliveryAdmins().once('value').then((snapshot) => {
-      let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-      // chatController.addParticipantsToChat(Object.keys(deliveryAdmins), chat, parseInt(orderId), ParticipantType.DeliveryOperator)
-      notifyDeliveryAdminsNewOrder(deliveryAdmins, orderId)
-    })
-    
-
-    return {
-      status: ServerResponseStatus.Success,
-      orderId: orderId
-    }
-  } catch (e) {
-    functions.logger.error(e);
-    functions.logger.error(`Order request error ${customerId}`);
-    return {
-      status: ServerResponseStatus.Error,
-      orderId: "Order request error"
-    }
-  } finally {
-    await customerNodes.lock(customerId).remove();
-  }
 };
 
-async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>,
-  orderId: string) {
+async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>, orderId: string) {
 
-  // let notification: Notification = {
-  //   foreground: <OrderNotification>{
-  //     time: (new Date()).toISOString(),
-  //     notificationType: NotificationType.NewOrder,
-  //     orderType: OrderType.Taxi,
-  //     orderId: orderId,
-  //     notificationAction: NotificationAction.ShowSnackBarAlways,
-  //   },
-  //   background: {
-  //     [Language.ES]: {
-  //       title: "Nueva Pedido",
-  //       body: `Hay una nueva orden de taxi`
-  //     },
-  //     [Language.EN]: {
-  //       title: "New Order",
-  //       body: `There is a new taxi order`
-  //     }
-  //   },
-  //   linkUrl: orderUrl(ParticipantType.DeliveryAdmin, OrderType.Taxi, orderId)
-  // }
-
-  // for (let adminId in deliveryAdmins) {
-  //   pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
-  // }
 }

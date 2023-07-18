@@ -1,66 +1,102 @@
-import { Order, OrderType } from "../../Generic/Order"
+import { PaymentType } from "../../Generic/Order"
 import { UserInfo } from "../../Generic/User"
-import { TaxiOrderRequest } from "./TaxiOrderRequest"
-import { Location } from '../../Generic/Generic';
+import { CustomerAppType, Location } from '../../Generic/Generic';
 // import { RouteInformation } from '../../Generic/RouteInformation';
 import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../../Notification";
+import { OrderStripeInfo } from "../../stripe";
+import { CounterOffer } from "../../Generic/Delivery";
 
-export interface TaxiOrder extends Order {
-  from: Location,
-  cost: number,
+export interface TaxiOrder  {
+  id: number;
+  fromLocation: Location;
+  toLocation: Location;
+  customerId: number;
+  orderTime: string;
   status: TaxiOrderStatus,
-  // routeInformation: RouteInformation,
-  acceptRideTime?: string,
-  startRideTime?: string,
-  finishRideTime?: string,
+  paymentType: PaymentType;
+  tax?: number;
+  stripeFees?: number;
+  discountValue?: number;
+  customerAppType: CustomerAppType;
+  refundAmount: number;
+  chatId: number;
+  cost: number;
+  driverId?: number;
+  cancellationTime?: string;
+  estimatedArrivalAtPickupTime?: string;
+  actualArrivalAtPickupTime?: string;
+  estimatedArrivalAtDropoffTime?: string;
+  actualArrivalAtDropoffTime?: string;
+  stripeInfo?: OrderStripeInfo;
+  driverReviewByCustomerId?: number;
+  customerReviewByDriverId?: number;
+  taxiCompanyId?: number;
+  tripPolyline?: string;
+  tripDistance?: number;
+  tripDuration?: number;
+  billImage?: string;
+  currentGps?: Location
+  notifiedDrivers: Record<number, boolean>;
+  chosenCompanies?: Array<number>;
+  counterOffers?: Record<number, CounterOffer>;
   scheduledTime?: string,
-  notificationStatus?: Record<string, NotificationStatus>;
-  counterOffers?: Record<string, CounterOffer>;
-  lock?: boolean;
-  driver?: TaxiInfo;
+
+  // routeInformation: RouteInformation,
+  // acceptRideTime?: string,
+  // startRideTime?: string,
+  // finishRideTime?: string,
+  // scheduledTime?: string,
+  // notificationStatus?: Record<string, NotificationStatus>;
+  // counterOffers?: Record<string, CounterOffer>;
+  // lock?: boolean;
+  // driver?: TaxiInfo;
 }
 
-export interface TaxiInfo extends UserInfo {
-  taxiNumber?: string,
-  sitio?: string
-}
+// export interface TaxiInfo extends UserInfo {
+//   taxiNumber?: string,
+//   sitio?: string
+// }
 
 export enum TaxiOrderStatus {
-  LookingForTaxiScheduled = "lookingForTaxiScheduled",
-  Scheduled = "scheduled",
-  LookingForTaxi = "lookingForTaxi",
-  OnTheWay = "onTheWay",
-  InTransit = "inTransit",
-  DroppedOff = "droppedOff",
-  Expired = "expired",
+  OrderReceived = "orderReceived",
+  OnTheWayToPickup = "onTheWayToPickup",
+  AtPickup = "atPickup",
+  OnTheWayToDropoff = "onTheWayToDropoff",
+  AtDropoff = "atDropoff",
+  RideComplete = "rideComplete",
   CancelledByCustomer = "cancelledByCustomer",
-  CancelledByTaxi = "cancelledByTaxi",
-  ForwardingToLocalCompany = "forwardingToLocalCompany",
-  ForwardingSuccessful = "forwardingSuccessful",
-  ForwardingUnsuccessful = "forwardingUnsuccessful"
+  CancelledByDriver = "cancelledByDriver",
+  CancelledByServiceProvider = "cancelledByServiceProvider",
+  CancelledByAdmin = "cancelledByAdmin",
+  // CancelledByTaxi = "cancelledByTaxi",
+  // ForwardingToLocalCompany = "forwardingToLocalCompany",
+  // ForwardingSuccessful = "forwardingSuccessful",
+  // ForwardingUnsuccessful = "forwardingUnsuccessful"
 }
 
 export function orderInProcess(status: TaxiOrderStatus): boolean {
-  return !(status == TaxiOrderStatus.CancelledByTaxi ||
+  return !(status == TaxiOrderStatus.RideComplete ||
     status == TaxiOrderStatus.CancelledByCustomer ||
-    status == TaxiOrderStatus.DroppedOff)
+    status == TaxiOrderStatus.CancelledByServiceProvider || 
+    status == TaxiOrderStatus.CancelledByDriver || 
+    status == TaxiOrderStatus.CancelledByAdmin)
 }
 
-export function constructTaxiOrder(
-  orderRequest: TaxiOrderRequest,
-  customer: UserInfo): TaxiOrder {
-  let requestCopy: any = orderRequest;
-  requestCopy.cost = orderRequest.estimatedPrice;
-  delete requestCopy.estimatedPrice;
-  return Object.assign(requestCopy,
-    {
-      customer: customer,
-      orderType: OrderType.Taxi,
-      status: (requestCopy.scheduledTime) ?
-        TaxiOrderStatus.LookingForTaxiScheduled : TaxiOrderStatus.LookingForTaxi,
-      orderTime: (new Date()).toISOString(),
-    });
-}
+// export function constructTaxiOrder(
+//   orderRequest: TaxiOrderRequest,
+//   customer: UserInfo): TaxiOrder {
+//   let requestCopy: any = orderRequest;
+//   requestCopy.cost = orderRequest.estimatedPrice;
+//   delete requestCopy.estimatedPrice;
+//   return Object.assign(requestCopy,
+//     {
+//       customer: customer,
+//       orderType: OrderType.Taxi,
+//       status: (requestCopy.scheduledTime) ?
+//         TaxiOrderStatus.LookingForTaxiScheduled : TaxiOrderStatus.LookingForTaxi,
+//       orderTime: (new Date()).toISOString(),
+//     });
+// }
 
 export interface TaxiOrderStatusChangeNotification extends OrderNotification {
   status: TaxiOrderStatus
@@ -76,20 +112,20 @@ export interface NotificationStatus {
   receievedTime?: string
 }
 
-export interface CounterOffer {
-  price: number,
-  offerValidTime: string,
-  offerValidTimeEpoch: number,
-  status: CounterOfferStatus
-}
+// export interface CounterOffer {
+//   price: number,
+//   offerValidTime: string,
+//   offerValidTimeEpoch: number,
+//   status: CounterOfferStatus
+// }
 
-export enum CounterOfferStatus {
-  Submitted = "submitted",
-  Accepted = "accepted",
-  Rejected = "rejected",
-  Expired = "expired",
-  Cancelled = "cancelled",
-}
+// export enum CounterOfferStatus {
+//   Submitted = "submitted",
+//   Accepted = "accepted",
+//   Rejected = "rejected",
+//   Expired = "expired",
+//   Cancelled = "cancelled",
+// }
 
 export interface CounterOfferNotificationForQueue extends NotificationForQueue {
   driver: UserInfo,
