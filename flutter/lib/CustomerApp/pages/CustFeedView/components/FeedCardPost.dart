@@ -1,24 +1,42 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFeedView/controllers/CustFeedViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustFeedView']['components']['FeedCardPost'];
 
 class FeedCardPost extends StatelessWidget {
-  const FeedCardPost({super.key});
+  final Post post;
+  final double elevation;
+  final CustFeedViewController controller;
+  final EdgeInsetsGeometry margin;
+  FeedCardPost(
+      {super.key,
+      required this.post,
+      required this.controller,
+      this.elevation = .5,
+      this.margin = const EdgeInsets.all(12.5)});
+
+  final TextEditingController _commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
-      margin: EdgeInsets.all(12.5),
+      elevation: elevation,
+      margin: margin,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(
-                  'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=826&t=st=1689667492~exp=1689668092~hmac=ab9aac635bfe09ad58d100992046c307b73e99863d850fc3f4860258fa83ed45'),
+              backgroundImage:
+                  CachedNetworkImageProvider(post.serviceProviderImage ?? ''),
             ),
-            title: Text('Iyadh Souissi'),
+            title: Text('${post.serviceProviderName}'),
             titleTextStyle: context.textTheme.bodyLarge
                 ?.copyWith(fontWeight: FontWeight.w700),
             subtitleTextStyle:
@@ -27,18 +45,21 @@ class FeedCardPost extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-                'Hello dear community, we only have limited Tuna Sashimi for today, pre-order now before it’s out of stock !',
+            child: Text(post.message,
                 style: context.textTheme.bodyLarge
                     ?.copyWith(fontWeight: FontWeight.w500, fontSize: 15)),
           ),
           smallSepartor,
-          smallSepartor,
-          CachedNetworkImage(
-            imageUrl:
-                'https://www.pcworld.com/wp-content/uploads/2023/04/windows-10-logo-onscreen-100809733-orig-3.jpg?resize=1024%2C684&quality=50&strip=all',
-            width: double.infinity,
-          ),
+          if (post.image != null)
+            Column(
+              children: <Widget>[
+                smallSepartor,
+                CachedNetworkImage(
+                  imageUrl: post.image!,
+                  width: double.infinity,
+                ),
+              ],
+            ),
           smallSepartor,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -50,7 +71,7 @@ class FeedCardPost extends StatelessWidget {
                   size: 25,
                 ),
                 hSmallSepartor,
-                Text('10 Likes',
+                Text('${post.likes.length} ${_i18n()['like']}',
                     style: context.textTheme.bodyLarge
                         ?.copyWith(fontWeight: FontWeight.w700, fontSize: 10)),
                 hBigSeperator,
@@ -59,7 +80,7 @@ class FeedCardPost extends StatelessWidget {
                   size: 22.5,
                 ),
                 hSmallSepartor,
-                Text('2 Comments',
+                Text('${post.comments.length} ${_i18n()['comment']}',
                     style: context.textTheme.bodyLarge
                         ?.copyWith(fontWeight: FontWeight.w700, fontSize: 10)),
               ],
@@ -74,15 +95,17 @@ class FeedCardPost extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
-                  'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=826&t=st=1689667492~exp=1689668092~hmac=ab9aac635bfe09ad58d100992046c307b73e99863d850fc3f4860258fa83ed45'),
+                  controller.authController.user!.image),
             ),
             title: TextField(
+              controller: _commentController,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                  hintText: 'Write your comment..',
+                  hintText: '${_i18n()['writecomment']}',
                   suffix: GestureDetector(
-                    onTap: () {},
-                    child: Text('Post',
+                    onTap: () => controller.writeComment(
+                        postId: post.id, commentController: _commentController),
+                    child: Text('${_i18n()['post']}',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: primaryBlueColor)),

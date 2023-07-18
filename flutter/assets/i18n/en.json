@@ -917,6 +917,19 @@
           "noDriverAssignedYet": "No driver assigned yet"
         }
       },
+      "CustFeedView": {
+        "CustFeedView": {
+          "title": "Feed"
+        },
+        "components": {
+          "FeedCardPost": {
+            "like": "Like",
+            "comment": "Comment",
+            "writecomment": "Write your comment..",
+            "post": "Post"
+          }
+        }
+      },
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
@@ -1654,6 +1667,10 @@
           "NoServicesFound": {
             "noServicesFound": "No services found",
             "bodyMessage": "Sorry, the service you are looking for is not currently offered."
+          },
+          "NoPostsFound": {
+            "noPostsFound": "No posts found",
+            "bodyMessage": "You can check back later"
           }
         },
         "RentalsView": {
