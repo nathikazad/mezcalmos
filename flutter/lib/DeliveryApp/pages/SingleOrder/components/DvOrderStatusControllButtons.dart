@@ -62,7 +62,7 @@ class _DvOrderStatusControllButtonsState
     } else if (clicked) {
       return _loadingPlaceholder();
     } else {
-      return _getFooterComponent();
+      return Container(height: 70, child: _getFooterComponent());
     }
   }
 
@@ -237,6 +237,7 @@ class _DvOrderStatusControllButtonsState
 
   Widget _loadingPlaceholder() {
     return Container(
+      height: 70,
       color: Get.theme.primaryColorLight,
       child: Center(
         child: CircularProgressIndicator(

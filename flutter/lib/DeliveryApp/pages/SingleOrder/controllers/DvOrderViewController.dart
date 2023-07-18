@@ -111,6 +111,7 @@ class DvOrderViewcontroller {
             _order.value!.packageReady = event.packageReady;
             _order.value!.driverInfo = event.driverInfo;
             _order.value!.counterOffers = event.counterOffers;
+            _order.value!.customerOffer = event.customerOffer;
             // _order.value = null;
             // _order.value = event;
 

@@ -167,6 +167,7 @@ class DeliveryOrderVariables {
   DateTime? estimatedPackageReadyTime;
   DateTime? scheduleTime;
   DateTime? cancellationTime;
+  double? customerOffer;
   DeliveryOrderStatus status;
   user.UserInfo? driverInfo;
   Map<int, CounterOffer>? counterOffers;
@@ -179,6 +180,7 @@ class DeliveryOrderVariables {
       this.estimatedPackageReadyTime,
       this.scheduleTime,
       this.counterOffers,
+      this.customerOffer,
       this.cancellationTime,
       this.driverInfo});
 }

@@ -1585,7 +1585,7 @@ class Discount {
     required this.discountType, required this.discountAmount});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "discountType": discountType.toFirebaseFormatString(),
+      "discountType": discountType,
       "discountAmount": discountAmount,
     };
   }
@@ -1611,12 +1611,12 @@ Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "offerForOrder": offerForOrder,
       "offerForItems": offerForItems,
-      "discountType": discountType.toFirebaseFormatString(),
+      "discountType": discountType,
       "discountValue": discountValue,
       "minimumOrderAmount": minimumOrderAmount,
       "items": items,
       "categories": categories,
-      "offeringTypes": offeringTypes?.map((offeringType) => offeringType.toFirebaseFormatString()).toList(),
+      "offeringTypes": offeringTypes,
       "validityRangeStart": validityRangeStart,
       "validityRangeEnd": validityRangeEnd,
       "weeklyRepeat": weeklyRepeat,
