@@ -625,783 +625,6 @@ class _CopyWithStubImpl$Mutation$subscribeRestaurant$insert_service_provider_sub
       _res;
 }
 
-class Variables$Mutation$writePost {
-  factory Variables$Mutation$writePost({
-    int? service_provider_id,
-    String? message,
-    String? image,
-    dynamic? likes,
-    dynamic? comments,
-    String? link,
-  }) =>
-      Variables$Mutation$writePost._({
-        if (service_provider_id != null)
-          r'service_provider_id': service_provider_id,
-        if (message != null) r'message': message,
-        if (image != null) r'image': image,
-        if (likes != null) r'likes': likes,
-        if (comments != null) r'comments': comments,
-        if (link != null) r'link': link,
-      });
-
-  Variables$Mutation$writePost._(this._$data);
-
-  factory Variables$Mutation$writePost.fromJson(Map<String, dynamic> data) {
-    final result$data = <String, dynamic>{};
-    if (data.containsKey('service_provider_id')) {
-      final l$service_provider_id = data['service_provider_id'];
-      result$data['service_provider_id'] = (l$service_provider_id as int?);
-    }
-    if (data.containsKey('message')) {
-      final l$message = data['message'];
-      result$data['message'] = (l$message as String?);
-    }
-    if (data.containsKey('image')) {
-      final l$image = data['image'];
-      result$data['image'] = (l$image as String?);
-    }
-    if (data.containsKey('likes')) {
-      final l$likes = data['likes'];
-      result$data['likes'] = l$likes == null ? null : mapFromJson(l$likes);
-    }
-    if (data.containsKey('comments')) {
-      final l$comments = data['comments'];
-      result$data['comments'] =
-          l$comments == null ? null : mapFromJson(l$comments);
-    }
-    if (data.containsKey('link')) {
-      final l$link = data['link'];
-      result$data['link'] = (l$link as String?);
-    }
-    return Variables$Mutation$writePost._(result$data);
-  }
-
-  Map<String, dynamic> _$data;
-
-  int? get service_provider_id => (_$data['service_provider_id'] as int?);
-  String? get message => (_$data['message'] as String?);
-  String? get image => (_$data['image'] as String?);
-  dynamic? get likes => (_$data['likes'] as dynamic?);
-  dynamic? get comments => (_$data['comments'] as dynamic?);
-  String? get link => (_$data['link'] as String?);
-  Map<String, dynamic> toJson() {
-    final result$data = <String, dynamic>{};
-    if (_$data.containsKey('service_provider_id')) {
-      final l$service_provider_id = service_provider_id;
-      result$data['service_provider_id'] = l$service_provider_id;
-    }
-    if (_$data.containsKey('message')) {
-      final l$message = message;
-      result$data['message'] = l$message;
-    }
-    if (_$data.containsKey('image')) {
-      final l$image = image;
-      result$data['image'] = l$image;
-    }
-    if (_$data.containsKey('likes')) {
-      final l$likes = likes;
-      result$data['likes'] = l$likes == null ? null : mapToJson(l$likes);
-    }
-    if (_$data.containsKey('comments')) {
-      final l$comments = comments;
-      result$data['comments'] =
-          l$comments == null ? null : mapToJson(l$comments);
-    }
-    if (_$data.containsKey('link')) {
-      final l$link = link;
-      result$data['link'] = l$link;
-    }
-    return result$data;
-  }
-
-  CopyWith$Variables$Mutation$writePost<Variables$Mutation$writePost>
-      get copyWith => CopyWith$Variables$Mutation$writePost(
-            this,
-            (i) => i,
-          );
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Variables$Mutation$writePost) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$service_provider_id = service_provider_id;
-    final lOther$service_provider_id = other.service_provider_id;
-    if (_$data.containsKey('service_provider_id') !=
-        other._$data.containsKey('service_provider_id')) {
-      return false;
-    }
-    if (l$service_provider_id != lOther$service_provider_id) {
-      return false;
-    }
-    final l$message = message;
-    final lOther$message = other.message;
-    if (_$data.containsKey('message') != other._$data.containsKey('message')) {
-      return false;
-    }
-    if (l$message != lOther$message) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (_$data.containsKey('image') != other._$data.containsKey('image')) {
-      return false;
-    }
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$likes = likes;
-    final lOther$likes = other.likes;
-    if (_$data.containsKey('likes') != other._$data.containsKey('likes')) {
-      return false;
-    }
-    if (l$likes != lOther$likes) {
-      return false;
-    }
-    final l$comments = comments;
-    final lOther$comments = other.comments;
-    if (_$data.containsKey('comments') !=
-        other._$data.containsKey('comments')) {
-      return false;
-    }
-    if (l$comments != lOther$comments) {
-      return false;
-    }
-    final l$link = link;
-    final lOther$link = other.link;
-    if (_$data.containsKey('link') != other._$data.containsKey('link')) {
-      return false;
-    }
-    if (l$link != lOther$link) {
-      return false;
-    }
-    return true;
-  }
-
-  @override
-  int get hashCode {
-    final l$service_provider_id = service_provider_id;
-    final l$message = message;
-    final l$image = image;
-    final l$likes = likes;
-    final l$comments = comments;
-    final l$link = link;
-    return Object.hashAll([
-      _$data.containsKey('service_provider_id')
-          ? l$service_provider_id
-          : const {},
-      _$data.containsKey('message') ? l$message : const {},
-      _$data.containsKey('image') ? l$image : const {},
-      _$data.containsKey('likes') ? l$likes : const {},
-      _$data.containsKey('comments') ? l$comments : const {},
-      _$data.containsKey('link') ? l$link : const {},
-    ]);
-  }
-}
-
-abstract class CopyWith$Variables$Mutation$writePost<TRes> {
-  factory CopyWith$Variables$Mutation$writePost(
-    Variables$Mutation$writePost instance,
-    TRes Function(Variables$Mutation$writePost) then,
-  ) = _CopyWithImpl$Variables$Mutation$writePost;
-
-  factory CopyWith$Variables$Mutation$writePost.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$writePost;
-
-  TRes call({
-    int? service_provider_id,
-    String? message,
-    String? image,
-    dynamic? likes,
-    dynamic? comments,
-    String? link,
-  });
-}
-
-class _CopyWithImpl$Variables$Mutation$writePost<TRes>
-    implements CopyWith$Variables$Mutation$writePost<TRes> {
-  _CopyWithImpl$Variables$Mutation$writePost(
-    this._instance,
-    this._then,
-  );
-
-  final Variables$Mutation$writePost _instance;
-
-  final TRes Function(Variables$Mutation$writePost) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? service_provider_id = _undefined,
-    Object? message = _undefined,
-    Object? image = _undefined,
-    Object? likes = _undefined,
-    Object? comments = _undefined,
-    Object? link = _undefined,
-  }) =>
-      _then(Variables$Mutation$writePost._({
-        ..._instance._$data,
-        if (service_provider_id != _undefined)
-          'service_provider_id': (service_provider_id as int?),
-        if (message != _undefined) 'message': (message as String?),
-        if (image != _undefined) 'image': (image as String?),
-        if (likes != _undefined) 'likes': (likes as dynamic?),
-        if (comments != _undefined) 'comments': (comments as dynamic?),
-        if (link != _undefined) 'link': (link as String?),
-      }));
-}
-
-class _CopyWithStubImpl$Variables$Mutation$writePost<TRes>
-    implements CopyWith$Variables$Mutation$writePost<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$writePost(this._res);
-
-  TRes _res;
-
-  call({
-    int? service_provider_id,
-    String? message,
-    String? image,
-    dynamic? likes,
-    dynamic? comments,
-    String? link,
-  }) =>
-      _res;
-}
-
-class Mutation$writePost {
-  Mutation$writePost({
-    this.insert_service_provider_post_one,
-    required this.$__typename,
-  });
-
-  factory Mutation$writePost.fromJson(Map<String, dynamic> json) {
-    final l$insert_service_provider_post_one =
-        json['insert_service_provider_post_one'];
-    final l$$__typename = json['__typename'];
-    return Mutation$writePost(
-      insert_service_provider_post_one:
-          l$insert_service_provider_post_one == null
-              ? null
-              : Mutation$writePost$insert_service_provider_post_one.fromJson(
-                  (l$insert_service_provider_post_one as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Mutation$writePost$insert_service_provider_post_one?
-      insert_service_provider_post_one;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$insert_service_provider_post_one = insert_service_provider_post_one;
-    _resultData['insert_service_provider_post_one'] =
-        l$insert_service_provider_post_one?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$insert_service_provider_post_one = insert_service_provider_post_one;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$insert_service_provider_post_one,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Mutation$writePost) || runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$insert_service_provider_post_one = insert_service_provider_post_one;
-    final lOther$insert_service_provider_post_one =
-        other.insert_service_provider_post_one;
-    if (l$insert_service_provider_post_one !=
-        lOther$insert_service_provider_post_one) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$writePost on Mutation$writePost {
-  CopyWith$Mutation$writePost<Mutation$writePost> get copyWith =>
-      CopyWith$Mutation$writePost(
-        this,
-        (i) => i,
-      );
-}
-
-abstract class CopyWith$Mutation$writePost<TRes> {
-  factory CopyWith$Mutation$writePost(
-    Mutation$writePost instance,
-    TRes Function(Mutation$writePost) then,
-  ) = _CopyWithImpl$Mutation$writePost;
-
-  factory CopyWith$Mutation$writePost.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$writePost;
-
-  TRes call({
-    Mutation$writePost$insert_service_provider_post_one?
-        insert_service_provider_post_one,
-    String? $__typename,
-  });
-  CopyWith$Mutation$writePost$insert_service_provider_post_one<TRes>
-      get insert_service_provider_post_one;
-}
-
-class _CopyWithImpl$Mutation$writePost<TRes>
-    implements CopyWith$Mutation$writePost<TRes> {
-  _CopyWithImpl$Mutation$writePost(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$writePost _instance;
-
-  final TRes Function(Mutation$writePost) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? insert_service_provider_post_one = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Mutation$writePost(
-        insert_service_provider_post_one:
-            insert_service_provider_post_one == _undefined
-                ? _instance.insert_service_provider_post_one
-                : (insert_service_provider_post_one
-                    as Mutation$writePost$insert_service_provider_post_one?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Mutation$writePost$insert_service_provider_post_one<TRes>
-      get insert_service_provider_post_one {
-    final local$insert_service_provider_post_one =
-        _instance.insert_service_provider_post_one;
-    return local$insert_service_provider_post_one == null
-        ? CopyWith$Mutation$writePost$insert_service_provider_post_one.stub(
-            _then(_instance))
-        : CopyWith$Mutation$writePost$insert_service_provider_post_one(
-            local$insert_service_provider_post_one,
-            (e) => call(insert_service_provider_post_one: e));
-  }
-}
-
-class _CopyWithStubImpl$Mutation$writePost<TRes>
-    implements CopyWith$Mutation$writePost<TRes> {
-  _CopyWithStubImpl$Mutation$writePost(this._res);
-
-  TRes _res;
-
-  call({
-    Mutation$writePost$insert_service_provider_post_one?
-        insert_service_provider_post_one,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Mutation$writePost$insert_service_provider_post_one<TRes>
-      get insert_service_provider_post_one =>
-          CopyWith$Mutation$writePost$insert_service_provider_post_one.stub(
-              _res);
-}
-
-const documentNodeMutationwritePost = DocumentNode(definitions: [
-  OperationDefinitionNode(
-    type: OperationType.mutation,
-    name: NameNode(value: 'writePost'),
-    variableDefinitions: [
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'service_provider_id')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'message')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'image')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'likes')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'jsonb'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'comments')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'jsonb'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'link')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-    ],
-    directives: [],
-    selectionSet: SelectionSetNode(selections: [
-      FieldNode(
-        name: NameNode(value: 'insert_service_provider_post_one'),
-        alias: null,
-        arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'object'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'service_provider_type'),
-                value: StringValueNode(
-                  value: 'restaurant',
-                  isBlock: false,
-                ),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'service_provider_id'),
-                value:
-                    VariableNode(name: NameNode(value: 'service_provider_id')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'message'),
-                value: VariableNode(name: NameNode(value: 'message')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'image'),
-                value: VariableNode(name: NameNode(value: 'image')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'likes'),
-                value: VariableNode(name: NameNode(value: 'likes')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'comments'),
-                value: VariableNode(name: NameNode(value: 'comments')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'link'),
-                value: VariableNode(name: NameNode(value: 'link')),
-              ),
-            ]),
-          )
-        ],
-        directives: [],
-        selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'posted_on'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: '__typename'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-        ]),
-      ),
-      
-    ]),
-  ),
-]);
-Mutation$writePost _parserFn$Mutation$writePost(Map<String, dynamic> data) =>
-    Mutation$writePost.fromJson(data);
-typedef OnMutationCompleted$Mutation$writePost = FutureOr<void> Function(
-  dynamic,
-  Mutation$writePost?,
-);
-
-class Options$Mutation$writePost
-    extends graphql.MutationOptions<Mutation$writePost> {
-  Options$Mutation$writePost({
-    String? operationName,
-    Variables$Mutation$writePost? variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    OnMutationCompleted$Mutation$writePost? onCompleted,
-    graphql.OnMutationUpdate<Mutation$writePost>? update,
-    graphql.OnError? onError,
-  })  : onCompletedWithParsed = onCompleted,
-        super(
-          variables: variables?.toJson() ?? {},
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          onCompleted: onCompleted == null
-              ? null
-              : (data) => onCompleted(
-                    data,
-                    data == null ? null : _parserFn$Mutation$writePost(data),
-                  ),
-          update: update,
-          onError: onError,
-          document: documentNodeMutationwritePost,
-          parserFn: _parserFn$Mutation$writePost,
-        );
-
-  final OnMutationCompleted$Mutation$writePost? onCompletedWithParsed;
-
-  @override
-  List<Object?> get properties => [
-        ...super.onCompleted == null
-            ? super.properties
-            : super.properties.where((property) => property != onCompleted),
-        onCompletedWithParsed,
-      ];
-}
-
-class WatchOptions$Mutation$writePost
-    extends graphql.WatchQueryOptions<Mutation$writePost> {
-  WatchOptions$Mutation$writePost({
-    String? operationName,
-    Variables$Mutation$writePost? variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    Duration? pollInterval,
-    bool? eagerlyFetchResults,
-    bool carryForwardDataOnException = true,
-    bool fetchResults = false,
-  }) : super(
-          variables: variables?.toJson() ?? {},
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          document: documentNodeMutationwritePost,
-          pollInterval: pollInterval,
-          eagerlyFetchResults: eagerlyFetchResults,
-          carryForwardDataOnException: carryForwardDataOnException,
-          fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$writePost,
-        );
-}
-
-extension ClientExtension$Mutation$writePost on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$writePost>> mutate$writePost(
-          [Options$Mutation$writePost? options]) async =>
-      await this.mutate(options ?? Options$Mutation$writePost());
-  graphql.ObservableQuery<Mutation$writePost> watchMutation$writePost(
-          [WatchOptions$Mutation$writePost? options]) =>
-      this.watchMutation(options ?? WatchOptions$Mutation$writePost());
-}
-
-class Mutation$writePost$insert_service_provider_post_one {
-  Mutation$writePost$insert_service_provider_post_one({
-    required this.id,
-    required this.posted_on,
-    required this.$__typename,
-  });
-
-  factory Mutation$writePost$insert_service_provider_post_one.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$posted_on = json['posted_on'];
-    final l$$__typename = json['__typename'];
-    return Mutation$writePost$insert_service_provider_post_one(
-      id: (l$id as int),
-      posted_on: (l$posted_on as String),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String posted_on;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$posted_on = posted_on;
-    _resultData['posted_on'] = l$posted_on;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$posted_on = posted_on;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$posted_on,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Mutation$writePost$insert_service_provider_post_one) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$posted_on = posted_on;
-    final lOther$posted_on = other.posted_on;
-    if (l$posted_on != lOther$posted_on) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$writePost$insert_service_provider_post_one
-    on Mutation$writePost$insert_service_provider_post_one {
-  CopyWith$Mutation$writePost$insert_service_provider_post_one<
-          Mutation$writePost$insert_service_provider_post_one>
-      get copyWith =>
-          CopyWith$Mutation$writePost$insert_service_provider_post_one(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$writePost$insert_service_provider_post_one<
-    TRes> {
-  factory CopyWith$Mutation$writePost$insert_service_provider_post_one(
-    Mutation$writePost$insert_service_provider_post_one instance,
-    TRes Function(Mutation$writePost$insert_service_provider_post_one) then,
-  ) = _CopyWithImpl$Mutation$writePost$insert_service_provider_post_one;
-
-  factory CopyWith$Mutation$writePost$insert_service_provider_post_one.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$writePost$insert_service_provider_post_one;
-
-  TRes call({
-    int? id,
-    String? posted_on,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Mutation$writePost$insert_service_provider_post_one<TRes>
-    implements
-        CopyWith$Mutation$writePost$insert_service_provider_post_one<TRes> {
-  _CopyWithImpl$Mutation$writePost$insert_service_provider_post_one(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$writePost$insert_service_provider_post_one _instance;
-
-  final TRes Function(Mutation$writePost$insert_service_provider_post_one)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? posted_on = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Mutation$writePost$insert_service_provider_post_one(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        posted_on: posted_on == _undefined || posted_on == null
-            ? _instance.posted_on
-            : (posted_on as String),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Mutation$writePost$insert_service_provider_post_one<
-        TRes>
-    implements
-        CopyWith$Mutation$writePost$insert_service_provider_post_one<TRes> {
-  _CopyWithStubImpl$Mutation$writePost$insert_service_provider_post_one(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? posted_on,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
 class Variables$Query$getSubscribedRestaurants {
   factory Variables$Query$getSubscribedRestaurants({int? $_eq}) =>
       Variables$Query$getSubscribedRestaurants._({
@@ -6214,11 +5437,11 @@ class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$busin
 
 class Variables$Mutation$write_comment {
   factory Variables$Mutation$write_comment({
-    int? id,
+    required int id,
     dynamic? comments,
   }) =>
       Variables$Mutation$write_comment._({
-        if (id != null) r'id': id,
+        r'id': id,
         if (comments != null) r'comments': comments,
       });
 
@@ -6226,10 +5449,8 @@ class Variables$Mutation$write_comment {
 
   factory Variables$Mutation$write_comment.fromJson(Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    if (data.containsKey('id')) {
-      final l$id = data['id'];
-      result$data['id'] = (l$id as int?);
-    }
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
     if (data.containsKey('comments')) {
       final l$comments = data['comments'];
       result$data['comments'] =
@@ -6240,14 +5461,12 @@ class Variables$Mutation$write_comment {
 
   Map<String, dynamic> _$data;
 
-  int? get id => (_$data['id'] as int?);
+  int get id => (_$data['id'] as int);
   dynamic? get comments => (_$data['comments'] as dynamic?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    if (_$data.containsKey('id')) {
-      final l$id = id;
-      result$data['id'] = l$id;
-    }
+    final l$id = id;
+    result$data['id'] = l$id;
     if (_$data.containsKey('comments')) {
       final l$comments = comments;
       result$data['comments'] =
@@ -6272,9 +5491,6 @@ class Variables$Mutation$write_comment {
     }
     final l$id = id;
     final lOther$id = other.id;
-    if (_$data.containsKey('id') != other._$data.containsKey('id')) {
-      return false;
-    }
     if (l$id != lOther$id) {
       return false;
     }
@@ -6295,7 +5511,7 @@ class Variables$Mutation$write_comment {
     final l$id = id;
     final l$comments = comments;
     return Object.hashAll([
-      _$data.containsKey('id') ? l$id : const {},
+      l$id,
       _$data.containsKey('comments') ? l$comments : const {},
     ]);
   }
@@ -6335,7 +5551,7 @@ class _CopyWithImpl$Variables$Mutation$write_comment<TRes>
   }) =>
       _then(Variables$Mutation$write_comment._({
         ..._instance._$data,
-        if (id != _undefined) 'id': (id as int?),
+        if (id != _undefined && id != null) 'id': (id as int),
         if (comments != _undefined) 'comments': (comments as dynamic?),
       }));
 }
@@ -6520,7 +5736,7 @@ const documentNodeMutationwrite_comment = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'id')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -6594,7 +5810,7 @@ class Options$Mutation$write_comment
     extends graphql.MutationOptions<Mutation$write_comment> {
   Options$Mutation$write_comment({
     String? operationName,
-    Variables$Mutation$write_comment? variables,
+    required Variables$Mutation$write_comment variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -6605,7 +5821,7 @@ class Options$Mutation$write_comment
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -6641,7 +5857,7 @@ class WatchOptions$Mutation$write_comment
     extends graphql.WatchQueryOptions<Mutation$write_comment> {
   WatchOptions$Mutation$write_comment({
     String? operationName,
-    Variables$Mutation$write_comment? variables,
+    required Variables$Mutation$write_comment variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -6652,7 +5868,7 @@ class WatchOptions$Mutation$write_comment
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -6670,11 +5886,11 @@ class WatchOptions$Mutation$write_comment
 
 extension ClientExtension$Mutation$write_comment on graphql.GraphQLClient {
   Future<graphql.QueryResult<Mutation$write_comment>> mutate$write_comment(
-          [Options$Mutation$write_comment? options]) async =>
-      await this.mutate(options ?? Options$Mutation$write_comment());
+          Options$Mutation$write_comment options) async =>
+      await this.mutate(options);
   graphql.ObservableQuery<Mutation$write_comment> watchMutation$write_comment(
-          [WatchOptions$Mutation$write_comment? options]) =>
-      this.watchMutation(options ?? WatchOptions$Mutation$write_comment());
+          WatchOptions$Mutation$write_comment options) =>
+      this.watchMutation(options);
 }
 
 class Mutation$write_comment$update_service_provider_post_by_pk {
@@ -6816,42 +6032,40 @@ class _CopyWithStubImpl$Mutation$write_comment$update_service_provider_post_by_p
 
 class Variables$Mutation$like_post {
   factory Variables$Mutation$like_post({
-    int? id,
-    dynamic? likes,
+    required int id,
+    dynamic? customer_id,
   }) =>
       Variables$Mutation$like_post._({
-        if (id != null) r'id': id,
-        if (likes != null) r'likes': likes,
+        r'id': id,
+        if (customer_id != null) r'customer_id': customer_id,
       });
 
   Variables$Mutation$like_post._(this._$data);
 
   factory Variables$Mutation$like_post.fromJson(Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    if (data.containsKey('id')) {
-      final l$id = data['id'];
-      result$data['id'] = (l$id as int?);
-    }
-    if (data.containsKey('likes')) {
-      final l$likes = data['likes'];
-      result$data['likes'] = l$likes == null ? null : mapFromJson(l$likes);
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    if (data.containsKey('customer_id')) {
+      final l$customer_id = data['customer_id'];
+      result$data['customer_id'] =
+          l$customer_id == null ? null : mapFromJson(l$customer_id);
     }
     return Variables$Mutation$like_post._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int? get id => (_$data['id'] as int?);
-  dynamic? get likes => (_$data['likes'] as dynamic?);
+  int get id => (_$data['id'] as int);
+  dynamic? get customer_id => (_$data['customer_id'] as dynamic?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    if (_$data.containsKey('id')) {
-      final l$id = id;
-      result$data['id'] = l$id;
-    }
-    if (_$data.containsKey('likes')) {
-      final l$likes = likes;
-      result$data['likes'] = l$likes == null ? null : mapToJson(l$likes);
+    final l$id = id;
+    result$data['id'] = l$id;
+    if (_$data.containsKey('customer_id')) {
+      final l$customer_id = customer_id;
+      result$data['customer_id'] =
+          l$customer_id == null ? null : mapToJson(l$customer_id);
     }
     return result$data;
   }
@@ -6872,18 +6086,16 @@ class Variables$Mutation$like_post {
     }
     final l$id = id;
     final lOther$id = other.id;
-    if (_$data.containsKey('id') != other._$data.containsKey('id')) {
-      return false;
-    }
     if (l$id != lOther$id) {
       return false;
     }
-    final l$likes = likes;
-    final lOther$likes = other.likes;
-    if (_$data.containsKey('likes') != other._$data.containsKey('likes')) {
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (_$data.containsKey('customer_id') !=
+        other._$data.containsKey('customer_id')) {
       return false;
     }
-    if (l$likes != lOther$likes) {
+    if (l$customer_id != lOther$customer_id) {
       return false;
     }
     return true;
@@ -6892,10 +6104,10 @@ class Variables$Mutation$like_post {
   @override
   int get hashCode {
     final l$id = id;
-    final l$likes = likes;
+    final l$customer_id = customer_id;
     return Object.hashAll([
-      _$data.containsKey('id') ? l$id : const {},
-      _$data.containsKey('likes') ? l$likes : const {},
+      l$id,
+      _$data.containsKey('customer_id') ? l$customer_id : const {},
     ]);
   }
 }
@@ -6911,7 +6123,7 @@ abstract class CopyWith$Variables$Mutation$like_post<TRes> {
 
   TRes call({
     int? id,
-    dynamic? likes,
+    dynamic? customer_id,
   });
 }
 
@@ -6930,12 +6142,12 @@ class _CopyWithImpl$Variables$Mutation$like_post<TRes>
 
   TRes call({
     Object? id = _undefined,
-    Object? likes = _undefined,
+    Object? customer_id = _undefined,
   }) =>
       _then(Variables$Mutation$like_post._({
         ..._instance._$data,
-        if (id != _undefined) 'id': (id as int?),
-        if (likes != _undefined) 'likes': (likes as dynamic?),
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (customer_id != _undefined) 'customer_id': (customer_id as dynamic?),
       }));
 }
 
@@ -6947,7 +6159,7 @@ class _CopyWithStubImpl$Variables$Mutation$like_post<TRes>
 
   call({
     int? id,
-    dynamic? likes,
+    dynamic? customer_id,
   }) =>
       _res;
 }
@@ -7118,13 +6330,13 @@ const documentNodeMutationlike_post = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'id')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'likes')),
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
         type: NamedTypeNode(
           name: NameNode(value: 'jsonb'),
           isNonNull: false,
@@ -7153,7 +6365,7 @@ const documentNodeMutationlike_post = DocumentNode(definitions: [
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
                 name: NameNode(value: 'likes'),
-                value: VariableNode(name: NameNode(value: 'likes')),
+                value: VariableNode(name: NameNode(value: 'customer_id')),
               )
             ]),
           ),
@@ -7191,7 +6403,7 @@ class Options$Mutation$like_post
     extends graphql.MutationOptions<Mutation$like_post> {
   Options$Mutation$like_post({
     String? operationName,
-    Variables$Mutation$like_post? variables,
+    required Variables$Mutation$like_post variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -7202,7 +6414,7 @@ class Options$Mutation$like_post
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -7236,7 +6448,7 @@ class WatchOptions$Mutation$like_post
     extends graphql.WatchQueryOptions<Mutation$like_post> {
   WatchOptions$Mutation$like_post({
     String? operationName,
-    Variables$Mutation$like_post? variables,
+    required Variables$Mutation$like_post variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -7247,7 +6459,7 @@ class WatchOptions$Mutation$like_post
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -7265,11 +6477,11 @@ class WatchOptions$Mutation$like_post
 
 extension ClientExtension$Mutation$like_post on graphql.GraphQLClient {
   Future<graphql.QueryResult<Mutation$like_post>> mutate$like_post(
-          [Options$Mutation$like_post? options]) async =>
-      await this.mutate(options ?? Options$Mutation$like_post());
+          Options$Mutation$like_post options) async =>
+      await this.mutate(options);
   graphql.ObservableQuery<Mutation$like_post> watchMutation$like_post(
-          [WatchOptions$Mutation$like_post? options]) =>
-      this.watchMutation(options ?? WatchOptions$Mutation$like_post());
+          WatchOptions$Mutation$like_post options) =>
+      this.watchMutation(options);
 }
 
 class Mutation$like_post$update_service_provider_post_by_pk {
@@ -7400,6 +6612,1501 @@ class _CopyWithStubImpl$Mutation$like_post$update_service_provider_post_by_pk<
 
   call({
     int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$create_post {
+  factory Variables$Mutation$create_post({
+    String? image,
+    String? message,
+    required int service_provider_id,
+    String? service_provider_type,
+  }) =>
+      Variables$Mutation$create_post._({
+        if (image != null) r'image': image,
+        if (message != null) r'message': message,
+        r'service_provider_id': service_provider_id,
+        if (service_provider_type != null)
+          r'service_provider_type': service_provider_type,
+      });
+
+  Variables$Mutation$create_post._(this._$data);
+
+  factory Variables$Mutation$create_post.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('image')) {
+      final l$image = data['image'];
+      result$data['image'] = (l$image as String?);
+    }
+    if (data.containsKey('message')) {
+      final l$message = data['message'];
+      result$data['message'] = (l$message as String?);
+    }
+    final l$service_provider_id = data['service_provider_id'];
+    result$data['service_provider_id'] = (l$service_provider_id as int);
+    if (data.containsKey('service_provider_type')) {
+      final l$service_provider_type = data['service_provider_type'];
+      result$data['service_provider_type'] =
+          (l$service_provider_type as String?);
+    }
+    return Variables$Mutation$create_post._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String? get image => (_$data['image'] as String?);
+  String? get message => (_$data['message'] as String?);
+  int get service_provider_id => (_$data['service_provider_id'] as int);
+  String? get service_provider_type =>
+      (_$data['service_provider_type'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('image')) {
+      final l$image = image;
+      result$data['image'] = l$image;
+    }
+    if (_$data.containsKey('message')) {
+      final l$message = message;
+      result$data['message'] = l$message;
+    }
+    final l$service_provider_id = service_provider_id;
+    result$data['service_provider_id'] = l$service_provider_id;
+    if (_$data.containsKey('service_provider_type')) {
+      final l$service_provider_type = service_provider_type;
+      result$data['service_provider_type'] = l$service_provider_type;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$create_post<Variables$Mutation$create_post>
+      get copyWith => CopyWith$Variables$Mutation$create_post(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$create_post) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (_$data.containsKey('image') != other._$data.containsKey('image')) {
+      return false;
+    }
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$message = message;
+    final lOther$message = other.message;
+    if (_$data.containsKey('message') != other._$data.containsKey('message')) {
+      return false;
+    }
+    if (l$message != lOther$message) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (_$data.containsKey('service_provider_type') !=
+        other._$data.containsKey('service_provider_type')) {
+      return false;
+    }
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$message = message;
+    final l$service_provider_id = service_provider_id;
+    final l$service_provider_type = service_provider_type;
+    return Object.hashAll([
+      _$data.containsKey('image') ? l$image : const {},
+      _$data.containsKey('message') ? l$message : const {},
+      l$service_provider_id,
+      _$data.containsKey('service_provider_type')
+          ? l$service_provider_type
+          : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$create_post<TRes> {
+  factory CopyWith$Variables$Mutation$create_post(
+    Variables$Mutation$create_post instance,
+    TRes Function(Variables$Mutation$create_post) then,
+  ) = _CopyWithImpl$Variables$Mutation$create_post;
+
+  factory CopyWith$Variables$Mutation$create_post.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$create_post;
+
+  TRes call({
+    String? image,
+    String? message,
+    int? service_provider_id,
+    String? service_provider_type,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$create_post<TRes>
+    implements CopyWith$Variables$Mutation$create_post<TRes> {
+  _CopyWithImpl$Variables$Mutation$create_post(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$create_post _instance;
+
+  final TRes Function(Variables$Mutation$create_post) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? message = _undefined,
+    Object? service_provider_id = _undefined,
+    Object? service_provider_type = _undefined,
+  }) =>
+      _then(Variables$Mutation$create_post._({
+        ..._instance._$data,
+        if (image != _undefined) 'image': (image as String?),
+        if (message != _undefined) 'message': (message as String?),
+        if (service_provider_id != _undefined && service_provider_id != null)
+          'service_provider_id': (service_provider_id as int),
+        if (service_provider_type != _undefined)
+          'service_provider_type': (service_provider_type as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$create_post<TRes>
+    implements CopyWith$Variables$Mutation$create_post<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$create_post(this._res);
+
+  TRes _res;
+
+  call({
+    String? image,
+    String? message,
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      _res;
+}
+
+class Mutation$create_post {
+  Mutation$create_post({
+    this.insert_service_provider_post_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$create_post.fromJson(Map<String, dynamic> json) {
+    final l$insert_service_provider_post_one =
+        json['insert_service_provider_post_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$create_post(
+      insert_service_provider_post_one:
+          l$insert_service_provider_post_one == null
+              ? null
+              : Mutation$create_post$insert_service_provider_post_one.fromJson(
+                  (l$insert_service_provider_post_one as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$create_post$insert_service_provider_post_one?
+      insert_service_provider_post_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_service_provider_post_one = insert_service_provider_post_one;
+    _resultData['insert_service_provider_post_one'] =
+        l$insert_service_provider_post_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_service_provider_post_one = insert_service_provider_post_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_service_provider_post_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$create_post) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_service_provider_post_one = insert_service_provider_post_one;
+    final lOther$insert_service_provider_post_one =
+        other.insert_service_provider_post_one;
+    if (l$insert_service_provider_post_one !=
+        lOther$insert_service_provider_post_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$create_post on Mutation$create_post {
+  CopyWith$Mutation$create_post<Mutation$create_post> get copyWith =>
+      CopyWith$Mutation$create_post(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$create_post<TRes> {
+  factory CopyWith$Mutation$create_post(
+    Mutation$create_post instance,
+    TRes Function(Mutation$create_post) then,
+  ) = _CopyWithImpl$Mutation$create_post;
+
+  factory CopyWith$Mutation$create_post.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$create_post;
+
+  TRes call({
+    Mutation$create_post$insert_service_provider_post_one?
+        insert_service_provider_post_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$create_post$insert_service_provider_post_one<TRes>
+      get insert_service_provider_post_one;
+}
+
+class _CopyWithImpl$Mutation$create_post<TRes>
+    implements CopyWith$Mutation$create_post<TRes> {
+  _CopyWithImpl$Mutation$create_post(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$create_post _instance;
+
+  final TRes Function(Mutation$create_post) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_service_provider_post_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$create_post(
+        insert_service_provider_post_one:
+            insert_service_provider_post_one == _undefined
+                ? _instance.insert_service_provider_post_one
+                : (insert_service_provider_post_one
+                    as Mutation$create_post$insert_service_provider_post_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$create_post$insert_service_provider_post_one<TRes>
+      get insert_service_provider_post_one {
+    final local$insert_service_provider_post_one =
+        _instance.insert_service_provider_post_one;
+    return local$insert_service_provider_post_one == null
+        ? CopyWith$Mutation$create_post$insert_service_provider_post_one.stub(
+            _then(_instance))
+        : CopyWith$Mutation$create_post$insert_service_provider_post_one(
+            local$insert_service_provider_post_one,
+            (e) => call(insert_service_provider_post_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$create_post<TRes>
+    implements CopyWith$Mutation$create_post<TRes> {
+  _CopyWithStubImpl$Mutation$create_post(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$create_post$insert_service_provider_post_one?
+        insert_service_provider_post_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$create_post$insert_service_provider_post_one<TRes>
+      get insert_service_provider_post_one =>
+          CopyWith$Mutation$create_post$insert_service_provider_post_one.stub(
+              _res);
+}
+
+const documentNodeMutationcreate_post = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'create_post'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'image')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'message')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_service_provider_post_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'image'),
+                value: VariableNode(name: NameNode(value: 'image')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'message'),
+                value: VariableNode(name: NameNode(value: 'message')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value:
+                    VariableNode(name: NameNode(value: 'service_provider_id')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: VariableNode(
+                    name: NameNode(value: 'service_provider_type')),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'posted_on'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$create_post _parserFn$Mutation$create_post(
+        Map<String, dynamic> data) =>
+    Mutation$create_post.fromJson(data);
+typedef OnMutationCompleted$Mutation$create_post = FutureOr<void> Function(
+  dynamic,
+  Mutation$create_post?,
+);
+
+class Options$Mutation$create_post
+    extends graphql.MutationOptions<Mutation$create_post> {
+  Options$Mutation$create_post({
+    String? operationName,
+    required Variables$Mutation$create_post variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$create_post? onCompleted,
+    graphql.OnMutationUpdate<Mutation$create_post>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null ? null : _parserFn$Mutation$create_post(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationcreate_post,
+          parserFn: _parserFn$Mutation$create_post,
+        );
+
+  final OnMutationCompleted$Mutation$create_post? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$create_post
+    extends graphql.WatchQueryOptions<Mutation$create_post> {
+  WatchOptions$Mutation$create_post({
+    String? operationName,
+    required Variables$Mutation$create_post variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationcreate_post,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$create_post,
+        );
+}
+
+extension ClientExtension$Mutation$create_post on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$create_post>> mutate$create_post(
+          Options$Mutation$create_post options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$create_post> watchMutation$create_post(
+          WatchOptions$Mutation$create_post options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$create_post$insert_service_provider_post_one {
+  Mutation$create_post$insert_service_provider_post_one({
+    required this.id,
+    required this.posted_on,
+    required this.$__typename,
+  });
+
+  factory Mutation$create_post$insert_service_provider_post_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$posted_on = json['posted_on'];
+    final l$$__typename = json['__typename'];
+    return Mutation$create_post$insert_service_provider_post_one(
+      id: (l$id as int),
+      posted_on: (l$posted_on as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String posted_on;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$posted_on = posted_on;
+    _resultData['posted_on'] = l$posted_on;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$posted_on = posted_on;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$posted_on,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$create_post$insert_service_provider_post_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$posted_on = posted_on;
+    final lOther$posted_on = other.posted_on;
+    if (l$posted_on != lOther$posted_on) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$create_post$insert_service_provider_post_one
+    on Mutation$create_post$insert_service_provider_post_one {
+  CopyWith$Mutation$create_post$insert_service_provider_post_one<
+          Mutation$create_post$insert_service_provider_post_one>
+      get copyWith =>
+          CopyWith$Mutation$create_post$insert_service_provider_post_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$create_post$insert_service_provider_post_one<
+    TRes> {
+  factory CopyWith$Mutation$create_post$insert_service_provider_post_one(
+    Mutation$create_post$insert_service_provider_post_one instance,
+    TRes Function(Mutation$create_post$insert_service_provider_post_one) then,
+  ) = _CopyWithImpl$Mutation$create_post$insert_service_provider_post_one;
+
+  factory CopyWith$Mutation$create_post$insert_service_provider_post_one.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$create_post$insert_service_provider_post_one;
+
+  TRes call({
+    int? id,
+    String? posted_on,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$create_post$insert_service_provider_post_one<TRes>
+    implements
+        CopyWith$Mutation$create_post$insert_service_provider_post_one<TRes> {
+  _CopyWithImpl$Mutation$create_post$insert_service_provider_post_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$create_post$insert_service_provider_post_one _instance;
+
+  final TRes Function(Mutation$create_post$insert_service_provider_post_one)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? posted_on = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$create_post$insert_service_provider_post_one(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        posted_on: posted_on == _undefined || posted_on == null
+            ? _instance.posted_on
+            : (posted_on as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$create_post$insert_service_provider_post_one<
+        TRes>
+    implements
+        CopyWith$Mutation$create_post$insert_service_provider_post_one<TRes> {
+  _CopyWithStubImpl$Mutation$create_post$insert_service_provider_post_one(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? posted_on,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$fetch_service_provider_posts {
+  factory Variables$Query$fetch_service_provider_posts({
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      Variables$Query$fetch_service_provider_posts._({
+        if (service_provider_id != null)
+          r'service_provider_id': service_provider_id,
+        if (service_provider_type != null)
+          r'service_provider_type': service_provider_type,
+      });
+
+  Variables$Query$fetch_service_provider_posts._(this._$data);
+
+  factory Variables$Query$fetch_service_provider_posts.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('service_provider_id')) {
+      final l$service_provider_id = data['service_provider_id'];
+      result$data['service_provider_id'] = (l$service_provider_id as int?);
+    }
+    if (data.containsKey('service_provider_type')) {
+      final l$service_provider_type = data['service_provider_type'];
+      result$data['service_provider_type'] =
+          (l$service_provider_type as String?);
+    }
+    return Variables$Query$fetch_service_provider_posts._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get service_provider_id => (_$data['service_provider_id'] as int?);
+  String? get service_provider_type =>
+      (_$data['service_provider_type'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('service_provider_id')) {
+      final l$service_provider_id = service_provider_id;
+      result$data['service_provider_id'] = l$service_provider_id;
+    }
+    if (_$data.containsKey('service_provider_type')) {
+      final l$service_provider_type = service_provider_type;
+      result$data['service_provider_type'] = l$service_provider_type;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$fetch_service_provider_posts<
+          Variables$Query$fetch_service_provider_posts>
+      get copyWith => CopyWith$Variables$Query$fetch_service_provider_posts(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$fetch_service_provider_posts) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (_$data.containsKey('service_provider_id') !=
+        other._$data.containsKey('service_provider_id')) {
+      return false;
+    }
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (_$data.containsKey('service_provider_type') !=
+        other._$data.containsKey('service_provider_type')) {
+      return false;
+    }
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_id = service_provider_id;
+    final l$service_provider_type = service_provider_type;
+    return Object.hashAll([
+      _$data.containsKey('service_provider_id')
+          ? l$service_provider_id
+          : const {},
+      _$data.containsKey('service_provider_type')
+          ? l$service_provider_type
+          : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$fetch_service_provider_posts<TRes> {
+  factory CopyWith$Variables$Query$fetch_service_provider_posts(
+    Variables$Query$fetch_service_provider_posts instance,
+    TRes Function(Variables$Query$fetch_service_provider_posts) then,
+  ) = _CopyWithImpl$Variables$Query$fetch_service_provider_posts;
+
+  factory CopyWith$Variables$Query$fetch_service_provider_posts.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$fetch_service_provider_posts;
+
+  TRes call({
+    int? service_provider_id,
+    String? service_provider_type,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$fetch_service_provider_posts<TRes>
+    implements CopyWith$Variables$Query$fetch_service_provider_posts<TRes> {
+  _CopyWithImpl$Variables$Query$fetch_service_provider_posts(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$fetch_service_provider_posts _instance;
+
+  final TRes Function(Variables$Query$fetch_service_provider_posts) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_id = _undefined,
+    Object? service_provider_type = _undefined,
+  }) =>
+      _then(Variables$Query$fetch_service_provider_posts._({
+        ..._instance._$data,
+        if (service_provider_id != _undefined)
+          'service_provider_id': (service_provider_id as int?),
+        if (service_provider_type != _undefined)
+          'service_provider_type': (service_provider_type as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$fetch_service_provider_posts<TRes>
+    implements CopyWith$Variables$Query$fetch_service_provider_posts<TRes> {
+  _CopyWithStubImpl$Variables$Query$fetch_service_provider_posts(this._res);
+
+  TRes _res;
+
+  call({
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      _res;
+}
+
+class Query$fetch_service_provider_posts {
+  Query$fetch_service_provider_posts({
+    required this.service_provider_post,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_service_provider_posts.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_post = json['service_provider_post'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_service_provider_posts(
+      service_provider_post: (l$service_provider_post as List<dynamic>)
+          .map((e) =>
+              Query$fetch_service_provider_posts$service_provider_post.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$fetch_service_provider_posts$service_provider_post>
+      service_provider_post;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_post = service_provider_post;
+    _resultData['service_provider_post'] =
+        l$service_provider_post.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_post = service_provider_post;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_post.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$fetch_service_provider_posts) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_post = service_provider_post;
+    final lOther$service_provider_post = other.service_provider_post;
+    if (l$service_provider_post.length != lOther$service_provider_post.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_post.length; i++) {
+      final l$service_provider_post$entry = l$service_provider_post[i];
+      final lOther$service_provider_post$entry =
+          lOther$service_provider_post[i];
+      if (l$service_provider_post$entry != lOther$service_provider_post$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_service_provider_posts
+    on Query$fetch_service_provider_posts {
+  CopyWith$Query$fetch_service_provider_posts<
+          Query$fetch_service_provider_posts>
+      get copyWith => CopyWith$Query$fetch_service_provider_posts(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_service_provider_posts<TRes> {
+  factory CopyWith$Query$fetch_service_provider_posts(
+    Query$fetch_service_provider_posts instance,
+    TRes Function(Query$fetch_service_provider_posts) then,
+  ) = _CopyWithImpl$Query$fetch_service_provider_posts;
+
+  factory CopyWith$Query$fetch_service_provider_posts.stub(TRes res) =
+      _CopyWithStubImpl$Query$fetch_service_provider_posts;
+
+  TRes call({
+    List<Query$fetch_service_provider_posts$service_provider_post>?
+        service_provider_post,
+    String? $__typename,
+  });
+  TRes service_provider_post(
+      Iterable<Query$fetch_service_provider_posts$service_provider_post> Function(
+              Iterable<
+                  CopyWith$Query$fetch_service_provider_posts$service_provider_post<
+                      Query$fetch_service_provider_posts$service_provider_post>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$fetch_service_provider_posts<TRes>
+    implements CopyWith$Query$fetch_service_provider_posts<TRes> {
+  _CopyWithImpl$Query$fetch_service_provider_posts(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_service_provider_posts _instance;
+
+  final TRes Function(Query$fetch_service_provider_posts) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_post = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$fetch_service_provider_posts(
+        service_provider_post:
+            service_provider_post == _undefined || service_provider_post == null
+                ? _instance.service_provider_post
+                : (service_provider_post as List<
+                    Query$fetch_service_provider_posts$service_provider_post>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_post(
+          Iterable<Query$fetch_service_provider_posts$service_provider_post> Function(
+                  Iterable<
+                      CopyWith$Query$fetch_service_provider_posts$service_provider_post<
+                          Query$fetch_service_provider_posts$service_provider_post>>)
+              _fn) =>
+      call(
+          service_provider_post: _fn(_instance.service_provider_post.map((e) =>
+              CopyWith$Query$fetch_service_provider_posts$service_provider_post(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$fetch_service_provider_posts<TRes>
+    implements CopyWith$Query$fetch_service_provider_posts<TRes> {
+  _CopyWithStubImpl$Query$fetch_service_provider_posts(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$fetch_service_provider_posts$service_provider_post>?
+        service_provider_post,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_post(_fn) => _res;
+}
+
+const documentNodeQueryfetch_service_provider_posts =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'fetch_service_provider_posts'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_post'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_type')),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'comments'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'likes'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'message'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'link'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'posted_on'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$fetch_service_provider_posts _parserFn$Query$fetch_service_provider_posts(
+        Map<String, dynamic> data) =>
+    Query$fetch_service_provider_posts.fromJson(data);
+
+class Options$Query$fetch_service_provider_posts
+    extends graphql.QueryOptions<Query$fetch_service_provider_posts> {
+  Options$Query$fetch_service_provider_posts({
+    String? operationName,
+    Variables$Query$fetch_service_provider_posts? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryfetch_service_provider_posts,
+          parserFn: _parserFn$Query$fetch_service_provider_posts,
+        );
+}
+
+class WatchOptions$Query$fetch_service_provider_posts
+    extends graphql.WatchQueryOptions<Query$fetch_service_provider_posts> {
+  WatchOptions$Query$fetch_service_provider_posts({
+    String? operationName,
+    Variables$Query$fetch_service_provider_posts? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryfetch_service_provider_posts,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$fetch_service_provider_posts,
+        );
+}
+
+class FetchMoreOptions$Query$fetch_service_provider_posts
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$fetch_service_provider_posts({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$fetch_service_provider_posts? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQueryfetch_service_provider_posts,
+        );
+}
+
+extension ClientExtension$Query$fetch_service_provider_posts
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$fetch_service_provider_posts>>
+      query$fetch_service_provider_posts(
+              [Options$Query$fetch_service_provider_posts? options]) async =>
+          await this
+              .query(options ?? Options$Query$fetch_service_provider_posts());
+  graphql.ObservableQuery<Query$fetch_service_provider_posts>
+      watchQuery$fetch_service_provider_posts(
+              [WatchOptions$Query$fetch_service_provider_posts? options]) =>
+          this.watchQuery(
+              options ?? WatchOptions$Query$fetch_service_provider_posts());
+  void writeQuery$fetch_service_provider_posts({
+    required Query$fetch_service_provider_posts data,
+    Variables$Query$fetch_service_provider_posts? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryfetch_service_provider_posts),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$fetch_service_provider_posts? readQuery$fetch_service_provider_posts({
+    Variables$Query$fetch_service_provider_posts? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryfetch_service_provider_posts),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$fetch_service_provider_posts.fromJson(result);
+  }
+}
+
+class Query$fetch_service_provider_posts$service_provider_post {
+  Query$fetch_service_provider_posts$service_provider_post({
+    required this.comments,
+    required this.id,
+    this.image,
+    required this.likes,
+    required this.message,
+    this.link,
+    required this.posted_on,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_service_provider_posts$service_provider_post.fromJson(
+      Map<String, dynamic> json) {
+    final l$comments = json['comments'];
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$likes = json['likes'];
+    final l$message = json['message'];
+    final l$link = json['link'];
+    final l$posted_on = json['posted_on'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_service_provider_posts$service_provider_post(
+      comments: mapFromJson(l$comments),
+      id: (l$id as int),
+      image: (l$image as String?),
+      likes: mapFromJson(l$likes),
+      message: (l$message as String),
+      link: (l$link as String?),
+      posted_on: (l$posted_on as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic comments;
+
+  final int id;
+
+  final String? image;
+
+  final dynamic likes;
+
+  final String message;
+
+  final String? link;
+
+  final String posted_on;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$comments = comments;
+    _resultData['comments'] = mapToJson(l$comments);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$likes = likes;
+    _resultData['likes'] = mapToJson(l$likes);
+    final l$message = message;
+    _resultData['message'] = l$message;
+    final l$link = link;
+    _resultData['link'] = l$link;
+    final l$posted_on = posted_on;
+    _resultData['posted_on'] = l$posted_on;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$comments = comments;
+    final l$id = id;
+    final l$image = image;
+    final l$likes = likes;
+    final l$message = message;
+    final l$link = link;
+    final l$posted_on = posted_on;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$comments,
+      l$id,
+      l$image,
+      l$likes,
+      l$message,
+      l$link,
+      l$posted_on,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$fetch_service_provider_posts$service_provider_post) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$comments = comments;
+    final lOther$comments = other.comments;
+    if (l$comments != lOther$comments) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$likes = likes;
+    final lOther$likes = other.likes;
+    if (l$likes != lOther$likes) {
+      return false;
+    }
+    final l$message = message;
+    final lOther$message = other.message;
+    if (l$message != lOther$message) {
+      return false;
+    }
+    final l$link = link;
+    final lOther$link = other.link;
+    if (l$link != lOther$link) {
+      return false;
+    }
+    final l$posted_on = posted_on;
+    final lOther$posted_on = other.posted_on;
+    if (l$posted_on != lOther$posted_on) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_service_provider_posts$service_provider_post
+    on Query$fetch_service_provider_posts$service_provider_post {
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post<
+          Query$fetch_service_provider_posts$service_provider_post>
+      get copyWith =>
+          CopyWith$Query$fetch_service_provider_posts$service_provider_post(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post<
+    TRes> {
+  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post(
+    Query$fetch_service_provider_posts$service_provider_post instance,
+    TRes Function(Query$fetch_service_provider_posts$service_provider_post)
+        then,
+  ) = _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post;
+
+  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post;
+
+  TRes call({
+    dynamic? comments,
+    int? id,
+    String? image,
+    dynamic? likes,
+    String? message,
+    String? link,
+    String? posted_on,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post<
+        TRes>
+    implements
+        CopyWith$Query$fetch_service_provider_posts$service_provider_post<
+            TRes> {
+  _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_service_provider_posts$service_provider_post _instance;
+
+  final TRes Function(Query$fetch_service_provider_posts$service_provider_post)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? comments = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? likes = _undefined,
+    Object? message = _undefined,
+    Object? link = _undefined,
+    Object? posted_on = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$fetch_service_provider_posts$service_provider_post(
+        comments: comments == _undefined || comments == null
+            ? _instance.comments
+            : (comments as dynamic),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        likes: likes == _undefined || likes == null
+            ? _instance.likes
+            : (likes as dynamic),
+        message: message == _undefined || message == null
+            ? _instance.message
+            : (message as String),
+        link: link == _undefined ? _instance.link : (link as String?),
+        posted_on: posted_on == _undefined || posted_on == null
+            ? _instance.posted_on
+            : (posted_on as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post<
+        TRes>
+    implements
+        CopyWith$Query$fetch_service_provider_posts$service_provider_post<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? comments,
+    int? id,
+    String? image,
+    dynamic? likes,
+    String? message,
+    String? link,
+    String? posted_on,
     String? $__typename,
   }) =>
       _res;

@@ -69,6 +69,45 @@ Future<List<Post>> fetch_subscribed_posts(
   return posts;
 }
 
+Future<List<Post>> fetch_service_provider_posts(
+    {required int serviceProviderId,
+    required cModels.ServiceProviderType serviceProviderType,
+    // int? limit,
+    // int? offset,
+    bool withCache = true}) async {
+  QueryResult<Query$fetch_service_provider_posts> res =
+      await _db.graphQLClient.query$fetch_service_provider_posts(
+    Options$Query$fetch_service_provider_posts(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$fetch_service_provider_posts(
+          service_provider_id: serviceProviderId,
+          service_provider_type: serviceProviderType.toFirebaseFormatString()),
+    ),
+  );
+  mezDbgPrint("👋 called fetch_service_provider_posts ===========>${res.data}");
+  // if (res.parsedData?.service_provider_offer == null) {
+  //   throwError(res.exception);
+  // }
+  final List<Post> posts = [];
+  res.parsedData?.service_provider_post.forEach((data) {
+    posts.add(Post(
+      id: data.id,
+      serviceProviderId: serviceProviderId,
+      serviceProviderType: serviceProviderType,
+      // serviceProviderName: serviceProviderName,
+      // serviceProviderImage: serviceProviderImage,
+      message: data.message,
+      image: data.image,
+      likes: data.likes,
+      comments: data.comments.map((e) => commentFromJson(e)).toList(),
+      postedOn: DateTime.parse(data.posted_on),
+      link: data.link,
+    ));
+  });
+  return posts;
+}
+
 Future<int?> write_comment(
     {required int postId, required String comment}) async {
   final QueryResult<Mutation$write_comment> res =
@@ -81,7 +120,44 @@ Future<int?> write_comment(
     ),
   );
   if (res.parsedData?.update_service_provider_post_by_pk == null) {
-    throw Exception("🚨 insert review exception 🚨 \n ${res.exception}");
+    throw Exception("🚨 write comment exception 🚨 \n ${res.exception}");
   }
   return res.parsedData!.update_service_provider_post_by_pk?.id;
+}
+
+Future<int?> like_post({required int postId, required int customerId}) async {
+  final QueryResult<Mutation$like_post> res =
+      await _db.graphQLClient.mutate$like_post(
+    Options$Mutation$like_post(
+      variables:
+          Variables$Mutation$like_post(id: postId, customer_id: customerId),
+    ),
+  );
+  if (res.parsedData?.update_service_provider_post_by_pk == null) {
+    throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
+  }
+  return res.parsedData!.update_service_provider_post_by_pk?.id;
+}
+
+Future<int?> create_post({
+  required int serviceProviderId,
+  required cModels.ServiceProviderType serviceProviderType,
+  required String message,
+  String? image,
+}) async {
+  final QueryResult<Mutation$create_post> res =
+      await _db.graphQLClient.mutate$create_post(
+    Options$Mutation$create_post(
+      variables: Variables$Mutation$create_post(
+        service_provider_id: serviceProviderId,
+        service_provider_type: serviceProviderType.toFirebaseFormatString(),
+        message: message,
+        image: image,
+      ),
+    ),
+  );
+  if (res.parsedData?.insert_service_provider_post_one == null) {
+    throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
+  }
+  return res.parsedData!.insert_service_provider_post_one?.id;
 }

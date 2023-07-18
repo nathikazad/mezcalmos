@@ -452,10 +452,13 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       } else {
         cart.items.forEach((cartItem) {
           if (offer.details.offerForItems == "particularItems") {
-            offer.details.items!.forEach((c) => {
-                  if (c == cartItem.itemId)
-                    {discount += offer.details.discountValue}
-                });
+            for (int i = 0; i < offer.details.items!.length; i++) {
+              if (offer.details.items![i] == cartItem.itemId &&
+                  offer.details.offeringTypes![i] == cartItem.offeringType) {
+                discount += offer.details.discountValue;
+                break;
+              }
+            }
           } else if (offer.details.offerForItems == "particularServices") {
             offer.details.offeringTypes!.forEach((c) => {
                   if (c == cartItem.offeringType)
@@ -468,14 +471,14 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
     case cModels.DiscountType.Percentage:
       cart.items.forEach((cartItem) {
         if (offer.details.offerForItems == "particularItems") {
-          offer.details.items!.forEach((c) => {
-                if (c == cartItem.itemId)
-                  {
-                    discount +=
-                        cartItem.cost * offer.details.discountValue / 100.0
-                  }
-              });
-        } else if (offer.details.offerForItems == "particularCategories") {
+          for (int i = 0; i < offer.details.items!.length; i++) {
+            if (offer.details.items![i] == cartItem.itemId &&
+                offer.details.offeringTypes![i] == cartItem.offeringType) {
+              discount += cartItem.cost * offer.details.discountValue / 100.0;
+              break;
+            }
+          }
+        } else if (offer.details.offerForItems == "particularServices") {
           offer.details.offeringTypes!.forEach((c) => {
                 if (c == cartItem.offeringType)
                   {
@@ -492,8 +495,9 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       int sameItems = 0;
       cart.items.forEach((cartItem) {
         if (offer.details.offerForItems == "particularItems") {
-          for (num c in offer.details.items!) {
-            if (c == cartItem.itemId) {
+          for (int i = 0; i < offer.details.items!.length; i++) {
+            if (offer.details.items![i] == cartItem.itemId &&
+                offer.details.offeringTypes![i] == cartItem.offeringType) {
               sameItems++;
               break;
             }
@@ -514,9 +518,9 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       num oneItemCost = 0;
       cart.items.forEach((cartItem) {
         if (offer.details.offerForItems == "particularItems") {
-          for (num c in offer.details.items!) {
-            if (c == cartItem.itemId) {
-              oneItemCost = cartItem.cost;
+          for (int i = 0; i < offer.details.items!.length; i++) {
+            if (offer.details.items![i] == cartItem.itemId &&
+                offer.details.offeringTypes![i] == cartItem.offeringType) {
               sameItems++;
               break;
             }
