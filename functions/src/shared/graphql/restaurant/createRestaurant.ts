@@ -81,7 +81,7 @@ export async function createRestaurant(
             }
           }
         },
-        restaurant_operators: {
+        restaurant_operators: (restaurantDetails.isMezAdmin == false) ? {
           data: [{
             user_id: restaurantOperatorUserId,
             operator_details: {
@@ -93,7 +93,7 @@ export async function createRestaurant(
               }
             },
           }]
-        }
+        }: undefined
       }
     }, {
       id: true,
@@ -122,7 +122,7 @@ export async function createRestaurant(
 
     throw new MezError(RestaurantError.RestaurantCreationError);
   }
-  if(restaurantDetails.restaurantOperatorNotificationToken) {
+  if(restaurantDetails.isMezAdmin == false && restaurantDetails.restaurantOperatorNotificationToken) {
     chain.mutation({
       insert_notification_info_one: [{
         object: {
