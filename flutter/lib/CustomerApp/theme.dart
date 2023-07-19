@@ -28,7 +28,6 @@ class CustomerAppTheme {
       sliderTheme: SliderThemeData(
         thumbColor: primaryBlueColor,
         showValueIndicator: ShowValueIndicator.always,
-        
         valueIndicatorColor: secondaryLightBlueColor,
         valueIndicatorShape: PaddleSliderValueIndicatorShape(),
         inactiveTrackColor: secondaryLightBlueColor,
@@ -61,7 +60,7 @@ class CustomerAppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: Colors.grey.shade200,
+          fillColor: Colors.white,
           //isDense: true,
           errorStyle: TextStyle(
             fontFamily: "Nunito",
@@ -78,7 +77,17 @@ class CustomerAppTheme {
             fontSize: 10.mezSp,
             color: Colors.black.withOpacity(0.8),
           ),
-          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(12),
+          isDense: true,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide.none),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide(width: 1, color: Colors.grey.shade400)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide.none),
           floatingLabelBehavior: FloatingLabelBehavior.never),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,

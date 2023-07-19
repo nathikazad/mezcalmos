@@ -2,13 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustDeliveryTypePicker.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/BuildItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/CartIsEmptyScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/OrderSummaryCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustRestaurantCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -19,20 +20,21 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/CustOrderDeliverySelector.dart';
 
-class ViewCartScreen extends StatefulWidget {
+class CustRestaurantCartView extends StatefulWidget {
   static Future<void> navigate() {
     return MezRouter.toNamed(RestaurantRoutes.cartRoute);
   }
 
   @override
-  _ViewCartScreenState createState() => _ViewCartScreenState();
+  _CustRestaurantCartViewState createState() => _CustRestaurantCartViewState();
 }
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
 
-class _ViewCartScreenState extends State<ViewCartScreen> {
-  CustCartViewController viewController = CustCartViewController();
+class _CustRestaurantCartViewState extends State<CustRestaurantCartView> {
+  CustRestaurantCartViewController viewController =
+      CustRestaurantCartViewController();
 
   @override
   void initState() {
@@ -80,21 +82,13 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DeliveryTimePicker(
-                        deliveryTime: viewController.cart.deliveryTime,
-                        fixed7days: !viewController.cart.isSpecial,
-                        isServiceOpen: viewController.cart.restaurant!.isOpen,
-                        numberOfDays: viewController.cart.isSpecial ? 1 : 7,
-                        onValue: (DateTime? value) {
-                          viewController.setDeliveryTime(value);
+                      CustDeliveryTypeSelector(
+                        onDeliveryTypeChanged: (DeliveryType value) {
+                          viewController.switchDeliveryType(type: value);
+                          mezDbgPrint("Changed from parent callback ==>$value");
                         },
-                        onClear: () {
-                          viewController.setDeliveryTime(null);
-                        },
-                        periodOfTime: viewController.cart.cartPeriod,
-                        schedule: viewController.cart.restaurant!.schedule,
                       ),
-                      _deliveryLocation(),
+                      if (viewController.showDelivery) _deliveryLocation(),
                     ],
                   ),
                 ),
@@ -104,18 +98,18 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 //     viewCartController: viewController,
                 //   ),
                 // ),
-
-                Obx(
-                  () => CustOrderDeliverySelector(
-                    onSelectionUpdate: (List<int> value) {
-                      viewController.selectedCompanies = value;
-                    },
-                    distanceInKm: viewController.orderDistanceInKm.value,
-                    onEstDeliveryPriceChange: (double value) {
-                      viewController.setShippingCost(value);
-                    },
+                if (viewController.showDelivery)
+                  Obx(
+                    () => CustOrderDeliverySelector(
+                      onSelectionUpdate: (List<int> value) {
+                        viewController.selectedCompanies = value;
+                      },
+                      distanceInKm: viewController.orderDistanceInKm.value,
+                      onEstDeliveryPriceChange: (double value) {
+                        viewController.setShippingCost(value);
+                      },
+                    ),
                   ),
-                ),
 
                 CardSummaryCard(
                   controller: viewController,

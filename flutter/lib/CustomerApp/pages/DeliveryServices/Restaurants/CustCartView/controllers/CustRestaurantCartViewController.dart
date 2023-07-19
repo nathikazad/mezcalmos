@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // controller class //
-class CustCartViewController {
+class CustRestaurantCartViewController {
   // instances //
   CustomerAuthController customerAuthController =
       Get.find<CustomerAuthController>();
@@ -47,6 +47,9 @@ class CustCartViewController {
   Rxn<CreditCard> card = Rxn();
 
   final RxBool clickedCheckout = false.obs;
+  Rx<cModels.DeliveryType> dvType = Rx(cModels.DeliveryType.Delivery);
+  RxList<cModels.DeliveryType> availableDvTypes =
+      RxList([cModels.DeliveryType.Delivery, cModels.DeliveryType.Pickup]);
 
   // texts
   TextEditingController noteText = TextEditingController();
@@ -70,6 +73,7 @@ class CustCartViewController {
   Cart get cart => cartController.cart.value ?? Cart();
 
   Rxn<Cart> get _cartRxn => cartController.cart;
+  bool get showDelivery => dvType.value == cModels.DeliveryType.Delivery;
 
   // init //
   Future<void> init() async {
@@ -157,10 +161,6 @@ class CustCartViewController {
 
   //   options.refresh();
   // }
-
-  bool get shoudSchedule {
-    return (cart.restaurant?.isOpen == false || cart.isSpecial);
-  }
 
   void switchPaymentMedthod(
       {required cModels.PaymentType paymentType, CreditCard? card}) {
@@ -332,11 +332,10 @@ class CustCartViewController {
         (cart.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true);
   }
 
-  bool get canSchedule {
-    return cart.restaurant?.isOpen == false && validTime;
-  }
-
   bool get canOrder {
+    if (dvType == cModels.DeliveryType.Pickup) {
+      return true;
+    }
     return cart.toLocation != null && cart.shippingCost != null;
   }
 
@@ -439,13 +438,13 @@ class CustCartViewController {
     return null;
   }
 
-  bool get validTime {
-    if (cart.deliveryTime != null) {
-      return cart.deliveryTime!.toLocal().isAfter(DateTime.now().toLocal());
-    } else {
-      return cart.restaurant?.isOpen == true;
-    }
-  }
+  // bool get validTime {
+  //   if (cart.deliveryTime != null) {
+  //     return cart.deliveryTime!.toLocal().isAfter(DateTime.now().toLocal());
+  //   } else {
+  //     return cart.restaurant?.isOpen == true;
+  //   }
+  // }
 
   void switchLocation(loc.MezLocation location) {
     _cartRxn.value?.toLocation = location;
@@ -453,9 +452,17 @@ class CustCartViewController {
     updateShippingPrice();
   }
 
-  void setDeliveryTime(DateTime? dateTime) {
-    _cartRxn.value?.deliveryTime = dateTime;
-    _cartRxn.refresh();
+  // void setDeliveryTime(DateTime? dateTime) {
+  //   _cartRxn.value?.deliveryTime = dateTime;
+  //   _cartRxn.refresh();
+  // }
+
+  void switchDeliveryType({required cModels.DeliveryType type}) {
+    dvType.value = type;
+    _cartRxn.value?.deliveryType = dvType.value;
+    if (_cartRxn.value?.deliveryType == cModels.DeliveryType.Pickup) {
+      _cartRxn.value?.shippingCost = null;
+    }
   }
 }
 

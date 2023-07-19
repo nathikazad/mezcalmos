@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustRestaurantCartViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -20,7 +20,7 @@ class CardSummaryCard extends StatelessWidget {
 
   final MezLocation? serviceLoc;
 
-  final CustCartViewController controller;
+  final CustRestaurantCartViewController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -71,45 +71,46 @@ class CardSummaryCard extends StatelessWidget {
                 ),
               ),
               //=======================Delivery cost :===============
-              Container(
-                padding: EdgeInsets.only(
-                  bottom: 4,
-                ),
-                width: Get.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        child: Text("${_i18n()["deliveryCost"]}",
-                            style: txt.bodyMedium),
+              if (controller.showDelivery)
+                Container(
+                  padding: EdgeInsets.only(
+                    bottom: 4,
+                  ),
+                  width: Get.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: Text("${_i18n()["deliveryCost"]}",
+                              style: txt.bodyMedium),
+                        ),
                       ),
-                    ),
 
-                    Obx(
-                      () => Flexible(
-                          child: ShippingCostComponent(
-                        alignment: MainAxisAlignment.end,
-                        shippingCost: controller.estDeliveryCost.value,
-                      )),
-                    ),
-                    // : (controller.cart.shippingCost == null)
-                    //     ? Text("_")
-                    //     : Row(
-                    //         children: [
-                    //           Transform.scale(
-                    //               scale: 0.4,
-                    //               child: CircularProgressIndicator(
-                    //                 color: primaryBlueColor,
-                    //               )),
-                    //           Text('${_i18n()["toBeCalc"]}',
-                    //               style: txt.bodyMedium?.copyWith(
-                    //                   fontStyle: FontStyle.italic)),
-                    //         ],
-                    //       )
-                  ],
+                      Obx(
+                        () => Flexible(
+                            child: ShippingCostComponent(
+                          alignment: MainAxisAlignment.end,
+                          shippingCost: controller.estDeliveryCost.value,
+                        )),
+                      ),
+                      // : (controller.cart.shippingCost == null)
+                      //     ? Text("_")
+                      //     : Row(
+                      //         children: [
+                      //           Transform.scale(
+                      //               scale: 0.4,
+                      //               child: CircularProgressIndicator(
+                      //                 color: primaryBlueColor,
+                      //               )),
+                      //           Text('${_i18n()["toBeCalc"]}',
+                      //               style: txt.bodyMedium?.copyWith(
+                      //                   fontStyle: FontStyle.italic)),
+                      //         ],
+                      //       )
+                    ],
+                  ),
                 ),
-              ),
               //=======================Stripe fees :=============== //
               if (controller.showFees)
                 Container(
