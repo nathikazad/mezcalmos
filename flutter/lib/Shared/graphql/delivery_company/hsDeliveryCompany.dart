@@ -245,3 +245,13 @@ Future<List<DeliveryCompany>?> get_dv_companies({required bool isOpen}) async {
 //   }
 // }
 
+Future<bool> get_open_dv_companies() async {
+  QueryResult<Query$checkOpenCompaniesAndDrivers> res =
+      await _hasuraDb.graphQLClient.query$checkOpenCompaniesAndDrivers(
+          Options$Query$checkOpenCompaniesAndDrivers(
+              fetchPolicy: FetchPolicy.networkOnly));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.delivery_company.isNotEmpty == true;
+}

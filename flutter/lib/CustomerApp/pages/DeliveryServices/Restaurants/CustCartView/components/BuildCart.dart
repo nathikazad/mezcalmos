@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustRestaurantCartViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -14,7 +14,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class CartItemsHeader extends StatelessWidget {
   const CartItemsHeader({Key? key, required this.viewController})
       : super(key: key);
-  final CustCartViewController viewController;
+  final CustRestaurantCartViewController viewController;
 
   /// RestaurantController
 

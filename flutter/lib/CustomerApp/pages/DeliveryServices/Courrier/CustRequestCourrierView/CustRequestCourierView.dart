@@ -7,7 +7,9 @@ import 'package:mezcalmos/CustomerApp/router/courierRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -22,7 +24,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustRequestCourierView"];
 
 class CustRequestCourierView extends StatefulWidget {
-  static Future<void> navigate() {
+  static Future<void> navigate() async {
+    final bool res = await get_open_dv_companies();
+    if (!res) {
+      showErrorSnackBar(errorText: "No open companies at the moment");
+      return;
+    }
     return MezRouter.toPath(CourierRoutes.kCourierRequestRoute);
   }
 

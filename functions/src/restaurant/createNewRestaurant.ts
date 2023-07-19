@@ -23,7 +23,8 @@ export interface RestaurantDetails {
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
   language: ServiceProviderLanguage,
-  uniqueId?: string
+  uniqueId?: string,
+  isMezAdmin: boolean
 }
 export interface RestaurantResponse {
   success: boolean,
@@ -37,7 +38,8 @@ export enum RestaurantError {
   DeepLinkError = "deepLinkError",
   QRGenerationError = "qrGenerationError",
   RestaurantCreationError = "restaurantCreationError",
-  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists",
+  UnauthorizedAccess = "unauthorizedAccess"
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails): Promise<RestaurantResponse> {
@@ -52,6 +54,9 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
     let mezAdmins: MezAdmin[] = promiseResponse[1];
 
+    if(restaurantDetails.isMezAdmin && !mezAdmins.find((m) => m.id == userId)) {
+      throw new MezError(RestaurantError.UnauthorizedAccess);
+    }
       
     let restaurant: ServiceProvider = await createRestaurant(restaurantDetails, userId);
     

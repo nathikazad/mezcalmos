@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/CustCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/CustRestaurantCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -127,7 +127,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           try {
             await widget.viewController
                 .handleAddItem()
-                .whenComplete(() => ViewCartScreen.navigate());
+                .whenComplete(() => CustRestaurantCartView.navigate());
           } catch (e, stk) {
             mezDbgPrint(e);
             mezDbgPrint(stk);
@@ -137,7 +137,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
         try {
           await widget.viewController
               .handleEditItem()
-              .whenComplete(() => ViewCartScreen.navigate());
+              .whenComplete(() => CustRestaurantCartView.navigate());
         } catch (e, stk) {
           mezDbgPrint(e);
           mezDbgPrint(stk);
@@ -161,13 +161,13 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       secondaryCallBack: () async {
         await MezRouter.back();
 
-        await ViewCartScreen.navigate();
+        await CustRestaurantCartView.navigate();
       },
       primaryCallBack: () async {
         await widget.viewController.handleAddItem();
         await MezRouter.back();
 
-        await ViewCartScreen.navigate();
+        await CustRestaurantCartView.navigate();
       },
     );
   }
@@ -187,14 +187,14 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       secondaryCallBack: () async {
         await MezRouter.back();
 
-        await ViewCartScreen.navigate();
+        await CustRestaurantCartView.navigate();
       },
       primaryCallBack: () async {
         mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
         await widget.viewController.cartController?.clearCart();
         await widget.viewController.handleAddItem();
         await MezRouter.back();
-        await ViewCartScreen.navigate();
+        await CustRestaurantCartView.navigate();
       },
     );
   }

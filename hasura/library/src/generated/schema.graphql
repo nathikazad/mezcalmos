@@ -32319,14 +32319,14 @@ enum restaurant_operator_constraint {
   operator_details_id_key
 
   """
+  unique or primary key constraint on columns "user_id"
+  """
+  operator_user_id_key
+
+  """
   unique or primary key constraint on columns "id"
   """
   restaurant_operator_pkey
-
-  """
-  unique or primary key constraint on columns "user_id"
-  """
-  restaurant_operator_user_id_key
 }
 
 """
