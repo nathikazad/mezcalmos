@@ -8375,3 +8375,473 @@ class _CopyWithStubImpl$Subscription$listen_on_details_open_status$service_provi
   }) =>
       _res;
 }
+
+class Query$checkOpenCompaniesAndDrivers {
+  Query$checkOpenCompaniesAndDrivers({
+    required this.delivery_company,
+    required this.$__typename,
+  });
+
+  factory Query$checkOpenCompaniesAndDrivers.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_company = json['delivery_company'];
+    final l$$__typename = json['__typename'];
+    return Query$checkOpenCompaniesAndDrivers(
+      delivery_company: (l$delivery_company as List<dynamic>)
+          .map((e) =>
+              Query$checkOpenCompaniesAndDrivers$delivery_company.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$checkOpenCompaniesAndDrivers$delivery_company>
+      delivery_company;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_company = delivery_company;
+    _resultData['delivery_company'] =
+        l$delivery_company.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_company = delivery_company;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_company.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$checkOpenCompaniesAndDrivers) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_company = delivery_company;
+    final lOther$delivery_company = other.delivery_company;
+    if (l$delivery_company.length != lOther$delivery_company.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_company.length; i++) {
+      final l$delivery_company$entry = l$delivery_company[i];
+      final lOther$delivery_company$entry = lOther$delivery_company[i];
+      if (l$delivery_company$entry != lOther$delivery_company$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$checkOpenCompaniesAndDrivers
+    on Query$checkOpenCompaniesAndDrivers {
+  CopyWith$Query$checkOpenCompaniesAndDrivers<
+          Query$checkOpenCompaniesAndDrivers>
+      get copyWith => CopyWith$Query$checkOpenCompaniesAndDrivers(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$checkOpenCompaniesAndDrivers<TRes> {
+  factory CopyWith$Query$checkOpenCompaniesAndDrivers(
+    Query$checkOpenCompaniesAndDrivers instance,
+    TRes Function(Query$checkOpenCompaniesAndDrivers) then,
+  ) = _CopyWithImpl$Query$checkOpenCompaniesAndDrivers;
+
+  factory CopyWith$Query$checkOpenCompaniesAndDrivers.stub(TRes res) =
+      _CopyWithStubImpl$Query$checkOpenCompaniesAndDrivers;
+
+  TRes call({
+    List<Query$checkOpenCompaniesAndDrivers$delivery_company>? delivery_company,
+    String? $__typename,
+  });
+  TRes delivery_company(
+      Iterable<Query$checkOpenCompaniesAndDrivers$delivery_company> Function(
+              Iterable<
+                  CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company<
+                      Query$checkOpenCompaniesAndDrivers$delivery_company>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$checkOpenCompaniesAndDrivers<TRes>
+    implements CopyWith$Query$checkOpenCompaniesAndDrivers<TRes> {
+  _CopyWithImpl$Query$checkOpenCompaniesAndDrivers(
+    this._instance,
+    this._then,
+  );
+
+  final Query$checkOpenCompaniesAndDrivers _instance;
+
+  final TRes Function(Query$checkOpenCompaniesAndDrivers) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_company = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$checkOpenCompaniesAndDrivers(
+        delivery_company: delivery_company == _undefined ||
+                delivery_company == null
+            ? _instance.delivery_company
+            : (delivery_company
+                as List<Query$checkOpenCompaniesAndDrivers$delivery_company>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_company(
+          Iterable<Query$checkOpenCompaniesAndDrivers$delivery_company> Function(
+                  Iterable<
+                      CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company<
+                          Query$checkOpenCompaniesAndDrivers$delivery_company>>)
+              _fn) =>
+      call(
+          delivery_company: _fn(_instance.delivery_company.map((e) =>
+              CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$checkOpenCompaniesAndDrivers<TRes>
+    implements CopyWith$Query$checkOpenCompaniesAndDrivers<TRes> {
+  _CopyWithStubImpl$Query$checkOpenCompaniesAndDrivers(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$checkOpenCompaniesAndDrivers$delivery_company>? delivery_company,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_company(_fn) => _res;
+}
+
+const documentNodeQuerycheckOpenCompaniesAndDrivers =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'checkOpenCompaniesAndDrivers'),
+    variableDefinitions: [],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_company'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: '_and'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'drivers'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'online'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: '_eq'),
+                            value: BooleanValueNode(value: true),
+                          )
+                        ]),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'is_open'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value: BooleanValueNode(value: true),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$checkOpenCompaniesAndDrivers _parserFn$Query$checkOpenCompaniesAndDrivers(
+        Map<String, dynamic> data) =>
+    Query$checkOpenCompaniesAndDrivers.fromJson(data);
+
+class Options$Query$checkOpenCompaniesAndDrivers
+    extends graphql.QueryOptions<Query$checkOpenCompaniesAndDrivers> {
+  Options$Query$checkOpenCompaniesAndDrivers({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerycheckOpenCompaniesAndDrivers,
+          parserFn: _parserFn$Query$checkOpenCompaniesAndDrivers,
+        );
+}
+
+class WatchOptions$Query$checkOpenCompaniesAndDrivers
+    extends graphql.WatchQueryOptions<Query$checkOpenCompaniesAndDrivers> {
+  WatchOptions$Query$checkOpenCompaniesAndDrivers({
+    String? operationName,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerycheckOpenCompaniesAndDrivers,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$checkOpenCompaniesAndDrivers,
+        );
+}
+
+class FetchMoreOptions$Query$checkOpenCompaniesAndDrivers
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$checkOpenCompaniesAndDrivers(
+      {required graphql.UpdateQuery updateQuery})
+      : super(
+          updateQuery: updateQuery,
+          document: documentNodeQuerycheckOpenCompaniesAndDrivers,
+        );
+}
+
+extension ClientExtension$Query$checkOpenCompaniesAndDrivers
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$checkOpenCompaniesAndDrivers>>
+      query$checkOpenCompaniesAndDrivers(
+              [Options$Query$checkOpenCompaniesAndDrivers? options]) async =>
+          await this
+              .query(options ?? Options$Query$checkOpenCompaniesAndDrivers());
+  graphql.ObservableQuery<Query$checkOpenCompaniesAndDrivers>
+      watchQuery$checkOpenCompaniesAndDrivers(
+              [WatchOptions$Query$checkOpenCompaniesAndDrivers? options]) =>
+          this.watchQuery(
+              options ?? WatchOptions$Query$checkOpenCompaniesAndDrivers());
+  void writeQuery$checkOpenCompaniesAndDrivers({
+    required Query$checkOpenCompaniesAndDrivers data,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+            operation: graphql.Operation(
+                document: documentNodeQuerycheckOpenCompaniesAndDrivers)),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$checkOpenCompaniesAndDrivers? readQuery$checkOpenCompaniesAndDrivers(
+      {bool optimistic = true}) {
+    final result = this.readQuery(
+      graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerycheckOpenCompaniesAndDrivers)),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$checkOpenCompaniesAndDrivers.fromJson(result);
+  }
+}
+
+class Query$checkOpenCompaniesAndDrivers$delivery_company {
+  Query$checkOpenCompaniesAndDrivers$delivery_company({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$checkOpenCompaniesAndDrivers$delivery_company.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$checkOpenCompaniesAndDrivers$delivery_company(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$checkOpenCompaniesAndDrivers$delivery_company) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$checkOpenCompaniesAndDrivers$delivery_company
+    on Query$checkOpenCompaniesAndDrivers$delivery_company {
+  CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company<
+          Query$checkOpenCompaniesAndDrivers$delivery_company>
+      get copyWith =>
+          CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company<
+    TRes> {
+  factory CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company(
+    Query$checkOpenCompaniesAndDrivers$delivery_company instance,
+    TRes Function(Query$checkOpenCompaniesAndDrivers$delivery_company) then,
+  ) = _CopyWithImpl$Query$checkOpenCompaniesAndDrivers$delivery_company;
+
+  factory CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$checkOpenCompaniesAndDrivers$delivery_company;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$checkOpenCompaniesAndDrivers$delivery_company<TRes>
+    implements
+        CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company<TRes> {
+  _CopyWithImpl$Query$checkOpenCompaniesAndDrivers$delivery_company(
+    this._instance,
+    this._then,
+  );
+
+  final Query$checkOpenCompaniesAndDrivers$delivery_company _instance;
+
+  final TRes Function(Query$checkOpenCompaniesAndDrivers$delivery_company)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$checkOpenCompaniesAndDrivers$delivery_company(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$checkOpenCompaniesAndDrivers$delivery_company<
+        TRes>
+    implements
+        CopyWith$Query$checkOpenCompaniesAndDrivers$delivery_company<TRes> {
+  _CopyWithStubImpl$Query$checkOpenCompaniesAndDrivers$delivery_company(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}

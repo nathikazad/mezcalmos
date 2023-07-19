@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustRestaurantCartViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -17,7 +17,7 @@ dynamic _i18n() =>
 class PaymentMethodPicker extends StatefulWidget {
   const PaymentMethodPicker({Key? key, required this.viewCartController})
       : super(key: key);
-  final CustCartViewController viewCartController;
+  final CustRestaurantCartViewController viewCartController;
 
   @override
   State<PaymentMethodPicker> createState() => _PaymentMethodPickerState();

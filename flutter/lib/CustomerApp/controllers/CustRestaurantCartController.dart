@@ -186,8 +186,7 @@ class CustRestaurantCartController extends GetxController {
                     cart.value!.getRouteInfo!.distance.distanceInMeters,
                 tripDuration: cart.value!.getRouteInfo!.duration.seconds,
                 tripPolyline: cart.value!.getRouteInfo!.polyline,
-                deliveryType: cloudFunctionModels.DeliveryType.Delivery,
-                scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
+                deliveryType: cart.value!.deliveryType,
                 stripePaymentId: stripePaymentId,
                 stripeFees: cart.value?.stripeFees);
         if (res.success == false) {

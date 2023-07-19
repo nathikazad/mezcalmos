@@ -539,6 +539,11 @@
       "savedCards": "My cards"
     },
     "components": {
+      "CustDeliveryTypeSelector" : {
+"dvType" : "Delivery type",
+"delivery": "Delivery",
+"pickup" :"In-store Pickup"
+      },
       "CustOrderCostCard": {
         "orderCost": "Order cost"
       },
@@ -1116,7 +1121,9 @@
             "notAvailable": "This restaurant is closed",
             "orderNow": "Order now",
             "scheduleOrder": "Schedule order",
-            "errorText": "Sorry, we don't support your area yet"
+            "errorText": "Sorry, we don't support your area yet",
+            "delivery" :"Delivery",
+            "pickup" :"In-store Pickup"
           }
         },
         "ViewItemScreen": {

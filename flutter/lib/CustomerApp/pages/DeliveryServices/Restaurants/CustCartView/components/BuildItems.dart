@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/components/MyExpensionPanelComponent.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/components/itemChosenChoices.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/BuildCart.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/ItemInformationCart.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustRestaurantCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/CustItemView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/components/itemChosenChoices.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -24,7 +23,7 @@ class CartItemsBuilder extends StatelessWidget {
   const CartItemsBuilder({Key? key, required this.viewController})
       : super(key: key);
 
-  final CustCartViewController viewController;
+  final CustRestaurantCartViewController viewController;
 
   @override
   Widget build(BuildContext context) {
