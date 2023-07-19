@@ -34,7 +34,30 @@ Future<List<cModels.Offer>> get_service_provider_offers(
         serviceProviderId: serviceProviderId,
         serviceProviderType: serviceProviderType,
         offerType: data.offer_type.toOfferType(),
-        details: data.details,
+        details: cModels.OfferDetails(
+          offerForOrder: data.details["offerForOrder"],
+          discountType:
+              data.details["discountType"].toString().toDiscountType(),
+          discountValue: data.details["discountValue"],
+          weeklyRepeat: data.details["weeklyRepeat"],
+          categories: data.details["categories"],
+          couponReusable: data.details["couponReusable"],
+          offeringTypes: data.details["offeringTypes"] == null
+              ? <cModels.OfferingType>[]
+              : data.details["offeringTypes"]
+                  .map<cModels.OfferingType>(
+                      (e) => e.toString().toOfferingType())
+                  .toList(),
+          items: data.details["items"] == null
+              ? <num>[]
+              : data.details["items"]
+                  .map<int>((e) => int.parse(e.toString()))
+                  .toList(),
+          minimumOrderAmount: data.details["minimumOrderAmount"],
+          offerForItems: data.details["offerForItems"],
+          validityRangeEnd: data.details["validityRangeEnd"],
+          validityRangeStart: data.details["validityRangeStart"],
+        ),
         status: data.status.toOfferStatus(),
         couponCode: data.coupon_code));
   });
@@ -49,8 +72,7 @@ Future<cModels.Offer?> check_coupon(
   QueryResult<Query$check_coupon> res =
       await _db.graphQLClient.query$check_coupon(
     Options$Query$check_coupon(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Query$check_coupon(
           coupon_code: couponCode,
           service_provider_id: serviceProviderId,
@@ -69,7 +91,28 @@ Future<cModels.Offer?> check_coupon(
       serviceProviderId: serviceProviderId,
       serviceProviderType: serviceProviderType,
       offerType: cModels.OfferType.Coupon,
-      details: data.details,
+      details: cModels.OfferDetails(
+        offerForOrder: data.details["offerForOrder"],
+        discountType: data.details["discountType"].toString().toDiscountType(),
+        discountValue: data.details["discountValue"],
+        weeklyRepeat: data.details["weeklyRepeat"],
+        categories: data.details["categories"],
+        couponReusable: data.details["couponReusable"],
+        offeringTypes: data.details["offeringTypes"] == null
+            ? <cModels.OfferingType>[]
+            : data.details["offeringTypes"]
+                .map<cModels.OfferingType>((e) => e.toString().toOfferingType())
+                .toList(),
+        items: data.details["items"] == null
+            ? <num>[]
+            : data.details["items"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
+        minimumOrderAmount: data.details["minimumOrderAmount"],
+        offerForItems: data.details["offerForItems"],
+        validityRangeEnd: data.details["validityRangeEnd"],
+        validityRangeStart: data.details["validityRangeStart"],
+      ),
       status: cModels.OfferStatus.Active,
       couponCode: couponCode);
 }
@@ -104,8 +147,7 @@ Future<List<cModels.Offer>> fetch_promotions(
   QueryResult<Query$fetchPromotions> res =
       await _db.graphQLClient.query$fetchPromotions(
     Options$Query$fetchPromotions(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Query$fetchPromotions(
           service_provider_id: serviceProviderId,
           service_provider_type: serviceProviderType.toFirebaseFormatString()),
@@ -123,7 +165,30 @@ Future<List<cModels.Offer>> fetch_promotions(
         serviceProviderId: serviceProviderId,
         serviceProviderType: serviceProviderType,
         offerType: cModels.OfferType.Promotion,
-        details: data.details,
+        details: cModels.OfferDetails(
+          offerForOrder: data.details["offerForOrder"],
+          discountType:
+              data.details["discountType"].toString().toDiscountType(),
+          discountValue: data.details["discountValue"],
+          weeklyRepeat: data.details["weeklyRepeat"],
+          categories: data.details["categories"],
+          couponReusable: data.details["couponReusable"],
+          offeringTypes: data.details["offeringTypes"] == null
+              ? <cModels.OfferingType>[]
+              : data.details["offeringTypes"]
+                  .map<cModels.OfferingType>(
+                      (e) => e.toString().toOfferingType())
+                  .toList(),
+          items: data.details["items"] == null
+              ? <num>[]
+              : data.details["items"]
+                  .map<int>((e) => int.parse(e.toString()))
+                  .toList(),
+          minimumOrderAmount: data.details["minimumOrderAmount"],
+          offerForItems: data.details["offerForItems"],
+          validityRangeEnd: data.details["validityRangeEnd"],
+          validityRangeStart: data.details["validityRangeStart"],
+        ),
         status: cModels.OfferStatus.Active,
         nameId: data.name_id));
   });
@@ -179,7 +244,28 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
       serviceProviderId: data.service_provider_id,
       serviceProviderType: data.service_provider_type.toServiceProviderType(),
       offerType: cModels.OfferType.Promotion,
-      details: data.details,
+      details: cModels.OfferDetails(
+        offerForOrder: data.details["offerForOrder"],
+        discountType: data.details["discountType"].toString().toDiscountType(),
+        discountValue: data.details["discountValue"],
+        weeklyRepeat: data.details["weeklyRepeat"],
+        categories: data.details["categories"],
+        couponReusable: data.details["couponReusable"],
+        offeringTypes: data.details["offeringTypes"] == null
+            ? <cModels.OfferingType>[]
+            : data.details["offeringTypes"]
+                .map<cModels.OfferingType>((e) => e.toString().toOfferingType())
+                .toList(),
+        items: data.details["items"] == null
+            ? <num>[]
+            : data.details["items"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
+        minimumOrderAmount: data.details["minimumOrderAmount"],
+        offerForItems: data.details["offerForItems"],
+        validityRangeEnd: data.details["validityRangeEnd"],
+        validityRangeStart: data.details["validityRangeStart"],
+      ),
       status: cModels.OfferStatus.Active,
       nameId: data.name.id,
       serviceProviderName: serviceProviderName,

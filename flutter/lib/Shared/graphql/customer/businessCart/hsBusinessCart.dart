@@ -59,7 +59,9 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
     businessId: cartData.business_id?.toInt(),
     cost: cartData.cost ?? 0,
     discountValue: cartData.discount_value,
-    appliedOffers: cartData.applied_offers,
+    appliedOffers: cartData.applied_offers
+        .map<int>((e) => int.parse(e.toString()))
+        .toList(),
     items: cartData.items
         .map(
           (Query$getBusinessCart$business_cart$items data) => BusinessCartItem(
