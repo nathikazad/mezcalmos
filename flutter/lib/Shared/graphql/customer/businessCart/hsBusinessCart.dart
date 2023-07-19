@@ -59,7 +59,9 @@ Future<CustBusinessCart?> get_business_cart({required int customerId}) async {
     businessId: cartData.business_id?.toInt(),
     cost: cartData.cost ?? 0,
     discountValue: cartData.discount_value,
-    appliedOffers: cartData.applied_offers,
+    appliedOffers: cartData.applied_offers
+        .map<int>((e) => int.parse(e.toString()))
+        .toList(),
     items: cartData.items
         .map(
           (Query$getBusinessCart$business_cart$items data) => BusinessCartItem(
@@ -909,7 +911,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
 
 Future<CustBusinessCart?> get_business_order_request(
     {required int orderId}) async {
-  var cart = await _hasuraDb.graphQLClient.query$get_business_order_request(
+  QueryResult<Query$get_business_order_request> cart =
+      await _hasuraDb.graphQLClient.query$get_business_order_request(
     Options$Query$get_business_order_request(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$get_business_order_request(
