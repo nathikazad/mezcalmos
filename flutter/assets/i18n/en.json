@@ -2287,6 +2287,17 @@
         "onTheWayPickupBody": "Driver is on his way to pickup your order",
         "onTheWayDropoffTitle": "Delivery on the way",
         "onTheWayDropoffBody": "Driver is on the way to deliver you order"
+      },
+      "business": {
+        "modifReqTitle" : "Changes Requested",
+        "modifReqBody" : "Your order business is requesting some changes",
+        "confirmedTitle" : "Confirmed",
+        "confirmedBody" : "You order request is confirmed by the business provider"
+      },
+      "offers" : {
+        "newOfferTitle" : "New Offer",
+        "newOfferBody" : "You received new delivery price offer"
+
       }
     }
   },
@@ -3484,7 +3495,7 @@
         "order": "Order",
         "viewImage": "View image"
       },
-      "RestaurantOrderView": {
+      "DvOrderView": {
         "components": {
           "RestaurantOrderFromToComponent": {
             "pickUpTimeErrorTitle": "Oops",
@@ -3507,7 +3518,10 @@
         "title": "Delivery",
         "restaurant": "Restaurant",
         "laundry": "Laundry",
-        "courier": "Open Delivery"
+        "courier": "Open Delivery",
+        "cancel" : "Cancel",
+        "counterOffer" : "Counter Offer",
+        "reqCounterOffer" : "Request price change"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {

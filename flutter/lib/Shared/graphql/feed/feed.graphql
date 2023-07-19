@@ -4,13 +4,6 @@ mutation subscribeRestaurant($customer_id: Int, $service_provider_id: Int) {
   }
 }
 
-mutation writePost($service_provider_id: Int, $message: String, $image: String, $likes: jsonb, $comments: jsonb, $link: String) {
-  insert_service_provider_post_one(object: {service_provider_type: "restaurant", service_provider_id: $service_provider_id, message: $message, image: $image, likes: $likes, comments: $comments, link: $link}) {
-    id
-    posted_on
-  }
-}
-
 query getSubscribedRestaurants($_eq: Int) {
   service_provider_subscriber(where: {service_provider_type: {_eq: "restaurant"}, _and: {customer_id: {_eq: $_eq}}}) {
     id
@@ -111,14 +104,33 @@ query fetch_subscribed_posts($customer_id: Int, $limit: Int, $offset: Int) {
   }
 }
 
-mutation write_comment($id: Int, $comments: jsonb) {
+mutation write_comment($id: Int!, $comments: jsonb) {
   update_service_provider_post_by_pk(pk_columns: {id: $id}, _append: {comments: $comments}) {
     id
   }
 }
 
-mutation like_post($id: Int, $likes: jsonb) {
-  update_service_provider_post_by_pk(pk_columns: {id: $id}, _append: {likes: $likes}) {
+mutation like_post($id: Int!, $customer_id: jsonb) {
+  update_service_provider_post_by_pk(pk_columns: {id: $id}, _append: {likes: $customer_id}) {
     id
+  }
+}
+
+mutation create_post($image: String, $message: String, $service_provider_id: Int!, $service_provider_type: String) {
+  insert_service_provider_post_one(object: {image: $image, message: $message, service_provider_id: $service_provider_id, service_provider_type: $service_provider_type}) {
+    id
+    posted_on
+  }
+}
+
+query fetch_service_provider_posts($service_provider_id: Int, $service_provider_type: String) {
+  service_provider_post(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
+    comments
+    id
+    image
+    likes
+    message
+    link
+    posted_on
   }
 }

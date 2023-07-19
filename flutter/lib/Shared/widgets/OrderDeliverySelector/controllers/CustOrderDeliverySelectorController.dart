@@ -103,8 +103,13 @@ class CustOrderDeliverySelectorController {
     }
 
     if (_maxDeliveryPrice == 0) {
-      mezDbgPrint("🔴 Max Delivery Cost is 0 ===> Setting to 80");
-      _maxDeliveryPrice = 80;
+      mezDbgPrint("🔴 Max Delivery Cost is 0 ===> Setting to 40");
+      _maxDeliveryPrice = 40;
+    }
+    if (_maxDeliveryPrice > 200 || _maxDeliveryPrice < 40) {
+      mezDbgPrint(
+          "Calculated delivery price is out of range 40-200 => $_maxDeliveryPrice, setting to 40...");
+      _maxDeliveryPrice = 40;
     }
 
     estDeliveryPrice.value = _maxDeliveryPrice;

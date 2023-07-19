@@ -20,7 +20,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-    ["pages"]["RestaurantOrderView"];
+    ["pages"]["DvOrderView"];
 //
 
 class DvOrderView extends StatefulWidget {
@@ -88,7 +88,7 @@ class _DvOrderViewState extends State<DvOrderView> {
             )),
       ),
       bottomNavigationBar: Obx(
-        () => (viewController.hasData && !viewController.showSendOfferButton)
+        () => (viewController.hasData)
             ? DvOrderStatusControllButtons(
                 viewController: viewController,
               )
@@ -177,7 +177,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                       if (viewController.showSendOfferButton) ...[
                         smallSepartor,
                         MezButton(
-                          label: "Send offer",
+                          label: "Counter Offer",
                           onClick: () async {
                             double? newPrice = await _showCostSheet(context);
                             if (newPrice != null) {
@@ -221,7 +221,7 @@ Future<double?> _showCostSheet(BuildContext context) {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "${_i18n()['actualCost']}",
+                    "${_i18n()['counterOffer']}",
                     style: context.textTheme.bodyLarge,
                   ),
                   SizedBox(
@@ -265,7 +265,7 @@ Future<double?> _showCostSheet(BuildContext context) {
                       Flexible(
                         child: MezButton(
                           height: 45,
-                          label: "${_i18n()['save']}",
+                          label: "${_i18n()['reqCounterOffer']}",
                           onClick: () async {
                             Navigator.pop(context,
                                 double.tryParse(_textEditingController.text));

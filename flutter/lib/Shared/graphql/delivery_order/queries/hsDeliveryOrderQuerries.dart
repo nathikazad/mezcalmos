@@ -219,7 +219,7 @@ Future<List<MinimalOrder>?> get_open_driver_orders(
         orderType: orderData.order_type.toOrderType(),
         toAdress: orderData.dropoff_address,
         orderTime: DateTime.parse(orderData.order_time),
-        deliveryCost: orderData.delivery_cost,
+        deliveryCost: orderData.customer_offer,
         title: orderData.customer.user.name!,
         image: orderData.customer.user.image,
         status: orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),

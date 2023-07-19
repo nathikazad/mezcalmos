@@ -424,6 +424,7 @@ update_permissions:
   - role: customer
     permission:
       columns:
+        - customer_offer
         - driver_review_by_customer_id
       filter:
         customer_id:

@@ -17,6 +17,20 @@ Notification customerNotificationHandler(
   switch (notificationType) {
     case NotificationType.NewMessage:
       return newMessageNotification(key, value);
+    case NotificationType.NewCounterOffer:
+      return Notification(
+          id: key,
+          title: "${_i18n()['offers']['newOfferTitle']}",
+          body: "${_i18n()['offers']['newOfferBody']}",
+          imgUrl: null,
+          icon: Material.Icons.price_change,
+          linkUrl: value["linkUrl"],
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewMessage,
+          notificationAction:
+              value["notificationAction"]?.toString().toNotificationAction() ??
+                  NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+          variableParams: value);
 
     case NotificationType.OrderStatusChange:
       final OrderType orderType = value['orderType'].toString().toOrderType();
@@ -28,6 +42,8 @@ Notification customerNotificationHandler(
           return laundryOrderStatusChangeNotificationHandler(key, value);
         case OrderType.Courier:
           return _courierOrderStatusChangeNotificationHandler(key, value);
+        case OrderType.Business:
+          return _businessOrderStatusChangeNotificationHandler(key, value);
         default:
           throw StateError("Invalid Notification Type");
       }
@@ -98,6 +114,28 @@ Notification _courierOrderStatusChangeNotificationHandler(String key, value) {
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],
     title: dynamicFields["title"],
+    timestamp: DateTime.parse(value['time']),
+    notificationType: NotificationType.OrderStatusChange,
+    notificationAction:
+        value["notificationAction"].toString().toNotificationAction(),
+    variableParams: value,
+  );
+}
+
+Notification _businessOrderStatusChangeNotificationHandler(String key, value) {
+  final BusinessOrderRequestStatus newOrdersStatus =
+      value['status'].toString().toBusinessOrderRequestStatus();
+  final Map<String, dynamic> dynamicFields =
+      _getBusinessOrderStatusFields(newOrdersStatus);
+  return Notification(
+    id: key,
+    //  icon: Material.Icons.shopping_bag_rounded,
+    linkUrl: value["linkUrl"],
+    linkText: _i18n()['viewOrder'],
+    body: dynamicFields["body"],
+    imgUrl: dynamicFields["imgUrl"],
+    title: dynamicFields["title"],
+
     timestamp: DateTime.parse(value['time']),
     notificationType: NotificationType.OrderStatusChange,
     notificationAction:
@@ -223,6 +261,27 @@ Map<String, dynamic> _getCourierOrderStatusFields(DeliveryOrderStatus status) {
       };
     default:
       throw StateError("Unhandled Courier Order Status");
+  }
+}
+
+Map<String, dynamic> _getBusinessOrderStatusFields(
+    BusinessOrderRequestStatus status) {
+  switch (status) {
+    case BusinessOrderRequestStatus.Confirmed:
+      return <String, dynamic>{
+        "title": "${_i18n()["business"]["confirmedTitle"]}",
+        "body": "${_i18n()["business"]["confirmedBody"]}",
+        "imgUrl": "assets/images/shared/notifications/delivered.png",
+      };
+    case BusinessOrderRequestStatus.ModificationRequestByBusiness:
+      return <String, dynamic>{
+        "title": "${_i18n()["business"]["modifReqTitle"]}",
+        "body": "${_i18n()["business"]["modifReqBody"]}",
+        "imgUrl": "assets/images/shared/notifications/packageChecked.png",
+      };
+
+    default:
+      throw StateError("Unhandled Business Order Status");
   }
 }
 
