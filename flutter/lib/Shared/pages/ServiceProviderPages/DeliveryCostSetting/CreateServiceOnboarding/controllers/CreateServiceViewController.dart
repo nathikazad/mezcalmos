@@ -338,6 +338,7 @@ class CreateServiceViewController {
           selfDelivery: serviceInput.value.isSelfDelivery,
         ),
         language: languages.value,
+        isMezAdmin: false,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
