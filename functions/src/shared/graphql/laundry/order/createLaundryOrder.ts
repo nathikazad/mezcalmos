@@ -29,6 +29,18 @@ export async function createLaundryOrder(
           app_type_id: AppType.MezAdmin
         };
     });
+    let params: any = {
+        "customer_location_gps": {
+            "type": "Point",
+            "coordinates": [laundryRequestDetails.customerLocation.lng, laundryRequestDetails.customerLocation.lat ],
+        },
+    }
+    if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
+        params["dropoff_gps"] = {
+            "type": "Point",
+            "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
+        }
+    }
 
     let response = await chain.mutation({
         insert_laundry_order_one: [{
@@ -118,16 +130,7 @@ export async function createLaundryOrder(
                 chat_with_service_provider_id: true,
             },
         }],
-    }, {
-        "customer_location_gps": {
-            "type": "Point",
-            "coordinates": [laundryRequestDetails.customerLocation.lng, laundryRequestDetails.customerLocation.lat ],
-        },
-        "dropoff_gps": {
-            "type": "Point",
-            "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
-        }
-    })
+    }, params)
 
     if(response.insert_laundry_order_one == null) {
         throw new MezError(ReqLaundryError.OrderCreationError);
