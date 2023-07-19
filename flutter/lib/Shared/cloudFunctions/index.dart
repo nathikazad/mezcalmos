@@ -1,6 +1,8 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(
@@ -262,7 +264,8 @@ class CloudFunctions {
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
       required ServiceProviderLanguage language,
-      String? uniqueId}) async {
+      String? uniqueId,
+      required bool isMezAdmin}) async {
     return RestaurantResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "restaurant3-createRestaurant",
         parameters: <String, dynamic>{
@@ -278,6 +281,7 @@ class CloudFunctions {
           "deliveryDetails": deliveryDetails.toFirebaseFormattedJson(),
           "language": language.toFirebaseFormattedJson(),
           "uniqueId": uniqueId,
+          "isMezAdmin": isMezAdmin,
         }));
   }
 
