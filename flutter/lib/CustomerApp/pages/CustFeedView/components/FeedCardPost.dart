@@ -66,9 +66,21 @@ class FeedCardPost extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.favorite_border,
-                  size: 25,
+                GestureDetector(
+                  onTap: () async {
+                    print('Tesssssssssssstr');
+                    await controller.likePost(post.id);
+                  },
+                  child: Icon(
+                      post.likes.contains(
+                              controller.authController.user?.hasuraId)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      size: 25,
+                      color: post.likes.contains(
+                              controller.authController.user?.hasuraId)
+                          ? primaryBlueColor
+                          : null),
                 ),
                 hSmallSepartor,
                 Text('${post.likes.length} ${_i18n()['like']}',

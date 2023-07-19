@@ -43,7 +43,11 @@ class Comment {
 Comment commentFromJson(Map<String, dynamic> json) {
   return Comment(
     message: json['message'],
-    likes: json['likes'].cast<int>(),
-    commentedOn: DateTime.parse(json['commented_on']),
+    likes: json['likes'] == null
+        ? List<int>.empty()
+        : json['likes']
+            .map<int>((e) => int.parse(e.toString()))
+            .toList(), //json['likes'].cast<int>(),
+    commentedOn: null,
   );
 }

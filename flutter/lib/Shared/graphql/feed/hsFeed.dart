@@ -51,6 +51,8 @@ Future<List<Post>> fetch_subscribed_posts(
         serviceProviderImage = data.business?.details.image;
         break;
     }
+
+    print('ddd ${data.likes}');
     posts.add(Post(
       id: data.id,
       serviceProviderId: data.service_provider_id,
@@ -59,9 +61,8 @@ Future<List<Post>> fetch_subscribed_posts(
       serviceProviderImage: serviceProviderImage,
       message: data.message,
       image: data.image,
-      likes: data.likes ?? List<int>.empty(),
-      comments: data.comments.map((e) => commentFromJson(e)).toList() ??
-          List<Comment>.empty(),
+      likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
+      comments: data.comments.map<Comment>((e) => commentFromJson(e)).toList(),
       postedOn: DateTime.parse(data.posted_on),
       link: data.link,
     ));
@@ -126,6 +127,7 @@ Future<int?> write_comment(
 }
 
 Future<int?> like_post({required int postId, required int customerId}) async {
+  print('ssssssssssssssss $postId $customerId');
   final QueryResult<Mutation$like_post> res =
       await _db.graphQLClient.mutate$like_post(
     Options$Mutation$like_post(
@@ -133,6 +135,7 @@ Future<int?> like_post({required int postId, required int customerId}) async {
           Variables$Mutation$like_post(id: postId, customer_id: customerId),
     ),
   );
+  print('reeeesss ${res.data}');
   if (res.parsedData?.update_service_provider_post_by_pk == null) {
     throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
   }

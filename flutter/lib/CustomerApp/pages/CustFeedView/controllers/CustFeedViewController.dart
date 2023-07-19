@@ -61,4 +61,12 @@ class CustFeedViewController {
     commentController.text = '';
     await write_comment(postId: postId, comment: commentController.text);
   }
+
+  Future<void> likePost(
+    int postId,
+  ) async {
+    print('qqq ${postId}');
+    print('qqq ${_authController.user!.hasuraId}');
+    await like_post(postId: postId, customerId: _authController.user!.hasuraId);
+  }
 }

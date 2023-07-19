@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
+import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
 
 class CustBusinessViewController {
@@ -23,6 +26,12 @@ class CustBusinessViewController {
   final RxList<review.Review> _reviews = RxList.empty();
   final RxnNum _ratingAverage = RxnNum();
 
+  AuthController _authController = Get.find<AuthController>();
+  AuthController get authController => _authController;
+
+  RxList<Post> _posts = RxList.empty();
+  List<Post> get posts => _posts.value;
+
 // getters
 
   int get businessId => _businessId;
@@ -38,7 +47,10 @@ class CustBusinessViewController {
     required TickerProvider vsync,
   }) async {
     _businessId = businessId;
-    tabController = TabController(length: 2, vsync: vsync);
+    tabController = TabController(length: 3, vsync: vsync);
+
+    unawaited(_fetchPosts());
+
     mezDbgPrint('businessId: $businessId');
     _business.value =
         await get_business_by_id(id: businessId, withCache: false);
@@ -66,6 +78,15 @@ class CustBusinessViewController {
         _ratingAverage.value = value;
       }
     }));
+  }
+
+  Future<void> _fetchPosts() async {
+    try {
+      _posts.value = await fetch_service_provider_posts(
+          serviceProviderId: businessId,
+          serviceProviderType: ServiceProviderType.Business);
+    } catch (e) {
+    } finally {}
   }
 
   void dispose() {}
