@@ -30,3 +30,30 @@ object_relationships:
         remote_table:
           name: user
           schema: public
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - customer_id
+        - service_provider_id
+        - service_provider_type
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - customer_id
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: customer
+    permission:
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

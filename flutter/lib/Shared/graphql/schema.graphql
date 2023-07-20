@@ -20242,6 +20242,19 @@ type mutation_root {
   delete_service_provider_post_by_pk(id: Int!): service_provider_post
 
   """
+  delete data from the table: "service_provider.post_comment"
+  """
+  delete_service_provider_post_comment(
+    """filter the rows which have to be deleted"""
+    where: service_provider_post_comment_bool_exp!
+  ): service_provider_post_comment_mutation_response
+
+  """
+  delete single row from the table: "service_provider.post_comment"
+  """
+  delete_service_provider_post_comment_by_pk(id: Int!): service_provider_post_comment
+
+  """
   delete data from the table: "service_provider.referral"
   """
   delete_service_provider_referral(
@@ -21758,6 +21771,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: service_provider_post_on_conflict
   ): service_provider_post_mutation_response
+
+  """
+  insert data into the table: "service_provider.post_comment"
+  """
+  insert_service_provider_post_comment(
+    """the rows to be inserted"""
+    objects: [service_provider_post_comment_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: service_provider_post_comment_on_conflict
+  ): service_provider_post_comment_mutation_response
+
+  """
+  insert a single row into the table: "service_provider.post_comment"
+  """
+  insert_service_provider_post_comment_one(
+    """the row to be inserted"""
+    object: service_provider_post_comment_insert_input!
+
+    """upsert condition"""
+    on_conflict: service_provider_post_comment_on_conflict
+  ): service_provider_post_comment
 
   """
   insert a single row into the table: "service_provider.post"
@@ -24869,6 +24904,84 @@ type mutation_root {
     _set: service_provider_post_set_input
     pk_columns: service_provider_post_pk_columns_input!
   ): service_provider_post
+
+  """
+  update data of the table: "service_provider.post_comment"
+  """
+  update_service_provider_post_comment(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: service_provider_post_comment_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: service_provider_post_comment_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: service_provider_post_comment_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: service_provider_post_comment_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_post_comment_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: service_provider_post_comment_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_post_comment_set_input
+
+    """filter the rows which have to be updated"""
+    where: service_provider_post_comment_bool_exp!
+  ): service_provider_post_comment_mutation_response
+
+  """
+  update single row of the table: "service_provider.post_comment"
+  """
+  update_service_provider_post_comment_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: service_provider_post_comment_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: service_provider_post_comment_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: service_provider_post_comment_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: service_provider_post_comment_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_post_comment_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: service_provider_post_comment_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_post_comment_set_input
+    pk_columns: service_provider_post_comment_pk_columns_input!
+  ): service_provider_post_comment
+
+  """
+  update multiples rows of table: "service_provider.post_comment"
+  """
+  update_service_provider_post_comment_many(
+    """updates to execute, in order"""
+    updates: [service_provider_post_comment_updates!]!
+  ): [service_provider_post_comment_mutation_response]
 
   """
   update multiples rows of table: "service_provider.post"
@@ -28676,6 +28789,51 @@ type query_root {
   service_provider_post_by_pk(id: Int!): service_provider_post
 
   """
+  fetch data from the table: "service_provider.post_comment"
+  """
+  service_provider_post_comment(
+    """distinct select on columns"""
+    distinct_on: [service_provider_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_post_comment_bool_exp
+  ): [service_provider_post_comment!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider.post_comment"
+  """
+  service_provider_post_comment_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_post_comment_bool_exp
+  ): service_provider_post_comment_aggregate!
+
+  """
+  fetch data from the table: "service_provider.post_comment" using primary key columns
+  """
+  service_provider_post_comment_by_pk(id: Int!): service_provider_post_comment
+
+  """
   fetch data from the table: "service_provider.referral"
   """
   service_provider_referral(
@@ -32319,14 +32477,14 @@ enum restaurant_operator_constraint {
   operator_details_id_key
 
   """
+  unique or primary key constraint on columns "user_id"
+  """
+  operator_user_id_key
+
+  """
   unique or primary key constraint on columns "id"
   """
   restaurant_operator_pkey
-
-  """
-  unique or primary key constraint on columns "user_id"
-  """
-  restaurant_operator_user_id_key
 }
 
 """
@@ -39376,11 +39534,41 @@ type service_provider_post {
   """An object relationship"""
   business: business_business
 
-  """Array of { message, date }"""
+  """An array relationship"""
   comments(
-    """JSON select path"""
-    path: String
-  ): jsonb!
+    """distinct select on columns"""
+    distinct_on: [service_provider_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_post_comment_bool_exp
+  ): [service_provider_post_comment!]!
+
+  """An aggregate relationship"""
+  comments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_post_comment_bool_exp
+  ): service_provider_post_comment_aggregate!
 
   """An object relationship"""
   delivery_company: delivery_company
@@ -39432,9 +39620,6 @@ type service_provider_post_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_append_input {
-  """Array of { message, date }"""
-  comments: jsonb
-
   """Array of customerIds"""
   likes: jsonb
 }
@@ -39453,7 +39638,8 @@ input service_provider_post_bool_exp {
   _not: service_provider_post_bool_exp
   _or: [service_provider_post_bool_exp!]
   business: business_business_bool_exp
-  comments: jsonb_comparison_exp
+  comments: service_provider_post_comment_bool_exp
+  comments_aggregate: service_provider_post_comment_aggregate_bool_exp
   delivery_company: delivery_company_bool_exp
   id: Int_comparison_exp
   image: String_comparison_exp
@@ -39465,6 +39651,484 @@ input service_provider_post_bool_exp {
   restaurant: restaurant_restaurant_bool_exp
   service_provider_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
+}
+
+"""
+columns and relationships of "service_provider.post_comment"
+"""
+type service_provider_post_comment {
+  commented_on: timestamptz!
+  id: Int!
+  likes(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+  message: String!
+  post_id: Int!
+
+  """An object relationship"""
+  user: user!
+  user_id: Int!
+}
+
+"""
+aggregated selection of "service_provider.post_comment"
+"""
+type service_provider_post_comment_aggregate {
+  aggregate: service_provider_post_comment_aggregate_fields
+  nodes: [service_provider_post_comment!]!
+}
+
+input service_provider_post_comment_aggregate_bool_exp {
+  count: service_provider_post_comment_aggregate_bool_exp_count
+}
+
+input service_provider_post_comment_aggregate_bool_exp_count {
+  arguments: [service_provider_post_comment_select_column!]
+  distinct: Boolean
+  filter: service_provider_post_comment_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "service_provider.post_comment"
+"""
+type service_provider_post_comment_aggregate_fields {
+  avg: service_provider_post_comment_avg_fields
+  count(columns: [service_provider_post_comment_select_column!], distinct: Boolean): Int!
+  max: service_provider_post_comment_max_fields
+  min: service_provider_post_comment_min_fields
+  stddev: service_provider_post_comment_stddev_fields
+  stddev_pop: service_provider_post_comment_stddev_pop_fields
+  stddev_samp: service_provider_post_comment_stddev_samp_fields
+  sum: service_provider_post_comment_sum_fields
+  var_pop: service_provider_post_comment_var_pop_fields
+  var_samp: service_provider_post_comment_var_samp_fields
+  variance: service_provider_post_comment_variance_fields
+}
+
+"""
+order by aggregate values of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_aggregate_order_by {
+  avg: service_provider_post_comment_avg_order_by
+  count: order_by
+  max: service_provider_post_comment_max_order_by
+  min: service_provider_post_comment_min_order_by
+  stddev: service_provider_post_comment_stddev_order_by
+  stddev_pop: service_provider_post_comment_stddev_pop_order_by
+  stddev_samp: service_provider_post_comment_stddev_samp_order_by
+  sum: service_provider_post_comment_sum_order_by
+  var_pop: service_provider_post_comment_var_pop_order_by
+  var_samp: service_provider_post_comment_var_samp_order_by
+  variance: service_provider_post_comment_variance_order_by
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input service_provider_post_comment_append_input {
+  likes: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "service_provider.post_comment"
+"""
+input service_provider_post_comment_arr_rel_insert_input {
+  data: [service_provider_post_comment_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: service_provider_post_comment_on_conflict
+}
+
+"""aggregate avg on columns"""
+type service_provider_post_comment_avg_fields {
+  id: Float
+  post_id: Float
+  user_id: Float
+}
+
+"""
+order by avg() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_avg_order_by {
+  id: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table
+"service_provider.post_comment". All fields are combined with a logical 'AND'.
+"""
+input service_provider_post_comment_bool_exp {
+  _and: [service_provider_post_comment_bool_exp!]
+  _not: service_provider_post_comment_bool_exp
+  _or: [service_provider_post_comment_bool_exp!]
+  commented_on: timestamptz_comparison_exp
+  id: Int_comparison_exp
+  likes: jsonb_comparison_exp
+  message: String_comparison_exp
+  post_id: Int_comparison_exp
+  user: user_bool_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "service_provider.post_comment"
+"""
+enum service_provider_post_comment_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  post_comment_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input service_provider_post_comment_delete_at_path_input {
+  likes: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input service_provider_post_comment_delete_elem_input {
+  likes: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input service_provider_post_comment_delete_key_input {
+  likes: String
+}
+
+"""
+input type for incrementing numeric columns in table "service_provider.post_comment"
+"""
+input service_provider_post_comment_inc_input {
+  id: Int
+  post_id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "service_provider.post_comment"
+"""
+input service_provider_post_comment_insert_input {
+  commented_on: timestamptz
+  id: Int
+  likes: jsonb
+  message: String
+  post_id: Int
+  user: user_obj_rel_insert_input
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type service_provider_post_comment_max_fields {
+  commented_on: timestamptz
+  id: Int
+  message: String
+  post_id: Int
+  user_id: Int
+}
+
+"""
+order by max() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_max_order_by {
+  commented_on: order_by
+  id: order_by
+  message: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type service_provider_post_comment_min_fields {
+  commented_on: timestamptz
+  id: Int
+  message: String
+  post_id: Int
+  user_id: Int
+}
+
+"""
+order by min() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_min_order_by {
+  commented_on: order_by
+  id: order_by
+  message: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "service_provider.post_comment"
+"""
+type service_provider_post_comment_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [service_provider_post_comment!]!
+}
+
+"""
+on_conflict condition type for table "service_provider.post_comment"
+"""
+input service_provider_post_comment_on_conflict {
+  constraint: service_provider_post_comment_constraint!
+  update_columns: [service_provider_post_comment_update_column!]! = []
+  where: service_provider_post_comment_bool_exp
+}
+
+"""
+Ordering options when selecting data from "service_provider.post_comment".
+"""
+input service_provider_post_comment_order_by {
+  commented_on: order_by
+  id: order_by
+  likes: order_by
+  message: order_by
+  post_id: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: service_provider.post_comment"""
+input service_provider_post_comment_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input service_provider_post_comment_prepend_input {
+  likes: jsonb
+}
+
+"""
+select columns of table "service_provider.post_comment"
+"""
+enum service_provider_post_comment_select_column {
+  """column name"""
+  commented_on
+
+  """column name"""
+  id
+
+  """column name"""
+  likes
+
+  """column name"""
+  message
+
+  """column name"""
+  post_id
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "service_provider.post_comment"
+"""
+input service_provider_post_comment_set_input {
+  commented_on: timestamptz
+  id: Int
+  likes: jsonb
+  message: String
+  post_id: Int
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type service_provider_post_comment_stddev_fields {
+  id: Float
+  post_id: Float
+  user_id: Float
+}
+
+"""
+order by stddev() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_stddev_order_by {
+  id: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type service_provider_post_comment_stddev_pop_fields {
+  id: Float
+  post_id: Float
+  user_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_stddev_pop_order_by {
+  id: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type service_provider_post_comment_stddev_samp_fields {
+  id: Float
+  post_id: Float
+  user_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_stddev_samp_order_by {
+  id: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""
+Streaming cursor of the table "service_provider_post_comment"
+"""
+input service_provider_post_comment_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: service_provider_post_comment_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input service_provider_post_comment_stream_cursor_value_input {
+  commented_on: timestamptz
+  id: Int
+  likes: jsonb
+  message: String
+  post_id: Int
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type service_provider_post_comment_sum_fields {
+  id: Int
+  post_id: Int
+  user_id: Int
+}
+
+"""
+order by sum() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_sum_order_by {
+  id: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""
+update columns of table "service_provider.post_comment"
+"""
+enum service_provider_post_comment_update_column {
+  """column name"""
+  commented_on
+
+  """column name"""
+  id
+
+  """column name"""
+  likes
+
+  """column name"""
+  message
+
+  """column name"""
+  post_id
+
+  """column name"""
+  user_id
+}
+
+input service_provider_post_comment_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: service_provider_post_comment_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: service_provider_post_comment_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: service_provider_post_comment_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: service_provider_post_comment_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: service_provider_post_comment_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: service_provider_post_comment_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: service_provider_post_comment_set_input
+  where: service_provider_post_comment_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type service_provider_post_comment_var_pop_fields {
+  id: Float
+  post_id: Float
+  user_id: Float
+}
+
+"""
+order by var_pop() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_var_pop_order_by {
+  id: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type service_provider_post_comment_var_samp_fields {
+  id: Float
+  post_id: Float
+  user_id: Float
+}
+
+"""
+order by var_samp() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_var_samp_order_by {
+  id: order_by
+  post_id: order_by
+  user_id: order_by
+}
+
+"""aggregate variance on columns"""
+type service_provider_post_comment_variance_fields {
+  id: Float
+  post_id: Float
+  user_id: Float
+}
+
+"""
+order by variance() on columns of table "service_provider.post_comment"
+"""
+input service_provider_post_comment_variance_order_by {
+  id: order_by
+  post_id: order_by
+  user_id: order_by
 }
 
 """
@@ -39481,9 +40145,6 @@ enum service_provider_post_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input service_provider_post_delete_at_path_input {
-  """Array of { message, date }"""
-  comments: [String!]
-
   """Array of customerIds"""
   likes: [String!]
 }
@@ -39493,9 +40154,6 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input service_provider_post_delete_elem_input {
-  """Array of { message, date }"""
-  comments: Int
-
   """Array of customerIds"""
   likes: Int
 }
@@ -39504,9 +40162,6 @@ input service_provider_post_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input service_provider_post_delete_key_input {
-  """Array of { message, date }"""
-  comments: String
-
   """Array of customerIds"""
   likes: String
 }
@@ -39524,9 +40179,7 @@ input type for inserting data into table "service_provider.post"
 """
 input service_provider_post_insert_input {
   business: business_business_obj_rel_insert_input
-
-  """Array of { message, date }"""
-  comments: jsonb
+  comments: service_provider_post_comment_arr_rel_insert_input
   delivery_company: delivery_company_obj_rel_insert_input
   id: Int
   image: String
@@ -39587,7 +40240,7 @@ input service_provider_post_on_conflict {
 """Ordering options when selecting data from "service_provider.post"."""
 input service_provider_post_order_by {
   business: business_business_order_by
-  comments: order_by
+  comments_aggregate: service_provider_post_comment_aggregate_order_by
   delivery_company: delivery_company_order_by
   id: order_by
   image: order_by
@@ -39608,9 +40261,6 @@ input service_provider_post_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_prepend_input {
-  """Array of { message, date }"""
-  comments: jsonb
-
   """Array of customerIds"""
   likes: jsonb
 }
@@ -39619,9 +40269,6 @@ input service_provider_post_prepend_input {
 select columns of table "service_provider.post"
 """
 enum service_provider_post_select_column {
-  """column name"""
-  comments
-
   """column name"""
   id
 
@@ -39651,8 +40298,6 @@ enum service_provider_post_select_column {
 input type for updating data in table "service_provider.post"
 """
 input service_provider_post_set_input {
-  """Array of { message, date }"""
-  comments: jsonb
   id: Int
   image: String
 
@@ -39696,8 +40341,6 @@ input service_provider_post_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_provider_post_stream_cursor_value_input {
-  """Array of { message, date }"""
-  comments: jsonb
   id: Int
   image: String
 
@@ -39720,9 +40363,6 @@ type service_provider_post_sum_fields {
 update columns of table "service_provider.post"
 """
 enum service_provider_post_update_column {
-  """column name"""
-  comments
-
   """column name"""
   id
 
@@ -45471,6 +46111,65 @@ type subscription_root {
   fetch data from the table: "service_provider.post" using primary key columns
   """
   service_provider_post_by_pk(id: Int!): service_provider_post
+
+  """
+  fetch data from the table: "service_provider.post_comment"
+  """
+  service_provider_post_comment(
+    """distinct select on columns"""
+    distinct_on: [service_provider_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_post_comment_bool_exp
+  ): [service_provider_post_comment!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider.post_comment"
+  """
+  service_provider_post_comment_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_post_comment_bool_exp
+  ): service_provider_post_comment_aggregate!
+
+  """
+  fetch data from the table: "service_provider.post_comment" using primary key columns
+  """
+  service_provider_post_comment_by_pk(id: Int!): service_provider_post_comment
+
+  """
+  fetch data from the table in a streaming manner: "service_provider.post_comment"
+  """
+  service_provider_post_comment_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [service_provider_post_comment_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: service_provider_post_comment_bool_exp
+  ): [service_provider_post_comment!]!
 
   """
   fetch data from the table in a streaming manner: "service_provider.post"
