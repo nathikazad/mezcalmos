@@ -539,10 +539,10 @@
       "savedCards": "My cards"
     },
     "components": {
-      "CustDeliveryTypeSelector" : {
-"dvType" : "Delivery type",
-"delivery": "Delivery",
-"pickup" :"In-store Pickup"
+      "CustDeliveryTypeSelector": {
+        "dvType": "Delivery type",
+        "delivery": "Delivery",
+        "pickup": "In-store Pickup"
       },
       "CustOrderCostCard": {
         "orderCost": "Order cost"
@@ -896,9 +896,8 @@
           "title": "Open Delivery",
           "from": "From",
           "to": "To",
-          "chooseCompany" :"Choose your delivery company",
-          "chooseCompanyInfo" :"If you choose multiple the first company to accept your order will receive the order.",
-
+          "chooseCompany": "Choose your delivery company",
+          "chooseCompanyInfo": "If you choose multiple the first company to accept your order will receive the order.",
           "thisFieldCanBeEmpty": "This field can be empty",
           "next": "Next",
           "orderNow": "Order now",
@@ -1122,8 +1121,8 @@
             "orderNow": "Order now",
             "scheduleOrder": "Schedule order",
             "errorText": "Sorry, we don't support your area yet",
-            "delivery" :"Delivery",
-            "pickup" :"In-store Pickup"
+            "delivery": "Delivery",
+            "pickup": "In-store Pickup"
           }
         },
         "ViewItemScreen": {
@@ -2296,15 +2295,14 @@
         "onTheWayDropoffBody": "Driver is on the way to deliver you order"
       },
       "business": {
-        "modifReqTitle" : "Changes Requested",
-        "modifReqBody" : "Your order business is requesting some changes",
-        "confirmedTitle" : "Confirmed",
-        "confirmedBody" : "You order request is confirmed by the business provider"
+        "modifReqTitle": "Changes Requested",
+        "modifReqBody": "Your order business is requesting some changes",
+        "confirmedTitle": "Confirmed",
+        "confirmedBody": "You order request is confirmed by the business provider"
       },
-      "offers" : {
-        "newOfferTitle" : "New Offer",
-        "newOfferBody" : "You received new delivery price offer"
-
+      "offers": {
+        "newOfferTitle": "New Offer",
+        "newOfferBody": "You received new delivery price offer"
       }
     }
   },
@@ -2460,14 +2458,12 @@
         "story": "Story",
         "facebook": "Facebook",
         "save": "Save"
-       
       },
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage": {
             "create": "Create",
             "opNote": "If you want to be added as an operator to an existing business, ask the owner of the business to send you invite code",
-
             "subtitle": {
               "restaurant": "Create a new restaurant and receive orders from your local customers.",
               "business": "Create an account to expand your business & attract more online customers.",
@@ -2527,7 +2523,7 @@
             }
           }
         },
-        "formErrorText" : "Please check that all required fields are there",
+        "formErrorText": "Please check that all required fields are there",
         "createText": "Create",
         "info": "Information",
         "schedule": "Schedule",
@@ -2915,10 +2911,11 @@
       "OrderDeliveryLocation": {
         "title": "Delivery location",
         "deliveryDetails": "Delivery details"
-      },    "OrderDeliveryType": {
+      },
+      "OrderDeliveryType": {
         "title": "Delivery type",
         "delivery": "Delivery",
-        "pickup" : "In-store Pickup"
+        "pickup": "In-store Pickup"
       },
       "OrderScheduledTimeCard": {
         "title": "Scheduled time"
@@ -3539,9 +3536,9 @@
         "restaurant": "Restaurant",
         "laundry": "Laundry",
         "courier": "Open Delivery",
-        "cancel" : "Cancel",
-        "counterOffer" : "Counter Offer",
-        "reqCounterOffer" : "Request price change"
+        "cancel": "Cancel",
+        "counterOffer": "Counter Offer",
+        "reqCounterOffer": "Request price change"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
@@ -4290,7 +4287,13 @@
       "newOrderTitle": "Order received",
       "newOrderBody": "You got a new order",
       "canceledOrderTitle": "Order cancelled",
-      "canceledOrderBody": "Your order has been cancelled"
+      "canceledOrderBody": "Your order has been cancelled",
+      "newBusinessTitle": "New business",
+      "newBusinessBody": "New business have been created",
+      "newRestaurantTitle": "New Restaurant",
+      "newRestaurantBody": "New restaurant have been created",
+      "newLaundryTitle": "New Laundry",
+      "newLaundryBody": "New laundry have been created"
     },
     "pages": {
       "AdminTabsView": {

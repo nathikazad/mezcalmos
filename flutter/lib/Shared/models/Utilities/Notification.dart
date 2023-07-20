@@ -13,6 +13,9 @@ enum NotificationType {
   NewDriver,
   Call,
   PriceChange,
+  NewBusiness,
+  NewLaundry,
+  NewRestaurant,
 }
 
 extension ParseNotificationTypeToString on NotificationType {
