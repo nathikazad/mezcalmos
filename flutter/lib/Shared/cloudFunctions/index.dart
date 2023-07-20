@@ -362,7 +362,8 @@ class CloudFunctions {
       String? businessOperatorNotificationToken,
       required ServiceProviderLanguage language,
       String? uniqueId,
-      required Schedule schedule}  ) async {
+      required Schedule schedule,
+      required bool isMezAdmin}  ) async {
     return BusinessResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "business-createBusiness",
       parameters: <String, dynamic>{
@@ -375,6 +376,7 @@ class CloudFunctions {
         "language":language.toFirebaseFormattedJson(),
         "uniqueId": uniqueId,
         "schedule":schedule.toFirebaseFormattedJson(),
+        "isMezAdmin": isMezAdmin,
       }));
   }
 
@@ -420,7 +422,8 @@ class CloudFunctions {
       String? laundryOperatorNotificationToken,
       required DeliveryDetails deliveryDetails,
       required ServiceProviderLanguage language,
-      String? uniqueId}  ) async {
+      String? uniqueId,
+      required bool isMezAdmin}  ) async {
     return LaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "laundry3-createLaundry",
       parameters: <String, dynamic>{
@@ -433,6 +436,7 @@ class CloudFunctions {
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
         "language":language.toFirebaseFormattedJson(),
         "uniqueId": uniqueId,
+        "isMezAdmin": isMezAdmin,
       }));
   }
 
