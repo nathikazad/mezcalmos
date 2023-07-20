@@ -20,7 +20,6 @@ export interface BusinessDetails {
     businessOperatorNotificationToken?: string,
     language: ServiceProviderLanguage,
     uniqueId?: string,
-    firebaseId?: string,
     schedule: Schedule,
 }
 export interface BusinessResponse {

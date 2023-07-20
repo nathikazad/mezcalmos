@@ -55,7 +55,6 @@ export async function createLaundryStore(
                         name: laundryDetails.name,
                         image: laundryDetails.image,
                         schedule: $`schedule`,
-                        firebase_id: laundryDetails.firebaseId ?? undefined,
                         language: $`language`,
                         service_provider_type: ServiceProviderType.Laundry,
                         unique_id: uniqueId,
@@ -135,7 +134,6 @@ export async function createLaundryStore(
         schedule: laundryDetails.schedule,
         deliveryDetails: laundryDetails.deliveryDetails,
         language: laundryDetails.language,
-        firebaseId: laundryDetails.firebaseId,
         serviceProviderType: ServiceProviderType.Laundry,
         uniqueId
     }
