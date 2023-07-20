@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -217,7 +217,7 @@ Future<String?> getAdressFromLatLng(LatLng latlng) async {
         onTimeout: () => throw Exception(
             "Timed out when trying to geocode LatLng(${latlng.latitude}, ${latlng.longitude})")));
   } catch (e, _stack) {
-    logCrashes(crashInfos: "Error => $e\n\nStack => $_stack");
+    logCrashes(e, _stack);
   }
 
   if (resp != null) {

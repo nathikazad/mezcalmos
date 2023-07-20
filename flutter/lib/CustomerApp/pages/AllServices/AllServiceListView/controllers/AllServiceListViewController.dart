@@ -80,15 +80,20 @@ class AllServiceListViewController {
   }
 
   Future<void> fetchServiceTree() async {
+    logEventToServer("Fetching Service tree");
     final locPkg.LocationData location = await locPkg.Location().getLocation();
+    logEventToServer("Fetching Service tree got location");
     final ServiceTree data = await get_service_tree(
       distance: defaultDistance,
       lat: location.latitude ?? 15.8.toDouble(),
       lng: location.longitude ?? -97.toDouble(),
       withCache: true,
     );
+
     serviceTreeData.value = data;
     mezDbgPrint("service_tree: $data");
+    logEventToServer("Fetching Service tree finished",
+        debugData: {"serviceTree": data.toString()});
   }
 
   void setCurrentSelectedService(MezService serviceValue) {

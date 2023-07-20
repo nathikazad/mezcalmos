@@ -39,6 +39,7 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   void initState() {
+    logEventToServer("Wrapper init start");
     // this will execute first and much faster since it's a microtask.
     MezRouter.registerReturnToViewCallback(SharedRoutes.kWrapperRoute, () {
       mezDbgPrint("back in wrapper");
@@ -62,6 +63,7 @@ class _WrapperState extends State<Wrapper> {
     });
     Future.microtask(() => checkConnectivity());
     super.initState();
+    logEventToServer("Wrapper init finish");
   }
 
   void checkConnectivity() {
@@ -137,7 +139,7 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("current route ======>>>>${MezRouter.currentRoute().name}");
         mezDbgPrint("[777] app = customerApp .. routing to home!");
         await MezRouter.popEverythingTillBeforeWrapper();
-
+        logEventToServer("Wrapper sending to home route");
         MezRouter.toPath(SharedRoutes.kHomeRoute);
 
         Future.microtask(() async {
