@@ -41,6 +41,16 @@ insert_permissions:
         - service_provider_id
         - service_provider_type
 select_permissions:
+  - role: anonymous
+    permission:
+      columns: []
+      filter: {}
+      allow_aggregations: true
+  - role: business_operator
+    permission:
+      columns: []
+      filter: {}
+      allow_aggregations: true
   - role: customer
     permission:
       columns:
@@ -51,6 +61,27 @@ select_permissions:
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
+      allow_aggregations: true
+  - role: delivery_operator
+    permission:
+      columns: []
+      filter: {}
+      allow_aggregations: true
+  - role: laundry_operator
+    permission:
+      columns: []
+      filter: {}
+      allow_aggregations: true
+  - role: mez_admin
+    permission:
+      columns: []
+      filter: {}
+      allow_aggregations: true
+  - role: restaurant_operator
+    permission:
+      columns: []
+      filter: {}
+      allow_aggregations: true
 delete_permissions:
   - role: customer
     permission:

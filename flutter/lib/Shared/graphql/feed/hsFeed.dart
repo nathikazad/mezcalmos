@@ -236,6 +236,25 @@ Future<List<Post>> fetch_posts_within_distance(
   return posts;
 }
 
+Future<int> fetch_number_of_subscribers(
+    {required int serviceProviderId,
+    required cModels.ServiceProviderType serviceProviderType,
+    bool withCache = true}) async {
+  QueryResult<Query$fetch_number_of_subscribers> res =
+      await _db.graphQLClient.query$fetch_number_of_subscribers(
+    Options$Query$fetch_number_of_subscribers(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$fetch_number_of_subscribers(
+          service_provider_id: serviceProviderId,
+          service_provider_type: serviceProviderType.toFirebaseFormatString()),
+    ),
+  );
+  return res
+          .parsedData?.service_provider_subscriber_aggregate.aggregate?.count ??
+      0;
+}
+
 Future<int?> subscribe_service_provider(
     {required int customerId,
     required int serviceProviderId,
@@ -293,18 +312,31 @@ Future<int?> write_comment(
   return res.parsedData!.insert_service_provider_post_comment_one?.id;
 }
 
-Future<int?> like_post({required int postId, required int customerId}) async {
-  final QueryResult<Mutation$like_post> res =
-      await _db.graphQLClient.mutate$like_post(
-    Options$Mutation$like_post(
-      variables:
-          Variables$Mutation$like_post(id: postId, customer_id: customerId),
+Future<void> update_post_likes(
+    {required int postId, required List<int> likes}) async {
+  final QueryResult<Mutation$update_post_likes> res =
+      await _db.graphQLClient.mutate$update_post_likes(
+    Options$Mutation$update_post_likes(
+      variables: Variables$Mutation$update_post_likes(id: postId, likes: likes),
     ),
   );
   if (res.parsedData?.update_service_provider_post_by_pk == null) {
     throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
   }
-  return res.parsedData!.update_service_provider_post_by_pk?.id;
+}
+
+Future<void> update_comment_likes(
+    {required int postId, required List<int> likes}) async {
+  final QueryResult<Mutation$update_comment_likes> res =
+      await _db.graphQLClient.mutate$update_comment_likes(
+    Options$Mutation$update_comment_likes(
+      variables:
+          Variables$Mutation$update_comment_likes(id: postId, likes: likes),
+    ),
+  );
+  if (res.parsedData?.update_service_provider_post_comment_by_pk == null) {
+    throw Exception("🚨 like comment exception 🚨 \n ${res.exception}");
+  }
 }
 
 Future<int?> create_post({
@@ -328,4 +360,38 @@ Future<int?> create_post({
     throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
   }
   return res.parsedData!.insert_service_provider_post_one?.id;
+}
+
+Future<int?> delete_post({
+  required int postId,
+}) async {
+  final QueryResult<Mutation$delete_post> res =
+      await _db.graphQLClient.mutate$delete_post(
+    Options$Mutation$delete_post(
+      variables: Variables$Mutation$delete_post(
+        id: postId,
+      ),
+    ),
+  );
+  if (res.parsedData?.delete_service_provider_post_by_pk == null) {
+    throw Exception("🚨 delete post exception 🚨 \n ${res.exception}");
+  }
+  return res.parsedData!.delete_service_provider_post_by_pk?.id;
+}
+
+Future<int?> delete_comment({
+  required int commentId,
+}) async {
+  final QueryResult<Mutation$delete_comment> res =
+      await _db.graphQLClient.mutate$delete_comment(
+    Options$Mutation$delete_comment(
+      variables: Variables$Mutation$delete_comment(
+        id: commentId,
+      ),
+    ),
+  );
+  if (res.parsedData?.delete_service_provider_post_comment_by_pk == null) {
+    throw Exception("🚨 delete comment exception 🚨 \n ${res.exception}");
+  }
+  return res.parsedData!.delete_service_provider_post_comment_by_pk?.post_id;
 }
