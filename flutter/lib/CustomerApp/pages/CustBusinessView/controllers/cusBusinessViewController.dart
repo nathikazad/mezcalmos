@@ -33,6 +33,9 @@ class CustBusinessViewController {
   RxList<Post> _posts = RxList.empty();
   List<Post> get posts => _posts.value;
 
+  RxList<Post> _gridImages = RxList.empty();
+  List<Post> get gridImages => _gridImages.value;
+
 // getters
 
   int get businessId => _businessId;
@@ -52,6 +55,7 @@ class CustBusinessViewController {
     tabController = TabController(length: 3, vsync: vsync);
 
     unawaited(_fetchPosts());
+    unawaited(_fetchGridImages());
 
     mezDbgPrint('businessId: $businessId');
     _business.value =
@@ -96,6 +100,34 @@ class CustBusinessViewController {
           serviceProviderType: ServiceProviderType.Business);
     } catch (e) {
     } finally {}
+  }
+
+  Future<void> _fetchGridImages() async {
+    try {
+      _gridImages.value = await fetch_service_provider_posts(
+          imagesOnly: true,
+          serviceProviderId: businessId,
+          serviceProviderType: ServiceProviderType.Business);
+    } catch (e) {
+    } finally {}
+  }
+
+  Future<void> writeComment(
+      {required int postId,
+      required TextEditingController commentController}) async {
+    if (commentController.text.isEmpty) return;
+
+    commentController.text = '';
+    await write_comment(
+        userId: _authController.hasuraUserId!,
+        postId: postId,
+        commentMsg: commentController.text);
+  }
+
+  Future<void> likePost(
+    int postId,
+  ) async {
+    await like_post(postId: postId, customerId: _authController.user!.hasuraId);
   }
 
   void dispose() {}

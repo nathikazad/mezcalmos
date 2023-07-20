@@ -531,10 +531,10 @@
       "savedCards": "My cards"
     },
     "components": {
-      "CustDeliveryTypeSelector" : {
-"dvType" : "Delivery type",
-"delivery": "Delivery",
-"pickup" :"In-store Pickup"
+      "CustDeliveryTypeSelector": {
+        "dvType": "Delivery type",
+        "delivery": "Delivery",
+        "pickup": "In-store Pickup"
       },
       "CustOrderCostCard": {
         "orderCost": "Order cost"
@@ -1134,8 +1134,8 @@
             "orderNow": "Order now",
             "scheduleOrder": "Schedule order",
             "errorText": "Sorry, we don't support your area yet",
-            "delivery" :"Delivery",
-            "pickup" :"In-store Pickup"
+            "delivery": "Delivery",
+            "pickup": "In-store Pickup"
           }
         },
         "ViewItemScreen": {
@@ -2042,7 +2042,15 @@
         "oneTimeEvents": "Upcoming Events",
         "onDemandEvents": "Experiences",
         "description": "Description",
-        "noDescription": "No description"
+        "noDescription": "No description",
+        "components": {
+          "BusinessFeedCardPost": {
+            "like": "Like",
+            "comment": "Comment",
+            "writecomment": "Write your comment..",
+            "post": "Post"
+          }
+        }
       },
       "CustomerWrapper": {
         "orders": "Orders",

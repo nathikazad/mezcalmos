@@ -71,7 +71,10 @@ class CustFeedViewController {
     if (commentController.text.isEmpty) return;
 
     commentController.text = '';
-    await write_comment(postId: postId, comment: commentController.text);
+    await write_comment(
+        userId: _authController.hasuraUserId!,
+        postId: postId,
+        commentMsg: commentController.text);
   }
 
   Future<void> likePost(

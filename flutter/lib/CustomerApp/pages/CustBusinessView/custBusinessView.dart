@@ -8,10 +8,9 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRe
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessServiceCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/BusinessFeedCardPost.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustFeedView/components/FeedCardPost.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustFeedView/controllers/CustFeedViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -30,7 +29,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -167,17 +165,18 @@ class _CustBusinessViewState extends State<CustBusinessView>
                                 child: TabBarView(children: <Widget>[
                               Obx(() => _viewController.posts.isEmpty
                                   ? NoPostsFound()
-                                  : SingleChildScrollView(child: Column()
-                                      // child: Column(
-                                      //   children: List.generate(
-                                      //       _viewController.posts.length,
-                                      //       (int index) => FeedCardPost(
-                                      //           controller:
-                                      //               ,
-                                      //           post: _viewController
-                                      //               .posts[index])),
-                                      // ),
-                                      )),
+                                  : SingleChildScrollView(
+                                      child: Column(
+                                        children: List.generate(
+                                            _viewController.posts.length,
+                                            (int index) => BusinessFeedCardPost(
+                                                controller: _viewController,
+                                                business:
+                                                    _viewController.business!,
+                                                post: _viewController
+                                                    .posts[index])),
+                                      ),
+                                    )),
                               GridView.builder(
                                   padding: EdgeInsets.zero,
                                   gridDelegate:
@@ -186,14 +185,12 @@ class _CustBusinessViewState extends State<CustBusinessView>
                                           childAspectRatio: 1,
                                           crossAxisSpacing: 1,
                                           mainAxisSpacing: 1),
-                                  itemCount: 25,
+                                  itemCount: _viewController.gridImages.length,
                                   itemBuilder: (BuildContext ctx, int index) {
-                                    return Container(
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
-                                      ),
-                                    );
+                                    return CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: _viewController
+                                            .gridImages[index].image!);
                                   })
                             ]))
                           ])),

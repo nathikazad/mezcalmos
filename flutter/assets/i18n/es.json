@@ -525,11 +525,11 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
-      "CustDeliveryTypeSelector" : {
-        "dvType" : "Tipo de entrega",
+      "CustDeliveryTypeSelector": {
+        "dvType": "Tipo de entrega",
         "delivery": "Entrega",
-        "pickup" :"Recogida en la tienda"
-              },
+        "pickup": "Recogida en la tienda"
+      },
       "CustOrderCostCard": {
         "orderCost": "Costo de la orden"
       },
@@ -1127,8 +1127,8 @@
             "deliveryLocation": "Lugar de entrega",
             "deliveryType": "Tipo de entrega",
             "paymentMethod": "Método de pago",
-            "delivery" :"Entrega",
-            "pickup" :"Recogida en la tienda"
+            "delivery": "Entrega",
+            "pickup": "Recogida en la tienda"
           }
         },
         "ViewItemScreen": {
@@ -2100,7 +2100,15 @@
         "oneTimeEvents": "Próximos Eventos",
         "onDemandEvents": "Experiencias",
         "description": "Descripción",
-        "noDescription": "Sin descripción"
+        "noDescription": "Sin descripción",
+        "components": {
+          "BusinessFeedCardPost": {
+            "like": "Como",
+            "comment": "Comentario",
+            "writecomment": "Escribe tu comentario ..",
+            "post": "Correo"
+          }
+        }
       },
 
       "CustomerWrapper": {
