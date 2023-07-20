@@ -19,7 +19,6 @@ export interface LaundryDetails {
   phoneNumber: string,
   schedule: Schedule,
   laundryOperatorNotificationToken?: string,
-  firebaseId?: string,
   deliveryDetails: DeliveryDetails,
   language: ServiceProviderLanguage,
   uniqueId?: string

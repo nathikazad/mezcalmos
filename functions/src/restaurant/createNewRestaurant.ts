@@ -19,7 +19,6 @@ export interface RestaurantDetails {
   location: Location,
   schedule: Schedule,
   restaurantOperatorNotificationToken?: string,
-  firebaseId?: string,
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
   language: ServiceProviderLanguage,

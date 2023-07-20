@@ -2930,7 +2930,7 @@ extension ParseStringToChangeUniqueIdError on String {
 }
 
 
-enum RestaurantError { UnhandledError, DeliveryDetailsNotSet, UserNotFound, DeepLinkError, QRGenerationError, RestaurantCreationError, UniqueIdAlreadyExists, UnAuthorizedAccess }
+enum RestaurantError { UnhandledError, DeliveryDetailsNotSet, UserNotFound, DeepLinkError, QRGenerationError, RestaurantCreationError, UniqueIdAlreadyExists, UnauthorizedAccess }
 extension ParseRestaurantErrorToString on RestaurantError {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
