@@ -66,7 +66,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                         }
                     }
                 },
-                operators: {
+                operators: (businessDetails.isMezAdmin == false) ? {
                     data: [{
                         user_id: businessOperatorUserId,
                         operator_details: {
@@ -78,7 +78,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                             }
                         }
                     }]
-                }
+                }: undefined
             }
         }, {
             service_provider_type: true,
@@ -119,7 +119,7 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
             serviceProviderType: ServiceProviderType.Business
         }
     }
-    if(businessDetails.businessOperatorNotificationToken) {
+    if(businessDetails.isMezAdmin == false && businessDetails.businessOperatorNotificationToken) {
         chain.mutation({
             insert_notification_info_one: [{
                 object: {
