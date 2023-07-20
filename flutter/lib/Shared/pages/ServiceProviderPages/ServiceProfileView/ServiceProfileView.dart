@@ -3,11 +3,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
@@ -23,10 +21,8 @@ import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 import 'package:mezcalmos/env.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:share_plus_platform_interface/share_plus_platform_interface.dart'
     as share;
@@ -187,6 +183,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     _showQrPdfModal();
                                   },
                                 ),
+                            
                               _navigationLink(
                                 icon: Icons.grading,
                                 label: "",
