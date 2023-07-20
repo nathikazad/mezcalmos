@@ -29,25 +29,31 @@ class Post {
 }
 
 class Comment {
+  int id;
   String message;
   DateTime? commentedOn;
   List<int> likes;
+  int postId;
+  int userId;
+  String? userName;
+  String? userImage;
 
   Comment({
+    required this.id,
     required this.message,
     required this.likes,
+    required this.postId,
+    required this.userId,
+    this.userName,
+    this.userImage,
     this.commentedOn,
   });
 }
 
-Comment commentFromJson(Map<String, dynamic> json) {
-  return Comment(
-    message: json['message'],
-    likes: json['likes'] == null
-        ? List<int>.empty()
-        : json['likes']
-            .map<int>((e) => int.parse(e.toString()))
-            .toList(), //json['likes'].cast<int>(),
-    commentedOn: null,
-  );
-}
+// Comment commentFromJson(Map<String, dynamic> json) {
+//   return Comment(
+//     message: json['message'],
+//     likes: json['likes'].cast<int>(),
+//     commentedOn: DateTime.parse(json['commented_on']),
+//   );
+// }

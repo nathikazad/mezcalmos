@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
+import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
@@ -40,6 +41,7 @@ class CustBusinessViewController {
   bool get isBusinessLoaded => _business.value != null;
   RxList<review.Review> get reviews => _reviews;
   RxnNum get ratingAverage => _ratingAverage;
+  RxList<Offer> promotions = RxList.empty();
 
   // methods //
   Future<void> init({
@@ -55,6 +57,12 @@ class CustBusinessViewController {
     _business.value =
         await get_business_by_id(id: businessId, withCache: false);
     mezDbgPrint(_business.value?.toFirebaseFormattedJson());
+
+    promotions.value = await fetch_promotions(
+      serviceProviderId: businessId,
+      serviceProviderType: ServiceProviderType.Business,
+      withCache: false,
+    );
 
     // _service.value = await get_service_details_by_id(
     //     serviceDetailsId: serviceDetailsId, serviceId: serviceId);
@@ -83,6 +91,7 @@ class CustBusinessViewController {
   Future<void> _fetchPosts() async {
     try {
       _posts.value = await fetch_service_provider_posts(
+          imagesOnly: false,
           serviceProviderId: businessId,
           serviceProviderType: ServiceProviderType.Business);
     } catch (e) {

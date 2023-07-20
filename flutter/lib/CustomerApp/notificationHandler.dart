@@ -279,7 +279,13 @@ Map<String, dynamic> _getBusinessOrderStatusFields(
         "body": "${_i18n()["business"]["modifReqBody"]}",
         "imgUrl": "assets/images/shared/notifications/packageChecked.png",
       };
-
+    case BusinessOrderRequestStatus.CancelledByBusiness:
+      return <String, dynamic>{
+        "title": "${_i18n()["cancelledTitle"]}",
+        "body": "${_i18n()["cancelledBody"]}",
+        "imgUrl":
+            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+      };
     default:
       throw StateError("Unhandled Business Order Status");
   }

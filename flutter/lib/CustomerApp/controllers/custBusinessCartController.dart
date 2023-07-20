@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/helpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
@@ -50,6 +51,8 @@ class CustBusinessCartController extends GetxController {
   StreamSubscription<List<CustBusinessCart>?>? cartStream;
   String? subscriptionId;
   int _numberOfOldBusinessOrders = 0;
+
+  TextEditingController couponController = TextEditingController();
 
   @override
   Future<void> onInit() async {
@@ -342,5 +345,14 @@ class CustBusinessCartController extends GetxController {
       case OfferingType.Product:
         return;
     }
+  }
+
+  Future<void> applyCoupon() async {
+    var response = await applyBusinessCoupon(
+      cart: cart.value!,
+      customerId: _auth.hasuraUserId!,
+      couponCode: couponController.text.trim(),
+    );
+    mezDbgPrint("response: ${response?.name}");
   }
 }

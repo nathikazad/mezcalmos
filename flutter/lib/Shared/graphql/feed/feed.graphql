@@ -1,24 +1,3 @@
-mutation subscribeRestaurant($customer_id: Int, $service_provider_id: Int) {
-  insert_service_provider_subscriber_one(object: {customer_id: $customer_id, service_provider_id: $service_provider_id, service_provider_type: "restaurant"}) {
-    id
-  }
-}
-
-query getSubscribedRestaurants($_eq: Int) {
-  service_provider_subscriber(where: {service_provider_type: {_eq: "restaurant"}, _and: {customer_id: {_eq: $_eq}}}) {
-    id
-    restaurant {
-    details   {name}
-    }
-  }
-}
-
-mutation addFavouriteItem($customer_id: Int, $restaurant_id: Int, $restaurant_item_id: Int) {
-  insert_customer_favourited_item_one(object: {customer_id: $customer_id, restaurant_id: $restaurant_id, restaurant_item_id: $restaurant_item_id}) {
-    id
-  }
-}
-
 query getFavouriteItems($_eq: Int) {
   customer_favourited_item(where: {customer_id: {_eq: $_eq}}) {
     restaurant_item_id
@@ -68,7 +47,17 @@ query fetch_subscribed_posts($customer_id: Int, $limit: Int, $offset: Int) {
       posted_on: desc
     }
   ) {
-    comments
+    comments {
+      id
+      message
+      likes
+      commented_on
+      user {
+        id
+        name
+        image
+      }
+    }
     id
     image
     likes
@@ -104,9 +93,152 @@ query fetch_subscribed_posts($customer_id: Int, $limit: Int, $offset: Int) {
   }
 }
 
-mutation write_comment($id: Int!, $comments: jsonb) {
-  update_service_provider_post_by_pk(pk_columns: {id: $id}, _append: {comments: $comments}) {
+query fetch_service_provider_posts($service_provider_id: Int, $service_provider_type: String, $limit: Int, $offset: Int, $image: String_comparison_exp = {}) {
+  service_provider_post(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}, image: $image}, limit: $limit, offset: $offset) {
+    comments {
+      id
+      message
+      likes
+      commented_on
+      user {
+        id
+        name
+        image
+      }
+    }
     id
+    image
+    likes
+    message
+    link
+    posted_on
+  }
+}
+
+query fetch_posts_within_distance($limit: Int, $offset: Int, $from: geography!, $distance: Float!) {
+  service_provider_post(
+    limit: $limit, 
+    offset: $offset, 
+    where: {
+      _or: [{
+        business: {
+          details: {
+            location: {
+							gps: {
+                _st_d_within: {
+                  distance: $distance,
+                  from: $from
+                }
+              }
+            }
+          }
+        }
+      }, {
+        laundry: {
+          details: {
+            location: {
+							gps: {
+                _st_d_within: {
+                  distance: $distance,
+                  from: $from
+                }
+              }
+            }
+          }
+        }
+      }, {
+        delivery_company: {
+          details: {
+            location: {
+							gps: {
+                _st_d_within: {
+                  distance: $distance,
+                  from: $from
+                }
+              }
+            }
+          }
+        }
+      }, {
+        restaurant: {
+          details: {
+            location: {
+							gps: {
+                _st_d_within: {
+                  distance: $distance,
+                  from: $from
+                }
+              }
+            }
+          }
+        }
+      }]
+    }, 
+    order_by: {
+      posted_on: desc
+    }
+  ) {
+    comments {
+      id
+      message
+      likes
+      commented_on
+      user {
+        id
+        name
+        image
+      }
+    }
+    id
+    image
+    likes
+    link
+    message
+    posted_on
+    service_provider_id
+    service_provider_type
+    restaurant {
+      details {
+        name
+        image
+      }
+    }
+    laundry {
+      details {
+        name
+        image
+      }
+    }
+    delivery_company {
+      details {
+        name
+        image
+      }
+    }
+    business {
+      details {
+        name
+        image
+      }
+    }
+  }
+}
+mutation subscribe_service_provider($customer_id: Int, $service_provider_id: Int, $service_provider_type: String) {
+  insert_service_provider_subscriber_one(object: {customer_id: $customer_id, service_provider_id: $service_provider_id, service_provider_type: $service_provider_type}) {
+    id
+  }
+}
+
+mutation unsubscribe_service_provider($customer_id: Int, $service_provider_id: Int, $service_provider_type: String) {
+  delete_service_provider_subscriber(where: {customer_id: {_eq: $customer_id}, service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
+    affected_rows
+  }
+}
+
+mutation write_comment($post_id: Int!, $message: String!, $user_id: Int!) {
+  insert_service_provider_post_comment_one(object: {post_id: $post_id, message: $message, user_id: $user_id}) {
+    id
+    commented_on
   }
 }
 
@@ -123,14 +255,8 @@ mutation create_post($image: String, $message: String, $service_provider_id: Int
   }
 }
 
-query fetch_service_provider_posts($service_provider_id: Int, $service_provider_type: String) {
-  service_provider_post(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
-    comments
+mutation addFavouriteItem($customer_id: Int, $restaurant_id: Int, $restaurant_item_id: Int) {
+  insert_customer_favourited_item_one(object: {customer_id: $customer_id, restaurant_id: $restaurant_id, restaurant_item_id: $restaurant_item_id}) {
     id
-    image
-    likes
-    message
-    link
-    posted_on
   }
 }

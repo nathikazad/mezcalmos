@@ -150,3 +150,9 @@ query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
 subscription listen_on_details_open_status($id: Int!) {
   service_provider_details_by_pk(id:$id){is_open}
 }
+
+query checkOpenCompaniesAndDrivers {
+  delivery_company(where: {_and: {drivers: {online: {_eq: true}}}, details: {is_open: {_eq: true}}}) {
+    id
+  }
+}

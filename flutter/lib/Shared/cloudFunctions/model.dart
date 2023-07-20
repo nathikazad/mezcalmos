@@ -2936,7 +2936,7 @@ extension ParseStringToAddOperatorError on String {
 }
 
 
-enum AuthOperatorError { UnhandledError, OperatorNotFound, UnauthorizedAccess, IncorrectOperatorId, OperatorDetailsNotFound }
+enum AuthOperatorError { UnhandledError, OperatorNotFound, UnauthorizedAccess, IncorrectOperatorId, OperatorDetailsNotFound, InvalidParticipantType }
 extension ParseAuthOperatorErrorToString on AuthOperatorError {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
@@ -3064,7 +3064,7 @@ extension ParseStringToChangeUniqueIdError on String {
 }
 
 
-enum RestaurantError { UnhandledError, DeliveryDetailsNotSet, UserNotFound, DeepLinkError, QRGenerationError, RestaurantCreationError, UniqueIdAlreadyExists }
+enum RestaurantError { UnhandledError, DeliveryDetailsNotSet, UserNotFound, DeepLinkError, QRGenerationError, RestaurantCreationError, UniqueIdAlreadyExists, UnauthorizedAccess }
 extension ParseRestaurantErrorToString on RestaurantError {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;

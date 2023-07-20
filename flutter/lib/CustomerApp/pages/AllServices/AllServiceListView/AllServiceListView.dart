@@ -44,57 +44,69 @@ class _AllServiceListViewState extends State<AllServiceListView> {
     cServiceController.dispose();
   }
 
-  void navigateToServices(
+  Future<void> navigateToServices(
     MezService value,
     List<ServiceTree> childServiceTree,
-  ) {
+  ) async {
     cServiceController.setCurrentSelectedService(value);
     switch (value) {
       case MezService.Deliveries:
+        // ignore: unawaited_futures
         DeliveryServiceView.navigate(
           serviceTree: childServiceTree,
         );
         return;
       case MezService.Courier:
-        CustRequestCourierView.navigate();
+      
+        await CustRequestCourierView.navigate();
 
         return;
       case MezService.Rentals:
+        // ignore: unawaited_futures
         CustRentalWrapper.navigate(
           serviceTree: childServiceTree,
         );
         return;
       case MezService.Classes:
+        // ignore: unawaited_futures
         CustClassesListView.navigate();
         return;
       case MezService.Therapy:
+        // ignore: unawaited_futures
         CustTherapyListView.navigate();
         return;
       case MezService.Events:
+        // ignore: unawaited_futures
         CustEventsListView.navigate();
         return;
       case MezService.Volunteer:
+        // ignore: unawaited_futures
         CustVolunteerListView.navigate();
         return;
       case MezService.Adventure:
+        // ignore: unawaited_futures
         CustAdventureListView.navigate();
         return;
       case MezService.Services:
+        // ignore: unawaited_futures
         CustServicesWrapper.navigate(
           serviceTree: childServiceTree,
         );
         return;
       case MezService.LocallyMade:
+        // ignore: unawaited_futures
         CustLocallyMadeWrapper.navigate(
           serviceTree: childServiceTree,
         );
         return;
       case MezService.Food:
+        // ignore: unawaited_futures
         CustFoodWrapper.navigate(
           serviceTree: childServiceTree,
         );
         return;
       case MezService.RealEstate:
+        // ignore: unawaited_futures
         CustRealEstateListView.navigate();
         return;
     }

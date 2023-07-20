@@ -525,6 +525,11 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "CustDeliveryTypeSelector" : {
+        "dvType" : "Tipo de entrega",
+        "delivery": "Entrega",
+        "pickup" :"Recogida en la tienda"
+              },
       "CustOrderCostCard": {
         "orderCost": "Costo de la orden"
       },
@@ -1121,7 +1126,9 @@
             "notes": "Escribe tus notas aquí",
             "deliveryLocation": "Lugar de entrega",
             "deliveryType": "Tipo de entrega",
-            "paymentMethod": "Método de pago"
+            "paymentMethod": "Método de pago",
+            "delivery" :"Entrega",
+            "pickup" :"Recogida en la tienda"
           }
         },
         "ViewItemScreen": {
