@@ -343,8 +343,7 @@
     
       "folderName": "MezAdminApp",
       "appPermissions": [
-        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>",
-        "<uses-permission android:name='android.permission.MANAGE_EXTERNAL_STORAGE' /> tools:ignore='ScopedStorage'"
+        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>"
       ],
       "packages": {
         "stage": {
@@ -721,8 +720,7 @@
     "BusinessApp": {
       "appPermissions": [
         "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>",
-        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>",
-        "<uses-permission android:name='android.permission.MANAGE_EXTERNAL_STORAGE' /> tools:ignore='ScopedStorage'"
+        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>"
       ],
       "folderName": "BusinessApp",
       "packages": {
