@@ -29,7 +29,6 @@
     "shared_pubspec": {
       "dependencies": {
         "ensure_visible_when_focused": "^1.1.1",
-        "open_file": "^3.3.2",
         "social_share": "^2.3.1",
         "share_plus": "^7.0.2",
 
@@ -342,9 +341,6 @@
     "MezAdminApp": {
     
       "folderName": "MezAdminApp",
-      "appPermissions": [
-        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>"
-      ],
       "packages": {
         "stage": {
           "appName": "MezAdmin Stage",
@@ -719,8 +715,7 @@
     },
     "BusinessApp": {
       "appPermissions": [
-        "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>",
-        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>"
+        "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
       ],
       "folderName": "BusinessApp",
       "packages": {
