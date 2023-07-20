@@ -2524,6 +2524,7 @@
         "story": "Historia",
         "facebook": "Facebook",
         "save": "Ahorrar"
+  
       },
       "CreateServiceView": {
         "pages": {
@@ -2590,6 +2591,7 @@
             }
           }
         },
+        "formErrorText" : "Verifique que todos los campos requeridos estén ahí",
         "createText": "Crear",
         "info": "Información",
         "schedule": "Calendario",
@@ -2721,7 +2723,28 @@
         "none": "Ninguna",
         "en": "Ingles",
         "es": "Español",
-        "uniqueId": "Unique ID"
+        "uniqueId": "Unique ID",
+        "businessProfile": {
+          "surfShop": "Tienda de Surf",
+          "vehicleRental": "Alquiler de Vehículos",
+          "yogaStudio": "Estudio de Yoga",
+          "homeRental": "Alquiler de Viviendas",
+          "languageSchool": "Escuela de Idiomas",
+          "tourAgency": "Agencia de Turismo",
+          "artisanalProduct": "Producto Artesanal",
+          "cleaningService": "Servicio de Limpieza",
+          "petSitting": "Cuidado de Mascotas",
+          "wellnessPractitioner": "Profesional de Bienestar",
+          "volunteer": "Voluntariado",
+          "entertainment": "Planificadores de eventos",
+          "danceStudio": "Estudio de baile",
+          "mealPlanning": "Planificación de comidas",
+          "photography": "Fotografía",
+          "beautySalon": "Salón de belleza",
+          "tattooArtist": "Tatuador",
+          "coWorking": "Espacio de trabajo conjunto",
+          "realEstate": "Bienes raíces"
+        }
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
@@ -2972,6 +2995,11 @@
       "OrderDeliveryLocation": {
         "title": "Lugar de entrega",
         "deliveryDetails": "Delivery details"
+      },
+      "OrderDeliveryType": {
+        "title": "Tipo de entrega",
+        "delivery": "Entrega",
+        "pickup" : "Recogida en la tienda"
       },
       "OrderScheduledTimeCard": {
         "title": "Hora Programada"

@@ -150,6 +150,7 @@ extension OrderTypeHelper on cModels.OrderType {
 }
 
 abstract class DeliverableOrder extends Order {
+  cModels.DeliveryType deliveryType;
   UserInfo? driverInfo;
   UserInfo? deliveryCompany;
   MezLocation? pickupLocation;
@@ -171,6 +172,7 @@ abstract class DeliverableOrder extends Order {
     required this.deliveryOrderId,
     required this.driverLocation,
     required this.deliveryDirection,
+    required this.deliveryType,
     super.notes,
     super.review,
     this.customerReviewByDriver,
@@ -238,6 +240,10 @@ abstract class DeliverableOrder extends Order {
   String toString() {
     return 'DeliverableOrder(driverInfo: $driverInfo, deliveryCompany: $deliveryCompany, pickupLocation: $pickupLocation, deliveryOrderId: $deliveryOrderId, driverLocation: $driverLocation, deliveryDirection: $deliveryDirection, serviceProviderDriverChatId: $serviceProviderDriverChatId, customerDriverChatId: $customerDriverChatId, estimatedArrivalAtPickup: $estimatedArrivalAtPickup, estimatedArrivalAtDropoff: $estimatedArrivalAtDropoff, notifiedOperator: $notifiedOperator, notifiedAdmin: $notifiedAdmin)';
   }
+
+  bool get inStorePickup {
+    return deliveryType == cModels.DeliveryType.Pickup;
+  }
 }
 
 abstract class TwoWayDeliverableOrder extends DeliverableOrder {
@@ -256,6 +262,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       required super.deliveryProviderType,
       required this.customerPickupDriverChatId,
       required super.costs,
+      required super.deliveryType,
       required super.deliveryDirection,
       required super.deliveryOrderId,
       super.notes,

@@ -3128,7 +3128,7 @@ extension ParseStringToCancelOrderError on String {
 }
 
 
-enum BusinessError { UnhandledError, UserNotFound, BusinessCreationError, UniqueIdAlreadyExists }
+enum BusinessError { UnhandledError, UserNotFound, BusinessCreationError, UniqueIdAlreadyExists, UnauthorizedAccess }
 extension ParseBusinessErrorToString on BusinessError {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
@@ -3192,7 +3192,7 @@ extension ParseStringToCustomerHandleRequestError on String {
 }
 
 
-enum LaundryError { UnhandledError, DeliveryDetailsNotSet, UserNotFound, DeepLinkError, QRGenerationError, LaundryCreationError, UniqueIdAlreadyExists }
+enum LaundryError { UnhandledError, DeliveryDetailsNotSet, UserNotFound, DeepLinkError, QRGenerationError, LaundryCreationError, UniqueIdAlreadyExists, UnauthorizedAccess }
 extension ParseLaundryErrorToString on LaundryError {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;

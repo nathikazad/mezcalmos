@@ -7,7 +7,6 @@ import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/HomeCartItem
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ProductCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/RentalCartItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/ServiceCartItemCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/CartIsEmptyScreen.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -33,7 +32,6 @@ class CustCartView extends StatefulWidget {
 }
 
 class _CustCartViewState extends State<CustCartView> {
-  final CustCartViewController viewController = CustCartViewController();
   final CustBusinessCartController custBusinessCartController =
       Get.find<CustBusinessCartController>();
 

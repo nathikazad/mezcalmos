@@ -182,7 +182,7 @@ class CustRestaurantCartController extends GetxController {
                     lng: cart.value!.toLocation!.longitude,
                     address: cart.value!.toLocation!.address),
                 // deliveryCost: cart.value!.shippingCost!,
-                customerDeliveryOffer: cart.value!.shippingCost!,
+                customerDeliveryOffer: cart.value!.shippingCost ?? 0,
                 paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
                 notes: cart.value?.notes,
                 restaurantId: cart.value!.restaurant!.info.hasuraId,

@@ -2460,7 +2460,8 @@
         "instagram": "Instagram",
         "story": "Story",
         "facebook": "Facebook",
-        "save": "Sa e"
+        "save": "Save"
+       
       },
       "CreateServiceView": {
         "pages": {
@@ -2527,6 +2528,7 @@
             }
           }
         },
+        "formErrorText" : "Please check that all required fields are there",
         "createText": "Create",
         "info": "Information",
         "schedule": "Schedule",
@@ -2660,7 +2662,28 @@
         "saved": "Saved",
         "error": "Error",
         "savedSuccess": "Your information has been successfully saved ",
-        "uniqueId": "Unique ID"
+        "uniqueId": "Unique ID",
+        "businessProfile": {
+          "surfShop": "Surf Shop",
+          "vehicleRental": "Vehicle Rental",
+          "yogaStudio": "Yoga Studio",
+          "homeRental": "Home Rental",
+          "languageSchool": "Language School",
+          "tourAgency": "Tour Agency",
+          "artisanalProduct": "Artisanal Product",
+          "cleaningService": "Cleaning Service",
+          "petSitting": "Pet Sitting",
+          "wellnessPractitioner": "Wellness Practitioner",
+          "volunteer": "Volunteer",
+          "entertainment": "Event Planners",
+          "danceStudio": "Dance Studio",
+          "mealPlanning": "Meal Planning",
+          "photography": "Photography",
+          "beautySalon": "Beauty Salon",
+          "tattooArtist": "Tattoo Artist",
+          "coWorking": "Co-working Space",
+          "realEstate": "Real Estate"
+        }
       },
       "SomethingWentWrongScreen": {
         "noRestaurantFoundOnOperator": "No restaurant found on your operator",
@@ -2906,6 +2929,10 @@
       "OrderDeliveryLocation": {
         "title": "Delivery location",
         "deliveryDetails": "Delivery details"
+      },    "OrderDeliveryType": {
+        "title": "Delivery type",
+        "delivery": "Delivery",
+        "pickup" : "In-store Pickup"
       },
       "OrderScheduledTimeCard": {
         "title": "Scheduled time"
