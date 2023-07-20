@@ -9,6 +9,8 @@ import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServic
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
+import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ["AdminServicesView"]["AdminServicesView"];
@@ -33,6 +35,17 @@ class _AdminServicesViewState extends State<AdminServicesView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        MezAddButton(
+          onClick: () {
+            if (viewController.currentService !=
+                ServiceProviderType.DeliveryCompany) {
+              CreateServiceView.navigate(
+                  serviceProviderType: viewController.currentService,
+                  fromMezAdmin: true);
+            }
+          },
+          title: "Add service",
+        ),
         Expanded(
           child: SingleChildScrollView(
             controller: viewController.scrollController,
