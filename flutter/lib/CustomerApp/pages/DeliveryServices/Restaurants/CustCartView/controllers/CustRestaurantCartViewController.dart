@@ -48,8 +48,7 @@ class CustRestaurantCartViewController {
 
   final RxBool clickedCheckout = false.obs;
   Rx<cModels.DeliveryType> dvType = Rx(cModels.DeliveryType.Delivery);
-  RxList<cModels.DeliveryType> availableDvTypes =
-      RxList([cModels.DeliveryType.Delivery, cModels.DeliveryType.Pickup]);
+
 
   // texts
   TextEditingController noteText = TextEditingController();

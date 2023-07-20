@@ -103,6 +103,8 @@ Future<LaundryOrder?> get_laundry_order_by_id(
   final Query$get_laundry_order_by_id$laundry_order_by_pk orderData =
       res.parsedData!.laundry_order_by_pk!;
   return LaundryOrder(
+    deliveryType: orderData.delivery_type.toString().toDeliveryType(),
+
     deliveryProviderType: orderData.to_customer_delivery?.service_provider_type
             .toServiceProviderType() ??
         orderData.from_customer_delivery!.service_provider_type
@@ -252,6 +254,8 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
       final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk
           orderData = event.parsedData!.laundry_order_by_pk!;
       return LaundryOrder(
+        deliveryType: orderData.delivery_type.toString().toDeliveryType(),
+
         deliveryProviderType: orderData
                 .to_customer_delivery?.service_provider_type
                 .toServiceProviderType() ??

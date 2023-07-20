@@ -179,6 +179,41 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                             // SizedBox(
                             //   height: 15,
                             // ),
+                            Obx(() => (viewController.isBusiness &&
+                                    viewController.mainBusniessProfile.value !=
+                                        null)
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                        meduimSeperator,
+                                        Text(
+                                          "Business type",
+                                          style: context.textTheme.bodyLarge,
+                                        ),
+                                        smallSepartor,
+                                        MezStringDropDown(
+                                            value: viewController
+                                                .mainBusniessProfile.value!
+                                                .toFirebaseFormatString(),
+                                            labelText: "Business type",
+                                            elementsTextStyle:
+                                                context.textTheme.bodyLarge,
+                                            langPath:
+                                                _i18n()['businessProfile'],
+                                            items: BusinessProfile.values
+                                                .map((BusinessProfile e) =>
+                                                    e.toFirebaseFormatString())
+                                                .toList(),
+                                            onChanged: (String? v) {
+                                              viewController.switchBusinessType(
+                                                  type: v
+                                                      .toString()
+                                                      .toBusinessProfile());
+                                            }),
+                                        meduimSeperator
+                                      ])
+                                : SizedBox()),
                             Text(
                               "${_i18n()['location']}",
                               style: context.textTheme.bodyLarge,
