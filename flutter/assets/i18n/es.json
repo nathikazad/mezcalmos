@@ -913,7 +913,11 @@
       },
       "CustFeedView": {
         "CustFeedView": {
-          "title": "Alimentar"
+          "title": "Alimentar",
+          "posts": "Postes",
+          "promotions": "Promociones",
+          "postSwitch": "Solo muestre publicaciones para las cuentas que sigue.",
+          "promotionSwitch": "Solo muestre promociones para las cuentas que sigue."
         },
         "components": {
           "FeedCardPost": {

@@ -11,8 +11,17 @@ class CustFeedViewController {
   AuthController _authController = Get.find<AuthController>();
   AuthController get authController => _authController;
 
-  RxList<Post> _posts = RxList.empty();
+  RxList<Post> _posts = RxList<Post>.empty();
   List<Post> get posts => _posts.value;
+
+  RxList<dynamic> _promotions = RxList(['', '', '']);
+  List<dynamic> get promotions => _promotions.value;
+
+  RxBool _postSwitch = false.obs;
+  bool get postSwitch => _postSwitch.value;
+
+  RxBool _promotionSwitch = false.obs;
+  bool get promotionSwitch => _promotionSwitch.value;
 
   /* SCROLL CONTROLLER */
   ScrollController get scrollController => _scrollController;
@@ -26,6 +35,7 @@ class CustFeedViewController {
   CustFeedViewController.init() {
     _scrollController.onBottomReach(_fetchPosts, sensitivity: 200);
     _fetchPosts();
+    _fetchPromotions();
     print(_authController.hasuraUserId);
   }
 
@@ -53,6 +63,8 @@ class CustFeedViewController {
     _posts.refresh();
   }
 
+  Future<void> _fetchPromotions() async {}
+
   Future<void> writeComment(
       {required int postId,
       required TextEditingController commentController}) async {
@@ -68,5 +80,15 @@ class CustFeedViewController {
     print('qqq ${postId}');
     print('qqq ${_authController.user!.hasuraId}');
     await like_post(postId: postId, customerId: _authController.user!.hasuraId);
+  }
+
+  void setPostSwitch(bool value) {
+    _postSwitch.value = value;
+    //fetch
+  }
+
+  void setPromotionSwitch(bool value) {
+    _promotionSwitch.value = value;
+    //fetch
   }
 }

@@ -19,7 +19,8 @@ class FeedCardPost extends StatelessWidget {
       required this.post,
       required this.controller,
       this.elevation = .5,
-      this.margin = const EdgeInsets.all(12.5)});
+      this.margin =
+          const EdgeInsets.only(bottom: 12.5, left: 12.5, right: 12.5)});
 
   final TextEditingController _commentController = TextEditingController();
 
@@ -67,9 +68,9 @@ class FeedCardPost extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () async {
+                  onTap: () {
                     print('Tesssssssssssstr');
-                    await controller.likePost(post.id);
+                    controller.likePost(post.id);
                   },
                   child: Icon(
                       post.likes.contains(

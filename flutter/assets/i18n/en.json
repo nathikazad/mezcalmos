@@ -919,7 +919,11 @@
       },
       "CustFeedView": {
         "CustFeedView": {
-          "title": "Feed"
+          "title": "Feed",
+          "posts": "Posts",
+          "promotions": "Promotions",
+          "postSwitch": "Only show posts for accounts you follow.",
+          "promotionSwitch": "Only show promotions for accounts you follow."
         },
         "components": {
           "FeedCardPost": {
@@ -1670,6 +1674,10 @@
           },
           "NoPostsFound": {
             "noPostsFound": "No posts found",
+            "bodyMessage": "You can check back later"
+          },
+          "NoPromotionsFound": {
+            "noPromotionsFound": "No promotions found",
             "bodyMessage": "You can check back later"
           }
         },
