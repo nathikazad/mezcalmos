@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustRestaurantOrderViewController {
@@ -30,6 +29,11 @@ class CustRestaurantOrderViewController {
 
   StreamSubscription<RestaurantOrder?>? orderStream;
   String? subscriptionId;
+
+  bool get showDeliveryOffers =>
+      !order.value!.inStorePickup &&
+      order.value!.inProcess() &&
+      order.value?.driverInfo == null;
 
   Future<void> init({required int orderId}) async {
     mezDbgPrint(

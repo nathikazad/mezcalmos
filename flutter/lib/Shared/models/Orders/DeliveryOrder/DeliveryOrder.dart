@@ -19,6 +19,7 @@ class DeliveryOrder extends DeliverableOrder {
       {required super.orderType,
       required super.paymentType,
       required super.deliveryOrderId,
+      super.deliveryType = DeliveryType.Delivery,
       required super.orderTime,
       required this.customerOffer,
       super.stripePaymentInfo,
@@ -168,6 +169,7 @@ class DeliveryOrderVariables {
   DateTime? scheduleTime;
   DateTime? cancellationTime;
   double? customerOffer;
+
   DeliveryOrderStatus status;
   user.UserInfo? driverInfo;
   Map<int, CounterOffer>? counterOffers;

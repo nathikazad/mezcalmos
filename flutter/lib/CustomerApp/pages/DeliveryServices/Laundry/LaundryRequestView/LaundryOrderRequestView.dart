@@ -242,28 +242,30 @@ class _CustLaundryOrderRequestViewState
                 style: context.txt.bodyLarge,
               ),
             ),
-            SizedBox(height: 4),
-            Container(
-              padding: EdgeInsets.only(
-                bottom: 4,
-              ),
-              width: Get.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Text("${_i18n()["deliveryCost"]}",
-                          style: context.txt.bodyMedium),
+            if (viewController.showDelivery) ...[
+              SizedBox(height: 4),
+              Container(
+                padding: EdgeInsets.only(
+                  bottom: 4,
+                ),
+                width: Get.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        child: Text("${_i18n()["deliveryCost"]}",
+                            style: context.txt.bodyMedium),
+                      ),
                     ),
-                  ),
-                  Text(
-                    "${viewController.estDeliveryCost.value.toPriceString()} x 2",
-                    style: context.txt.bodyMedium,
-                  )
-                ],
+                    Text(
+                      "${viewController.estDeliveryCost.value.toPriceString()} x 2",
+                      style: context.txt.bodyMedium,
+                    )
+                  ],
+                ),
               ),
-            ),
+            ]
             // SizedBox(
             //   height: 8,
             // ),
@@ -357,7 +359,10 @@ class _CustLaundryOrderRequestViewState
         onClick: () async {
           if (viewController.isUserSignedIn) {
             mezDbgPrint(viewController.formKey.currentState?.validate());
-            if (viewController.formKey.currentState?.validate() == true) {
+            if (viewController.showDelivery &&
+                viewController.formKey.currentState?.validate() == true) {
+              await viewController.createLaundryOrder();
+            } else if (!viewController.showDelivery) {
               await viewController.createLaundryOrder();
             }
           } else {

@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryTypeCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
@@ -92,7 +93,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             order: viewController.order.value!,
                             ordersStates: viewController.order.value!.status,
                           ),
-                          if (viewController.order.value?.driverInfo == null)
+                          if (viewController.showDeliveryOffers)
                             CustDeliveryOffersList(
                               deliveryOrderId:
                                   viewController.order.value!.deliveryOrderId!,
@@ -142,6 +143,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                           //   order: viewController.order.value!,
                           //   margin: const EdgeInsets.only(top: 8),
                           // ),
+                          OrderDeliveryType(
+                            deliveryType:
+                                viewController.order.value!.deliveryType,
+                            margin: EdgeInsets.only(top: 8),
+                          ),
                           OrderDeliveryLocation(
                             address: viewController
                                 .order.value!.dropOffLocation.address,

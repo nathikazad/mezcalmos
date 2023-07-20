@@ -2959,6 +2959,11 @@
         "title": "Lugar de entrega",
         "deliveryDetails": "Delivery details"
       },
+      "OrderDeliveryType": {
+        "title": "Tipo de entrega",
+        "delivery": "Entrega",
+        "pickup" : "Recogida en la tienda"
+      },
       "OrderScheduledTimeCard": {
         "title": "Hora Programada"
       },

@@ -2892,6 +2892,10 @@
       "OrderDeliveryLocation": {
         "title": "Delivery location",
         "deliveryDetails": "Delivery details"
+      },    "OrderDeliveryType": {
+        "title": "Delivery type",
+        "delivery": "Delivery",
+        "pickup" : "In-store Pickup"
       },
       "OrderScheduledTimeCard": {
         "title": "Scheduled time"

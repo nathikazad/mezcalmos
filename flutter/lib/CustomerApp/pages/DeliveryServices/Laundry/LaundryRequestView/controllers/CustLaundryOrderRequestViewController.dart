@@ -169,6 +169,7 @@ class CustLaundryOrderRequestViewController {
   }
 
   Future<void> createLaundryOrder() async {
+    mezDbgPrint("Called create laundry order 🔴");
     final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
     bool? isOpen =
