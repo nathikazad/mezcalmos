@@ -352,7 +352,7 @@ class CreateServiceViewController {
           selfDelivery: serviceInput.value.isSelfDelivery,
         ),
         language: languages.value,
-        isMezAdmin: fromMezAdmin,
+      
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
@@ -386,6 +386,7 @@ class CreateServiceViewController {
         
         uniqueId: (businessId.text.isEmpty) ? null : businessId.text.trim(),
         schedule: oldSchedule.value,
+        isMezAdmin: fromMezAdmin,
       );
       if (res.success == false) {
         mezDbgPrint(res.error);
@@ -412,7 +413,7 @@ class CreateServiceViewController {
           await CloudFunctions.laundry3_createLaundry(
               name: serviceInput.value.serviceInfo!.name,
               image: newImageUrl.value ?? defaultUserImgUrl,
-              
+              isMezAdmin: fromMezAdmin,
               phoneNumber: phone.text,
               location: cModels.Location(
                   lat: serviceInput.value.serviceInfo!.location.latitude,
