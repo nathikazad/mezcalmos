@@ -59,7 +59,6 @@ export async function createRestaurant(
             image: restaurantDetails.image,
             phone_number: restaurantDetails.phoneNumber,
             schedule: $`schedule`,
-            firebase_id: restaurantDetails.firebaseId ?? undefined,
             language: $`language`,
             service_provider_type: ServiceProviderType.Restaurant,
             unique_id: uniqueId,
@@ -204,7 +203,6 @@ export async function createRestaurant(
     deliveryPartnerId: restaurantDetails.deliveryPartnerId,
     deliveryDetails: restaurantDetails.deliveryDetails,
     language: restaurantDetails.language,
-    firebaseId: restaurantDetails.firebaseId,
     serviceProviderType: ServiceProviderType.Restaurant,
     uniqueId
   };

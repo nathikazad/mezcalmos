@@ -249,7 +249,6 @@ class CloudFunctions {
       required Location location,
       required Schedule schedule,
       String? restaurantOperatorNotificationToken,
-      String? firebaseId,
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
       required ServiceProviderLanguage language,
@@ -263,7 +262,6 @@ class CloudFunctions {
         "location":location.toFirebaseFormattedJson(),
         "schedule":schedule.toFirebaseFormattedJson(),
         "restaurantOperatorNotificationToken": restaurantOperatorNotificationToken,
-        "firebaseId": firebaseId,
         "deliveryPartnerId": deliveryPartnerId,
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
         "language":language.toFirebaseFormattedJson(),
@@ -364,7 +362,6 @@ class CloudFunctions {
       String? businessOperatorNotificationToken,
       required ServiceProviderLanguage language,
       String? uniqueId,
-      String? firebaseId,
       required Schedule schedule}  ) async {
     return BusinessResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "business-createBusiness",
@@ -377,7 +374,6 @@ class CloudFunctions {
         "businessOperatorNotificationToken": businessOperatorNotificationToken,
         "language":language.toFirebaseFormattedJson(),
         "uniqueId": uniqueId,
-        "firebaseId": firebaseId,
         "schedule":schedule.toFirebaseFormattedJson(),
       }));
   }
@@ -422,8 +418,6 @@ class CloudFunctions {
       required String phoneNumber,
       required Schedule schedule,
       String? laundryOperatorNotificationToken,
-      String? firebaseId,
-      num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
       required ServiceProviderLanguage language,
       String? uniqueId}  ) async {
@@ -436,8 +430,6 @@ class CloudFunctions {
         "phoneNumber": phoneNumber,
         "schedule":schedule.toFirebaseFormattedJson(),
         "laundryOperatorNotificationToken": laundryOperatorNotificationToken,
-        "firebaseId": firebaseId,
-        "deliveryPartnerId": deliveryPartnerId,
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
         "language":language.toFirebaseFormattedJson(),
         "uniqueId": uniqueId,

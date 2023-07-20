@@ -20,8 +20,7 @@ export interface BusinessDetails {
     businessOperatorNotificationToken?: string,
     language: ServiceProviderLanguage,
     uniqueId?: string,
-    firebaseId?: string,
-    schedule: Schedule
+    schedule: Schedule,
 }
 export interface BusinessResponse {
   success: boolean,

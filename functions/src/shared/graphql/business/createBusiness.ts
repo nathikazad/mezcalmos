@@ -46,7 +46,6 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                         phone_number: businessDetails.phoneNumber,
                         language: $`language` ,
                         service_provider_type: ServiceProviderType.Business,
-                        firebase_id: businessDetails.firebaseId ?? undefined,
                         unique_id: uniqueId,
                         schedule: $`schedule`,
                         location: {
