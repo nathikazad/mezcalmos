@@ -50,6 +50,7 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
       await _hasuraDb.graphQLClient.query$get_chat_info(
     Options$Query$get_chat_info(
       variables: Variables$Query$get_chat_info(chat_id: chat_id),
+      fetchPolicy: FetchPolicy.networkOnly,
     ),
   );
 
