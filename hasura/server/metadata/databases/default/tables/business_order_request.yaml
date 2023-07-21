@@ -25,6 +25,11 @@ computed_fields:
       function:
         name: ordercost
         schema: business
+  - name: in_progress
+    definition:
+      function:
+        name: order_in_process
+        schema: business
 select_permissions:
   - role: business_operator
     permission:
@@ -41,6 +46,7 @@ select_permissions:
         - order_time
       computed_fields:
         - cost
+        - in_progress
       filter:
         business:
           operators:
@@ -61,6 +67,7 @@ select_permissions:
         - order_time
       computed_fields:
         - cost
+        - in_progress
       filter:
         customer:
           user_id:
@@ -80,6 +87,7 @@ select_permissions:
         - order_time
       computed_fields:
         - cost
+        - in_progress
       filter:
         _exists:
           _table:

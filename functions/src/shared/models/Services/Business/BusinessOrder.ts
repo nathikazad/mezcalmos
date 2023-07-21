@@ -46,8 +46,7 @@ export enum BusinessOrderRequestStatus {
     ModificationRequestByBusiness = "modificationRequestByBusiness",
     CancelledByBusiness = "cancelledByBusiness",
     Confirmed = "confirmed",
-    CancelledByCustomer = "cancelledByCustomer",
-    Completed = "completed"
+    CancelledByCustomer = "cancelledByCustomer"
 }
 
 export interface BusinessCart {
