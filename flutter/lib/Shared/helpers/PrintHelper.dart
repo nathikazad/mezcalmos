@@ -98,6 +98,7 @@ void logEventToServer(String message, {Map<String, dynamic>? debugData}) {
     Breadcrumb(message: message, type: "debug", data: debugData),
   );
   Amplitude.getInstance().logEvent(message, eventProperties: debugData);
+  mezDbgPrint("🍞🍞🍞🍞 $message");
 }
 
 // This is to get all kind of exception in our code!
