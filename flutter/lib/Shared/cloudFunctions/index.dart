@@ -260,7 +260,6 @@ class CloudFunctions {
       required Location location,
       required Schedule schedule,
       String? restaurantOperatorNotificationToken,
-      String? firebaseId,
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
       required ServiceProviderLanguage language,
@@ -276,7 +275,6 @@ class CloudFunctions {
           "schedule": schedule.toFirebaseFormattedJson(),
           "restaurantOperatorNotificationToken":
               restaurantOperatorNotificationToken,
-          "firebaseId": firebaseId,
           "deliveryPartnerId": deliveryPartnerId,
           "deliveryDetails": deliveryDetails.toFirebaseFormattedJson(),
           "language": language.toFirebaseFormattedJson(),
@@ -289,7 +287,7 @@ class CloudFunctions {
       {required CustomerAppType customerAppType,
       required Location customerLocation,
       required num customerDeliveryOffer,
-      required List<int> chosenCompanies,
+      required List<num> chosenCompanies,
       required PaymentType paymentType,
       String? notes,
       required num restaurantId,
@@ -383,8 +381,8 @@ class CloudFunctions {
       String? businessOperatorNotificationToken,
       required ServiceProviderLanguage language,
       String? uniqueId,
-      String? firebaseId,
-      required Schedule schedule}) async {
+      required Schedule schedule,
+      required bool isMezAdmin}) async {
     return BusinessResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "business-createBusiness",
         parameters: <String, dynamic>{
@@ -397,8 +395,8 @@ class CloudFunctions {
               businessOperatorNotificationToken,
           "language": language.toFirebaseFormattedJson(),
           "uniqueId": uniqueId,
-          "firebaseId": firebaseId,
           "schedule": schedule.toFirebaseFormattedJson(),
+          "isMezAdmin": isMezAdmin,
         }));
   }
 
@@ -444,10 +442,10 @@ class CloudFunctions {
       required String phoneNumber,
       required Schedule schedule,
       String? laundryOperatorNotificationToken,
-      String? firebaseId,
       required DeliveryDetails deliveryDetails,
       required ServiceProviderLanguage language,
-      String? uniqueId}) async {
+      String? uniqueId,
+      required bool isMezAdmin}) async {
     return LaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "laundry3-createLaundry",
         parameters: <String, dynamic>{
@@ -457,10 +455,10 @@ class CloudFunctions {
           "phoneNumber": phoneNumber,
           "schedule": schedule.toFirebaseFormattedJson(),
           "laundryOperatorNotificationToken": laundryOperatorNotificationToken,
-          "firebaseId": firebaseId,
           "deliveryDetails": deliveryDetails.toFirebaseFormattedJson(),
           "language": language.toFirebaseFormattedJson(),
           "uniqueId": uniqueId,
+          "isMezAdmin": isMezAdmin,
         }));
   }
 
@@ -470,7 +468,7 @@ class CloudFunctions {
       required DeliveryType deliveryType,
       required Location customerLocation,
       required num fromCustomerDeliveryOffer,
-      List<int>? chosenCompanies,
+      List<num>? chosenCompanies,
       required CustomerAppType customerAppType,
       String? notes,
       num? tax,
@@ -537,7 +535,7 @@ class CloudFunctions {
 
   static Future<ReqDeliveryResponse> laundry3_requestLaundryDelivery(
       {required num orderId,
-      required List<int> chosenCompanies,
+      required List<num> chosenCompanies,
       required num customerOffer}) async {
     return ReqDeliveryResponse.fromFirebaseFormattedJson(
         await callCloudFunction(
@@ -579,7 +577,7 @@ class CloudFunctions {
       Location? fromLocationGps,
       String? fromLocationText,
       required List<CourierItem> items,
-      required List<int> deliveryCompanyIds,
+      required List<num> deliveryCompanyIds,
       required num customerOffer,
       required CustomerAppType customerAppType,
       num? tax,

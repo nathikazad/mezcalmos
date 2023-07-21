@@ -20,8 +20,8 @@ export interface BusinessDetails {
     businessOperatorNotificationToken?: string,
     language: ServiceProviderLanguage,
     uniqueId?: string,
-    firebaseId?: string,
     schedule: Schedule,
+    isMezAdmin: boolean
 }
 export interface BusinessResponse {
   success: boolean,
@@ -32,7 +32,8 @@ export enum BusinessError {
   UnhandledError = "unhandledError",
   UserNotFound = "userNotFound",
   BusinessCreationError = "businessCreationError",
-  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists",
+  UnauthorizedAccess = "unauthorizedAccess"
 }
 
 export async function createNewBusiness(userId: number, businessDetails: BusinessDetails): Promise<BusinessResponse> {
@@ -41,6 +42,10 @@ export async function createNewBusiness(userId: number, businessDetails: Busines
     let mezAdminsPromise = getMezAdmins();
     let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
     let mezAdmins: MezAdmin[] = promiseResponse[1];
+
+    if(businessDetails.isMezAdmin && !mezAdmins.find((m) => m.id == userId)) {
+      throw new MezError(BusinessError.UnauthorizedAccess);
+    }
   
     let business: Business = await createBusiness(businessDetails, userId);
   

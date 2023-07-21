@@ -64,6 +64,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.fromCustomerDeliveryId,
       required this.toCustomerDeliveryId,
       required this.shippingCost,
+      required super.deliveryType,
       this.costsByType,
       super.review,
       super.stripePaymentInfo,

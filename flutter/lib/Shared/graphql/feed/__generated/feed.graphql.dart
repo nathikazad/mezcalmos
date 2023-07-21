@@ -8376,6 +8376,837 @@ class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$
       _res;
 }
 
+class Variables$Query$fetch_number_of_subscribers {
+  factory Variables$Query$fetch_number_of_subscribers({
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      Variables$Query$fetch_number_of_subscribers._({
+        if (service_provider_id != null)
+          r'service_provider_id': service_provider_id,
+        if (service_provider_type != null)
+          r'service_provider_type': service_provider_type,
+      });
+
+  Variables$Query$fetch_number_of_subscribers._(this._$data);
+
+  factory Variables$Query$fetch_number_of_subscribers.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('service_provider_id')) {
+      final l$service_provider_id = data['service_provider_id'];
+      result$data['service_provider_id'] = (l$service_provider_id as int?);
+    }
+    if (data.containsKey('service_provider_type')) {
+      final l$service_provider_type = data['service_provider_type'];
+      result$data['service_provider_type'] =
+          (l$service_provider_type as String?);
+    }
+    return Variables$Query$fetch_number_of_subscribers._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get service_provider_id => (_$data['service_provider_id'] as int?);
+  String? get service_provider_type =>
+      (_$data['service_provider_type'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('service_provider_id')) {
+      final l$service_provider_id = service_provider_id;
+      result$data['service_provider_id'] = l$service_provider_id;
+    }
+    if (_$data.containsKey('service_provider_type')) {
+      final l$service_provider_type = service_provider_type;
+      result$data['service_provider_type'] = l$service_provider_type;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$fetch_number_of_subscribers<
+          Variables$Query$fetch_number_of_subscribers>
+      get copyWith => CopyWith$Variables$Query$fetch_number_of_subscribers(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$fetch_number_of_subscribers) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (_$data.containsKey('service_provider_id') !=
+        other._$data.containsKey('service_provider_id')) {
+      return false;
+    }
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (_$data.containsKey('service_provider_type') !=
+        other._$data.containsKey('service_provider_type')) {
+      return false;
+    }
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_id = service_provider_id;
+    final l$service_provider_type = service_provider_type;
+    return Object.hashAll([
+      _$data.containsKey('service_provider_id')
+          ? l$service_provider_id
+          : const {},
+      _$data.containsKey('service_provider_type')
+          ? l$service_provider_type
+          : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$fetch_number_of_subscribers<TRes> {
+  factory CopyWith$Variables$Query$fetch_number_of_subscribers(
+    Variables$Query$fetch_number_of_subscribers instance,
+    TRes Function(Variables$Query$fetch_number_of_subscribers) then,
+  ) = _CopyWithImpl$Variables$Query$fetch_number_of_subscribers;
+
+  factory CopyWith$Variables$Query$fetch_number_of_subscribers.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$fetch_number_of_subscribers;
+
+  TRes call({
+    int? service_provider_id,
+    String? service_provider_type,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$fetch_number_of_subscribers<TRes>
+    implements CopyWith$Variables$Query$fetch_number_of_subscribers<TRes> {
+  _CopyWithImpl$Variables$Query$fetch_number_of_subscribers(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$fetch_number_of_subscribers _instance;
+
+  final TRes Function(Variables$Query$fetch_number_of_subscribers) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_id = _undefined,
+    Object? service_provider_type = _undefined,
+  }) =>
+      _then(Variables$Query$fetch_number_of_subscribers._({
+        ..._instance._$data,
+        if (service_provider_id != _undefined)
+          'service_provider_id': (service_provider_id as int?),
+        if (service_provider_type != _undefined)
+          'service_provider_type': (service_provider_type as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$fetch_number_of_subscribers<TRes>
+    implements CopyWith$Variables$Query$fetch_number_of_subscribers<TRes> {
+  _CopyWithStubImpl$Variables$Query$fetch_number_of_subscribers(this._res);
+
+  TRes _res;
+
+  call({
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      _res;
+}
+
+class Query$fetch_number_of_subscribers {
+  Query$fetch_number_of_subscribers({
+    required this.service_provider_subscriber_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_number_of_subscribers.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_subscriber_aggregate =
+        json['service_provider_subscriber_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_number_of_subscribers(
+      service_provider_subscriber_aggregate:
+          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
+              .fromJson((l$service_provider_subscriber_aggregate
+                  as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
+      service_provider_subscriber_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_subscriber_aggregate =
+        service_provider_subscriber_aggregate;
+    _resultData['service_provider_subscriber_aggregate'] =
+        l$service_provider_subscriber_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_subscriber_aggregate =
+        service_provider_subscriber_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_subscriber_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$fetch_number_of_subscribers) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_subscriber_aggregate =
+        service_provider_subscriber_aggregate;
+    final lOther$service_provider_subscriber_aggregate =
+        other.service_provider_subscriber_aggregate;
+    if (l$service_provider_subscriber_aggregate !=
+        lOther$service_provider_subscriber_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_number_of_subscribers
+    on Query$fetch_number_of_subscribers {
+  CopyWith$Query$fetch_number_of_subscribers<Query$fetch_number_of_subscribers>
+      get copyWith => CopyWith$Query$fetch_number_of_subscribers(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_number_of_subscribers<TRes> {
+  factory CopyWith$Query$fetch_number_of_subscribers(
+    Query$fetch_number_of_subscribers instance,
+    TRes Function(Query$fetch_number_of_subscribers) then,
+  ) = _CopyWithImpl$Query$fetch_number_of_subscribers;
+
+  factory CopyWith$Query$fetch_number_of_subscribers.stub(TRes res) =
+      _CopyWithStubImpl$Query$fetch_number_of_subscribers;
+
+  TRes call({
+    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate?
+        service_provider_subscriber_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+      TRes> get service_provider_subscriber_aggregate;
+}
+
+class _CopyWithImpl$Query$fetch_number_of_subscribers<TRes>
+    implements CopyWith$Query$fetch_number_of_subscribers<TRes> {
+  _CopyWithImpl$Query$fetch_number_of_subscribers(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_number_of_subscribers _instance;
+
+  final TRes Function(Query$fetch_number_of_subscribers) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_subscriber_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$fetch_number_of_subscribers(
+        service_provider_subscriber_aggregate:
+            service_provider_subscriber_aggregate == _undefined ||
+                    service_provider_subscriber_aggregate == null
+                ? _instance.service_provider_subscriber_aggregate
+                : (service_provider_subscriber_aggregate
+                    as Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+      TRes> get service_provider_subscriber_aggregate {
+    final local$service_provider_subscriber_aggregate =
+        _instance.service_provider_subscriber_aggregate;
+    return CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+        local$service_provider_subscriber_aggregate,
+        (e) => call(service_provider_subscriber_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$fetch_number_of_subscribers<TRes>
+    implements CopyWith$Query$fetch_number_of_subscribers<TRes> {
+  _CopyWithStubImpl$Query$fetch_number_of_subscribers(this._res);
+
+  TRes _res;
+
+  call({
+    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate?
+        service_provider_subscriber_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+          TRes>
+      get service_provider_subscriber_aggregate =>
+          CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
+              .stub(_res);
+}
+
+const documentNodeQueryfetch_number_of_subscribers = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'fetch_number_of_subscribers'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_subscriber_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_type')),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'count'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$fetch_number_of_subscribers _parserFn$Query$fetch_number_of_subscribers(
+        Map<String, dynamic> data) =>
+    Query$fetch_number_of_subscribers.fromJson(data);
+
+class Options$Query$fetch_number_of_subscribers
+    extends graphql.QueryOptions<Query$fetch_number_of_subscribers> {
+  Options$Query$fetch_number_of_subscribers({
+    String? operationName,
+    Variables$Query$fetch_number_of_subscribers? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryfetch_number_of_subscribers,
+          parserFn: _parserFn$Query$fetch_number_of_subscribers,
+        );
+}
+
+class WatchOptions$Query$fetch_number_of_subscribers
+    extends graphql.WatchQueryOptions<Query$fetch_number_of_subscribers> {
+  WatchOptions$Query$fetch_number_of_subscribers({
+    String? operationName,
+    Variables$Query$fetch_number_of_subscribers? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryfetch_number_of_subscribers,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$fetch_number_of_subscribers,
+        );
+}
+
+class FetchMoreOptions$Query$fetch_number_of_subscribers
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$fetch_number_of_subscribers({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$fetch_number_of_subscribers? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQueryfetch_number_of_subscribers,
+        );
+}
+
+extension ClientExtension$Query$fetch_number_of_subscribers
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$fetch_number_of_subscribers>>
+      query$fetch_number_of_subscribers(
+              [Options$Query$fetch_number_of_subscribers? options]) async =>
+          await this
+              .query(options ?? Options$Query$fetch_number_of_subscribers());
+  graphql.ObservableQuery<Query$fetch_number_of_subscribers>
+      watchQuery$fetch_number_of_subscribers(
+              [WatchOptions$Query$fetch_number_of_subscribers? options]) =>
+          this.watchQuery(
+              options ?? WatchOptions$Query$fetch_number_of_subscribers());
+  void writeQuery$fetch_number_of_subscribers({
+    required Query$fetch_number_of_subscribers data,
+    Variables$Query$fetch_number_of_subscribers? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryfetch_number_of_subscribers),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$fetch_number_of_subscribers? readQuery$fetch_number_of_subscribers({
+    Variables$Query$fetch_number_of_subscribers? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryfetch_number_of_subscribers),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$fetch_number_of_subscribers.fromJson(result);
+  }
+}
+
+class Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate {
+  Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
+    on Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate {
+  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate>
+      get copyWith =>
+          CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+    TRes> {
+  factory CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
+        instance,
+    TRes Function(
+            Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate;
+
+  factory CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate;
+
+  TRes call({
+    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
+      _instance;
+
+  final TRes Function(
+          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate {
+  Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
+    on Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate {
+  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
+    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate;
+
+  factory CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$subscribe_service_provider {
   factory Variables$Mutation$subscribe_service_provider({
     int? customer_id,
@@ -10374,48 +11205,52 @@ class _CopyWithStubImpl$Mutation$write_comment$insert_service_provider_post_comm
       _res;
 }
 
-class Variables$Mutation$like_post {
-  factory Variables$Mutation$like_post({
-    required int id,
-    dynamic? customer_id,
+class Variables$Mutation$update_comment_likes {
+  factory Variables$Mutation$update_comment_likes({
+    int? id,
+    dynamic? likes,
   }) =>
-      Variables$Mutation$like_post._({
-        r'id': id,
-        if (customer_id != null) r'customer_id': customer_id,
+      Variables$Mutation$update_comment_likes._({
+        if (id != null) r'id': id,
+        if (likes != null) r'likes': likes,
       });
 
-  Variables$Mutation$like_post._(this._$data);
+  Variables$Mutation$update_comment_likes._(this._$data);
 
-  factory Variables$Mutation$like_post.fromJson(Map<String, dynamic> data) {
+  factory Variables$Mutation$update_comment_likes.fromJson(
+      Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$id = data['id'];
-    result$data['id'] = (l$id as int);
-    if (data.containsKey('customer_id')) {
-      final l$customer_id = data['customer_id'];
-      result$data['customer_id'] =
-          l$customer_id == null ? null : mapFromJson(l$customer_id);
+    if (data.containsKey('id')) {
+      final l$id = data['id'];
+      result$data['id'] = (l$id as int?);
     }
-    return Variables$Mutation$like_post._(result$data);
+    if (data.containsKey('likes')) {
+      final l$likes = data['likes'];
+      result$data['likes'] = l$likes == null ? null : mapFromJson(l$likes);
+    }
+    return Variables$Mutation$update_comment_likes._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get id => (_$data['id'] as int);
-  dynamic? get customer_id => (_$data['customer_id'] as dynamic?);
+  int? get id => (_$data['id'] as int?);
+  dynamic? get likes => (_$data['likes'] as dynamic?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$id = id;
-    result$data['id'] = l$id;
-    if (_$data.containsKey('customer_id')) {
-      final l$customer_id = customer_id;
-      result$data['customer_id'] =
-          l$customer_id == null ? null : mapToJson(l$customer_id);
+    if (_$data.containsKey('id')) {
+      final l$id = id;
+      result$data['id'] = l$id;
+    }
+    if (_$data.containsKey('likes')) {
+      final l$likes = likes;
+      result$data['likes'] = l$likes == null ? null : mapToJson(l$likes);
     }
     return result$data;
   }
 
-  CopyWith$Variables$Mutation$like_post<Variables$Mutation$like_post>
-      get copyWith => CopyWith$Variables$Mutation$like_post(
+  CopyWith$Variables$Mutation$update_comment_likes<
+          Variables$Mutation$update_comment_likes>
+      get copyWith => CopyWith$Variables$Mutation$update_comment_likes(
             this,
             (i) => i,
           );
@@ -10424,22 +11259,24 @@ class Variables$Mutation$like_post {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Mutation$like_post) ||
+    if (!(other is Variables$Mutation$update_comment_likes) ||
         runtimeType != other.runtimeType) {
       return false;
     }
     final l$id = id;
     final lOther$id = other.id;
+    if (_$data.containsKey('id') != other._$data.containsKey('id')) {
+      return false;
+    }
     if (l$id != lOther$id) {
       return false;
     }
-    final l$customer_id = customer_id;
-    final lOther$customer_id = other.customer_id;
-    if (_$data.containsKey('customer_id') !=
-        other._$data.containsKey('customer_id')) {
+    final l$likes = likes;
+    final lOther$likes = other.likes;
+    if (_$data.containsKey('likes') != other._$data.containsKey('likes')) {
       return false;
     }
-    if (l$customer_id != lOther$customer_id) {
+    if (l$likes != lOther$likes) {
       return false;
     }
     return true;
@@ -10448,98 +11285,98 @@ class Variables$Mutation$like_post {
   @override
   int get hashCode {
     final l$id = id;
-    final l$customer_id = customer_id;
+    final l$likes = likes;
     return Object.hashAll([
-      l$id,
-      _$data.containsKey('customer_id') ? l$customer_id : const {},
+      _$data.containsKey('id') ? l$id : const {},
+      _$data.containsKey('likes') ? l$likes : const {},
     ]);
   }
 }
 
-abstract class CopyWith$Variables$Mutation$like_post<TRes> {
-  factory CopyWith$Variables$Mutation$like_post(
-    Variables$Mutation$like_post instance,
-    TRes Function(Variables$Mutation$like_post) then,
-  ) = _CopyWithImpl$Variables$Mutation$like_post;
+abstract class CopyWith$Variables$Mutation$update_comment_likes<TRes> {
+  factory CopyWith$Variables$Mutation$update_comment_likes(
+    Variables$Mutation$update_comment_likes instance,
+    TRes Function(Variables$Mutation$update_comment_likes) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_comment_likes;
 
-  factory CopyWith$Variables$Mutation$like_post.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$like_post;
+  factory CopyWith$Variables$Mutation$update_comment_likes.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_comment_likes;
 
   TRes call({
     int? id,
-    dynamic? customer_id,
+    dynamic? likes,
   });
 }
 
-class _CopyWithImpl$Variables$Mutation$like_post<TRes>
-    implements CopyWith$Variables$Mutation$like_post<TRes> {
-  _CopyWithImpl$Variables$Mutation$like_post(
+class _CopyWithImpl$Variables$Mutation$update_comment_likes<TRes>
+    implements CopyWith$Variables$Mutation$update_comment_likes<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_comment_likes(
     this._instance,
     this._then,
   );
 
-  final Variables$Mutation$like_post _instance;
+  final Variables$Mutation$update_comment_likes _instance;
 
-  final TRes Function(Variables$Mutation$like_post) _then;
+  final TRes Function(Variables$Mutation$update_comment_likes) _then;
 
   static const _undefined = {};
 
   TRes call({
     Object? id = _undefined,
-    Object? customer_id = _undefined,
+    Object? likes = _undefined,
   }) =>
-      _then(Variables$Mutation$like_post._({
+      _then(Variables$Mutation$update_comment_likes._({
         ..._instance._$data,
-        if (id != _undefined && id != null) 'id': (id as int),
-        if (customer_id != _undefined) 'customer_id': (customer_id as dynamic?),
+        if (id != _undefined) 'id': (id as int?),
+        if (likes != _undefined) 'likes': (likes as dynamic?),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Mutation$like_post<TRes>
-    implements CopyWith$Variables$Mutation$like_post<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$like_post(this._res);
+class _CopyWithStubImpl$Variables$Mutation$update_comment_likes<TRes>
+    implements CopyWith$Variables$Mutation$update_comment_likes<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_comment_likes(this._res);
 
   TRes _res;
 
   call({
     int? id,
-    dynamic? customer_id,
+    dynamic? likes,
   }) =>
       _res;
 }
 
-class Mutation$like_post {
-  Mutation$like_post({
-    this.update_service_provider_post_by_pk,
+class Mutation$update_comment_likes {
+  Mutation$update_comment_likes({
+    this.update_service_provider_post_comment_by_pk,
     required this.$__typename,
   });
 
-  factory Mutation$like_post.fromJson(Map<String, dynamic> json) {
-    final l$update_service_provider_post_by_pk =
-        json['update_service_provider_post_by_pk'];
+  factory Mutation$update_comment_likes.fromJson(Map<String, dynamic> json) {
+    final l$update_service_provider_post_comment_by_pk =
+        json['update_service_provider_post_comment_by_pk'];
     final l$$__typename = json['__typename'];
-    return Mutation$like_post(
-      update_service_provider_post_by_pk:
-          l$update_service_provider_post_by_pk == null
+    return Mutation$update_comment_likes(
+      update_service_provider_post_comment_by_pk:
+          l$update_service_provider_post_comment_by_pk == null
               ? null
-              : Mutation$like_post$update_service_provider_post_by_pk.fromJson(
-                  (l$update_service_provider_post_by_pk
+              : Mutation$update_comment_likes$update_service_provider_post_comment_by_pk
+                  .fromJson((l$update_service_provider_post_comment_by_pk
                       as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$like_post$update_service_provider_post_by_pk?
-      update_service_provider_post_by_pk;
+  final Mutation$update_comment_likes$update_service_provider_post_comment_by_pk?
+      update_service_provider_post_comment_by_pk;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$update_service_provider_post_by_pk =
-        update_service_provider_post_by_pk;
-    _resultData['update_service_provider_post_by_pk'] =
-        l$update_service_provider_post_by_pk?.toJson();
+    final l$update_service_provider_post_comment_by_pk =
+        update_service_provider_post_comment_by_pk;
+    _resultData['update_service_provider_post_comment_by_pk'] =
+        l$update_service_provider_post_comment_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -10547,11 +11384,11 @@ class Mutation$like_post {
 
   @override
   int get hashCode {
-    final l$update_service_provider_post_by_pk =
-        update_service_provider_post_by_pk;
+    final l$update_service_provider_post_comment_by_pk =
+        update_service_provider_post_comment_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$update_service_provider_post_by_pk,
+      l$update_service_provider_post_comment_by_pk,
       l$$__typename,
     ]);
   }
@@ -10561,15 +11398,16 @@ class Mutation$like_post {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$like_post) || runtimeType != other.runtimeType) {
+    if (!(other is Mutation$update_comment_likes) ||
+        runtimeType != other.runtimeType) {
       return false;
     }
-    final l$update_service_provider_post_by_pk =
-        update_service_provider_post_by_pk;
-    final lOther$update_service_provider_post_by_pk =
-        other.update_service_provider_post_by_pk;
-    if (l$update_service_provider_post_by_pk !=
-        lOther$update_service_provider_post_by_pk) {
+    final l$update_service_provider_post_comment_by_pk =
+        update_service_provider_post_comment_by_pk;
+    final lOther$update_service_provider_post_comment_by_pk =
+        other.update_service_provider_post_comment_by_pk;
+    if (l$update_service_provider_post_comment_by_pk !=
+        lOther$update_service_provider_post_comment_by_pk) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -10581,106 +11419,108 @@ class Mutation$like_post {
   }
 }
 
-extension UtilityExtension$Mutation$like_post on Mutation$like_post {
-  CopyWith$Mutation$like_post<Mutation$like_post> get copyWith =>
-      CopyWith$Mutation$like_post(
-        this,
-        (i) => i,
-      );
+extension UtilityExtension$Mutation$update_comment_likes
+    on Mutation$update_comment_likes {
+  CopyWith$Mutation$update_comment_likes<Mutation$update_comment_likes>
+      get copyWith => CopyWith$Mutation$update_comment_likes(
+            this,
+            (i) => i,
+          );
 }
 
-abstract class CopyWith$Mutation$like_post<TRes> {
-  factory CopyWith$Mutation$like_post(
-    Mutation$like_post instance,
-    TRes Function(Mutation$like_post) then,
-  ) = _CopyWithImpl$Mutation$like_post;
+abstract class CopyWith$Mutation$update_comment_likes<TRes> {
+  factory CopyWith$Mutation$update_comment_likes(
+    Mutation$update_comment_likes instance,
+    TRes Function(Mutation$update_comment_likes) then,
+  ) = _CopyWithImpl$Mutation$update_comment_likes;
 
-  factory CopyWith$Mutation$like_post.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$like_post;
+  factory CopyWith$Mutation$update_comment_likes.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_comment_likes;
 
   TRes call({
-    Mutation$like_post$update_service_provider_post_by_pk?
-        update_service_provider_post_by_pk,
+    Mutation$update_comment_likes$update_service_provider_post_comment_by_pk?
+        update_service_provider_post_comment_by_pk,
     String? $__typename,
   });
-  CopyWith$Mutation$like_post$update_service_provider_post_by_pk<TRes>
-      get update_service_provider_post_by_pk;
+  CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
+      TRes> get update_service_provider_post_comment_by_pk;
 }
 
-class _CopyWithImpl$Mutation$like_post<TRes>
-    implements CopyWith$Mutation$like_post<TRes> {
-  _CopyWithImpl$Mutation$like_post(
+class _CopyWithImpl$Mutation$update_comment_likes<TRes>
+    implements CopyWith$Mutation$update_comment_likes<TRes> {
+  _CopyWithImpl$Mutation$update_comment_likes(
     this._instance,
     this._then,
   );
 
-  final Mutation$like_post _instance;
+  final Mutation$update_comment_likes _instance;
 
-  final TRes Function(Mutation$like_post) _then;
+  final TRes Function(Mutation$update_comment_likes) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? update_service_provider_post_by_pk = _undefined,
+    Object? update_service_provider_post_comment_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$like_post(
-        update_service_provider_post_by_pk:
-            update_service_provider_post_by_pk == _undefined
-                ? _instance.update_service_provider_post_by_pk
-                : (update_service_provider_post_by_pk
-                    as Mutation$like_post$update_service_provider_post_by_pk?),
+      _then(Mutation$update_comment_likes(
+        update_service_provider_post_comment_by_pk:
+            update_service_provider_post_comment_by_pk == _undefined
+                ? _instance.update_service_provider_post_comment_by_pk
+                : (update_service_provider_post_comment_by_pk
+                    as Mutation$update_comment_likes$update_service_provider_post_comment_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$like_post$update_service_provider_post_by_pk<TRes>
-      get update_service_provider_post_by_pk {
-    final local$update_service_provider_post_by_pk =
-        _instance.update_service_provider_post_by_pk;
-    return local$update_service_provider_post_by_pk == null
-        ? CopyWith$Mutation$like_post$update_service_provider_post_by_pk.stub(
-            _then(_instance))
-        : CopyWith$Mutation$like_post$update_service_provider_post_by_pk(
-            local$update_service_provider_post_by_pk,
-            (e) => call(update_service_provider_post_by_pk: e));
+  CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
+      TRes> get update_service_provider_post_comment_by_pk {
+    final local$update_service_provider_post_comment_by_pk =
+        _instance.update_service_provider_post_comment_by_pk;
+    return local$update_service_provider_post_comment_by_pk == null
+        ? CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk(
+            local$update_service_provider_post_comment_by_pk,
+            (e) => call(update_service_provider_post_comment_by_pk: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$like_post<TRes>
-    implements CopyWith$Mutation$like_post<TRes> {
-  _CopyWithStubImpl$Mutation$like_post(this._res);
+class _CopyWithStubImpl$Mutation$update_comment_likes<TRes>
+    implements CopyWith$Mutation$update_comment_likes<TRes> {
+  _CopyWithStubImpl$Mutation$update_comment_likes(this._res);
 
   TRes _res;
 
   call({
-    Mutation$like_post$update_service_provider_post_by_pk?
-        update_service_provider_post_by_pk,
+    Mutation$update_comment_likes$update_service_provider_post_comment_by_pk?
+        update_service_provider_post_comment_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$like_post$update_service_provider_post_by_pk<TRes>
-      get update_service_provider_post_by_pk =>
-          CopyWith$Mutation$like_post$update_service_provider_post_by_pk.stub(
-              _res);
+  CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
+          TRes>
+      get update_service_provider_post_comment_by_pk =>
+          CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk
+              .stub(_res);
 }
 
-const documentNodeMutationlike_post = DocumentNode(definitions: [
+const documentNodeMutationupdate_comment_likes = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.mutation,
-    name: NameNode(value: 'like_post'),
+    name: NameNode(value: 'update_comment_likes'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'id')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
-          isNonNull: true,
+          isNonNull: false,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        variable: VariableNode(name: NameNode(value: 'likes')),
         type: NamedTypeNode(
           name: NameNode(value: 'jsonb'),
           isNonNull: false,
@@ -10692,7 +11532,7 @@ const documentNodeMutationlike_post = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'update_service_provider_post_by_pk'),
+        name: NameNode(value: 'update_service_provider_post_comment_by_pk'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -10705,11 +11545,11 @@ const documentNodeMutationlike_post = DocumentNode(definitions: [
             ]),
           ),
           ArgumentNode(
-            name: NameNode(value: '_append'),
+            name: NameNode(value: '_set'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
                 name: NameNode(value: 'likes'),
-                value: VariableNode(name: NameNode(value: 'customer_id')),
+                value: VariableNode(name: NameNode(value: 'likes')),
               )
             ]),
           ),
@@ -10736,29 +11576,31 @@ const documentNodeMutationlike_post = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Mutation$like_post _parserFn$Mutation$like_post(Map<String, dynamic> data) =>
-    Mutation$like_post.fromJson(data);
-typedef OnMutationCompleted$Mutation$like_post = FutureOr<void> Function(
+Mutation$update_comment_likes _parserFn$Mutation$update_comment_likes(
+        Map<String, dynamic> data) =>
+    Mutation$update_comment_likes.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_comment_likes = FutureOr<void>
+    Function(
   dynamic,
-  Mutation$like_post?,
+  Mutation$update_comment_likes?,
 );
 
-class Options$Mutation$like_post
-    extends graphql.MutationOptions<Mutation$like_post> {
-  Options$Mutation$like_post({
+class Options$Mutation$update_comment_likes
+    extends graphql.MutationOptions<Mutation$update_comment_likes> {
+  Options$Mutation$update_comment_likes({
     String? operationName,
-    required Variables$Mutation$like_post variables,
+    Variables$Mutation$update_comment_likes? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
-    OnMutationCompleted$Mutation$like_post? onCompleted,
-    graphql.OnMutationUpdate<Mutation$like_post>? update,
+    OnMutationCompleted$Mutation$update_comment_likes? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_comment_likes>? update,
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -10769,15 +11611,18 @@ class Options$Mutation$like_post
               ? null
               : (data) => onCompleted(
                     data,
-                    data == null ? null : _parserFn$Mutation$like_post(data),
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_comment_likes(data),
                   ),
           update: update,
           onError: onError,
-          document: documentNodeMutationlike_post,
-          parserFn: _parserFn$Mutation$like_post,
+          document: documentNodeMutationupdate_comment_likes,
+          parserFn: _parserFn$Mutation$update_comment_likes,
         );
 
-  final OnMutationCompleted$Mutation$like_post? onCompletedWithParsed;
+  final OnMutationCompleted$Mutation$update_comment_likes?
+      onCompletedWithParsed;
 
   @override
   List<Object?> get properties => [
@@ -10788,11 +11633,11 @@ class Options$Mutation$like_post
       ];
 }
 
-class WatchOptions$Mutation$like_post
-    extends graphql.WatchQueryOptions<Mutation$like_post> {
-  WatchOptions$Mutation$like_post({
+class WatchOptions$Mutation$update_comment_likes
+    extends graphql.WatchQueryOptions<Mutation$update_comment_likes> {
+  WatchOptions$Mutation$update_comment_likes({
     String? operationName,
-    required Variables$Mutation$like_post variables,
+    Variables$Mutation$update_comment_likes? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -10803,42 +11648,46 @@ class WatchOptions$Mutation$like_post
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables.toJson(),
+          variables: variables?.toJson() ?? {},
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeMutationlike_post,
+          document: documentNodeMutationupdate_comment_likes,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$like_post,
+          parserFn: _parserFn$Mutation$update_comment_likes,
         );
 }
 
-extension ClientExtension$Mutation$like_post on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$like_post>> mutate$like_post(
-          Options$Mutation$like_post options) async =>
-      await this.mutate(options);
-  graphql.ObservableQuery<Mutation$like_post> watchMutation$like_post(
-          WatchOptions$Mutation$like_post options) =>
-      this.watchMutation(options);
+extension ClientExtension$Mutation$update_comment_likes
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_comment_likes>>
+      mutate$update_comment_likes(
+              [Options$Mutation$update_comment_likes? options]) async =>
+          await this.mutate(options ?? Options$Mutation$update_comment_likes());
+  graphql.ObservableQuery<Mutation$update_comment_likes>
+      watchMutation$update_comment_likes(
+              [WatchOptions$Mutation$update_comment_likes? options]) =>
+          this.watchMutation(
+              options ?? WatchOptions$Mutation$update_comment_likes());
 }
 
-class Mutation$like_post$update_service_provider_post_by_pk {
-  Mutation$like_post$update_service_provider_post_by_pk({
+class Mutation$update_comment_likes$update_service_provider_post_comment_by_pk {
+  Mutation$update_comment_likes$update_service_provider_post_comment_by_pk({
     required this.id,
     required this.$__typename,
   });
 
-  factory Mutation$like_post$update_service_provider_post_by_pk.fromJson(
+  factory Mutation$update_comment_likes$update_service_provider_post_comment_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$$__typename = json['__typename'];
-    return Mutation$like_post$update_service_provider_post_by_pk(
+    return Mutation$update_comment_likes$update_service_provider_post_comment_by_pk(
       id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -10872,7 +11721,8 @@ class Mutation$like_post$update_service_provider_post_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$like_post$update_service_provider_post_by_pk) ||
+    if (!(other
+            is Mutation$update_comment_likes$update_service_provider_post_comment_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -10890,27 +11740,30 @@ class Mutation$like_post$update_service_provider_post_by_pk {
   }
 }
 
-extension UtilityExtension$Mutation$like_post$update_service_provider_post_by_pk
-    on Mutation$like_post$update_service_provider_post_by_pk {
-  CopyWith$Mutation$like_post$update_service_provider_post_by_pk<
-          Mutation$like_post$update_service_provider_post_by_pk>
+extension UtilityExtension$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk
+    on Mutation$update_comment_likes$update_service_provider_post_comment_by_pk {
+  CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
+          Mutation$update_comment_likes$update_service_provider_post_comment_by_pk>
       get copyWith =>
-          CopyWith$Mutation$like_post$update_service_provider_post_by_pk(
+          CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$like_post$update_service_provider_post_by_pk<
+abstract class CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
     TRes> {
-  factory CopyWith$Mutation$like_post$update_service_provider_post_by_pk(
-    Mutation$like_post$update_service_provider_post_by_pk instance,
-    TRes Function(Mutation$like_post$update_service_provider_post_by_pk) then,
-  ) = _CopyWithImpl$Mutation$like_post$update_service_provider_post_by_pk;
+  factory CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk(
+    Mutation$update_comment_likes$update_service_provider_post_comment_by_pk
+        instance,
+    TRes Function(
+            Mutation$update_comment_likes$update_service_provider_post_comment_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk;
 
-  factory CopyWith$Mutation$like_post$update_service_provider_post_by_pk.stub(
+  factory CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$like_post$update_service_provider_post_by_pk;
+      _CopyWithStubImpl$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk;
 
   TRes call({
     int? id,
@@ -10918,17 +11771,21 @@ abstract class CopyWith$Mutation$like_post$update_service_provider_post_by_pk<
   });
 }
 
-class _CopyWithImpl$Mutation$like_post$update_service_provider_post_by_pk<TRes>
+class _CopyWithImpl$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
+        TRes>
     implements
-        CopyWith$Mutation$like_post$update_service_provider_post_by_pk<TRes> {
-  _CopyWithImpl$Mutation$like_post$update_service_provider_post_by_pk(
+        CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk(
     this._instance,
     this._then,
   );
 
-  final Mutation$like_post$update_service_provider_post_by_pk _instance;
+  final Mutation$update_comment_likes$update_service_provider_post_comment_by_pk
+      _instance;
 
-  final TRes Function(Mutation$like_post$update_service_provider_post_by_pk)
+  final TRes Function(
+          Mutation$update_comment_likes$update_service_provider_post_comment_by_pk)
       _then;
 
   static const _undefined = {};
@@ -10937,7 +11794,8 @@ class _CopyWithImpl$Mutation$like_post$update_service_provider_post_by_pk<TRes>
     Object? id = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$like_post$update_service_provider_post_by_pk(
+      _then(
+          Mutation$update_comment_likes$update_service_provider_post_comment_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -10945,11 +11803,618 @@ class _CopyWithImpl$Mutation$like_post$update_service_provider_post_by_pk<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Mutation$like_post$update_service_provider_post_by_pk<
+class _CopyWithStubImpl$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$like_post$update_service_provider_post_by_pk<TRes> {
-  _CopyWithStubImpl$Mutation$like_post$update_service_provider_post_by_pk(
+        CopyWith$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_comment_likes$update_service_provider_post_comment_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_post_likes {
+  factory Variables$Mutation$update_post_likes({
+    int? id,
+    dynamic? likes,
+  }) =>
+      Variables$Mutation$update_post_likes._({
+        if (id != null) r'id': id,
+        if (likes != null) r'likes': likes,
+      });
+
+  Variables$Mutation$update_post_likes._(this._$data);
+
+  factory Variables$Mutation$update_post_likes.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('id')) {
+      final l$id = data['id'];
+      result$data['id'] = (l$id as int?);
+    }
+    if (data.containsKey('likes')) {
+      final l$likes = data['likes'];
+      result$data['likes'] = l$likes == null ? null : mapFromJson(l$likes);
+    }
+    return Variables$Mutation$update_post_likes._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get id => (_$data['id'] as int?);
+  dynamic? get likes => (_$data['likes'] as dynamic?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('id')) {
+      final l$id = id;
+      result$data['id'] = l$id;
+    }
+    if (_$data.containsKey('likes')) {
+      final l$likes = likes;
+      result$data['likes'] = l$likes == null ? null : mapToJson(l$likes);
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_post_likes<
+          Variables$Mutation$update_post_likes>
+      get copyWith => CopyWith$Variables$Mutation$update_post_likes(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_post_likes) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (_$data.containsKey('id') != other._$data.containsKey('id')) {
+      return false;
+    }
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$likes = likes;
+    final lOther$likes = other.likes;
+    if (_$data.containsKey('likes') != other._$data.containsKey('likes')) {
+      return false;
+    }
+    if (l$likes != lOther$likes) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$likes = likes;
+    return Object.hashAll([
+      _$data.containsKey('id') ? l$id : const {},
+      _$data.containsKey('likes') ? l$likes : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_post_likes<TRes> {
+  factory CopyWith$Variables$Mutation$update_post_likes(
+    Variables$Mutation$update_post_likes instance,
+    TRes Function(Variables$Mutation$update_post_likes) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_post_likes;
+
+  factory CopyWith$Variables$Mutation$update_post_likes.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_post_likes;
+
+  TRes call({
+    int? id,
+    dynamic? likes,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_post_likes<TRes>
+    implements CopyWith$Variables$Mutation$update_post_likes<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_post_likes(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_post_likes _instance;
+
+  final TRes Function(Variables$Mutation$update_post_likes) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? likes = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_post_likes._({
+        ..._instance._$data,
+        if (id != _undefined) 'id': (id as int?),
+        if (likes != _undefined) 'likes': (likes as dynamic?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_post_likes<TRes>
+    implements CopyWith$Variables$Mutation$update_post_likes<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_post_likes(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? likes,
+  }) =>
+      _res;
+}
+
+class Mutation$update_post_likes {
+  Mutation$update_post_likes({
+    this.update_service_provider_post_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_post_likes.fromJson(Map<String, dynamic> json) {
+    final l$update_service_provider_post_by_pk =
+        json['update_service_provider_post_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_post_likes(
+      update_service_provider_post_by_pk:
+          l$update_service_provider_post_by_pk == null
+              ? null
+              : Mutation$update_post_likes$update_service_provider_post_by_pk
+                  .fromJson((l$update_service_provider_post_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_post_likes$update_service_provider_post_by_pk?
+      update_service_provider_post_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_service_provider_post_by_pk =
+        update_service_provider_post_by_pk;
+    _resultData['update_service_provider_post_by_pk'] =
+        l$update_service_provider_post_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_service_provider_post_by_pk =
+        update_service_provider_post_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_service_provider_post_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_post_likes) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_service_provider_post_by_pk =
+        update_service_provider_post_by_pk;
+    final lOther$update_service_provider_post_by_pk =
+        other.update_service_provider_post_by_pk;
+    if (l$update_service_provider_post_by_pk !=
+        lOther$update_service_provider_post_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_post_likes
+    on Mutation$update_post_likes {
+  CopyWith$Mutation$update_post_likes<Mutation$update_post_likes>
+      get copyWith => CopyWith$Mutation$update_post_likes(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_post_likes<TRes> {
+  factory CopyWith$Mutation$update_post_likes(
+    Mutation$update_post_likes instance,
+    TRes Function(Mutation$update_post_likes) then,
+  ) = _CopyWithImpl$Mutation$update_post_likes;
+
+  factory CopyWith$Mutation$update_post_likes.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_post_likes;
+
+  TRes call({
+    Mutation$update_post_likes$update_service_provider_post_by_pk?
+        update_service_provider_post_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk<TRes>
+      get update_service_provider_post_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_post_likes<TRes>
+    implements CopyWith$Mutation$update_post_likes<TRes> {
+  _CopyWithImpl$Mutation$update_post_likes(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_post_likes _instance;
+
+  final TRes Function(Mutation$update_post_likes) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_service_provider_post_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_post_likes(
+        update_service_provider_post_by_pk: update_service_provider_post_by_pk ==
+                _undefined
+            ? _instance.update_service_provider_post_by_pk
+            : (update_service_provider_post_by_pk
+                as Mutation$update_post_likes$update_service_provider_post_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk<TRes>
+      get update_service_provider_post_by_pk {
+    final local$update_service_provider_post_by_pk =
+        _instance.update_service_provider_post_by_pk;
+    return local$update_service_provider_post_by_pk == null
+        ? CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk(
+            local$update_service_provider_post_by_pk,
+            (e) => call(update_service_provider_post_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_post_likes<TRes>
+    implements CopyWith$Mutation$update_post_likes<TRes> {
+  _CopyWithStubImpl$Mutation$update_post_likes(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_post_likes$update_service_provider_post_by_pk?
+        update_service_provider_post_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk<TRes>
+      get update_service_provider_post_by_pk =>
+          CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_post_likes = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_post_likes'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'likes')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_service_provider_post_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'likes'),
+                value: VariableNode(name: NameNode(value: 'likes')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_post_likes _parserFn$Mutation$update_post_likes(
+        Map<String, dynamic> data) =>
+    Mutation$update_post_likes.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_post_likes = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_post_likes?,
+);
+
+class Options$Mutation$update_post_likes
+    extends graphql.MutationOptions<Mutation$update_post_likes> {
+  Options$Mutation$update_post_likes({
+    String? operationName,
+    Variables$Mutation$update_post_likes? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_post_likes? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_post_likes>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_post_likes(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_post_likes,
+          parserFn: _parserFn$Mutation$update_post_likes,
+        );
+
+  final OnMutationCompleted$Mutation$update_post_likes? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_post_likes
+    extends graphql.WatchQueryOptions<Mutation$update_post_likes> {
+  WatchOptions$Mutation$update_post_likes({
+    String? operationName,
+    Variables$Mutation$update_post_likes? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_post_likes,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_post_likes,
+        );
+}
+
+extension ClientExtension$Mutation$update_post_likes on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_post_likes>>
+      mutate$update_post_likes(
+              [Options$Mutation$update_post_likes? options]) async =>
+          await this.mutate(options ?? Options$Mutation$update_post_likes());
+  graphql.ObservableQuery<
+      Mutation$update_post_likes> watchMutation$update_post_likes(
+          [WatchOptions$Mutation$update_post_likes? options]) =>
+      this.watchMutation(options ?? WatchOptions$Mutation$update_post_likes());
+}
+
+class Mutation$update_post_likes$update_service_provider_post_by_pk {
+  Mutation$update_post_likes$update_service_provider_post_by_pk({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_post_likes$update_service_provider_post_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_post_likes$update_service_provider_post_by_pk(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_post_likes$update_service_provider_post_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_post_likes$update_service_provider_post_by_pk
+    on Mutation$update_post_likes$update_service_provider_post_by_pk {
+  CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk<
+          Mutation$update_post_likes$update_service_provider_post_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk(
+    Mutation$update_post_likes$update_service_provider_post_by_pk instance,
+    TRes Function(Mutation$update_post_likes$update_service_provider_post_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_post_likes$update_service_provider_post_by_pk;
+
+  factory CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_post_likes$update_service_provider_post_by_pk;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_post_likes$update_service_provider_post_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_post_likes$update_service_provider_post_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_post_likes$update_service_provider_post_by_pk _instance;
+
+  final TRes Function(
+      Mutation$update_post_likes$update_service_provider_post_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_post_likes$update_service_provider_post_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_post_likes$update_service_provider_post_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_post_likes$update_service_provider_post_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_post_likes$update_service_provider_post_by_pk(
       this._res);
 
   TRes _res;
@@ -11645,6 +13110,1073 @@ class _CopyWithStubImpl$Mutation$create_post$insert_service_provider_post_one<
   call({
     int? id,
     String? posted_on,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$delete_post {
+  factory Variables$Mutation$delete_post({required int id}) =>
+      Variables$Mutation$delete_post._({
+        r'id': id,
+      });
+
+  Variables$Mutation$delete_post._(this._$data);
+
+  factory Variables$Mutation$delete_post.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$delete_post._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$delete_post<Variables$Mutation$delete_post>
+      get copyWith => CopyWith$Variables$Mutation$delete_post(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$delete_post) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$delete_post<TRes> {
+  factory CopyWith$Variables$Mutation$delete_post(
+    Variables$Mutation$delete_post instance,
+    TRes Function(Variables$Mutation$delete_post) then,
+  ) = _CopyWithImpl$Variables$Mutation$delete_post;
+
+  factory CopyWith$Variables$Mutation$delete_post.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$delete_post;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Mutation$delete_post<TRes>
+    implements CopyWith$Variables$Mutation$delete_post<TRes> {
+  _CopyWithImpl$Variables$Mutation$delete_post(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$delete_post _instance;
+
+  final TRes Function(Variables$Mutation$delete_post) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Mutation$delete_post._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$delete_post<TRes>
+    implements CopyWith$Variables$Mutation$delete_post<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$delete_post(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Mutation$delete_post {
+  Mutation$delete_post({
+    this.delete_service_provider_post_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_post.fromJson(Map<String, dynamic> json) {
+    final l$delete_service_provider_post_by_pk =
+        json['delete_service_provider_post_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_post(
+      delete_service_provider_post_by_pk:
+          l$delete_service_provider_post_by_pk == null
+              ? null
+              : Mutation$delete_post$delete_service_provider_post_by_pk
+                  .fromJson((l$delete_service_provider_post_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$delete_post$delete_service_provider_post_by_pk?
+      delete_service_provider_post_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_service_provider_post_by_pk =
+        delete_service_provider_post_by_pk;
+    _resultData['delete_service_provider_post_by_pk'] =
+        l$delete_service_provider_post_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_service_provider_post_by_pk =
+        delete_service_provider_post_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_service_provider_post_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$delete_post) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_service_provider_post_by_pk =
+        delete_service_provider_post_by_pk;
+    final lOther$delete_service_provider_post_by_pk =
+        other.delete_service_provider_post_by_pk;
+    if (l$delete_service_provider_post_by_pk !=
+        lOther$delete_service_provider_post_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_post on Mutation$delete_post {
+  CopyWith$Mutation$delete_post<Mutation$delete_post> get copyWith =>
+      CopyWith$Mutation$delete_post(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$delete_post<TRes> {
+  factory CopyWith$Mutation$delete_post(
+    Mutation$delete_post instance,
+    TRes Function(Mutation$delete_post) then,
+  ) = _CopyWithImpl$Mutation$delete_post;
+
+  factory CopyWith$Mutation$delete_post.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$delete_post;
+
+  TRes call({
+    Mutation$delete_post$delete_service_provider_post_by_pk?
+        delete_service_provider_post_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk<TRes>
+      get delete_service_provider_post_by_pk;
+}
+
+class _CopyWithImpl$Mutation$delete_post<TRes>
+    implements CopyWith$Mutation$delete_post<TRes> {
+  _CopyWithImpl$Mutation$delete_post(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_post _instance;
+
+  final TRes Function(Mutation$delete_post) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_service_provider_post_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_post(
+        delete_service_provider_post_by_pk:
+            delete_service_provider_post_by_pk == _undefined
+                ? _instance.delete_service_provider_post_by_pk
+                : (delete_service_provider_post_by_pk
+                    as Mutation$delete_post$delete_service_provider_post_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk<TRes>
+      get delete_service_provider_post_by_pk {
+    final local$delete_service_provider_post_by_pk =
+        _instance.delete_service_provider_post_by_pk;
+    return local$delete_service_provider_post_by_pk == null
+        ? CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk(
+            local$delete_service_provider_post_by_pk,
+            (e) => call(delete_service_provider_post_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$delete_post<TRes>
+    implements CopyWith$Mutation$delete_post<TRes> {
+  _CopyWithStubImpl$Mutation$delete_post(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$delete_post$delete_service_provider_post_by_pk?
+        delete_service_provider_post_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk<TRes>
+      get delete_service_provider_post_by_pk =>
+          CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk.stub(
+              _res);
+}
+
+const documentNodeMutationdelete_post = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'delete_post'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_service_provider_post_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$delete_post _parserFn$Mutation$delete_post(
+        Map<String, dynamic> data) =>
+    Mutation$delete_post.fromJson(data);
+typedef OnMutationCompleted$Mutation$delete_post = FutureOr<void> Function(
+  dynamic,
+  Mutation$delete_post?,
+);
+
+class Options$Mutation$delete_post
+    extends graphql.MutationOptions<Mutation$delete_post> {
+  Options$Mutation$delete_post({
+    String? operationName,
+    required Variables$Mutation$delete_post variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$delete_post? onCompleted,
+    graphql.OnMutationUpdate<Mutation$delete_post>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null ? null : _parserFn$Mutation$delete_post(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdelete_post,
+          parserFn: _parserFn$Mutation$delete_post,
+        );
+
+  final OnMutationCompleted$Mutation$delete_post? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$delete_post
+    extends graphql.WatchQueryOptions<Mutation$delete_post> {
+  WatchOptions$Mutation$delete_post({
+    String? operationName,
+    required Variables$Mutation$delete_post variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdelete_post,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$delete_post,
+        );
+}
+
+extension ClientExtension$Mutation$delete_post on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$delete_post>> mutate$delete_post(
+          Options$Mutation$delete_post options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$delete_post> watchMutation$delete_post(
+          WatchOptions$Mutation$delete_post options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$delete_post$delete_service_provider_post_by_pk {
+  Mutation$delete_post$delete_service_provider_post_by_pk({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_post$delete_service_provider_post_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_post$delete_service_provider_post_by_pk(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$delete_post$delete_service_provider_post_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_post$delete_service_provider_post_by_pk
+    on Mutation$delete_post$delete_service_provider_post_by_pk {
+  CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk<
+          Mutation$delete_post$delete_service_provider_post_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk(
+    Mutation$delete_post$delete_service_provider_post_by_pk instance,
+    TRes Function(Mutation$delete_post$delete_service_provider_post_by_pk) then,
+  ) = _CopyWithImpl$Mutation$delete_post$delete_service_provider_post_by_pk;
+
+  factory CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$delete_post$delete_service_provider_post_by_pk;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$delete_post$delete_service_provider_post_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk<TRes> {
+  _CopyWithImpl$Mutation$delete_post$delete_service_provider_post_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_post$delete_service_provider_post_by_pk _instance;
+
+  final TRes Function(Mutation$delete_post$delete_service_provider_post_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_post$delete_service_provider_post_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$delete_post$delete_service_provider_post_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_post$delete_service_provider_post_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$delete_post$delete_service_provider_post_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$delete_comment {
+  factory Variables$Mutation$delete_comment({required int id}) =>
+      Variables$Mutation$delete_comment._({
+        r'id': id,
+      });
+
+  Variables$Mutation$delete_comment._(this._$data);
+
+  factory Variables$Mutation$delete_comment.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$delete_comment._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$delete_comment<Variables$Mutation$delete_comment>
+      get copyWith => CopyWith$Variables$Mutation$delete_comment(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$delete_comment) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$delete_comment<TRes> {
+  factory CopyWith$Variables$Mutation$delete_comment(
+    Variables$Mutation$delete_comment instance,
+    TRes Function(Variables$Mutation$delete_comment) then,
+  ) = _CopyWithImpl$Variables$Mutation$delete_comment;
+
+  factory CopyWith$Variables$Mutation$delete_comment.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$delete_comment;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Mutation$delete_comment<TRes>
+    implements CopyWith$Variables$Mutation$delete_comment<TRes> {
+  _CopyWithImpl$Variables$Mutation$delete_comment(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$delete_comment _instance;
+
+  final TRes Function(Variables$Mutation$delete_comment) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Mutation$delete_comment._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$delete_comment<TRes>
+    implements CopyWith$Variables$Mutation$delete_comment<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$delete_comment(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Mutation$delete_comment {
+  Mutation$delete_comment({
+    this.delete_service_provider_post_comment_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_comment.fromJson(Map<String, dynamic> json) {
+    final l$delete_service_provider_post_comment_by_pk =
+        json['delete_service_provider_post_comment_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_comment(
+      delete_service_provider_post_comment_by_pk:
+          l$delete_service_provider_post_comment_by_pk == null
+              ? null
+              : Mutation$delete_comment$delete_service_provider_post_comment_by_pk
+                  .fromJson((l$delete_service_provider_post_comment_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$delete_comment$delete_service_provider_post_comment_by_pk?
+      delete_service_provider_post_comment_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_service_provider_post_comment_by_pk =
+        delete_service_provider_post_comment_by_pk;
+    _resultData['delete_service_provider_post_comment_by_pk'] =
+        l$delete_service_provider_post_comment_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_service_provider_post_comment_by_pk =
+        delete_service_provider_post_comment_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_service_provider_post_comment_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$delete_comment) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_service_provider_post_comment_by_pk =
+        delete_service_provider_post_comment_by_pk;
+    final lOther$delete_service_provider_post_comment_by_pk =
+        other.delete_service_provider_post_comment_by_pk;
+    if (l$delete_service_provider_post_comment_by_pk !=
+        lOther$delete_service_provider_post_comment_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_comment on Mutation$delete_comment {
+  CopyWith$Mutation$delete_comment<Mutation$delete_comment> get copyWith =>
+      CopyWith$Mutation$delete_comment(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$delete_comment<TRes> {
+  factory CopyWith$Mutation$delete_comment(
+    Mutation$delete_comment instance,
+    TRes Function(Mutation$delete_comment) then,
+  ) = _CopyWithImpl$Mutation$delete_comment;
+
+  factory CopyWith$Mutation$delete_comment.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$delete_comment;
+
+  TRes call({
+    Mutation$delete_comment$delete_service_provider_post_comment_by_pk?
+        delete_service_provider_post_comment_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+      TRes> get delete_service_provider_post_comment_by_pk;
+}
+
+class _CopyWithImpl$Mutation$delete_comment<TRes>
+    implements CopyWith$Mutation$delete_comment<TRes> {
+  _CopyWithImpl$Mutation$delete_comment(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_comment _instance;
+
+  final TRes Function(Mutation$delete_comment) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_service_provider_post_comment_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_comment(
+        delete_service_provider_post_comment_by_pk:
+            delete_service_provider_post_comment_by_pk == _undefined
+                ? _instance.delete_service_provider_post_comment_by_pk
+                : (delete_service_provider_post_comment_by_pk
+                    as Mutation$delete_comment$delete_service_provider_post_comment_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+      TRes> get delete_service_provider_post_comment_by_pk {
+    final local$delete_service_provider_post_comment_by_pk =
+        _instance.delete_service_provider_post_comment_by_pk;
+    return local$delete_service_provider_post_comment_by_pk == null
+        ? CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk(
+            local$delete_service_provider_post_comment_by_pk,
+            (e) => call(delete_service_provider_post_comment_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$delete_comment<TRes>
+    implements CopyWith$Mutation$delete_comment<TRes> {
+  _CopyWithStubImpl$Mutation$delete_comment(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$delete_comment$delete_service_provider_post_comment_by_pk?
+        delete_service_provider_post_comment_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+          TRes>
+      get delete_service_provider_post_comment_by_pk =>
+          CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationdelete_comment = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'delete_comment'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_service_provider_post_comment_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: IntValueNode(value: '10'),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'post_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$delete_comment _parserFn$Mutation$delete_comment(
+        Map<String, dynamic> data) =>
+    Mutation$delete_comment.fromJson(data);
+typedef OnMutationCompleted$Mutation$delete_comment = FutureOr<void> Function(
+  dynamic,
+  Mutation$delete_comment?,
+);
+
+class Options$Mutation$delete_comment
+    extends graphql.MutationOptions<Mutation$delete_comment> {
+  Options$Mutation$delete_comment({
+    String? operationName,
+    required Variables$Mutation$delete_comment variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$delete_comment? onCompleted,
+    graphql.OnMutationUpdate<Mutation$delete_comment>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$delete_comment(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdelete_comment,
+          parserFn: _parserFn$Mutation$delete_comment,
+        );
+
+  final OnMutationCompleted$Mutation$delete_comment? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$delete_comment
+    extends graphql.WatchQueryOptions<Mutation$delete_comment> {
+  WatchOptions$Mutation$delete_comment({
+    String? operationName,
+    required Variables$Mutation$delete_comment variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdelete_comment,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$delete_comment,
+        );
+}
+
+extension ClientExtension$Mutation$delete_comment on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$delete_comment>> mutate$delete_comment(
+          Options$Mutation$delete_comment options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$delete_comment> watchMutation$delete_comment(
+          WatchOptions$Mutation$delete_comment options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$delete_comment$delete_service_provider_post_comment_by_pk {
+  Mutation$delete_comment$delete_service_provider_post_comment_by_pk({
+    required this.post_id,
+    required this.$__typename,
+  });
+
+  factory Mutation$delete_comment$delete_service_provider_post_comment_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$post_id = json['post_id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$delete_comment$delete_service_provider_post_comment_by_pk(
+      post_id: (l$post_id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int post_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$post_id = post_id;
+    _resultData['post_id'] = l$post_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$post_id = post_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$post_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$delete_comment$delete_service_provider_post_comment_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$post_id = post_id;
+    final lOther$post_id = other.post_id;
+    if (l$post_id != lOther$post_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$delete_comment$delete_service_provider_post_comment_by_pk
+    on Mutation$delete_comment$delete_service_provider_post_comment_by_pk {
+  CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+          Mutation$delete_comment$delete_service_provider_post_comment_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk(
+    Mutation$delete_comment$delete_service_provider_post_comment_by_pk instance,
+    TRes Function(
+            Mutation$delete_comment$delete_service_provider_post_comment_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$delete_comment$delete_service_provider_post_comment_by_pk;
+
+  factory CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$delete_comment$delete_service_provider_post_comment_by_pk;
+
+  TRes call({
+    int? post_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$delete_comment$delete_service_provider_post_comment_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$delete_comment$delete_service_provider_post_comment_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$delete_comment$delete_service_provider_post_comment_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? post_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$delete_comment$delete_service_provider_post_comment_by_pk(
+        post_id: post_id == _undefined || post_id == null
+            ? _instance.post_id
+            : (post_id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$delete_comment$delete_service_provider_post_comment_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$delete_comment$delete_service_provider_post_comment_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? post_id,
     String? $__typename,
   }) =>
       _res;

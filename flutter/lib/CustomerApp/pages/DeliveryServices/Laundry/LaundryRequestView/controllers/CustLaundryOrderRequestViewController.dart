@@ -36,6 +36,11 @@ class CustLaundryOrderRequestViewController {
   Rxn<Laundry> laundry = Rxn();
   Rxn<MezLocation> customerLoc = Rxn();
   RxnNum shippingCost = RxnNum();
+  Rx<cloudFunctionModels.DeliveryType> dvType =
+      Rx(cloudFunctionModels.DeliveryType.Delivery);
+  bool get showDelivery =>
+      dvType.value == cloudFunctionModels.DeliveryType.Delivery;
+
   DeliveryCost? get deliveryCost {
     return laundry.value!.deliveryCost;
   }
@@ -164,6 +169,7 @@ class CustLaundryOrderRequestViewController {
   }
 
   Future<void> createLaundryOrder() async {
+    mezDbgPrint("Called create laundry order 🔴");
     final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
     bool? isOpen =
@@ -205,7 +211,7 @@ class CustLaundryOrderRequestViewController {
             laundryRequest.routeInformation!.distance.distanceInMeters,
         tripDuration: laundryRequest.routeInformation!.duration.seconds,
         tripPolyline: laundryRequest.routeInformation!.polyline,
-        deliveryType: cloudFunctionModels.DeliveryType.Delivery,
+        deliveryType: dvType.value,
       );
       if (response.orderId == null) {
         mezDbgPrint(response.error);
@@ -223,6 +229,15 @@ class CustLaundryOrderRequestViewController {
     } catch (e) {
       showErrorSnackBar();
       mezDbgPrint(e);
+    }
+  }
+
+  void switchDeliveryType({required cloudFunctionModels.DeliveryType type}) {
+    dvType.value = type;
+
+    //  _cartRxn.value?.deliveryType = dvType.value;
+    if (dvType.value == cloudFunctionModels.DeliveryType.Pickup) {
+      shippingCost.value = null;
     }
   }
 }

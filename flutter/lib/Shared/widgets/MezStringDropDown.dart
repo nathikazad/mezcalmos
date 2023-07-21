@@ -10,12 +10,14 @@ class MezStringDropDown extends StatefulWidget {
   final Map<String, dynamic> langPath;
   final bool withNoneItem;
   final List<IconData> icons;
+  final TextStyle? elementsTextStyle;
 
   const MezStringDropDown({
     required this.labelText,
     required this.langPath,
     this.withNoneItem = false,
     this.value,
+    this.elementsTextStyle,
     required this.items,
     required this.onChanged,
     this.validator,
@@ -66,7 +68,8 @@ class _MezStringDropDownState extends State<MezStringDropDown> {
                         ),
                         Text("${widget.langPath['$item']}"),
                       ])
-                    : Text("${widget.langPath['$item']}"),
+                    : Text("${widget.langPath['$item']}",
+                        style: widget.elementsTextStyle),
               ))
           .toList(),
       onChanged: (String? value) {

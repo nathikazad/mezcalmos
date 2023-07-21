@@ -53,6 +53,7 @@ class RestaurantOrder extends DeliverableOrder {
       required super.scheduleTime,
       required super.customer,
       required super.dropOffLocation,
+      required super.deliveryType,
       super.estimatedPackageReadyTime,
       super.driverInfo,
       super.review,

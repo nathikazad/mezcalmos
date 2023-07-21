@@ -21476,6 +21476,1166 @@ class _CopyWithStubImpl$Query$get_business_lang$business_business_by_pk$details<
       _res;
 }
 
+class Variables$Query$get_business_profile {
+  factory Variables$Query$get_business_profile({required int id}) =>
+      Variables$Query$get_business_profile._({
+        r'id': id,
+      });
+
+  Variables$Query$get_business_profile._(this._$data);
+
+  factory Variables$Query$get_business_profile.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$get_business_profile._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_business_profile<
+          Variables$Query$get_business_profile>
+      get copyWith => CopyWith$Variables$Query$get_business_profile(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_business_profile) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_business_profile<TRes> {
+  factory CopyWith$Variables$Query$get_business_profile(
+    Variables$Query$get_business_profile instance,
+    TRes Function(Variables$Query$get_business_profile) then,
+  ) = _CopyWithImpl$Variables$Query$get_business_profile;
+
+  factory CopyWith$Variables$Query$get_business_profile.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_business_profile;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$get_business_profile<TRes>
+    implements CopyWith$Variables$Query$get_business_profile<TRes> {
+  _CopyWithImpl$Variables$Query$get_business_profile(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_business_profile _instance;
+
+  final TRes Function(Variables$Query$get_business_profile) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$get_business_profile._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_business_profile<TRes>
+    implements CopyWith$Variables$Query$get_business_profile<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_business_profile(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$get_business_profile {
+  Query$get_business_profile({
+    this.business_business_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_profile.fromJson(Map<String, dynamic> json) {
+    final l$business_business_by_pk = json['business_business_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_profile(
+      business_business_by_pk: l$business_business_by_pk == null
+          ? null
+          : Query$get_business_profile$business_business_by_pk.fromJson(
+              (l$business_business_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_business_profile$business_business_by_pk?
+      business_business_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$business_business_by_pk = business_business_by_pk;
+    _resultData['business_business_by_pk'] =
+        l$business_business_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$business_business_by_pk = business_business_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$business_business_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_profile) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$business_business_by_pk = business_business_by_pk;
+    final lOther$business_business_by_pk = other.business_business_by_pk;
+    if (l$business_business_by_pk != lOther$business_business_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_profile
+    on Query$get_business_profile {
+  CopyWith$Query$get_business_profile<Query$get_business_profile>
+      get copyWith => CopyWith$Query$get_business_profile(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_profile<TRes> {
+  factory CopyWith$Query$get_business_profile(
+    Query$get_business_profile instance,
+    TRes Function(Query$get_business_profile) then,
+  ) = _CopyWithImpl$Query$get_business_profile;
+
+  factory CopyWith$Query$get_business_profile.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_business_profile;
+
+  TRes call({
+    Query$get_business_profile$business_business_by_pk? business_business_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$get_business_profile$business_business_by_pk<TRes>
+      get business_business_by_pk;
+}
+
+class _CopyWithImpl$Query$get_business_profile<TRes>
+    implements CopyWith$Query$get_business_profile<TRes> {
+  _CopyWithImpl$Query$get_business_profile(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_profile _instance;
+
+  final TRes Function(Query$get_business_profile) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? business_business_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_profile(
+        business_business_by_pk: business_business_by_pk == _undefined
+            ? _instance.business_business_by_pk
+            : (business_business_by_pk
+                as Query$get_business_profile$business_business_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_business_profile$business_business_by_pk<TRes>
+      get business_business_by_pk {
+    final local$business_business_by_pk = _instance.business_business_by_pk;
+    return local$business_business_by_pk == null
+        ? CopyWith$Query$get_business_profile$business_business_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$get_business_profile$business_business_by_pk(
+            local$business_business_by_pk,
+            (e) => call(business_business_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_business_profile<TRes>
+    implements CopyWith$Query$get_business_profile<TRes> {
+  _CopyWithStubImpl$Query$get_business_profile(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_business_profile$business_business_by_pk? business_business_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_business_profile$business_business_by_pk<TRes>
+      get business_business_by_pk =>
+          CopyWith$Query$get_business_profile$business_business_by_pk.stub(
+              _res);
+}
+
+const documentNodeQueryget_business_profile = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_business_profile'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_business_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'profile'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_business_profile _parserFn$Query$get_business_profile(
+        Map<String, dynamic> data) =>
+    Query$get_business_profile.fromJson(data);
+
+class Options$Query$get_business_profile
+    extends graphql.QueryOptions<Query$get_business_profile> {
+  Options$Query$get_business_profile({
+    String? operationName,
+    required Variables$Query$get_business_profile variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_business_profile,
+          parserFn: _parserFn$Query$get_business_profile,
+        );
+}
+
+class WatchOptions$Query$get_business_profile
+    extends graphql.WatchQueryOptions<Query$get_business_profile> {
+  WatchOptions$Query$get_business_profile({
+    String? operationName,
+    required Variables$Query$get_business_profile variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_business_profile,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_business_profile,
+        );
+}
+
+class FetchMoreOptions$Query$get_business_profile
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_business_profile({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_business_profile variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_business_profile,
+        );
+}
+
+extension ClientExtension$Query$get_business_profile on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_business_profile>>
+      query$get_business_profile(
+              Options$Query$get_business_profile options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_business_profile>
+      watchQuery$get_business_profile(
+              WatchOptions$Query$get_business_profile options) =>
+          this.watchQuery(options);
+  void writeQuery$get_business_profile({
+    required Query$get_business_profile data,
+    required Variables$Query$get_business_profile variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_business_profile),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_business_profile? readQuery$get_business_profile({
+    required Variables$Query$get_business_profile variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQueryget_business_profile),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$get_business_profile.fromJson(result);
+  }
+}
+
+class Query$get_business_profile$business_business_by_pk {
+  Query$get_business_profile$business_business_by_pk({
+    required this.profile,
+    required this.$__typename,
+  });
+
+  factory Query$get_business_profile$business_business_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$profile = json['profile'];
+    final l$$__typename = json['__typename'];
+    return Query$get_business_profile$business_business_by_pk(
+      profile: (l$profile as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String profile;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$profile = profile;
+    _resultData['profile'] = l$profile;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$profile = profile;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$profile,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_business_profile$business_business_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$profile = profile;
+    final lOther$profile = other.profile;
+    if (l$profile != lOther$profile) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_business_profile$business_business_by_pk
+    on Query$get_business_profile$business_business_by_pk {
+  CopyWith$Query$get_business_profile$business_business_by_pk<
+          Query$get_business_profile$business_business_by_pk>
+      get copyWith =>
+          CopyWith$Query$get_business_profile$business_business_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_business_profile$business_business_by_pk<
+    TRes> {
+  factory CopyWith$Query$get_business_profile$business_business_by_pk(
+    Query$get_business_profile$business_business_by_pk instance,
+    TRes Function(Query$get_business_profile$business_business_by_pk) then,
+  ) = _CopyWithImpl$Query$get_business_profile$business_business_by_pk;
+
+  factory CopyWith$Query$get_business_profile$business_business_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_business_profile$business_business_by_pk;
+
+  TRes call({
+    String? profile,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_business_profile$business_business_by_pk<TRes>
+    implements
+        CopyWith$Query$get_business_profile$business_business_by_pk<TRes> {
+  _CopyWithImpl$Query$get_business_profile$business_business_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_business_profile$business_business_by_pk _instance;
+
+  final TRes Function(Query$get_business_profile$business_business_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? profile = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_business_profile$business_business_by_pk(
+        profile: profile == _undefined || profile == null
+            ? _instance.profile
+            : (profile as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_business_profile$business_business_by_pk<TRes>
+    implements
+        CopyWith$Query$get_business_profile$business_business_by_pk<TRes> {
+  _CopyWithStubImpl$Query$get_business_profile$business_business_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? profile,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_business_by_id {
+  factory Variables$Mutation$update_business_by_id({
+    required int id,
+    Input$business_business_set_input? object,
+  }) =>
+      Variables$Mutation$update_business_by_id._({
+        r'id': id,
+        if (object != null) r'object': object,
+      });
+
+  Variables$Mutation$update_business_by_id._(this._$data);
+
+  factory Variables$Mutation$update_business_by_id.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    if (data.containsKey('object')) {
+      final l$object = data['object'];
+      result$data['object'] = l$object == null
+          ? null
+          : Input$business_business_set_input.fromJson(
+              (l$object as Map<String, dynamic>));
+    }
+    return Variables$Mutation$update_business_by_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Input$business_business_set_input? get object =>
+      (_$data['object'] as Input$business_business_set_input?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    if (_$data.containsKey('object')) {
+      final l$object = object;
+      result$data['object'] = l$object?.toJson();
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_business_by_id<
+          Variables$Mutation$update_business_by_id>
+      get copyWith => CopyWith$Variables$Mutation$update_business_by_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_business_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$object = object;
+    final lOther$object = other.object;
+    if (_$data.containsKey('object') != other._$data.containsKey('object')) {
+      return false;
+    }
+    if (l$object != lOther$object) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$object = object;
+    return Object.hashAll([
+      l$id,
+      _$data.containsKey('object') ? l$object : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_business_by_id<TRes> {
+  factory CopyWith$Variables$Mutation$update_business_by_id(
+    Variables$Mutation$update_business_by_id instance,
+    TRes Function(Variables$Mutation$update_business_by_id) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_business_by_id;
+
+  factory CopyWith$Variables$Mutation$update_business_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_business_by_id;
+
+  TRes call({
+    int? id,
+    Input$business_business_set_input? object,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_business_by_id<TRes>
+    implements CopyWith$Variables$Mutation$update_business_by_id<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_business_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_business_by_id _instance;
+
+  final TRes Function(Variables$Mutation$update_business_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? object = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_business_by_id._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (object != _undefined)
+          'object': (object as Input$business_business_set_input?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_business_by_id<TRes>
+    implements CopyWith$Variables$Mutation$update_business_by_id<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_business_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Input$business_business_set_input? object,
+  }) =>
+      _res;
+}
+
+class Mutation$update_business_by_id {
+  Mutation$update_business_by_id({
+    this.update_business_business_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_by_id.fromJson(Map<String, dynamic> json) {
+    final l$update_business_business_by_pk =
+        json['update_business_business_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_by_id(
+      update_business_business_by_pk: l$update_business_business_by_pk == null
+          ? null
+          : Mutation$update_business_by_id$update_business_business_by_pk
+              .fromJson(
+                  (l$update_business_business_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_business_by_id$update_business_business_by_pk?
+      update_business_business_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_business_by_pk = update_business_business_by_pk;
+    _resultData['update_business_business_by_pk'] =
+        l$update_business_business_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_business_by_pk = update_business_business_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_business_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_business_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_business_by_pk = update_business_business_by_pk;
+    final lOther$update_business_business_by_pk =
+        other.update_business_business_by_pk;
+    if (l$update_business_business_by_pk !=
+        lOther$update_business_business_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_by_id
+    on Mutation$update_business_by_id {
+  CopyWith$Mutation$update_business_by_id<Mutation$update_business_by_id>
+      get copyWith => CopyWith$Mutation$update_business_by_id(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_by_id<TRes> {
+  factory CopyWith$Mutation$update_business_by_id(
+    Mutation$update_business_by_id instance,
+    TRes Function(Mutation$update_business_by_id) then,
+  ) = _CopyWithImpl$Mutation$update_business_by_id;
+
+  factory CopyWith$Mutation$update_business_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_by_id;
+
+  TRes call({
+    Mutation$update_business_by_id$update_business_business_by_pk?
+        update_business_business_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_business_by_id$update_business_business_by_pk<TRes>
+      get update_business_business_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_business_by_id<TRes>
+    implements CopyWith$Mutation$update_business_by_id<TRes> {
+  _CopyWithImpl$Mutation$update_business_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_by_id _instance;
+
+  final TRes Function(Mutation$update_business_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_business_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_by_id(
+        update_business_business_by_pk: update_business_business_by_pk ==
+                _undefined
+            ? _instance.update_business_business_by_pk
+            : (update_business_business_by_pk
+                as Mutation$update_business_by_id$update_business_business_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_business_by_id$update_business_business_by_pk<TRes>
+      get update_business_business_by_pk {
+    final local$update_business_business_by_pk =
+        _instance.update_business_business_by_pk;
+    return local$update_business_business_by_pk == null
+        ? CopyWith$Mutation$update_business_by_id$update_business_business_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_business_by_id$update_business_business_by_pk(
+            local$update_business_business_by_pk,
+            (e) => call(update_business_business_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_business_by_id<TRes>
+    implements CopyWith$Mutation$update_business_by_id<TRes> {
+  _CopyWithStubImpl$Mutation$update_business_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_business_by_id$update_business_business_by_pk?
+        update_business_business_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_business_by_id$update_business_business_by_pk<TRes>
+      get update_business_business_by_pk =>
+          CopyWith$Mutation$update_business_by_id$update_business_business_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_business_by_id = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_business_by_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'object')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'business_business_set_input'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_business_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'object')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'profile'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_business_by_id _parserFn$Mutation$update_business_by_id(
+        Map<String, dynamic> data) =>
+    Mutation$update_business_by_id.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_business_by_id = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$update_business_by_id?,
+);
+
+class Options$Mutation$update_business_by_id
+    extends graphql.MutationOptions<Mutation$update_business_by_id> {
+  Options$Mutation$update_business_by_id({
+    String? operationName,
+    required Variables$Mutation$update_business_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_business_by_id? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_business_by_id>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_business_by_id(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_business_by_id,
+          parserFn: _parserFn$Mutation$update_business_by_id,
+        );
+
+  final OnMutationCompleted$Mutation$update_business_by_id?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_business_by_id
+    extends graphql.WatchQueryOptions<Mutation$update_business_by_id> {
+  WatchOptions$Mutation$update_business_by_id({
+    String? operationName,
+    required Variables$Mutation$update_business_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_business_by_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_business_by_id,
+        );
+}
+
+extension ClientExtension$Mutation$update_business_by_id
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_business_by_id>>
+      mutate$update_business_by_id(
+              Options$Mutation$update_business_by_id options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_business_by_id>
+      watchMutation$update_business_by_id(
+              WatchOptions$Mutation$update_business_by_id options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_business_by_id$update_business_business_by_pk {
+  Mutation$update_business_by_id$update_business_business_by_pk({
+    required this.id,
+    required this.profile,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_by_id$update_business_business_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$profile = json['profile'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_by_id$update_business_business_by_pk(
+      id: (l$id as int),
+      profile: (l$profile as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String profile;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$profile = profile;
+    _resultData['profile'] = l$profile;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$profile = profile;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$profile,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_business_by_id$update_business_business_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$profile = profile;
+    final lOther$profile = other.profile;
+    if (l$profile != lOther$profile) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_by_id$update_business_business_by_pk
+    on Mutation$update_business_by_id$update_business_business_by_pk {
+  CopyWith$Mutation$update_business_by_id$update_business_business_by_pk<
+          Mutation$update_business_by_id$update_business_business_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_business_by_id$update_business_business_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_by_id$update_business_business_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_business_by_id$update_business_business_by_pk(
+    Mutation$update_business_by_id$update_business_business_by_pk instance,
+    TRes Function(Mutation$update_business_by_id$update_business_business_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_business_by_id$update_business_business_by_pk;
+
+  factory CopyWith$Mutation$update_business_by_id$update_business_business_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_by_id$update_business_business_by_pk;
+
+  TRes call({
+    int? id,
+    String? profile,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_business_by_id$update_business_business_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_by_id$update_business_business_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_business_by_id$update_business_business_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_by_id$update_business_business_by_pk _instance;
+
+  final TRes Function(
+      Mutation$update_business_by_id$update_business_business_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? profile = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_by_id$update_business_business_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        profile: profile == _undefined || profile == null
+            ? _instance.profile
+            : (profile as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_business_by_id$update_business_business_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_by_id$update_business_business_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_business_by_id$update_business_business_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? profile,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$get_business_id_from_details_id {
   factory Variables$Query$get_business_id_from_details_id(
           {required int businessDetailsId}) =>
