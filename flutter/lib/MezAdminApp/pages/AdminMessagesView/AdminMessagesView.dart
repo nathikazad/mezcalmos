@@ -36,10 +36,10 @@ class _AdminMessagesViewState extends State<AdminMessagesView>
           title: "Chat",
           tabBar: TabBar(controller: viewController.tabController, tabs: [
             Tab(
-              text: "Services",
+              text: "Users",
             ),
             Tab(
-              text: "Customers",
+              text: "Service Providers",
             ),
           ])),
       body: TabBarView(

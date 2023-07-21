@@ -21,7 +21,6 @@ import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:share_plus_platform_interface/share_plus_platform_interface.dart'
@@ -183,7 +182,6 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     _showQrPdfModal();
                                   },
                                 ),
-                            
                               _navigationLink(
                                 icon: Icons.grading,
                                 label: "",

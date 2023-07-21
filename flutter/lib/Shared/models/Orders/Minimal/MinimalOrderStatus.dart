@@ -69,7 +69,6 @@ extension ParseBusinessOrderStatusToMinimalOrderStatus
       case BusinessOrderRequestStatus.CancelledByBusiness:
         return MinimalOrderStatus.Cancelled;
       case BusinessOrderRequestStatus.Confirmed:
-      case BusinessOrderRequestStatus.Completed:
         return MinimalOrderStatus.Delivered;
 
       default:
