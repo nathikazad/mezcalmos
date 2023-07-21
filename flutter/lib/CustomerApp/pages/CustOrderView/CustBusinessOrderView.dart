@@ -325,9 +325,7 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (custBusinessOrderController.currentOrderInView.value!.status !=
-                BusinessOrderRequestStatus.Confirmed &&
-            custBusinessOrderController.currentOrderInView.value!.status !=
-                BusinessOrderRequestStatus.Completed)
+                BusinessOrderRequestStatus.Confirmed)
           MezCard(
             content: Row(
               children: [

@@ -4359,7 +4359,13 @@
       "newOrderTitle": "Orden recibida",
       "newOrderBody": "Tienes un nuevo pedido",
       "canceledOrderTitle": "Orden cancelada",
-      "canceledOrderBody": "Su pedido ha sido cancelado"
+      "canceledOrderBody": "Su pedido ha sido cancelado",
+      "newBusinessTitle": "Nuevo negocio",
+"newBusinessBody": "Se ha creado un nuevo negocio",
+"newRestaurantTitle": "Nuevo restaurante",
+"newRestaurantBody": "Se ha creado un nuevo restaurante",
+"newLaundryTitle": "Nueva lavandería",
+"newLaundryBody": "Se ha creado una nueva lavandería"
     },
     "pages": {
       "AdminTabsView": {

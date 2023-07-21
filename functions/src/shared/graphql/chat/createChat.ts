@@ -27,6 +27,12 @@ export async function createServiceProviderCustomerChat(serviceProvider: Service
             phoneNumber: customer.phoneNumber,
             participantType: ParticipantType.Customer,
         },
+        [ChatInfoAppName.MezAdminApp]: {
+            chatTitle: serviceProvider.name,
+            chatImage: serviceProvider.image,
+            phoneNumber: serviceProvider.phoneNumber,
+            participantType: AppParticipant[ServiceProviderToAppType[serviceProvider.serviceProviderType]],
+        },
     }
 
     let response = await chain.mutation({
@@ -105,7 +111,14 @@ export async function createDirectChat(user1: UserInfo, user2: UserInfo, directC
         "chatInfo": chatInfo
     });
 }
-export async function createMezAdminChat(recipients: number[], mezAdminChatDetails: MezAdminChatDetails, mezAdmins: MezAdmin[], name?: string, image?: string): Promise<number> {
+export async function createMezAdminChat(
+    recipients: number[], 
+    mezAdminChatDetails: MezAdminChatDetails, 
+    mezAdmins: MezAdmin[], 
+    name?: string, 
+    image?: string,
+    phoneNumber?: string
+): Promise<number> {
     let chain = getHasura();
 
     let mezAdminsDetails = mezAdmins.map((m:any) => {
@@ -160,6 +173,8 @@ export async function createMezAdminChat(recipients: number[], mezAdminChatDetai
             [ChatInfoAppName.MezAdminApp]: {
                 chatTitle: name ?? nameSub,
                 chatImage: image,
+                phoneNumber: phoneNumber,
+                participantType: AppParticipant[RecipientAppType[mezAdminChatDetails.recipientType]],
             },
         }
     })
