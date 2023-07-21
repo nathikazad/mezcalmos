@@ -887,8 +887,7 @@ enum BusinessOrderRequestStatus {
   ModificationRequestByBusiness,
   CancelledByBusiness,
   Confirmed,
-  CancelledByCustomer,
-  Completed
+  CancelledByCustomer
 }
 
 extension ParseBusinessOrderRequestStatusToString
