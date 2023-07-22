@@ -57,12 +57,7 @@ class BusinessOpRoutes {
           path: kBsOpBusinessOrder,
           name: kBsOpBusinessOrder,
           builder: () => BsHomeRentalOrderView(),
-        ),
-        QRoute(
-          path: kBsOtherService,
-          name: kBsOtherService,
-          builder: () => BsOtherServiceView(),
-        ),
+        )
       ] +
       sharedWitAdminRoutes +
       SharedRoutes.qRoutes +
@@ -108,6 +103,11 @@ class BusinessOpRoutes {
       path: kBsOpProduct,
       name: kBsOpProduct,
       builder: () => BsOpProductView(),
+    ),
+    QRoute(
+      path: kBsOtherService,
+      name: kBsOtherService,
+      builder: () => BsOtherServiceView(),
     ),
   ];
 }

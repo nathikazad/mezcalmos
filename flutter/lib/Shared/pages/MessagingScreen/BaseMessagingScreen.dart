@@ -39,8 +39,7 @@ class BaseMessagingScreen extends StatefulWidget {
   BaseMessagingScreenState createState() => BaseMessagingScreenState();
 
   static Future<void> navigate(
-      {required int chatId,
-      IncomingViewLink? incomingViewLink}) {
+      {required int chatId, IncomingViewLink? incomingViewLink}) {
     return MezRouter.toPath(
         SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()),
         arguments: {
@@ -387,7 +386,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         final String? contact = controller.chat.value?.chatInfo.phoneNumber;
         mezDbgPrint("contact $contact");
         final String androidUrl = "whatsapp://send?phone=$contact";
-        final String iosUrl = "https://wa.me/$contact}";
+        final String iosUrl = "https://wa.me/$contact";
         if (kIsWeb) {
           final Uri launchUri = Uri(
             scheme: 'https',
@@ -397,6 +396,8 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         } else {
           if (contact != null) {
             if (Platform.isIOS) {
+              mezDbgPrint(iosUrl);
+              mezDbgPrint("https://wa.me/+529541283454");
               launchUrl(Uri.parse(iosUrl));
             } else {
               launchUrl(Uri.parse(androidUrl));
