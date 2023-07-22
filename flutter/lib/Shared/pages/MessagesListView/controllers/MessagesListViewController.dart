@@ -55,7 +55,7 @@ abstract class MessagesListViewController {
     IncomingViewLink? viewLink,
   }) async {
     await BaseMessagingScreen.navigate(
-        chatId: chatid, incomingViewLink: viewLink, phoneNumber: phoneNumber);
+        chatId: chatid, incomingViewLink: viewLink);
   }
 }
 
@@ -118,8 +118,7 @@ class CustMessagesListViewController extends MessagesListViewController {
             "initiateChat: HasuraChat is null ${newChatData.toFirebaseFormattedJson()}");
         await BaseMessagingScreen.navigate(
             chatId: newChatData.chatId!.toInt(),
-            incomingViewLink: viewLink,
-            phoneNumber: phoneNumber);
+            incomingViewLink: viewLink);
       } else {
         mezDbgPrint(
             "initiateChat: HasuraChat is with error ${newChatData.toFirebaseFormattedJson()}");
@@ -207,8 +206,7 @@ class CustDeliveryListViewController extends MessagesListViewController {
             "initiateChat: HasuraChat is null ${newChatData.toFirebaseFormattedJson()}");
         await BaseMessagingScreen.navigate(
             chatId: newChatData.chatId!.toInt(),
-            incomingViewLink: viewLink,
-            phoneNumber: phoneNumber);
+            incomingViewLink: viewLink);
       } else {
         mezDbgPrint(
             "initiateChat: HasuraChat is with error ${newChatData.toFirebaseFormattedJson()}");

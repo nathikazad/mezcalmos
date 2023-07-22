@@ -25,6 +25,11 @@ computed_fields:
       function:
         name: ordercost
         schema: business
+  - name: in_progress
+    definition:
+      function:
+        name: order_in_process
+        schema: business
 select_permissions:
   - role: business_operator
     permission:
@@ -41,6 +46,7 @@ select_permissions:
         - order_time
       computed_fields:
         - cost
+        - in_progress
       filter:
         business:
           operators:
@@ -61,7 +67,32 @@ select_permissions:
         - order_time
       computed_fields:
         - cost
+        - in_progress
       filter:
         customer:
           user_id:
             _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - business_id
+        - chat_id
+        - customer_id
+        - id
+        - review_id
+        - customer_app_type
+        - notes
+        - status
+        - cancellation_time
+        - order_time
+      computed_fields:
+        - cost
+        - in_progress
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

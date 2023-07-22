@@ -6,7 +6,7 @@ extension BusinessOrderHelper on BusinessOrder {
   bool get inProcess =>
       status != BusinessOrderRequestStatus.CancelledByBusiness &&
       status != BusinessOrderRequestStatus.CancelledByCustomer &&
-      status != BusinessOrderRequestStatus.Completed;
+      status != BusinessOrderRequestStatus.Confirmed;
   DateTime get furtherItemDate {
     return items.map((BusinessOrderItem e) => DateTime.parse(e.time!)).reduce(
         (DateTime value, DateTime element) =>
@@ -30,9 +30,7 @@ extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
       this == BusinessOrderRequestStatus.CancelledByBusiness ||
       this == BusinessOrderRequestStatus.CancelledByCustomer;
   bool get isPending => this == BusinessOrderRequestStatus.RequestReceived;
-  bool get isPast =>
-      this == BusinessOrderRequestStatus.Completed ||
-      this == BusinessOrderRequestStatus.Confirmed;
+  bool get isPast => this == BusinessOrderRequestStatus.Confirmed;
   String toReadableString() {
     switch (this) {
       case BusinessOrderRequestStatus.RequestReceived:
@@ -44,9 +42,6 @@ extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
         return "cancelled";
       case BusinessOrderRequestStatus.Confirmed:
         return "confirmed";
-
-      case BusinessOrderRequestStatus.Completed:
-        return "completed";
       default:
         return "";
     }
@@ -64,8 +59,6 @@ extension BusinessOrderRequestStatusExtensions on BusinessOrderRequestStatus {
         return Icons.check;
       case BusinessOrderRequestStatus.CancelledByCustomer:
         return Icons.close;
-      case BusinessOrderRequestStatus.Completed:
-        return Icons.check;
       default:
         return Icons.error_outline;
     }

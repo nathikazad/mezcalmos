@@ -12,7 +12,10 @@ enum NotificationType {
   OperatorApproved,
   NewDriver,
   Call,
-  PriceChange
+  PriceChange,
+  NewBusiness,
+  NewLaundry,
+  NewRestaurant,
 }
 
 extension ParseNotificationTypeToString on NotificationType {

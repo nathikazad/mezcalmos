@@ -132,9 +132,9 @@ class _SignInViewState extends State<SignInView> {
           height: 20,
         ),
         // if (!kIsWeb) facebookLoginBtn(lmode),
-        // SizedBox(
-        //   height: 10,
-        // ),
+        SizedBox(
+          height: 10,
+        ),
         smsLoginBtn(),
         SizedBox(
           height: 10,

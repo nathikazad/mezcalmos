@@ -3,11 +3,8 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/orders/__generated/admin_orders.graphql.dart';
-import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -335,8 +332,9 @@ Stream<List<MinimalOrder>?> listen_on_admin_business_orders({
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
-            status:
-                orderData.status.toBusinessOrderRequestStatus().toMinimalOrderStatus(),
+            status: orderData.status
+                .toBusinessOrderRequestStatus()
+                .toMinimalOrderStatus(),
             totalCost: orderData.cost!);
       }).toList();
       return orders;
@@ -373,8 +371,9 @@ Future<List<MinimalOrder>?> get_admin_business_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status:
-              orderData.status.toBusinessOrderRequestStatus().toMinimalOrderStatus(),
+          status: orderData.status
+              .toBusinessOrderRequestStatus()
+              .toMinimalOrderStatus(),
           totalCost: orderData.cost!);
     }).toList();
     return orders;

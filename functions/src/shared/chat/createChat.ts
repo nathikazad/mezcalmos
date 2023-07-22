@@ -118,6 +118,7 @@ export async function createNewMezAdminChat(userId: number, mezAdminChatDetails:
         let recipients: number[] = [];
         let name: string | undefined;
         let image: string | undefined;
+        let phoneNumber: string | undefined;
 
         switch (mezAdminChatDetails.recipientType) {
             case RecipientType.Customer:
@@ -126,6 +127,7 @@ export async function createNewMezAdminChat(userId: number, mezAdminChatDetails:
                 const user: UserInfo = await getUser(mezAdminChatDetails.recipientId);
                 name = user.name;
                 image = user.image;
+                phoneNumber = user.phoneNumber;
                 break;
             case RecipientType.Restaurant:
                 serviceProvider = await getRestaurant(mezAdminChatDetails.recipientId);
@@ -146,12 +148,13 @@ export async function createNewMezAdminChat(userId: number, mezAdminChatDetails:
             recipients = serviceProvider.operators!.map(operator => operator.userId);
             name = serviceProvider.name;
             image = serviceProvider.image;
+            phoneNumber = serviceProvider.phoneNumber;
         }
         if(mezAdmins.find(mezAdmin => mezAdmin.id == userId) == undefined && recipients.includes(userId) == false) {
             throw new MezError(MezAdminChatError.InvalidAccess);
         }
 
-        const chatId: number = await createMezAdminChat(recipients, mezAdminChatDetails, mezAdmins, name, image);
+        const chatId: number = await createMezAdminChat(recipients, mezAdminChatDetails, mezAdmins, name, image, phoneNumber);
         return {
             success: true,
             chatId

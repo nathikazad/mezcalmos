@@ -11,6 +11,7 @@ import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart'
 import 'package:mezcalmos/BusinessApp/router.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/MezAdminApp/router/router.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
@@ -102,8 +103,13 @@ class CreateServiceViewController {
     }
   }
 
+  late bool fromMezAdmin;
+
   // methods //
-  void init({required ServiceProviderType serviceProviderType}) {
+  void init(
+      {required ServiceProviderType serviceProviderType,
+      required bool fromMezAdmin}) {
+    this.fromMezAdmin = fromMezAdmin;
     serviceType = serviceProviderType;
   }
 
@@ -179,7 +185,8 @@ class CreateServiceViewController {
           .animateToPage(currentPage.value - 1,
               duration: Duration(milliseconds: 500), curve: Curves.easeInOut)
           .whenComplete(() => currentPage.value = pageController.page!.toInt());
-    }
+    } else
+      MezRouter.back();
   }
 
   Future<bool?> handleNext() async {
@@ -236,6 +243,9 @@ class CreateServiceViewController {
               duration: Duration(milliseconds: 500), curve: Curves.easeIn)
           .whenComplete(
               () => currentPage.value = pageController.page!.toInt()));
+    } else {
+      infoFromKey.currentState?.validate();
+      showErrorSnackBar(errorText: "${_i18n()['formErrorText']}");
     }
   }
 
@@ -303,42 +313,47 @@ class CreateServiceViewController {
     } else if (isBusiness) {
       final bool res = await _pushBusinessToDb();
       return res;
+    } else if (serviceType == ServiceProviderType.Laundry) {
+      final bool res = await _pushLaundryToDb();
+      return res;
     } else {
       return false;
     }
   }
 
   Future<bool> _pushRestaurantToDb() async {
+    mezDbgPrint("From mezAdmin =====>$fromMezAdmin");
     mezDbgPrint(
         "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
     try {
       await _setImage();
       final RestaurantResponse res =
           await CloudFunctions.restaurant3_createRestaurant(
-        name: serviceInput.value.serviceInfo!.name,
-        uniqueId: (businessId.text.isEmpty) ? null : businessId.text.trim(),
-        phoneNumber: phone.text,
-        image: serviceInput.value.serviceInfo!.image,
-        location: cModels.Location(
-            lat: serviceInput.value.serviceInfo!.location.latitude,
-            lng: serviceInput.value.serviceInfo!.location.longitude,
-            address: serviceInput.value.serviceInfo!.location.address),
-        schedule: serviceInput.value.schedule!,
-        deliveryPartnerId: serviceInput.value.deliveryPartnerId,
-        deliveryDetails: cModels.DeliveryDetails(
-          minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,
-          costPerKm: serviceInput.value.selfDeliveryCost?.costPerKm,
-          radius: 10,
-          freeDeliveryMinimumCost:
-              serviceInput.value.selfDeliveryCost?.freeDeliveryMinimumCost,
-          freeDeliveryKmRange:
-              serviceInput.value.selfDeliveryCost?.freeDeliveryKmRange,
-          deliveryAvailable: true,
-          customerPickup: false,
-          selfDelivery: serviceInput.value.isSelfDelivery,
-        ),
-        language: languages.value,
-      );
+              name: serviceInput.value.serviceInfo!.name,
+              uniqueId:
+                  (businessId.text.isEmpty) ? null : businessId.text.trim(),
+              phoneNumber: phone.text,
+              image: newImageUrl.value ?? defaultUserImgUrl,
+              location: cModels.Location(
+                  lat: serviceInput.value.serviceInfo!.location.latitude,
+                  lng: serviceInput.value.serviceInfo!.location.longitude,
+                  address: serviceInput.value.serviceInfo!.location.address),
+              schedule: serviceInput.value.schedule!,
+              deliveryPartnerId: serviceInput.value.deliveryPartnerId,
+              deliveryDetails: cModels.DeliveryDetails(
+                minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,
+                costPerKm: serviceInput.value.selfDeliveryCost?.costPerKm,
+                radius: 10,
+                freeDeliveryMinimumCost: serviceInput
+                    .value.selfDeliveryCost?.freeDeliveryMinimumCost,
+                freeDeliveryKmRange:
+                    serviceInput.value.selfDeliveryCost?.freeDeliveryKmRange,
+                deliveryAvailable: true,
+                customerPickup: false,
+                selfDelivery: serviceInput.value.isSelfDelivery,
+              ),
+              language: languages.value,
+              isMezAdmin: fromMezAdmin);
       if (res.success == false) {
         mezDbgPrint(res.error);
         showErrorSnackBar(errorText: res.error.toString());
@@ -370,7 +385,55 @@ class CreateServiceViewController {
         profile: businessProfile!,
         uniqueId: (businessId.text.isEmpty) ? null : businessId.text.trim(),
         schedule: oldSchedule.value,
+        isMezAdmin: fromMezAdmin,
       );
+      if (res.success == false) {
+        mezDbgPrint(res.error);
+        showErrorSnackBar(errorText: res.error.toString());
+      }
+      return res.success;
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message?.toString() ?? "Unknown Error");
+      throw Exception("Exception in _pushBusinessToDb 🟥🟥🟥 $e,$stk");
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      return false;
+      //  throw Exception("Exception in _pushBusinessToDb 🟥🟥🟥 $e,$stk");
+    }
+  }
+
+  Future<bool> _pushLaundryToDb() async {
+    mezDbgPrint(
+        "Creating Laundry ${languages.value.toFirebaseFormattedJson()} with this paylod ====>>>\n ${_constructServiceDetails()}");
+    try {
+      await _setImage();
+      final cModels.LaundryResponse res =
+          await CloudFunctions.laundry3_createLaundry(
+              name: serviceInput.value.serviceInfo!.name,
+              image: newImageUrl.value ?? defaultUserImgUrl,
+              isMezAdmin: fromMezAdmin,
+              phoneNumber: phone.text,
+              location: cModels.Location(
+                  lat: serviceInput.value.serviceInfo!.location.latitude,
+                  lng: serviceInput.value.serviceInfo!.location.longitude,
+                  address: serviceInput.value.serviceInfo!.location.address),
+              language: languages.value,
+              uniqueId:
+                  (businessId.text.isEmpty) ? null : businessId.text.trim(),
+              schedule: oldSchedule.value,
+              deliveryDetails: cModels.DeliveryDetails(
+                minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,
+                costPerKm: serviceInput.value.selfDeliveryCost?.costPerKm,
+                radius: 10,
+                freeDeliveryMinimumCost: serviceInput
+                    .value.selfDeliveryCost?.freeDeliveryMinimumCost,
+                freeDeliveryKmRange:
+                    serviceInput.value.selfDeliveryCost?.freeDeliveryKmRange,
+                deliveryAvailable: true,
+                customerPickup: false,
+                selfDelivery: serviceInput.value.isSelfDelivery,
+              ));
       if (res.success == false) {
         mezDbgPrint(res.error);
         showErrorSnackBar(errorText: res.error.toString());
@@ -413,6 +476,10 @@ class CreateServiceViewController {
 
   void confirmCallBack(BuildContext context) {
     Navigator.of(context).pop();
+    if (fromMezAdmin) {
+      MezRouter.toNamed(MezAdminRoutes.kTabsViewRoute);
+      return;
+    }
     switch (serviceType) {
       case ServiceProviderType.Business:
         Get.find<BusinessOpAuthController>().setupBusinessOperator();

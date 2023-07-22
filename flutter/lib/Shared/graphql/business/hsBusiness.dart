@@ -22,9 +22,9 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
   final QueryResult<Query$get_business_by_rental_category1> response =
       await _db.graphQLClient.query$get_business_by_rental_category1(
@@ -37,7 +37,7 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
                       .map((RentalCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  online_ordering: online_ordering_exp,
+                  online_ordering: onlineOrderingExp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
                   offset: offset,
@@ -77,9 +77,9 @@ Future<List<BusinessCard>> get_business_by_home(
     required HomeAvailabilityOption? homeType,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_business_by_home> response = await _db
@@ -90,7 +90,7 @@ Future<List<BusinessCard>> get_business_by_home(
           variables: Variables$Query$get_business_by_home(
               distance: distance,
               homeType: homeType!.toFirebaseFormatString(),
-              online_ordering: online_ordering_exp,
+              online_ordering: onlineOrderingExp,
               from: Geography(
                   fromLocation.lat as double, fromLocation.lng as double),
               offset: offset,
@@ -311,9 +311,9 @@ Future<List<BusinessCard>> get_business_by_event_category1(
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_business_by_event_category1> response =
@@ -330,7 +330,7 @@ Future<List<BusinessCard>> get_business_by_event_category1(
                       .map((ScheduleType e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  online_ordering: online_ordering_exp,
+                  online_ordering: onlineOrderingExp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
                   offset: offset,
@@ -368,9 +368,9 @@ Future<List<BusinessCard>> get_business_by_service_category1(
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_business_by_service_category1> response =
@@ -385,7 +385,7 @@ Future<List<BusinessCard>> get_business_by_service_category1(
                           (ServiceCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  online_ordering: online_ordering_exp,
+                  online_ordering: onlineOrderingExp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
                   offset: offset,
@@ -423,9 +423,9 @@ Future<List<BusinessCard>> get_business_by_product_category1(
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_business_by_product_category1> response =
@@ -439,7 +439,7 @@ Future<List<BusinessCard>> get_business_by_product_category1(
                       .map((ProductCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  online_ordering: online_ordering_exp,
+                  online_ordering: onlineOrderingExp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
                   offset: offset,
@@ -584,4 +584,35 @@ Future<int?> get_businessId_from_item_detailsId(
     return data.first.id;
   }
   return null;
+}
+
+Future<BusinessProfile?> get_business_profile_by_id(
+    {required int businessId}) async {
+  QueryResult<Query$get_business_profile> res = await _db.graphQLClient
+      .query$get_business_profile(Options$Query$get_business_profile(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_profile(id: businessId)));
+  mezDbgPrint("💀 Getting business profile by id ======>$res");
+
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.business_business_by_pk?.profile.toBusinessProfile();
+}
+
+Future<BusinessProfile?> update_business_profile_by_id(
+    {required int businessId, required BusinessProfile newProfile}) async {
+  final QueryResult<Mutation$update_business_by_id> res = await _db
+      .graphQLClient
+      .mutate$update_business_by_id(Options$Mutation$update_business_by_id(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Mutation$update_business_by_id(
+              id: businessId,
+              object: Input$business_business_set_input(
+                  profile: newProfile.toFirebaseFormatString()))));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.update_business_business_by_pk?.profile
+      .toBusinessProfile();
 }
