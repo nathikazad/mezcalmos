@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
-import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 enum AllServiceViewEnum {
   Delivery,
@@ -86,18 +84,8 @@ class AllServiceListViewController {
 
   Future<void> fetchServiceTree() async {
     logEventToServer("Fetching Service tree");
-
-    if (await locPkg.Location().hasPermission() !=
-        LocationPermissionsStatus.Ok) {
-      unawaited(MezRouter.toNamed(SharedRoutes.kLocationPermissionPage));
-      // return;
-    }
-
-    // temporary hack, need to check location permission and redirect user to
-    final locPkg.LocationData? location = await locPkg.Location()
-        .getLocation()
-        .timeout(Duration(seconds: 3),
-            onTimeout: () => locPkg.LocationData.fromMap({}));
+    final locPkg.LocationData? location =
+        await Get.find<LocationController>().getCurrentLocation();
     logEventToServer("Fetching Service tree got location");
     final ServiceTree data = await get_service_tree(
       distance: defaultDistance,
@@ -105,7 +93,6 @@ class AllServiceListViewController {
       lng: location?.longitude ?? 97.0767.toDouble(),
       withCache: true,
     );
-
     serviceTreeData.value = data;
     mezDbgPrint("service_tree: $data");
     logEventToServer("Fetching Service tree finished",

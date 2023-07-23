@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -62,9 +63,9 @@ class DeliveryAuthController extends GetxController {
   }
 
   Timer _listenForLocation() {
-    final Location location = Location();
     return Timer.periodic(Duration(seconds: 150), (Timer? timer) async {
-      final LocationData currentLocation = await location.getLocation();
+      final LocationData currentLocation =
+          await Get.find<LocationController>().getCurrentLocation();
       final DateTime currentTime = DateTime.now();
       if (currentLocation.latitude != null &&
           currentLocation.longitude != null) {

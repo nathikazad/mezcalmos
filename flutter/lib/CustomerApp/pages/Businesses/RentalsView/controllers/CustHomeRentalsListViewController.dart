@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
@@ -118,8 +119,8 @@ class CustHomeRentalsListViewController {
     try {
       ctx = context;
       _isLoading.value = true;
-      await locPkg.Location()
-          .getLocation()
+      await Get.find<LocationController>()
+          .getCurrentLocation()
           .then((locPkg.LocationData location) {
         if (location.latitude != null && location.longitude != null)
           _currentLocation = LatLng(location.latitude!, location.longitude!);
@@ -129,7 +130,7 @@ class CustHomeRentalsListViewController {
       _filterInput = defaultFilters();
 
       final locPkg.LocationData location =
-          await locPkg.Location().getLocation();
+          await Get.find<LocationController>().getCurrentLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
             lat: location.latitude!, lng: location.longitude!, address: "");

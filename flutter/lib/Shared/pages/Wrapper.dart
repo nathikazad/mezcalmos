@@ -69,18 +69,6 @@ class _WrapperState extends State<Wrapper> {
   void checkConnectivity() {
     ConnectivityHelper.internetStatusStream
         .listen((InternetStatus currentInternetStatus) {
-      // mezDbgPrint("Inside check connectivity");
-      // if (internetStatus == InternetStatus.Offline) {
-      //   if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
-      //     mezDbgPrint("No internet going so going to no internet page");
-      //     unawaited(MezRouter.toNamed(SharedRoutes.kNoInternetRoute));
-      //   }
-      // } else {
-      //   if (MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
-      //     mezDbgPrint("Internet is back so going to back");
-      //     MezRouter.back();
-      //   }
-      // }
       if (previousInternetStatus != currentInternetStatus) {
         if (internetStatusDialog != null) {
           internetStatusDialog!.call();
@@ -108,7 +96,8 @@ class _WrapperState extends State<Wrapper> {
         //  bool preventDuplicates = true (byDefault om GetX)
         Future<void>.delayed(
           Duration(milliseconds: 500),
-          () => MezRouter.toNamed(SharedRoutes.kLocationPermissionPage),
+          () => MezRouter.toNamed(SharedRoutes.kLocationPermissionPage,
+              ignoreSamePath: true),
         );
       }
     });
@@ -139,6 +128,7 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("current route ======>>>>${MezRouter.currentRoute().name}");
         mezDbgPrint("[777] app = customerApp .. routing to home!");
         await MezRouter.popEverythingTillBeforeWrapper();
+
         logEventToServer("Wrapper sending to home route");
         MezRouter.toPath(SharedRoutes.kHomeRoute);
 

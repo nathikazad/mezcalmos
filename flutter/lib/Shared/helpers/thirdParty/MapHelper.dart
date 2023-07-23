@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -130,7 +131,8 @@ class Route {
 }
 
 Future<LocModel.MezLocation> getCurrentLocation() async {
-  final LocationData res = (await Location().getLocation());
+  final LocationData res =
+      (await Get.find<LocationController>().getCurrentLocation());
   mezDbgPrint("Got current loc ====> $res");
   return LocModel.MezLocation("", res);
 }
@@ -142,12 +144,8 @@ Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
   final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
-  final LocationData loc = await Location().getLocation().timeout(
-        Duration(seconds: 2),
-        onTimeout: () => LocationData.fromMap(
-          <String, dynamic>{"latitude": 15.872141, "longitude": -97.076737},
-        ),
-      );
+  final LocationData loc =
+      await Get.find<LocationController>().getCurrentLocation();
 
   final String url =
       "https://cors-mezc.herokuapp.com/api/place/autocomplete/json?input=$search&language=en&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000";
