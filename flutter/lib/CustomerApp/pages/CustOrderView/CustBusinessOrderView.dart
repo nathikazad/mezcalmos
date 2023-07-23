@@ -86,7 +86,8 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
       bottomNavigationBar: entityType == EntityType.Admin
           ? null
           : Obx(() {
-              if (custBusinessOrderController.currentOrderInView.value == null) {
+              if (custBusinessOrderController.currentOrderInView.value ==
+                  null) {
                 return SizedBox.shrink();
               }
               // else if (custBusinessOrderController
@@ -325,7 +326,7 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (custBusinessOrderController.currentOrderInView.value!.status !=
-                BusinessOrderRequestStatus.Confirmed)
+            BusinessOrderRequestStatus.Confirmed)
           MezCard(
             content: Row(
               children: [

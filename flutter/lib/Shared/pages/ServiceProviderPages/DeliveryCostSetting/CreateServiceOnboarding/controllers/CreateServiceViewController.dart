@@ -121,7 +121,7 @@ class CreateServiceViewController {
     }
   }
 
-  Future<void> editImage(context) async {
+  Future<void> editImage(BuildContext context) async {
     final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
 
     if (_from != null) {
@@ -199,7 +199,7 @@ class CreateServiceViewController {
         break;
       case 2:
         return handleScheduleNext();
-        break;
+        
       case 3:
         return _createService();
 
@@ -329,31 +329,31 @@ class CreateServiceViewController {
       await _setImage();
       final RestaurantResponse res =
           await CloudFunctions.restaurant3_createRestaurant(
-        name: serviceInput.value.serviceInfo!.name,
-        uniqueId: (businessId.text.isEmpty) ? null : businessId.text.trim(),
-        phoneNumber: phone.text,
-        image: newImageUrl.value ?? defaultUserImgUrl,
-        location: cModels.Location(
-            lat: serviceInput.value.serviceInfo!.location.latitude,
-            lng: serviceInput.value.serviceInfo!.location.longitude,
-            address: serviceInput.value.serviceInfo!.location.address),
-        schedule: serviceInput.value.schedule!,
-        deliveryPartnerId: serviceInput.value.deliveryPartnerId,
-        deliveryDetails: cModels.DeliveryDetails(
-          minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,
-          costPerKm: serviceInput.value.selfDeliveryCost?.costPerKm,
-          radius: 10,
-          freeDeliveryMinimumCost:
-              serviceInput.value.selfDeliveryCost?.freeDeliveryMinimumCost,
-          freeDeliveryKmRange:
-              serviceInput.value.selfDeliveryCost?.freeDeliveryKmRange,
-          deliveryAvailable: true,
-          customerPickup: false,
-          selfDelivery: serviceInput.value.isSelfDelivery,
-        ),
-        language: languages.value,
-        isMezAdmin: fromMezAdmin,
-      );
+              name: serviceInput.value.serviceInfo!.name,
+              uniqueId:
+                  (businessId.text.isEmpty) ? null : businessId.text.trim(),
+              phoneNumber: phone.text,
+              image: newImageUrl.value ?? defaultUserImgUrl,
+              location: cModels.Location(
+                  lat: serviceInput.value.serviceInfo!.location.latitude,
+                  lng: serviceInput.value.serviceInfo!.location.longitude,
+                  address: serviceInput.value.serviceInfo!.location.address),
+              schedule: serviceInput.value.schedule!,
+              deliveryPartnerId: serviceInput.value.deliveryPartnerId,
+              deliveryDetails: cModels.DeliveryDetails(
+                minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,
+                costPerKm: serviceInput.value.selfDeliveryCost?.costPerKm,
+                radius: 10,
+                freeDeliveryMinimumCost: serviceInput
+                    .value.selfDeliveryCost?.freeDeliveryMinimumCost,
+                freeDeliveryKmRange:
+                    serviceInput.value.selfDeliveryCost?.freeDeliveryKmRange,
+                deliveryAvailable: true,
+                customerPickup: false,
+                selfDelivery: serviceInput.value.isSelfDelivery,
+              ),
+              language: languages.value,
+              isMezAdmin: fromMezAdmin);
       if (res.success == false) {
         mezDbgPrint(res.error);
         showErrorSnackBar(errorText: res.error.toString());
