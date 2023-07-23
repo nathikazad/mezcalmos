@@ -8376,21 +8376,21 @@ class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$
       _res;
 }
 
-class Variables$Query$fetch_number_of_subscribers {
-  factory Variables$Query$fetch_number_of_subscribers({
+class Variables$Query$fetch_subscribers {
+  factory Variables$Query$fetch_subscribers({
     int? service_provider_id,
     String? service_provider_type,
   }) =>
-      Variables$Query$fetch_number_of_subscribers._({
+      Variables$Query$fetch_subscribers._({
         if (service_provider_id != null)
           r'service_provider_id': service_provider_id,
         if (service_provider_type != null)
           r'service_provider_type': service_provider_type,
       });
 
-  Variables$Query$fetch_number_of_subscribers._(this._$data);
+  Variables$Query$fetch_subscribers._(this._$data);
 
-  factory Variables$Query$fetch_number_of_subscribers.fromJson(
+  factory Variables$Query$fetch_subscribers.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     if (data.containsKey('service_provider_id')) {
@@ -8402,7 +8402,7 @@ class Variables$Query$fetch_number_of_subscribers {
       result$data['service_provider_type'] =
           (l$service_provider_type as String?);
     }
-    return Variables$Query$fetch_number_of_subscribers._(result$data);
+    return Variables$Query$fetch_subscribers._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -8423,9 +8423,8 @@ class Variables$Query$fetch_number_of_subscribers {
     return result$data;
   }
 
-  CopyWith$Variables$Query$fetch_number_of_subscribers<
-          Variables$Query$fetch_number_of_subscribers>
-      get copyWith => CopyWith$Variables$Query$fetch_number_of_subscribers(
+  CopyWith$Variables$Query$fetch_subscribers<Variables$Query$fetch_subscribers>
+      get copyWith => CopyWith$Variables$Query$fetch_subscribers(
             this,
             (i) => i,
           );
@@ -8434,7 +8433,7 @@ class Variables$Query$fetch_number_of_subscribers {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Query$fetch_number_of_subscribers) ||
+    if (!(other is Variables$Query$fetch_subscribers) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -8474,14 +8473,14 @@ class Variables$Query$fetch_number_of_subscribers {
   }
 }
 
-abstract class CopyWith$Variables$Query$fetch_number_of_subscribers<TRes> {
-  factory CopyWith$Variables$Query$fetch_number_of_subscribers(
-    Variables$Query$fetch_number_of_subscribers instance,
-    TRes Function(Variables$Query$fetch_number_of_subscribers) then,
-  ) = _CopyWithImpl$Variables$Query$fetch_number_of_subscribers;
+abstract class CopyWith$Variables$Query$fetch_subscribers<TRes> {
+  factory CopyWith$Variables$Query$fetch_subscribers(
+    Variables$Query$fetch_subscribers instance,
+    TRes Function(Variables$Query$fetch_subscribers) then,
+  ) = _CopyWithImpl$Variables$Query$fetch_subscribers;
 
-  factory CopyWith$Variables$Query$fetch_number_of_subscribers.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Query$fetch_number_of_subscribers;
+  factory CopyWith$Variables$Query$fetch_subscribers.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$fetch_subscribers;
 
   TRes call({
     int? service_provider_id,
@@ -8489,16 +8488,16 @@ abstract class CopyWith$Variables$Query$fetch_number_of_subscribers<TRes> {
   });
 }
 
-class _CopyWithImpl$Variables$Query$fetch_number_of_subscribers<TRes>
-    implements CopyWith$Variables$Query$fetch_number_of_subscribers<TRes> {
-  _CopyWithImpl$Variables$Query$fetch_number_of_subscribers(
+class _CopyWithImpl$Variables$Query$fetch_subscribers<TRes>
+    implements CopyWith$Variables$Query$fetch_subscribers<TRes> {
+  _CopyWithImpl$Variables$Query$fetch_subscribers(
     this._instance,
     this._then,
   );
 
-  final Variables$Query$fetch_number_of_subscribers _instance;
+  final Variables$Query$fetch_subscribers _instance;
 
-  final TRes Function(Variables$Query$fetch_number_of_subscribers) _then;
+  final TRes Function(Variables$Query$fetch_subscribers) _then;
 
   static const _undefined = {};
 
@@ -8506,7 +8505,7 @@ class _CopyWithImpl$Variables$Query$fetch_number_of_subscribers<TRes>
     Object? service_provider_id = _undefined,
     Object? service_provider_type = _undefined,
   }) =>
-      _then(Variables$Query$fetch_number_of_subscribers._({
+      _then(Variables$Query$fetch_subscribers._({
         ..._instance._$data,
         if (service_provider_id != _undefined)
           'service_provider_id': (service_provider_id as int?),
@@ -8515,9 +8514,9 @@ class _CopyWithImpl$Variables$Query$fetch_number_of_subscribers<TRes>
       }));
 }
 
-class _CopyWithStubImpl$Variables$Query$fetch_number_of_subscribers<TRes>
-    implements CopyWith$Variables$Query$fetch_number_of_subscribers<TRes> {
-  _CopyWithStubImpl$Variables$Query$fetch_number_of_subscribers(this._res);
+class _CopyWithStubImpl$Variables$Query$fetch_subscribers<TRes>
+    implements CopyWith$Variables$Query$fetch_subscribers<TRes> {
+  _CopyWithStubImpl$Variables$Query$fetch_subscribers(this._res);
 
   TRes _res;
 
@@ -8528,37 +8527,36 @@ class _CopyWithStubImpl$Variables$Query$fetch_number_of_subscribers<TRes>
       _res;
 }
 
-class Query$fetch_number_of_subscribers {
-  Query$fetch_number_of_subscribers({
-    required this.service_provider_subscriber_aggregate,
+class Query$fetch_subscribers {
+  Query$fetch_subscribers({
+    required this.service_provider_subscriber,
     required this.$__typename,
   });
 
-  factory Query$fetch_number_of_subscribers.fromJson(
-      Map<String, dynamic> json) {
-    final l$service_provider_subscriber_aggregate =
-        json['service_provider_subscriber_aggregate'];
+  factory Query$fetch_subscribers.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_subscriber = json['service_provider_subscriber'];
     final l$$__typename = json['__typename'];
-    return Query$fetch_number_of_subscribers(
-      service_provider_subscriber_aggregate:
-          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
-              .fromJson((l$service_provider_subscriber_aggregate
-                  as Map<String, dynamic>)),
+    return Query$fetch_subscribers(
+      service_provider_subscriber:
+          (l$service_provider_subscriber as List<dynamic>)
+              .map((e) =>
+                  Query$fetch_subscribers$service_provider_subscriber.fromJson(
+                      (e as Map<String, dynamic>)))
+              .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
-      service_provider_subscriber_aggregate;
+  final List<Query$fetch_subscribers$service_provider_subscriber>
+      service_provider_subscriber;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$service_provider_subscriber_aggregate =
-        service_provider_subscriber_aggregate;
-    _resultData['service_provider_subscriber_aggregate'] =
-        l$service_provider_subscriber_aggregate.toJson();
+    final l$service_provider_subscriber = service_provider_subscriber;
+    _resultData['service_provider_subscriber'] =
+        l$service_provider_subscriber.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8566,11 +8564,10 @@ class Query$fetch_number_of_subscribers {
 
   @override
   int get hashCode {
-    final l$service_provider_subscriber_aggregate =
-        service_provider_subscriber_aggregate;
+    final l$service_provider_subscriber = service_provider_subscriber;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$service_provider_subscriber_aggregate,
+      Object.hashAll(l$service_provider_subscriber.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -8580,17 +8577,26 @@ class Query$fetch_number_of_subscribers {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$fetch_number_of_subscribers) ||
+    if (!(other is Query$fetch_subscribers) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$service_provider_subscriber_aggregate =
-        service_provider_subscriber_aggregate;
-    final lOther$service_provider_subscriber_aggregate =
-        other.service_provider_subscriber_aggregate;
-    if (l$service_provider_subscriber_aggregate !=
-        lOther$service_provider_subscriber_aggregate) {
+    final l$service_provider_subscriber = service_provider_subscriber;
+    final lOther$service_provider_subscriber =
+        other.service_provider_subscriber;
+    if (l$service_provider_subscriber.length !=
+        lOther$service_provider_subscriber.length) {
       return false;
+    }
+    for (int i = 0; i < l$service_provider_subscriber.length; i++) {
+      final l$service_provider_subscriber$entry =
+          l$service_provider_subscriber[i];
+      final lOther$service_provider_subscriber$entry =
+          lOther$service_provider_subscriber[i];
+      if (l$service_provider_subscriber$entry !=
+          lOther$service_provider_subscriber$entry) {
+        return false;
+      }
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
@@ -8601,94 +8607,98 @@ class Query$fetch_number_of_subscribers {
   }
 }
 
-extension UtilityExtension$Query$fetch_number_of_subscribers
-    on Query$fetch_number_of_subscribers {
-  CopyWith$Query$fetch_number_of_subscribers<Query$fetch_number_of_subscribers>
-      get copyWith => CopyWith$Query$fetch_number_of_subscribers(
-            this,
-            (i) => i,
-          );
+extension UtilityExtension$Query$fetch_subscribers on Query$fetch_subscribers {
+  CopyWith$Query$fetch_subscribers<Query$fetch_subscribers> get copyWith =>
+      CopyWith$Query$fetch_subscribers(
+        this,
+        (i) => i,
+      );
 }
 
-abstract class CopyWith$Query$fetch_number_of_subscribers<TRes> {
-  factory CopyWith$Query$fetch_number_of_subscribers(
-    Query$fetch_number_of_subscribers instance,
-    TRes Function(Query$fetch_number_of_subscribers) then,
-  ) = _CopyWithImpl$Query$fetch_number_of_subscribers;
+abstract class CopyWith$Query$fetch_subscribers<TRes> {
+  factory CopyWith$Query$fetch_subscribers(
+    Query$fetch_subscribers instance,
+    TRes Function(Query$fetch_subscribers) then,
+  ) = _CopyWithImpl$Query$fetch_subscribers;
 
-  factory CopyWith$Query$fetch_number_of_subscribers.stub(TRes res) =
-      _CopyWithStubImpl$Query$fetch_number_of_subscribers;
+  factory CopyWith$Query$fetch_subscribers.stub(TRes res) =
+      _CopyWithStubImpl$Query$fetch_subscribers;
 
   TRes call({
-    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate?
-        service_provider_subscriber_aggregate,
+    List<Query$fetch_subscribers$service_provider_subscriber>?
+        service_provider_subscriber,
     String? $__typename,
   });
-  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
-      TRes> get service_provider_subscriber_aggregate;
+  TRes service_provider_subscriber(
+      Iterable<Query$fetch_subscribers$service_provider_subscriber> Function(
+              Iterable<
+                  CopyWith$Query$fetch_subscribers$service_provider_subscriber<
+                      Query$fetch_subscribers$service_provider_subscriber>>)
+          _fn);
 }
 
-class _CopyWithImpl$Query$fetch_number_of_subscribers<TRes>
-    implements CopyWith$Query$fetch_number_of_subscribers<TRes> {
-  _CopyWithImpl$Query$fetch_number_of_subscribers(
+class _CopyWithImpl$Query$fetch_subscribers<TRes>
+    implements CopyWith$Query$fetch_subscribers<TRes> {
+  _CopyWithImpl$Query$fetch_subscribers(
     this._instance,
     this._then,
   );
 
-  final Query$fetch_number_of_subscribers _instance;
+  final Query$fetch_subscribers _instance;
 
-  final TRes Function(Query$fetch_number_of_subscribers) _then;
+  final TRes Function(Query$fetch_subscribers) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? service_provider_subscriber_aggregate = _undefined,
+    Object? service_provider_subscriber = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$fetch_number_of_subscribers(
-        service_provider_subscriber_aggregate:
-            service_provider_subscriber_aggregate == _undefined ||
-                    service_provider_subscriber_aggregate == null
-                ? _instance.service_provider_subscriber_aggregate
-                : (service_provider_subscriber_aggregate
-                    as Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate),
+      _then(Query$fetch_subscribers(
+        service_provider_subscriber: service_provider_subscriber ==
+                    _undefined ||
+                service_provider_subscriber == null
+            ? _instance.service_provider_subscriber
+            : (service_provider_subscriber
+                as List<Query$fetch_subscribers$service_provider_subscriber>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
-      TRes> get service_provider_subscriber_aggregate {
-    final local$service_provider_subscriber_aggregate =
-        _instance.service_provider_subscriber_aggregate;
-    return CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
-        local$service_provider_subscriber_aggregate,
-        (e) => call(service_provider_subscriber_aggregate: e));
-  }
+  TRes service_provider_subscriber(
+          Iterable<Query$fetch_subscribers$service_provider_subscriber> Function(
+                  Iterable<
+                      CopyWith$Query$fetch_subscribers$service_provider_subscriber<
+                          Query$fetch_subscribers$service_provider_subscriber>>)
+              _fn) =>
+      call(
+          service_provider_subscriber: _fn(_instance.service_provider_subscriber
+              .map((e) =>
+                  CopyWith$Query$fetch_subscribers$service_provider_subscriber(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
-class _CopyWithStubImpl$Query$fetch_number_of_subscribers<TRes>
-    implements CopyWith$Query$fetch_number_of_subscribers<TRes> {
-  _CopyWithStubImpl$Query$fetch_number_of_subscribers(this._res);
+class _CopyWithStubImpl$Query$fetch_subscribers<TRes>
+    implements CopyWith$Query$fetch_subscribers<TRes> {
+  _CopyWithStubImpl$Query$fetch_subscribers(this._res);
 
   TRes _res;
 
   call({
-    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate?
-        service_provider_subscriber_aggregate,
+    List<Query$fetch_subscribers$service_provider_subscriber>?
+        service_provider_subscriber,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
-          TRes>
-      get service_provider_subscriber_aggregate =>
-          CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
-              .stub(_res);
+  service_provider_subscriber(_fn) => _res;
 }
 
-const documentNodeQueryfetch_number_of_subscribers = DocumentNode(definitions: [
+const documentNodeQueryfetch_subscribers = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
-    name: NameNode(value: 'fetch_number_of_subscribers'),
+    name: NameNode(value: 'fetch_subscribers'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'service_provider_id')),
@@ -8712,7 +8722,7 @@ const documentNodeQueryfetch_number_of_subscribers = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'service_provider_subscriber_aggregate'),
+        name: NameNode(value: 'service_provider_subscriber'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -8744,26 +8754,18 @@ const documentNodeQueryfetch_number_of_subscribers = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'aggregate'),
+            name: NameNode(value: 'customer_id'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'count'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -8778,15 +8780,15 @@ const documentNodeQueryfetch_number_of_subscribers = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Query$fetch_number_of_subscribers _parserFn$Query$fetch_number_of_subscribers(
+Query$fetch_subscribers _parserFn$Query$fetch_subscribers(
         Map<String, dynamic> data) =>
-    Query$fetch_number_of_subscribers.fromJson(data);
+    Query$fetch_subscribers.fromJson(data);
 
-class Options$Query$fetch_number_of_subscribers
-    extends graphql.QueryOptions<Query$fetch_number_of_subscribers> {
-  Options$Query$fetch_number_of_subscribers({
+class Options$Query$fetch_subscribers
+    extends graphql.QueryOptions<Query$fetch_subscribers> {
+  Options$Query$fetch_subscribers({
     String? operationName,
-    Variables$Query$fetch_number_of_subscribers? variables,
+    Variables$Query$fetch_subscribers? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -8802,16 +8804,16 @@ class Options$Query$fetch_number_of_subscribers
           optimisticResult: optimisticResult,
           pollInterval: pollInterval,
           context: context,
-          document: documentNodeQueryfetch_number_of_subscribers,
-          parserFn: _parserFn$Query$fetch_number_of_subscribers,
+          document: documentNodeQueryfetch_subscribers,
+          parserFn: _parserFn$Query$fetch_subscribers,
         );
 }
 
-class WatchOptions$Query$fetch_number_of_subscribers
-    extends graphql.WatchQueryOptions<Query$fetch_number_of_subscribers> {
-  WatchOptions$Query$fetch_number_of_subscribers({
+class WatchOptions$Query$fetch_subscribers
+    extends graphql.WatchQueryOptions<Query$fetch_subscribers> {
+  WatchOptions$Query$fetch_subscribers({
     String? operationName,
-    Variables$Query$fetch_number_of_subscribers? variables,
+    Variables$Query$fetch_subscribers? variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -8829,99 +8831,95 @@ class WatchOptions$Query$fetch_number_of_subscribers
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeQueryfetch_number_of_subscribers,
+          document: documentNodeQueryfetch_subscribers,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Query$fetch_number_of_subscribers,
+          parserFn: _parserFn$Query$fetch_subscribers,
         );
 }
 
-class FetchMoreOptions$Query$fetch_number_of_subscribers
+class FetchMoreOptions$Query$fetch_subscribers
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$fetch_number_of_subscribers({
+  FetchMoreOptions$Query$fetch_subscribers({
     required graphql.UpdateQuery updateQuery,
-    Variables$Query$fetch_number_of_subscribers? variables,
+    Variables$Query$fetch_subscribers? variables,
   }) : super(
           updateQuery: updateQuery,
           variables: variables?.toJson() ?? {},
-          document: documentNodeQueryfetch_number_of_subscribers,
+          document: documentNodeQueryfetch_subscribers,
         );
 }
 
-extension ClientExtension$Query$fetch_number_of_subscribers
-    on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$fetch_number_of_subscribers>>
-      query$fetch_number_of_subscribers(
-              [Options$Query$fetch_number_of_subscribers? options]) async =>
-          await this
-              .query(options ?? Options$Query$fetch_number_of_subscribers());
-  graphql.ObservableQuery<Query$fetch_number_of_subscribers>
-      watchQuery$fetch_number_of_subscribers(
-              [WatchOptions$Query$fetch_number_of_subscribers? options]) =>
-          this.watchQuery(
-              options ?? WatchOptions$Query$fetch_number_of_subscribers());
-  void writeQuery$fetch_number_of_subscribers({
-    required Query$fetch_number_of_subscribers data,
-    Variables$Query$fetch_number_of_subscribers? variables,
+extension ClientExtension$Query$fetch_subscribers on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$fetch_subscribers>> query$fetch_subscribers(
+          [Options$Query$fetch_subscribers? options]) async =>
+      await this.query(options ?? Options$Query$fetch_subscribers());
+  graphql.ObservableQuery<Query$fetch_subscribers> watchQuery$fetch_subscribers(
+          [WatchOptions$Query$fetch_subscribers? options]) =>
+      this.watchQuery(options ?? WatchOptions$Query$fetch_subscribers());
+  void writeQuery$fetch_subscribers({
+    required Query$fetch_subscribers data,
+    Variables$Query$fetch_subscribers? variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-          operation: graphql.Operation(
-              document: documentNodeQueryfetch_number_of_subscribers),
+          operation:
+              graphql.Operation(document: documentNodeQueryfetch_subscribers),
           variables: variables?.toJson() ?? const {},
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$fetch_number_of_subscribers? readQuery$fetch_number_of_subscribers({
-    Variables$Query$fetch_number_of_subscribers? variables,
+  Query$fetch_subscribers? readQuery$fetch_subscribers({
+    Variables$Query$fetch_subscribers? variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
-        operation: graphql.Operation(
-            document: documentNodeQueryfetch_number_of_subscribers),
+        operation:
+            graphql.Operation(document: documentNodeQueryfetch_subscribers),
         variables: variables?.toJson() ?? const {},
       ),
       optimistic: optimistic,
     );
-    return result == null
-        ? null
-        : Query$fetch_number_of_subscribers.fromJson(result);
+    return result == null ? null : Query$fetch_subscribers.fromJson(result);
   }
 }
 
-class Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate {
-  Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate({
-    this.aggregate,
+class Query$fetch_subscribers$service_provider_subscriber {
+  Query$fetch_subscribers$service_provider_subscriber({
+    required this.customer_id,
+    required this.id,
     required this.$__typename,
   });
 
-  factory Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate.fromJson(
+  factory Query$fetch_subscribers$service_provider_subscriber.fromJson(
       Map<String, dynamic> json) {
-    final l$aggregate = json['aggregate'];
+    final l$customer_id = json['customer_id'];
+    final l$id = json['id'];
     final l$$__typename = json['__typename'];
-    return Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
-      aggregate: l$aggregate == null
-          ? null
-          : Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
-              .fromJson((l$aggregate as Map<String, dynamic>)),
+    return Query$fetch_subscribers$service_provider_subscriber(
+      customer_id: (l$customer_id as int),
+      id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate?
-      aggregate;
+  final int customer_id;
+
+  final int id;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$aggregate = aggregate;
-    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$customer_id = customer_id;
+    _resultData['customer_id'] = l$customer_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8929,10 +8927,12 @@ class Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate {
 
   @override
   int get hashCode {
-    final l$aggregate = aggregate;
+    final l$customer_id = customer_id;
+    final l$id = id;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$aggregate,
+      l$customer_id,
+      l$id,
       l$$__typename,
     ]);
   }
@@ -8942,14 +8942,18 @@ class Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate) ||
+    if (!(other is Query$fetch_subscribers$service_provider_subscriber) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$aggregate = aggregate;
-    final lOther$aggregate = other.aggregate;
-    if (l$aggregate != lOther$aggregate) {
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -8961,247 +8965,78 @@ class Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate {
   }
 }
 
-extension UtilityExtension$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
-    on Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate {
-  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
-          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate>
+extension UtilityExtension$Query$fetch_subscribers$service_provider_subscriber
+    on Query$fetch_subscribers$service_provider_subscriber {
+  CopyWith$Query$fetch_subscribers$service_provider_subscriber<
+          Query$fetch_subscribers$service_provider_subscriber>
       get copyWith =>
-          CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+          CopyWith$Query$fetch_subscribers$service_provider_subscriber(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
+abstract class CopyWith$Query$fetch_subscribers$service_provider_subscriber<
     TRes> {
-  factory CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
-    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
-        instance,
-    TRes Function(
-            Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate)
-        then,
-  ) = _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate;
+  factory CopyWith$Query$fetch_subscribers$service_provider_subscriber(
+    Query$fetch_subscribers$service_provider_subscriber instance,
+    TRes Function(Query$fetch_subscribers$service_provider_subscriber) then,
+  ) = _CopyWithImpl$Query$fetch_subscribers$service_provider_subscriber;
 
-  factory CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate.stub(
+  factory CopyWith$Query$fetch_subscribers$service_provider_subscriber.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate;
+      _CopyWithStubImpl$Query$fetch_subscribers$service_provider_subscriber;
 
   TRes call({
-    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate?
-        aggregate,
+    int? customer_id,
+    int? id,
     String? $__typename,
   });
-  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
-      TRes> get aggregate;
 }
 
-class _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
-        TRes>
+class _CopyWithImpl$Query$fetch_subscribers$service_provider_subscriber<TRes>
     implements
-        CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
-            TRes> {
-  _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
+        CopyWith$Query$fetch_subscribers$service_provider_subscriber<TRes> {
+  _CopyWithImpl$Query$fetch_subscribers$service_provider_subscriber(
     this._instance,
     this._then,
   );
 
-  final Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate
-      _instance;
+  final Query$fetch_subscribers$service_provider_subscriber _instance;
 
-  final TRes Function(
-          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate)
+  final TRes Function(Query$fetch_subscribers$service_provider_subscriber)
       _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? aggregate = _undefined,
+    Object? customer_id = _undefined,
+    Object? id = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
-        aggregate: aggregate == _undefined
-            ? _instance.aggregate
-            : (aggregate
-                as Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
-      TRes> get aggregate {
-    final local$aggregate = _instance.aggregate;
-    return local$aggregate == null
-        ? CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
-            .stub(_then(_instance))
-        : CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
-            local$aggregate, (e) => call(aggregate: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
-        TRes>
-    implements
-        CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate<
-            TRes> {
-  _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate(
-      this._res);
-
-  TRes _res;
-
-  call({
-    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate?
-        aggregate,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
-          TRes>
-      get aggregate =>
-          CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
-              .stub(_res);
-}
-
-class Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate {
-  Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate({
-    required this.count,
-    required this.$__typename,
-  });
-
-  factory Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate.fromJson(
-      Map<String, dynamic> json) {
-    final l$count = json['count'];
-    final l$$__typename = json['__typename'];
-    return Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
-      count: (l$count as int),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int count;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$count = count;
-    _resultData['count'] = l$count;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$count = count;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$count,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$count = count;
-    final lOther$count = other.count;
-    if (l$count != lOther$count) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
-    on Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate {
-  CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
-          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate>
-      get copyWith =>
-          CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
-    TRes> {
-  factory CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
-    Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
-        instance,
-    TRes Function(
-            Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate)
-        then,
-  ) = _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate;
-
-  factory CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate;
-
-  TRes call({
-    int? count,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
-        TRes>
-    implements
-        CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
-            TRes> {
-  _CopyWithImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
-    this._instance,
-    this._then,
-  );
-
-  final Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate
-      _instance;
-
-  final TRes Function(
-          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? count = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
-        count: count == _undefined || count == null
-            ? _instance.count
-            : (count as int),
+      _then(Query$fetch_subscribers$service_provider_subscriber(
+        customer_id: customer_id == _undefined || customer_id == null
+            ? _instance.customer_id
+            : (customer_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 }
 
-class _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
+class _CopyWithStubImpl$Query$fetch_subscribers$service_provider_subscriber<
         TRes>
     implements
-        CopyWith$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate<
-            TRes> {
-  _CopyWithStubImpl$Query$fetch_number_of_subscribers$service_provider_subscriber_aggregate$aggregate(
+        CopyWith$Query$fetch_subscribers$service_provider_subscriber<TRes> {
+  _CopyWithStubImpl$Query$fetch_subscribers$service_provider_subscriber(
       this._res);
 
   TRes _res;
 
   call({
-    int? count,
+    int? customer_id,
+    int? id,
     String? $__typename,
   }) =>
       _res;
