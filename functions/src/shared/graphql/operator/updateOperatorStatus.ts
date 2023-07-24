@@ -1,7 +1,6 @@
 import { getHasura } from "../../../utilities/hasura";
 import { AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { AuthOperatorError } from "../../../serviceProvider/authorizeOperator";
-import { DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { Operator } from "../../models/Services/Service";
 import { ParticipantType } from "../../models/Generic/Chat";
 

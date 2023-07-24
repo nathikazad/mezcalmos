@@ -142,19 +142,19 @@ export async function createRestaurant(
     })
   }
   
-  // if(restaurant.deliveryPartnerId) {
-  //   await chain.mutation({
-  //     insert_service_provider_delivery_partner_one: [{
-  //       object: {
-  //         delivery_company_id: restaurant.deliveryPartnerId,
-  //         service_provider_id: response.insert_restaurant_restaurant_one.id,
-  //         service_provider_type: ServiceProviderType.Restaurant
-  //       }
-  //     }, {
-  //       id: true,
-  //     }]
-  //   });
-  // }
+  if(restaurantDetails.deliveryPartnerId) {
+    await chain.mutation({
+      insert_service_provider_delivery_partner_one: [{
+        object: {
+          delivery_company_id: restaurantDetails.deliveryPartnerId,
+          service_provider_id: response.insert_restaurant_restaurant_one.id,
+          service_provider_type: ServiceProviderType.Restaurant
+        }
+      }, {
+        id: true,
+      }]
+    });
+  }
 
   // Generating 3 links/Qr
   // let restaurantOpLinks: IDeepLink | null = await generateDeepLink(
