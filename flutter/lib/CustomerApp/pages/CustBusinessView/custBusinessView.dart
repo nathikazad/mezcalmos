@@ -133,19 +133,22 @@ class _CustBusinessViewState extends State<CustBusinessView>
                       title: Text('${_viewController.business?.details.name}'),
                       titleTextStyle: context.textTheme.bodyLarge
                           ?.copyWith(fontWeight: FontWeight.w700),
-                      subtitle: Text('7 subscribers'),
+                      subtitle: Text(
+                          '${_viewController.subscribers.length} subscribers'),
                       subtitleTextStyle: context.textTheme.bodyMedium
                           ?.copyWith(fontSize: 12.5),
                       trailing: RawChip(
                         shape: StadiumBorder(),
                         label: Text(
-                          'Subscribe',
+                          _viewController.isSubscribed
+                              ? 'Unsubscribe'
+                              : 'Subscribe',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.normal),
                         ),
                         backgroundColor: primaryBlueColor,
-                        onPressed: () {},
+                        onPressed: () => _viewController.subscribe(),
                       )),
                 ),
                 Expanded(

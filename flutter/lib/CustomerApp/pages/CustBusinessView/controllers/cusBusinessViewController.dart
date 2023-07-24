@@ -33,6 +33,13 @@ class CustBusinessViewController {
   RxList<Post> _posts = RxList.empty();
   List<Post> get posts => _posts.value;
 
+  RxList<int> _subscribers = RxList.empty();
+  List<int> get subscribers => _subscribers.value;
+
+  RxBool get _isSubscribed =>
+      _subscribers.contains(_authController.user?.hasuraId).obs;
+  bool get isSubscribed => _isSubscribed.value;
+
   RxList<Post> _gridImages = RxList.empty();
   List<Post> get gridImages => _gridImages.value;
 
@@ -61,6 +68,8 @@ class CustBusinessViewController {
     _business.value =
         await get_business_by_id(id: businessId, withCache: false);
     mezDbgPrint(_business.value?.toFirebaseFormattedJson());
+
+    await _fetchSubscriptions();
 
     promotions.value = await fetch_promotions(
       serviceProviderId: businessId,
@@ -135,6 +144,35 @@ class CustBusinessViewController {
       likes.add(_authController.user!.hasuraId);
     }
     await update_post_likes(postId: post.id, likes: likes);
+  }
+
+  bool _canSubscribe = true;
+  Future<void> subscribe() async {
+    if (!_canSubscribe) return;
+
+    _canSubscribe = false;
+
+    await _fetchSubscriptions();
+
+    if (_subscribers.contains(_authController.user?.hasuraId)) {
+      await unsubscribe_service_provider(
+          customerId: _authController.user!.hasuraId,
+          serviceProviderId: businessId,
+          serviceProviderType: business!.details.serviceProviderType);
+    } else {
+      await subscribe_service_provider(
+          customerId: _authController.user!.hasuraId,
+          serviceProviderId: businessId,
+          serviceProviderType: business!.details.serviceProviderType);
+    }
+    _isSubscribed.refresh();
+    _canSubscribe = true;
+  }
+
+  Future<void> _fetchSubscriptions() async {
+    _subscribers.value = await fetch_subscribers(
+        serviceProviderId: businessId,
+        serviceProviderType: business!.details.serviceProviderType);
   }
 
   void dispose() {}
