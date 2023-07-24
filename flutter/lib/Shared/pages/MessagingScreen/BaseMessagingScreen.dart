@@ -294,8 +294,12 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
           },
         ),
         actions: <Widget>[
-          if (controller.chat.value?.chatInfo.phoneNumber != null || !kIsWeb)
-            _whatsAppButton(),
+          Obx(() {
+            if (controller.chat.value?.chatInfo.phoneNumber != null)
+              return _whatsAppButton();
+            else
+              return SizedBox();
+          }),
           if (controller.chat.value?.chatInfo.phoneNumber != null || !kIsWeb)
             _callButton(context),
 
