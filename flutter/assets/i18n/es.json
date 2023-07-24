@@ -2513,6 +2513,7 @@
             "imageError": "Se requiere una imagen",
             "description": "Descripción",
             "descriptionHintText": "Ingrese una descripción",
+            "phoneNumberHelper" : "Incluye el código de país: +52XXXXXXXX",
             "phoneText": "Número de teléfono",
             "phoneTextDescription": "Ingrese su número telefónico",
             "phoneTextError": "Ingrese un número de teléfono válido",
@@ -2655,6 +2656,7 @@
       "ServiceInfoEditView": {
         "name": "Nombre",
         "phoneNumber": "Número de teléfono",
+        "phoneNumberHelper" : "Incluye el código de país: +52XXXXXXXX",
         "location": "Localización",
         "phoneErrorText": "Por favor ingrese un número de teléfono válido",
         "description": "Descripción",

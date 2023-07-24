@@ -32,7 +32,8 @@ class CustOrderView extends StatefulWidget {
   State<CustOrderView> createState() => _CustOrderViewState();
 
   static Future<void> navigate({required int orderId, EntityType? entityType}) {
-    return MezRouter.toPath(constructPath(orderId));
+    return MezRouter.toPath(constructPath(orderId),
+        arguments: {"entityType": entityType});
   }
 
   static String constructPath(int orderId) {

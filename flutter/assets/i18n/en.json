@@ -2469,6 +2469,7 @@
             "descriptionHintText": "Enter a description",
             "phoneText": "Phone number",
             "phoneTextDescription": "Enter your phone number",
+            "phoneNumberHelper" : "Include country code: +52XXXXXXXX",
             "phoneTextError": "Enter valid phone number",
             "prLang": "Primary language",
             "sameLangErrorText": "This language is used, please enter a different language",
@@ -2611,6 +2612,7 @@
       "ServiceInfoEditView": {
         "name": "Name",
         "phoneNumber": "Phone number",
+        "phoneNumberHelper" : "Include country code: +52XXXXXXXX",
         "phoneErrorText": "Please enter a valid phone number",
         "location": "Location",
         "description": "Description",
