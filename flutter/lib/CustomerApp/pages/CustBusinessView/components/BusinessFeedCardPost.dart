@@ -72,7 +72,7 @@ class BusinessFeedCardPost extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    controller.likePost(post.id);
+                    controller.likePost(post);
                   },
                   child: Icon(
                       post.likes.contains(

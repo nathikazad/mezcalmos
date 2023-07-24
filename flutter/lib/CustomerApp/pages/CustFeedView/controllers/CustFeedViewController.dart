@@ -78,11 +78,16 @@ class CustFeedViewController {
   }
 
   Future<void> likePost(
-    int postId,
+    Post post,
   ) async {
-    print('qqq ${postId}');
-    print('qqq ${_authController.user!.hasuraId}');
-    await like_post(postId: postId, customerId: _authController.user!.hasuraId);
+    final List<int> likes = post.likes;
+
+    if (likes.contains(_authController.user!.hasuraId)) {
+      likes.remove(_authController.user!.hasuraId);
+    } else {
+      likes.add(_authController.user!.hasuraId);
+    }
+    await update_post_likes(postId: post.id, likes: likes);
   }
 
   void setPostSwitch(bool value) {

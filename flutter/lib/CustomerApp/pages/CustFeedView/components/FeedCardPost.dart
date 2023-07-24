@@ -69,8 +69,7 @@ class FeedCardPost extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    print('Tesssssssssssstr');
-                    controller.likePost(post.id);
+                    controller.likePost(post);
                   },
                   child: Icon(
                       post.likes.contains(

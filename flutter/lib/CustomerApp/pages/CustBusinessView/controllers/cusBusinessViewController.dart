@@ -125,9 +125,16 @@ class CustBusinessViewController {
   }
 
   Future<void> likePost(
-    int postId,
+    Post post,
   ) async {
-    await like_post(postId: postId, customerId: _authController.user!.hasuraId);
+    final List<int> likes = post.likes;
+
+    if (likes.contains(_authController.user!.hasuraId)) {
+      likes.remove(_authController.user!.hasuraId);
+    } else {
+      likes.add(_authController.user!.hasuraId);
+    }
+    await update_post_likes(postId: post.id, likes: likes);
   }
 
   void dispose() {}
