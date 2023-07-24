@@ -34,6 +34,7 @@ import { handleOrderRequestFromCustomer } from "./business/customerHandleRequest
 import { requestOrder } from "./business/orderRequest";
 import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
+import { RuntimeOptions } from "firebase-functions";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -86,7 +87,7 @@ export const serviceProvider = {
 }
 
 export const restaurant3 = {
-  createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
+  createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data), {memory: "512MB"}),
   checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
   readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
@@ -96,7 +97,7 @@ export const restaurant3 = {
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 export const business = {
-  createBusiness: authenticatedCall((userId, data) => createNewBusiness(userId, data)),
+  createBusiness: authenticatedCall((userId, data) => createNewBusiness(userId, data), {memory: "512MB"}),
   requestOrder: authenticatedCall((userId, data) => requestOrder(userId, data)),
   handleOrderRequestByAdmin: authenticatedCall((userId, data) => handleOrderRequestByAdmin(userId, data)),
   handleOrderRequestFromCustomer: authenticatedCall((userId, data) => handleOrderRequestFromCustomer(userId, data)),
@@ -131,9 +132,8 @@ export const delivery3 = {
 }
 
 type AuthenticatedFunction = (userId:number, data:any) => any;
-function authenticatedCall(func:AuthenticatedFunction) {
-  return functions.https.onCall(async (data, context) => {
-    
+function authenticatedCall(func:AuthenticatedFunction, runtimeOptions:RuntimeOptions= {memory: "256MB"}) {
+  return functions.runWith(runtimeOptions).https.onCall(async (data, context) => {
     console.log("[+] authenticatedCall :: ", data);
     if (!context.auth?.uid) {
       throw new HttpsError(

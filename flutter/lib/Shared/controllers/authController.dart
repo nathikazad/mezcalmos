@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
@@ -54,6 +53,7 @@ class AuthController extends GetxController {
     // _authStateStream.addStream(_auth.authStateChanges());
 
     _auth.authStateChanges().listen((fireAuth.User? user) async {
+      logEventToServer("Auth state change user: ${user?.uid}");
       await authChangeCallback(user);
     });
 

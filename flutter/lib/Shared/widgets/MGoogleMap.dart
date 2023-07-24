@@ -9,6 +9,7 @@ import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
@@ -119,7 +120,8 @@ class MGoogleMapState extends State<MGoogleMap> {
   Future<LocationData?> _currentLocation() async {
     LocationData? currentLocation;
     try {
-      currentLocation = await Location().getLocation();
+      currentLocation =
+          await Get.find<LocationController>().getCurrentLocation();
       widget.notifyParentOfNewLocation?.call(
         LocationModel.MezLocation.fromFirebaseData(
           <String, dynamic>{

@@ -46,7 +46,7 @@ List<SideMenuItem> sideMenuItems = <SideMenuItem>[
 ];
 
 void main() {
-  runMainGuarded(
+  runMainGuardedWithSentry(
     () => runApp(
       Sizer(
         builder: (

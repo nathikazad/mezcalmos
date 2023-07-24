@@ -156,6 +156,7 @@ Future<void> signInWithFacebook() async {
 }
 
 Future<void> signInWithApple() async {
+  logEventToServer("Signing in with Apple");
   // To prevent replay attacks with the credential returned from Apple, we
   // include a nonce in the credential request. When signing in in with
   // Firebase, the nonce in the id token returned by Apple, is expected to
@@ -207,6 +208,8 @@ Future<void> signInWithApple() async {
   } catch (exception) {
     mezDbgPrint(exception);
     MezSnackbar("Notice ~", "Failed SignIn with Apple !");
+    logEventToServer("Failed Sign in with Apple",
+        debugData: {"exception": exception.toString()});
     throw exception;
   }
 }
