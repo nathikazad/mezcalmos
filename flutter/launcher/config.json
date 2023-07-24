@@ -29,7 +29,6 @@
     "shared_pubspec": {
       "dependencies": {
         "ensure_visible_when_focused": "^1.1.1",
-        "open_file": "^3.3.2",
         "social_share": "^2.3.1",
         "share_plus": "^7.0.2",
 
@@ -340,10 +339,6 @@
     },
     "MezAdminApp": {
       "folderName": "MezAdminApp",
-      "appPermissions": [
-        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>",
-        "<uses-permission android:name='android.permission.MANAGE_EXTERNAL_STORAGE' /> tools:ignore='ScopedStorage'"
-      ],
       "packages": {
         "stage": {
           "appName": "MezAdmin Stage",
@@ -372,7 +367,8 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0"
+          "agora_rtc_engine": "6.1.0",
+          "open_file": "^3.3.2"
         },
         "assets": [
           "assets/images/",
@@ -390,7 +386,10 @@
           "assets/animation/",
           "assets/sounds/",
           "assets/icons/appstore.png",
-          "assets/images/shared/markers/"
+          "assets/images/shared/markers/",
+          "assets/images/restaurantApp/createRestaurant.png",
+          "assets/images/laundryApp/createLaundry.png",
+          "assets/images/businessApp/createBusiness.png"
         ]
       }
     },
@@ -716,9 +715,7 @@
     },
     "BusinessApp": {
       "appPermissions": [
-        "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>",
-        "<uses-permission android:name='android.permission.WRITE_EXTERNAL_STORAGE'/>",
-        "<uses-permission android:name='android.permission.MANAGE_EXTERNAL_STORAGE' /> tools:ignore='ScopedStorage'"
+        "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
       ],
       "folderName": "BusinessApp",
       "packages": {
@@ -749,7 +746,8 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0"
+          "agora_rtc_engine": "6.1.0",
+          "open_file": "^3.3.2"
         },
         "assets": [
           "assets/images/",

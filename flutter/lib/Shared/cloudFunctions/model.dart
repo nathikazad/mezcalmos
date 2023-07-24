@@ -682,7 +682,7 @@ factory OrderReqResponse.fromFirebaseFormattedJson(json) {
   }
 }
 
-enum BusinessOrderRequestStatus { RequestReceived, ModificationRequestByBusiness, CancelledByBusiness, Confirmed, CancelledByCustomer, Completed }
+enum BusinessOrderRequestStatus { RequestReceived, ModificationRequestByBusiness, CancelledByBusiness, Confirmed, CancelledByCustomer }
 extension ParseBusinessOrderRequestStatusToString on BusinessOrderRequestStatus {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;

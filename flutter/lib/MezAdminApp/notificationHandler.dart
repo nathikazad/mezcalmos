@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/notificationHandler.dart';
 import 'package:mezcalmos/LaundryApp/notificationHandler.dart';
@@ -33,6 +34,45 @@ Notification mezAdminNotificationHandler(String key, value) {
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);
+    case NotificationType.NewBusiness:
+      return Notification(
+          id: key,
+          icon: mat.Icons.store,
+          linkUrl: value["linkUrl"],
+          body: "${_i18n()['newBusinessBody']}",
+          imgUrl: null,
+          title: "${_i18n()['newBusinessTitle']}",
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewBusiness,
+          notificationAction:
+              (value["notificationAction"] as String).toNotificationAction(),
+          variableParams: value);
+    case NotificationType.NewRestaurant:
+      return Notification(
+          id: key,
+          icon: mat.Icons.flatware,
+          linkUrl: value["linkUrl"],
+          body: "${_i18n()['newRestaurantBody']}",
+          imgUrl: null,
+          title: "${_i18n()['newRestaurantTitle']}",
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewRestaurant,
+          notificationAction:
+              (value["notificationAction"] as String).toNotificationAction(),
+          variableParams: value);
+    case NotificationType.NewLaundry:
+      return Notification(
+          id: key,
+          icon: mat.Icons.local_laundry_service,
+          linkUrl: value["linkUrl"],
+          body: "${_i18n()['newLaundryBody']}",
+          imgUrl: null,
+          title: "${_i18n()['newLaundryTitle']}",
+          timestamp: DateTime.parse(value['time']),
+          notificationType: NotificationType.NewLaundry,
+          notificationAction:
+              (value["notificationAction"] as String).toNotificationAction(),
+          variableParams: value);
     case NotificationType.OrderStatusChange:
       return _orderStatusChangesHandler(key, value);
 
@@ -42,7 +82,7 @@ Notification mezAdminNotificationHandler(String key, value) {
 }
 
 Notification _orderStatusChangesHandler(key, value) {
-  OrderType orderType = value['orderType'].toString().toOrderType();
+  final OrderType orderType = value['orderType'].toString().toOrderType();
   switch (orderType) {
     case OrderType.Restaurant:
       return restaurantOpOrderChangesNotifier(key, value);

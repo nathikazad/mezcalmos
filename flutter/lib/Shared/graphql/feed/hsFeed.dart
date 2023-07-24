@@ -236,23 +236,25 @@ Future<List<Post>> fetch_posts_within_distance(
   return posts;
 }
 
-Future<int> fetch_number_of_subscribers(
+Future<List<int>> fetch_subscribers(
     {required int serviceProviderId,
     required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {
-  QueryResult<Query$fetch_number_of_subscribers> res =
-      await _db.graphQLClient.query$fetch_number_of_subscribers(
-    Options$Query$fetch_number_of_subscribers(
+  QueryResult<Query$fetch_subscribers> res =
+      await _db.graphQLClient.query$fetch_subscribers(
+    Options$Query$fetch_subscribers(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
-      variables: Variables$Query$fetch_number_of_subscribers(
+      variables: Variables$Query$fetch_subscribers(
           service_provider_id: serviceProviderId,
           service_provider_type: serviceProviderType.toFirebaseFormatString()),
     ),
   );
-  return res
-          .parsedData?.service_provider_subscriber_aggregate.aggregate?.count ??
-      0;
+  List<int> subscribers = <int>[];
+  res.parsedData?.service_provider_subscriber.forEach((element) {
+    subscribers.add(element.customer_id);
+  });
+  return subscribers;
 }
 
 Future<int?> subscribe_service_provider(

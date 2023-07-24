@@ -2494,14 +2494,12 @@
         "story": "Story",
         "facebook": "Facebook",
         "save": "Save"
-       
       },
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage": {
             "create": "Create",
             "opNote": "If you want to be added as an operator to an existing business, ask the owner of the business to send you invite code",
-
             "subtitle": {
               "restaurant": "Create a new restaurant and receive orders from your local customers.",
               "business": "Create an account to expand your business & attract more online customers.",
@@ -2561,7 +2559,7 @@
             }
           }
         },
-        "formErrorText" : "Please check that all required fields are there",
+        "formErrorText": "Please check that all required fields are there",
         "createText": "Create",
         "info": "Information",
         "schedule": "Schedule",
@@ -2962,10 +2960,11 @@
       "OrderDeliveryLocation": {
         "title": "Delivery location",
         "deliveryDetails": "Delivery details"
-      },    "OrderDeliveryType": {
+      },
+      "OrderDeliveryType": {
         "title": "Delivery type",
         "delivery": "Delivery",
-        "pickup" : "In-store Pickup"
+        "pickup": "In-store Pickup"
       },
       "OrderScheduledTimeCard": {
         "title": "Scheduled time"
@@ -4337,7 +4336,13 @@
       "newOrderTitle": "Order received",
       "newOrderBody": "You got a new order",
       "canceledOrderTitle": "Order cancelled",
-      "canceledOrderBody": "Your order has been cancelled"
+      "canceledOrderBody": "Your order has been cancelled",
+      "newBusinessTitle": "New business",
+      "newBusinessBody": "New business have been created",
+      "newRestaurantTitle": "New Restaurant",
+      "newRestaurantBody": "New restaurant have been created",
+      "newLaundryTitle": "New Laundry",
+      "newLaundryBody": "New laundry have been created"
     },
     "pages": {
       "AdminTabsView": {

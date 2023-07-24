@@ -224,11 +224,10 @@ query fetch_posts_within_distance($limit: Int, $offset: Int, $from: geography!, 
   }
 }
 
-query fetch_number_of_subscribers($service_provider_id: Int, $service_provider_type: String) {
-  service_provider_subscriber_aggregate(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
-    aggregate {
-      count
-    }
+query fetch_subscribers($service_provider_id: Int, $service_provider_type: String) {
+  service_provider_subscriber(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
+    customer_id
+    id
   }
 }
 

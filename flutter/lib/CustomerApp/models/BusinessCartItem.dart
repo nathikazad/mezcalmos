@@ -34,14 +34,13 @@ class CustBusinessCart {
   }
 
   bool get showReviewButton =>
-      (status == BusinessOrderRequestStatus.Confirmed ||
-          status == BusinessOrderRequestStatus.Completed) &&
+      (status == BusinessOrderRequestStatus.Confirmed) &&
       furtherItemDate.isBefore(DateTime.now().toLocal());
 
   bool get inProcess =>
       status != BusinessOrderRequestStatus.CancelledByBusiness &&
       status != BusinessOrderRequestStatus.CancelledByCustomer &&
-      status != BusinessOrderRequestStatus.Completed;
+      status != BusinessOrderRequestStatus.Confirmed;
   DateTime get furtherItemDate {
     return items.map((BusinessCartItem e) => DateTime.parse(e.time!)).reduce(
         (DateTime value, DateTime element) =>
