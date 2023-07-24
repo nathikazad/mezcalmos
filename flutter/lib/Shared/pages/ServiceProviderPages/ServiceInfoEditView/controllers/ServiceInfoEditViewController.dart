@@ -228,6 +228,8 @@ class ServiceInfoEditViewController {
 
   Future<void> updateBsProfile() async {
     if (isBusiness && mainBusniessProfile.value != newBusniessProfile.value) {
+      mezDbgPrint(
+          "👋 updating business profile to =====>${newBusniessProfile.value}");
       mainBusniessProfile.value = await update_business_profile_by_id(
           businessId: serviceId, newProfile: newBusniessProfile.value!);
       newBusniessProfile.value = mainBusniessProfile.value;
