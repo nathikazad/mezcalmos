@@ -22,19 +22,26 @@ class LocationController extends GetxController {
   }
 
   Future<LocationData> getCurrentLocation() async {
+    logEventToServer("Updating location permission");
     await updateLocationPermission();
+    logEventToServer("Location permission ${statusSnapshot.value}");
     if (statusSnapshot.value != LocationPermissionsStatus.Ok) {
+      logEventToServer("Redirectin guser to permission page");
       await MezRouter.toNamed(SharedRoutes.kLocationPermissionPage,
           ignoreSamePath: true);
+      logEventToServer("getCurrentLocation back from permission page");
     }
+    logEventToServer("getting location");
     final LocationData locationData = await Location()
         .getLocation()
         .timeout(Duration(seconds: 3), onTimeout: () {
+      logEventToServer("getting location timedout");
       return LocationData.fromMap({
         'latitude': 15.8720.toDouble(),
         'longitude': 97.0767.toDouble(),
       });
     });
+    logEventToServer("getting location success ${locationData.toString()}");
     return locationData;
   }
 
