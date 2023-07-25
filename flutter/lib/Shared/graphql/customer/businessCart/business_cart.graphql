@@ -36,6 +36,7 @@ query getBusinessCart($customer_id: Int!) {
             name
             currency
             online_ordering
+            phone_number
             accepted_payments
             image
             location {
@@ -82,6 +83,7 @@ query getBusinessCart($customer_id: Int!) {
             currency
             online_ordering
             id
+            phone_number
             accepted_payments
             image
           }
@@ -96,6 +98,7 @@ query getBusinessCart($customer_id: Int!) {
             currency
             online_ordering
             id
+            phone_number
             accepted_payments
             image
           }
@@ -135,6 +138,7 @@ query getBusinessCart($customer_id: Int!) {
             id
             accepted_payments
             online_ordering
+            phone_number
             image
           }
         }
@@ -173,6 +177,7 @@ query getBusinessCart($customer_id: Int!) {
             online_ordering
             id
             accepted_payments
+            phone_number
             image
           }
         }
@@ -303,6 +308,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             online_ordering
+            phone_number
             accepted_payments
             image
             location {
@@ -347,6 +353,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             online_ordering
             currency
+            phone_number
             id
             accepted_payments
             image
@@ -360,6 +367,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             id
+            phone_number
             online_ordering
             accepted_payments
             image
@@ -398,6 +406,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             id
+            phone_number
             accepted_payments
             online_ordering
             image
@@ -436,6 +445,7 @@ subscription listen_on_business_order_request($_id: Int!) {
             name
             currency
             id
+            phone_number
             accepted_payments
             online_ordering
             image
@@ -514,6 +524,7 @@ query get_business_order_request($id: Int!) {
             id
             name
             currency
+            phone_number
             online_ordering
             accepted_payments
             image
@@ -557,6 +568,7 @@ query get_business_order_request($id: Int!) {
           id
           details {
             name
+            phone_number
             online_ordering
             currency
             id
@@ -572,6 +584,7 @@ query get_business_order_request($id: Int!) {
             name
             currency
             id
+            phone_number
             online_ordering
             accepted_payments
             image
@@ -610,6 +623,7 @@ query get_business_order_request($id: Int!) {
             name
             currency
             id
+            phone_number
             accepted_payments
             online_ordering
             image
@@ -649,6 +663,7 @@ query get_business_order_request($id: Int!) {
             currency
             id
             accepted_payments
+            phone_number
             online_ordering
             image
           }
