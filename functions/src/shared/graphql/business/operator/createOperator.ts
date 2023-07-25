@@ -1,4 +1,5 @@
 import { AddOperatorDetails, AddOperatorError } from "../../../../serviceProvider/addOperator";
+import { notification_info_constraint, notification_info_update_column } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus, MezError } from "../../../models/Generic/Generic";
 import { Operator, ServiceProvider } from "../../../models/Services/Service";
@@ -50,15 +51,6 @@ export async function createBusinessOperator(operatorUserId: number, addOpDetail
                         user_id: operatorUserId,
                         app_type_id: AppType.Business,
                         app_version: addOpDetails.appVersion,
-                        notification_info: (addOpDetails.notificationToken) 
-                        ? {
-                            data: {
-                                token: addOpDetails.notificationToken,
-                                user_id: operatorUserId,
-                                turn_off_notifications: false,
-                                app_type_id: AppType.Business
-                            }
-                        }: undefined,
                         status: AuthorizationStatus.AwaitingApproval,
                     }
                 },
@@ -71,6 +63,27 @@ export async function createBusinessOperator(operatorUserId: number, addOpDetail
     if(mutationResponse.insert_business_operator_one == null) {
         throw new MezError(AddOperatorError.OperatorCreationError);
     }
+
+    if(addOpDetails.notificationToken) {
+        chain.mutation({
+          insert_notification_info_one: [{
+            object: {
+              app_type_id: AppType.Business,
+              token: addOpDetails.notificationToken,
+              user_id: operatorUserId,
+              turn_off_notifications: false,
+            },
+            on_conflict: {
+              constraint: (
+                notification_info_constraint.notification_info_app_type_id_user_id_key
+              ),
+              update_columns: [notification_info_update_column.token]
+            }
+          }, {
+            id: true
+          }]
+        })
+      }
     return {
       id: mutationResponse.insert_business_operator_one.id,
       userId: operatorUserId,

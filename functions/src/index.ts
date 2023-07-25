@@ -134,7 +134,6 @@ export const delivery3 = {
 type AuthenticatedFunction = (userId:number, data:any) => any;
 function authenticatedCall(func:AuthenticatedFunction, runtimeOptions:RuntimeOptions= {memory: "256MB"}) {
   return functions.runWith(runtimeOptions).https.onCall(async (data, context) => {
-    console.log("[+] authenticatedCall :: ", data);
     if (!context.auth?.uid) {
       throw new HttpsError(
         "unauthenticated",
@@ -148,6 +147,7 @@ function authenticatedCall(func:AuthenticatedFunction, runtimeOptions:RuntimeOpt
     }
     data = data || {};
     data.firebaseId = context.auth!.uid;
+    console.log("[+] authenticatedCall :: ", parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]));
     return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }

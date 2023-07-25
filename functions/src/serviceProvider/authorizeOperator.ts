@@ -67,6 +67,7 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
                 if (authorizeDetails.approved == false) {
                     await deleteBusinessOperator(operator);
                 }
+                break;
             default:
                 throw new MezError(AuthOperatorError.InvalidParticipantType);
         }
