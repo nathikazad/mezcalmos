@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/EventCartItemCard.dart';
@@ -14,6 +15,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -21,6 +23,7 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustOrderView']['CustOrderView'];
@@ -142,6 +145,15 @@ class _CustOrderViewState extends State<CustOrderView> {
                                     ),
                                   ),
                                 ),
+                                if (getBusinessPhone() != null)
+                                  MezIconButton(
+                                    onTap: () {
+                                      callWhatsappNumber(getBusinessPhone()!);
+                                    },
+                                    icon: Ionicons.logo_whatsapp,
+                                    iconColor: Colors.green,
+                                    backgroundColor: Colors.white,
+                                  ),
                                 MessageButton(
                                   chatId: custBusinessCartController
                                       .currentOrderInView.value!.chatId!
@@ -306,6 +318,27 @@ class _CustOrderViewState extends State<CustOrderView> {
       case OfferingType.Home:
         return custBusinessCartController
             .currentOrderInView.value!.items.first.home!.business.name;
+    }
+  }
+
+  String? getBusinessPhone() {
+    switch (custBusinessCartController
+        .currentOrderInView.value!.items.first.offeringType) {
+      case OfferingType.Rental:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.rental!.business.phoneNo;
+      case OfferingType.Event:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.event!.business.phoneNo;
+      case OfferingType.Service:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.service!.business.phoneNo;
+      case OfferingType.Product:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.product!.business.phoneNo;
+      case OfferingType.Home:
+        return custBusinessCartController
+            .currentOrderInView.value!.items.first.home!.business.phoneNo;
     }
   }
 
