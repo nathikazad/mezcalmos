@@ -2465,6 +2465,40 @@
           }
         }
       },
+      "ServiceFeedView": {
+        "ServiceFeedView": {
+          "title": "Feed",
+          "posts": "Posts",
+          "promotions": "Promotions",
+          "postSwitch": "Only show posts for accounts you follow.",
+          "promotionSwitch": "Only show promotions for accounts you follow.",
+          "writeSomethingHere": "Write something here..",
+          "takePicture": "Take a picture",
+          "uploadPicture": "Upload picture",
+          "publish": "Publish",
+          "expire": "Expire:",
+          "oneDay": "1 day",
+          "twoDays": "2 days",
+          "oneWeek": "1 week",
+          "never": "Never",
+          "components": {
+            "BsFeedCardPost": {
+              "like": "Like",
+              "comment": "Comment",
+              "writecomment": "Write your comment..",
+              "post": "Post"
+            }
+          }
+        },
+        "components": {
+          "BsFeedCardPost": {
+            "like": "Like",
+            "comment": "Comment",
+            "writecomment": "Write your comment..",
+            "post": "Post"
+          }
+        }
+      },
       "ServiceProfileView": {
         "profile": "Profile",
         "info": "Information",

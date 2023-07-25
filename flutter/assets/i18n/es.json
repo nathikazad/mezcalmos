@@ -2523,6 +2523,40 @@
           }
         }
       },
+      "ServiceFeedView": {
+        "ServiceFeedView": {
+          "title": "Alimentar",
+          "posts": "Postes",
+          "promotions": "Promociones",
+          "postSwitch": "Solo muestre publicaciones para las cuentas que sigue.",
+          "promotionSwitch": "Solo muestre promociones para las cuentas que sigue.",
+          "writeSomethingHere": "Escribe algo aquí ..",
+          "takePicture": "Toma una foto",
+          "uploadPicture": "Subir foto",
+          "publish": "Publicar",
+          "expire": "Expirar:",
+          "oneDay": "1 día",
+          "twoDays": "2 días",
+          "oneWweek": "1 semana",
+          "never": "Nunca",
+          "components": {
+            "BsFeedCardPost": {
+              "like": "Como",
+              "comment": "Comentario",
+              "writecomment": "Escribe tu comentario ..",
+              "post": "Correo"
+            }
+          }
+        },
+        "components": {
+          "BsFeedCardPost": {
+            "like": "Como",
+            "comment": "Comentario",
+            "writecomment": "Escribe tu comentario ..",
+            "post": "Correo"
+          }
+        }
+      },
       "ServiceProfileView": {
         "profile": "Perfil",
         "info": "Información",
@@ -2552,7 +2586,6 @@
         "story": "Historia",
         "facebook": "Facebook",
         "save": "Ahorrar"
-  
       },
       "CreateServiceView": {
         "pages": {
@@ -2619,7 +2652,7 @@
             }
           }
         },
-        "formErrorText" : "Verifique que todos los campos requeridos estén ahí",
+        "formErrorText": "Verifique que todos los campos requeridos estén ahí",
         "createText": "Crear",
         "info": "Información",
         "schedule": "Calendario",
@@ -3027,7 +3060,7 @@
       "OrderDeliveryType": {
         "title": "Tipo de entrega",
         "delivery": "Entrega",
-        "pickup" : "Recogida en la tienda"
+        "pickup": "Recogida en la tienda"
       },
       "OrderScheduledTimeCard": {
         "title": "Hora Programada"
@@ -4389,11 +4422,11 @@
       "canceledOrderTitle": "Orden cancelada",
       "canceledOrderBody": "Su pedido ha sido cancelado",
       "newBusinessTitle": "Nuevo negocio",
-"newBusinessBody": "Se ha creado un nuevo negocio",
-"newRestaurantTitle": "Nuevo restaurante",
-"newRestaurantBody": "Se ha creado un nuevo restaurante",
-"newLaundryTitle": "Nueva lavandería",
-"newLaundryBody": "Se ha creado una nueva lavandería"
+      "newBusinessBody": "Se ha creado un nuevo negocio",
+      "newRestaurantTitle": "Nuevo restaurante",
+      "newRestaurantBody": "Se ha creado un nuevo restaurante",
+      "newLaundryTitle": "Nueva lavandería",
+      "newLaundryBody": "Se ha creado una nueva lavandería"
     },
     "pages": {
       "AdminTabsView": {

@@ -1,20 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustFeedView/controllers/CustFeedViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceFeedView/controllers/ServiceFeedViewController.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-    ['pages']['CustFeedView']['components']['FeedCardPost'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['ServiceFeedView']['components']['BsFeedCardPost'];
 
-class FeedCardPost extends StatelessWidget {
+class BsFeedCardPost extends StatelessWidget {
   final Post post;
   final double elevation;
-  final CustFeedViewController controller;
+  final ServiceFeedViewController controller;
   final EdgeInsetsGeometry margin;
-  FeedCardPost(
+  BsFeedCardPost(
       {super.key,
       required this.post,
       required this.controller,
@@ -34,10 +34,11 @@ class FeedCardPost extends StatelessWidget {
         children: [
           ListTile(
             leading: CircleAvatar(
-              backgroundImage:
-                  CachedNetworkImageProvider(post.serviceProviderImage ?? ''),
+              backgroundImage: CachedNetworkImageProvider(
+                controller.authController.user!.image,
+              ),
             ),
-            title: Text('${post.serviceProviderName}'),
+            title: Text('${controller.authController.user!.name}'),
             titleTextStyle: context.textTheme.bodyLarge
                 ?.copyWith(fontWeight: FontWeight.w700),
             subtitleTextStyle:
