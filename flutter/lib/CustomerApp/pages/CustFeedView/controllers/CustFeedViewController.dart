@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
+import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
 
@@ -14,7 +16,7 @@ class CustFeedViewController {
   RxList<Post> _posts = RxList<Post>.empty();
   List<Post> get posts => _posts.value;
 
-  RxList<dynamic> _promotions = RxList(['', '', '']);
+  RxList<Offer> _promotions = RxList([]);
   List<dynamic> get promotions => _promotions.value;
 
   RxBool _postSwitch = false.obs;
@@ -24,46 +26,76 @@ class CustFeedViewController {
   bool get promotionSwitch => _promotionSwitch.value;
 
   /* SCROLL CONTROLLER */
-  ScrollController get scrollController => _scrollController;
-  ScrollController _scrollController = ScrollController();
-  final int fetchSize = 10;
-  int _currentOffset = 0;
-  bool _fetchingData = false;
-  bool _reachedEndOfData = false;
+  ScrollController get postScrollController => _postScrollController;
+  ScrollController _postScrollController = ScrollController();
+  final int postFetchSize = 10;
+  int _postCurrentOffset = 0;
+  bool _postFetchingData = false;
+  bool _postReachedEndOfData = false;
+
+  ScrollController get promoScrollController => _promoScrollController;
+  ScrollController _promoScrollController = ScrollController();
+  final int promoFetchSize = 10;
+  int _promoCurrentOffset = 0;
+  bool _promoFetchingData = false;
+  bool _promoReachedEndOfData = false;
   /* SCROLL CONTROLLER */
 
   CustFeedViewController.init() {
-    _scrollController.onBottomReach(_fetchPosts, sensitivity: 200);
+    _postScrollController.onBottomReach(_fetchPosts, sensitivity: 200);
+    _promoScrollController.onBottomReach(_fetchPromotions, sensitivity: 200);
     _fetchPosts();
     _fetchPromotions();
     print(_authController.hasuraUserId);
   }
 
   Future<void> _fetchPosts() async {
-    if (_fetchingData || _reachedEndOfData) {
+    if (_postFetchingData || _postReachedEndOfData) {
       return;
     }
     try {
-      _fetchingData = true;
+      _postFetchingData = true;
       final List<Post> newData = await fetch_subscribed_posts(
-        offset: _currentOffset,
-        limit: fetchSize,
+        offset: _postCurrentOffset,
+        limit: postFetchSize,
         customerId: _authController.hasuraUserId!,
       );
       print(newData.length);
       _posts.value += newData;
       if (newData.length == 0) {
-        _reachedEndOfData = true;
+        _postReachedEndOfData = true;
       }
-      _currentOffset += fetchSize;
+      _postCurrentOffset += postFetchSize;
     } finally {
-      _fetchingData = false;
+      _postFetchingData = false;
     }
 
     _posts.refresh();
   }
 
-  Future<void> _fetchPromotions() async {}
+  Future<void> _fetchPromotions() async {
+    if (_promoFetchingData || _promoReachedEndOfData) {
+      return;
+    }
+    try {
+      _promoFetchingData = true;
+      final List<Offer> newData = await fetch_subscribed_promotions(
+        offset: _promoCurrentOffset,
+        limit: promoFetchSize,
+        customerId: _authController.hasuraUserId!,
+      );
+      print(newData.length);
+      _promotions.value += newData;
+      if (newData.length == 0) {
+        _promoReachedEndOfData = true;
+      }
+      _promoCurrentOffset += promoFetchSize;
+    } finally {
+      _promoFetchingData = false;
+    }
+
+    _promotions.refresh();
+  }
 
   Future<void> writeComment(
       {required int postId,

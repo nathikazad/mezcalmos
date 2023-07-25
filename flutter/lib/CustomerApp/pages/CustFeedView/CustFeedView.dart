@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPromotionsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFeedView/components/FeedCardPost.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFeedView/components/FeedPromotionCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFeedView/controllers/CustFeedViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -64,7 +65,8 @@ class CustFeedView extends StatelessWidget {
                           child: _viewController.posts.isEmpty
                               ? NoPostsFound()
                               : ListView.builder(
-                                  controller: _viewController.scrollController,
+                                  controller:
+                                      _viewController.postScrollController,
                                   itemCount: _viewController.posts.length,
                                   itemBuilder: (BuildContext context,
                                           int index) =>
@@ -87,94 +89,19 @@ class CustFeedView extends StatelessWidget {
                             onChanged: _viewController.setPromotionSwitch),
                       ),
                       Expanded(
-                          child: _viewController.promotions.isEmpty
-                              ? NoPromotionsFound()
-                              : ListView.builder(
-                                  itemCount: _viewController.promotions.length,
-                                  itemBuilder: (BuildContext context,
-                                          int index) =>
-                                      MezExpandableCard(
-                                        elevation: 0,
-                                        marging: EdgeInsets.only(
-                                            left: 16, right: 16, bottom: 10),
-                                        imageUrl:
-                                            'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=826&t=st=1689760974~exp=1689761574~hmac=7dd12d67a92c9c9a0b8a3a2372a0bac260b5e74849a275f3a625bca8ce96c87a',
-                                        imageShape: BoxShape.circle,
-                                        headerImageRadius: 40,
-                                        title: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text.rich(
-                                                textAlign: TextAlign.center,
-                                                style: context
-                                                    .textTheme.bodyLarge
-                                                    ?.copyWith(fontSize: 15),
-                                                TextSpan(
-                                                    text: 'Bello Puerto',
-                                                    children: [
-                                                      WidgetSpan(
-                                                          child:
-                                                              hSmallSepartor),
-                                                      TextSpan(
-                                                          text: '●',
-                                                          style: TextStyle(
-                                                              fontSize: 10)),
-                                                      WidgetSpan(
-                                                          child:
-                                                              hSmallSepartor),
-                                                      TextSpan(
-                                                          text: 'Bello Puerto')
-                                                    ])),
-                                            Text(
-                                              '27 May, 09:00 AM - 30 May, 7:00 PM',
-                                              style: context
-                                                  .textTheme.bodyMedium
-                                                  ?.copyWith(
-                                                      color:
-                                                          Colors.grey.shade400,
-                                                      fontSize: 13),
-                                            )
-                                          ],
-                                        ),
-                                        expandableWidget: [
-                                          Text(
-                                            'Promotional items',
-                                            style: context.textTheme.bodyLarge
-                                                ?.copyWith(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                          ),
-                                          smallSepartor,
-                                          Text(
-                                            'Tuna Sashimi, Mixed Salad, Fetuccini Dorado, Vegeterian pasta, Tuna and pineapple toast.',
-                                            style: context.textTheme.bodyLarge
-                                                ?.copyWith(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                          ),
-                                          Divider(),
-                                          Text(
-                                            'Discounted items',
-                                            style: context.textTheme.bodyLarge
-                                                ?.copyWith(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                          ),
-                                          smallSepartor,
-                                          Text(
-                                            'Red Chili Water.',
-                                            style: context.textTheme.bodyLarge
-                                                ?.copyWith(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                          )
-                                        ],
-                                      )))
+                        child: _viewController.promotions.isEmpty
+                            ? NoPromotionsFound()
+                            : ListView.builder(
+                                controller:
+                                    _viewController.promoScrollController,
+                                itemCount: _viewController.promotions.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) =>
+                                        FeedPromotionCard(
+                                  promotion: _viewController.promotions[index],
+                                ),
+                              ),
+                      )
                     ],
                   )),
             ]))
