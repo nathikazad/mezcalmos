@@ -148,6 +148,7 @@ function authenticatedCall(func:AuthenticatedFunction, runtimeOptions:RuntimeOpt
     data = data || {};
     data.firebaseId = context.auth!.uid;
     console.log("[+] authenticatedCall :: ", parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]));
+    console.log(data)
     return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }
