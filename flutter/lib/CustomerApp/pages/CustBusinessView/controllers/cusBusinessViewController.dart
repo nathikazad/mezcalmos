@@ -91,6 +91,7 @@ class CustBusinessViewController {
   Future<void> _fetchPosts() async {
     try {
       _posts.value = await fetch_service_provider_posts(
+          imagesOnly: false,
           serviceProviderId: businessId,
           serviceProviderType: ServiceProviderType.Business);
     } catch (e) {

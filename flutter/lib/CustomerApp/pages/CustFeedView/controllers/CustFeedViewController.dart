@@ -103,7 +103,11 @@ class CustFeedViewController {
     if (commentController.text.isEmpty) return;
 
     commentController.text = '';
-    await write_comment(postId: postId, comment: commentController.text);
+    await write_comment(
+      userId: _authController.hasuraUserId!.toInt(),
+      postId: postId,
+      commentMsg: commentController.text,
+    );
   }
 
   Future<void> likePost(
@@ -111,7 +115,10 @@ class CustFeedViewController {
   ) async {
     print('qqq ${postId}');
     print('qqq ${_authController.user!.hasuraId}');
-    await like_post(postId: postId, customerId: _authController.user!.hasuraId);
+    final List<int> likes =
+        _posts.firstWhere((element) => element.id == postId).likes;
+    likes.add(_authController.user!.hasuraId);
+    await update_post_likes(postId: postId, likes: likes);
   }
 
   void setPostSwitch(bool value) {

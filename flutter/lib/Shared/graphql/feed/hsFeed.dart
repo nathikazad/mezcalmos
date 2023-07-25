@@ -78,7 +78,7 @@ Future<List<Post>> fetch_subscribed_posts(
       message: data.message,
       image: data.image,
       likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
-      comments: data.comments.map<Comment>((e) => commentFromJson(e.toJson())).toList(),
+      comments: comments,
       postedOn: DateTime.parse(data.posted_on),
       link: data.link,
     ));
