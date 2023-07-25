@@ -62,7 +62,7 @@ Future<List<Post>> fetch_subscribed_posts(
       message: data.message,
       image: data.image,
       likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
-      comments: data.comments.map<Comment>((e) => commentFromJson(e)).toList(),
+      comments: data.comments.map<Comment>((e) => commentFromJson(e.toJson())).toList(),
       postedOn: DateTime.parse(data.posted_on),
       link: data.link,
     ));
@@ -101,7 +101,7 @@ Future<List<Post>> fetch_service_provider_posts(
       message: data.message,
       image: data.image,
       likes: data.likes,
-      comments: data.comments.map((e) => commentFromJson(e)).toList(),
+      comments: data.comments.map((e) => commentFromJson(e.toJson())).toList(),
       postedOn: DateTime.parse(data.posted_on),
       link: data.link,
     ));
