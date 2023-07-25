@@ -58,6 +58,22 @@ export async function updateOperatorStatusToAuthorized(operator: Operator, parti
             });
             opCount = response.delivery_operator_aggregate.aggregate!.count;
             break;
+        case ParticipantType.BusinessOperator:
+            const response3 = await chain.query({
+                business_operator_aggregate: [{
+                    where: {
+                        business_id: {
+                            _eq: operator.serviceProviderId
+                        }
+                    }
+                }, {
+                    aggregate: {
+                        count: [{}, true]
+                    }
+                }]
+            });
+            opCount = response3.business_operator_aggregate.aggregate!.count;
+            break;
     }
 
     let mutationResponse = await chain.mutation({

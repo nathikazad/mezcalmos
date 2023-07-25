@@ -11,6 +11,8 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { MezError } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Operator, OperatorApprovedNotification } from "../shared/models/Services/Service";
+import { getBusinessOperator, getBusinessOperatorByUserId } from "../shared/graphql/business/operator/getBusinessOperator";
+import { deleteBusinessOperator } from "../shared/graphql/business/operator/deleteOperator";
 
 export interface AuthorizeDetails {
     newOperatorId: number,
@@ -59,11 +61,17 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
                     await deleteLaundryOperator(operator);
                 }
                 break;
+            case ParticipantType.BusinessOperator:
+                operator = await getBusinessOperator(authorizeDetails.newOperatorId);
+
+                if (authorizeDetails.approved == false) {
+                    await deleteBusinessOperator(operator);
+                }
             default:
                 throw new MezError(AuthOperatorError.InvalidParticipantType);
         }
-
-        await updateOperatorStatusToAuthorized(operator, authorizeDetails.participantType);
+        if(authorizeDetails.approved)
+            await updateOperatorStatusToAuthorized(operator, authorizeDetails.participantType);
 
         notifyOperator(authorizeDetails.participantType, operator);
         return {
@@ -147,6 +155,8 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             case ParticipantType.LaundryOperator:
                 owner = await getLaundryOperatorByUserId(ownerUserId);
                 break;
+            case ParticipantType.BusinessOperator:
+                owner = await getBusinessOperatorByUserId(ownerUserId);
             default:
                 throw new MezError(AuthOperatorError.UnauthorizedAccess);
         }
