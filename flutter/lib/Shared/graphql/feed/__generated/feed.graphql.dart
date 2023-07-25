@@ -1523,11 +1523,7 @@ class Query$fetch_subscribed_posts$service_provider_post {
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$fetch_subscribed_posts$service_provider_post(
-      comments: (l$comments as List<dynamic>)
-          .map((e) =>
-              Query$fetch_subscribed_posts$service_provider_post$comments
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      comments: mapFromJson(l$comments),
       id: (l$id as int),
       image: (l$image as String?),
       likes: mapFromJson(l$likes),
@@ -1556,8 +1552,7 @@ class Query$fetch_subscribed_posts$service_provider_post {
     );
   }
 
-  final List<Query$fetch_subscribed_posts$service_provider_post$comments>
-      comments;
+  final dynamic comments;
 
   final int id;
 
@@ -1590,7 +1585,7 @@ class Query$fetch_subscribed_posts$service_provider_post {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$comments = comments;
-    _resultData['comments'] = l$comments.map((e) => e.toJson()).toList();
+    _resultData['comments'] = mapToJson(l$comments);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -1637,7 +1632,7 @@ class Query$fetch_subscribed_posts$service_provider_post {
     final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$comments.map((v) => v)),
+      l$comments,
       l$id,
       l$image,
       l$likes,
@@ -1665,15 +1660,8 @@ class Query$fetch_subscribed_posts$service_provider_post {
     }
     final l$comments = comments;
     final lOther$comments = other.comments;
-    if (l$comments.length != lOther$comments.length) {
+    if (l$comments != lOther$comments) {
       return false;
-    }
-    for (int i = 0; i < l$comments.length; i++) {
-      final l$comments$entry = l$comments[i];
-      final lOther$comments$entry = lOther$comments[i];
-      if (l$comments$entry != lOther$comments$entry) {
-        return false;
-      }
     }
     final l$id = id;
     final lOther$id = other.id;
@@ -1767,7 +1755,7 @@ abstract class CopyWith$Query$fetch_subscribed_posts$service_provider_post<
       _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post;
 
   TRes call({
-    List<Query$fetch_subscribed_posts$service_provider_post$comments>? comments,
+    dynamic? comments,
     int? id,
     String? image,
     dynamic? likes,
@@ -1783,12 +1771,6 @@ abstract class CopyWith$Query$fetch_subscribed_posts$service_provider_post<
     Query$fetch_subscribed_posts$service_provider_post$business? business,
     String? $__typename,
   });
-  TRes comments(
-      Iterable<Query$fetch_subscribed_posts$service_provider_post$comments> Function(
-              Iterable<
-                  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments<
-                      Query$fetch_subscribed_posts$service_provider_post$comments>>)
-          _fn);
   CopyWith$Query$fetch_subscribed_posts$service_provider_post$restaurant<TRes>
       get restaurant;
   CopyWith$Query$fetch_subscribed_posts$service_provider_post$laundry<TRes>
@@ -1832,8 +1814,7 @@ class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
       _then(Query$fetch_subscribed_posts$service_provider_post(
         comments: comments == _undefined || comments == null
             ? _instance.comments
-            : (comments as List<
-                Query$fetch_subscribed_posts$service_provider_post$comments>),
+            : (comments as dynamic),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         likes: likes == _undefined || likes == null
@@ -1874,18 +1855,6 @@ class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes comments(
-          Iterable<Query$fetch_subscribed_posts$service_provider_post$comments> Function(
-                  Iterable<
-                      CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments<
-                          Query$fetch_subscribed_posts$service_provider_post$comments>>)
-              _fn) =>
-      call(
-          comments: _fn(_instance.comments.map((e) =>
-              CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments(
-                e,
-                (i) => i,
-              ))).toList());
   CopyWith$Query$fetch_subscribed_posts$service_provider_post$restaurant<TRes>
       get restaurant {
     final local$restaurant = _instance.restaurant;
@@ -1936,7 +1905,7 @@ class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
   TRes _res;
 
   call({
-    List<Query$fetch_subscribed_posts$service_provider_post$comments>? comments,
+    dynamic? comments,
     int? id,
     String? image,
     dynamic? likes,
@@ -1953,7 +1922,6 @@ class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
     String? $__typename,
   }) =>
       _res;
-  comments(_fn) => _res;
   CopyWith$Query$fetch_subscribed_posts$service_provider_post$restaurant<TRes>
       get restaurant =>
           CopyWith$Query$fetch_subscribed_posts$service_provider_post$restaurant
@@ -1971,415 +1939,6 @@ class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
       get business =>
           CopyWith$Query$fetch_subscribed_posts$service_provider_post$business
               .stub(_res);
-}
-
-class Query$fetch_subscribed_posts$service_provider_post$comments {
-  Query$fetch_subscribed_posts$service_provider_post$comments({
-    required this.id,
-    required this.message,
-    required this.likes,
-    required this.commented_on,
-    required this.user,
-    required this.$__typename,
-  });
-
-  factory Query$fetch_subscribed_posts$service_provider_post$comments.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$message = json['message'];
-    final l$likes = json['likes'];
-    final l$commented_on = json['commented_on'];
-    final l$user = json['user'];
-    final l$$__typename = json['__typename'];
-    return Query$fetch_subscribed_posts$service_provider_post$comments(
-      id: (l$id as int),
-      message: (l$message as String),
-      likes: mapFromJson(l$likes),
-      commented_on: (l$commented_on as String),
-      user: Query$fetch_subscribed_posts$service_provider_post$comments$user
-          .fromJson((l$user as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String message;
-
-  final dynamic likes;
-
-  final String commented_on;
-
-  final Query$fetch_subscribed_posts$service_provider_post$comments$user user;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$message = message;
-    _resultData['message'] = l$message;
-    final l$likes = likes;
-    _resultData['likes'] = mapToJson(l$likes);
-    final l$commented_on = commented_on;
-    _resultData['commented_on'] = l$commented_on;
-    final l$user = user;
-    _resultData['user'] = l$user.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$message = message;
-    final l$likes = likes;
-    final l$commented_on = commented_on;
-    final l$user = user;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$message,
-      l$likes,
-      l$commented_on,
-      l$user,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$fetch_subscribed_posts$service_provider_post$comments) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$message = message;
-    final lOther$message = other.message;
-    if (l$message != lOther$message) {
-      return false;
-    }
-    final l$likes = likes;
-    final lOther$likes = other.likes;
-    if (l$likes != lOther$likes) {
-      return false;
-    }
-    final l$commented_on = commented_on;
-    final lOther$commented_on = other.commented_on;
-    if (l$commented_on != lOther$commented_on) {
-      return false;
-    }
-    final l$user = user;
-    final lOther$user = other.user;
-    if (l$user != lOther$user) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$fetch_subscribed_posts$service_provider_post$comments
-    on Query$fetch_subscribed_posts$service_provider_post$comments {
-  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments<
-          Query$fetch_subscribed_posts$service_provider_post$comments>
-      get copyWith =>
-          CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments<
-    TRes> {
-  factory CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments(
-    Query$fetch_subscribed_posts$service_provider_post$comments instance,
-    TRes Function(Query$fetch_subscribed_posts$service_provider_post$comments)
-        then,
-  ) = _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments;
-
-  factory CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments;
-
-  TRes call({
-    int? id,
-    String? message,
-    dynamic? likes,
-    String? commented_on,
-    Query$fetch_subscribed_posts$service_provider_post$comments$user? user,
-    String? $__typename,
-  });
-  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-      TRes> get user;
-}
-
-class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments<
-        TRes>
-    implements
-        CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments<
-            TRes> {
-  _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments(
-    this._instance,
-    this._then,
-  );
-
-  final Query$fetch_subscribed_posts$service_provider_post$comments _instance;
-
-  final TRes Function(
-      Query$fetch_subscribed_posts$service_provider_post$comments) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? message = _undefined,
-    Object? likes = _undefined,
-    Object? commented_on = _undefined,
-    Object? user = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$fetch_subscribed_posts$service_provider_post$comments(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        message: message == _undefined || message == null
-            ? _instance.message
-            : (message as String),
-        likes: likes == _undefined || likes == null
-            ? _instance.likes
-            : (likes as dynamic),
-        commented_on: commented_on == _undefined || commented_on == null
-            ? _instance.commented_on
-            : (commented_on as String),
-        user: user == _undefined || user == null
-            ? _instance.user
-            : (user
-                as Query$fetch_subscribed_posts$service_provider_post$comments$user),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-      TRes> get user {
-    final local$user = _instance.user;
-    return CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user(
-        local$user, (e) => call(user: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments<
-        TRes>
-    implements
-        CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments<
-            TRes> {
-  _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? message,
-    dynamic? likes,
-    String? commented_on,
-    Query$fetch_subscribed_posts$service_provider_post$comments$user? user,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-          TRes>
-      get user =>
-          CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user
-              .stub(_res);
-}
-
-class Query$fetch_subscribed_posts$service_provider_post$comments$user {
-  Query$fetch_subscribed_posts$service_provider_post$comments$user({
-    required this.id,
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Query$fetch_subscribed_posts$service_provider_post$comments$user.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Query$fetch_subscribed_posts$service_provider_post$comments$user(
-      id: (l$id as int),
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$fetch_subscribed_posts$service_provider_post$comments$user) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$fetch_subscribed_posts$service_provider_post$comments$user
-    on Query$fetch_subscribed_posts$service_provider_post$comments$user {
-  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-          Query$fetch_subscribed_posts$service_provider_post$comments$user>
-      get copyWith =>
-          CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-    TRes> {
-  factory CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user(
-    Query$fetch_subscribed_posts$service_provider_post$comments$user instance,
-    TRes Function(
-            Query$fetch_subscribed_posts$service_provider_post$comments$user)
-        then,
-  ) = _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments$user;
-
-  factory CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments$user;
-
-  TRes call({
-    int? id,
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-        TRes>
-    implements
-        CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-            TRes> {
-  _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments$user(
-    this._instance,
-    this._then,
-  );
-
-  final Query$fetch_subscribed_posts$service_provider_post$comments$user
-      _instance;
-
-  final TRes Function(
-      Query$fetch_subscribed_posts$service_provider_post$comments$user) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$fetch_subscribed_posts$service_provider_post$comments$user(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-        TRes>
-    implements
-        CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments$user<
-            TRes> {
-  _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments$user(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? name,
-    String? image,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Query$fetch_subscribed_posts$service_provider_post$restaurant {
@@ -4455,11 +4014,7 @@ class Query$fetch_service_provider_posts$service_provider_post {
     final l$posted_on = json['posted_on'];
     final l$$__typename = json['__typename'];
     return Query$fetch_service_provider_posts$service_provider_post(
-      comments: (l$comments as List<dynamic>)
-          .map((e) =>
-              Query$fetch_service_provider_posts$service_provider_post$comments
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      comments: mapFromJson(l$comments),
       id: (l$id as int),
       image: (l$image as String?),
       likes: mapFromJson(l$likes),
@@ -4470,8 +4025,7 @@ class Query$fetch_service_provider_posts$service_provider_post {
     );
   }
 
-  final List<Query$fetch_service_provider_posts$service_provider_post$comments>
-      comments;
+  final dynamic comments;
 
   final int id;
 
@@ -4490,7 +4044,7 @@ class Query$fetch_service_provider_posts$service_provider_post {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$comments = comments;
-    _resultData['comments'] = l$comments.map((e) => e.toJson()).toList();
+    _resultData['comments'] = mapToJson(l$comments);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -4519,7 +4073,7 @@ class Query$fetch_service_provider_posts$service_provider_post {
     final l$posted_on = posted_on;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$comments.map((v) => v)),
+      l$comments,
       l$id,
       l$image,
       l$likes,
@@ -4541,15 +4095,8 @@ class Query$fetch_service_provider_posts$service_provider_post {
     }
     final l$comments = comments;
     final lOther$comments = other.comments;
-    if (l$comments.length != lOther$comments.length) {
+    if (l$comments != lOther$comments) {
       return false;
-    }
-    for (int i = 0; i < l$comments.length; i++) {
-      final l$comments$entry = l$comments[i];
-      final lOther$comments$entry = lOther$comments[i];
-      if (l$comments$entry != lOther$comments$entry) {
-        return false;
-      }
     }
     final l$id = id;
     final lOther$id = other.id;
@@ -4614,8 +4161,7 @@ abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post
       _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post;
 
   TRes call({
-    List<Query$fetch_service_provider_posts$service_provider_post$comments>?
-        comments,
+    dynamic? comments,
     int? id,
     String? image,
     dynamic? likes,
@@ -4624,12 +4170,6 @@ abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post
     String? posted_on,
     String? $__typename,
   });
-  TRes comments(
-      Iterable<Query$fetch_service_provider_posts$service_provider_post$comments> Function(
-              Iterable<
-                  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments<
-                      Query$fetch_service_provider_posts$service_provider_post$comments>>)
-          _fn);
 }
 
 class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post<
@@ -4662,8 +4202,7 @@ class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post<
       _then(Query$fetch_service_provider_posts$service_provider_post(
         comments: comments == _undefined || comments == null
             ? _instance.comments
-            : (comments as List<
-                Query$fetch_service_provider_posts$service_provider_post$comments>),
+            : (comments as dynamic),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         likes: likes == _undefined || likes == null
@@ -4680,18 +4219,6 @@ class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post<
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes comments(
-          Iterable<Query$fetch_service_provider_posts$service_provider_post$comments> Function(
-                  Iterable<
-                      CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments<
-                          Query$fetch_service_provider_posts$service_provider_post$comments>>)
-              _fn) =>
-      call(
-          comments: _fn(_instance.comments.map((e) =>
-              CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments(
-                e,
-                (i) => i,
-              ))).toList());
 }
 
 class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post<
@@ -4705,433 +4232,13 @@ class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post
   TRes _res;
 
   call({
-    List<Query$fetch_service_provider_posts$service_provider_post$comments>?
-        comments,
+    dynamic? comments,
     int? id,
     String? image,
     dynamic? likes,
     String? message,
     String? link,
     String? posted_on,
-    String? $__typename,
-  }) =>
-      _res;
-  comments(_fn) => _res;
-}
-
-class Query$fetch_service_provider_posts$service_provider_post$comments {
-  Query$fetch_service_provider_posts$service_provider_post$comments({
-    required this.id,
-    required this.message,
-    required this.likes,
-    required this.commented_on,
-    required this.user,
-    required this.$__typename,
-  });
-
-  factory Query$fetch_service_provider_posts$service_provider_post$comments.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$message = json['message'];
-    final l$likes = json['likes'];
-    final l$commented_on = json['commented_on'];
-    final l$user = json['user'];
-    final l$$__typename = json['__typename'];
-    return Query$fetch_service_provider_posts$service_provider_post$comments(
-      id: (l$id as int),
-      message: (l$message as String),
-      likes: mapFromJson(l$likes),
-      commented_on: (l$commented_on as String),
-      user:
-          Query$fetch_service_provider_posts$service_provider_post$comments$user
-              .fromJson((l$user as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String message;
-
-  final dynamic likes;
-
-  final String commented_on;
-
-  final Query$fetch_service_provider_posts$service_provider_post$comments$user
-      user;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$message = message;
-    _resultData['message'] = l$message;
-    final l$likes = likes;
-    _resultData['likes'] = mapToJson(l$likes);
-    final l$commented_on = commented_on;
-    _resultData['commented_on'] = l$commented_on;
-    final l$user = user;
-    _resultData['user'] = l$user.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$message = message;
-    final l$likes = likes;
-    final l$commented_on = commented_on;
-    final l$user = user;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$message,
-      l$likes,
-      l$commented_on,
-      l$user,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$fetch_service_provider_posts$service_provider_post$comments) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$message = message;
-    final lOther$message = other.message;
-    if (l$message != lOther$message) {
-      return false;
-    }
-    final l$likes = likes;
-    final lOther$likes = other.likes;
-    if (l$likes != lOther$likes) {
-      return false;
-    }
-    final l$commented_on = commented_on;
-    final lOther$commented_on = other.commented_on;
-    if (l$commented_on != lOther$commented_on) {
-      return false;
-    }
-    final l$user = user;
-    final lOther$user = other.user;
-    if (l$user != lOther$user) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$fetch_service_provider_posts$service_provider_post$comments
-    on Query$fetch_service_provider_posts$service_provider_post$comments {
-  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments<
-          Query$fetch_service_provider_posts$service_provider_post$comments>
-      get copyWith =>
-          CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments<
-    TRes> {
-  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments(
-    Query$fetch_service_provider_posts$service_provider_post$comments instance,
-    TRes Function(
-            Query$fetch_service_provider_posts$service_provider_post$comments)
-        then,
-  ) = _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments;
-
-  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments;
-
-  TRes call({
-    int? id,
-    String? message,
-    dynamic? likes,
-    String? commented_on,
-    Query$fetch_service_provider_posts$service_provider_post$comments$user?
-        user,
-    String? $__typename,
-  });
-  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-      TRes> get user;
-}
-
-class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments<
-        TRes>
-    implements
-        CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments<
-            TRes> {
-  _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments(
-    this._instance,
-    this._then,
-  );
-
-  final Query$fetch_service_provider_posts$service_provider_post$comments
-      _instance;
-
-  final TRes Function(
-      Query$fetch_service_provider_posts$service_provider_post$comments) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? message = _undefined,
-    Object? likes = _undefined,
-    Object? commented_on = _undefined,
-    Object? user = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$fetch_service_provider_posts$service_provider_post$comments(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        message: message == _undefined || message == null
-            ? _instance.message
-            : (message as String),
-        likes: likes == _undefined || likes == null
-            ? _instance.likes
-            : (likes as dynamic),
-        commented_on: commented_on == _undefined || commented_on == null
-            ? _instance.commented_on
-            : (commented_on as String),
-        user: user == _undefined || user == null
-            ? _instance.user
-            : (user
-                as Query$fetch_service_provider_posts$service_provider_post$comments$user),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-      TRes> get user {
-    final local$user = _instance.user;
-    return CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user(
-        local$user, (e) => call(user: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments<
-        TRes>
-    implements
-        CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments<
-            TRes> {
-  _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? message,
-    dynamic? likes,
-    String? commented_on,
-    Query$fetch_service_provider_posts$service_provider_post$comments$user?
-        user,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-          TRes>
-      get user =>
-          CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user
-              .stub(_res);
-}
-
-class Query$fetch_service_provider_posts$service_provider_post$comments$user {
-  Query$fetch_service_provider_posts$service_provider_post$comments$user({
-    required this.id,
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Query$fetch_service_provider_posts$service_provider_post$comments$user.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Query$fetch_service_provider_posts$service_provider_post$comments$user(
-      id: (l$id as int),
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$fetch_service_provider_posts$service_provider_post$comments$user) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$fetch_service_provider_posts$service_provider_post$comments$user
-    on Query$fetch_service_provider_posts$service_provider_post$comments$user {
-  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-          Query$fetch_service_provider_posts$service_provider_post$comments$user>
-      get copyWith =>
-          CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-    TRes> {
-  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user(
-    Query$fetch_service_provider_posts$service_provider_post$comments$user
-        instance,
-    TRes Function(
-            Query$fetch_service_provider_posts$service_provider_post$comments$user)
-        then,
-  ) = _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments$user;
-
-  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments$user;
-
-  TRes call({
-    int? id,
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-        TRes>
-    implements
-        CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-            TRes> {
-  _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments$user(
-    this._instance,
-    this._then,
-  );
-
-  final Query$fetch_service_provider_posts$service_provider_post$comments$user
-      _instance;
-
-  final TRes Function(
-          Query$fetch_service_provider_posts$service_provider_post$comments$user)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$fetch_service_provider_posts$service_provider_post$comments$user(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-        TRes>
-    implements
-        CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments$user<
-            TRes> {
-  _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments$user(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? name,
-    String? image,
     String? $__typename,
   }) =>
       _res;
@@ -6180,11 +5287,7 @@ class Query$fetch_posts_within_distance$service_provider_post {
     final l$business = json['business'];
     final l$$__typename = json['__typename'];
     return Query$fetch_posts_within_distance$service_provider_post(
-      comments: (l$comments as List<dynamic>)
-          .map((e) =>
-              Query$fetch_posts_within_distance$service_provider_post$comments
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      comments: mapFromJson(l$comments),
       id: (l$id as int),
       image: (l$image as String?),
       likes: mapFromJson(l$likes),
@@ -6213,8 +5316,7 @@ class Query$fetch_posts_within_distance$service_provider_post {
     );
   }
 
-  final List<Query$fetch_posts_within_distance$service_provider_post$comments>
-      comments;
+  final dynamic comments;
 
   final int id;
 
@@ -6249,7 +5351,7 @@ class Query$fetch_posts_within_distance$service_provider_post {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$comments = comments;
-    _resultData['comments'] = l$comments.map((e) => e.toJson()).toList();
+    _resultData['comments'] = mapToJson(l$comments);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -6296,7 +5398,7 @@ class Query$fetch_posts_within_distance$service_provider_post {
     final l$business = business;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$comments.map((v) => v)),
+      l$comments,
       l$id,
       l$image,
       l$likes,
@@ -6324,15 +5426,8 @@ class Query$fetch_posts_within_distance$service_provider_post {
     }
     final l$comments = comments;
     final lOther$comments = other.comments;
-    if (l$comments.length != lOther$comments.length) {
+    if (l$comments != lOther$comments) {
       return false;
-    }
-    for (int i = 0; i < l$comments.length; i++) {
-      final l$comments$entry = l$comments[i];
-      final lOther$comments$entry = lOther$comments[i];
-      if (l$comments$entry != lOther$comments$entry) {
-        return false;
-      }
     }
     final l$id = id;
     final lOther$id = other.id;
@@ -6426,8 +5521,7 @@ abstract class CopyWith$Query$fetch_posts_within_distance$service_provider_post<
       _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post;
 
   TRes call({
-    List<Query$fetch_posts_within_distance$service_provider_post$comments>?
-        comments,
+    dynamic? comments,
     int? id,
     String? image,
     dynamic? likes,
@@ -6444,12 +5538,6 @@ abstract class CopyWith$Query$fetch_posts_within_distance$service_provider_post<
     Query$fetch_posts_within_distance$service_provider_post$business? business,
     String? $__typename,
   });
-  TRes comments(
-      Iterable<Query$fetch_posts_within_distance$service_provider_post$comments> Function(
-              Iterable<
-                  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments<
-                      Query$fetch_posts_within_distance$service_provider_post$comments>>)
-          _fn);
   CopyWith$Query$fetch_posts_within_distance$service_provider_post$restaurant<
       TRes> get restaurant;
   CopyWith$Query$fetch_posts_within_distance$service_provider_post$laundry<TRes>
@@ -6495,8 +5583,7 @@ class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post<
       _then(Query$fetch_posts_within_distance$service_provider_post(
         comments: comments == _undefined || comments == null
             ? _instance.comments
-            : (comments as List<
-                Query$fetch_posts_within_distance$service_provider_post$comments>),
+            : (comments as dynamic),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         likes: likes == _undefined || likes == null
@@ -6537,18 +5624,6 @@ class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post<
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes comments(
-          Iterable<Query$fetch_posts_within_distance$service_provider_post$comments> Function(
-                  Iterable<
-                      CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments<
-                          Query$fetch_posts_within_distance$service_provider_post$comments>>)
-              _fn) =>
-      call(
-          comments: _fn(_instance.comments.map((e) =>
-              CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments(
-                e,
-                (i) => i,
-              ))).toList());
   CopyWith$Query$fetch_posts_within_distance$service_provider_post$restaurant<
       TRes> get restaurant {
     final local$restaurant = _instance.restaurant;
@@ -6600,8 +5675,7 @@ class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post<
   TRes _res;
 
   call({
-    List<Query$fetch_posts_within_distance$service_provider_post$comments>?
-        comments,
+    dynamic? comments,
     int? id,
     String? image,
     dynamic? likes,
@@ -6619,7 +5693,6 @@ class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post<
     String? $__typename,
   }) =>
       _res;
-  comments(_fn) => _res;
   CopyWith$Query$fetch_posts_within_distance$service_provider_post$restaurant<
           TRes>
       get restaurant =>
@@ -6639,422 +5712,6 @@ class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post<
       get business =>
           CopyWith$Query$fetch_posts_within_distance$service_provider_post$business
               .stub(_res);
-}
-
-class Query$fetch_posts_within_distance$service_provider_post$comments {
-  Query$fetch_posts_within_distance$service_provider_post$comments({
-    required this.id,
-    required this.message,
-    required this.likes,
-    required this.commented_on,
-    required this.user,
-    required this.$__typename,
-  });
-
-  factory Query$fetch_posts_within_distance$service_provider_post$comments.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$message = json['message'];
-    final l$likes = json['likes'];
-    final l$commented_on = json['commented_on'];
-    final l$user = json['user'];
-    final l$$__typename = json['__typename'];
-    return Query$fetch_posts_within_distance$service_provider_post$comments(
-      id: (l$id as int),
-      message: (l$message as String),
-      likes: mapFromJson(l$likes),
-      commented_on: (l$commented_on as String),
-      user:
-          Query$fetch_posts_within_distance$service_provider_post$comments$user
-              .fromJson((l$user as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String message;
-
-  final dynamic likes;
-
-  final String commented_on;
-
-  final Query$fetch_posts_within_distance$service_provider_post$comments$user
-      user;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$message = message;
-    _resultData['message'] = l$message;
-    final l$likes = likes;
-    _resultData['likes'] = mapToJson(l$likes);
-    final l$commented_on = commented_on;
-    _resultData['commented_on'] = l$commented_on;
-    final l$user = user;
-    _resultData['user'] = l$user.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$message = message;
-    final l$likes = likes;
-    final l$commented_on = commented_on;
-    final l$user = user;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$message,
-      l$likes,
-      l$commented_on,
-      l$user,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$fetch_posts_within_distance$service_provider_post$comments) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$message = message;
-    final lOther$message = other.message;
-    if (l$message != lOther$message) {
-      return false;
-    }
-    final l$likes = likes;
-    final lOther$likes = other.likes;
-    if (l$likes != lOther$likes) {
-      return false;
-    }
-    final l$commented_on = commented_on;
-    final lOther$commented_on = other.commented_on;
-    if (l$commented_on != lOther$commented_on) {
-      return false;
-    }
-    final l$user = user;
-    final lOther$user = other.user;
-    if (l$user != lOther$user) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$fetch_posts_within_distance$service_provider_post$comments
-    on Query$fetch_posts_within_distance$service_provider_post$comments {
-  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments<
-          Query$fetch_posts_within_distance$service_provider_post$comments>
-      get copyWith =>
-          CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments<
-    TRes> {
-  factory CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments(
-    Query$fetch_posts_within_distance$service_provider_post$comments instance,
-    TRes Function(
-            Query$fetch_posts_within_distance$service_provider_post$comments)
-        then,
-  ) = _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments;
-
-  factory CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments;
-
-  TRes call({
-    int? id,
-    String? message,
-    dynamic? likes,
-    String? commented_on,
-    Query$fetch_posts_within_distance$service_provider_post$comments$user? user,
-    String? $__typename,
-  });
-  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-      TRes> get user;
-}
-
-class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments<
-        TRes>
-    implements
-        CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments<
-            TRes> {
-  _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments(
-    this._instance,
-    this._then,
-  );
-
-  final Query$fetch_posts_within_distance$service_provider_post$comments
-      _instance;
-
-  final TRes Function(
-      Query$fetch_posts_within_distance$service_provider_post$comments) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? message = _undefined,
-    Object? likes = _undefined,
-    Object? commented_on = _undefined,
-    Object? user = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$fetch_posts_within_distance$service_provider_post$comments(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        message: message == _undefined || message == null
-            ? _instance.message
-            : (message as String),
-        likes: likes == _undefined || likes == null
-            ? _instance.likes
-            : (likes as dynamic),
-        commented_on: commented_on == _undefined || commented_on == null
-            ? _instance.commented_on
-            : (commented_on as String),
-        user: user == _undefined || user == null
-            ? _instance.user
-            : (user
-                as Query$fetch_posts_within_distance$service_provider_post$comments$user),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-      TRes> get user {
-    final local$user = _instance.user;
-    return CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user(
-        local$user, (e) => call(user: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments<
-        TRes>
-    implements
-        CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments<
-            TRes> {
-  _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? message,
-    dynamic? likes,
-    String? commented_on,
-    Query$fetch_posts_within_distance$service_provider_post$comments$user? user,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-          TRes>
-      get user =>
-          CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user
-              .stub(_res);
-}
-
-class Query$fetch_posts_within_distance$service_provider_post$comments$user {
-  Query$fetch_posts_within_distance$service_provider_post$comments$user({
-    required this.id,
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Query$fetch_posts_within_distance$service_provider_post$comments$user.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Query$fetch_posts_within_distance$service_provider_post$comments$user(
-      id: (l$id as int),
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$fetch_posts_within_distance$service_provider_post$comments$user) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$fetch_posts_within_distance$service_provider_post$comments$user
-    on Query$fetch_posts_within_distance$service_provider_post$comments$user {
-  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-          Query$fetch_posts_within_distance$service_provider_post$comments$user>
-      get copyWith =>
-          CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-    TRes> {
-  factory CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user(
-    Query$fetch_posts_within_distance$service_provider_post$comments$user
-        instance,
-    TRes Function(
-            Query$fetch_posts_within_distance$service_provider_post$comments$user)
-        then,
-  ) = _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments$user;
-
-  factory CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments$user;
-
-  TRes call({
-    int? id,
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-        TRes>
-    implements
-        CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-            TRes> {
-  _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments$user(
-    this._instance,
-    this._then,
-  );
-
-  final Query$fetch_posts_within_distance$service_provider_post$comments$user
-      _instance;
-
-  final TRes Function(
-          Query$fetch_posts_within_distance$service_provider_post$comments$user)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Query$fetch_posts_within_distance$service_provider_post$comments$user(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-        TRes>
-    implements
-        CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments$user<
-            TRes> {
-  _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments$user(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    String? name,
-    String? image,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Query$fetch_posts_within_distance$service_provider_post$restaurant {

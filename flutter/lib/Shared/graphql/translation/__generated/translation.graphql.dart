@@ -1173,3 +1173,785 @@ class _CopyWithStubImpl$Mutation$insertTranslationValue$insert_translation_one<
   }) =>
       _res;
 }
+
+class Variables$Query$fetch_translations {
+  factory Variables$Query$fetch_translations({List<int>? ids}) =>
+      Variables$Query$fetch_translations._({
+        if (ids != null) r'ids': ids,
+      });
+
+  Variables$Query$fetch_translations._(this._$data);
+
+  factory Variables$Query$fetch_translations.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('ids')) {
+      final l$ids = data['ids'];
+      result$data['ids'] =
+          (l$ids as List<dynamic>?)?.map((e) => (e as int)).toList();
+    }
+    return Variables$Query$fetch_translations._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  List<int>? get ids => (_$data['ids'] as List<int>?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('ids')) {
+      final l$ids = ids;
+      result$data['ids'] = l$ids?.map((e) => e).toList();
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$fetch_translations<
+          Variables$Query$fetch_translations>
+      get copyWith => CopyWith$Variables$Query$fetch_translations(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$fetch_translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$ids = ids;
+    final lOther$ids = other.ids;
+    if (_$data.containsKey('ids') != other._$data.containsKey('ids')) {
+      return false;
+    }
+    if (l$ids != null && lOther$ids != null) {
+      if (l$ids.length != lOther$ids.length) {
+        return false;
+      }
+      for (int i = 0; i < l$ids.length; i++) {
+        final l$ids$entry = l$ids[i];
+        final lOther$ids$entry = lOther$ids[i];
+        if (l$ids$entry != lOther$ids$entry) {
+          return false;
+        }
+      }
+    } else if (l$ids != lOther$ids) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$ids = ids;
+    return Object.hashAll([
+      _$data.containsKey('ids')
+          ? l$ids == null
+              ? null
+              : Object.hashAll(l$ids.map((v) => v))
+          : const {}
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$fetch_translations<TRes> {
+  factory CopyWith$Variables$Query$fetch_translations(
+    Variables$Query$fetch_translations instance,
+    TRes Function(Variables$Query$fetch_translations) then,
+  ) = _CopyWithImpl$Variables$Query$fetch_translations;
+
+  factory CopyWith$Variables$Query$fetch_translations.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$fetch_translations;
+
+  TRes call({List<int>? ids});
+}
+
+class _CopyWithImpl$Variables$Query$fetch_translations<TRes>
+    implements CopyWith$Variables$Query$fetch_translations<TRes> {
+  _CopyWithImpl$Variables$Query$fetch_translations(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$fetch_translations _instance;
+
+  final TRes Function(Variables$Query$fetch_translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? ids = _undefined}) =>
+      _then(Variables$Query$fetch_translations._({
+        ..._instance._$data,
+        if (ids != _undefined) 'ids': (ids as List<int>?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$fetch_translations<TRes>
+    implements CopyWith$Variables$Query$fetch_translations<TRes> {
+  _CopyWithStubImpl$Variables$Query$fetch_translations(this._res);
+
+  TRes _res;
+
+  call({List<int>? ids}) => _res;
+}
+
+class Query$fetch_translations {
+  Query$fetch_translations({
+    required this.translation,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_translations.fromJson(Map<String, dynamic> json) {
+    final l$translation = json['translation'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_translations(
+      translation: (l$translation as List<dynamic>)
+          .map((e) => Query$fetch_translations$translation.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$fetch_translations$translation> translation;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translation = translation;
+    _resultData['translation'] = l$translation.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translation = translation;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translation.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$fetch_translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translation = translation;
+    final lOther$translation = other.translation;
+    if (l$translation.length != lOther$translation.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translation.length; i++) {
+      final l$translation$entry = l$translation[i];
+      final lOther$translation$entry = lOther$translation[i];
+      if (l$translation$entry != lOther$translation$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_translations
+    on Query$fetch_translations {
+  CopyWith$Query$fetch_translations<Query$fetch_translations> get copyWith =>
+      CopyWith$Query$fetch_translations(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$fetch_translations<TRes> {
+  factory CopyWith$Query$fetch_translations(
+    Query$fetch_translations instance,
+    TRes Function(Query$fetch_translations) then,
+  ) = _CopyWithImpl$Query$fetch_translations;
+
+  factory CopyWith$Query$fetch_translations.stub(TRes res) =
+      _CopyWithStubImpl$Query$fetch_translations;
+
+  TRes call({
+    List<Query$fetch_translations$translation>? translation,
+    String? $__typename,
+  });
+  TRes translation(
+      Iterable<Query$fetch_translations$translation> Function(
+              Iterable<
+                  CopyWith$Query$fetch_translations$translation<
+                      Query$fetch_translations$translation>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$fetch_translations<TRes>
+    implements CopyWith$Query$fetch_translations<TRes> {
+  _CopyWithImpl$Query$fetch_translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_translations _instance;
+
+  final TRes Function(Query$fetch_translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translation = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$fetch_translations(
+        translation: translation == _undefined || translation == null
+            ? _instance.translation
+            : (translation as List<Query$fetch_translations$translation>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translation(
+          Iterable<Query$fetch_translations$translation> Function(
+                  Iterable<
+                      CopyWith$Query$fetch_translations$translation<
+                          Query$fetch_translations$translation>>)
+              _fn) =>
+      call(
+          translation: _fn(_instance.translation
+              .map((e) => CopyWith$Query$fetch_translations$translation(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$fetch_translations<TRes>
+    implements CopyWith$Query$fetch_translations<TRes> {
+  _CopyWithStubImpl$Query$fetch_translations(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$fetch_translations$translation>? translation,
+    String? $__typename,
+  }) =>
+      _res;
+  translation(_fn) => _res;
+}
+
+const documentNodeQueryfetch_translations = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'fetch_translations'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'ids')),
+        type: ListTypeNode(
+          type: NamedTypeNode(
+            name: NameNode(value: 'Int'),
+            isNonNull: true,
+          ),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'translation'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_in'),
+                    value: VariableNode(name: NameNode(value: 'ids')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'translations'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'language_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'value'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$fetch_translations _parserFn$Query$fetch_translations(
+        Map<String, dynamic> data) =>
+    Query$fetch_translations.fromJson(data);
+
+class Options$Query$fetch_translations
+    extends graphql.QueryOptions<Query$fetch_translations> {
+  Options$Query$fetch_translations({
+    String? operationName,
+    Variables$Query$fetch_translations? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryfetch_translations,
+          parserFn: _parserFn$Query$fetch_translations,
+        );
+}
+
+class WatchOptions$Query$fetch_translations
+    extends graphql.WatchQueryOptions<Query$fetch_translations> {
+  WatchOptions$Query$fetch_translations({
+    String? operationName,
+    Variables$Query$fetch_translations? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryfetch_translations,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$fetch_translations,
+        );
+}
+
+class FetchMoreOptions$Query$fetch_translations
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$fetch_translations({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$fetch_translations? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQueryfetch_translations,
+        );
+}
+
+extension ClientExtension$Query$fetch_translations on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$fetch_translations>>
+      query$fetch_translations(
+              [Options$Query$fetch_translations? options]) async =>
+          await this.query(options ?? Options$Query$fetch_translations());
+  graphql.ObservableQuery<Query$fetch_translations>
+      watchQuery$fetch_translations(
+              [WatchOptions$Query$fetch_translations? options]) =>
+          this.watchQuery(options ?? WatchOptions$Query$fetch_translations());
+  void writeQuery$fetch_translations({
+    required Query$fetch_translations data,
+    Variables$Query$fetch_translations? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQueryfetch_translations),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$fetch_translations? readQuery$fetch_translations({
+    Variables$Query$fetch_translations? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQueryfetch_translations),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$fetch_translations.fromJson(result);
+  }
+}
+
+class Query$fetch_translations$translation {
+  Query$fetch_translations$translation({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_translations$translation.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_translations$translation(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$fetch_translations$translation$translations.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$fetch_translations$translation$translations> translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$fetch_translations$translation) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_translations$translation
+    on Query$fetch_translations$translation {
+  CopyWith$Query$fetch_translations$translation<
+          Query$fetch_translations$translation>
+      get copyWith => CopyWith$Query$fetch_translations$translation(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_translations$translation<TRes> {
+  factory CopyWith$Query$fetch_translations$translation(
+    Query$fetch_translations$translation instance,
+    TRes Function(Query$fetch_translations$translation) then,
+  ) = _CopyWithImpl$Query$fetch_translations$translation;
+
+  factory CopyWith$Query$fetch_translations$translation.stub(TRes res) =
+      _CopyWithStubImpl$Query$fetch_translations$translation;
+
+  TRes call({
+    List<Query$fetch_translations$translation$translations>? translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$fetch_translations$translation$translations> Function(
+              Iterable<
+                  CopyWith$Query$fetch_translations$translation$translations<
+                      Query$fetch_translations$translation$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$fetch_translations$translation<TRes>
+    implements CopyWith$Query$fetch_translations$translation<TRes> {
+  _CopyWithImpl$Query$fetch_translations$translation(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_translations$translation _instance;
+
+  final TRes Function(Query$fetch_translations$translation) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$fetch_translations$translation(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations
+                as List<Query$fetch_translations$translation$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$fetch_translations$translation$translations> Function(
+                  Iterable<
+                      CopyWith$Query$fetch_translations$translation$translations<
+                          Query$fetch_translations$translation$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map(
+              (e) => CopyWith$Query$fetch_translations$translation$translations(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$fetch_translations$translation<TRes>
+    implements CopyWith$Query$fetch_translations$translation<TRes> {
+  _CopyWithStubImpl$Query$fetch_translations$translation(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$fetch_translations$translation$translations>? translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$fetch_translations$translation$translations {
+  Query$fetch_translations$translation$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_translations$translation$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_translations$translation$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$fetch_translations$translation$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_translations$translation$translations
+    on Query$fetch_translations$translation$translations {
+  CopyWith$Query$fetch_translations$translation$translations<
+          Query$fetch_translations$translation$translations>
+      get copyWith =>
+          CopyWith$Query$fetch_translations$translation$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_translations$translation$translations<
+    TRes> {
+  factory CopyWith$Query$fetch_translations$translation$translations(
+    Query$fetch_translations$translation$translations instance,
+    TRes Function(Query$fetch_translations$translation$translations) then,
+  ) = _CopyWithImpl$Query$fetch_translations$translation$translations;
+
+  factory CopyWith$Query$fetch_translations$translation$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_translations$translation$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$fetch_translations$translation$translations<TRes>
+    implements
+        CopyWith$Query$fetch_translations$translation$translations<TRes> {
+  _CopyWithImpl$Query$fetch_translations$translation$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_translations$translation$translations _instance;
+
+  final TRes Function(Query$fetch_translations$translation$translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$fetch_translations$translation$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$fetch_translations$translation$translations<TRes>
+    implements
+        CopyWith$Query$fetch_translations$translation$translations<TRes> {
+  _CopyWithStubImpl$Query$fetch_translations$translation$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}

@@ -10,3 +10,12 @@ mutation insertTranslationValue($data :  translation_insert_input!){
     id
   }
 }
+
+query fetch_translations($ids: [Int!]) {
+  translation(where: {id: {_in: $ids}}) {
+    translations {
+      language_id
+      value
+    }
+  }
+}
