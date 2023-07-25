@@ -911,7 +911,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
 
 Future<CustBusinessCart?> get_business_order_request(
     {required int orderId}) async {
-  var cart = await _hasuraDb.graphQLClient.query$get_business_order_request(
+  QueryResult<Query$get_business_order_request> cart =
+      await _hasuraDb.graphQLClient.query$get_business_order_request(
     Options$Query$get_business_order_request(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$get_business_order_request(

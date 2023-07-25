@@ -138,10 +138,28 @@ Future<ServiceTree> get_service_tree(
       MezService.Home,
       homeResponse.parsedData?.business_home_aggregate.aggregate?.count ?? 0,
       root);
+
+  final QueryResult<Query$number_of_co_working> coWorkingResponse = await _db
+      .graphQLClient
+      .query$number_of_co_working(Options$Query$number_of_co_working(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_co_working(
+              distance: distance, from: Geography(lat, lng))));
+  final ServiceTree coWorking = ServiceTree(
+      MezService.CoWorking,
+      coWorkingResponse.parsedData?.business_home_aggregate.aggregate?.count ??
+          0,
+      root);
+
   await Future.wait(futures);
   if (rentals.count > 0) {
     if (home.count > 0) {
       rentals.children.add(home);
+    }
+
+    if (coWorking.count > 0) {
+      rentals.children.add(coWorking);
     }
     root.children.add(rentals);
   }

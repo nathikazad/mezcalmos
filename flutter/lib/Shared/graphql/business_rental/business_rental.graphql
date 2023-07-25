@@ -25,7 +25,7 @@ query get_rental_by_category(
             }
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
-            online_ordering: $online_ordering,
+            online_ordering: $online_ordering
           }
         }
       }
@@ -206,7 +206,7 @@ query get_home(
           details: {
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
-            online_ordering: $online_ordering,
+            online_ordering: $online_ordering
           }
         }
         available_for: { _eq: "rent" }
@@ -278,7 +278,7 @@ query get_real_estates(
           details: {
             approved: { _eq: true }
             open_status: { _neq: "closedIndefinitely" }
-            online_ordering: $online_ordering,
+            online_ordering: $online_ordering
           }
         }
         available_for: { _eq: "sale" }
@@ -910,5 +910,133 @@ mutation update_home_category1($detailsId: Int!, $category: String!) {
     _set: { category1: $category }
   ) {
     affected_rows
+  }
+}
+
+query get_coworking(
+  $location: geography!
+  $limit: Int
+  $offset: Int
+  $distance: Float!
+  $online_ordering: Boolean_comparison_exp = {}
+) {
+  business_home(
+    where: {
+      location: {
+        gps: { _st_d_within: { distance: $distance, from: $location } }
+      }
+      _and: {
+        available_for: { _eq: "rent" }
+        details: { category1: { _eq: "room" } }
+      }
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { business: { details: { referral_points: desc_nulls_last } } }
+  ) {
+    details {
+      name_id
+      description_id
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    business {
+      id
+      details {
+        id
+        name
+        currency
+        location {
+          gps
+          address
+        }
+      }
+    }
+    bathrooms
+    bedrooms
+    location {
+      address
+      gps
+      name
+    }
+    available_for
+    offering_type
+    location_id
+  }
+}
+
+query get_coworking_by_id($id: Int!) {
+  business_home_by_pk(id: $id) {
+    details {
+      name_id
+      description_id
+      id
+      name {
+        translations {
+          language_id
+          value
+        }
+      }
+      additional_parameters
+      available
+      category1
+      category2
+      cost
+      image
+      position
+      tags
+    }
+    id
+    business {
+      id
+      details {
+        last_active_time
+        id
+        name
+        online_ordering
+        phone_number
+        currency
+        location {
+          gps
+          address
+        }
+        image
+        accepted_payments
+        business {
+          reviews_aggregate {
+            aggregate {
+              avg {
+                rating
+              }
+              count
+            }
+          }
+        }
+      }
+    }
+    bathrooms
+    bedrooms
+    location {
+      address
+      gps
+      name
+    }
+    available_for
+    offering_type
+    location_id
   }
 }

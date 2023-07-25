@@ -2,14 +2,6 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
-        "BsHomeRentalOrderView": {
-          "BsHomeRentalOrderView": {
-            "invalidOrderId": "ID de pedido no válido",
-            "requestChanges": "Solicitar cambios",
-            "acceptOrder": "Aceptar pedido",
-            "cancelOrder": "Cancelar pedido"
-          }
-        },
         "BsOrdersListViews": {
           "BsOrdersListView": {
             "orders": "Pedidos",
@@ -24,7 +16,7 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
-              "pending": "Solicitada",
+              "pending": "Pendiente",
               "waitingCustomer": "Esperando a un cliente",
               "cancelled": "Cancelada",
               "confirmed": "Confirmada",
@@ -39,8 +31,7 @@
               "save": "Guardar",
               "cancel": "Cancelar",
               "startFrom": "Comienza desde",
-              "updateTimeTitle": "Tiempo de actualizacion",
-              "free": "GRATIS"
+              "updateTimeTitle": "Tiempo de actualizacion"
             }
           }
         }
@@ -725,6 +716,10 @@
           "title": "Alquiler de vehículos",
           "subtitle": "Si posee una tienda de alquiler de vehículos, desea expandirlo en línea."
         },
+        "coWorking": {
+          "title": "Espacio de trabajo conjunto",
+          "subtitle": "Si posee un espacio de trabajo conjunto y desea expandirlo en línea."
+        },
         "yogaStudio": {
           "title": "Estudio de yoga",
           "subtitle": "Si posee Yoga Studio, quiere expandirlo en línea."
@@ -891,9 +886,8 @@
           "title": "Entrega abierta",
           "from": "De",
           "to": "A",
-          "chooseCompany" :"Elija su empresa de entrega",
-          "chooseCompanyInfo" :"Si elige múltiples, la primera compañía para aceptar su pedido recibirá el pedido.",
-
+          "chooseCompany": "Elija su empresa de entrega",
+          "chooseCompanyInfo": "Si elige múltiples, la primera compañía para aceptar su pedido recibirá el pedido.",
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
           "next": "Próxima",
           "orderNow": "Ordenar ahora",
@@ -920,6 +914,23 @@
           "deliveryDetails": "Detalles de la entrega",
           "pickupLoc": "Lugar de recogida",
           "noDriverAssignedYet": "No hay controlador asignado todavía"
+        }
+      },
+      "CustFeedView": {
+        "CustFeedView": {
+          "title": "Alimentar",
+          "posts": "Postes",
+          "promotions": "Promociones",
+          "postSwitch": "Solo muestre publicaciones para las cuentas que sigue.",
+          "promotionSwitch": "Solo muestre promociones para las cuentas que sigue."
+        },
+        "components": {
+          "FeedCardPost": {
+            "like": "Como",
+            "comment": "Comentario",
+            "writecomment": "Escribe tu comentario..",
+            "post": "Correo"
+          }
         }
       },
       "ListOrdersScreen": {
@@ -1626,7 +1637,9 @@
             "yoga": "Yoga",
             "fitness": "Fitness",
             "dance": "Dance",
-            "therapy": "Terapia"
+            "therapy": "Terapia",
+            "social": "Social",
+            "session": "Sesión"
           },
           "CustBusinessRentalCost": {
             "hour": "hora",
@@ -1695,12 +1708,16 @@
           "NoServicesFound": {
             "noServicesFound": "No se encontraron servicios",
             "bodyMessage": "Lo siento, el servicio que está buscando no se ofrece actualmente."
+          },
+          "NoPostsFound": {
+            "noPostsFound": "No se han encontrado publicaciones",
+            "bodyMessage": "Puedes volver más tarde"
           }
         },
         "RentalsView": {
           "CustHomeRentalListView": {
-            "homes": "Casas",
-            "home": "Hogar",
+            "coWorking": "Co-working",
+            "coWorkings": "Trabajo conjunto",
             "map": "Mapa",
             "filter": "Filtrar",
             "offerOnly": "Solo ofertas",
@@ -1737,6 +1754,10 @@
             "home": {
               "title": "Casas",
               "description": "Descubre las mejores casas de su ciudad."
+            },
+            "coWorking": {
+              "title": "Trabajo colaborativo",
+              "description": "Trabajo desde escritorios dedicados, habitaciones privadas y oficina de piso completo en lugares cercanos."
             }
           },
           "CustRentalsListView": {
@@ -1844,7 +1865,8 @@
             "surf": "Surf",
             "yoga": "yoga",
             "fitness": "Aptitud física",
-            "dance": "Bailar"
+            "dance": "Bailar",
+            "session": "Sesión"
           }
         },
         "TherapyView": {
@@ -2358,17 +2380,15 @@
         "onTheWayDropoffBody": "El conductor está en camino a cumplir su pedido"
       },
       "business": {
-        "modifReqTitle" : "Cambios solicitados",
-        "modifReqBody" : "Su negocio de pedidos solicita algunos cambios",
-        "confirmedTitle" : "Confirmada",
-        "confirmedBody" : "El proveedor de negocios confirma su solicitud de pedido"
+        "modifReqTitle": "Cambios solicitados",
+        "modifReqBody": "Su negocio de pedidos solicita algunos cambios",
+        "confirmedTitle": "Confirmada",
+        "confirmedBody": "El proveedor de negocios confirma su solicitud de pedido"
       },
-      "offers" : {
-        "newOfferTitle" : "Nueva oferta",
-        "newOfferBody" : "Recibió una nueva oferta de precio de entrega"
-
+      "offers": {
+        "newOfferTitle": "Nueva oferta",
+        "newOfferBody": "Recibió una nueva oferta de precio de entrega"
       }
-
     }
   },
   "Shared": {
@@ -3746,9 +3766,9 @@
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
         "courier": "Entrega abierta",
-        "cancel" : "Cancelar",
-        "counterOffer" : "Contraoferta",
-        "reqCounterOffer" : "Solicitar cambio de precio"
+        "cancel": "Cancelar",
+        "counterOffer": "Contraoferta",
+        "reqCounterOffer": "Solicitar cambio de precio"
       }
     },
     "notificationHandler": {

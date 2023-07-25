@@ -78,7 +78,7 @@ Future<List<Post>> fetch_subscribed_posts(
       message: data.message,
       image: data.image,
       likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
-      comments: comments,
+      comments: data.comments.map<Comment>((e) => commentFromJson(e.toJson())).toList(),
       postedOn: DateTime.parse(data.posted_on),
       link: data.link,
     ));
@@ -322,6 +322,7 @@ Future<void> update_post_likes(
       variables: Variables$Mutation$update_post_likes(id: postId, likes: likes),
     ),
   );
+  print('reeeesss ${res.data}');
   if (res.parsedData?.update_service_provider_post_by_pk == null) {
     throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
   }

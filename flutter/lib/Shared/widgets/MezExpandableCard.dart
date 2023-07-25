@@ -11,13 +11,16 @@ class MezExpandableCard extends StatefulWidget {
       this.imageUrl,
       this.marging = const EdgeInsets.only(bottom: 15),
       required this.title,
+      this.headerImageRadius = 55,
+      this.elevation,
       this.imageShape = BoxShape.rectangle,
       required this.expandableWidget,
       this.onTapHeaderImage});
   final bool showImage;
   final Function()? onTapHeaderImage;
   final EdgeInsets marging;
-
+  final double headerImageRadius;
+  final double? elevation;
   final String? imageUrl;
   final Widget title;
   final BoxShape imageShape;
@@ -32,6 +35,7 @@ class _MezExpandableCardState extends State<MezExpandableCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: widget.elevation,
       margin: widget.marging,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -104,11 +108,13 @@ class _MezExpandableCardState extends State<MezExpandableCard> {
           if (widget.showImage && widget.imageUrl != null)
             Container(
               //  padding: const EdgeInsets.all(5),
-              height: 55,
-              width: 55,
+              height: widget.headerImageRadius,
+              width: widget.headerImageRadius,
 
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: widget.imageShape == BoxShape.circle
+                      ? null
+                      : BorderRadius.circular(8),
                   shape: widget.imageShape,
                   image: DecorationImage(
                     fit: BoxFit.cover,
