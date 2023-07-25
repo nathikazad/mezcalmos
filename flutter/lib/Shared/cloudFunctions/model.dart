@@ -3518,7 +3518,9 @@ enum AddOperatorError {
   OperatorCreationError,
   RestaurantNotfound,
   DeliveryCompanyOperatorsNotFound,
-  LaundryStoreNotfound
+  LaundryStoreNotfound,
+  BusinessNotfound,
+  InvalidServiceProviderType
 }
 
 extension ParseAddOperatorErrorToString on AddOperatorError {
