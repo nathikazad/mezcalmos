@@ -43,6 +43,7 @@ export interface OfferDetails {
     items?: Array<number>, 
     // Array<categoryIds>,
     categories?: Array<number>,
+    nameIds?: Array<number>,
     // Array<offeringTypes>,
     offeringTypes?: Array<OfferingType>,
     // date_time both for coupon and promo

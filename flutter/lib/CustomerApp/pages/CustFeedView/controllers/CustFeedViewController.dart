@@ -104,9 +104,10 @@ class CustFeedViewController {
 
     commentController.text = '';
     await write_comment(
-        userId: _authController.hasuraUserId!,
-        postId: postId,
-        commentMsg: commentController.text);
+      userId: _authController.hasuraUserId!.toInt(),
+      postId: postId,
+      commentMsg: commentController.text,
+    );
   }
 
   Future<void> likePost(

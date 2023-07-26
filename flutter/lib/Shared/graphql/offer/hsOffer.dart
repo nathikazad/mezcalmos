@@ -40,7 +40,16 @@ Future<List<cModels.Offer>> get_service_provider_offers(
               data.details["discountType"].toString().toDiscountType(),
           discountValue: data.details["discountValue"],
           weeklyRepeat: data.details["weeklyRepeat"],
-          categories: data.details["categories"],
+          categories: data.details["categories"] == null
+              ? <num>[]
+              : data.details["categories"]
+                  .map<int>((e) => int.parse(e.toString()))
+                  .toList(),
+          nameIds: data.details["nameIds"] == null
+              ? <num>[]
+              : data.details["nameIds"]
+                  .map<int>((e) => int.parse(e.toString()))
+                  .toList(),
           couponReusable: data.details["couponReusable"],
           offeringTypes: data.details["offeringTypes"] == null
               ? <cModels.OfferingType>[]
@@ -96,7 +105,16 @@ Future<cModels.Offer?> check_coupon(
         discountType: data.details["discountType"].toString().toDiscountType(),
         discountValue: data.details["discountValue"],
         weeklyRepeat: data.details["weeklyRepeat"],
-        categories: data.details["categories"],
+        categories: data.details["categories"] == null
+            ? <num>[]
+            : data.details["categories"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
+        nameIds: data.details["nameIds"] == null
+            ? <num>[]
+            : data.details["nameIds"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
         couponReusable: data.details["couponReusable"],
         offeringTypes: data.details["offeringTypes"] == null
             ? <cModels.OfferingType>[]
@@ -171,7 +189,16 @@ Future<List<cModels.Offer>> fetch_promotions(
               data.details["discountType"].toString().toDiscountType(),
           discountValue: data.details["discountValue"],
           weeklyRepeat: data.details["weeklyRepeat"],
-          categories: data.details["categories"],
+          categories: data.details["categories"] == null
+              ? <num>[]
+              : data.details["categories"]
+                  .map<int>((e) => int.parse(e.toString()))
+                  .toList(),
+          nameIds: data.details["nameIds"] == null
+              ? <num>[]
+              : data.details["nameIds"]
+                  .map<int>((e) => int.parse(e.toString()))
+                  .toList(),
           couponReusable: data.details["couponReusable"],
           offeringTypes: data.details["offeringTypes"] == null
               ? <cModels.OfferingType>[]
@@ -249,7 +276,16 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
         discountType: data.details["discountType"].toString().toDiscountType(),
         discountValue: data.details["discountValue"],
         weeklyRepeat: data.details["weeklyRepeat"],
-        categories: data.details["categories"],
+        categories: data.details["categories"] == null
+            ? <num>[]
+            : data.details["categories"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
+        nameIds: data.details["nameIds"] == null
+            ? <num>[]
+            : data.details["nameIds"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
         couponReusable: data.details["couponReusable"],
         offeringTypes: data.details["offeringTypes"] == null
             ? <cModels.OfferingType>[]
@@ -335,7 +371,16 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
         discountType: data.details["discountType"].toString().toDiscountType(),
         discountValue: data.details["discountValue"],
         weeklyRepeat: data.details["weeklyRepeat"],
-        categories: data.details["categories"],
+        categories: data.details["categories"] == null
+            ? <num>[]
+            : data.details["categories"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
+        nameIds: data.details["nameIds"] == null
+            ? <num>[]
+            : data.details["nameIds"]
+                .map<int>((e) => int.parse(e.toString()))
+                .toList(),
         couponReusable: data.details["couponReusable"],
         offeringTypes: data.details["offeringTypes"] == null
             ? <cModels.OfferingType>[]
