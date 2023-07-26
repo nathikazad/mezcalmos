@@ -101,10 +101,17 @@ class ServiceFeedViewController {
     // if (postDescriptionController.text.trim().isEmpty &&
     //     _selectedImages.isEmpty) return;
 
+    if (postDescriptionController.text.trim().isEmpty &&
+        _selectedImage.value == null) return;
+
     await create_post(
         message: postDescriptionController.text,
         serviceProviderId: opAuthController.companyId!,
         serviceProviderType: ServiceProviderType.Business);
+
+    postDescriptionController.text = '';
+
+    unawaited(_fetchPosts());
   }
 
   Future<void> pickImage(BuildContext context, ImageSource source) async {

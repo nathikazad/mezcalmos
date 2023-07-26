@@ -45,7 +45,7 @@ class ServiceFeedView extends StatelessWidget {
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Card(
               elevation: 0,
-              margin: EdgeInsets.all(7.5),
+              margin: EdgeInsets.symmetric(horizontal: 12.5, vertical: 7.5),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -54,6 +54,7 @@ class ServiceFeedView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
+                      hSmallSepartor,
                       CircleAvatar(
                         backgroundImage: CachedNetworkImageProvider(
                             _viewController.authController.user!.image),
@@ -230,7 +231,8 @@ class ServiceFeedView extends StatelessWidget {
                               //                     child: Icon(Icons.cancel,
                               //                         size: 20))))))
                             ]),
-                      )
+                      ),
+                      hSmallSepartor
                     ],
                   ),
                   Divider(
@@ -292,6 +294,7 @@ class ServiceFeedView extends StatelessWidget {
                     children: List.generate(
                         _viewController.posts.length,
                         (int index) => BsFeedCardPost(
+                            elevation: 0,
                             controller: _viewController,
                             post: _viewController.posts[index])),
                   )),
