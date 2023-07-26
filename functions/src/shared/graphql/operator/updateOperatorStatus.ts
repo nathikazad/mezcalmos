@@ -3,6 +3,7 @@ import { AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { AuthOperatorError } from "../../../serviceProvider/authorizeOperator";
 import { Operator } from "../../models/Services/Service";
 import { ParticipantType } from "../../models/Generic/Chat";
+import { DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
 export async function updateOperatorStatusToAuthorized(operator: Operator, participantType: ParticipantType) {
     let chain = getHasura();
