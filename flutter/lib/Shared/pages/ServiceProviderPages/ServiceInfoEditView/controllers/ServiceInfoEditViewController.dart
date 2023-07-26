@@ -22,7 +22,7 @@ class ServiceInfoEditViewController {
   // TEXT INPUTS //
   TextEditingController serviceNameTxt = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
-  TextEditingController prefixTextFieldController = TextEditingController();
+  // TextEditingController prefixTextFieldController = TextEditingController();
   TextEditingController primaryServiceDesc = TextEditingController();
   TextEditingController secondayServiceDesc = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -59,7 +59,6 @@ class ServiceInfoEditViewController {
     required int serviceId,
     required ServiceProviderType serviceProvidertype,
   }) async {
-    prefixTextFieldController.text = '+52';
     serviceType = serviceProvidertype;
     detailsId = serviceDetailsId;
     this.serviceId = serviceId;
@@ -92,15 +91,9 @@ class ServiceInfoEditViewController {
       // phoneNumber.text = service.value?.phoneNumber ?? '';
 
       if (service.value!.phoneNumber == null) {
-        prefixTextFieldController.text = '';
         phoneNumber.text = '+52';
-      } else if (service.value!.phoneNumber!.contains(' ')) {
-        prefixTextFieldController.text =
-            service.value?.phoneNumber?.split(' ')[0] ?? '';
-        phoneNumber.text = service.value?.phoneNumber?.split(' ')[1] ?? '';
       } else {
-        phoneNumber.text = service.value?.phoneNumber ?? '';
-        prefixTextFieldController.text = '+52';
+        phoneNumber.text = service.value!.phoneNumber!;
       }
 
       newLocation.value = service.value!.location;
@@ -187,7 +180,7 @@ class ServiceInfoEditViewController {
         location: newLocation.value!,
         hasuraId: 1,
         languages: languages.value!,
-        phoneNumber: '${prefixTextFieldController.text} ${phoneNumber.text}',
+        phoneNumber: phoneNumber.text,
         descriptionId: newDescId,
         image: newImageUrl.value,
         name: serviceNameTxt.text.inCaps);
@@ -235,6 +228,8 @@ class ServiceInfoEditViewController {
 
   Future<void> updateBsProfile() async {
     if (isBusiness && mainBusniessProfile.value != newBusniessProfile.value) {
+      mezDbgPrint(
+          "👋 updating business profile to =====>${newBusniessProfile.value}");
       mainBusniessProfile.value = await update_business_profile_by_id(
           businessId: serviceId, newProfile: newBusniessProfile.value!);
       newBusniessProfile.value = mainBusniessProfile.value;

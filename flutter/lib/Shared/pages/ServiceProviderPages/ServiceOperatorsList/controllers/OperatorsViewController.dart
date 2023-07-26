@@ -124,8 +124,10 @@ class OperatorsListViewController {
         return cModels.ParticipantType.LaundryOperator;
       case cModels.ServiceProviderType.DeliveryCompany:
         return cModels.ParticipantType.DeliveryOperator;
+      case cModels.ServiceProviderType.Business:
+        return cModels.ParticipantType.BusinessOperator;
       default:
-        return cModels.ParticipantType.RestaurantOperator;
+        throw Exception("Invalid Service Provider Type");
     }
   }
 }

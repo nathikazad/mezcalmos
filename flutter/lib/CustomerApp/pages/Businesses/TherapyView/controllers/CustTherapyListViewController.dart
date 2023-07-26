@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFi
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -89,7 +90,7 @@ class CustTherapyListViewController {
       selectedCategories.value = List.from(_filterCategories);
 
       final locPkg.LocationData location =
-          await locPkg.Location().getLocation();
+          await Get.find<LocationController>().getCurrentLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
           lat: location.latitude!,

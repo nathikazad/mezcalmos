@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/data_consumption/hsDataConsumption.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart'
-    show logLongString, logToken, mezDbgPrint;
+    show logEventToServer, logLongString, mezDbgPrint;
 import 'package:mezcalmos/env.dart';
 
 class MyParser extends gqClient.ResponseParser {
@@ -74,6 +74,7 @@ class HasuraDb {
   Future<void> initializeHasura() async {
     cancelAllSubscriptions();
     await setupClient();
+    logEventToServer("Hasura init successful");
   }
 
   Future<void> setupClient() async {

@@ -10,6 +10,7 @@ query getRestaurants(
     where: {
       details: {
         is_open: $is_open
+        open_status: {_neq: "closedIndefinitely"}
         location: {
           gps: { _st_d_within: { distance: $distance, from: $from } }
         }

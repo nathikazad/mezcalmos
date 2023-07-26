@@ -111,3 +111,53 @@ export async function getBusinessOperators(businessId: number): Promise<Operator
     }
   })
 }
+
+export async function getBusinessOperator(operatorId: number): Promise<Operator> {
+  let chain = getHasura();
+
+  let response = await chain.query({
+    business_operator_by_pk: [{
+      id: operatorId
+    }, {
+      id: true,
+      business_id: true,
+      user_id: true,
+      operator_details: {
+        id: true,
+        status: true,
+        owner: true,
+        online: true,
+        notification_info: {
+        token: true,
+        turn_off_notifications: true
+        },
+      },
+      user: {
+        firebase_id: true,
+        language_id: true,
+      }
+    }]
+  });
+  if(response.business_operator_by_pk == null) {
+    throw new MezError("operatorNotFound");
+  }
+  return {
+    id: response.business_operator_by_pk.id,
+    detailsId: response.business_operator_by_pk.operator_details.id,
+    userId: response.business_operator_by_pk.user_id,
+    serviceProviderId: response.business_operator_by_pk.business_id,
+    status: response.business_operator_by_pk.operator_details.status as AuthorizationStatus,
+    online: response.business_operator_by_pk.operator_details.online,
+    owner: response.business_operator_by_pk.operator_details.owner,
+    notificationInfo: (response.business_operator_by_pk.operator_details.notification_info) ? {
+      appType: AppType.Business,
+      token: response.business_operator_by_pk.operator_details.notification_info.token,
+      turnOffNotifications: response.business_operator_by_pk.operator_details.notification_info.turn_off_notifications
+    }: undefined,
+    user: {
+      id: response.business_operator_by_pk.user_id,
+      firebaseId: response.business_operator_by_pk.user.firebase_id,
+      language: response.business_operator_by_pk.user.language_id as Language
+    }
+  };
+}

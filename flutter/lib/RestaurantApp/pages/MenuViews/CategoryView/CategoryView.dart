@@ -32,11 +32,16 @@ class ROpCategoryView extends StatefulWidget {
         });
   }
 
-  static Future<void> navigateWithCategory(
-      {required int categoryId, required int restaurantId}) {
-    return MezRouter.toPath(RestaurantAppRoutes.restaurantEditCategoryRoute
-        .replaceAll(":categoryId", categoryId.toString())
-        .replaceAll(":restaurantId", restaurantId.toString()));
+  static Future<void> navigateWithCategory({
+    required int categoryId,
+    required int restaurantId,
+    required int detailsId,
+  }) {
+    return MezRouter.toPath(
+        RestaurantAppRoutes.restaurantEditCategoryRoute
+            .replaceFirst(":categoryId", categoryId.toString())
+            .replaceFirst(":restaurantId", restaurantId.toString()),
+        arguments: <String, dynamic>{"detailsId": detailsId});
   }
 
   @override
@@ -66,7 +71,7 @@ class _ROpCategoryViewState extends State<ROpCategoryView>
     //       : false;
     // }
 
-    shouldSave = MezRouter.bodyArguments!["shouldSave"] as bool;
+    shouldSave = MezRouter.bodyArguments?["shouldSave"] as bool? ?? true;
     detailsId = int.tryParse(MezRouter.bodyArguments!["detailsId"].toString());
 
     if (restaurantId != null && detailsId != null) {
