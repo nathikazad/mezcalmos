@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapLaundryCard.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -79,7 +79,9 @@ class CustLaundriesListViewController {
     _filterInput = defaultFilters();
     ctx = context;
 
-    await locPkg.Location().getLocation().then((LocationData location) {
+    await Get.find<LocationController>()
+        .getCurrentLocation()
+        .then((LocationData location) {
       if (location.latitude != null && location.longitude != null)
         _currentLocation = LatLng(location.latitude!, location.longitude!);
     });
@@ -126,8 +128,8 @@ class CustLaundriesListViewController {
   }
 
   void _getCustomerCurrentLocation() {
-    Location()
-        .getLocation()
+    Get.find<LocationController>()
+        .getCurrentLocation()
         .then((LocationData value) => customerLocation = value);
   }
 

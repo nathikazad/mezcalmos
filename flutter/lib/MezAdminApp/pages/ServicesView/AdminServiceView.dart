@@ -107,7 +107,9 @@ class _AdminServicesViewState extends State<AdminServicesView> {
       child: TextFormField(
         textAlignVertical: TextAlignVertical.center,
         style: context.txt.bodyLarge,
-        onChanged: (String value) {},
+        onChanged: (String value) {
+          viewController.search(value);
+        },
         decoration: InputDecoration(
             fillColor: Colors.white,
             prefixIcon: Icon(

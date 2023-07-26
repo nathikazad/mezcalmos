@@ -57,6 +57,22 @@ select_permissions:
         - address
         - name
       filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - gps
+        - business_id
+        - id
+        - address
+        - name
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
   - role: business_operator
     permission:

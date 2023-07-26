@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/graphql/business_rental/__generated/business_re
 import 'package:mezcalmos/Shared/graphql/business_service/__generated/business_service.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/common/__generated/common.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -17,6 +18,8 @@ Future<ServiceTree> get_service_tree(
     required double lng,
     required bool withCache}) async {
   //create tree root node
+  logEventToServer("getting Service tree fetching from hasura",
+      debugData: {"distance": distance, "lat": lat, "lng": lng});
   final ServiceTree root = ServiceTree(MezService.Root, 0, null);
 
   final QueryResult<Query$number_of_delivery> deliveryResponse = await _db

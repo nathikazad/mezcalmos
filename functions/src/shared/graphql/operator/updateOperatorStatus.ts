@@ -1,7 +1,6 @@
 import { getHasura } from "../../../utilities/hasura";
 import { AuthorizationStatus, MezError } from "../../models/Generic/Generic";
 import { AuthOperatorError } from "../../../serviceProvider/authorizeOperator";
-import { DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { Operator } from "../../models/Services/Service";
 import { ParticipantType } from "../../models/Generic/Chat";
 
@@ -58,6 +57,22 @@ export async function updateOperatorStatusToAuthorized(operator: Operator, parti
                 }]
             });
             opCount = response.delivery_operator_aggregate.aggregate!.count;
+            break;
+        case ParticipantType.BusinessOperator:
+            const response3 = await chain.query({
+                business_operator_aggregate: [{
+                    where: {
+                        business_id: {
+                            _eq: operator.serviceProviderId
+                        }
+                    }
+                }, {
+                    aggregate: {
+                        count: [{}, true]
+                    }
+                }]
+            });
+            opCount = response3.business_operator_aggregate.aggregate!.count;
             break;
     }
 

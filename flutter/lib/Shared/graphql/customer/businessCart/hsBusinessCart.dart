@@ -596,6 +596,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                           id: data.home!.business!.details.id,
                                           name:
                                               data.home!.business!.details.name,
+                                          phoneNo: data.home!.business!.details
+                                              .phone_number,
                                           currency: data
                                               .home!.business!.details.currency
                                               .toCurrency(),
@@ -663,6 +665,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                 rental: data.rental != null
                                     ? RentalWithBusinessCard(
                                         business: BusinessCard(
+                                          phoneNo: data.rental!.business.details
+                                              .phone_number,
                                           onlineOrdering: data.rental!.business
                                               .details.online_ordering,
                                           id: data.rental!.business.details.id,
@@ -719,6 +723,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                 event: data.event != null
                                     ? EventWithBusinessCard(
                                         business: BusinessCard(
+                                          phoneNo: data.event!.business.details
+                                              .phone_number,
                                           onlineOrdering: data.event!.business
                                               .details.online_ordering,
                                           id: data.event!.business.details.id,
@@ -785,6 +791,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                 service: data.service != null
                                     ? ServiceWithBusinessCard(
                                         business: BusinessCard(
+                                          phoneNo: data.service!.business
+                                              .details.phone_number,
                                           onlineOrdering: data.service!.business
                                               .details.online_ordering,
                                           id: data.service!.business.details.id,
@@ -840,6 +848,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
                                 product: data.product != null
                                     ? ProductWithBusinessCard(
                                         business: BusinessCard(
+                                          phoneNo: data.product!.business
+                                              .details.phone_number,
                                           onlineOrdering: data.product!.business
                                               .details.online_ordering,
                                           id: data.product!.business.details.id,
@@ -907,7 +917,8 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
 
 Future<CustBusinessCart?> get_business_order_request(
     {required int orderId}) async {
-  var cart = await _hasuraDb.graphQLClient.query$get_business_order_request(
+  QueryResult<Query$get_business_order_request> cart =
+      await _hasuraDb.graphQLClient.query$get_business_order_request(
     Options$Query$get_business_order_request(
       fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$get_business_order_request(
@@ -981,6 +992,7 @@ Future<CustBusinessCart?> get_business_order_request(
                 home: data.home != null
                     ? HomeWithBusinessCard(
                         business: BusinessCard(
+                          phoneNo: data.home!.business!.details.phone_number,
                           onlineOrdering:
                               data.home!.business!.details.online_ordering,
                           id: data.home!.business!.details.id,
@@ -1033,6 +1045,7 @@ Future<CustBusinessCart?> get_business_order_request(
                 rental: data.rental != null
                     ? RentalWithBusinessCard(
                         business: BusinessCard(
+                          phoneNo: data.rental!.business.details.phone_number,
                           onlineOrdering:
                               data.rental!.business.details.online_ordering,
                           id: data.rental!.business.details.id,
@@ -1074,6 +1087,7 @@ Future<CustBusinessCart?> get_business_order_request(
                 event: data.event != null
                     ? EventWithBusinessCard(
                         business: BusinessCard(
+                          phoneNo: data.event!.business.details.phone_number,
                           onlineOrdering:
                               data.event!.business.details.online_ordering,
                           id: data.event!.business.details.id,
@@ -1123,6 +1137,7 @@ Future<CustBusinessCart?> get_business_order_request(
                 service: data.service != null
                     ? ServiceWithBusinessCard(
                         business: BusinessCard(
+                          phoneNo: data.service!.business.details.phone_number,
                           onlineOrdering:
                               data.service!.business.details.online_ordering,
                           id: data.service!.business.details.id,
@@ -1164,6 +1179,7 @@ Future<CustBusinessCart?> get_business_order_request(
                 product: data.product != null
                     ? ProductWithBusinessCard(
                         business: BusinessCard(
+                          phoneNo: data.product!.business.details.phone_number,
                           onlineOrdering:
                               data.product!.business.details.online_ordering,
                           id: data.product!.business.details.id,
