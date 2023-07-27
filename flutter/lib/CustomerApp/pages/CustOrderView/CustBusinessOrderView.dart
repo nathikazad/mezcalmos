@@ -325,22 +325,22 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
   }
 
   String? getBusinessPhone() {
-    switch (custBusinessCartController
+    switch (custBusinessOrderController
         .currentOrderInView.value!.items.first.offeringType) {
       case OfferingType.Rental:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.rental!.business.phoneNo;
       case OfferingType.Event:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.event!.business.phoneNo;
       case OfferingType.Service:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.service!.business.phoneNo;
       case OfferingType.Product:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.product!.business.phoneNo;
       case OfferingType.Home:
-        return custBusinessCartController
+        return custBusinessOrderController
             .currentOrderInView.value!.items.first.home!.business.phoneNo;
     }
   }
