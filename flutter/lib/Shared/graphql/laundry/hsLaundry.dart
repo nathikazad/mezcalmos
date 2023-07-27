@@ -67,15 +67,14 @@ Future<Laundry?> get_laundry_store_by_id(
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(
-          id: data.delivery_details_of_deliverer!.first.id,
-          selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
-          costPerKmFromBase: data.delivery_details_of_deliverer!.first.cost_per_km_from_base,
-          freeDeliveryMinimumCost: data
-              .delivery_details_of_deliverer!.first.free_delivery_minimum_cost,
-          costPerKm: data.delivery_details_of_deliverer!.first.cost_per_km,
-          minimumCost: data.delivery_details_of_deliverer!.first.minimum_cost,
-          freeDeliveryKmRange:
-              data.delivery_details_of_deliverer!.first.free_delivery_km_range,
+          id: data.delivery_details.id,
+          selfDelivery: data.delivery_details.self_delivery,
+          costPerKmFromBase: data.delivery_details.cost_per_km_from_base,
+          freeDeliveryMinimumCost:
+              data.delivery_details.free_delivery_minimum_cost,
+          costPerKm: data.delivery_details.cost_per_km,
+          minimumCost: data.delivery_details.minimum_cost,
+          freeDeliveryKmRange: data.delivery_details.free_delivery_km_range,
         ),
         userInfo: ServiceInfo(
             locationId: data.details!.location_id,
@@ -100,7 +99,7 @@ Future<Laundry?> get_laundry_store_by_id(
             ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: paymentInfo,
-        selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
+        selfDelivery: data.delivery_details.self_delivery,
         averageNumberOfDays: data.normal_delivery_time,
         laundryState: ServiceState(data.details!.open_status.toServiceStatus(),
             data.details!.approved),
@@ -331,9 +330,9 @@ Future<List<Laundry>> get_laundries(
     int? limit,
     int? offset,
     bool withCache = true}) async {
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
   QueryResult<Query$getLaundries> res = await _db.graphQLClient
       .query$getLaundries(Options$Query$getLaundries(
@@ -341,7 +340,7 @@ Future<List<Laundry>> get_laundries(
             distance: distance,
             from: Geography(
                 fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
-            online_ordering: online_ordering_exp,
+            online_ordering: onlineOrderingExp,
             limit: limit,
             offset: offset,
           ),
@@ -381,16 +380,14 @@ Future<List<Laundry>> get_laundries(
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(
-          id: data.delivery_details_of_deliverer!.first.id,
-                    costPerKmFromBase: data.delivery_details_of_deliverer!.first.cost_per_km_from_base,
-
-          selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
-          freeDeliveryMinimumCost: data
-              .delivery_details_of_deliverer!.first.free_delivery_minimum_cost,
-          costPerKm: data.delivery_details_of_deliverer!.first.cost_per_km,
-          minimumCost: data.delivery_details_of_deliverer!.first.minimum_cost,
-          freeDeliveryKmRange:
-              data.delivery_details_of_deliverer!.first.free_delivery_km_range,
+          id: data.delivery_details.id,
+          costPerKmFromBase: data.delivery_details.cost_per_km_from_base,
+          selfDelivery: data.delivery_details.self_delivery,
+          freeDeliveryMinimumCost:
+              data.delivery_details.free_delivery_minimum_cost,
+          costPerKm: data.delivery_details.cost_per_km,
+          minimumCost: data.delivery_details.minimum_cost,
+          freeDeliveryKmRange: data.delivery_details.free_delivery_km_range,
         ),
         userInfo: ServiceInfo(
             locationId: data.details!.location_id,
@@ -414,7 +411,7 @@ Future<List<Laundry>> get_laundries(
             ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: paymentInfo,
-        selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
+        selfDelivery: data.delivery_details.self_delivery,
         averageNumberOfDays: data.normal_delivery_time,
         laundryState: ServiceState(data.details!.open_status.toServiceStatus(),
             data.details!.approved),

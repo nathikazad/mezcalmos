@@ -29,13 +29,13 @@ Future<List<Restaurant>> fetch_restaurants(
   final List<Restaurant> _restaurants = <Restaurant>[];
   dynamic parsedData;
   dynamic exception;
-  Input$Boolean_comparison_exp? is_open_exp;
+  Input$Boolean_comparison_exp? isOpenExp;
   if (is_open == true) {
-    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
+    isOpenExp = Input$Boolean_comparison_exp($_eq: true);
   }
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
   final QueryResult<Query$getRestaurants> response = await _db.graphQLClient
       .query$getRestaurants(Options$Query$getRestaurants(
@@ -43,8 +43,8 @@ Future<List<Restaurant>> fetch_restaurants(
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               distance: distance,
-              is_open: is_open_exp,
-              online_ordering: online_ordering_exp,
+              is_open: isOpenExp,
+              online_ordering: onlineOrderingExp,
               limit: limit,
               offset: offset),
           fetchPolicy: withCache
@@ -70,19 +70,18 @@ Future<List<Restaurant>> fetch_restaurants(
             descriptionId: data.details!.description_id,
             location: MezLocation.fromHasura(
                 data.details!.location.gps, data.details!.location.address)),
-        deliveryCost: (data.delivery_details_of_deliverer == null)
+        deliveryCost: (data.delivery_details == null)
             ? null
             : DeliveryCost(
-                id: data.delivery_details_of_deliverer!.first.id,
+                id: data.delivery_details.id,
                 selfDelivery:
-                    data.delivery_details_of_deliverer!.first.self_delivery,
-                freeDeliveryMinimumCost: data.delivery_details_of_deliverer!
-                    .first.free_delivery_minimum_cost,
+                    data.delivery_details.self_delivery,
+                freeDeliveryMinimumCost: data.delivery_details.free_delivery_minimum_cost,
                 costPerKm:
-                    data.delivery_details_of_deliverer!.first.cost_per_km,
+                    data.delivery_details.cost_per_km,
                 minimumCost:
-                    data.delivery_details_of_deliverer!.first.minimum_cost,
-                freeDeliveryKmRange: data.delivery_details_of_deliverer!.first
+                    data.delivery_details.minimum_cost,
+                freeDeliveryKmRange: data.delivery_details
                     .free_delivery_km_range,
               ),
         schedule: data.details!.schedule != null
@@ -173,19 +172,18 @@ Future<Restaurant?> get_restaurant_by_id(
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,
-        deliveryCost: (data.delivery_details_of_deliverer == null)
+        deliveryCost: (data.delivery_details == null)
             ? null
             : DeliveryCost(
-                id: data.delivery_details_of_deliverer!.first.id,
+                id: data.delivery_details.id,
                 selfDelivery:
-                    data.delivery_details_of_deliverer!.first.self_delivery,
-                freeDeliveryMinimumCost: data.delivery_details_of_deliverer!
-                    .first.free_delivery_minimum_cost,
+                    data.delivery_details.self_delivery,
+                freeDeliveryMinimumCost: data.delivery_details.free_delivery_minimum_cost,
                 costPerKm:
-                    data.delivery_details_of_deliverer!.first.cost_per_km,
+                    data.delivery_details.cost_per_km,
                 minimumCost:
-                    data.delivery_details_of_deliverer!.first.minimum_cost,
-                freeDeliveryKmRange: data.delivery_details_of_deliverer!.first
+                    data.delivery_details.minimum_cost,
+                freeDeliveryKmRange: data.delivery_details
                     .free_delivery_km_range,
               ),
         userInfo: ServiceInfo(
@@ -204,7 +202,7 @@ Future<Restaurant?> get_restaurant_by_id(
             ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: null,
-        selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
+        selfDelivery: data.delivery_details.self_delivery,
         restaurantState: ServiceState(
             data.details!.open_status.toServiceStatus(),
             data.details!.approved),

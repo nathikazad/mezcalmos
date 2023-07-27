@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/ServicesViews/CustServicesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundriesList/CustLaundriesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
+import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['ServicesViews']['CustServicesWrapper'];
@@ -37,40 +43,62 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
     serviceTree = MezRouter.bodyArguments!["serviceTree"] as List<ServiceTree>;
   }
 
-  void navigateToListView(MezService mezService) {
+  Future<void> navigateToListView(MezService mezService) async {
+    int? orderId = await get_customer_last_order_id(
+        customerId: Get.find<AuthController>().hasuraUserId!,
+        orderType: mezService.toOrderType());
+    mezDbgPrint(
+        "checking if there is orders ${mezService.toOrderType()} ========>$orderId");
+    if (orderId != null && orderId > 0) {
+      switch (mezService) {
+        case MezService.Courier:
+          await CustCourierOrderView.navigate(orderId: orderId);
+          break;
+        case MezService.Restaurants:
+          await ViewRestaurantOrderScreen.navigate(orderId: orderId);
+          break;
+        case MezService.Laundry:
+          await CustLaundryOrderView.navigate(orderId: orderId);
+          break;
+        default:
+          await MezRouter.back(backResult: true);
+      }
+      return;
+    }
+
     switch (mezService) {
       case MezService.Cleaning:
-        CustServicesListView.navigate(
+        await CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.Cleaning,
         );
         break;
       case MezService.MealPlanning:
-        CustServicesListView.navigate(
+        await CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.MealPlanning,
         );
         break;
       case MezService.PetSitting:
-        CustServicesListView.navigate(
+        await CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.PetSitting,
         );
         break;
       case MezService.Photography:
-        CustServicesListView.navigate(
+        await CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.Photography,
         );
         break;
       case MezService.Beauty:
-        CustServicesListView.navigate(
+        await CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.Beauty,
         );
         break;
       case MezService.Tattoo:
-        CustServicesListView.navigate(
+        await CustServicesListView.navigate(
           serviceCategory: ServiceCategory1.Tattoo,
         );
         break;
       case MezService.Laundry:
-        CustLaundriesListView.navigate();
+        await CustLaundriesListView.navigate();
         break;
     }
   }

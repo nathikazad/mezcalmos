@@ -186,15 +186,16 @@ class _CustLaundryOrderRequestViewState
                             SizedBox(
                               height: 15,
                             ),
-                            CustOrderDeliverySelector(
-                              onSelectionUpdate: (List<int> value) {
-                                viewController.selectedCompanies = value;
-                              },
-                              distanceInKm: viewController.getOrderDistance,
-                              onEstDeliveryPriceChange: (double value) {
-                                viewController.estDeliveryCost.value = value;
-                              },
-                            ),
+                            if (!viewController.laundry.value!.selfDelivery)
+                              CustOrderDeliverySelector(
+                                onSelectionUpdate: (List<int> value) {
+                                  viewController.selectedCompanies = value;
+                                },
+                                distanceInKm: viewController.getOrderDistance,
+                                onEstDeliveryPriceChange: (double value) {
+                                  viewController.estDeliveryCost.value = value;
+                                },
+                              ),
                           ],
                           SizedBox(
                             height: 10,

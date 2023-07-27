@@ -49,7 +49,6 @@ class CustRestaurantCartViewController {
   final RxBool clickedCheckout = false.obs;
   Rx<cModels.DeliveryType> dvType = Rx(cModels.DeliveryType.Delivery);
 
-
   // texts
   TextEditingController noteText = TextEditingController();
 
@@ -64,6 +63,8 @@ class CustRestaurantCartViewController {
     return cart.restaurant?.deliveryCost;
   }
 
+  bool get isSelfDelivery => deliveryCost?.selfDelivery ?? false;
+
   RxBool isShippingSet = RxBool(false);
   RxBool hasData = RxBool(false);
   RxnDouble orderDistanceInKm = RxnDouble();
@@ -72,7 +73,8 @@ class CustRestaurantCartViewController {
   Cart get cart => cartController.cart.value ?? Cart();
 
   Rxn<Cart> get _cartRxn => cartController.cart;
-  bool get showDelivery => dvType.value == cModels.DeliveryType.Delivery;
+  bool get showDelivery =>
+      dvType.value == cModels.DeliveryType.Delivery;
 
   // init //
   Future<void> init() async {
@@ -374,37 +376,25 @@ class CustRestaurantCartViewController {
         );
 
         orderDistanceInKm.refresh();
-        // if (_orderDistanceInKm <= 10) {
-        //   final num shippingCost =
-        //       (deliveryCost!.costPerKm * (_orderDistanceInKm)) +
-        //           getShippingCostFromBase();
-        //   if (shippingCost < deliveryCost!.minimumCost) {
-        //     mezDbgPrint(
-        //         " shipping cost is less than ${deliveryCost!.minimumCost} : $shippingCost ");
-        //     cart.shippingCost = deliveryCost!.minimumCost.ceil();
-        //     _cartRxn.refresh();
-        //   } else {
-        //     mezDbgPrint("Shipping cost ============>$shippingCost");
-        //     cart.shippingCost = shippingCost.ceil();
-        //     _cartRxn.refresh();
-        //   }
-        //   cart.setRouteInformation = MapHelper.RouteInformation(
-        //     polyline: routeInfo.encodedPolyLine,
-        //     distance: routeInfo.distance,
-        //     duration: routeInfo.duration,
-        //   );
+        if (orderDistanceInKm.value! <= 10) {
+          final num shippingCost =
+              (deliveryCost!.costPerKm * (orderDistanceInKm.value!)) +
+                  getShippingCostFromBase();
+          if (shippingCost < deliveryCost!.minimumCost) {
+            mezDbgPrint(
+                " shipping cost is less than ${deliveryCost!.minimumCost} : $shippingCost ");
+            estDeliveryCost.value = deliveryCost!.minimumCost.ceil().toDouble();
+          } else {
+            mezDbgPrint("Shipping cost ============>$shippingCost");
+            estDeliveryCost.value = shippingCost.ceil().toDouble();
+          }
 
-        //   // await saveCart();
-        //   isShippingSet.value = true;
-
-        //   return true;
-        // } else {
-        //   cart.shippingCost = null;
-        //   // await saveCart();
-        //   isShippingSet.value = false;
-
-        //   return false;
-        // }
+          isShippingSet.value = true;
+        } else {
+          cart.shippingCost = null;
+          // await saveCart();
+          isShippingSet.value = false;
+        }
       } else {
         cart.shippingCost = null;
         // await saveCart();

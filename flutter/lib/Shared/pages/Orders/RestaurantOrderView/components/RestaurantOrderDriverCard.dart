@@ -86,7 +86,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             widget.order.driverInfo != null &&
                             widget.order.isSelfDelivery())
                           MezIconButton(
-                            onTap: () async {
+                            onTap: () {
                               PickDriverView.navigate(
                                   deliveryOrderId:
                                       widget.order.deliveryOrderId!,
@@ -151,7 +151,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
         if (widget.order.isSelfDelivery() && widget.order.inProcess())
           InkWell(
               onTap: () async {
-                PickDriverView.navigate(
+                await PickDriverView.navigate(
                     deliveryOrderId: widget.order.deliveryOrderId!,
                     showForwardButton: true);
               },

@@ -28,7 +28,7 @@ query getRestaurants(
         }
       }
     }
-    delivery_details_of_deliverer {
+    delivery_details {
       cost_per_km
       cost_per_km_from_base
       free_delivery_km_range
@@ -90,7 +90,7 @@ query getOneRestaurant($id: Int!) {
         }
       }
     }
-    delivery_details_of_deliverer {
+    delivery_details{
       cost_per_km_from_base
       cost_per_km
       free_delivery_km_range
@@ -213,7 +213,7 @@ mutation updateRestaurantInfo(
   update_restaurant_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
 
-    delivery_details_of_deliverer {
+    delivery_details {
       cost_per_km_from_base
       cost_per_km
       free_delivery_km_range
