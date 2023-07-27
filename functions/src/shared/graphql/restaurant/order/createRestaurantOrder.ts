@@ -124,8 +124,9 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         to_location_address: checkoutReq.customerLocation.address,
         notes: checkoutReq.notes,
         status: RestaurantOrderStatus.OrderReceived,
-        discount_value: checkoutReq.discountValue ?? undefined,
-        tax: checkoutReq.tax ?? undefined,
+        stripe_fees: checkoutReq.stripeFees ?? 0,
+        discount_value: checkoutReq.discountValue ?? 0,
+        tax: checkoutReq.tax ?? 0,
         items: {
           data: $`data` 
         },

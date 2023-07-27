@@ -20,6 +20,7 @@ export interface LaundryDetails {
   schedule: Schedule,
   laundryOperatorNotificationToken?: string,
   deliveryDetails: DeliveryDetails,
+  deliveryPartnerId?: number,
   language: ServiceProviderLanguage,
   uniqueId?: string,
   isMezAdmin: boolean

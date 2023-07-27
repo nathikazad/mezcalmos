@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
@@ -108,8 +109,8 @@ class MezServicesMapController {
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
     mGoogleMapController.recenterButtonEnabled.value = true;
 
-    unawaited(locPkg.Location()
-        .getLocation()
+    unawaited(await Get.find<LocationController>()
+        .getCurrentLocation()
         .then((locPkg.LocationData locationData) {
       if (locationData.latitude != null && locationData.longitude != null) {
         _currentLocation.value =
@@ -129,6 +130,7 @@ class MezServicesMapController {
         mGoogleMapController.markers
             .addAll(markers.map((Marker e) => MezMarker(markerId: e.markerId)));
       }
+      return null;
     }));
   }
 

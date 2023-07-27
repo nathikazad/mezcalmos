@@ -128,6 +128,9 @@ export async function updateUniqueIdAndServiceLinks(serviceProvider: ServiceProv
         case ServiceProviderType.Laundry:
             appType = AppType.Laundry
             break;
+        case ServiceProviderType.Business:
+            appType = AppType.Business
+            break;
         default:
             throw new MezError(ChangeUniqueIdError.InvalidServiceProviderType);
     }

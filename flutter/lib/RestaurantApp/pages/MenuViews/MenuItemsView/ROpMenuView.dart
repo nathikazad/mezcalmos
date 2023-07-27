@@ -127,7 +127,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                   onClick: () async {
                     mezDbgPrint("Tapped");
 
-                    bool res = await viewController.saveReorder();
+                    final bool res = await viewController.saveReorder();
                     if (res) {
                       viewController.cancelReoderMode();
                     }
@@ -277,6 +277,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     ROpCategoryItems(
                         key: Key('$index'),
                         category: viewController.rOcategories[index],
+                        detailsId: viewController.detailsId!,
                         restaurantId: restaurantID!,
                         viewController: viewController)
                 ],
@@ -293,6 +294,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     viewController.mainCategories.length,
                     (int index) => ROpCategoryItems(
                         viewController: viewController,
+                        detailsId: viewController.detailsId!,
                         restaurantId: restaurantID!,
                         category: viewController.mainCategories[index])),
               ),

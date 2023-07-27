@@ -35,6 +35,7 @@ import { requestOrder } from "./business/orderRequest";
 import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
 import { requestLaundryDelivery } from "./laundry/deliveryRequest";
+import { RuntimeOptions } from "firebase-functions";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -87,7 +88,7 @@ export const serviceProvider = {
 }
 
 export const restaurant3 = {
-  createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
+  createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data), {memory: "512MB"}),
   checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
   readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
@@ -97,7 +98,7 @@ export const restaurant3 = {
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 export const business = {
-  createBusiness: authenticatedCall((userId, data) => createNewBusiness(userId, data)),
+  createBusiness: authenticatedCall((userId, data) => createNewBusiness(userId, data), {memory: "512MB"}),
   requestOrder: authenticatedCall((userId, data) => requestOrder(userId, data)),
   handleOrderRequestByAdmin: authenticatedCall((userId, data) => handleOrderRequestByAdmin(userId, data)),
   handleOrderRequestFromCustomer: authenticatedCall((userId, data) => handleOrderRequestFromCustomer(userId, data)),
@@ -133,10 +134,8 @@ export const delivery3 = {
 }
 
 type AuthenticatedFunction = (userId:number, data:any) => any;
-function authenticatedCall(func:AuthenticatedFunction) {
-  return functions.https.onCall(async (data, context) => {
-    
-    console.log("[+] authenticatedCall :: ", data);
+function authenticatedCall(func:AuthenticatedFunction, runtimeOptions:RuntimeOptions= {memory: "256MB"}) {
+  return functions.runWith(runtimeOptions).https.onCall(async (data, context) => {
     if (!context.auth?.uid) {
       throw new HttpsError(
         "unauthenticated",
@@ -150,6 +149,8 @@ function authenticatedCall(func:AuthenticatedFunction) {
     }
     data = data || {};
     data.firebaseId = context.auth!.uid;
+    console.log("[+] authenticatedCall :: ", parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]));
+    console.log(data)
     return await func(parseInt(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"]), data);
   });
 }
