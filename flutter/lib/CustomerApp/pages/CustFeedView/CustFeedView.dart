@@ -17,15 +17,25 @@ import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustFeedView']['CustFeedView'];
 
-class CustFeedView extends StatelessWidget {
+class CustFeedView extends StatefulWidget {
   final bool asTab;
-  CustFeedView({super.key, this.asTab = false});
+  const CustFeedView({super.key, this.asTab = false});
 
   static Future<void> navigate() {
     return MezRouter.toPath(CustomerRoutes.customerOrdersRoute);
   }
 
-  final CustFeedViewController _viewController = CustFeedViewController.init();
+  @override
+  State<CustFeedView> createState() => _CustFeedViewState();
+}
+
+class _CustFeedViewState extends State<CustFeedView> {
+  CustFeedViewController _viewController = CustFeedViewController();
+  @override
+  void initState() {
+    super.initState();
+    _viewController.init();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +43,8 @@ class CustFeedView extends StatelessWidget {
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       appBar: MezcalmosAppBar(
-          asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
-          onClick: asTab ? null : MezRouter.back,
+          widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+          onClick: widget.asTab ? null : MezRouter.back,
           title: '${_i18n()["title"]}'),
       body: DefaultTabController(
           length: 2,
@@ -57,9 +67,12 @@ class CustFeedView extends StatelessWidget {
                               ?.copyWith(fontSize: 15),
                         ),
                         trailing: Switch(
-                            activeColor: primaryBlueColor,
-                            value: _viewController.postSwitch,
-                            onChanged: _viewController.setPostSwitch),
+                          activeColor: primaryBlueColor,
+                          value: _viewController.postSwitch,
+                          onChanged: (value) {
+                            _viewController.setPostSwitch(value);
+                          },
+                        ),
                       ),
                       Expanded(
                           child: _viewController.posts.isEmpty
@@ -84,9 +97,12 @@ class CustFeedView extends StatelessWidget {
                               ?.copyWith(fontSize: 15),
                         ),
                         trailing: Switch(
-                            activeColor: primaryBlueColor,
-                            value: _viewController.promotionSwitch,
-                            onChanged: _viewController.setPromotionSwitch),
+                          activeColor: primaryBlueColor,
+                          value: _viewController.promotionSwitch,
+                          onChanged: (value) {
+                            _viewController.setPromotionSwitch(value);
+                          },
+                        ),
                       ),
                       Expanded(
                         child: _viewController.promotions.isEmpty

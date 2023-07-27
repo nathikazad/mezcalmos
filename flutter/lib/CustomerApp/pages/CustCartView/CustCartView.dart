@@ -241,6 +241,20 @@ class _CustCartViewState extends State<CustCartView> {
                                     ),
                                   ],
                                 ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Final Cost',
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                    Text(
+                                      "\$${custBusinessCartController.cart.value!.cost.toDouble() - custBusinessCartController.cart.value!.discountValue.toDouble()}",
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
