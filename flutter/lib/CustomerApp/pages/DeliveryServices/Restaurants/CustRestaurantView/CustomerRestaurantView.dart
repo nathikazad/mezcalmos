@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/BusinessFeedCardPost.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestauSliverAppBar.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantFeedCardPost.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
@@ -59,7 +63,6 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-     
       bottomSheet: Obx(
         () => (_viewController.restaurant.value?.isOpen == false)
             ? _schedulingOrdersBottomWidget()
@@ -88,33 +91,106 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
+      physics: NeverScrollableScrollPhysics(),
       controller: _viewController.scrollController,
       slivers: [
         RestaurantSliverAppBar(controller: _viewController),
-        Obx(() {
-          if (_viewController.showInfo.value)
-            return SliverPadding(
-              padding: const EdgeInsets.all(12),
-              sliver: SliverToBoxAdapter(
-                  child: RestaurantInfoTab(
+        SliverFillRemaining(
+          child:
+              TabBarView(controller: _viewController.tabController, children: [
+            SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 12.5),
+              child: Column(
+                  children: List.generate(
+                      _viewController.isOnMenuView
+                          ? _viewController.catsList.length
+                          : _viewController.getGroupedSpecials().length,
+                      (int index) {
+                _viewController.itemKeys[index] = RectGetter.createGlobalKey();
+                return _viewController.isOnMenuView
+                    ? _scrollableCategoryItems(index)
+                    : _scrollableSpecialItems(index);
+              })),
+            ),
+            Expanded(
+              child: DefaultTabController(
+                  length: 2,
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    TabBar(
+                        labelColor: primaryBlueColor,
+                        unselectedLabelColor: Colors.grey.shade400,
+                        tabs: [
+                          Tab(icon: Icon(Icons.newspaper)),
+                          Tab(icon: Icon(Icons.grid_on))
+                        ]),
+                    Expanded(
+                        child: TabBarView(children: <Widget>[
+                      Obx(() => _viewController.posts.isEmpty
+                          ? NoPostsFound()
+                          : SingleChildScrollView(
+                              child: Column(
+                                children: List.generate(
+                                    _viewController.posts.length,
+                                    (int index) => RestaurantFeedCardPost(
+                                        controller: _viewController,
+                                        restaurant:
+                                            _viewController.restaurant.value!,
+                                        post: _viewController.posts[index])),
+                              ),
+                            )),
+                      GridView.builder(
+                          padding: EdgeInsets.zero,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  childAspectRatio: 1,
+                                  crossAxisSpacing: 1,
+                                  mainAxisSpacing: 1),
+                          itemCount: _viewController.gridImages.length,
+                          itemBuilder: (BuildContext ctx, int index) {
+                            return CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl:
+                                    _viewController.gridImages[index].image!);
+                          })
+                    ]))
+                  ])),
+            ),
+            SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 12.5),
+              child: RestaurantInfoTab(
                 restaurant: _viewController.restaurant.value!,
                 controller: _viewController,
-              )),
-            );
-          else if (_viewController.isInitialzed) {
-            return _buildItemsList();
-          } else {
-            return SliverFillRemaining(
-                child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                "Some magic is happening ...",
-                style: context.txt.bodyLarge?.copyWith(
-                    color: primaryBlueColor, fontStyle: FontStyle.italic),
               ),
-            ));
-          }
-        })
+            ),
+          ]),
+        )
+
+        // Obx(() {
+        //   if (_viewController.showInfo.value)
+        //     return SliverPadding(
+        //       padding: const EdgeInsets.all(12),
+        //       sliver: SliverToBoxAdapter(
+        //           child: RestaurantInfoTab(
+        //         restaurant: _viewController.restaurant.value!,
+        //         controller: _viewController,
+        //       )),
+        //     );
+        //   else if (_viewController.isInitialzed) {
+        //     return _buildItemsList();
+        //   } else {
+        //     return SliverFillRemaining(
+        //         child: Container(
+        //       alignment: Alignment.center,
+        //       child: Text(
+        //         "Some magic is happening ...",
+        //         style: context.txt.bodyLarge?.copyWith(
+        //             color: primaryBlueColor, fontStyle: FontStyle.italic),
+        //       ),
+        //     ));
+        //   }
+        // })
       ],
     );
   }
