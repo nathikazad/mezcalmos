@@ -3738,7 +3738,7 @@
         "courier": "Entrega abierta",
         "cancel" : "Cancelar",
         "counterOffer" : "Contraoferta",
-        "reqCounterOffer" : "Solicitar cambio de precio"
+        "reqCounterOffer" : "Solicitar"
       }
     },
     "notificationHandler": {

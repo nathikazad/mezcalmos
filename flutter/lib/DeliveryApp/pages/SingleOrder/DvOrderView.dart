@@ -220,13 +220,15 @@ Future<double?> _showCostSheet(BuildContext context) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    "${_i18n()['counterOffer']}",
-                    style: context.textTheme.bodyLarge,
+                  Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.all(8),
+                    child: Text(
+                      "${_i18n()['counterOffer']}",
+                      style: context.textTheme.bodyLarge,
+                    ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  meduimSeperator,
                   TextFormField(
                     controller: _textEditingController,
                     style: context.textTheme.bodyLarge,
@@ -243,9 +245,7 @@ Future<double?> _showCostSheet(BuildContext context) {
                       FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
                     ],
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  meduimSeperator,
                   Row(
                     children: [
                       Flexible(
@@ -274,9 +274,7 @@ Future<double?> _showCostSheet(BuildContext context) {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  meduimSeperator
                 ],
               )),
         );
