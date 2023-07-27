@@ -1,5 +1,5 @@
-query admin_get_dv_companies($limit: Int!, $offset: Int!) {
-  delivery_company(limit: $limit, offset: $offset) {
+query admin_get_dv_companies($limit: Int!, $offset: Int!,$keyword: String="%%") {
+  delivery_company(limit: $limit, offset: $offset, where: {details: {name: {_ilike: $keyword}}}) {
     delivery_details {
       cost_per_km
       customer_pickup
@@ -32,8 +32,8 @@ query admin_get_dv_companies($limit: Int!, $offset: Int!) {
     id
   }
 }
-query admin_get_laundries($limit: Int!, $offset: Int!) {
-  laundry_store(limit: $limit, offset: $offset) {
+query admin_get_laundries($limit: Int!, $offset: Int!,$keyword: String="%%") {
+  laundry_store(limit: $limit, offset: $offset, where: {details: {name: {_ilike: $keyword}}}) {
     details {
       id
       is_open
@@ -53,8 +53,8 @@ query admin_get_laundries($limit: Int!, $offset: Int!) {
     delivery_details_id
     id
   }
-}query admin_get_businesses($limit: Int!, $offset: Int!) {
-  business_business(limit: $limit, offset: $offset) {
+}query admin_get_businesses($limit: Int!, $offset: Int!,$keyword: String="%%") {
+  business_business(limit: $limit, offset: $offset, where: {details: {name: {_ilike: $keyword}}}) {
     details {
       id
       approved
@@ -74,8 +74,8 @@ query admin_get_laundries($limit: Int!, $offset: Int!) {
     id
   }
 }
-query admin_get_restaurants($limit: Int!, $offset: Int!) {
-  restaurant_restaurant(limit: $limit, offset: $offset) {
+query admin_get_restaurants($limit: Int!, $offset: Int!,$keyword: String="%%") {
+  restaurant_restaurant(limit: $limit, offset: $offset, where: {details: {name: {_ilike: $keyword}}}) {
     id
     delivery_details_id
     details {

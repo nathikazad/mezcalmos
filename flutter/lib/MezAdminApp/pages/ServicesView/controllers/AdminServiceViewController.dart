@@ -68,7 +68,7 @@ class AdminServicesViewController {
     scrollController.onBottomReach(fetchCurrent, sensitivity: 500);
   }
 
-  Future<void> fetchCompanies() async {
+  Future<void> fetchCompanies({String? keyword}) async {
     isFetching.value = true;
     if (_dvFetchingData || _dvReachedEndOfData) {
       return;
@@ -76,7 +76,10 @@ class AdminServicesViewController {
     _dvFetchingData = true;
     mezDbgPrint("fetching companies from admin controller");
     List<DeliveryCompany> newList = await admin_get_dv_companies(
-        withCache: false, limit: dvFetchSize, offset: _dvCurrentOffset);
+        withCache: false,
+        limit: dvFetchSize,
+        offset: _dvCurrentOffset,
+        keyword: keyword);
     _dvCompanies.value += newList;
     _dvCompanies.refresh();
     if (newList.length == 0) {
@@ -87,7 +90,7 @@ class AdminServicesViewController {
     isFetching.value = false;
   }
 
-  Future<void> fetchBusiness() async {
+  Future<void> fetchBusiness({String? keyword}) async {
     isFetching.value = true;
     if (_businessFetchingData || _businessReachedEndOfData) {
       return;
@@ -96,6 +99,7 @@ class AdminServicesViewController {
     mezDbgPrint("fetching businesses from admin controller");
     List<cModels.Business> newList = await admin_get_businesses(
         withCache: false,
+        keyword: keyword,
         limit: businessFetchSize,
         offset: _businessCurrentOffset);
     _businesses.value += newList;
@@ -109,7 +113,7 @@ class AdminServicesViewController {
     isFetching.value = false;
   }
 
-  Future<void> fetchLaundries() async {
+  Future<void> fetchLaundries({String? keyword}) async {
     isFetching.value = true;
     if (_laundryFetchingData || _laundryReachedEndOfData) {
       return;
@@ -119,6 +123,7 @@ class AdminServicesViewController {
     List<Laundry> newList = await admin_get_laundries(
         withCache: false,
         limit: laundryFetchSize,
+        keyword: keyword,
         offset: _laundryCurrentOffset);
     _laundries.value += newList;
     _laundries.refresh();
@@ -131,7 +136,7 @@ class AdminServicesViewController {
     isFetching.value = false;
   }
 
-  Future<void> fetchRestaurants() async {
+  Future<void> fetchRestaurants({String? keyword}) async {
     isFetching.value = true;
     if (_restFetchingData || _restReachedEndOfData) {
       return;
@@ -139,7 +144,10 @@ class AdminServicesViewController {
     _restFetchingData = true;
     mezDbgPrint("fetching restaurants from admin controller");
     List<Restaurant> newList = await admin_get_restaurants(
-        withCache: false, limit: restFetchSize, offset: _restCurrentOffset);
+        withCache: false,
+        limit: restFetchSize,
+        offset: _restCurrentOffset,
+        keyword: keyword);
     _restaurants.value += newList;
     _restaurants.refresh();
     if (newList.length == 0) {
@@ -156,12 +164,58 @@ class AdminServicesViewController {
       {required int serviceDetailsId,
       required cModels.ServiceProviderType providerType,
       required bool value}) async {
-    await update_service_state(
+    final bool res = await update_service_state(
         status: value ? ServiceStatus.Open : ServiceStatus.ClosedTemporarily,
         detailsId: serviceDetailsId,
         approved: null);
-    await _resetData();
-    fetchCurrent();
+    if (res) {
+      _updateIsOpen(providerType, serviceDetailsId, value);
+    }
+  }
+
+  void _updateIsOpen(cModels.ServiceProviderType providerType,
+      int serviceDetailsId, bool value) {
+    switch (providerType) {
+      case cModels.ServiceProviderType.Restaurant:
+        _restaurants
+                .firstWhere((Restaurant element) =>
+                    element.serviceDetailsId == serviceDetailsId)
+                .state
+                .status =
+            value ? ServiceStatus.Open : ServiceStatus.ClosedTemporarily;
+        _restaurants.refresh();
+        break;
+      case cModels.ServiceProviderType.Laundry:
+        _laundries
+                .firstWhere((Laundry element) =>
+                    element.serviceDetailsId == serviceDetailsId)
+                .state
+                .status =
+            value ? ServiceStatus.Open : ServiceStatus.ClosedTemporarily;
+        _laundries.refresh();
+        break;
+      case cModels.ServiceProviderType.Business:
+        _businesses
+                .firstWhere((cModels.Business element) =>
+                    element.details.id == serviceDetailsId)
+                .details
+                .openStatus =
+            value
+                ? cModels.OpenStatus.Open
+                : cModels.OpenStatus.ClosedTemporarily;
+        _businesses.refresh();
+        break;
+      case cModels.ServiceProviderType.DeliveryCompany:
+        _dvCompanies
+                .firstWhere((DeliveryCompany element) =>
+                    element.serviceDetailsId == serviceDetailsId)
+                .state
+                .status =
+            value ? ServiceStatus.Open : ServiceStatus.ClosedTemporarily;
+        _dvCompanies.refresh();
+        break;
+      default:
+    }
   }
 
   void fetchCurrent() {
@@ -253,6 +307,84 @@ class AdminServicesViewController {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  void search(String value) {
+    if (value.isEmpty) {
+      _closeSearch();
+    } else if (value.length.isEven) {
+      switch (currentService) {
+        case ServiceProviderType.Business:
+          _searchBusiness(value);
+
+          break;
+        case ServiceProviderType.Restaurant:
+          _searchRestaurants(value);
+
+          break;
+        case ServiceProviderType.Laundry:
+          _searchLaundry(value);
+          break;
+        case ServiceProviderType.DeliveryCompany:
+          _searchDvCompanies(value);
+
+          break;
+        default:
+      }
+    }
+  }
+
+  void _closeSearch() {
+    switch (currentService) {
+      case ServiceProviderType.Business:
+        _searchBusiness(null);
+
+        break;
+      case ServiceProviderType.Restaurant:
+        _searchRestaurants(null);
+
+        break;
+      case ServiceProviderType.Laundry:
+        _searchLaundry(null);
+        break;
+      case ServiceProviderType.DeliveryCompany:
+        _searchDvCompanies(null);
+
+        break;
+      default:
+    }
+  }
+
+  void _searchBusiness(String? keyword) {
+    _businesses.clear();
+    _businessCurrentOffset = 0;
+    _businessFetchingData = false;
+    _businessReachedEndOfData = false;
+    fetchBusiness(keyword: keyword);
+  }
+
+  void _searchLaundry(String? keyword) {
+    _laundries.clear();
+    _laundryCurrentOffset = 0;
+    _laundryFetchingData = false;
+    _laundryReachedEndOfData = false;
+    fetchLaundries(keyword: keyword);
+  }
+
+  void _searchRestaurants(String? keyword) {
+    _restaurants.clear();
+    _restCurrentOffset = 0;
+    _restFetchingData = false;
+    _restReachedEndOfData = false;
+    fetchRestaurants(keyword: keyword);
+  }
+
+  void _searchDvCompanies(String? keyword) {
+    _dvCompanies.clear();
+    _dvCurrentOffset = 0;
+    _dvFetchingData = false;
+    _dvReachedEndOfData = false;
+    fetchCompanies(keyword: keyword);
   }
 
   Future<void> _resetData() async {

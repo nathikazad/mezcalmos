@@ -117,6 +117,8 @@ class CreateServiceInfoPage extends StatelessWidget {
                     },
                     style: context.txt.bodyLarge,
                     decoration: InputDecoration(
+                        helperText:
+                      "${_i18n()['phoneNumberHelper']}",
                         hintStyle: context.txt.bodyMedium,
                         hintText: "${_i18n()['phoneTextDescription']}"),
                   ),

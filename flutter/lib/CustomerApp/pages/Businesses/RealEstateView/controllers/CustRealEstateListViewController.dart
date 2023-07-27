@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFi
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/constants/mapConstants.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
@@ -96,7 +97,7 @@ class CustRealEstateListViewController {
       // todo @ChiragKr04 fix the location thing
 
       final locPkg.LocationData location =
-          await locPkg.Location().getLocation();
+          await Get.find<LocationController>().getCurrentLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
             lat: location.latitude!, lng: location.longitude!, address: "");
