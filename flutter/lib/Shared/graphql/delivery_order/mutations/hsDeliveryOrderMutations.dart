@@ -89,9 +89,10 @@ Future<bool> update_delivery_order_offers(
                     (int key, cModels.CounterOffer value) =>
                         MapEntry(key, value.toFirebaseFormattedJson())),
               ))));
+
   if (res.parsedData?.update_delivery_order_by_pk == null) {
-    mezDbgPrint("res =>$res");
-    //  throwError(res.exception);
+//    mezDbgPrint("res =>$res");
+    throwError(res.exception);
   }
   return res.parsedData?.update_delivery_order_by_pk != null;
 }

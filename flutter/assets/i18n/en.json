@@ -3542,7 +3542,7 @@
         "courier": "Open Delivery",
         "cancel": "Cancel",
         "counterOffer": "Counter Offer",
-        "reqCounterOffer": "Request price change"
+        "reqCounterOffer": "Request"
       },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
