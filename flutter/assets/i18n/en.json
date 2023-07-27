@@ -4269,7 +4269,8 @@
         "orders": "Orders",
         "menu": "Menu",
         "drivers": "Drivers",
-        "profile": "Profile"
+        "profile": "Profile",
+        "feed": "Feed"
       },
       "ROpDashboardPage": {
         "openTitle": "Restaurant Availibility",

@@ -4319,7 +4319,8 @@
         "orders": "Pedidos",
         "menu": "Menú",
         "drivers": "Conductoras",
-        "profile": "Perfil"
+        "profile": "Perfil",
+        "feed": "Alimentar"
       },
       "ROpDashboardPage": {
         "openTitle": "Disponibilidad de restaurantes",
