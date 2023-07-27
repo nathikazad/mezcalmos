@@ -131,6 +131,10 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                                 Text(
                                   laundry.rate!.toStringAsFixed(1),
                                   style: context.txt.bodySmall,
+                                ),
+                                Text(
+                                  '(${laundry.reviewCount})',
+                                  style: context.txt.bodySmall,
                                 )
                               ],
                             ),

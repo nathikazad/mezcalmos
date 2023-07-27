@@ -57,7 +57,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-         actionIcons: [
+        actionIcons: [
           FloatingCartComponent(
             cartType: CartType.business,
           ),
@@ -250,7 +250,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                                     WidgetSpan(
                                         alignment: PlaceholderAlignment.middle,
                                         child: Text(
-                                            '${viewController.businesses[index].avgRating}',
+                                            '${viewController.businesses[index].avgRating?.toStringAsFixed(1)}',
                                             style:
                                                 context.textTheme.bodySmall)),
                                     WidgetSpan(

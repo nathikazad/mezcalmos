@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/helpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
@@ -49,6 +51,8 @@ class CustBusinessCartController extends GetxController {
   StreamSubscription<List<CustBusinessCart>?>? cartStream;
   String? subscriptionId;
   int _numberOfOldBusinessOrders = 0;
+
+  TextEditingController couponController = TextEditingController();
 
   @override
   Future<void> onInit() async {
@@ -154,6 +158,8 @@ class CustBusinessCartController extends GetxController {
       mezDbgPrint("Cart value ============> $value");
       if (value != null && value.items.isNotEmpty && value.businessId != null) {
         cart.value = value;
+        await applyOffersToBusinessCart(
+            cart: cart.value!, customerId: _auth.hasuraUserId!);
         cart.refresh();
       } else {
         cart.value = value;
@@ -272,7 +278,6 @@ class CustBusinessCartController extends GetxController {
     return null;
   }
 
-
   Future<void> updateProductItemCount({
     required BusinessCartItem item,
     required int count,
@@ -340,5 +345,14 @@ class CustBusinessCartController extends GetxController {
       case OfferingType.Product:
         return;
     }
+  }
+
+  Future<void> applyCoupon() async {
+    var response = await applyBusinessCoupon(
+      cart: cart.value!,
+      customerId: _auth.hasuraUserId!,
+      couponCode: couponController.text.trim(),
+    );
+    mezDbgPrint("response: ${response?.name}");
   }
 }

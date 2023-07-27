@@ -1,4 +1,5 @@
 import '../../__generated/schema.graphql.dart';
+import '../../offer/__generated/offer.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -12863,6 +12864,5032 @@ class _CopyWithStubImpl$Mutation$update_business_online_ordering$update_service_
 
   call({
     bool? online_ordering,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$add_new_offer {
+  factory Variables$Mutation$add_new_offer(
+          {required Input$service_provider_offer_insert_input object}) =>
+      Variables$Mutation$add_new_offer._({
+        r'object': object,
+      });
+
+  Variables$Mutation$add_new_offer._(this._$data);
+
+  factory Variables$Mutation$add_new_offer.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$object = data['object'];
+    result$data['object'] = Input$service_provider_offer_insert_input.fromJson(
+        (l$object as Map<String, dynamic>));
+    return Variables$Mutation$add_new_offer._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$service_provider_offer_insert_input get object =>
+      (_$data['object'] as Input$service_provider_offer_insert_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$object = object;
+    result$data['object'] = l$object.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$add_new_offer<Variables$Mutation$add_new_offer>
+      get copyWith => CopyWith$Variables$Mutation$add_new_offer(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$add_new_offer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$object = object;
+    final lOther$object = other.object;
+    if (l$object != lOther$object) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$object = object;
+    return Object.hashAll([l$object]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$add_new_offer<TRes> {
+  factory CopyWith$Variables$Mutation$add_new_offer(
+    Variables$Mutation$add_new_offer instance,
+    TRes Function(Variables$Mutation$add_new_offer) then,
+  ) = _CopyWithImpl$Variables$Mutation$add_new_offer;
+
+  factory CopyWith$Variables$Mutation$add_new_offer.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$add_new_offer;
+
+  TRes call({Input$service_provider_offer_insert_input? object});
+}
+
+class _CopyWithImpl$Variables$Mutation$add_new_offer<TRes>
+    implements CopyWith$Variables$Mutation$add_new_offer<TRes> {
+  _CopyWithImpl$Variables$Mutation$add_new_offer(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$add_new_offer _instance;
+
+  final TRes Function(Variables$Mutation$add_new_offer) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? object = _undefined}) =>
+      _then(Variables$Mutation$add_new_offer._({
+        ..._instance._$data,
+        if (object != _undefined && object != null)
+          'object': (object as Input$service_provider_offer_insert_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$add_new_offer<TRes>
+    implements CopyWith$Variables$Mutation$add_new_offer<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$add_new_offer(this._res);
+
+  TRes _res;
+
+  call({Input$service_provider_offer_insert_input? object}) => _res;
+}
+
+class Mutation$add_new_offer {
+  Mutation$add_new_offer({
+    this.insert_service_provider_offer_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$add_new_offer.fromJson(Map<String, dynamic> json) {
+    final l$insert_service_provider_offer_one =
+        json['insert_service_provider_offer_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$add_new_offer(
+      insert_service_provider_offer_one: l$insert_service_provider_offer_one ==
+              null
+          ? null
+          : Mutation$add_new_offer$insert_service_provider_offer_one.fromJson(
+              (l$insert_service_provider_offer_one as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$add_new_offer$insert_service_provider_offer_one?
+      insert_service_provider_offer_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_service_provider_offer_one =
+        insert_service_provider_offer_one;
+    _resultData['insert_service_provider_offer_one'] =
+        l$insert_service_provider_offer_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_service_provider_offer_one =
+        insert_service_provider_offer_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_service_provider_offer_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$add_new_offer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_service_provider_offer_one =
+        insert_service_provider_offer_one;
+    final lOther$insert_service_provider_offer_one =
+        other.insert_service_provider_offer_one;
+    if (l$insert_service_provider_offer_one !=
+        lOther$insert_service_provider_offer_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$add_new_offer on Mutation$add_new_offer {
+  CopyWith$Mutation$add_new_offer<Mutation$add_new_offer> get copyWith =>
+      CopyWith$Mutation$add_new_offer(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$add_new_offer<TRes> {
+  factory CopyWith$Mutation$add_new_offer(
+    Mutation$add_new_offer instance,
+    TRes Function(Mutation$add_new_offer) then,
+  ) = _CopyWithImpl$Mutation$add_new_offer;
+
+  factory CopyWith$Mutation$add_new_offer.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$add_new_offer;
+
+  TRes call({
+    Mutation$add_new_offer$insert_service_provider_offer_one?
+        insert_service_provider_offer_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one<TRes>
+      get insert_service_provider_offer_one;
+}
+
+class _CopyWithImpl$Mutation$add_new_offer<TRes>
+    implements CopyWith$Mutation$add_new_offer<TRes> {
+  _CopyWithImpl$Mutation$add_new_offer(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$add_new_offer _instance;
+
+  final TRes Function(Mutation$add_new_offer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_service_provider_offer_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$add_new_offer(
+        insert_service_provider_offer_one: insert_service_provider_offer_one ==
+                _undefined
+            ? _instance.insert_service_provider_offer_one
+            : (insert_service_provider_offer_one
+                as Mutation$add_new_offer$insert_service_provider_offer_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one<TRes>
+      get insert_service_provider_offer_one {
+    final local$insert_service_provider_offer_one =
+        _instance.insert_service_provider_offer_one;
+    return local$insert_service_provider_offer_one == null
+        ? CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one
+            .stub(_then(_instance))
+        : CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one(
+            local$insert_service_provider_offer_one,
+            (e) => call(insert_service_provider_offer_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$add_new_offer<TRes>
+    implements CopyWith$Mutation$add_new_offer<TRes> {
+  _CopyWithStubImpl$Mutation$add_new_offer(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$add_new_offer$insert_service_provider_offer_one?
+        insert_service_provider_offer_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one<TRes>
+      get insert_service_provider_offer_one =>
+          CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one
+              .stub(_res);
+}
+
+const documentNodeMutationadd_new_offer = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'add_new_offer'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'object')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'service_provider_offer_insert_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_service_provider_offer_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: VariableNode(name: NameNode(value: 'object')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$add_new_offer _parserFn$Mutation$add_new_offer(
+        Map<String, dynamic> data) =>
+    Mutation$add_new_offer.fromJson(data);
+typedef OnMutationCompleted$Mutation$add_new_offer = FutureOr<void> Function(
+  dynamic,
+  Mutation$add_new_offer?,
+);
+
+class Options$Mutation$add_new_offer
+    extends graphql.MutationOptions<Mutation$add_new_offer> {
+  Options$Mutation$add_new_offer({
+    String? operationName,
+    required Variables$Mutation$add_new_offer variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$add_new_offer? onCompleted,
+    graphql.OnMutationUpdate<Mutation$add_new_offer>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$add_new_offer(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationadd_new_offer,
+          parserFn: _parserFn$Mutation$add_new_offer,
+        );
+
+  final OnMutationCompleted$Mutation$add_new_offer? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$add_new_offer
+    extends graphql.WatchQueryOptions<Mutation$add_new_offer> {
+  WatchOptions$Mutation$add_new_offer({
+    String? operationName,
+    required Variables$Mutation$add_new_offer variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationadd_new_offer,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$add_new_offer,
+        );
+}
+
+extension ClientExtension$Mutation$add_new_offer on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$add_new_offer>> mutate$add_new_offer(
+          Options$Mutation$add_new_offer options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$add_new_offer> watchMutation$add_new_offer(
+          WatchOptions$Mutation$add_new_offer options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$add_new_offer$insert_service_provider_offer_one {
+  Mutation$add_new_offer$insert_service_provider_offer_one({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$add_new_offer$insert_service_provider_offer_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$add_new_offer$insert_service_provider_offer_one(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$add_new_offer$insert_service_provider_offer_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$add_new_offer$insert_service_provider_offer_one
+    on Mutation$add_new_offer$insert_service_provider_offer_one {
+  CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one<
+          Mutation$add_new_offer$insert_service_provider_offer_one>
+      get copyWith =>
+          CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one<
+    TRes> {
+  factory CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one(
+    Mutation$add_new_offer$insert_service_provider_offer_one instance,
+    TRes Function(Mutation$add_new_offer$insert_service_provider_offer_one)
+        then,
+  ) = _CopyWithImpl$Mutation$add_new_offer$insert_service_provider_offer_one;
+
+  factory CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$add_new_offer$insert_service_provider_offer_one;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$add_new_offer$insert_service_provider_offer_one<
+        TRes>
+    implements
+        CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one<
+            TRes> {
+  _CopyWithImpl$Mutation$add_new_offer$insert_service_provider_offer_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$add_new_offer$insert_service_provider_offer_one _instance;
+
+  final TRes Function(Mutation$add_new_offer$insert_service_provider_offer_one)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$add_new_offer$insert_service_provider_offer_one(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$add_new_offer$insert_service_provider_offer_one<
+        TRes>
+    implements
+        CopyWith$Mutation$add_new_offer$insert_service_provider_offer_one<
+            TRes> {
+  _CopyWithStubImpl$Mutation$add_new_offer$insert_service_provider_offer_one(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$get_offer_by_id {
+  factory Variables$Query$get_offer_by_id({required int id}) =>
+      Variables$Query$get_offer_by_id._({
+        r'id': id,
+      });
+
+  Variables$Query$get_offer_by_id._(this._$data);
+
+  factory Variables$Query$get_offer_by_id.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$get_offer_by_id._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_offer_by_id<Variables$Query$get_offer_by_id>
+      get copyWith => CopyWith$Variables$Query$get_offer_by_id(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_offer_by_id) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_offer_by_id<TRes> {
+  factory CopyWith$Variables$Query$get_offer_by_id(
+    Variables$Query$get_offer_by_id instance,
+    TRes Function(Variables$Query$get_offer_by_id) then,
+  ) = _CopyWithImpl$Variables$Query$get_offer_by_id;
+
+  factory CopyWith$Variables$Query$get_offer_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_offer_by_id;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$get_offer_by_id<TRes>
+    implements CopyWith$Variables$Query$get_offer_by_id<TRes> {
+  _CopyWithImpl$Variables$Query$get_offer_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_offer_by_id _instance;
+
+  final TRes Function(Variables$Query$get_offer_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) =>
+      _then(Variables$Query$get_offer_by_id._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_offer_by_id<TRes>
+    implements CopyWith$Variables$Query$get_offer_by_id<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_offer_by_id(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$get_offer_by_id {
+  Query$get_offer_by_id({
+    this.service_provider_offer_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$get_offer_by_id.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_offer_by_pk = json['service_provider_offer_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$get_offer_by_id(
+      service_provider_offer_by_pk: l$service_provider_offer_by_pk == null
+          ? null
+          : Query$get_offer_by_id$service_provider_offer_by_pk.fromJson(
+              (l$service_provider_offer_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_offer_by_id$service_provider_offer_by_pk?
+      service_provider_offer_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_offer_by_pk = service_provider_offer_by_pk;
+    _resultData['service_provider_offer_by_pk'] =
+        l$service_provider_offer_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_offer_by_pk = service_provider_offer_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_offer_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_offer_by_id) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_offer_by_pk = service_provider_offer_by_pk;
+    final lOther$service_provider_offer_by_pk =
+        other.service_provider_offer_by_pk;
+    if (l$service_provider_offer_by_pk != lOther$service_provider_offer_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_offer_by_id on Query$get_offer_by_id {
+  CopyWith$Query$get_offer_by_id<Query$get_offer_by_id> get copyWith =>
+      CopyWith$Query$get_offer_by_id(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$get_offer_by_id<TRes> {
+  factory CopyWith$Query$get_offer_by_id(
+    Query$get_offer_by_id instance,
+    TRes Function(Query$get_offer_by_id) then,
+  ) = _CopyWithImpl$Query$get_offer_by_id;
+
+  factory CopyWith$Query$get_offer_by_id.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_offer_by_id;
+
+  TRes call({
+    Query$get_offer_by_id$service_provider_offer_by_pk?
+        service_provider_offer_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk<TRes>
+      get service_provider_offer_by_pk;
+}
+
+class _CopyWithImpl$Query$get_offer_by_id<TRes>
+    implements CopyWith$Query$get_offer_by_id<TRes> {
+  _CopyWithImpl$Query$get_offer_by_id(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_offer_by_id _instance;
+
+  final TRes Function(Query$get_offer_by_id) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_offer_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_offer_by_id(
+        service_provider_offer_by_pk: service_provider_offer_by_pk == _undefined
+            ? _instance.service_provider_offer_by_pk
+            : (service_provider_offer_by_pk
+                as Query$get_offer_by_id$service_provider_offer_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk<TRes>
+      get service_provider_offer_by_pk {
+    final local$service_provider_offer_by_pk =
+        _instance.service_provider_offer_by_pk;
+    return local$service_provider_offer_by_pk == null
+        ? CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk(
+            local$service_provider_offer_by_pk,
+            (e) => call(service_provider_offer_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_offer_by_id<TRes>
+    implements CopyWith$Query$get_offer_by_id<TRes> {
+  _CopyWithStubImpl$Query$get_offer_by_id(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_offer_by_id$service_provider_offer_by_pk?
+        service_provider_offer_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk<TRes>
+      get service_provider_offer_by_pk =>
+          CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk.stub(
+              _res);
+}
+
+const documentNodeQueryget_offer_by_id = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_offer_by_id'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_offer_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'service_provider_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'service_provider_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offer_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'coupon_code'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'translations'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'value'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'language_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_offer_by_id _parserFn$Query$get_offer_by_id(
+        Map<String, dynamic> data) =>
+    Query$get_offer_by_id.fromJson(data);
+
+class Options$Query$get_offer_by_id
+    extends graphql.QueryOptions<Query$get_offer_by_id> {
+  Options$Query$get_offer_by_id({
+    String? operationName,
+    required Variables$Query$get_offer_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_offer_by_id,
+          parserFn: _parserFn$Query$get_offer_by_id,
+        );
+}
+
+class WatchOptions$Query$get_offer_by_id
+    extends graphql.WatchQueryOptions<Query$get_offer_by_id> {
+  WatchOptions$Query$get_offer_by_id({
+    String? operationName,
+    required Variables$Query$get_offer_by_id variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_offer_by_id,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_offer_by_id,
+        );
+}
+
+class FetchMoreOptions$Query$get_offer_by_id extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_offer_by_id({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_offer_by_id variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_offer_by_id,
+        );
+}
+
+extension ClientExtension$Query$get_offer_by_id on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_offer_by_id>> query$get_offer_by_id(
+          Options$Query$get_offer_by_id options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$get_offer_by_id> watchQuery$get_offer_by_id(
+          WatchOptions$Query$get_offer_by_id options) =>
+      this.watchQuery(options);
+  void writeQuery$get_offer_by_id({
+    required Query$get_offer_by_id data,
+    required Variables$Query$get_offer_by_id variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQueryget_offer_by_id),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_offer_by_id? readQuery$get_offer_by_id({
+    required Variables$Query$get_offer_by_id variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQueryget_offer_by_id),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$get_offer_by_id.fromJson(result);
+  }
+}
+
+class Query$get_offer_by_id$service_provider_offer_by_pk {
+  Query$get_offer_by_id$service_provider_offer_by_pk({
+    required this.status,
+    required this.service_provider_type,
+    required this.service_provider_id,
+    required this.offer_type,
+    required this.id,
+    required this.details,
+    this.coupon_code,
+    required this.name_id,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_offer_by_id$service_provider_offer_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$status = json['status'];
+    final l$service_provider_type = json['service_provider_type'];
+    final l$service_provider_id = json['service_provider_id'];
+    final l$offer_type = json['offer_type'];
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$coupon_code = json['coupon_code'];
+    final l$name_id = json['name_id'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_offer_by_id$service_provider_offer_by_pk(
+      status: (l$status as String),
+      service_provider_type: (l$service_provider_type as String),
+      service_provider_id: (l$service_provider_id as int),
+      offer_type: (l$offer_type as String),
+      id: (l$id as int),
+      details: mapFromJson(l$details),
+      coupon_code: (l$coupon_code as String?),
+      name_id: (l$name_id as int),
+      name: Query$get_offer_by_id$service_provider_offer_by_pk$name.fromJson(
+          (l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String status;
+
+  final String service_provider_type;
+
+  final int service_provider_id;
+
+  final String offer_type;
+
+  final int id;
+
+  final dynamic details;
+
+  final String? coupon_code;
+
+  final int name_id;
+
+  final Query$get_offer_by_id$service_provider_offer_by_pk$name name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$service_provider_id = service_provider_id;
+    _resultData['service_provider_id'] = l$service_provider_id;
+    final l$offer_type = offer_type;
+    _resultData['offer_type'] = l$offer_type;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = mapToJson(l$details);
+    final l$coupon_code = coupon_code;
+    _resultData['coupon_code'] = l$coupon_code;
+    final l$name_id = name_id;
+    _resultData['name_id'] = l$name_id;
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$status = status;
+    final l$service_provider_type = service_provider_type;
+    final l$service_provider_id = service_provider_id;
+    final l$offer_type = offer_type;
+    final l$id = id;
+    final l$details = details;
+    final l$coupon_code = coupon_code;
+    final l$name_id = name_id;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$status,
+      l$service_provider_type,
+      l$service_provider_id,
+      l$offer_type,
+      l$id,
+      l$details,
+      l$coupon_code,
+      l$name_id,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_offer_by_id$service_provider_offer_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$offer_type = offer_type;
+    final lOther$offer_type = other.offer_type;
+    if (l$offer_type != lOther$offer_type) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$coupon_code = coupon_code;
+    final lOther$coupon_code = other.coupon_code;
+    if (l$coupon_code != lOther$coupon_code) {
+      return false;
+    }
+    final l$name_id = name_id;
+    final lOther$name_id = other.name_id;
+    if (l$name_id != lOther$name_id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_offer_by_id$service_provider_offer_by_pk
+    on Query$get_offer_by_id$service_provider_offer_by_pk {
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk<
+          Query$get_offer_by_id$service_provider_offer_by_pk>
+      get copyWith =>
+          CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk<
+    TRes> {
+  factory CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk(
+    Query$get_offer_by_id$service_provider_offer_by_pk instance,
+    TRes Function(Query$get_offer_by_id$service_provider_offer_by_pk) then,
+  ) = _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk;
+
+  factory CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk;
+
+  TRes call({
+    String? status,
+    String? service_provider_type,
+    int? service_provider_id,
+    String? offer_type,
+    int? id,
+    dynamic? details,
+    String? coupon_code,
+    int? name_id,
+    Query$get_offer_by_id$service_provider_offer_by_pk$name? name,
+    String? $__typename,
+  });
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name<TRes>
+      get name;
+}
+
+class _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk<TRes>
+    implements
+        CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk<TRes> {
+  _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_offer_by_id$service_provider_offer_by_pk _instance;
+
+  final TRes Function(Query$get_offer_by_id$service_provider_offer_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? status = _undefined,
+    Object? service_provider_type = _undefined,
+    Object? service_provider_id = _undefined,
+    Object? offer_type = _undefined,
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? coupon_code = _undefined,
+    Object? name_id = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_offer_by_id$service_provider_offer_by_pk(
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
+        offer_type: offer_type == _undefined || offer_type == null
+            ? _instance.offer_type
+            : (offer_type as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as dynamic),
+        coupon_code: coupon_code == _undefined
+            ? _instance.coupon_code
+            : (coupon_code as String?),
+        name_id: name_id == _undefined || name_id == null
+            ? _instance.name_id
+            : (name_id as int),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as Query$get_offer_by_id$service_provider_offer_by_pk$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name<TRes>
+      get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk<TRes>
+    implements
+        CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk<TRes> {
+  _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? status,
+    String? service_provider_type,
+    int? service_provider_id,
+    String? offer_type,
+    int? id,
+    dynamic? details,
+    String? coupon_code,
+    int? name_id,
+    Query$get_offer_by_id$service_provider_offer_by_pk$name? name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name<TRes>
+      get name =>
+          CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name.stub(
+              _res);
+}
+
+class Query$get_offer_by_id$service_provider_offer_by_pk$name {
+  Query$get_offer_by_id$service_provider_offer_by_pk$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_offer_by_id$service_provider_offer_by_pk$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_offer_by_id$service_provider_offer_by_pk$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_offer_by_id$service_provider_offer_by_pk$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_offer_by_id$service_provider_offer_by_pk$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_offer_by_id$service_provider_offer_by_pk$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_offer_by_id$service_provider_offer_by_pk$name
+    on Query$get_offer_by_id$service_provider_offer_by_pk$name {
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name<
+          Query$get_offer_by_id$service_provider_offer_by_pk$name>
+      get copyWith =>
+          CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name<
+    TRes> {
+  factory CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name(
+    Query$get_offer_by_id$service_provider_offer_by_pk$name instance,
+    TRes Function(Query$get_offer_by_id$service_provider_offer_by_pk$name) then,
+  ) = _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name;
+
+  factory CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name;
+
+  TRes call({
+    List<Query$get_offer_by_id$service_provider_offer_by_pk$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_offer_by_id$service_provider_offer_by_pk$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations<
+                      Query$get_offer_by_id$service_provider_offer_by_pk$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name<
+        TRes>
+    implements
+        CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name<TRes> {
+  _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_offer_by_id$service_provider_offer_by_pk$name _instance;
+
+  final TRes Function(Query$get_offer_by_id$service_provider_offer_by_pk$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_offer_by_id$service_provider_offer_by_pk$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_offer_by_id$service_provider_offer_by_pk$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_offer_by_id$service_provider_offer_by_pk$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations<
+                          Query$get_offer_by_id$service_provider_offer_by_pk$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name<
+        TRes>
+    implements
+        CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name<TRes> {
+  _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_offer_by_id$service_provider_offer_by_pk$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_offer_by_id$service_provider_offer_by_pk$name$translations {
+  Query$get_offer_by_id$service_provider_offer_by_pk$name$translations({
+    required this.value,
+    required this.language_id,
+    required this.$__typename,
+  });
+
+  factory Query$get_offer_by_id$service_provider_offer_by_pk$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$value = json['value'];
+    final l$language_id = json['language_id'];
+    final l$$__typename = json['__typename'];
+    return Query$get_offer_by_id$service_provider_offer_by_pk$name$translations(
+      value: (l$value as String),
+      language_id: (l$language_id as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String value;
+
+  final String language_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$value = value;
+    final l$language_id = language_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$value,
+      l$language_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_offer_by_id$service_provider_offer_by_pk$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations
+    on Query$get_offer_by_id$service_provider_offer_by_pk$name$translations {
+  CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations<
+          Query$get_offer_by_id$service_provider_offer_by_pk$name$translations>
+      get copyWith =>
+          CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations<
+    TRes> {
+  factory CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations(
+    Query$get_offer_by_id$service_provider_offer_by_pk$name$translations
+        instance,
+    TRes Function(
+            Query$get_offer_by_id$service_provider_offer_by_pk$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations;
+
+  factory CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations;
+
+  TRes call({
+    String? value,
+    String? language_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_offer_by_id$service_provider_offer_by_pk$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_offer_by_id$service_provider_offer_by_pk$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? value = _undefined,
+    Object? language_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_offer_by_id$service_provider_offer_by_pk$name$translations(
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? value,
+    String? language_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_offer {
+  factory Variables$Mutation$update_offer({
+    required int id,
+    required int service_provider_id,
+    Input$service_provider_offer_set_input? offer,
+  }) =>
+      Variables$Mutation$update_offer._({
+        r'id': id,
+        r'service_provider_id': service_provider_id,
+        if (offer != null) r'offer': offer,
+      });
+
+  Variables$Mutation$update_offer._(this._$data);
+
+  factory Variables$Mutation$update_offer.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$service_provider_id = data['service_provider_id'];
+    result$data['service_provider_id'] = (l$service_provider_id as int);
+    if (data.containsKey('offer')) {
+      final l$offer = data['offer'];
+      result$data['offer'] = l$offer == null
+          ? null
+          : Input$service_provider_offer_set_input.fromJson(
+              (l$offer as Map<String, dynamic>));
+    }
+    return Variables$Mutation$update_offer._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  int get service_provider_id => (_$data['service_provider_id'] as int);
+  Input$service_provider_offer_set_input? get offer =>
+      (_$data['offer'] as Input$service_provider_offer_set_input?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$service_provider_id = service_provider_id;
+    result$data['service_provider_id'] = l$service_provider_id;
+    if (_$data.containsKey('offer')) {
+      final l$offer = offer;
+      result$data['offer'] = l$offer?.toJson();
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_offer<Variables$Mutation$update_offer>
+      get copyWith => CopyWith$Variables$Mutation$update_offer(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_offer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$offer = offer;
+    final lOther$offer = other.offer;
+    if (_$data.containsKey('offer') != other._$data.containsKey('offer')) {
+      return false;
+    }
+    if (l$offer != lOther$offer) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$service_provider_id = service_provider_id;
+    final l$offer = offer;
+    return Object.hashAll([
+      l$id,
+      l$service_provider_id,
+      _$data.containsKey('offer') ? l$offer : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_offer<TRes> {
+  factory CopyWith$Variables$Mutation$update_offer(
+    Variables$Mutation$update_offer instance,
+    TRes Function(Variables$Mutation$update_offer) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_offer;
+
+  factory CopyWith$Variables$Mutation$update_offer.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_offer;
+
+  TRes call({
+    int? id,
+    int? service_provider_id,
+    Input$service_provider_offer_set_input? offer,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_offer<TRes>
+    implements CopyWith$Variables$Mutation$update_offer<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_offer(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_offer _instance;
+
+  final TRes Function(Variables$Mutation$update_offer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? service_provider_id = _undefined,
+    Object? offer = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_offer._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (service_provider_id != _undefined && service_provider_id != null)
+          'service_provider_id': (service_provider_id as int),
+        if (offer != _undefined)
+          'offer': (offer as Input$service_provider_offer_set_input?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_offer<TRes>
+    implements CopyWith$Variables$Mutation$update_offer<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_offer(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    int? service_provider_id,
+    Input$service_provider_offer_set_input? offer,
+  }) =>
+      _res;
+}
+
+class Mutation$update_offer {
+  Mutation$update_offer({
+    this.update_service_provider_offer,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_offer.fromJson(Map<String, dynamic> json) {
+    final l$update_service_provider_offer =
+        json['update_service_provider_offer'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_offer(
+      update_service_provider_offer: l$update_service_provider_offer == null
+          ? null
+          : Mutation$update_offer$update_service_provider_offer.fromJson(
+              (l$update_service_provider_offer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_offer$update_service_provider_offer?
+      update_service_provider_offer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_service_provider_offer = update_service_provider_offer;
+    _resultData['update_service_provider_offer'] =
+        l$update_service_provider_offer?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_service_provider_offer = update_service_provider_offer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_service_provider_offer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_offer) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_service_provider_offer = update_service_provider_offer;
+    final lOther$update_service_provider_offer =
+        other.update_service_provider_offer;
+    if (l$update_service_provider_offer !=
+        lOther$update_service_provider_offer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_offer on Mutation$update_offer {
+  CopyWith$Mutation$update_offer<Mutation$update_offer> get copyWith =>
+      CopyWith$Mutation$update_offer(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$update_offer<TRes> {
+  factory CopyWith$Mutation$update_offer(
+    Mutation$update_offer instance,
+    TRes Function(Mutation$update_offer) then,
+  ) = _CopyWithImpl$Mutation$update_offer;
+
+  factory CopyWith$Mutation$update_offer.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_offer;
+
+  TRes call({
+    Mutation$update_offer$update_service_provider_offer?
+        update_service_provider_offer,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_offer$update_service_provider_offer<TRes>
+      get update_service_provider_offer;
+}
+
+class _CopyWithImpl$Mutation$update_offer<TRes>
+    implements CopyWith$Mutation$update_offer<TRes> {
+  _CopyWithImpl$Mutation$update_offer(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_offer _instance;
+
+  final TRes Function(Mutation$update_offer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_service_provider_offer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_offer(
+        update_service_provider_offer:
+            update_service_provider_offer == _undefined
+                ? _instance.update_service_provider_offer
+                : (update_service_provider_offer
+                    as Mutation$update_offer$update_service_provider_offer?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_offer$update_service_provider_offer<TRes>
+      get update_service_provider_offer {
+    final local$update_service_provider_offer =
+        _instance.update_service_provider_offer;
+    return local$update_service_provider_offer == null
+        ? CopyWith$Mutation$update_offer$update_service_provider_offer.stub(
+            _then(_instance))
+        : CopyWith$Mutation$update_offer$update_service_provider_offer(
+            local$update_service_provider_offer,
+            (e) => call(update_service_provider_offer: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_offer<TRes>
+    implements CopyWith$Mutation$update_offer<TRes> {
+  _CopyWithStubImpl$Mutation$update_offer(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_offer$update_service_provider_offer?
+        update_service_provider_offer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_offer$update_service_provider_offer<TRes>
+      get update_service_provider_offer =>
+          CopyWith$Mutation$update_offer$update_service_provider_offer.stub(
+              _res);
+}
+
+const documentNodeMutationupdate_offer = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_offer'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offer')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'service_provider_offer_set_input'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_service_provider_offer'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_id')),
+                  )
+                ]),
+              ),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'offer')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'returning'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_offer _parserFn$Mutation$update_offer(
+        Map<String, dynamic> data) =>
+    Mutation$update_offer.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_offer = FutureOr<void> Function(
+  dynamic,
+  Mutation$update_offer?,
+);
+
+class Options$Mutation$update_offer
+    extends graphql.MutationOptions<Mutation$update_offer> {
+  Options$Mutation$update_offer({
+    String? operationName,
+    required Variables$Mutation$update_offer variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_offer? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_offer>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null ? null : _parserFn$Mutation$update_offer(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_offer,
+          parserFn: _parserFn$Mutation$update_offer,
+        );
+
+  final OnMutationCompleted$Mutation$update_offer? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_offer
+    extends graphql.WatchQueryOptions<Mutation$update_offer> {
+  WatchOptions$Mutation$update_offer({
+    String? operationName,
+    required Variables$Mutation$update_offer variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_offer,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_offer,
+        );
+}
+
+extension ClientExtension$Mutation$update_offer on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_offer>> mutate$update_offer(
+          Options$Mutation$update_offer options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_offer> watchMutation$update_offer(
+          WatchOptions$Mutation$update_offer options) =>
+      this.watchMutation(options);
+}
+
+class Mutation$update_offer$update_service_provider_offer {
+  Mutation$update_offer$update_service_provider_offer({
+    required this.returning,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_offer$update_service_provider_offer.fromJson(
+      Map<String, dynamic> json) {
+    final l$returning = json['returning'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_offer$update_service_provider_offer(
+      returning: (l$returning as List<dynamic>)
+          .map((e) =>
+              Mutation$update_offer$update_service_provider_offer$returning
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Mutation$update_offer$update_service_provider_offer$returning>
+      returning;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$returning = returning;
+    _resultData['returning'] = l$returning.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$returning = returning;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$returning.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_offer$update_service_provider_offer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$returning = returning;
+    final lOther$returning = other.returning;
+    if (l$returning.length != lOther$returning.length) {
+      return false;
+    }
+    for (int i = 0; i < l$returning.length; i++) {
+      final l$returning$entry = l$returning[i];
+      final lOther$returning$entry = lOther$returning[i];
+      if (l$returning$entry != lOther$returning$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_offer$update_service_provider_offer
+    on Mutation$update_offer$update_service_provider_offer {
+  CopyWith$Mutation$update_offer$update_service_provider_offer<
+          Mutation$update_offer$update_service_provider_offer>
+      get copyWith =>
+          CopyWith$Mutation$update_offer$update_service_provider_offer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_offer$update_service_provider_offer<
+    TRes> {
+  factory CopyWith$Mutation$update_offer$update_service_provider_offer(
+    Mutation$update_offer$update_service_provider_offer instance,
+    TRes Function(Mutation$update_offer$update_service_provider_offer) then,
+  ) = _CopyWithImpl$Mutation$update_offer$update_service_provider_offer;
+
+  factory CopyWith$Mutation$update_offer$update_service_provider_offer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_offer$update_service_provider_offer;
+
+  TRes call({
+    List<Mutation$update_offer$update_service_provider_offer$returning>?
+        returning,
+    String? $__typename,
+  });
+  TRes returning(
+      Iterable<Mutation$update_offer$update_service_provider_offer$returning> Function(
+              Iterable<
+                  CopyWith$Mutation$update_offer$update_service_provider_offer$returning<
+                      Mutation$update_offer$update_service_provider_offer$returning>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$update_offer$update_service_provider_offer<TRes>
+    implements
+        CopyWith$Mutation$update_offer$update_service_provider_offer<TRes> {
+  _CopyWithImpl$Mutation$update_offer$update_service_provider_offer(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_offer$update_service_provider_offer _instance;
+
+  final TRes Function(Mutation$update_offer$update_service_provider_offer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? returning = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_offer$update_service_provider_offer(
+        returning: returning == _undefined || returning == null
+            ? _instance.returning
+            : (returning as List<
+                Mutation$update_offer$update_service_provider_offer$returning>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes returning(
+          Iterable<Mutation$update_offer$update_service_provider_offer$returning> Function(
+                  Iterable<
+                      CopyWith$Mutation$update_offer$update_service_provider_offer$returning<
+                          Mutation$update_offer$update_service_provider_offer$returning>>)
+              _fn) =>
+      call(
+          returning: _fn(_instance.returning.map((e) =>
+              CopyWith$Mutation$update_offer$update_service_provider_offer$returning(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$update_offer$update_service_provider_offer<
+        TRes>
+    implements
+        CopyWith$Mutation$update_offer$update_service_provider_offer<TRes> {
+  _CopyWithStubImpl$Mutation$update_offer$update_service_provider_offer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$update_offer$update_service_provider_offer$returning>?
+        returning,
+    String? $__typename,
+  }) =>
+      _res;
+  returning(_fn) => _res;
+}
+
+class Mutation$update_offer$update_service_provider_offer$returning {
+  Mutation$update_offer$update_service_provider_offer$returning({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_offer$update_service_provider_offer$returning.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_offer$update_service_provider_offer$returning(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_offer$update_service_provider_offer$returning) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_offer$update_service_provider_offer$returning
+    on Mutation$update_offer$update_service_provider_offer$returning {
+  CopyWith$Mutation$update_offer$update_service_provider_offer$returning<
+          Mutation$update_offer$update_service_provider_offer$returning>
+      get copyWith =>
+          CopyWith$Mutation$update_offer$update_service_provider_offer$returning(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_offer$update_service_provider_offer$returning<
+    TRes> {
+  factory CopyWith$Mutation$update_offer$update_service_provider_offer$returning(
+    Mutation$update_offer$update_service_provider_offer$returning instance,
+    TRes Function(Mutation$update_offer$update_service_provider_offer$returning)
+        then,
+  ) = _CopyWithImpl$Mutation$update_offer$update_service_provider_offer$returning;
+
+  factory CopyWith$Mutation$update_offer$update_service_provider_offer$returning.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_offer$update_service_provider_offer$returning;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_offer$update_service_provider_offer$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$update_offer$update_service_provider_offer$returning<
+            TRes> {
+  _CopyWithImpl$Mutation$update_offer$update_service_provider_offer$returning(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_offer$update_service_provider_offer$returning _instance;
+
+  final TRes Function(
+      Mutation$update_offer$update_service_provider_offer$returning) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_offer$update_service_provider_offer$returning(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_offer$update_service_provider_offer$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$update_offer$update_service_provider_offer$returning<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_offer$update_service_provider_offer$returning(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$check_coupon {
+  factory Variables$Query$check_coupon({
+    String? coupon_code,
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      Variables$Query$check_coupon._({
+        if (coupon_code != null) r'coupon_code': coupon_code,
+        if (service_provider_id != null)
+          r'service_provider_id': service_provider_id,
+        if (service_provider_type != null)
+          r'service_provider_type': service_provider_type,
+      });
+
+  Variables$Query$check_coupon._(this._$data);
+
+  factory Variables$Query$check_coupon.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('coupon_code')) {
+      final l$coupon_code = data['coupon_code'];
+      result$data['coupon_code'] = (l$coupon_code as String?);
+    }
+    if (data.containsKey('service_provider_id')) {
+      final l$service_provider_id = data['service_provider_id'];
+      result$data['service_provider_id'] = (l$service_provider_id as int?);
+    }
+    if (data.containsKey('service_provider_type')) {
+      final l$service_provider_type = data['service_provider_type'];
+      result$data['service_provider_type'] =
+          (l$service_provider_type as String?);
+    }
+    return Variables$Query$check_coupon._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String? get coupon_code => (_$data['coupon_code'] as String?);
+  int? get service_provider_id => (_$data['service_provider_id'] as int?);
+  String? get service_provider_type =>
+      (_$data['service_provider_type'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('coupon_code')) {
+      final l$coupon_code = coupon_code;
+      result$data['coupon_code'] = l$coupon_code;
+    }
+    if (_$data.containsKey('service_provider_id')) {
+      final l$service_provider_id = service_provider_id;
+      result$data['service_provider_id'] = l$service_provider_id;
+    }
+    if (_$data.containsKey('service_provider_type')) {
+      final l$service_provider_type = service_provider_type;
+      result$data['service_provider_type'] = l$service_provider_type;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$check_coupon<Variables$Query$check_coupon>
+      get copyWith => CopyWith$Variables$Query$check_coupon(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$check_coupon) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$coupon_code = coupon_code;
+    final lOther$coupon_code = other.coupon_code;
+    if (_$data.containsKey('coupon_code') !=
+        other._$data.containsKey('coupon_code')) {
+      return false;
+    }
+    if (l$coupon_code != lOther$coupon_code) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (_$data.containsKey('service_provider_id') !=
+        other._$data.containsKey('service_provider_id')) {
+      return false;
+    }
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (_$data.containsKey('service_provider_type') !=
+        other._$data.containsKey('service_provider_type')) {
+      return false;
+    }
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$coupon_code = coupon_code;
+    final l$service_provider_id = service_provider_id;
+    final l$service_provider_type = service_provider_type;
+    return Object.hashAll([
+      _$data.containsKey('coupon_code') ? l$coupon_code : const {},
+      _$data.containsKey('service_provider_id')
+          ? l$service_provider_id
+          : const {},
+      _$data.containsKey('service_provider_type')
+          ? l$service_provider_type
+          : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$check_coupon<TRes> {
+  factory CopyWith$Variables$Query$check_coupon(
+    Variables$Query$check_coupon instance,
+    TRes Function(Variables$Query$check_coupon) then,
+  ) = _CopyWithImpl$Variables$Query$check_coupon;
+
+  factory CopyWith$Variables$Query$check_coupon.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$check_coupon;
+
+  TRes call({
+    String? coupon_code,
+    int? service_provider_id,
+    String? service_provider_type,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$check_coupon<TRes>
+    implements CopyWith$Variables$Query$check_coupon<TRes> {
+  _CopyWithImpl$Variables$Query$check_coupon(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$check_coupon _instance;
+
+  final TRes Function(Variables$Query$check_coupon) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? coupon_code = _undefined,
+    Object? service_provider_id = _undefined,
+    Object? service_provider_type = _undefined,
+  }) =>
+      _then(Variables$Query$check_coupon._({
+        ..._instance._$data,
+        if (coupon_code != _undefined) 'coupon_code': (coupon_code as String?),
+        if (service_provider_id != _undefined)
+          'service_provider_id': (service_provider_id as int?),
+        if (service_provider_type != _undefined)
+          'service_provider_type': (service_provider_type as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$check_coupon<TRes>
+    implements CopyWith$Variables$Query$check_coupon<TRes> {
+  _CopyWithStubImpl$Variables$Query$check_coupon(this._res);
+
+  TRes _res;
+
+  call({
+    String? coupon_code,
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      _res;
+}
+
+class Query$check_coupon {
+  Query$check_coupon({
+    required this.service_provider_offer,
+    required this.$__typename,
+  });
+
+  factory Query$check_coupon.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_offer = json['service_provider_offer'];
+    final l$$__typename = json['__typename'];
+    return Query$check_coupon(
+      service_provider_offer: (l$service_provider_offer as List<dynamic>)
+          .map((e) => Query$check_coupon$service_provider_offer.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$check_coupon$service_provider_offer> service_provider_offer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_offer = service_provider_offer;
+    _resultData['service_provider_offer'] =
+        l$service_provider_offer.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_offer = service_provider_offer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_offer.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$check_coupon) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_offer = service_provider_offer;
+    final lOther$service_provider_offer = other.service_provider_offer;
+    if (l$service_provider_offer.length !=
+        lOther$service_provider_offer.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_offer.length; i++) {
+      final l$service_provider_offer$entry = l$service_provider_offer[i];
+      final lOther$service_provider_offer$entry =
+          lOther$service_provider_offer[i];
+      if (l$service_provider_offer$entry !=
+          lOther$service_provider_offer$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$check_coupon on Query$check_coupon {
+  CopyWith$Query$check_coupon<Query$check_coupon> get copyWith =>
+      CopyWith$Query$check_coupon(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$check_coupon<TRes> {
+  factory CopyWith$Query$check_coupon(
+    Query$check_coupon instance,
+    TRes Function(Query$check_coupon) then,
+  ) = _CopyWithImpl$Query$check_coupon;
+
+  factory CopyWith$Query$check_coupon.stub(TRes res) =
+      _CopyWithStubImpl$Query$check_coupon;
+
+  TRes call({
+    List<Query$check_coupon$service_provider_offer>? service_provider_offer,
+    String? $__typename,
+  });
+  TRes service_provider_offer(
+      Iterable<Query$check_coupon$service_provider_offer> Function(
+              Iterable<
+                  CopyWith$Query$check_coupon$service_provider_offer<
+                      Query$check_coupon$service_provider_offer>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$check_coupon<TRes>
+    implements CopyWith$Query$check_coupon<TRes> {
+  _CopyWithImpl$Query$check_coupon(
+    this._instance,
+    this._then,
+  );
+
+  final Query$check_coupon _instance;
+
+  final TRes Function(Query$check_coupon) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_offer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$check_coupon(
+        service_provider_offer: service_provider_offer == _undefined ||
+                service_provider_offer == null
+            ? _instance.service_provider_offer
+            : (service_provider_offer
+                as List<Query$check_coupon$service_provider_offer>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_offer(
+          Iterable<Query$check_coupon$service_provider_offer> Function(
+                  Iterable<
+                      CopyWith$Query$check_coupon$service_provider_offer<
+                          Query$check_coupon$service_provider_offer>>)
+              _fn) =>
+      call(
+          service_provider_offer: _fn(_instance.service_provider_offer
+              .map((e) => CopyWith$Query$check_coupon$service_provider_offer(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$check_coupon<TRes>
+    implements CopyWith$Query$check_coupon<TRes> {
+  _CopyWithStubImpl$Query$check_coupon(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$check_coupon$service_provider_offer>? service_provider_offer,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_offer(_fn) => _res;
+}
+
+const documentNodeQuerycheck_coupon = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'check_coupon'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'coupon_code')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_offer'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'coupon_code'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'coupon_code')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_type')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'status'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'active',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'offer_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'coupon',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$check_coupon _parserFn$Query$check_coupon(Map<String, dynamic> data) =>
+    Query$check_coupon.fromJson(data);
+
+class Options$Query$check_coupon
+    extends graphql.QueryOptions<Query$check_coupon> {
+  Options$Query$check_coupon({
+    String? operationName,
+    Variables$Query$check_coupon? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerycheck_coupon,
+          parserFn: _parserFn$Query$check_coupon,
+        );
+}
+
+class WatchOptions$Query$check_coupon
+    extends graphql.WatchQueryOptions<Query$check_coupon> {
+  WatchOptions$Query$check_coupon({
+    String? operationName,
+    Variables$Query$check_coupon? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerycheck_coupon,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$check_coupon,
+        );
+}
+
+class FetchMoreOptions$Query$check_coupon extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$check_coupon({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$check_coupon? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQuerycheck_coupon,
+        );
+}
+
+extension ClientExtension$Query$check_coupon on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$check_coupon>> query$check_coupon(
+          [Options$Query$check_coupon? options]) async =>
+      await this.query(options ?? Options$Query$check_coupon());
+  graphql.ObservableQuery<Query$check_coupon> watchQuery$check_coupon(
+          [WatchOptions$Query$check_coupon? options]) =>
+      this.watchQuery(options ?? WatchOptions$Query$check_coupon());
+  void writeQuery$check_coupon({
+    required Query$check_coupon data,
+    Variables$Query$check_coupon? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(document: documentNodeQuerycheck_coupon),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$check_coupon? readQuery$check_coupon({
+    Variables$Query$check_coupon? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(document: documentNodeQuerycheck_coupon),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$check_coupon.fromJson(result);
+  }
+}
+
+class Query$check_coupon$service_provider_offer {
+  Query$check_coupon$service_provider_offer({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$check_coupon$service_provider_offer.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$check_coupon$service_provider_offer(
+      id: (l$id as int),
+      details: mapFromJson(l$details),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = mapToJson(l$details);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$check_coupon$service_provider_offer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$check_coupon$service_provider_offer
+    on Query$check_coupon$service_provider_offer {
+  CopyWith$Query$check_coupon$service_provider_offer<
+          Query$check_coupon$service_provider_offer>
+      get copyWith => CopyWith$Query$check_coupon$service_provider_offer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$check_coupon$service_provider_offer<TRes> {
+  factory CopyWith$Query$check_coupon$service_provider_offer(
+    Query$check_coupon$service_provider_offer instance,
+    TRes Function(Query$check_coupon$service_provider_offer) then,
+  ) = _CopyWithImpl$Query$check_coupon$service_provider_offer;
+
+  factory CopyWith$Query$check_coupon$service_provider_offer.stub(TRes res) =
+      _CopyWithStubImpl$Query$check_coupon$service_provider_offer;
+
+  TRes call({
+    int? id,
+    dynamic? details,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$check_coupon$service_provider_offer<TRes>
+    implements CopyWith$Query$check_coupon$service_provider_offer<TRes> {
+  _CopyWithImpl$Query$check_coupon$service_provider_offer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$check_coupon$service_provider_offer _instance;
+
+  final TRes Function(Query$check_coupon$service_provider_offer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$check_coupon$service_provider_offer(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as dynamic),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$check_coupon$service_provider_offer<TRes>
+    implements CopyWith$Query$check_coupon$service_provider_offer<TRes> {
+  _CopyWithStubImpl$Query$check_coupon$service_provider_offer(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? details,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$check_offer_applied {
+  factory Variables$Query$check_offer_applied({
+    int? offer_id,
+    int? customer_id,
+  }) =>
+      Variables$Query$check_offer_applied._({
+        if (offer_id != null) r'offer_id': offer_id,
+        if (customer_id != null) r'customer_id': customer_id,
+      });
+
+  Variables$Query$check_offer_applied._(this._$data);
+
+  factory Variables$Query$check_offer_applied.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('offer_id')) {
+      final l$offer_id = data['offer_id'];
+      result$data['offer_id'] = (l$offer_id as int?);
+    }
+    if (data.containsKey('customer_id')) {
+      final l$customer_id = data['customer_id'];
+      result$data['customer_id'] = (l$customer_id as int?);
+    }
+    return Variables$Query$check_offer_applied._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get offer_id => (_$data['offer_id'] as int?);
+  int? get customer_id => (_$data['customer_id'] as int?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('offer_id')) {
+      final l$offer_id = offer_id;
+      result$data['offer_id'] = l$offer_id;
+    }
+    if (_$data.containsKey('customer_id')) {
+      final l$customer_id = customer_id;
+      result$data['customer_id'] = l$customer_id;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$check_offer_applied<
+          Variables$Query$check_offer_applied>
+      get copyWith => CopyWith$Variables$Query$check_offer_applied(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$check_offer_applied) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$offer_id = offer_id;
+    final lOther$offer_id = other.offer_id;
+    if (_$data.containsKey('offer_id') !=
+        other._$data.containsKey('offer_id')) {
+      return false;
+    }
+    if (l$offer_id != lOther$offer_id) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (_$data.containsKey('customer_id') !=
+        other._$data.containsKey('customer_id')) {
+      return false;
+    }
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$offer_id = offer_id;
+    final l$customer_id = customer_id;
+    return Object.hashAll([
+      _$data.containsKey('offer_id') ? l$offer_id : const {},
+      _$data.containsKey('customer_id') ? l$customer_id : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$check_offer_applied<TRes> {
+  factory CopyWith$Variables$Query$check_offer_applied(
+    Variables$Query$check_offer_applied instance,
+    TRes Function(Variables$Query$check_offer_applied) then,
+  ) = _CopyWithImpl$Variables$Query$check_offer_applied;
+
+  factory CopyWith$Variables$Query$check_offer_applied.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$check_offer_applied;
+
+  TRes call({
+    int? offer_id,
+    int? customer_id,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$check_offer_applied<TRes>
+    implements CopyWith$Variables$Query$check_offer_applied<TRes> {
+  _CopyWithImpl$Variables$Query$check_offer_applied(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$check_offer_applied _instance;
+
+  final TRes Function(Variables$Query$check_offer_applied) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? offer_id = _undefined,
+    Object? customer_id = _undefined,
+  }) =>
+      _then(Variables$Query$check_offer_applied._({
+        ..._instance._$data,
+        if (offer_id != _undefined) 'offer_id': (offer_id as int?),
+        if (customer_id != _undefined) 'customer_id': (customer_id as int?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$check_offer_applied<TRes>
+    implements CopyWith$Variables$Query$check_offer_applied<TRes> {
+  _CopyWithStubImpl$Variables$Query$check_offer_applied(this._res);
+
+  TRes _res;
+
+  call({
+    int? offer_id,
+    int? customer_id,
+  }) =>
+      _res;
+}
+
+class Query$check_offer_applied {
+  Query$check_offer_applied({
+    required this.service_provider_offer_applied,
+    required this.$__typename,
+  });
+
+  factory Query$check_offer_applied.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_offer_applied =
+        json['service_provider_offer_applied'];
+    final l$$__typename = json['__typename'];
+    return Query$check_offer_applied(
+      service_provider_offer_applied: (l$service_provider_offer_applied
+              as List<dynamic>)
+          .map((e) =>
+              Query$check_offer_applied$service_provider_offer_applied.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$check_offer_applied$service_provider_offer_applied>
+      service_provider_offer_applied;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_offer_applied = service_provider_offer_applied;
+    _resultData['service_provider_offer_applied'] =
+        l$service_provider_offer_applied.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_offer_applied = service_provider_offer_applied;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_offer_applied.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$check_offer_applied) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_offer_applied = service_provider_offer_applied;
+    final lOther$service_provider_offer_applied =
+        other.service_provider_offer_applied;
+    if (l$service_provider_offer_applied.length !=
+        lOther$service_provider_offer_applied.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_offer_applied.length; i++) {
+      final l$service_provider_offer_applied$entry =
+          l$service_provider_offer_applied[i];
+      final lOther$service_provider_offer_applied$entry =
+          lOther$service_provider_offer_applied[i];
+      if (l$service_provider_offer_applied$entry !=
+          lOther$service_provider_offer_applied$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$check_offer_applied
+    on Query$check_offer_applied {
+  CopyWith$Query$check_offer_applied<Query$check_offer_applied> get copyWith =>
+      CopyWith$Query$check_offer_applied(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$check_offer_applied<TRes> {
+  factory CopyWith$Query$check_offer_applied(
+    Query$check_offer_applied instance,
+    TRes Function(Query$check_offer_applied) then,
+  ) = _CopyWithImpl$Query$check_offer_applied;
+
+  factory CopyWith$Query$check_offer_applied.stub(TRes res) =
+      _CopyWithStubImpl$Query$check_offer_applied;
+
+  TRes call({
+    List<Query$check_offer_applied$service_provider_offer_applied>?
+        service_provider_offer_applied,
+    String? $__typename,
+  });
+  TRes service_provider_offer_applied(
+      Iterable<Query$check_offer_applied$service_provider_offer_applied> Function(
+              Iterable<
+                  CopyWith$Query$check_offer_applied$service_provider_offer_applied<
+                      Query$check_offer_applied$service_provider_offer_applied>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$check_offer_applied<TRes>
+    implements CopyWith$Query$check_offer_applied<TRes> {
+  _CopyWithImpl$Query$check_offer_applied(
+    this._instance,
+    this._then,
+  );
+
+  final Query$check_offer_applied _instance;
+
+  final TRes Function(Query$check_offer_applied) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_offer_applied = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$check_offer_applied(
+        service_provider_offer_applied:
+            service_provider_offer_applied == _undefined ||
+                    service_provider_offer_applied == null
+                ? _instance.service_provider_offer_applied
+                : (service_provider_offer_applied as List<
+                    Query$check_offer_applied$service_provider_offer_applied>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_offer_applied(
+          Iterable<Query$check_offer_applied$service_provider_offer_applied> Function(
+                  Iterable<
+                      CopyWith$Query$check_offer_applied$service_provider_offer_applied<
+                          Query$check_offer_applied$service_provider_offer_applied>>)
+              _fn) =>
+      call(
+          service_provider_offer_applied: _fn(
+              _instance.service_provider_offer_applied.map((e) =>
+                  CopyWith$Query$check_offer_applied$service_provider_offer_applied(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$check_offer_applied<TRes>
+    implements CopyWith$Query$check_offer_applied<TRes> {
+  _CopyWithStubImpl$Query$check_offer_applied(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$check_offer_applied$service_provider_offer_applied>?
+        service_provider_offer_applied,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_offer_applied(_fn) => _res;
+}
+
+const documentNodeQuerycheck_offer_applied = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'check_offer_applied'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_offer_applied'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'offer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'offer_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'order_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'restaurant',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'restaurant_order'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'customer_id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value:
+                            VariableNode(name: NameNode(value: 'customer_id')),
+                      )
+                    ]),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'order_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$check_offer_applied _parserFn$Query$check_offer_applied(
+        Map<String, dynamic> data) =>
+    Query$check_offer_applied.fromJson(data);
+
+class Options$Query$check_offer_applied
+    extends graphql.QueryOptions<Query$check_offer_applied> {
+  Options$Query$check_offer_applied({
+    String? operationName,
+    Variables$Query$check_offer_applied? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerycheck_offer_applied,
+          parserFn: _parserFn$Query$check_offer_applied,
+        );
+}
+
+class WatchOptions$Query$check_offer_applied
+    extends graphql.WatchQueryOptions<Query$check_offer_applied> {
+  WatchOptions$Query$check_offer_applied({
+    String? operationName,
+    Variables$Query$check_offer_applied? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerycheck_offer_applied,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$check_offer_applied,
+        );
+}
+
+class FetchMoreOptions$Query$check_offer_applied
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$check_offer_applied({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$check_offer_applied? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQuerycheck_offer_applied,
+        );
+}
+
+extension ClientExtension$Query$check_offer_applied on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$check_offer_applied>>
+      query$check_offer_applied(
+              [Options$Query$check_offer_applied? options]) async =>
+          await this.query(options ?? Options$Query$check_offer_applied());
+  graphql.ObservableQuery<Query$check_offer_applied>
+      watchQuery$check_offer_applied(
+              [WatchOptions$Query$check_offer_applied? options]) =>
+          this.watchQuery(options ?? WatchOptions$Query$check_offer_applied());
+  void writeQuery$check_offer_applied({
+    required Query$check_offer_applied data,
+    Variables$Query$check_offer_applied? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerycheck_offer_applied),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$check_offer_applied? readQuery$check_offer_applied({
+    Variables$Query$check_offer_applied? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerycheck_offer_applied),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$check_offer_applied.fromJson(result);
+  }
+}
+
+class Query$check_offer_applied$service_provider_offer_applied {
+  Query$check_offer_applied$service_provider_offer_applied({
+    required this.order_id,
+    required this.$__typename,
+  });
+
+  factory Query$check_offer_applied$service_provider_offer_applied.fromJson(
+      Map<String, dynamic> json) {
+    final l$order_id = json['order_id'];
+    final l$$__typename = json['__typename'];
+    return Query$check_offer_applied$service_provider_offer_applied(
+      order_id: (l$order_id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int order_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$order_id = order_id;
+    _resultData['order_id'] = l$order_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$order_id = order_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$order_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$check_offer_applied$service_provider_offer_applied) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$order_id = order_id;
+    final lOther$order_id = other.order_id;
+    if (l$order_id != lOther$order_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$check_offer_applied$service_provider_offer_applied
+    on Query$check_offer_applied$service_provider_offer_applied {
+  CopyWith$Query$check_offer_applied$service_provider_offer_applied<
+          Query$check_offer_applied$service_provider_offer_applied>
+      get copyWith =>
+          CopyWith$Query$check_offer_applied$service_provider_offer_applied(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$check_offer_applied$service_provider_offer_applied<
+    TRes> {
+  factory CopyWith$Query$check_offer_applied$service_provider_offer_applied(
+    Query$check_offer_applied$service_provider_offer_applied instance,
+    TRes Function(Query$check_offer_applied$service_provider_offer_applied)
+        then,
+  ) = _CopyWithImpl$Query$check_offer_applied$service_provider_offer_applied;
+
+  factory CopyWith$Query$check_offer_applied$service_provider_offer_applied.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$check_offer_applied$service_provider_offer_applied;
+
+  TRes call({
+    int? order_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$check_offer_applied$service_provider_offer_applied<
+        TRes>
+    implements
+        CopyWith$Query$check_offer_applied$service_provider_offer_applied<
+            TRes> {
+  _CopyWithImpl$Query$check_offer_applied$service_provider_offer_applied(
+    this._instance,
+    this._then,
+  );
+
+  final Query$check_offer_applied$service_provider_offer_applied _instance;
+
+  final TRes Function(Query$check_offer_applied$service_provider_offer_applied)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? order_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$check_offer_applied$service_provider_offer_applied(
+        order_id: order_id == _undefined || order_id == null
+            ? _instance.order_id
+            : (order_id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$check_offer_applied$service_provider_offer_applied<
+        TRes>
+    implements
+        CopyWith$Query$check_offer_applied$service_provider_offer_applied<
+            TRes> {
+  _CopyWithStubImpl$Query$check_offer_applied$service_provider_offer_applied(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? order_id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$get_service_provider_offers {
+  factory Variables$Query$get_service_provider_offers({
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      Variables$Query$get_service_provider_offers._({
+        if (service_provider_id != null)
+          r'service_provider_id': service_provider_id,
+        if (service_provider_type != null)
+          r'service_provider_type': service_provider_type,
+      });
+
+  Variables$Query$get_service_provider_offers._(this._$data);
+
+  factory Variables$Query$get_service_provider_offers.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('service_provider_id')) {
+      final l$service_provider_id = data['service_provider_id'];
+      result$data['service_provider_id'] = (l$service_provider_id as int?);
+    }
+    if (data.containsKey('service_provider_type')) {
+      final l$service_provider_type = data['service_provider_type'];
+      result$data['service_provider_type'] =
+          (l$service_provider_type as String?);
+    }
+    return Variables$Query$get_service_provider_offers._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int? get service_provider_id => (_$data['service_provider_id'] as int?);
+  String? get service_provider_type =>
+      (_$data['service_provider_type'] as String?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('service_provider_id')) {
+      final l$service_provider_id = service_provider_id;
+      result$data['service_provider_id'] = l$service_provider_id;
+    }
+    if (_$data.containsKey('service_provider_type')) {
+      final l$service_provider_type = service_provider_type;
+      result$data['service_provider_type'] = l$service_provider_type;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_service_provider_offers<
+          Variables$Query$get_service_provider_offers>
+      get copyWith => CopyWith$Variables$Query$get_service_provider_offers(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_service_provider_offers) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (_$data.containsKey('service_provider_id') !=
+        other._$data.containsKey('service_provider_id')) {
+      return false;
+    }
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (_$data.containsKey('service_provider_type') !=
+        other._$data.containsKey('service_provider_type')) {
+      return false;
+    }
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_id = service_provider_id;
+    final l$service_provider_type = service_provider_type;
+    return Object.hashAll([
+      _$data.containsKey('service_provider_id')
+          ? l$service_provider_id
+          : const {},
+      _$data.containsKey('service_provider_type')
+          ? l$service_provider_type
+          : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_service_provider_offers<TRes> {
+  factory CopyWith$Variables$Query$get_service_provider_offers(
+    Variables$Query$get_service_provider_offers instance,
+    TRes Function(Variables$Query$get_service_provider_offers) then,
+  ) = _CopyWithImpl$Variables$Query$get_service_provider_offers;
+
+  factory CopyWith$Variables$Query$get_service_provider_offers.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_service_provider_offers;
+
+  TRes call({
+    int? service_provider_id,
+    String? service_provider_type,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$get_service_provider_offers<TRes>
+    implements CopyWith$Variables$Query$get_service_provider_offers<TRes> {
+  _CopyWithImpl$Variables$Query$get_service_provider_offers(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_service_provider_offers _instance;
+
+  final TRes Function(Variables$Query$get_service_provider_offers) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_id = _undefined,
+    Object? service_provider_type = _undefined,
+  }) =>
+      _then(Variables$Query$get_service_provider_offers._({
+        ..._instance._$data,
+        if (service_provider_id != _undefined)
+          'service_provider_id': (service_provider_id as int?),
+        if (service_provider_type != _undefined)
+          'service_provider_type': (service_provider_type as String?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_service_provider_offers<TRes>
+    implements CopyWith$Variables$Query$get_service_provider_offers<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_service_provider_offers(this._res);
+
+  TRes _res;
+
+  call({
+    int? service_provider_id,
+    String? service_provider_type,
+  }) =>
+      _res;
+}
+
+class Query$get_service_provider_offers {
+  Query$get_service_provider_offers({
+    required this.service_provider_offer,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_offers.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_offer = json['service_provider_offer'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_offers(
+      service_provider_offer: (l$service_provider_offer as List<dynamic>)
+          .map((e) =>
+              Query$get_service_provider_offers$service_provider_offer.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$get_service_provider_offers$service_provider_offer>
+      service_provider_offer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_offer = service_provider_offer;
+    _resultData['service_provider_offer'] =
+        l$service_provider_offer.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_offer = service_provider_offer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_offer.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_service_provider_offers) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_offer = service_provider_offer;
+    final lOther$service_provider_offer = other.service_provider_offer;
+    if (l$service_provider_offer.length !=
+        lOther$service_provider_offer.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_offer.length; i++) {
+      final l$service_provider_offer$entry = l$service_provider_offer[i];
+      final lOther$service_provider_offer$entry =
+          lOther$service_provider_offer[i];
+      if (l$service_provider_offer$entry !=
+          lOther$service_provider_offer$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_offers
+    on Query$get_service_provider_offers {
+  CopyWith$Query$get_service_provider_offers<Query$get_service_provider_offers>
+      get copyWith => CopyWith$Query$get_service_provider_offers(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_offers<TRes> {
+  factory CopyWith$Query$get_service_provider_offers(
+    Query$get_service_provider_offers instance,
+    TRes Function(Query$get_service_provider_offers) then,
+  ) = _CopyWithImpl$Query$get_service_provider_offers;
+
+  factory CopyWith$Query$get_service_provider_offers.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_offers;
+
+  TRes call({
+    List<Query$get_service_provider_offers$service_provider_offer>?
+        service_provider_offer,
+    String? $__typename,
+  });
+  TRes service_provider_offer(
+      Iterable<Query$get_service_provider_offers$service_provider_offer> Function(
+              Iterable<
+                  CopyWith$Query$get_service_provider_offers$service_provider_offer<
+                      Query$get_service_provider_offers$service_provider_offer>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_service_provider_offers<TRes>
+    implements CopyWith$Query$get_service_provider_offers<TRes> {
+  _CopyWithImpl$Query$get_service_provider_offers(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_offers _instance;
+
+  final TRes Function(Query$get_service_provider_offers) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_offer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_service_provider_offers(
+        service_provider_offer: service_provider_offer == _undefined ||
+                service_provider_offer == null
+            ? _instance.service_provider_offer
+            : (service_provider_offer as List<
+                Query$get_service_provider_offers$service_provider_offer>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_offer(
+          Iterable<Query$get_service_provider_offers$service_provider_offer> Function(
+                  Iterable<
+                      CopyWith$Query$get_service_provider_offers$service_provider_offer<
+                          Query$get_service_provider_offers$service_provider_offer>>)
+              _fn) =>
+      call(
+          service_provider_offer: _fn(_instance.service_provider_offer.map((e) =>
+              CopyWith$Query$get_service_provider_offers$service_provider_offer(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_offers<TRes>
+    implements CopyWith$Query$get_service_provider_offers<TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_offers(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_service_provider_offers$service_provider_offer>?
+        service_provider_offer,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_offer(_fn) => _res;
+}
+
+const documentNodeQueryget_service_provider_offers = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_service_provider_offers'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'service_provider_type')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_offer'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(
+                        name: NameNode(value: 'service_provider_type')),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'translations'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'language_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'value'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'coupon_code'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offer_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_service_provider_offers _parserFn$Query$get_service_provider_offers(
+        Map<String, dynamic> data) =>
+    Query$get_service_provider_offers.fromJson(data);
+
+class Options$Query$get_service_provider_offers
+    extends graphql.QueryOptions<Query$get_service_provider_offers> {
+  Options$Query$get_service_provider_offers({
+    String? operationName,
+    Variables$Query$get_service_provider_offers? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_service_provider_offers,
+          parserFn: _parserFn$Query$get_service_provider_offers,
+        );
+}
+
+class WatchOptions$Query$get_service_provider_offers
+    extends graphql.WatchQueryOptions<Query$get_service_provider_offers> {
+  WatchOptions$Query$get_service_provider_offers({
+    String? operationName,
+    Variables$Query$get_service_provider_offers? variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables?.toJson() ?? {},
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_service_provider_offers,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_service_provider_offers,
+        );
+}
+
+class FetchMoreOptions$Query$get_service_provider_offers
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_service_provider_offers({
+    required graphql.UpdateQuery updateQuery,
+    Variables$Query$get_service_provider_offers? variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables?.toJson() ?? {},
+          document: documentNodeQueryget_service_provider_offers,
+        );
+}
+
+extension ClientExtension$Query$get_service_provider_offers
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_service_provider_offers>>
+      query$get_service_provider_offers(
+              [Options$Query$get_service_provider_offers? options]) async =>
+          await this
+              .query(options ?? Options$Query$get_service_provider_offers());
+  graphql.ObservableQuery<Query$get_service_provider_offers>
+      watchQuery$get_service_provider_offers(
+              [WatchOptions$Query$get_service_provider_offers? options]) =>
+          this.watchQuery(
+              options ?? WatchOptions$Query$get_service_provider_offers());
+  void writeQuery$get_service_provider_offers({
+    required Query$get_service_provider_offers data,
+    Variables$Query$get_service_provider_offers? variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_service_provider_offers),
+          variables: variables?.toJson() ?? const {},
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_service_provider_offers? readQuery$get_service_provider_offers({
+    Variables$Query$get_service_provider_offers? variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryget_service_provider_offers),
+        variables: variables?.toJson() ?? const {},
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$get_service_provider_offers.fromJson(result);
+  }
+}
+
+class Query$get_service_provider_offers$service_provider_offer {
+  Query$get_service_provider_offers$service_provider_offer({
+    required this.id,
+    required this.details,
+    required this.name,
+    required this.status,
+    this.coupon_code,
+    required this.offer_type,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_offers$service_provider_offer.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$name = json['name'];
+    final l$status = json['status'];
+    final l$coupon_code = json['coupon_code'];
+    final l$offer_type = json['offer_type'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_offers$service_provider_offer(
+      id: (l$id as int),
+      details: mapFromJson(l$details),
+      name: Query$get_service_provider_offers$service_provider_offer$name
+          .fromJson((l$name as Map<String, dynamic>)),
+      status: (l$status as String),
+      coupon_code: (l$coupon_code as String?),
+      offer_type: (l$offer_type as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic details;
+
+  final Query$get_service_provider_offers$service_provider_offer$name name;
+
+  final String status;
+
+  final String? coupon_code;
+
+  final String offer_type;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = mapToJson(l$details);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$coupon_code = coupon_code;
+    _resultData['coupon_code'] = l$coupon_code;
+    final l$offer_type = offer_type;
+    _resultData['offer_type'] = l$offer_type;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$name = name;
+    final l$status = status;
+    final l$coupon_code = coupon_code;
+    final l$offer_type = offer_type;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$name,
+      l$status,
+      l$coupon_code,
+      l$offer_type,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_service_provider_offers$service_provider_offer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$coupon_code = coupon_code;
+    final lOther$coupon_code = other.coupon_code;
+    if (l$coupon_code != lOther$coupon_code) {
+      return false;
+    }
+    final l$offer_type = offer_type;
+    final lOther$offer_type = other.offer_type;
+    if (l$offer_type != lOther$offer_type) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_offers$service_provider_offer
+    on Query$get_service_provider_offers$service_provider_offer {
+  CopyWith$Query$get_service_provider_offers$service_provider_offer<
+          Query$get_service_provider_offers$service_provider_offer>
+      get copyWith =>
+          CopyWith$Query$get_service_provider_offers$service_provider_offer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_offers$service_provider_offer<
+    TRes> {
+  factory CopyWith$Query$get_service_provider_offers$service_provider_offer(
+    Query$get_service_provider_offers$service_provider_offer instance,
+    TRes Function(Query$get_service_provider_offers$service_provider_offer)
+        then,
+  ) = _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer;
+
+  factory CopyWith$Query$get_service_provider_offers$service_provider_offer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer;
+
+  TRes call({
+    int? id,
+    dynamic? details,
+    Query$get_service_provider_offers$service_provider_offer$name? name,
+    String? status,
+    String? coupon_code,
+    String? offer_type,
+    String? $__typename,
+  });
+  CopyWith$Query$get_service_provider_offers$service_provider_offer$name<TRes>
+      get name;
+}
+
+class _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_offers$service_provider_offer<
+            TRes> {
+  _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_offers$service_provider_offer _instance;
+
+  final TRes Function(Query$get_service_provider_offers$service_provider_offer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? name = _undefined,
+    Object? status = _undefined,
+    Object? coupon_code = _undefined,
+    Object? offer_type = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_service_provider_offers$service_provider_offer(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as dynamic),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name
+                as Query$get_service_provider_offers$service_provider_offer$name),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        coupon_code: coupon_code == _undefined
+            ? _instance.coupon_code
+            : (coupon_code as String?),
+        offer_type: offer_type == _undefined || offer_type == null
+            ? _instance.offer_type
+            : (offer_type as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_service_provider_offers$service_provider_offer$name<TRes>
+      get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$get_service_provider_offers$service_provider_offer$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_offers$service_provider_offer<
+            TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? details,
+    Query$get_service_provider_offers$service_provider_offer$name? name,
+    String? status,
+    String? coupon_code,
+    String? offer_type,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_service_provider_offers$service_provider_offer$name<TRes>
+      get name =>
+          CopyWith$Query$get_service_provider_offers$service_provider_offer$name
+              .stub(_res);
+}
+
+class Query$get_service_provider_offers$service_provider_offer$name {
+  Query$get_service_provider_offers$service_provider_offer$name({
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_offers$service_provider_offer$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_offers$service_provider_offer$name(
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$get_service_provider_offers$service_provider_offer$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Query$get_service_provider_offers$service_provider_offer$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_service_provider_offers$service_provider_offer$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_offers$service_provider_offer$name
+    on Query$get_service_provider_offers$service_provider_offer$name {
+  CopyWith$Query$get_service_provider_offers$service_provider_offer$name<
+          Query$get_service_provider_offers$service_provider_offer$name>
+      get copyWith =>
+          CopyWith$Query$get_service_provider_offers$service_provider_offer$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_offers$service_provider_offer$name<
+    TRes> {
+  factory CopyWith$Query$get_service_provider_offers$service_provider_offer$name(
+    Query$get_service_provider_offers$service_provider_offer$name instance,
+    TRes Function(Query$get_service_provider_offers$service_provider_offer$name)
+        then,
+  ) = _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer$name;
+
+  factory CopyWith$Query$get_service_provider_offers$service_provider_offer$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer$name;
+
+  TRes call({
+    List<Query$get_service_provider_offers$service_provider_offer$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$get_service_provider_offers$service_provider_offer$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations<
+                      Query$get_service_provider_offers$service_provider_offer$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer$name<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_offers$service_provider_offer$name<
+            TRes> {
+  _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_offers$service_provider_offer$name _instance;
+
+  final TRes Function(
+      Query$get_service_provider_offers$service_provider_offer$name) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_service_provider_offers$service_provider_offer$name(
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$get_service_provider_offers$service_provider_offer$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$get_service_provider_offers$service_provider_offer$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations<
+                          Query$get_service_provider_offers$service_provider_offer$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer$name<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_offers$service_provider_offer$name<
+            TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$get_service_provider_offers$service_provider_offer$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$get_service_provider_offers$service_provider_offer$name$translations {
+  Query$get_service_provider_offers$service_provider_offer$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_provider_offers$service_provider_offer$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_provider_offers$service_provider_offer$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_service_provider_offers$service_provider_offer$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_provider_offers$service_provider_offer$name$translations
+    on Query$get_service_provider_offers$service_provider_offer$name$translations {
+  CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations<
+          Query$get_service_provider_offers$service_provider_offer$name$translations>
+      get copyWith =>
+          CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations<
+    TRes> {
+  factory CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations(
+    Query$get_service_provider_offers$service_provider_offer$name$translations
+        instance,
+    TRes Function(
+            Query$get_service_provider_offers$service_provider_offer$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer$name$translations;
+
+  factory CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_provider_offers$service_provider_offer$name$translations
+      _instance;
+
+  final TRes Function(
+          Query$get_service_provider_offers$service_provider_offer$name$translations)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_service_provider_offers$service_provider_offer$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$get_service_provider_offers$service_provider_offer$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
     String? $__typename,
   }) =>
       _res;

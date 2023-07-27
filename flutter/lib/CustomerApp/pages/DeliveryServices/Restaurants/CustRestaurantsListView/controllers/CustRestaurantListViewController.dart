@@ -245,7 +245,7 @@ class CustRestaurantListViewController {
               lat: fromLoc?.latitude ?? _currentLocation.latitude,
               lng: fromLoc?.longitude ?? _currentLocation.longitude,
               address: ''),
-          is_open: showOnlyOpenOnMap,
+          is_open: false,
           withCache: false,
           limit: mapMarkersFetchSize,
           offset: mapMarkersOffset,

@@ -14,9 +14,12 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart'
+    as restaurantOrder;
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['FoodView']['CustFoodWrapper'];
@@ -53,8 +56,17 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
           inProcess: true);
 
       if (orderId != null && orderId > 0) {
-        await ViewRestaurantOrderScreen.navigate(orderId: orderId);
-        return;
+        restaurantOrder.RestaurantOrder? order =
+            await get_restaurant_order_by_id(
+                orderId: orderId, withCache: false);
+        if (order != null &&
+            ![
+              RestaurantOrderStatus.CancelledByAdmin,
+              RestaurantOrderStatus.CancelledByCustomer
+            ].contains(order.status)) {
+          await ViewRestaurantOrderScreen.navigate(orderId: orderId);
+          return;
+        }
       }
     }
     switch (mezService) {

@@ -50,7 +50,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-         actionIcons: [
+        actionIcons: [
           FloatingCartComponent(
             cartType: CartType.business,
           ),
@@ -234,7 +234,7 @@ class _CustTherapyListViewState extends State<CustTherapyListView> {
                               width: 2,
                             ),
                             Text(
-                                '${viewController.businesses[index].avgRating}',
+                                '${viewController.businesses[index].avgRating?.toStringAsFixed(1)}',
                                 style: context.textTheme.bodySmall),
                             Padding(
                               padding: const EdgeInsets.only(left: 2),

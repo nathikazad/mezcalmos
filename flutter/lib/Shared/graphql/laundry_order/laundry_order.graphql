@@ -343,3 +343,11 @@ mutation setLaundryOrderEstReadyTime(
     estimated_package_ready_time
   }
 }
+
+query number_of_customer_laundry_orders($customer_id: Int, $store_id: Int) {
+  laundry_order_aggregate(where: {customer_id: {_eq: $customer_id}, store_id: {_eq: $store_id}}) {
+    aggregate {
+      count
+    }
+  }
+}

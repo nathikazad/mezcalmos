@@ -89,6 +89,7 @@ Future<List<Restaurant>> fetch_restaurants(
             : null,
         paymentInfo: PaymentInfo(),
         rate: data.reviews_aggregate.aggregate?.avg?.rating,
+        reviewCount: data.reviews_aggregate.aggregate?.count,
         restaurantState: ServiceState(
             data.details!.open_status.toServiceStatus(),
             data.details!.approved),
@@ -164,8 +165,8 @@ Future<Restaurant?> get_restaurant_by_id(
 
     if (data != null) {
       return Restaurant(
-        averageRating: data.reviews_aggregate.aggregate?.avg?.rating??0.0,
-        reviewCount: data.reviews_aggregate.aggregate?.count??0,
+        averageRating: data.reviews_aggregate.aggregate?.avg?.rating ?? 0.0,
+        reviewCount: data.reviews_aggregate.aggregate?.count ?? 0,
         lastActive: DateTime.parse(data.details!.last_active_time),
         onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,

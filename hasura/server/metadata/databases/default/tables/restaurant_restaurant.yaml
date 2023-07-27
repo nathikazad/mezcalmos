@@ -53,6 +53,16 @@ array_relationships:
         remote_table:
           name: review
           schema: public
+  - name: subscribers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: subscriber
+          schema: service_provider
 computed_fields:
   - name: delivery_details_of_deliverer
     definition:

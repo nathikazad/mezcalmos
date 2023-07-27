@@ -128,7 +128,7 @@ class _CustBusinessMessageCardState extends State<CustBusinessMessageCard> {
                                 WidgetSpan(
                                     alignment: PlaceholderAlignment.middle,
                                     child: Text(
-                                        '${widget.business.avgRating ?? '0'}',
+                                        '${widget.business.avgRating?.toStringAsFixed(1)}',
                                         style: context.textTheme.bodySmall)),
                                 WidgetSpan(
                                   alignment: PlaceholderAlignment.middle,

@@ -495,3 +495,21 @@ Future<List<RestaurantOrderItem>> get_dv_order_restaurant_items(
               quantity: e.quantity))
       .toList();
 }
+
+Future<int> number_of_customer_restaurant_orders(
+    {required int restaurantId, required int customerId}) async {
+  final QueryResult<Query$number_of_customer_restaurant_orders> queryResult =
+      await _hasuraDb.graphQLClient.query$number_of_customer_restaurant_orders(
+    Options$Query$number_of_customer_restaurant_orders(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$number_of_customer_restaurant_orders(
+          restaurant_id: restaurantId, customer_id: customerId),
+    ),
+  );
+  if (queryResult.parsedData?.restaurant_order_aggregate.aggregate != null) {
+    return queryResult.parsedData!.restaurant_order_aggregate.aggregate!.count;
+  } else {
+    throw Exception(
+        "🚨 Getting number_of_customer_restaurant_orders exceptions \n ${queryResult.exception}");
+  }
+}
