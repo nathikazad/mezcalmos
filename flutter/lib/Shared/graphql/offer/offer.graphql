@@ -1,0 +1,230 @@
+query get_service_provider_offers($service_provider_id: Int, $service_provider_type: String) {
+  service_provider_offer(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
+    id
+    details
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+    status
+    coupon_code
+    offer_type
+  }
+}
+
+query check_coupon($coupon_code: String, $service_provider_id: Int, $service_provider_type: String) {
+  service_provider_offer(where: {coupon_code: {_eq: $coupon_code}, service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}, status: {_eq: "active"}, offer_type: {_eq: "coupon"}}) {
+    id
+    details
+  }
+}
+
+query check_offer_applied($offer_id: Int, $customer_id: Int, $order_type: String) {
+  service_provider_offer_applied(where: {offer_id: {_eq: $offer_id}, order_type: {_eq: $order_type}, _or: [{business_order: {customer_id: {_eq: $customer_id}}}, {restaurant_order: {customer_id: {_eq: $customer_id}}}, {laundry_order: {customer_id: {_eq: $customer_id}}}]}) {
+    order_id
+  }
+}
+
+query fetchPromotions($service_provider_id: Int, $service_provider_type: String) {
+  service_provider_offer(where: {offer_type: {_eq: "promotion"}, service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}, status: {_eq: "active"}}) {
+    details
+    id
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+    name_id
+  }
+}
+
+query fetch_subscribed_promotions($customer_id: Int, $limit: Int, $offset: Int) {
+    service_provider_offer(
+      limit: $limit,
+      offset: $offset,
+      where: {
+        _or: [{
+            business: {
+                subscribers: {
+                    customer_id: {
+                        _eq: $customer_id
+                        }
+                    }
+                }
+            }, {
+                laundry: {
+                    subscribers: {
+                        customer_id: {
+                            _eq: $customer_id
+                        }
+                    }
+                }
+            }, {
+                delivery_company: {
+                    subscribers: {
+                        customer_id: {
+                            _eq: $customer_id
+                        }
+                    }
+                }
+            }, {
+                restaurant: {
+                    subscribers: {
+                        customer_id: {
+                            _eq: $customer_id
+                        }
+                    }
+                }
+          }]
+      offer_type: {
+        _eq: "promotion"
+      }
+      status: {
+        _eq: "active"
+      }
+        }
+    ) {
+        id
+        details
+    		name {
+          id
+          translations {
+            language_id
+            value
+          }
+        }
+        service_provider_id
+        service_provider_type
+        restaurant {
+          details {
+            name
+            image
+          }
+        }
+        laundry {
+          details {
+            name
+            image
+          }
+        }
+        delivery_company {
+          details {
+            name
+            image
+          }
+        }
+        business {
+          details {
+            name
+            image
+          }
+        }
+    }
+}
+
+query fetch_all_promotions_within_distance($from: geography!, $distance: Float!, $limit: Int, $offset: Int) {
+    service_provider_offer(
+      limit: $limit,
+      offset: $offset,
+      where: {
+        _or: [{
+          business: {
+            details: {
+              location: {
+                gps: {
+                  _st_d_within: {
+                    distance: $distance,
+                    from: $from
+                  }
+                }
+              }
+            }
+          }
+        }, {
+          laundry: {
+            details: {
+              location: {
+                gps: {
+                  _st_d_within: {
+                    distance: $distance,
+                    from: $from
+                  }
+                }
+              }
+            }
+          }
+        }, {
+          delivery_company: {
+            details: {
+              location: {
+                gps: {
+                  _st_d_within: {
+                    distance: $distance,
+                    from: $from
+                  }
+                }
+              }
+            }
+          }
+        }, {
+          restaurant: {
+            details: {
+              location: {
+                gps: {
+                  _st_d_within: {
+                    distance: $distance,
+                    from: $from
+                  }
+                }
+              }
+            }
+          }
+        }]
+        offer_type: {
+          _eq: "promotion"
+        }
+        status: {
+          _eq: "active"
+        }
+      }
+    ) {
+        id
+        details
+    		name {
+          id
+          translations {
+            language_id
+            value
+          }
+        }
+        service_provider_id
+        service_provider_type
+        restaurant {
+          details {
+            name
+            image
+          }
+        }
+        laundry {
+          details {
+            name
+            image
+          }
+        }
+        delivery_company {
+          details {
+            name
+            image
+          }
+        }
+        business {
+          details {
+            name
+            image
+          }
+        }
+    }
+}

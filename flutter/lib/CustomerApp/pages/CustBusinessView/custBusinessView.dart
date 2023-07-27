@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessHomeCard.dart';
@@ -5,10 +6,12 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPa
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessServiceCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFeedView/components/FeedCardPost.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFeedView/controllers/CustFeedViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -21,12 +24,13 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -93,6 +97,8 @@ class _CustBusinessViewState extends State<CustBusinessView>
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   children: [
+                    if (_viewController.promotions.isNotEmpty)
+                      _promotions(context),
                     if (_viewController.business!.homes != null &&
                         _viewController.business!.homes!.isNotEmpty)
                       _home(context),
@@ -117,6 +123,82 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   ],
                 ),
               ),
+              Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Container(
+                  color: Colors.white,
+                  width: double.infinity,
+                  child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: CachedNetworkImageProvider(
+                            _viewController.business?.details.image ?? ''),
+                      ),
+                      title: Text('${_viewController.business?.details.name}'),
+                      titleTextStyle: context.textTheme.bodyLarge
+                          ?.copyWith(fontWeight: FontWeight.w700),
+                      subtitle: Text('7 subscribers'),
+                      subtitleTextStyle: context.textTheme.bodyMedium
+                          ?.copyWith(fontSize: 12.5),
+                      trailing: RawChip(
+                        shape: StadiumBorder(),
+                        label: Text(
+                          'Subscribe',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal),
+                        ),
+                        backgroundColor: primaryBlueColor,
+                        onPressed: () {},
+                      )),
+                ),
+                Expanded(
+                  child: DefaultTabController(
+                      length: 2,
+                      child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            TabBar(
+                                labelColor: primaryBlueColor,
+                                unselectedLabelColor: Colors.grey.shade400,
+                                tabs: [
+                                  Tab(icon: Icon(Icons.newspaper)),
+                                  Tab(icon: Icon(Icons.grid_on))
+                                ]),
+                            Expanded(
+                                child: TabBarView(children: <Widget>[
+                              Obx(() => _viewController.posts.isEmpty
+                                  ? NoPostsFound()
+                                  : SingleChildScrollView(child: Column()
+                                      // child: Column(
+                                      //   children: List.generate(
+                                      //       _viewController.posts.length,
+                                      //       (int index) => FeedCardPost(
+                                      //           controller:
+                                      //               ,
+                                      //           post: _viewController
+                                      //               .posts[index])),
+                                      // ),
+                                      )),
+                              GridView.builder(
+                                  padding: EdgeInsets.zero,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 1,
+                                          crossAxisSpacing: 1,
+                                          mainAxisSpacing: 1),
+                                  itemCount: 25,
+                                  itemBuilder: (BuildContext ctx, int index) {
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    );
+                                  })
+                            ]))
+                          ])),
+                )
+              ]),
               Container(
                 child: ListView(
                   padding: EdgeInsets.all(16),
@@ -126,8 +208,8 @@ class _CustBusinessViewState extends State<CustBusinessView>
                     _description(context),
                     if (_viewController.business!.details.schedule != null)
                       MezServiceOpenHours(
-                          schedule: _viewController.business!.details.schedule!
-                              ),
+                          schedule:
+                              _viewController.business!.details.schedule!),
                     ServiceLocationCard(
                         location: MezLocation(
                             _viewController.business!.details.location.address,
@@ -152,8 +234,8 @@ class _CustBusinessViewState extends State<CustBusinessView>
 
                     if (_viewController.business!.details.schedule != null)
                       MezServiceOpenHours(
-                          schedule: _viewController.business!.details.schedule!
-                              ),
+                          schedule:
+                              _viewController.business!.details.schedule!),
                     _reviewsList(context),
                   ],
                 ),
@@ -202,6 +284,51 @@ class _CustBusinessViewState extends State<CustBusinessView>
         );
       }
     }));
+  }
+
+  Column _promotions(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Promotions',
+          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+        ),
+        SizedBox(height: 5),
+        ..._viewController.promotions.map(
+          (element) {
+            return Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color(0xFFF0F2FF),
+              ),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    child: Image.asset(
+                      aPriceCheck,
+                      color: Colors.white,
+                      height: 48,
+                      width: 48,
+                    ),
+                    radius: 24,
+                    backgroundColor: primaryBlueColor,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    element.name!.getTranslation(userLanguage) ?? "",
+                    style: context.textTheme.bodyMedium!.copyWith(
+                      color: primaryBlueColor,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
   }
 
   Column _home(BuildContext context) {

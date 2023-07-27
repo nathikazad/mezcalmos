@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/helpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
@@ -38,7 +39,7 @@ class CustRestaurantCartController extends GetxController {
     await _handlerRestaurantId();
     subscriptionId = _hasuraDb.createSubscription(start: () {
       cartStream = listen_on_customer_cart(customer_id: _auth.hasuraUserId!)
-          .listen((Cart? event) {
+          .listen((Cart? event) async {
         if (event != null) {
           mezDbgPrint(
               "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length} \n restaurant isOpen =====> ${event.restaurant?.isOpen}");
@@ -54,8 +55,11 @@ class CustRestaurantCartController extends GetxController {
             mezDbgPrint(
                 " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
           }
-
-          _handlerRestaurantId();
+          if (event.restaurant == null && event.cartItems.isNotEmpty) {
+            await _handlerRestaurantId();
+          }
+          await applyOffersToRestaurantCart(
+              customerId: _auth.hasuraUserId!, cart: cart.value!);
           mezDbgPrint(
               "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
           cart.refresh();

@@ -58,6 +58,16 @@ array_relationships:
         table:
           name: service
           schema: business
+  - name: subscribers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: subscriber
+          schema: service_provider
 select_permissions:
   - role: anonymous
     permission:
@@ -95,27 +105,6 @@ select_permissions:
         - service_provider_type
         - profile
       filter:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id
-update_permissions:
-  - role: mez_admin
-    permission:
-      columns:
-        - profile
-      filter:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
         _exists:
           _table:
             name: mez_admin

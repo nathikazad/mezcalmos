@@ -372,8 +372,6 @@
         "dependencies": {
           "agora_rtc_engine": "6.1.0",
           "open_file": "^3.3.2"
-       
-         
         },
         "assets": [
           "assets/images/",
@@ -755,8 +753,6 @@
         "dependencies": {
           "agora_rtc_engine": "6.1.0",
           "open_file": "^3.3.2"
-       
-        
         },
         "assets": [
           "assets/images/",

@@ -563,6 +563,13 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'count'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'avg'),
                     alias: null,
                     arguments: [],
@@ -1379,15 +1386,18 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggre
 
 class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
   Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate({
+    required this.count,
     this.avg,
     required this.$__typename,
   });
 
   factory Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate.fromJson(
       Map<String, dynamic> json) {
+    final l$count = json['count'];
     final l$avg = json['avg'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+      count: (l$count as int),
       avg: l$avg == null
           ? null
           : Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
@@ -1396,6 +1406,8 @@ class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
     );
   }
 
+  final int count;
+
   final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
       avg;
 
@@ -1403,6 +1415,8 @@ class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
     final l$avg = avg;
     _resultData['avg'] = l$avg?.toJson();
     final l$$__typename = $__typename;
@@ -1412,9 +1426,11 @@ class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
 
   @override
   int get hashCode {
+    final l$count = count;
     final l$avg = avg;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$count,
       l$avg,
       l$$__typename,
     ]);
@@ -1428,6 +1444,11 @@ class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
     if (!(other
             is Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
       return false;
     }
     final l$avg = avg;
@@ -1470,6 +1491,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggre
       _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate;
 
   TRes call({
+    int? count,
     Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
         avg,
     String? $__typename,
@@ -1498,11 +1520,15 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate
   static const _undefined = {};
 
   TRes call({
+    Object? count = _undefined,
     Object? avg = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
         avg: avg == _undefined
             ? _instance.avg
             : (avg
@@ -1533,6 +1559,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggre
   TRes _res;
 
   call({
+    int? count,
     Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
         avg,
     String? $__typename,

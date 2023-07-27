@@ -117,6 +117,9 @@ class CustBusinessViewAppbar extends StatelessWidget {
                 icon: Icon(Icons.store_outlined),
               ),
               Tab(
+                icon: Icon(Icons.article),
+              ),
+              Tab(
                 icon: Icon(Icons.info_outline),
               ),
             ]),

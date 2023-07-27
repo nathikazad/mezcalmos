@@ -312,8 +312,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
     } else
       return _actualApp(appTheme, routes);
   }
-
-  Widget _actualApp(ThemeData appTheme, List<QRoute> routes) {
+Widget _actualApp(ThemeData appTheme, List<QRoute> routes) {
     return
         // DevicePreview(
         //   enabled: MezEnv.previewMode == true ? true : false,

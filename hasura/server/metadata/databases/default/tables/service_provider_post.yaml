@@ -2,6 +2,36 @@ table:
   name: post
   schema: service_provider
 object_relationships:
+  - name: business
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: business
+          schema: business
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: company
+          schema: delivery
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
   - name: restaurant
     using:
       manual_configuration:
@@ -12,3 +42,247 @@ object_relationships:
         remote_table:
           name: restaurant
           schema: restaurant
+array_relationships:
+  - name: comments
+    using:
+      foreign_key_constraint_on:
+        column: post_id
+        table:
+          name: post_comment
+          schema: service_provider
+insert_permissions:
+  - role: business_operator
+    permission:
+      check:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - image
+        - link
+        - message
+        - posted_on
+        - service_provider_id
+        - service_provider_type
+  - role: delivery_operator
+    permission:
+      check:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - image
+        - link
+        - message
+        - posted_on
+        - service_provider_id
+        - service_provider_type
+  - role: laundry_operator
+    permission:
+      check:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - image
+        - link
+        - message
+        - posted_on
+        - service_provider_id
+        - service_provider_type
+  - role: restaurant_operator
+    permission:
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - image
+        - link
+        - message
+        - posted_on
+        - service_provider_id
+        - service_provider_type
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - image
+        - link
+        - message
+        - service_provider_type
+        - posted_on
+        - likes
+      filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - image
+        - link
+        - message
+        - service_provider_type
+        - posted_on
+        - likes
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - image
+        - link
+        - message
+        - service_provider_type
+        - posted_on
+        - likes
+      filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - image
+        - link
+        - message
+        - service_provider_type
+        - posted_on
+        - likes
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - image
+        - link
+        - message
+        - service_provider_type
+        - posted_on
+        - likes
+      filter:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - image
+        - link
+        - message
+        - service_provider_type
+        - posted_on
+        - likes
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - image
+        - link
+        - message
+        - service_provider_type
+        - posted_on
+        - likes
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - image
+        - link
+        - message
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: delivery_operator
+    permission:
+      columns:
+        - image
+        - link
+        - message
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: laundry_operator
+    permission:
+      columns:
+        - image
+        - link
+        - message
+      filter:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - image
+        - link
+        - message
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: business_operator
+    permission:
+      filter:
+        business:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      filter:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

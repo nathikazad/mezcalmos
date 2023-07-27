@@ -1799,6 +1799,20 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'discount_value'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'applied_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -1925,6 +1939,8 @@ class Query$getBusinessCart$business_cart {
     this.business_id,
     required this.customer_id,
     this.cost,
+    required this.discount_value,
+    required this.applied_offers,
     required this.$__typename,
   });
 
@@ -1934,6 +1950,8 @@ class Query$getBusinessCart$business_cart {
     final l$business_id = json['business_id'];
     final l$customer_id = json['customer_id'];
     final l$cost = json['cost'];
+    final l$discount_value = json['discount_value'];
+    final l$applied_offers = json['applied_offers'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart(
       items: (l$items as List<dynamic>)
@@ -1943,6 +1961,8 @@ class Query$getBusinessCart$business_cart {
       business_id: (l$business_id as int?),
       customer_id: (l$customer_id as int),
       cost: l$cost == null ? null : moneyFromJson(l$cost),
+      discount_value: moneyFromJson(l$discount_value),
+      applied_offers: mapFromJson(l$applied_offers),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1954,6 +1974,10 @@ class Query$getBusinessCart$business_cart {
   final int customer_id;
 
   final double? cost;
+
+  final double discount_value;
+
+  final dynamic applied_offers;
 
   final String $__typename;
 
@@ -1967,6 +1991,10 @@ class Query$getBusinessCart$business_cart {
     _resultData['customer_id'] = l$customer_id;
     final l$cost = cost;
     _resultData['cost'] = l$cost == null ? null : moneyToJson(l$cost);
+    final l$discount_value = discount_value;
+    _resultData['discount_value'] = moneyToJson(l$discount_value);
+    final l$applied_offers = applied_offers;
+    _resultData['applied_offers'] = mapToJson(l$applied_offers);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1978,12 +2006,16 @@ class Query$getBusinessCart$business_cart {
     final l$business_id = business_id;
     final l$customer_id = customer_id;
     final l$cost = cost;
+    final l$discount_value = discount_value;
+    final l$applied_offers = applied_offers;
     final l$$__typename = $__typename;
     return Object.hashAll([
       Object.hashAll(l$items.map((v) => v)),
       l$business_id,
       l$customer_id,
       l$cost,
+      l$discount_value,
+      l$applied_offers,
       l$$__typename,
     ]);
   }
@@ -2024,6 +2056,16 @@ class Query$getBusinessCart$business_cart {
     if (l$cost != lOther$cost) {
       return false;
     }
+    final l$discount_value = discount_value;
+    final lOther$discount_value = other.discount_value;
+    if (l$discount_value != lOther$discount_value) {
+      return false;
+    }
+    final l$applied_offers = applied_offers;
+    final lOther$applied_offers = other.applied_offers;
+    if (l$applied_offers != lOther$applied_offers) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -2057,6 +2099,8 @@ abstract class CopyWith$Query$getBusinessCart$business_cart<TRes> {
     int? business_id,
     int? customer_id,
     double? cost,
+    double? discount_value,
+    dynamic? applied_offers,
     String? $__typename,
   });
   TRes items(
@@ -2085,6 +2129,8 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart<TRes>
     Object? business_id = _undefined,
     Object? customer_id = _undefined,
     Object? cost = _undefined,
+    Object? discount_value = _undefined,
+    Object? applied_offers = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBusinessCart$business_cart(
@@ -2098,6 +2144,12 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart<TRes>
             ? _instance.customer_id
             : (customer_id as int),
         cost: cost == _undefined ? _instance.cost : (cost as double?),
+        discount_value: discount_value == _undefined || discount_value == null
+            ? _instance.discount_value
+            : (discount_value as double),
+        applied_offers: applied_offers == _undefined || applied_offers == null
+            ? _instance.applied_offers
+            : (applied_offers as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2127,6 +2179,8 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart<TRes>
     int? business_id,
     int? customer_id,
     double? cost,
+    double? discount_value,
+    dynamic? applied_offers,
     String? $__typename,
   }) =>
       _res;
@@ -36842,6 +36896,656 @@ class _CopyWithStubImpl$Mutation$update_product_item_count$update_business_cart_
 
   call({
     int? affected_rows,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$update_business_cart_discount {
+  factory Variables$Mutation$update_business_cart_discount({
+    required int customer_id,
+    dynamic? applied_offers,
+    double? discount_value,
+  }) =>
+      Variables$Mutation$update_business_cart_discount._({
+        r'customer_id': customer_id,
+        if (applied_offers != null) r'applied_offers': applied_offers,
+        if (discount_value != null) r'discount_value': discount_value,
+      });
+
+  Variables$Mutation$update_business_cart_discount._(this._$data);
+
+  factory Variables$Mutation$update_business_cart_discount.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$customer_id = data['customer_id'];
+    result$data['customer_id'] = (l$customer_id as int);
+    if (data.containsKey('applied_offers')) {
+      final l$applied_offers = data['applied_offers'];
+      result$data['applied_offers'] =
+          l$applied_offers == null ? null : mapFromJson(l$applied_offers);
+    }
+    if (data.containsKey('discount_value')) {
+      final l$discount_value = data['discount_value'];
+      result$data['discount_value'] =
+          l$discount_value == null ? null : moneyFromJson(l$discount_value);
+    }
+    return Variables$Mutation$update_business_cart_discount._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get customer_id => (_$data['customer_id'] as int);
+  dynamic? get applied_offers => (_$data['applied_offers'] as dynamic?);
+  double? get discount_value => (_$data['discount_value'] as double?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$customer_id = customer_id;
+    result$data['customer_id'] = l$customer_id;
+    if (_$data.containsKey('applied_offers')) {
+      final l$applied_offers = applied_offers;
+      result$data['applied_offers'] =
+          l$applied_offers == null ? null : mapToJson(l$applied_offers);
+    }
+    if (_$data.containsKey('discount_value')) {
+      final l$discount_value = discount_value;
+      result$data['discount_value'] =
+          l$discount_value == null ? null : moneyToJson(l$discount_value);
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$update_business_cart_discount<
+          Variables$Mutation$update_business_cart_discount>
+      get copyWith => CopyWith$Variables$Mutation$update_business_cart_discount(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$update_business_cart_discount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$applied_offers = applied_offers;
+    final lOther$applied_offers = other.applied_offers;
+    if (_$data.containsKey('applied_offers') !=
+        other._$data.containsKey('applied_offers')) {
+      return false;
+    }
+    if (l$applied_offers != lOther$applied_offers) {
+      return false;
+    }
+    final l$discount_value = discount_value;
+    final lOther$discount_value = other.discount_value;
+    if (_$data.containsKey('discount_value') !=
+        other._$data.containsKey('discount_value')) {
+      return false;
+    }
+    if (l$discount_value != lOther$discount_value) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_id = customer_id;
+    final l$applied_offers = applied_offers;
+    final l$discount_value = discount_value;
+    return Object.hashAll([
+      l$customer_id,
+      _$data.containsKey('applied_offers') ? l$applied_offers : const {},
+      _$data.containsKey('discount_value') ? l$discount_value : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$update_business_cart_discount<TRes> {
+  factory CopyWith$Variables$Mutation$update_business_cart_discount(
+    Variables$Mutation$update_business_cart_discount instance,
+    TRes Function(Variables$Mutation$update_business_cart_discount) then,
+  ) = _CopyWithImpl$Variables$Mutation$update_business_cart_discount;
+
+  factory CopyWith$Variables$Mutation$update_business_cart_discount.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$update_business_cart_discount;
+
+  TRes call({
+    int? customer_id,
+    dynamic? applied_offers,
+    double? discount_value,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$update_business_cart_discount<TRes>
+    implements CopyWith$Variables$Mutation$update_business_cart_discount<TRes> {
+  _CopyWithImpl$Variables$Mutation$update_business_cart_discount(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$update_business_cart_discount _instance;
+
+  final TRes Function(Variables$Mutation$update_business_cart_discount) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? customer_id = _undefined,
+    Object? applied_offers = _undefined,
+    Object? discount_value = _undefined,
+  }) =>
+      _then(Variables$Mutation$update_business_cart_discount._({
+        ..._instance._$data,
+        if (customer_id != _undefined && customer_id != null)
+          'customer_id': (customer_id as int),
+        if (applied_offers != _undefined)
+          'applied_offers': (applied_offers as dynamic?),
+        if (discount_value != _undefined)
+          'discount_value': (discount_value as double?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$update_business_cart_discount<TRes>
+    implements CopyWith$Variables$Mutation$update_business_cart_discount<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$update_business_cart_discount(this._res);
+
+  TRes _res;
+
+  call({
+    int? customer_id,
+    dynamic? applied_offers,
+    double? discount_value,
+  }) =>
+      _res;
+}
+
+class Mutation$update_business_cart_discount {
+  Mutation$update_business_cart_discount({
+    this.update_business_cart_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_cart_discount.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_business_cart_by_pk = json['update_business_cart_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_cart_discount(
+      update_business_cart_by_pk: l$update_business_cart_by_pk == null
+          ? null
+          : Mutation$update_business_cart_discount$update_business_cart_by_pk
+              .fromJson((l$update_business_cart_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$update_business_cart_discount$update_business_cart_by_pk?
+      update_business_cart_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_business_cart_by_pk = update_business_cart_by_pk;
+    _resultData['update_business_cart_by_pk'] =
+        l$update_business_cart_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_business_cart_by_pk = update_business_cart_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_business_cart_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$update_business_cart_discount) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_business_cart_by_pk = update_business_cart_by_pk;
+    final lOther$update_business_cart_by_pk = other.update_business_cart_by_pk;
+    if (l$update_business_cart_by_pk != lOther$update_business_cart_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_cart_discount
+    on Mutation$update_business_cart_discount {
+  CopyWith$Mutation$update_business_cart_discount<
+          Mutation$update_business_cart_discount>
+      get copyWith => CopyWith$Mutation$update_business_cart_discount(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_cart_discount<TRes> {
+  factory CopyWith$Mutation$update_business_cart_discount(
+    Mutation$update_business_cart_discount instance,
+    TRes Function(Mutation$update_business_cart_discount) then,
+  ) = _CopyWithImpl$Mutation$update_business_cart_discount;
+
+  factory CopyWith$Mutation$update_business_cart_discount.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_cart_discount;
+
+  TRes call({
+    Mutation$update_business_cart_discount$update_business_cart_by_pk?
+        update_business_cart_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+      TRes> get update_business_cart_by_pk;
+}
+
+class _CopyWithImpl$Mutation$update_business_cart_discount<TRes>
+    implements CopyWith$Mutation$update_business_cart_discount<TRes> {
+  _CopyWithImpl$Mutation$update_business_cart_discount(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_cart_discount _instance;
+
+  final TRes Function(Mutation$update_business_cart_discount) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_business_cart_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_cart_discount(
+        update_business_cart_by_pk: update_business_cart_by_pk == _undefined
+            ? _instance.update_business_cart_by_pk
+            : (update_business_cart_by_pk
+                as Mutation$update_business_cart_discount$update_business_cart_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+      TRes> get update_business_cart_by_pk {
+    final local$update_business_cart_by_pk =
+        _instance.update_business_cart_by_pk;
+    return local$update_business_cart_by_pk == null
+        ? CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk(
+            local$update_business_cart_by_pk,
+            (e) => call(update_business_cart_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$update_business_cart_discount<TRes>
+    implements CopyWith$Mutation$update_business_cart_discount<TRes> {
+  _CopyWithStubImpl$Mutation$update_business_cart_discount(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$update_business_cart_discount$update_business_cart_by_pk?
+        update_business_cart_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+          TRes>
+      get update_business_cart_by_pk =>
+          CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdate_business_cart_discount =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'update_business_cart_discount'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'customer_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'applied_offers')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'jsonb'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'discount_value')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'money'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_business_cart_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: VariableNode(name: NameNode(value: 'customer_id')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'applied_offers'),
+                value: VariableNode(name: NameNode(value: 'applied_offers')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'discount_value'),
+                value: VariableNode(name: NameNode(value: 'discount_value')),
+              ),
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'discount_value'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$update_business_cart_discount
+    _parserFn$Mutation$update_business_cart_discount(
+            Map<String, dynamic> data) =>
+        Mutation$update_business_cart_discount.fromJson(data);
+typedef OnMutationCompleted$Mutation$update_business_cart_discount
+    = FutureOr<void> Function(
+  dynamic,
+  Mutation$update_business_cart_discount?,
+);
+
+class Options$Mutation$update_business_cart_discount
+    extends graphql.MutationOptions<Mutation$update_business_cart_discount> {
+  Options$Mutation$update_business_cart_discount({
+    String? operationName,
+    required Variables$Mutation$update_business_cart_discount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$update_business_cart_discount? onCompleted,
+    graphql.OnMutationUpdate<Mutation$update_business_cart_discount>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$update_business_cart_discount(
+                            data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdate_business_cart_discount,
+          parserFn: _parserFn$Mutation$update_business_cart_discount,
+        );
+
+  final OnMutationCompleted$Mutation$update_business_cart_discount?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$update_business_cart_discount
+    extends graphql.WatchQueryOptions<Mutation$update_business_cart_discount> {
+  WatchOptions$Mutation$update_business_cart_discount({
+    String? operationName,
+    required Variables$Mutation$update_business_cart_discount variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdate_business_cart_discount,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$update_business_cart_discount,
+        );
+}
+
+extension ClientExtension$Mutation$update_business_cart_discount
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$update_business_cart_discount>>
+      mutate$update_business_cart_discount(
+              Options$Mutation$update_business_cart_discount options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_business_cart_discount>
+      watchMutation$update_business_cart_discount(
+              WatchOptions$Mutation$update_business_cart_discount options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$update_business_cart_discount$update_business_cart_by_pk {
+  Mutation$update_business_cart_discount$update_business_cart_by_pk({
+    required this.discount_value,
+    required this.$__typename,
+  });
+
+  factory Mutation$update_business_cart_discount$update_business_cart_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$discount_value = json['discount_value'];
+    final l$$__typename = json['__typename'];
+    return Mutation$update_business_cart_discount$update_business_cart_by_pk(
+      discount_value: moneyFromJson(l$discount_value),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double discount_value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$discount_value = discount_value;
+    _resultData['discount_value'] = moneyToJson(l$discount_value);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$discount_value = discount_value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$discount_value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$update_business_cart_discount$update_business_cart_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$discount_value = discount_value;
+    final lOther$discount_value = other.discount_value;
+    if (l$discount_value != lOther$discount_value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$update_business_cart_discount$update_business_cart_by_pk
+    on Mutation$update_business_cart_discount$update_business_cart_by_pk {
+  CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+          Mutation$update_business_cart_discount$update_business_cart_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk(
+    Mutation$update_business_cart_discount$update_business_cart_by_pk instance,
+    TRes Function(
+            Mutation$update_business_cart_discount$update_business_cart_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$update_business_cart_discount$update_business_cart_by_pk;
+
+  factory CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$update_business_cart_discount$update_business_cart_by_pk;
+
+  TRes call({
+    double? discount_value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$update_business_cart_discount$update_business_cart_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$update_business_cart_discount$update_business_cart_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$update_business_cart_discount$update_business_cart_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? discount_value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$update_business_cart_discount$update_business_cart_by_pk(
+        discount_value: discount_value == _undefined || discount_value == null
+            ? _instance.discount_value
+            : (discount_value as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$update_business_cart_discount$update_business_cart_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$update_business_cart_discount$update_business_cart_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? discount_value,
     String? $__typename,
   }) =>
       _res;

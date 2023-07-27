@@ -210,6 +210,8 @@ query getBusinessCart($customer_id: Int!) {
     business_id
     customer_id
     cost
+    discount_value
+    applied_offers
   }
 }
 
@@ -714,5 +716,11 @@ mutation update_product_item_count(
     _set: { parameters: $parameters, cost: $cost }
   ) {
     affected_rows
+  }
+}
+
+mutation update_business_cart_discount($customer_id: Int!, $applied_offers: jsonb, $discount_value: money) {
+  update_business_cart_by_pk(pk_columns: {customer_id: $customer_id}, _set: {applied_offers: $applied_offers, discount_value: $discount_value}) {
+    discount_value
   }
 }

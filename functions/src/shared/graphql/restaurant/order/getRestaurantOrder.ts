@@ -1,6 +1,6 @@
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, CustomerAppType, Language, Location, MezError } from "../../../models/Generic/Generic";
-import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
+import { DeliveryType, OrderType, PaymentType } from "../../../models/Generic/Order";
 import { OrderItem, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 import { Operator, ServiceProviderType } from "../../../models/Services/Service";
 import { AuthorizationStatus } from "../../../models/Generic/Generic"
@@ -354,7 +354,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
   })
 }
 
-export async function getCustomerRestaurantOrders(customerId: number): Promise<RestaurantOrder[]> {
+export async function getCustomerAllRestaurantOrders(customerId: number): Promise<RestaurantOrder[]> {
   let chain = getHasura();
 
   let response =  await chain.query({
@@ -422,6 +422,86 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
       deliveryType: o.delivery_type as DeliveryType,
       customerAppType: o.customer_app_type as CustomerAppType,
       deliveryCost: o.delivery_cost,
+      items
+    }
+  })
+}
+
+export async function getCustomerRestaurantOrders(customerId: number, restaurantId: number): Promise<RestaurantOrder[]> {
+  let chain = getHasura();
+
+  let response =  await chain.query({
+    restaurant_order: [{
+      where: {
+        _and: [{
+          restaurant_id: {
+            _eq: restaurantId
+          }
+        }],
+        customer_id: {
+          _eq: customerId
+        }
+      }
+    }, {
+      id: true,
+      restaurant_id: true,
+      order_type: true,
+      status: true,
+      payment_type: true,
+      customer_id: true,
+      to_location_gps: true,
+      to_location_address: true,
+      order_time: true,
+      customer_app_type: true,
+      delivery_cost: true,
+      delivery_type: true,
+      items: [{}, {
+        id: true,
+        restaurant_item_id: true,
+        quantity: true,
+        cost_per_one: true,
+        restaurant_item : {
+          name : {
+            translations :  [{} , {
+              language_id : true,
+              value : true
+            }], 
+          },
+          image : true,
+        } 
+      }],
+      restaurant: {
+        details_id: true,
+      }
+    }]
+  });
+  return response.restaurant_order.map((o) => {
+    let items: OrderItem[] = o.items.map((i) => {
+      return {
+        name: i.restaurant_item.name,
+        orderItemId: i.id,
+        itemId: i.restaurant_item_id,
+        quantity: i.quantity,
+        costPerOne: i.cost_per_one
+      }
+    })
+    return {
+      orderId: o.id,
+      customerId: o.customer_id,
+      restaurantId: o.restaurant_id,
+      spDetailsId: o.restaurant.details_id,
+      paymentType: o.payment_type as PaymentType,
+      toLocation: (o.to_location_address) ? {
+        lat: o.to_location_gps.coordinates[1],
+        lng: o.to_location_gps.coordinates[0],
+        address: o.to_location_address
+      }: undefined,
+      orderTime: o.order_time,
+      status: o.status as RestaurantOrderStatus,
+      orderType: o.order_type as OrderType,
+      customerAppType: o.customer_app_type as CustomerAppType,
+      deliveryCost: o.delivery_cost,
+      deliveryType: o.delivery_type as DeliveryType,
       items
     }
   })

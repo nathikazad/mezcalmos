@@ -162,8 +162,10 @@ mutation create_customer_cart($cart: restaurant_cart_insert_input!) {
 }
 
 subscription listen_on_customer_cart($customer_id: Int!) {
-  restaurant_cart(where: { customer_id: { _eq: $customer_id } }) {
+  restaurant_cart_by_pk(customer_id: $customer_id) {
     restaurant_id
+    discount_value
+    applied_offers
     restaurant {
       id
       details_id
@@ -300,5 +302,11 @@ mutation updateRestaurantCartItem(
     _set: $itemData
   ) {
     id
+  }
+}
+
+mutation update_cart_discount($customer_id: Int!, $applied_offers: jsonb, $discount_value: money) {
+  update_restaurant_cart_by_pk(pk_columns: {customer_id: $customer_id}, _set: {applied_offers: $applied_offers, discount_value: $discount_value}) {
+    discount_value
   }
 }

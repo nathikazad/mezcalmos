@@ -114,6 +114,20 @@ class _CustCartViewState extends State<CustCartView> {
                               ),
                             ],
                           ),
+                          TextFormField(
+                            controller:
+                                custBusinessCartController.couponController,
+                            decoration: InputDecoration(
+                              labelText: '${_i18n()['coupon']}',
+                              suffixIcon: IconButton(
+                                onPressed: () async {
+                                  await custBusinessCartController
+                                      .applyCoupon();
+                                },
+                                icon: Icon(Icons.check),
+                              ),
+                            ),
+                          ),
                           if (custBusinessCartController
                               .cart.value!.items.isNotEmpty)
                             ...custBusinessCartController.cart.value!.items
@@ -185,6 +199,34 @@ class _CustCartViewState extends State<CustCartView> {
                                   style: context.textTheme.bodyLarge,
                                 ),
                                 smallSepartor,
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     Text(
+                                //       '${_i18n()['orderCost']}',
+                                //       style: context.textTheme.bodyMedium,
+                                //     ),
+                                //     Text(
+                                //       "\$${custBusinessCartController.cart.value?.cost.toDouble().toStringAsFixed(0)}",
+                                //       style: context.textTheme.bodyMedium,
+                                //     ),
+                                //   ],
+                                // ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Discount',
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                    Text(
+                                      "\$${custBusinessCartController.cart.value?.discountValue.toDouble().toStringAsFixed(0)}",
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                  ],
+                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -194,7 +236,21 @@ class _CustCartViewState extends State<CustCartView> {
                                       style: context.textTheme.bodyMedium,
                                     ),
                                     Text(
-                                      "\$${custBusinessCartController.cart.value?.cost.toDouble().toStringAsFixed(0)}",
+                                      "\$${custBusinessCartController.cart.value!.cost.toDouble().toStringAsFixed(0)}",
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Final Cost',
+                                      style: context.textTheme.bodyMedium,
+                                    ),
+                                    Text(
+                                      "\$${custBusinessCartController.cart.value!.cost.toDouble() - custBusinessCartController.cart.value!.discountValue.toDouble()}",
                                       style: context.textTheme.bodyMedium,
                                     ),
                                   ],

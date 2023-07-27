@@ -24,6 +24,7 @@ query getRestaurants(
     id
     reviews_aggregate {
       aggregate {
+        count
         avg {
           rating
         }
@@ -66,7 +67,6 @@ query getRestaurants(
     }
   }
 }
-
 
 # restaurant's description by pk
 query get_restaurant_desc_by_pk($desc_id: Int!) {

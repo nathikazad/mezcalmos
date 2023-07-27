@@ -12,6 +12,8 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFeedView/CustFeedView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -118,10 +120,14 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
           asTab: true,
         );
       case 2:
+        return CustFeedView(
+          asTab: true,
+        );
+      case 3:
         return MessagesListView(
           entityType: EntityType.Customer,
         );
-      case 3:
+      case 4:
         return CustProfileView();
 
       default:
@@ -161,6 +167,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                           showBadge: numberOfCurrentOrders > 0,
                           child: Icon(Icons.history)),
                       label: "${_i18n()['orders']}"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.people), label: 'Feed'),
                   BottomNavigationBarItem(
                     icon: badge.Badge(
                       badgeColor: Colors.red,

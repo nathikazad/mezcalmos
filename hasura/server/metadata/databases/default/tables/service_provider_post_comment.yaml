@@ -1,0 +1,129 @@
+table:
+  name: post_comment
+  schema: service_provider
+object_relationships:
+  - name: post
+    using:
+      foreign_key_constraint_on: post_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: customer
+    permission:
+      check: {}
+      columns:
+        - commented_on
+        - message
+        - post_id
+        - user_id
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - post_id
+        - user_id
+        - likes
+        - message
+        - commented_on
+      filter: {}
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - post_id
+        - user_id
+        - likes
+        - message
+        - commented_on
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - commented_on
+        - id
+        - likes
+        - message
+        - post_id
+        - user_id
+      filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - post_id
+        - user_id
+        - likes
+        - message
+        - commented_on
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - post_id
+        - user_id
+        - likes
+        - message
+        - commented_on
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - post_id
+        - user_id
+        - likes
+        - message
+        - commented_on
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - post_id
+        - user_id
+        - likes
+        - message
+        - commented_on
+      filter: {}
+delete_permissions:
+  - role: business_operator
+    permission:
+      filter:
+        post:
+          business:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: customer
+    permission:
+      filter:
+        user:
+          id:
+            _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      filter:
+        post:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      filter:
+        post:
+          laundry:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      filter:
+        post:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id

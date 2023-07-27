@@ -21,7 +21,8 @@ class Cart {
   Restaurant? restaurant;
   DateTime? deliveryTime;
   cModels.DeliveryType? deliveryType;
-
+  num discountValue = 0;
+  List<int> offersApplied = <int>[];
   String? notes;
   cModels.PaymentType paymentType = cModels.PaymentType.Cash;
 

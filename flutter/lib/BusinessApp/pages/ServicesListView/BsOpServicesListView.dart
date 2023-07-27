@@ -901,7 +901,7 @@ class _BsOpServicesListViewState extends State<BsOpServicesListView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _i18n()["officeSpace"],
+                "${_i18n()["officeSpace"]}",
                 style: context.textTheme.bodyLarge,
               ),
               // smallSepartor,

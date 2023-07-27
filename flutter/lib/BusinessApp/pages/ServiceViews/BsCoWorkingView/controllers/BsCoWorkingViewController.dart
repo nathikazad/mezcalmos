@@ -88,6 +88,14 @@ class BsCoWorkingViewController {
       detailsController.clearPrices();
       await detailsController.initEditMode(
           itemDetailsId: rental!.details.id.toInt());
+      // bedroomsController.text = rental!.bedrooms.toString();
+      // bathroomsController.text = rental!.bathrooms.toString();
+      areaController.text = rental!.details.additionalParameters?["area"]
+              .toString()
+              .replaceAll("sq ft", "")
+              .trim() ??
+          "";
+      petFriendly.value = rental!.details.additionalParameters?["petFriendly"];
       // homeLocation.value = rental!.gpsLocation;
       // homeType.value = rental!.category1;
       final String? roomType1 =
@@ -193,6 +201,8 @@ class BsCoWorkingViewController {
       category1: HomeCategory1.Room,
       availableFor: HomeAvailabilityOption.Rent,
       // gpsLocation: homeLocation.value,
+      // bathrooms: int.tryParse(bathroomsController.text),
+      // bedrooms: int.tryParse(bedroomsController.text),
       details: detailsController.details!,
     );
     return rental;

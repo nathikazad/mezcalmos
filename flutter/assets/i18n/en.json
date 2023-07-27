@@ -2,14 +2,6 @@
   "BusinessApp": {
     "pages": {
       "Orders": {
-        "BsHomeRentalOrderView": {
-          "BsHomeRentalOrderView": {
-            "invalidOrderId": "Invalid order ID",
-            "requestChanges": "Request changes",
-            "acceptOrder": "Accept request",
-            "cancelOrder": "Cancel request"
-          }
-        },
         "BsOrdersListViews": {
           "BsOrdersListView": {
             "orders": "Orders",
@@ -24,23 +16,23 @@
         "HomeRentalOrderView": {
           "components": {
             "BsHomeRentalOrderItemCard": {
-              "pending": "Requested",
+              "pending": "Pending",
               "waitingCustomer": "Waiting for customer",
               "cancelled": "Cancelled",
               "confirmed": "Confirmed",
               "completed": "Completed",
+
               "error": "Error",
               "edit": "Edit",
               "markAsUnavailable": "Mark as unavailable",
               "markAsAvailable": "Mark as available",
-              "updatePrice": "Update price",
+              "updatePrice": "Update Price",
               "required": "Required",
-              "notValid": "Not valid",
+              "notValid": "Not Valid",
               "save": "Save",
               "cancel": "Cancel",
-              "startFrom": "Start from",
-              "updateTimeTitle": "Update time",
-              "free": "FREE"
+              "startFrom": "Start From",
+              "updateTimeTitle": "Update Time"
             }
           }
         }
@@ -730,6 +722,10 @@
           "title": "Vehicle Rental",
           "subtitle": "If you own vehicle rental store want to expand it online."
         },
+        "coWorking": {
+          "title": "Co-working Space",
+          "subtitle": "If you own Co-working space and want to expand it online."
+        },
         "yogaStudio": {
           "title": "Yoga Studio",
           "subtitle": "If you own Yoga Studio want to expand it online."
@@ -924,6 +920,23 @@
           "deliveryDetails": "Delivery details",
           "pickupLoc": "Pickup location",
           "noDriverAssignedYet": "No driver assigned yet"
+        }
+      },
+      "CustFeedView": {
+        "CustFeedView": {
+          "title": "Feed",
+          "posts": "Posts",
+          "promotions": "Promotions",
+          "postSwitch": "Only show posts for accounts you follow.",
+          "promotionSwitch": "Only show promotions for accounts you follow."
+        },
+        "components": {
+          "FeedCardPost": {
+            "like": "Like",
+            "comment": "Comment",
+            "writecomment": "Write your comment..",
+            "post": "Post"
+          }
         }
       },
       "ListOrdersScreen": {
@@ -1595,7 +1608,8 @@
             "fitness": "Fitness",
             "dance": "Dance",
             "therapy": "Therapy",
-            "social": "Social"
+            "social": "Social",
+            "session": "Session"
           },
           "CustBusinessRentalCost": {
             "hour": "hour",
@@ -1665,12 +1679,20 @@
           "NoServicesFound": {
             "noServicesFound": "No services found",
             "bodyMessage": "Sorry, the service you are looking for is not currently offered."
+          },
+          "NoPostsFound": {
+            "noPostsFound": "No posts found",
+            "bodyMessage": "You can check back later"
+          },
+          "NoPromotionsFound": {
+            "noPromotionsFound": "No promotions found",
+            "bodyMessage": "You can check back later"
           }
         },
         "RentalsView": {
           "CustHomeRentalListView": {
-            "homes": "Homes",
-            "home": "Home",
+            "coWorking": "Co-working",
+            "coWorkings": "Co-workings",
             "map": "Map",
             "viewOnMap": "View on map",
             "viewAsList": "View as list",
@@ -1707,6 +1729,10 @@
             "home": {
               "title": "Homes",
               "description": "Discover the best homes in your city."
+            },
+            "coWorking": {
+              "title": "Co-working",
+              "description": "Work from dedicated desks, private rooms & full-floor office at nearby locations."
             }
           },
           "CustRentalsListView": {
@@ -1821,7 +1847,8 @@
             "surf": "Surf",
             "yoga": "Yoga",
             "fitness": "Fitness",
-            "dance": "Dance"
+            "dance": "Dance",
+            "session": "Session"
           }
         },
         "TherapyView": {
@@ -2439,6 +2466,7 @@
         "drivers": "Drivers",
         "schedule": "Schedule",
         "payments": "Payments",
+        "offers": "Offers",
         "delivery": "Delivery",
         "reviews": "Reviews",
         "share": "Share",
@@ -2617,6 +2645,19 @@
         "shrWhatsapp": "Share on WhatsApp",
         "copied": "Copied",
         "copiedText": "Link copied successfuly"
+      },
+      "ServiceOfferView": {
+        "offers": "Offers",
+        "addOffer": "Add offer",
+        "coupon": "Coupon",
+        "promotion": "Promotion",
+        "anyOrder": "Any Order",
+        "firstOrderOnly": "First Order Only",
+        "particularService": "Particular Service",
+        "particularCategory": "Particular Category",
+        "flatAmount": "Flat",
+        "percentage": "Percentage",
+        "anotherSameFlat": "Another Same"
       },
       "ServiceDriversListView": {
         "drivers": "Drivers",
