@@ -5,7 +5,8 @@
     "build": "tsc",
     "post-update": "yarn upgrade --latest",
     "generate-gql-client": "zeus http://localhost:8080/v1/graphql ./src/generated --node --typescript --header='x-hasura-admin-secret:myadminsecretkey' --graphql=./src/generated",
-    "generate-gql-client-staging": "zeus https://mez-staging.hasura.app/v1/graphql ./src/generated --node --typescript --header='x-hasura-admin-secret:0a2XRBPGpw7obsGPP3NXijEQVJEtF6AZ2Jhj0DgUO7PlMvnXOimr6bHHMGDPxFf9' --graphql=./src/generated"
+    "generate-gql-client-staging": "zeus https://mez-staging.hasura.app/v1/graphql ./src/generated --node --typescript --header='x-hasura-admin-secret:0a2XRBPGpw7obsGPP3NXijEQVJEtF6AZ2Jhj0DgUO7PlMvnXOimr6bHHMGDPxFf9' --graphql=./src/generated",
+    "generate-gql-client-production": "zeus https://mez-production.hasura.app/v1/graphql ./src/generated --node --typescript --header='x-hasura-admin-secret:i2HMhsu5edFEAvD5ZwUZh2WlN0GGtHU0tprdPAdNI1LejDWHJavfXWxeZ3SKnfCE' --graphql=./src/generated"
   },
   "dependencies": {
     "graphql-zeus": "^2.8.6",
