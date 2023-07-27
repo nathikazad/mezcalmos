@@ -122,6 +122,10 @@ class ServiceOfferEditViewController {
         discountType: selectedDiscountType.value,
         discountValue: double.parse(discountController.text),
         weeklyRepeat: repeatOffer.value,
+        nameIds: allOfferings
+            .where((element) => element.value)
+            .map((e) => e.id)
+            .toList(),
         items: _constructSelectedOfferingItems()["ids"] as List<num>,
         offeringTypes: _constructSelectedOfferingItems()["categories"]
             as List<OfferingType>?,
