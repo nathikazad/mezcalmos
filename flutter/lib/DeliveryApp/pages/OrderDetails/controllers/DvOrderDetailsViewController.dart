@@ -95,7 +95,7 @@ class DvOrderDetailsViewController {
         unawaited(_fetchOrderBill(orderId));
       } else {
         unawaited(_fetchRestaurantOrderItems());
-        unawaited(_fetchOrderBill(orderId));
+        // unawaited(_fetchOrderBill(orderId));
       }
     }
   }
