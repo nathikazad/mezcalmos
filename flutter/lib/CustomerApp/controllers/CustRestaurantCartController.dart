@@ -25,11 +25,9 @@ class CustRestaurantCartController extends GetxController {
   StreamSubscription<Cart?>? cartStream;
   String? subscriptionId;
   @override
-  Future<void> onInit() async {
+  void onInit() {
     if (_auth.hasuraUserId != null) {
-      await _initCart();
-
-      cart.refresh();
+      _initCart();
     }
     super.onInit();
   }
@@ -37,41 +35,44 @@ class CustRestaurantCartController extends GetxController {
   Future<void> _initCart() async {
     await fetchCart();
     await _handlerRestaurantId();
-    subscriptionId = _hasuraDb.createSubscription(start: () {
-      cartStream = listen_on_customer_cart(customer_id: _auth.hasuraUserId!)
-          .listen((Cart? event) async {
-        if (event != null) {
-          mezDbgPrint(
-              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length} \n restaurant isOpen =====> ${event.restaurant?.isOpen}");
-          if (cart.value != null) {
-            cart.value?.cartItems.clear();
-            cart.value?.cartItems.addAll(event.cartItems);
-            cart.value?.restaurant = null;
-            cart.value?.restaurant = event.restaurant;
+    if (cart.value != null) {
+      subscriptionId = _hasuraDb.createSubscription(start: () {
+        cartStream = listen_on_customer_cart(customer_id: _auth.hasuraUserId!)
+            .listen((Cart? event) async {
+          if (event != null) {
             mezDbgPrint(
-                " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
+                "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length} \n restaurant isOpen =====> ${event.restaurant?.isOpen}");
+            if (cart.value != null) {
+              cart.value?.cartItems.clear();
+              cart.value?.cartItems.addAll(event.cartItems);
+              cart.value?.restaurant = null;
+              cart.value?.restaurant = event.restaurant;
+
+              mezDbgPrint(
+                  " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
+            } else {
+              cart.value = event;
+              mezDbgPrint(
+                  " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
+            }
+            if (event.restaurant == null && event.cartItems.isNotEmpty) {
+              await _handlerRestaurantId();
+            }
+            await applyOffersToRestaurantCart(
+                customerId: _auth.hasuraUserId!, cart: cart.value!);
+            mezDbgPrint(
+                "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
+            cart.refresh();
           } else {
-            cart.value = event;
-            mezDbgPrint(
-                " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
+            cart.value = null;
+            cart.refresh();
           }
-          if (event.restaurant == null && event.cartItems.isNotEmpty) {
-            await _handlerRestaurantId();
-          }
-          await applyOffersToRestaurantCart(
-              customerId: _auth.hasuraUserId!, cart: cart.value!);
-          mezDbgPrint(
-              "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
-          cart.refresh();
-        } else {
-          cart.value = null;
-          cart.refresh();
-        }
+        });
+      }, cancel: () {
+        cartStream?.cancel();
+        cartStream = null;
       });
-    }, cancel: () {
-      cartStream?.cancel();
-      cartStream = null;
-    });
+    }
   }
 
   Future<void> _handlerRestaurantId() async {
@@ -96,6 +97,9 @@ class CustRestaurantCartController extends GetxController {
       if (value != null) {
         cart.value = value;
         cart.value?.restaurant = value.restaurant;
+        mezDbgPrint(
+            "✅ fetched restaurant cart ======>${cart.value?.cartItems.length}");
+        cart.refresh();
       } else {
         await create_customer_cart();
       }

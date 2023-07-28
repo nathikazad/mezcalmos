@@ -241,15 +241,20 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_on_customer_cart(
     Options$Subscription$listen_on_customer_cart(
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Subscription$listen_on_customer_cart(
           customer_id: customer_id),
     ),
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
+    if (cart.hasException) {
+      throw Exception(cart.exception);
+    }
     final Cart _cartEvent = Cart();
     final Subscription$listen_on_customer_cart$restaurant_cart_by_pk?
         parsedCart = cart.parsedData?.restaurant_cart_by_pk;
 
+    mezDbgPrint("♥️ Cart Event From HsFile ===========>${cart.data}");
     if (parsedCart != null) {
       Subscription$listen_on_customer_cart$restaurant_cart_by_pk$restaurant?
           _res = cart.parsedData?.restaurant_cart_by_pk?.restaurant;
@@ -270,7 +275,6 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
               ? null
               : DeliveryCost(
                   id: _res.delivery_details.id,
-                  
                   costPerKmFromBase:
                       _res.delivery_details.cost_per_km_from_base,
                   selfDelivery: _res.delivery_details.self_delivery,
@@ -310,7 +314,10 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         );
       }
       _cartEvent.discountValue = parsedCart.discount_value;
-      _cartEvent.offersApplied = parsedCart.applied_offers;
+      _cartEvent.offersApplied = parsedCart.applied_offers
+              ?.map<int>((value) => int.parse(value.toString()))
+              .toList() ??
+          [];
       parsedCart.items.forEach(
           (Subscription$listen_on_customer_cart$restaurant_cart_by_pk$items
               cartitem) {
