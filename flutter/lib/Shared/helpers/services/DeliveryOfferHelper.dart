@@ -16,4 +16,15 @@ extension CounterOfferExpiry on CounterOffer {
     final DateTime date = DateTime.parse(expiryTime);
     return DateTime.now().isAfter(date);
   }
+
+  Map<String, dynamic> toFirebaseJson() {
+    return <String, dynamic>{
+      "price": price,
+      "time": time,
+      "name": name,
+      "image": image,
+      "status": status.toFirebaseFormatString(),
+      "expiryTime": expiryTime,
+    };
+  }
 }
