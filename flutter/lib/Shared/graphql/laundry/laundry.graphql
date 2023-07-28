@@ -23,7 +23,7 @@ query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: I
         }
       }
     }
-    delivery_details_of_deliverer {
+    delivery_details {
       cost_per_km
       cost_per_km_from_base
       free_delivery_km_range
@@ -100,7 +100,7 @@ query getLaundryStoreById($id: Int!) {
         }
       }
     }
-    delivery_details_of_deliverer {
+    delivery_details{
       cost_per_km
       cost_per_km_from_base
       free_delivery_km_range

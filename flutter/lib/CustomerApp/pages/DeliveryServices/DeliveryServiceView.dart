@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
@@ -127,8 +128,9 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
         int? orderId = await get_customer_last_order_id(
             customerId: Get.find<AuthController>().hasuraUserId!,
             orderType: mezService.toOrderType());
+        mezDbgPrint(
+            "checking if there is orders ${mezService.toOrderType()} ========>$orderId");
         if (orderId != null && orderId > 0) {
-          
           switch (mezService) {
             case MezService.Courier:
               await CustCourierOrderView.navigate(orderId: orderId);

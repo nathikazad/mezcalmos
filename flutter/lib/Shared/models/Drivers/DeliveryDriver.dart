@@ -3,7 +3,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCompanyType.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryDriverState {
   AgentStatus status;
@@ -97,7 +96,7 @@ class DeliveryDriver {
       type: DeliveryDriverType.Delivery_driver,
     );
   }
-
+  //
   /// Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => <String, dynamic>{
         "authorizationStatus": deliveryDriverState.isAuthorized,
@@ -106,8 +105,9 @@ class DeliveryDriver {
         "lastLocationUpdateTime":
             lastLocationUpdateTime?.toUtc().toIso8601String(),
       };
-  bool get isAssociated {
-    return deliveryDriverState.deliveryCompanyId != null;
+  bool get isSpAssociated {
+    return deliveryDriverState.deliveryCompanyType !=
+        DeliveryCompanyType.DeliveryCompany;
   }
 
   @override

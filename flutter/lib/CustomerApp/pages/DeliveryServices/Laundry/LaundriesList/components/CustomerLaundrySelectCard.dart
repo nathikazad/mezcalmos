@@ -157,7 +157,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                                 ),
                                 Flexible(
                                   child: Text(
-                                      "${laundry.getCheapestCategory.toPriceString()}/kg",
+                                      "${laundry.getCheapestCategory?.toPriceString()}/kg",
                                       style: context.txt.bodySmall),
                                 ),
                               ],

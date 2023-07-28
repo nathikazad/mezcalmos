@@ -58,6 +58,8 @@ class CustLaundryOrderRequestViewController {
         isShippingSet.isTrue;
   }
 
+  bool get isSelfDelivery => laundry.value?.selfDelivery ?? false;
+
   Future<void> init({required Laundry laundry}) async {
     this.laundry.value = laundry;
 
@@ -106,6 +108,9 @@ class CustLaundryOrderRequestViewController {
             shippingCost.value = deliveryCost!.minimumCost.ceil();
           } else {
             shippingCost.value = _shippingCost.ceil();
+          }
+          if (shippingCost.value != null) {
+            estDeliveryCost.value = shippingCost.value!.toDouble();
           }
 
           // await saveCart();
@@ -198,6 +203,7 @@ class CustLaundryOrderRequestViewController {
           await CloudFunctions.laundry3_requestLaundry(
         fromCustomerDeliveryOffer: estDeliveryCost.value,
         chosenCompanies: selectedCompanies,
+
         storeId: laundryRequest.laundryId,
         customerAppType: cloudFunctionModels.CustomerAppType.Native,
         customerLocation: cloudFunctionModels.Location(

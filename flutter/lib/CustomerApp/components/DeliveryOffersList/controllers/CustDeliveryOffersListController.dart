@@ -47,6 +47,7 @@ class CustDeliveryOffersListController {
     CustDeliveryOffersListVariables? res =
         await get_dv_order_offers(orderId: orderId);
     if (res != null) {
+      mezDbgPrint("Customer offer =========>${res.customerOffer}");
       customerOffer.value = res.customerOffer;
       _offers.value = res.offers ?? {};
       notifiedDrivers.value = res.notifiedDrivers ?? {};
