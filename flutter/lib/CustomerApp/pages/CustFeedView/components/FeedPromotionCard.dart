@@ -110,6 +110,7 @@ class FeedPromotionCard extends StatelessWidget {
               if (promotion.nameTranslations != null &&
                   promotion.nameTranslations!.isNotEmpty)
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Divider(),
                     Text(
@@ -127,24 +128,24 @@ class FeedPromotionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              if (promotion.nameTranslations != null &&
-                  promotion.nameTranslations!.isNotEmpty)
-                Column(
-                  children: [
-                    Divider(),
-                    Text(
-                      'Discounted items',
-                      style: context.textTheme.bodyLarge
-                          ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
-                    ),
-                    smallSepartor,
-                    // Text(
-                    //   'Red Chili Water.',
-                    //   style: context.textTheme.bodyLarge
-                    //       ?.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
-                    // )
-                  ],
-                ),
+              // if (promotion.nameTranslations != null &&
+              //     promotion.nameTranslations!.isNotEmpty)
+              //   Column(
+              //     children: [
+              //       Divider(),
+              //       Text(
+              //         'Discounted items',
+              //         style: context.textTheme.bodyLarge
+              //             ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+              //       ),
+              //       smallSepartor,
+              //       // Text(
+              //       //   'Red Chili Water.',
+              //       //   style: context.textTheme.bodyLarge
+              //       //       ?.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
+              //       // )
+              //     ],
+              //   ),
             ],
           ),
         ),
