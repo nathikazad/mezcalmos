@@ -89,11 +89,13 @@ class ServiceOfferEditViewController {
     final Map<String, List<dynamic>> selectedOfferingItems = {
       "ids": <num>[],
       "categories": <OfferingType>[],
+      "nameIds": <num>[],
     };
     allOfferings.forEach((element) {
       if (element.value) {
         selectedOfferingItems["ids"]!.add(element.id);
         selectedOfferingItems["categories"]!.add(element.type);
+        selectedOfferingItems["nameIds"]!.add(element.nameIds);
       }
     });
     return selectedOfferingItems;
@@ -122,13 +124,10 @@ class ServiceOfferEditViewController {
         discountType: selectedDiscountType.value,
         discountValue: double.parse(discountController.text),
         weeklyRepeat: repeatOffer.value,
-        nameIds: allOfferings
-            .where((element) => element.value)
-            .map((e) => e.id)
-            .toList(),
         items: _constructSelectedOfferingItems()["ids"] as List<num>,
         offeringTypes: _constructSelectedOfferingItems()["categories"]
             as List<OfferingType>?,
+        nameIds: _constructSelectedOfferingItems()["nameIds"] as List<num>?,
         validityRangeStart: selectedStartDate.value?.toIso8601String(),
         validityRangeEnd: selectedEndDate.value?.toIso8601String(),
       ),
@@ -167,6 +166,7 @@ class ServiceOfferEditViewController {
     allOfferings.clear();
     _product.forEach((element) {
       allOfferings.add(OfferingData(
+        nameIds: element.details.nameId?.toInt() ?? -1,
         type: OfferingType.Product,
         id: element.id!.toInt(),
         name: element.details.name,
@@ -176,6 +176,7 @@ class ServiceOfferEditViewController {
     _services.forEach((element) {
       allOfferings.add(OfferingData(
         type: OfferingType.Service,
+        nameIds: element.details.nameId?.toInt() ?? -1,
         id: element.id!.toInt(),
         name: element.details.name,
         image: element.details.firstImage ?? defaultUserImgUrl,
@@ -184,6 +185,7 @@ class ServiceOfferEditViewController {
     _events.forEach((element) {
       allOfferings.add(OfferingData(
         type: OfferingType.Event,
+        nameIds: element.details.nameId?.toInt() ?? -1,
         id: element.id!.toInt(),
         name: element.details.name,
         image: element.details.firstImage ?? defaultUserImgUrl,
@@ -192,6 +194,7 @@ class ServiceOfferEditViewController {
     _rentals.forEach((element) {
       allOfferings.add(OfferingData(
         type: OfferingType.Rental,
+        nameIds: element.details.nameId?.toInt() ?? -1,
         id: element.id!.toInt(),
         name: element.details.name,
         image: element.details.firstImage ?? defaultUserImgUrl,
@@ -199,6 +202,7 @@ class ServiceOfferEditViewController {
     });
     _homeRentals.forEach((element) {
       allOfferings.add(OfferingData(
+        nameIds: element.details.nameId?.toInt() ?? -1,
         type: OfferingType.Home,
         id: element.id!.toInt(),
         name: element.details.name,
@@ -268,6 +272,7 @@ class ServiceOfferEditViewController {
 
 class OfferingData {
   int id;
+  int nameIds;
   Map<Language, String> name;
   String image;
   OfferingType type;
@@ -276,6 +281,7 @@ class OfferingData {
     required this.id,
     required this.name,
     required this.image,
+    required this.nameIds,
     required this.type,
     this.value = false,
   });

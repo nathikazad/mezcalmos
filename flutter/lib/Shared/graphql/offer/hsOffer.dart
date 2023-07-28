@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/offer/__generated/offer.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -240,6 +241,17 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
   // if (res.parsedData?.service_provider_offer == null) {
   //   throwError(res.exception);
   // }
+  List<List<Map<cModels.Language, String>>> alltranslations = [];
+  if (res.parsedData?.service_provider_offer != null) {
+    for (int i = 0; i < res.parsedData!.service_provider_offer.length; i++) {
+      alltranslations.add(await fetch_translations(
+          nameIds: res.parsedData?.service_provider_offer[i].details["nameIds"]
+              .map<int>((e) => int.parse(e.toString()))
+              .toList()));
+    }
+  }
+  int index = 0;
+
   final List<cModels.Offer> offers = [];
   res.parsedData?.service_provider_offer.forEach((data) {
     cModels.ServiceProviderType serviceProviderType =
@@ -271,6 +283,7 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
       serviceProviderId: data.service_provider_id,
       serviceProviderType: data.service_provider_type.toServiceProviderType(),
       offerType: cModels.OfferType.Promotion,
+      nameTranslations: alltranslations[index],
       details: cModels.OfferDetails(
         offerForOrder: data.details["offerForOrder"],
         discountType: data.details["discountType"].toString().toDiscountType(),
@@ -307,6 +320,7 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
       serviceProviderName: serviceProviderName,
       serviceProviderImage: serviceProviderImage,
     ));
+    index++;
   });
   return offers;
 }
@@ -335,6 +349,17 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
   // if (res.parsedData?.service_provider_offer == null) {
   //   throwError(res.exception);
   // }
+  List<List<Map<cModels.Language, String>>> alltranslations = [];
+  if (res.parsedData?.service_provider_offer != null) {
+    for (int i = 0; i < res.parsedData!.service_provider_offer.length; i++) {
+      alltranslations.add(await fetch_translations(
+          nameIds: res.parsedData?.service_provider_offer[i].details["nameIds"]
+              .map<int>((e) => int.parse(e.toString()))
+              .toList()));
+    }
+  }
+  int index = 0;
+
   final List<cModels.Offer> offers = [];
   res.parsedData?.service_provider_offer.forEach((data) {
     cModels.ServiceProviderType serviceProviderType =
@@ -366,6 +391,7 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
       serviceProviderId: data.service_provider_id,
       serviceProviderType: data.service_provider_type.toServiceProviderType(),
       offerType: cModels.OfferType.Promotion,
+      nameTranslations: alltranslations[index],
       details: cModels.OfferDetails(
         offerForOrder: data.details["offerForOrder"],
         discountType: data.details["discountType"].toString().toDiscountType(),
@@ -402,6 +428,7 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
       serviceProviderName: serviceProviderName,
       serviceProviderImage: serviceProviderImage,
     ));
+    index++;
   });
   return offers;
 }

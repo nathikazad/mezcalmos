@@ -629,6 +629,7 @@ Future<List<RentalCard>> get_business_rentals(
                       ?.map<String>((e) => e.toString())
                       .toList() ??
                   [],
+              nameId: data.details.name_id,
               cost: constructBusinessServiceCost(data.details.cost),
               additionalParameters: data.details.additional_parameters,
             ),

@@ -1918,6 +1918,7 @@ class Offer {
   num id;
   Map<Language, String>? name;
   num? nameId;
+  List<Map<Language,String>>? nameTranslations;
   num serviceProviderId;
   ServiceProviderType serviceProviderType;
   OfferType offerType;
@@ -1934,6 +1935,7 @@ class Offer {
       required this.serviceProviderType,
       required this.offerType,
       this.couponCode,
+      this.nameTranslations,
       required this.details,
       required this.status,
       this.serviceProviderName,
@@ -2031,13 +2033,16 @@ class OfferDetails {
     return <String, dynamic>{
       "offerForOrder": offerForOrder,
       "offerForItems": offerForItems,
-      "discountType": discountType,
+      "discountType": discountType.toFirebaseFormatString(),
       "discountValue": discountValue,
       "minimumOrderAmount": minimumOrderAmount,
       "items": items,
       "categories": categories,
       "nameIds": nameIds,
-      "offeringTypes": offeringTypes,
+      "offeringTypes": offeringTypes
+          ?.map((OfferingType offeringType) =>
+              offeringType.toFirebaseFormatString())
+          .toList(),
       "validityRangeStart": validityRangeStart,
       "validityRangeEnd": validityRangeEnd,
       "weeklyRepeat": weeklyRepeat,

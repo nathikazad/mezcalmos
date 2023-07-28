@@ -107,30 +107,44 @@ class FeedPromotionCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Divider(),
-              Text(
-                'Promotional items',
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              smallSepartor,
-              // Text(
-              //   '${promotion.details.items} Tuna Sashimi, Mixed Salad, Fetuccini Dorado, Vegeterian pasta, Tuna and pineapple toast.',
-              //   style: context.textTheme.bodyLarge
-              //       ?.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
-              // ),
-              Divider(),
-              Text(
-                'Discounted items',
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-              smallSepartor,
-              // Text(
-              //   'Red Chili Water.',
-              //   style: context.textTheme.bodyLarge
-              //       ?.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
-              // )
+              if (promotion.nameTranslations != null &&
+                  promotion.nameTranslations!.isNotEmpty)
+                Column(
+                  children: [
+                    Divider(),
+                    Text(
+                      'Promotional items',
+                      style: context.textTheme.bodyLarge
+                          ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+                    ),
+                    smallSepartor,
+                    Text(
+                      '${promotion.nameTranslations!.map((e) {
+                        return '${e.getTranslation(userLanguage) ?? ''}';
+                      })}',
+                      style: context.textTheme.bodyLarge
+                          ?.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              if (promotion.nameTranslations != null &&
+                  promotion.nameTranslations!.isNotEmpty)
+                Column(
+                  children: [
+                    Divider(),
+                    Text(
+                      'Discounted items',
+                      style: context.textTheme.bodyLarge
+                          ?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+                    ),
+                    smallSepartor,
+                    // Text(
+                    //   'Red Chili Water.',
+                    //   style: context.textTheme.bodyLarge
+                    //       ?.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
+                    // )
+                  ],
+                ),
             ],
           ),
         ),
