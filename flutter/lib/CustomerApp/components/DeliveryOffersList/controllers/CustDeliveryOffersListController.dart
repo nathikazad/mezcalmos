@@ -106,11 +106,17 @@ class CustDeliveryOffersListController {
   Future<void> rejectOffer({required int id}) async {
     Map<int, CounterOffer>? newOffers = offers;
     newOffers[id]?.status = CounterOfferStatus.Rejected;
-    final bool res =
-        await update_delivery_order_offers(offers: newOffers, orderId: orderId);
-    if (res == true) {
-      showSavedSnackBar(
-          title: "Rejected", subtitle: "Offer rejected successfully");
+    try {
+      final bool res = await update_delivery_order_offers(
+          offers: newOffers, orderId: orderId);
+      if (res == true) {
+        showSavedSnackBar(
+            title: "Rejected", subtitle: "Offer rejected successfully");
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      // TODO
     }
   }
 
