@@ -1036,6 +1036,7 @@
           },
           "ListRestaurantScreen": {
             "restaurants": "Restaurantes",
+            "loadingText" : "Llegar a los restaurantes cercanos ...",
             "search": "Búsqueda",
             "offerOnly": "Reserva en línea",
             "filter": "Filtrar",

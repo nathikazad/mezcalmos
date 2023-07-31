@@ -97,7 +97,7 @@ class CustRestaurantListViewController {
   Future<void> init({required BuildContext context}) async {
     _filterInput = defaultFilters();
     ctx = context;
-
+    isLoading.value = true;
     await Get.find<LocationController>()
         .getCurrentLocation()
         .then((LocationData location) {
@@ -106,13 +106,12 @@ class CustRestaurantListViewController {
     });
 
     await fetchRestaurants();
+    isLoading.value = false;
     callbackId = appLifeCycleController.attachCallback(
         AppLifecycleState.resumed, () => filter(filterInput));
   }
 
   Future<void> fetchRestaurants() async {
-    isLoading.value = true;
-
     await fetch_restaurants(
             fromLocation: cModels.Location(
                 lat: _currentLocation.latitude,
@@ -130,9 +129,7 @@ class CustRestaurantListViewController {
       _assignServiceIds();
       filter(_filterInput);
       _getCustomerCurrentLocation();
-    }).whenComplete(() {
-      isLoading.value = false;
-    });
+    }).whenComplete(() {});
   }
 
   void _getCustomerCurrentLocation() {
