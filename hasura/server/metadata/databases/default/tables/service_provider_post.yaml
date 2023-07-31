@@ -221,6 +221,12 @@ update_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       check: null
+  - role: customer
+    permission:
+      columns:
+        - likes
+      filter: {}
+      check: null
   - role: delivery_operator
     permission:
       columns:
