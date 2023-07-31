@@ -1,12 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/BusinessFeedCardPost.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicePostsList/CustServicePostsList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestauSliverAppBar.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantFeedCardPost.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
@@ -112,50 +108,11 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                     : _scrollableSpecialItems(index);
               })),
             ),
-            Expanded(
-              child: DefaultTabController(
-                  length: 2,
-                  child:
-                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                    TabBar(
-                        labelColor: primaryBlueColor,
-                        unselectedLabelColor: Colors.grey.shade400,
-                        tabs: [
-                          Tab(icon: Icon(Icons.newspaper)),
-                          Tab(icon: Icon(Icons.grid_on))
-                        ]),
-                    Expanded(
-                        child: TabBarView(children: <Widget>[
-                      Obx(() => _viewController.posts.isEmpty
-                          ? NoPostsFound()
-                          : SingleChildScrollView(
-                              child: Column(
-                                children: List.generate(
-                                    _viewController.posts.length,
-                                    (int index) => RestaurantFeedCardPost(
-                                        controller: _viewController,
-                                        restaurant:
-                                            _viewController.restaurant.value!,
-                                        post: _viewController.posts[index])),
-                              ),
-                            )),
-                      GridView.builder(
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 1,
-                                  crossAxisSpacing: 1,
-                                  mainAxisSpacing: 1),
-                          itemCount: _viewController.gridImages.length,
-                          itemBuilder: (BuildContext ctx, int index) {
-                            return CachedNetworkImage(
-                                fit: BoxFit.cover,
-                                imageUrl:
-                                    _viewController.gridImages[index].image!);
-                          })
-                    ]))
-                  ])),
+            CustServicePostsList(
+              serviceDetailsId:
+                  _viewController.restaurant.value!.serviceDetailsId,
+              serviceId: _viewController.restaurant.value!.restaurantId,
+              serviceProviderType: cModels.ServiceProviderType.Restaurant,
             ),
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 12.5),

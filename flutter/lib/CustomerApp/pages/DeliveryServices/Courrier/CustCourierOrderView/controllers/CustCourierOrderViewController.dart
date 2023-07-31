@@ -42,16 +42,8 @@ class CustCourierOrderViewController {
     return _order.value!.status;
   }
 
-  bool get showOffers {
-    return order.counterOffers?.isNotEmpty == true &&
-        order.counterOffers!.entries
-                .where((MapEntry<int, cModels.CounterOffer> element) =>
-                    element.value.isExpired == false &&
-                    element.value.isRequested == true)
-                .isNotEmpty ==
-            true &&
-        order.isDriverAssigned == false;
-  }
+  bool get showDeliveryOffers =>
+      !order.inStorePickup && order.inProcess() && order.driverInfo == null;
 
   Map<int, cModels.CounterOffer> get counterOffers {
     return order.counterOffers!.entries

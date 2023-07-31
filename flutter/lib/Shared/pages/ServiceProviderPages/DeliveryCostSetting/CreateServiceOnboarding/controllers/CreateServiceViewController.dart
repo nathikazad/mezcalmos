@@ -199,7 +199,7 @@ class CreateServiceViewController {
         break;
       case 2:
         return handleScheduleNext();
-        
+
       case 3:
         return _createService();
 
@@ -338,7 +338,7 @@ class CreateServiceViewController {
                   lat: serviceInput.value.serviceInfo!.location.latitude,
                   lng: serviceInput.value.serviceInfo!.location.longitude,
                   address: serviceInput.value.serviceInfo!.location.address),
-              schedule: serviceInput.value.schedule!,
+              schedule: oldSchedule.value,
               deliveryPartnerId: serviceInput.value.deliveryPartnerId,
               deliveryDetails: cModels.DeliveryDetails(
                 minimumCost: serviceInput.value.selfDeliveryCost?.minimumCost,

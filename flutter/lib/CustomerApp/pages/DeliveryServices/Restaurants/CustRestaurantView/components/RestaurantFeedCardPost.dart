@@ -1,30 +1,37 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustBusinessView']['components']['BusinessFeedCardPost'];
 
-class RestaurantFeedCardPost extends StatelessWidget {
+class ServiceFeedPostCard extends StatelessWidget {
   final Post post;
   final double elevation;
-  final CustomerRestaurantController controller;
-  final Restaurant restaurant;
+  final String serviceName;
+  final String serviceImage;
+
   final EdgeInsetsGeometry margin;
-  RestaurantFeedCardPost(
-      {super.key,
-      required this.post,
-      required this.controller,
-      required this.restaurant,
-      this.elevation = .5,
-      this.margin = const EdgeInsets.only(top: 12.5, left: 12.5, right: 12.5)});
+  final void Function(Post) onLikePost;
+  final void Function(Post, String) onCommentPost;
+
+  ServiceFeedPostCard({
+    Key? key,
+    required this.post,
+    required this.serviceName,
+    required this.serviceImage,
+    required this.onLikePost,
+    required this.onCommentPost,
+    this.elevation = .5,
+    this.margin = const EdgeInsets.only(top: 12.5, left: 12.5, right: 12.5),
+  });
 
   final TextEditingController _commentController = TextEditingController();
+  int? get hasuraUserId => Get.find<AuthController>().hasuraUserId;
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +44,10 @@ class RestaurantFeedCardPost extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
-                restaurant.info.image,
+                serviceImage,
               ),
             ),
-            title: Text('${restaurant.info.name}'),
+            title: Text('$serviceName'),
             titleTextStyle: context.textTheme.bodyLarge
                 ?.copyWith(fontWeight: FontWeight.w700),
             subtitleTextStyle:
@@ -72,16 +79,14 @@ class RestaurantFeedCardPost extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    controller.likePost(post);
+                    onLikePost(post);
                   },
                   child: Icon(
-                      post.likes.contains(
-                              controller.authController.user?.hasuraId)
+                      post.likes.contains(hasuraUserId)
                           ? Icons.favorite
                           : Icons.favorite_border,
                       size: 25,
-                      color: post.likes.contains(
-                              controller.authController.user?.hasuraId)
+                      color: post.likes.contains(hasuraUserId)
                           ? primaryBlueColor
                           : null),
                 ),
@@ -110,7 +115,7 @@ class RestaurantFeedCardPost extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
-                  controller.authController.user!.image),
+                  Get.find<AuthController>().user!.image),
             ),
             title: TextField(
               controller: _commentController,
@@ -118,8 +123,7 @@ class RestaurantFeedCardPost extends StatelessWidget {
               decoration: InputDecoration(
                   hintText: '${_i18n()['writecomment']}',
                   suffix: GestureDetector(
-                    onTap: () => controller.writeComment(
-                        postId: post.id, commentController: _commentController),
+                    onTap: () => onCommentPost(post, _commentController.text),
                     child: Text('${_i18n()['post']}',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,

@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -25,8 +24,9 @@ class CustomerRestaurantController {
   late AutoScrollController scrollController;
 
   late TabController tabController;
+  late TabController feedTabController;
 
-  late TabController tabsController;
+  late TabController categoriesTabController;
   late TabController specialstabsController;
 
   // keys //
@@ -69,7 +69,8 @@ class CustomerRestaurantController {
     tabController = TabController(length: 3, vsync: vsync);
 
     restaurant.value = await get_restaurant_by_id(id: restaurantId);
-    mezlog(restaurant.value?.info.location.toFirebaseFormattedJson());
+    _initControllers(vsync);
+    assignKeys();
     unawaited(get_service_reviews(
             serviceId: restaurantId,
             serviceProviderType: cModels.ServiceProviderType.Restaurant)
@@ -109,8 +110,7 @@ class CustomerRestaurantController {
       restaurant.value?.setCategories(_cats);
       restaurant.refresh();
     }
-    _initControllers(vsync);
-    assignKeys();
+
     _initialized.value = true;
   }
 
@@ -127,10 +127,11 @@ class CustomerRestaurantController {
   }
 
   void _initControllers(TickerProvider vsync) {
-    tabsController = TabController(
+    categoriesTabController = TabController(
         length: restaurant.value!.getAvailableCategories.length, vsync: vsync);
     specialstabsController =
         TabController(length: getGroupedSpecials().length, vsync: vsync);
+    feedTabController = TabController(length: 2, vsync: vsync);
   }
 
   // scroll methods //
@@ -150,10 +151,12 @@ class CustomerRestaurantController {
   }
 
   bool onScrollNotification(ScrollNotification notification) {
-    if (pauseRectGetterIndex.value) return false;
+    if (pauseRectGetterIndex.value || tabController.index != 0) return false;
     final int lastTabIndex = getTabController.length - 1;
     final List<int> visibleItems = getVisibleItemsIndex();
-
+    if (visibleItems.isEmpty) {
+      return false;
+    }
     final bool reachLastTabIndex =
         visibleItems.length <= 2 && visibleItems.last == lastTabIndex;
     if (reachLastTabIndex) {
@@ -251,7 +254,7 @@ class CustomerRestaurantController {
 
   TabController get getTabController {
     if (isOnMenuView) {
-      return tabsController;
+      return categoriesTabController;
     } else {
       return specialstabsController;
     }
@@ -334,7 +337,7 @@ class CustomerRestaurantController {
   void dispose() {
     scrollController.dispose();
 
-    tabsController.dispose();
+    categoriesTabController.dispose();
   }
 }
 

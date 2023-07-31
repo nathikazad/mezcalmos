@@ -22,7 +22,6 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderBillImage.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
@@ -108,8 +107,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                
-                  if (viewController.order.isDriverAssigned)
+                  if (viewController.showDeliveryOffers)
                     CustDeliveryOffersList(
                       deliveryOrderId: viewController.order.deliveryOrderId!,
                     ),
