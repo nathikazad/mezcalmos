@@ -113,3 +113,18 @@ Future<num?> update_delivery_order_customer_offer(
   }
   return res.parsedData?.update_delivery_order_by_pk?.customer_offer;
 }
+
+Future<num?> update_delivery_order_notified_drivers(
+    {required int orderId, required Map<int, bool> notifiedDrivers}) async {
+  final QueryResult<Mutation$updateDeliveryOrder> res = await _hasuraDb
+      .graphQLClient
+      .mutate$updateDeliveryOrder(Options$Mutation$updateDeliveryOrder(
+          variables: Variables$Mutation$updateDeliveryOrder(
+              orderId: orderId,
+              data: Input$delivery_order_set_input(
+                  notified_drivers: notifiedDrivers))));
+  if (res.parsedData?.update_delivery_order_by_pk == null) {
+    mezDbgPrint(res);
+  }
+  return res.parsedData?.update_delivery_order_by_pk?.customer_offer;
+}
