@@ -200,9 +200,9 @@ class CustFeedViewController {
     _postCurrentOffset = 0;
     _posts.value = [];
     if (_postSwitch.value) {
-      _fetchAllPosts();
-    } else {
       _fetchPosts();
+    } else {
+      _fetchAllPosts();
     }
   }
 
@@ -213,9 +213,9 @@ class CustFeedViewController {
     _promoCurrentOffset = 0;
     _promotions.value = [];
     if (_promotionSwitch.value) {
-      _fetchAllPromotions();
-    } else {
       _fetchPromotions();
+    } else {
+      _fetchAllPromotions();
     }
   }
 }
