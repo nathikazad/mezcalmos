@@ -425,6 +425,7 @@ update_permissions:
     permission:
       columns:
         - customer_offer
+        - counter_offers
         - driver_review_by_customer_id
       filter:
         customer_id:
