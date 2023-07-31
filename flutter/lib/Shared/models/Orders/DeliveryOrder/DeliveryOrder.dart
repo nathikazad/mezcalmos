@@ -102,6 +102,7 @@ class DeliveryOrder extends DeliverableOrder {
   bool waitingForOffer(int driverId) {
     return driverInfo == null &&
         counterOffers?.containsKey(driverId) == true &&
+        counterOffers?[driverId]?.status == CounterOfferStatus.Requested &&
         DateTime.parse(counterOffers![driverId]!.expiryTime)
             .toLocal()
             .isAfter(DateTime.now().toLocal());

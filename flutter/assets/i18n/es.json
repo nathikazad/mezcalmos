@@ -3811,9 +3811,9 @@
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
         "courier": "Entrega abierta",
-        "cancel": "Cancelar",
-        "counterOffer": "Contraoferta",
-        "reqCounterOffer": "Solicitar cambio de precio"
+        "cancel" : "Cancelar",
+        "counterOffer" : "Contraoferta",
+        "reqCounterOffer" : "Solicitar"
       }
     },
     "notificationHandler": {

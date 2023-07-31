@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/services/DeliveryOfferHelper.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -85,13 +86,15 @@ Future<bool> update_delivery_order_offers(
           variables: Variables$Mutation$updateDeliveryOrder(
               orderId: orderId,
               data: Input$delivery_order_set_input(
-                counter_offers: offers.map(
+                counter_offers: offers.map<String, dynamic>(
                     (int key, cModels.CounterOffer value) =>
-                        MapEntry(key, value.toFirebaseFormattedJson())),
+                        MapEntry<String, dynamic>(
+                            key.toString(), value.toFirebaseJson())),
               ))));
+
   if (res.parsedData?.update_delivery_order_by_pk == null) {
-    mezDbgPrint("res =>$res");
-    //  throwError(res.exception);
+//    mezDbgPrint("res =>$res");
+    throwError(res.exception);
   }
   return res.parsedData?.update_delivery_order_by_pk != null;
 }
