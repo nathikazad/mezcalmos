@@ -55,7 +55,7 @@ Future<DeliveryOrder?> get_driver_order_by_id(
         : null,
     packageReady: orderData.package_ready,
     customerOffer: orderData.customer_offer,
-    notifiedDrivers: orderData.notified_drivers,
+    notifiedDrivers: getNotifiedDrivers(orderData.notified_drivers),
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
     serviceOrderId: orderData.restaurant_order?.id,
