@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
@@ -25,7 +24,6 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
@@ -229,11 +227,18 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       backgroundColor: Colors.grey.shade100,
       foregroundColor: primaryBlueColor,
       onPressed: () {
-        Clipboard.setData(ClipboardData(
-                text:
-                    '${viewController.order.value?.clipBoardText(userLanguage)}'))
-            .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
-                position: Alignment.topCenter));
+        // Clipboard.setData(ClipboardData(
+        //         text:
+        //             '${viewController.order.value?.clipBoardText(userLanguage)}'))
+        //     .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
+        //         position: Alignment.topCenter));
+        final String? number =
+            viewController.order.value?.restaurant.phoneNumber;
+        if (number != null) {
+          callWhatsappNumber(number,
+              message: viewController.order.value?.clipBoardText(userLanguage));
+              
+        }
       },
       tooltip: 'Copy',
       child: new Icon(Icons.copy),

@@ -60,11 +60,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
     super.initState();
   }
- @override 
- void dispose(){
-  viewController.dispose();
-  super.dispose();
- }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -302,6 +304,32 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     );
   }
 
+  FloatingActionButton _copyBtn() {
+    return new FloatingActionButton(
+      focusColor: Colors.grey.shade100,
+      hoverColor: Colors.grey.shade100,
+      splashColor: Colors.grey.shade100,
+      backgroundColor: Colors.grey.shade100,
+      foregroundColor: primaryBlueColor,
+      onPressed: () {
+        // Clipboard.setData(ClipboardData(
+        //         text:
+        //             '${viewController.order.value?.clipBoardText(userLanguage)}'))
+        //     .then((value) => MezSnackbar("Done :D", "Copied to clipboard.",
+        //         position: Alignment.topCenter));
+        // final String? number =
+        //     viewController.order.value.serviceProvider.;
+        // if (number != null) {
+        //   callWhatsappNumber(number,
+        //       message: viewController.order.value?.clipBoardText(userLanguage));
+
+        // }
+      },
+      tooltip: 'Copy',
+      child: new Icon(Icons.copy),
+    );
+  }
+
   Container _orderDetailsHeader() {
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -474,20 +502,6 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         ),
       ),
     );
-  }
-
-  String _getOrderType() {
-    switch (viewController.order.value!.orderType) {
-      case cModels.OrderType.Restaurant:
-        return "${_i18n()["restaurant"]}";
-      case cModels.OrderType.Laundry:
-        return "${_i18n()["laundry"]}";
-      case cModels.OrderType.Courier:
-        return "Courier";
-
-      default:
-        return "";
-    }
   }
 
   Future<dynamic> _showTaxSheet(BuildContext context) {

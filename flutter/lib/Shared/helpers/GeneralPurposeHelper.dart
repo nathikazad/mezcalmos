@@ -869,25 +869,30 @@ class DashedLineVerticalPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
-Future<void> callWhatsappNumber(String number) async {
+Future<void> callWhatsappNumber(String number, {String? message}) async {
   mezDbgPrint("contact $number");
-  final String androidUrl = "whatsapp://send?phone=$number";
-  final String iosUrl = "https://wa.me/$number}";
+  final String encodedMessage =
+      message != null ? Uri.encodeComponent(message) : "";
+
   if (kIsWeb) {
     final Uri launchUri = Uri(
       scheme: 'https',
-      path: 'web.whatsapp.com/send?phone=$number',
+      path: 'web.whatsapp.com/send',
+      queryParameters: {
+        'phone': number,
+        'text': encodedMessage,
+      },
     );
     await launchUrl(launchUri);
   } else {
-    if (number != null) {
-      if (Platform.isIOS) {
-        await launchUrl(Uri.parse(iosUrl));
-      } else {
-        await launchUrl(Uri.parse(androidUrl));
-      }
+    final String androidUrl =
+        "whatsapp://send?phone=$number&text=$encodedMessage";
+    final String iosUrl = "https://wa.me/$number?text=$encodedMessage";
+
+    if (Platform.isIOS) {
+      await launchUrl(Uri.parse(iosUrl));
     } else {
-      showErrorSnackBar(errorTitle: "Not available");
+      await launchUrl(Uri.parse(androidUrl));
     }
   }
 }
