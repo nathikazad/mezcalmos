@@ -22,7 +22,7 @@ class RestaurantAppRoutes {
   static const String restaurantCategoryRoute =
       '/restaurantCategoryScreen/:restaurantId';
   static const String restaurantEditCategoryRoute =
-      '/restaurantCategoryScreen/:categoryId/:restaurantId';
+      '/restaurantEditCategoryScreen/:categoryId/:restaurantId';
 
   static const String restaurantItemRoute =
       '/itemView/:restaurantId/:itemId/:categoryId';

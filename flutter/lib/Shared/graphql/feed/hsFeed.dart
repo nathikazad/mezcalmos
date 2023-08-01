@@ -322,6 +322,7 @@ Future<void> update_post_likes(
       variables: Variables$Mutation$update_post_likes(id: postId, likes: likes),
     ),
   );
+  print('reeeesss ${res.data}');
   if (res.parsedData?.update_service_provider_post_by_pk == null) {
     throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
   }

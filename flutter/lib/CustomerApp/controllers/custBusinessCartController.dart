@@ -93,7 +93,7 @@ class CustBusinessCartController extends GetxController {
               .listen((List<CustBusinessCart>? event) {
         if (event != null) {
           mezDbgPrint(
-              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.length}");
+              "Stream triggred from business cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.length}");
           if (previousOrders.value != null) {
             previousOrders.value?.clear();
             previousOrders.value?.addAll(event);
@@ -348,7 +348,7 @@ class CustBusinessCartController extends GetxController {
   }
 
   Future<void> applyCoupon() async {
-    var response = await applyBusinessCoupon(
+    CouponError? response = await applyBusinessCoupon(
       cart: cart.value!,
       customerId: _auth.hasuraUserId!,
       couponCode: couponController.text.trim(),

@@ -8,6 +8,7 @@
 
 import 'dart:async';
 
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:device_preview/device_preview.dart';
@@ -99,10 +100,10 @@ class StartingPointBaseState extends State<StartingPointBase> {
   Widget build(BuildContext context) {
     // todo @sanchit
     // check if app is customer app
-    mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${appType}");
+    mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ $appType");
     if (appType == AppType.Customer) {
-      String myurl = Uri.base.toString();
-      mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${myurl}");
+      final String myurl = Uri.base.toString();
+      mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ $myurl");
 
       if (myurl.contains("uniqueId=")) {
         GetStorage()
@@ -276,12 +277,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
   void hookOnFlutterErrorsStdout() {
     FlutterError.onError = (FlutterErrorDetails details) {
-      final List<String> _crashString = [];
-      for (String item in details.toString().split('\n')) {
-        _crashString.add(item);
-        mezDbgPrint(item);
-      }
-      logCrashes(crashInfos: _crashString.join('\n'));
+      logCrashes(details.exception, details.stack);
     };
   }
 
@@ -301,6 +297,8 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
     // final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
     MezRouter.setupQR();
+    Amplitude.getInstance().init('c5b0193b3a70b991261b7792e8a88fae');
+    logEventToServer("Finished Init");
 
     if (kIsWeb && 100.w > 700) {
       return Center(
@@ -314,8 +312,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
     } else
       return _actualApp(appTheme, routes);
   }
-
-  Widget _actualApp(ThemeData appTheme, List<QRoute> routes) {
+Widget _actualApp(ThemeData appTheme, List<QRoute> routes) {
     return
         // DevicePreview(
         //   enabled: MezEnv.previewMode == true ? true : false,

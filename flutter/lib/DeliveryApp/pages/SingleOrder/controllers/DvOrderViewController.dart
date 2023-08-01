@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
@@ -68,9 +69,9 @@ class DvOrderViewcontroller {
 
   bool get showSendOfferButton {
     return !order.isDriverAssigned &&
-        (order.counterOffers == null ||
-            !order.counterOffers!.containsKey(
-                deliveryAuthAuthController.driver!.deliveryDriverId));
+        (order.waitingForOffer(
+                deliveryAuthAuthController.driver!.deliveryDriverId) ==
+            false);
   }
 
   bool get isWaitingForOffer => order
@@ -306,5 +307,26 @@ class DvOrderViewcontroller {
     }
   }
 
-  cancelOffer() {}
+  Future<void> cancelOffer() async {
+    Map<int, cModels.CounterOffer>? newOffers = order.counterOffers;
+    if (newOffers != null) {
+      newOffers[deliveryAuthAuthController.driver!.deliveryDriverId]?.status =
+          cModels.CounterOfferStatus.Cancelled;
+      mezDbgPrint(
+          "🔴 Cancelling offer =======>${newOffers.values.first.toFirebaseFormattedJson()}");
+      try {
+        final bool res = await update_delivery_order_offers(
+            orderId: order.orderId, offers: newOffers);
+        if (res) {
+          showSavedSnackBar(
+              title: "Cancelled", subtitle: "Your offer is cancelled");
+        }
+      } on OperationException catch (e) {
+        throw e;
+      } catch (e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
+    }
+  }
 }

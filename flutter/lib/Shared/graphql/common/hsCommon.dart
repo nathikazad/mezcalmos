@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/graphql/business_rental/__generated/business_re
 import 'package:mezcalmos/Shared/graphql/business_service/__generated/business_service.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/common/__generated/common.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -17,6 +18,8 @@ Future<ServiceTree> get_service_tree(
     required double lng,
     required bool withCache}) async {
   //create tree root node
+  logEventToServer("getting Service tree fetching from hasura",
+      debugData: {"distance": distance, "lat": lat, "lng": lng});
   final ServiceTree root = ServiceTree(MezService.Root, 0, null);
 
   final QueryResult<Query$number_of_delivery> deliveryResponse = await _db
@@ -138,10 +141,28 @@ Future<ServiceTree> get_service_tree(
       MezService.Home,
       homeResponse.parsedData?.business_home_aggregate.aggregate?.count ?? 0,
       root);
+
+  final QueryResult<Query$number_of_co_working> coWorkingResponse = await _db
+      .graphQLClient
+      .query$number_of_co_working(Options$Query$number_of_co_working(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+          variables: Variables$Query$number_of_co_working(
+              distance: distance, from: Geography(lat, lng))));
+  final ServiceTree coWorking = ServiceTree(
+      MezService.CoWorking,
+      coWorkingResponse.parsedData?.business_home_aggregate.aggregate?.count ??
+          0,
+      root);
+
   await Future.wait(futures);
   if (rentals.count > 0) {
     if (home.count > 0) {
       rentals.children.add(home);
+    }
+
+    if (coWorking.count > 0) {
+      rentals.children.add(coWorking);
     }
     root.children.add(rentals);
   }

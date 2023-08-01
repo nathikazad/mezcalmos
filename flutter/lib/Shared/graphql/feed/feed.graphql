@@ -250,13 +250,13 @@ mutation write_comment($post_id: Int!, $message: String!, $user_id: Int!) {
   }
 }
 
-mutation update_comment_likes($id: Int, $likes: jsonb) {
+mutation update_comment_likes($id: Int!, $likes: jsonb) {
   update_service_provider_post_comment_by_pk(pk_columns: {id: $id}, _set: {likes: $likes}) {
     id
   }
 }
 
-mutation update_post_likes($id: Int, $likes: jsonb) {
+mutation update_post_likes($id: Int!, $likes: jsonb) {
   update_service_provider_post_by_pk(pk_columns: {id: $id}, _set: {likes: $likes}) {
     id
   }

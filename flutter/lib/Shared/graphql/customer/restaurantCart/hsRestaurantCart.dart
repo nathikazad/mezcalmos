@@ -58,43 +58,23 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                 serviceDetailsId: cartData.restaurant!.details_id,
                 languages:
                     convertToLanguages(cartData.restaurant?.details?.language),
-                deliveryCost:
-                    (cartData.restaurant?.delivery_details_of_deliverer == null)
-                        ? null
-                        : DeliveryCost(
-                            selfDelivery: cartData
-                                .restaurant!
-                                .delivery_details_of_deliverer!
-                                .first
-                                .self_delivery,
-                            id: cartData.restaurant!
-                                .delivery_details_of_deliverer!.first.id,
-                            freeDeliveryMinimumCost: cartData
-                                .restaurant!
-                                .delivery_details_of_deliverer!
-                                .first
-                                .free_delivery_minimum_cost,
-                            costPerKmFromBase: cartData
-                                .restaurant!
-                                .delivery_details_of_deliverer!
-                                .first
-                                .cost_per_km_from_base,
-                            costPerKm: cartData
-                                .restaurant!
-                                .delivery_details_of_deliverer!
-                                .first
-                                .cost_per_km,
-                            minimumCost: cartData
-                                .restaurant!
-                                .delivery_details_of_deliverer!
-                                .first
-                                .minimum_cost,
-                            freeDeliveryKmRange: cartData
-                                .restaurant!
-                                .delivery_details_of_deliverer!
-                                .first
-                                .free_delivery_km_range,
-                          ),
+                deliveryCost: (cartData.restaurant?.delivery_details == null)
+                    ? null
+                    : DeliveryCost(
+                        selfDelivery:
+                            cartData.restaurant!.delivery_details.self_delivery,
+                        id: cartData.restaurant!.delivery_details.id,
+                        freeDeliveryMinimumCost: cartData.restaurant!
+                            .delivery_details.free_delivery_minimum_cost,
+                        costPerKmFromBase: cartData
+                            .restaurant!.delivery_details.cost_per_km_from_base,
+                        costPerKm:
+                            cartData.restaurant!.delivery_details.cost_per_km,
+                        minimumCost:
+                            cartData.restaurant!.delivery_details.minimum_cost,
+                        freeDeliveryKmRange: cartData.restaurant!
+                            .delivery_details.free_delivery_km_range,
+                      ),
                 userInfo: ServiceInfo(
                   hasuraId: cartData.restaurant!.id,
                   description: toLanguageMap(
@@ -261,15 +241,20 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_on_customer_cart(
     Options$Subscription$listen_on_customer_cart(
+      fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Subscription$listen_on_customer_cart(
           customer_id: customer_id),
     ),
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
+    if (cart.hasException) {
+      throw Exception(cart.exception);
+    }
     final Cart _cartEvent = Cart();
     final Subscription$listen_on_customer_cart$restaurant_cart_by_pk?
         parsedCart = cart.parsedData?.restaurant_cart_by_pk;
 
+    mezDbgPrint("♥️ Cart Event From HsFile ===========>${cart.data}");
     if (parsedCart != null) {
       Subscription$listen_on_customer_cart$restaurant_cart_by_pk$restaurant?
           _res = cart.parsedData?.restaurant_cart_by_pk?.restaurant;
@@ -283,25 +268,22 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       if (cart.parsedData?.restaurant_cart_by_pk?.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
           onlineOrdering: _res!.details!.online_ordering ?? false,
-          isOpen: _res!.details!.is_open ?? false,
+          isOpen: _res.details!.is_open ?? false,
           languages: convertToLanguages(_res.details!.language),
           serviceDetailsId: _res.details_id,
-          deliveryCost: (_res.delivery_details_of_deliverer == null)
+          deliveryCost: (_res.delivery_details == null)
               ? null
               : DeliveryCost(
-                  id: _res.delivery_details_of_deliverer!.first.id,
-                  costPerKmFromBase: _res.delivery_details_of_deliverer!.first
-                      .cost_per_km_from_base,
-                  selfDelivery:
-                      _res.delivery_details_of_deliverer!.first.self_delivery,
-                  freeDeliveryMinimumCost: _res.delivery_details_of_deliverer!
-                      .first.free_delivery_minimum_cost,
-                  costPerKm:
-                      _res.delivery_details_of_deliverer!.first.cost_per_km,
-                  minimumCost:
-                      _res.delivery_details_of_deliverer!.first.minimum_cost,
-                  freeDeliveryKmRange: _res.delivery_details_of_deliverer!.first
-                      .free_delivery_km_range,
+                  id: _res.delivery_details.id,
+                  costPerKmFromBase:
+                      _res.delivery_details.cost_per_km_from_base,
+                  selfDelivery: _res.delivery_details.self_delivery,
+                  freeDeliveryMinimumCost:
+                      _res.delivery_details.free_delivery_minimum_cost,
+                  costPerKm: _res.delivery_details.cost_per_km,
+                  minimumCost: _res.delivery_details.minimum_cost,
+                  freeDeliveryKmRange:
+                      _res.delivery_details.free_delivery_km_range,
                 ),
           userInfo: ServiceInfo(
             hasuraId: _res.id,
@@ -332,7 +314,10 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         );
       }
       _cartEvent.discountValue = parsedCart.discount_value;
-      _cartEvent.offersApplied = parsedCart.applied_offers;
+      _cartEvent.offersApplied = parsedCart.applied_offers
+              ?.map<int>((value) => int.parse(value.toString()))
+              .toList() ??
+          [];
       parsedCart.items.forEach(
           (Subscription$listen_on_customer_cart$restaurant_cart_by_pk$items
               cartitem) {

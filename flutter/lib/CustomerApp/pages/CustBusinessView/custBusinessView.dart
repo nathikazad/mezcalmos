@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessHomeCard.dart';
@@ -5,8 +6,9 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPa
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessServiceCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/BusinessFeedCardPost.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
@@ -24,11 +26,9 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/controllers/MessagesListViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -121,6 +121,84 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   ],
                 ),
               ),
+              Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Container(
+                  color: Colors.white,
+                  width: double.infinity,
+                  child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: CachedNetworkImageProvider(
+                            _viewController.business?.details.image ?? ''),
+                      ),
+                      title: Text('${_viewController.business?.details.name}'),
+                      titleTextStyle: context.textTheme.bodyLarge
+                          ?.copyWith(fontWeight: FontWeight.w700),
+                      subtitle: Text(
+                          '${_viewController.subscribers.length} subscribers'),
+                      subtitleTextStyle: context.textTheme.bodyMedium
+                          ?.copyWith(fontSize: 12.5),
+                      trailing: RawChip(
+                        shape: StadiumBorder(),
+                        label: Text(
+                          _viewController.isSubscribed
+                              ? 'Unsubscribe'
+                              : 'Subscribe',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal),
+                        ),
+                        backgroundColor: primaryBlueColor,
+                        onPressed: () => _viewController.subscribe(),
+                      )),
+                ),
+                Expanded(
+                  child: DefaultTabController(
+                      length: 2,
+                      child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            TabBar(
+                                labelColor: primaryBlueColor,
+                                unselectedLabelColor: Colors.grey.shade400,
+                                tabs: [
+                                  Tab(icon: Icon(Icons.newspaper)),
+                                  Tab(icon: Icon(Icons.grid_on))
+                                ]),
+                            Expanded(
+                                child: TabBarView(children: <Widget>[
+                              Obx(() => _viewController.posts.isEmpty
+                                  ? NoPostsFound()
+                                  : SingleChildScrollView(
+                                      child: Column(
+                                        children: List.generate(
+                                            _viewController.posts.length,
+                                            (int index) => BusinessFeedCardPost(
+                                                controller: _viewController,
+                                                business:
+                                                    _viewController.business!,
+                                                post: _viewController
+                                                    .posts[index])),
+                                      ),
+                                    )),
+                              GridView.builder(
+                                  padding: EdgeInsets.zero,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3,
+                                          childAspectRatio: 1,
+                                          crossAxisSpacing: 1,
+                                          mainAxisSpacing: 1),
+                                  itemCount: _viewController.gridImages.length,
+                                  itemBuilder: (BuildContext ctx, int index) {
+                                    return CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: _viewController
+                                            .gridImages[index].image!);
+                                  })
+                            ]))
+                          ])),
+                )
+              ]),
               Container(
                 child: ListView(
                   padding: EdgeInsets.all(16),

@@ -155,7 +155,10 @@ class CardSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(controller.cart.totalCost.toPriceString(),
+                        child: Text(
+                            (controller.cart.totalCost +
+                                    controller.estDeliveryCost.value)
+                                .toPriceString(),
                             style: txt.headlineSmall),
                       ),
                     ),

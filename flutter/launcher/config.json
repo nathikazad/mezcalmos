@@ -31,7 +31,9 @@
         "ensure_visible_when_focused": "^1.1.1",
         "social_share": "^2.3.1",
         "share_plus": "^7.0.2",
-        
+        "sentry_flutter": "^7.8.0",
+        "amplitude_flutter": "^3.13.0",
+
         "cupertino_icons": "^1.0.2",
         "google_api_availability": "^5.0.0",
         "flutter_datetime_picker": "^1.5.1",
@@ -338,7 +340,6 @@
       }
     },
     "MezAdminApp": {
-    
       "folderName": "MezAdminApp",
       "packages": {
         "stage": {
@@ -370,8 +371,6 @@
         "dependencies": {
           "agora_rtc_engine": "6.1.0",
           "open_file": "^3.3.2"
-       
-         
         },
         "assets": [
           "assets/images/",
@@ -501,7 +500,9 @@
       ],
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0"
+          "agora_rtc_engine": "6.1.0",
+          "open_file": "^3.3.2"
+       
         },
         "assets": [
           "assets/images/",
@@ -693,7 +694,8 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0"
+          "agora_rtc_engine": "6.1.0",
+          "open_file": "^3.3.2"
         },
         "assets": [
           "assets/images/",
@@ -751,8 +753,6 @@
         "dependencies": {
           "agora_rtc_engine": "6.1.0",
           "open_file": "^3.3.2"
-       
-        
         },
         "assets": [
           "assets/images/",

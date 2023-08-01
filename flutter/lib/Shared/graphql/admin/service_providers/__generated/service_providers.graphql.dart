@@ -6,10 +6,12 @@ class Variables$Query$admin_get_dv_companies {
   factory Variables$Query$admin_get_dv_companies({
     required int limit,
     required int offset,
+    String? keyword,
   }) =>
       Variables$Query$admin_get_dv_companies._({
         r'limit': limit,
         r'offset': offset,
+        if (keyword != null) r'keyword': keyword,
       });
 
   Variables$Query$admin_get_dv_companies._(this._$data);
@@ -21,6 +23,10 @@ class Variables$Query$admin_get_dv_companies {
     result$data['limit'] = (l$limit as int);
     final l$offset = data['offset'];
     result$data['offset'] = (l$offset as int);
+    if (data.containsKey('keyword')) {
+      final l$keyword = data['keyword'];
+      result$data['keyword'] = (l$keyword as String?);
+    }
     return Variables$Query$admin_get_dv_companies._(result$data);
   }
 
@@ -28,12 +34,17 @@ class Variables$Query$admin_get_dv_companies {
 
   int get limit => (_$data['limit'] as int);
   int get offset => (_$data['offset'] as int);
+  String? get keyword => (_$data['keyword'] as String?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
     final l$offset = offset;
     result$data['offset'] = l$offset;
+    if (_$data.containsKey('keyword')) {
+      final l$keyword = keyword;
+      result$data['keyword'] = l$keyword;
+    }
     return result$data;
   }
 
@@ -62,6 +73,14 @@ class Variables$Query$admin_get_dv_companies {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$keyword = keyword;
+    final lOther$keyword = other.keyword;
+    if (_$data.containsKey('keyword') != other._$data.containsKey('keyword')) {
+      return false;
+    }
+    if (l$keyword != lOther$keyword) {
+      return false;
+    }
     return true;
   }
 
@@ -69,9 +88,11 @@ class Variables$Query$admin_get_dv_companies {
   int get hashCode {
     final l$limit = limit;
     final l$offset = offset;
+    final l$keyword = keyword;
     return Object.hashAll([
       l$limit,
       l$offset,
+      _$data.containsKey('keyword') ? l$keyword : const {},
     ]);
   }
 }
@@ -88,6 +109,7 @@ abstract class CopyWith$Variables$Query$admin_get_dv_companies<TRes> {
   TRes call({
     int? limit,
     int? offset,
+    String? keyword,
   });
 }
 
@@ -107,11 +129,13 @@ class _CopyWithImpl$Variables$Query$admin_get_dv_companies<TRes>
   TRes call({
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? keyword = _undefined,
   }) =>
       _then(Variables$Query$admin_get_dv_companies._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
         if (offset != _undefined && offset != null) 'offset': (offset as int),
+        if (keyword != _undefined) 'keyword': (keyword as String?),
       }));
 }
 
@@ -124,6 +148,7 @@ class _CopyWithStubImpl$Variables$Query$admin_get_dv_companies<TRes>
   call({
     int? limit,
     int? offset,
+    String? keyword,
   }) =>
       _res;
 }
@@ -308,6 +333,19 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'keyword')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(
+            value: StringValueNode(
+          value: '%%',
+          isBlock: false,
+        )),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -322,6 +360,25 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'name'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_ilike'),
+                        value: VariableNode(name: NameNode(value: 'keyword')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -1732,10 +1789,12 @@ class Variables$Query$admin_get_laundries {
   factory Variables$Query$admin_get_laundries({
     required int limit,
     required int offset,
+    String? keyword,
   }) =>
       Variables$Query$admin_get_laundries._({
         r'limit': limit,
         r'offset': offset,
+        if (keyword != null) r'keyword': keyword,
       });
 
   Variables$Query$admin_get_laundries._(this._$data);
@@ -1747,6 +1806,10 @@ class Variables$Query$admin_get_laundries {
     result$data['limit'] = (l$limit as int);
     final l$offset = data['offset'];
     result$data['offset'] = (l$offset as int);
+    if (data.containsKey('keyword')) {
+      final l$keyword = data['keyword'];
+      result$data['keyword'] = (l$keyword as String?);
+    }
     return Variables$Query$admin_get_laundries._(result$data);
   }
 
@@ -1754,12 +1817,17 @@ class Variables$Query$admin_get_laundries {
 
   int get limit => (_$data['limit'] as int);
   int get offset => (_$data['offset'] as int);
+  String? get keyword => (_$data['keyword'] as String?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
     final l$offset = offset;
     result$data['offset'] = l$offset;
+    if (_$data.containsKey('keyword')) {
+      final l$keyword = keyword;
+      result$data['keyword'] = l$keyword;
+    }
     return result$data;
   }
 
@@ -1788,6 +1856,14 @@ class Variables$Query$admin_get_laundries {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$keyword = keyword;
+    final lOther$keyword = other.keyword;
+    if (_$data.containsKey('keyword') != other._$data.containsKey('keyword')) {
+      return false;
+    }
+    if (l$keyword != lOther$keyword) {
+      return false;
+    }
     return true;
   }
 
@@ -1795,9 +1871,11 @@ class Variables$Query$admin_get_laundries {
   int get hashCode {
     final l$limit = limit;
     final l$offset = offset;
+    final l$keyword = keyword;
     return Object.hashAll([
       l$limit,
       l$offset,
+      _$data.containsKey('keyword') ? l$keyword : const {},
     ]);
   }
 }
@@ -1814,6 +1892,7 @@ abstract class CopyWith$Variables$Query$admin_get_laundries<TRes> {
   TRes call({
     int? limit,
     int? offset,
+    String? keyword,
   });
 }
 
@@ -1833,11 +1912,13 @@ class _CopyWithImpl$Variables$Query$admin_get_laundries<TRes>
   TRes call({
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? keyword = _undefined,
   }) =>
       _then(Variables$Query$admin_get_laundries._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
         if (offset != _undefined && offset != null) 'offset': (offset as int),
+        if (keyword != _undefined) 'keyword': (keyword as String?),
       }));
 }
 
@@ -1850,6 +1931,7 @@ class _CopyWithStubImpl$Variables$Query$admin_get_laundries<TRes>
   call({
     int? limit,
     int? offset,
+    String? keyword,
   }) =>
       _res;
 }
@@ -2032,6 +2114,19 @@ const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'keyword')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(
+            value: StringValueNode(
+          value: '%%',
+          isBlock: false,
+        )),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -2046,6 +2141,25 @@ const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'name'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_ilike'),
+                        value: VariableNode(name: NameNode(value: 'keyword')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -2986,10 +3100,12 @@ class Variables$Query$admin_get_businesses {
   factory Variables$Query$admin_get_businesses({
     required int limit,
     required int offset,
+    String? keyword,
   }) =>
       Variables$Query$admin_get_businesses._({
         r'limit': limit,
         r'offset': offset,
+        if (keyword != null) r'keyword': keyword,
       });
 
   Variables$Query$admin_get_businesses._(this._$data);
@@ -3001,6 +3117,10 @@ class Variables$Query$admin_get_businesses {
     result$data['limit'] = (l$limit as int);
     final l$offset = data['offset'];
     result$data['offset'] = (l$offset as int);
+    if (data.containsKey('keyword')) {
+      final l$keyword = data['keyword'];
+      result$data['keyword'] = (l$keyword as String?);
+    }
     return Variables$Query$admin_get_businesses._(result$data);
   }
 
@@ -3008,12 +3128,17 @@ class Variables$Query$admin_get_businesses {
 
   int get limit => (_$data['limit'] as int);
   int get offset => (_$data['offset'] as int);
+  String? get keyword => (_$data['keyword'] as String?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
     final l$offset = offset;
     result$data['offset'] = l$offset;
+    if (_$data.containsKey('keyword')) {
+      final l$keyword = keyword;
+      result$data['keyword'] = l$keyword;
+    }
     return result$data;
   }
 
@@ -3042,6 +3167,14 @@ class Variables$Query$admin_get_businesses {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$keyword = keyword;
+    final lOther$keyword = other.keyword;
+    if (_$data.containsKey('keyword') != other._$data.containsKey('keyword')) {
+      return false;
+    }
+    if (l$keyword != lOther$keyword) {
+      return false;
+    }
     return true;
   }
 
@@ -3049,9 +3182,11 @@ class Variables$Query$admin_get_businesses {
   int get hashCode {
     final l$limit = limit;
     final l$offset = offset;
+    final l$keyword = keyword;
     return Object.hashAll([
       l$limit,
       l$offset,
+      _$data.containsKey('keyword') ? l$keyword : const {},
     ]);
   }
 }
@@ -3068,6 +3203,7 @@ abstract class CopyWith$Variables$Query$admin_get_businesses<TRes> {
   TRes call({
     int? limit,
     int? offset,
+    String? keyword,
   });
 }
 
@@ -3087,11 +3223,13 @@ class _CopyWithImpl$Variables$Query$admin_get_businesses<TRes>
   TRes call({
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? keyword = _undefined,
   }) =>
       _then(Variables$Query$admin_get_businesses._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
         if (offset != _undefined && offset != null) 'offset': (offset as int),
+        if (keyword != _undefined) 'keyword': (keyword as String?),
       }));
 }
 
@@ -3104,6 +3242,7 @@ class _CopyWithStubImpl$Variables$Query$admin_get_businesses<TRes>
   call({
     int? limit,
     int? offset,
+    String? keyword,
   }) =>
       _res;
 }
@@ -3288,6 +3427,19 @@ const documentNodeQueryadmin_get_businesses = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'keyword')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(
+            value: StringValueNode(
+          value: '%%',
+          isBlock: false,
+        )),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3302,6 +3454,25 @@ const documentNodeQueryadmin_get_businesses = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'name'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_ilike'),
+                        value: VariableNode(name: NameNode(value: 'keyword')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],
@@ -4219,10 +4390,12 @@ class Variables$Query$admin_get_restaurants {
   factory Variables$Query$admin_get_restaurants({
     required int limit,
     required int offset,
+    String? keyword,
   }) =>
       Variables$Query$admin_get_restaurants._({
         r'limit': limit,
         r'offset': offset,
+        if (keyword != null) r'keyword': keyword,
       });
 
   Variables$Query$admin_get_restaurants._(this._$data);
@@ -4234,6 +4407,10 @@ class Variables$Query$admin_get_restaurants {
     result$data['limit'] = (l$limit as int);
     final l$offset = data['offset'];
     result$data['offset'] = (l$offset as int);
+    if (data.containsKey('keyword')) {
+      final l$keyword = data['keyword'];
+      result$data['keyword'] = (l$keyword as String?);
+    }
     return Variables$Query$admin_get_restaurants._(result$data);
   }
 
@@ -4241,12 +4418,17 @@ class Variables$Query$admin_get_restaurants {
 
   int get limit => (_$data['limit'] as int);
   int get offset => (_$data['offset'] as int);
+  String? get keyword => (_$data['keyword'] as String?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$limit = limit;
     result$data['limit'] = l$limit;
     final l$offset = offset;
     result$data['offset'] = l$offset;
+    if (_$data.containsKey('keyword')) {
+      final l$keyword = keyword;
+      result$data['keyword'] = l$keyword;
+    }
     return result$data;
   }
 
@@ -4275,6 +4457,14 @@ class Variables$Query$admin_get_restaurants {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$keyword = keyword;
+    final lOther$keyword = other.keyword;
+    if (_$data.containsKey('keyword') != other._$data.containsKey('keyword')) {
+      return false;
+    }
+    if (l$keyword != lOther$keyword) {
+      return false;
+    }
     return true;
   }
 
@@ -4282,9 +4472,11 @@ class Variables$Query$admin_get_restaurants {
   int get hashCode {
     final l$limit = limit;
     final l$offset = offset;
+    final l$keyword = keyword;
     return Object.hashAll([
       l$limit,
       l$offset,
+      _$data.containsKey('keyword') ? l$keyword : const {},
     ]);
   }
 }
@@ -4301,6 +4493,7 @@ abstract class CopyWith$Variables$Query$admin_get_restaurants<TRes> {
   TRes call({
     int? limit,
     int? offset,
+    String? keyword,
   });
 }
 
@@ -4320,11 +4513,13 @@ class _CopyWithImpl$Variables$Query$admin_get_restaurants<TRes>
   TRes call({
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? keyword = _undefined,
   }) =>
       _then(Variables$Query$admin_get_restaurants._({
         ..._instance._$data,
         if (limit != _undefined && limit != null) 'limit': (limit as int),
         if (offset != _undefined && offset != null) 'offset': (offset as int),
+        if (keyword != _undefined) 'keyword': (keyword as String?),
       }));
 }
 
@@ -4337,6 +4532,7 @@ class _CopyWithStubImpl$Variables$Query$admin_get_restaurants<TRes>
   call({
     int? limit,
     int? offset,
+    String? keyword,
   }) =>
       _res;
 }
@@ -4526,6 +4722,19 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'keyword')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(
+            value: StringValueNode(
+          value: '%%',
+          isBlock: false,
+        )),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -4540,6 +4749,25 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'offset'),
             value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'name'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_ilike'),
+                        value: VariableNode(name: NameNode(value: 'keyword')),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
           ),
         ],
         directives: [],

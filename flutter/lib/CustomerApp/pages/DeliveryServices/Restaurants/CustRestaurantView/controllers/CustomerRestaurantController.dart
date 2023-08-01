@@ -5,14 +5,16 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
+import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -21,7 +23,10 @@ class CustomerRestaurantController {
   // controllers //
   late AutoScrollController scrollController;
 
-  late TabController tabsController;
+  late TabController tabController;
+  late TabController feedTabController;
+
+  late TabController categoriesTabController;
   late TabController specialstabsController;
 
   // keys //
@@ -38,6 +43,22 @@ class CustomerRestaurantController {
   RxList<Item> specials = RxList.empty();
   RxBool _initialized = RxBool(false);
 
+  AuthController _authController = Get.find<AuthController>();
+  AuthController get authController => _authController;
+
+  RxList<Post> _posts = RxList.empty();
+  List<Post> get posts => _posts.value;
+
+  RxList<int> _subscribers = RxList.empty();
+  List<int> get subscribers => _subscribers.value;
+
+  RxBool get _isSubscribed =>
+      _subscribers.contains(_authController.user?.hasuraId).obs;
+  bool get isSubscribed => _isSubscribed.value;
+
+  RxList<Post> _gridImages = RxList.empty();
+  List<Post> get gridImages => _gridImages.value;
+
   bool get isInitialzed {
     return _initialized.value;
   }
@@ -45,8 +66,11 @@ class CustomerRestaurantController {
   Future<void> init(
       {required int restaurantId, required TickerProvider vsync}) async {
     scrollController = AutoScrollController();
+    tabController = TabController(length: 3, vsync: vsync);
+
     restaurant.value = await get_restaurant_by_id(id: restaurantId);
-    mezlog(restaurant.value?.info.location.toFirebaseFormattedJson());
+    _initControllers(vsync);
+    assignKeys();
     unawaited(get_service_reviews(
             serviceId: restaurantId,
             serviceProviderType: cModels.ServiceProviderType.Restaurant)
@@ -63,7 +87,13 @@ class CustomerRestaurantController {
         restaurant.value!.rate = value;
       }
     }));
+
+    unawaited(_fetchPosts());
+    unawaited(_fetchGridImages());
+
     await _getShippingPrice();
+
+    await _fetchSubscriptions();
 
     final List<Category>? _cats =
         await get_restaurant_categories_by_id(restaurantId);
@@ -80,8 +110,7 @@ class CustomerRestaurantController {
       restaurant.value?.setCategories(_cats);
       restaurant.refresh();
     }
-    _initControllers(vsync);
-    assignKeys();
+
     _initialized.value = true;
   }
 
@@ -98,10 +127,11 @@ class CustomerRestaurantController {
   }
 
   void _initControllers(TickerProvider vsync) {
-    tabsController = TabController(
+    categoriesTabController = TabController(
         length: restaurant.value!.getAvailableCategories.length, vsync: vsync);
     specialstabsController =
         TabController(length: getGroupedSpecials().length, vsync: vsync);
+    feedTabController = TabController(length: 2, vsync: vsync);
   }
 
   // scroll methods //
@@ -121,10 +151,12 @@ class CustomerRestaurantController {
   }
 
   bool onScrollNotification(ScrollNotification notification) {
-    if (pauseRectGetterIndex.value) return false;
+    if (pauseRectGetterIndex.value || tabController.index != 0) return false;
     final int lastTabIndex = getTabController.length - 1;
     final List<int> visibleItems = getVisibleItemsIndex();
-
+    if (visibleItems.isEmpty) {
+      return false;
+    }
     final bool reachLastTabIndex =
         visibleItems.length <= 2 && visibleItems.last == lastTabIndex;
     if (reachLastTabIndex) {
@@ -222,16 +254,90 @@ class CustomerRestaurantController {
 
   TabController get getTabController {
     if (isOnMenuView) {
-      return tabsController;
+      return categoriesTabController;
     } else {
       return specialstabsController;
     }
   }
 
+  Future<void> _fetchPosts() async {
+    try {
+      _posts.value = await fetch_service_provider_posts(
+          imagesOnly: false,
+          serviceProviderId: restaurant.value!.restaurantId,
+          serviceProviderType: cModels.ServiceProviderType.Restaurant);
+    } catch (e) {
+    } finally {}
+  }
+
+  Future<void> _fetchGridImages() async {
+    try {
+      _gridImages.value = await fetch_service_provider_posts(
+          imagesOnly: true,
+          serviceProviderId: restaurant.value!.restaurantId,
+          serviceProviderType: cModels.ServiceProviderType.Restaurant);
+    } catch (e) {
+    } finally {}
+  }
+
+  Future<void> writeComment(
+      {required int postId,
+      required TextEditingController commentController}) async {
+    if (commentController.text.isEmpty) return;
+
+    commentController.text = '';
+    await write_comment(
+        userId: _authController.hasuraUserId!,
+        postId: postId,
+        commentMsg: commentController.text);
+  }
+
+  Future<void> likePost(
+    Post post,
+  ) async {
+    final List<int> likes = post.likes;
+
+    if (likes.contains(_authController.user!.hasuraId)) {
+      likes.remove(_authController.user!.hasuraId);
+    } else {
+      likes.add(_authController.user!.hasuraId);
+    }
+    await update_post_likes(postId: post.id, likes: likes);
+  }
+
+  bool _canSubscribe = true;
+  Future<void> subscribe() async {
+    if (!_canSubscribe) return;
+
+    _canSubscribe = false;
+
+    await _fetchSubscriptions();
+
+    if (_subscribers.contains(_authController.user?.hasuraId)) {
+      await unsubscribe_service_provider(
+          customerId: _authController.user!.hasuraId,
+          serviceProviderId: restaurant.value!.restaurantId,
+          serviceProviderType: cModels.ServiceProviderType.Restaurant);
+    } else {
+      await subscribe_service_provider(
+          customerId: _authController.user!.hasuraId,
+          serviceProviderId: restaurant.value!.restaurantId,
+          serviceProviderType: cModels.ServiceProviderType.Restaurant);
+    }
+    _isSubscribed.refresh();
+    _canSubscribe = true;
+  }
+
+  Future<void> _fetchSubscriptions() async {
+    _subscribers.value = await fetch_subscribers(
+        serviceProviderId: restaurant.value!.restaurantId,
+        serviceProviderType: cModels.ServiceProviderType.Restaurant);
+  }
+
   void dispose() {
     scrollController.dispose();
 
-    tabsController.dispose();
+    categoriesTabController.dispose();
   }
 }
 

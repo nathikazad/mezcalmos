@@ -11,18 +11,19 @@ class MezStringDropDown extends StatefulWidget {
   final bool withNoneItem;
   final List<IconData> icons;
   final TextStyle? elementsTextStyle;
+  final bool isExpanded;
 
-  const MezStringDropDown({
-    required this.labelText,
-    required this.langPath,
-    this.withNoneItem = false,
-    this.value,
-    this.elementsTextStyle,
-    required this.items,
-    required this.onChanged,
-    this.validator,
-    this.icons = const <IconData>[],
-  });
+  const MezStringDropDown(
+      {required this.labelText,
+      required this.langPath,
+      this.withNoneItem = false,
+      this.value,
+      this.elementsTextStyle,
+      required this.items,
+      required this.onChanged,
+      this.validator,
+      this.icons = const <IconData>[],
+      this.isExpanded = false});
 
   @override
   _MezStringDropDownState createState() => _MezStringDropDownState();
@@ -49,8 +50,12 @@ class _MezStringDropDownState extends State<MezStringDropDown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      itemHeight: 50,
+      padding: EdgeInsets.zero,
+      isExpanded: widget.isExpanded,
       value: _selectedValue,
       decoration: InputDecoration(
+        constraints: BoxConstraints(maxHeight: 50),
         labelText: widget.labelText,
         errorMaxLines: 2,
         alignLabelWithHint: false,

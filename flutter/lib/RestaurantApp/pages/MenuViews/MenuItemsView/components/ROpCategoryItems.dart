@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
@@ -12,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpMenuView"]["components"]["ROpCategoryItems"];
@@ -21,11 +19,13 @@ class ROpCategoryItems extends StatefulWidget {
   const ROpCategoryItems(
       {Key? key,
       required this.category,
+      required this.detailsId,
       required this.viewController,
       required this.restaurantId})
       : super(key: key);
   final Category category;
   final int restaurantId;
+  final int detailsId;
 
   final ROpMenuViewController viewController;
 
@@ -141,10 +141,11 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                     ),
                     InkWell(
                       onTap: () async {
-                        MezRouter.back();
+                        Navigator.pop(context);
                         final bool? result =
                             await ROpCategoryView.navigateWithCategory(
                                 categoryId: widget.category.id!,
+                                detailsId: widget.detailsId,
                                 restaurantId: widget.restaurantId) as bool?;
                         if (result == true) {
                           await widget.viewController.fetchCategories();

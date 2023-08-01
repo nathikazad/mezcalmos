@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -179,16 +178,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
                   const SizedBox(
                     height: 8,
                   ),
-                  MezButton(
-                    icon: Ionicons.logo_whatsapp,
-                    label: "${_i18n()['shrWhatsapp']}",
-                    textColor: Color(0xFF219125),
-                    backgroundColor: Color(0xFFE3FFE4),
-                    onClick: () async {
-                      // final bool result = await viewController.addDriver();
-                      // if (result) MezRouter.back();
-                    },
-                  ),
+
                   if (MediaQuery.of(ctx).viewInsets.bottom == 0)
                     const SizedBox(
                       height: 25,

@@ -15,7 +15,8 @@ enum CouponError {
   FirstOrderOnly,
   AlreadyApplied,
   NotApplicable,
-  InvalidCouponCode
+  InvalidCouponCode,
+  OrderAmountTooLow
 }
 
 Future<CouponError?> applyRestaurantCoupon(
@@ -32,6 +33,10 @@ Future<CouponError?> applyRestaurantCoupon(
   }
   if (cart.offersApplied.firstWhereOrNull((o) => o == coupon.id) != null) {
     return CouponError.AlreadyApplied;
+  }
+  if (coupon.details.minimumOrderAmount != null &&
+      coupon.details.minimumOrderAmount! > cart.itemsCost()) {
+    return CouponError.OrderAmountTooLow;
   }
   bool isValid = true;
   if (coupon.details.validityRangeStart != null &&
@@ -179,6 +184,11 @@ Future<void> applyOffersToRestaurantCart(
 num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
   num discount = 0;
 
+  if (offer.details.minimumOrderAmount != null &&
+      offer.details.minimumOrderAmount! > cart.itemsCost()) {
+    return 0;
+  }
+
   switch (offer.details.discountType) {
     case cModels.DiscountType.StoreCredit:
       break;
@@ -306,6 +316,10 @@ Future<CouponError?> applyBusinessCoupon(
   }
   if (cart.appliedOffers.firstWhereOrNull((o) => o == coupon.id) != null) {
     return CouponError.AlreadyApplied;
+  }
+  if (coupon.details.minimumOrderAmount != null &&
+      coupon.details.minimumOrderAmount! > cart.cost) {
+    return CouponError.OrderAmountTooLow;
   }
   bool isValid = true;
   if (coupon.details.validityRangeStart != null &&
@@ -443,6 +457,10 @@ Future<void> applyOffersToBusinessCart(
 num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
   num discount = 0;
 
+  if (offer.details.minimumOrderAmount != null &&
+      offer.details.minimumOrderAmount! > cart.cost) {
+    return 0;
+  }
   switch (offer.details.discountType) {
     case cModels.DiscountType.StoreCredit:
       break;

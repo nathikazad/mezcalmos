@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicePostsList/CustServicePostsList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestauSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
@@ -59,7 +59,6 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-     
       bottomSheet: Obx(
         () => (_viewController.restaurant.value?.isOpen == false)
             ? _schedulingOrdersBottomWidget()
@@ -88,33 +87,67 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
+      physics: NeverScrollableScrollPhysics(),
       controller: _viewController.scrollController,
       slivers: [
         RestaurantSliverAppBar(controller: _viewController),
-        Obx(() {
-          if (_viewController.showInfo.value)
-            return SliverPadding(
-              padding: const EdgeInsets.all(12),
-              sliver: SliverToBoxAdapter(
-                  child: RestaurantInfoTab(
+        SliverFillRemaining(
+          child:
+              TabBarView(controller: _viewController.tabController, children: [
+            SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 12.5),
+              child: Column(
+                  children: List.generate(
+                      _viewController.isOnMenuView
+                          ? _viewController.catsList.length
+                          : _viewController.getGroupedSpecials().length,
+                      (int index) {
+                _viewController.itemKeys[index] = RectGetter.createGlobalKey();
+                return _viewController.isOnMenuView
+                    ? _scrollableCategoryItems(index)
+                    : _scrollableSpecialItems(index);
+              })),
+            ),
+            CustServicePostsList(
+              serviceDetailsId:
+                  _viewController.restaurant.value!.serviceDetailsId,
+              serviceId: _viewController.restaurant.value!.restaurantId,
+              serviceProviderType: cModels.ServiceProviderType.Restaurant,
+            ),
+            SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 12.5),
+              child: RestaurantInfoTab(
                 restaurant: _viewController.restaurant.value!,
                 controller: _viewController,
-              )),
-            );
-          else if (_viewController.isInitialzed) {
-            return _buildItemsList();
-          } else {
-            return SliverFillRemaining(
-                child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                "Some magic is happening ...",
-                style: context.txt.bodyLarge?.copyWith(
-                    color: primaryBlueColor, fontStyle: FontStyle.italic),
               ),
-            ));
-          }
-        })
+            ),
+          ]),
+        )
+
+        // Obx(() {
+        //   if (_viewController.showInfo.value)
+        //     return SliverPadding(
+        //       padding: const EdgeInsets.all(12),
+        //       sliver: SliverToBoxAdapter(
+        //           child: RestaurantInfoTab(
+        //         restaurant: _viewController.restaurant.value!,
+        //         controller: _viewController,
+        //       )),
+        //     );
+        //   else if (_viewController.isInitialzed) {
+        //     return _buildItemsList();
+        //   } else {
+        //     return SliverFillRemaining(
+        //         child: Container(
+        //       alignment: Alignment.center,
+        //       child: Text(
+        //         "Some magic is happening ...",
+        //         style: context.txt.bodyLarge?.copyWith(
+        //             color: primaryBlueColor, fontStyle: FontStyle.italic),
+        //       ),
+        //     ));
+        //   }
+        // })
       ],
     );
   }

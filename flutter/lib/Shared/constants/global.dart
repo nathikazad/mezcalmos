@@ -164,6 +164,7 @@ const String aAtLaundry = "assets/images/shared/notifications/atLaundry.png";
 const String aNoMessages = "assets/images/shared/noMessages.png";
 const String aNoResults = "assets/images/shared/noresults.png";
 const String aNoServices = "assets/images/shared/noServicesAdded.png";
+const String aNoPosts = "assets/images/shared/noPosts.png";
 const String aReadyDeliveryLaundry =
     "assets/images/shared/notifications/readyForDelivery.png";
 const rive.RiveAnimation aDriverAnimation = rive.RiveAnimation.asset(
@@ -204,6 +205,7 @@ const String aTourismAgency = "assets/images/customer/tourismAgency.png";
 const String aMealPlanning = "assets/images/customer/mealPlanning.png";
 const String aRealEstate = "assets/images/customer/realEstate.png";
 const String aLanguageSchool = "assets/images/customer/languageSchool.png";
+const String aCoWorking = "assets/images/customer/coWorking.png";
 
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";

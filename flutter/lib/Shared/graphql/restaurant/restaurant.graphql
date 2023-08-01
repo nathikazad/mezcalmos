@@ -10,6 +10,7 @@ query getRestaurants(
     where: {
       details: {
         is_open: $is_open
+        open_status: {_neq: "closedIndefinitely"}
         location: {
           gps: { _st_d_within: { distance: $distance, from: $from } }
         }
@@ -23,12 +24,13 @@ query getRestaurants(
     id
     reviews_aggregate {
       aggregate {
+        count
         avg {
           rating
         }
       }
     }
-    delivery_details_of_deliverer {
+    delivery_details {
       cost_per_km
       cost_per_km_from_base
       free_delivery_km_range
@@ -66,7 +68,6 @@ query getRestaurants(
   }
 }
 
-
 # restaurant's description by pk
 query get_restaurant_desc_by_pk($desc_id: Int!) {
   translation_by_pk(id: $desc_id) {
@@ -90,7 +91,7 @@ query getOneRestaurant($id: Int!) {
         }
       }
     }
-    delivery_details_of_deliverer {
+    delivery_details{
       cost_per_km_from_base
       cost_per_km
       free_delivery_km_range
@@ -213,7 +214,7 @@ mutation updateRestaurantInfo(
   update_restaurant_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
 
-    delivery_details_of_deliverer {
+    delivery_details {
       cost_per_km_from_base
       cost_per_km
       free_delivery_km_range

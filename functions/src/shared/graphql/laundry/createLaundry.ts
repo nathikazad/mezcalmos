@@ -137,19 +137,19 @@ export async function createLaundryStore(
         serviceProviderType: ServiceProviderType.Laundry,
         uniqueId
     }
-    // if(laundryDetails.deliveryPartnerId) {
-    //     await chain.mutation({
-    //         insert_service_provider_delivery_partner_one: [{
-    //             object: {
-    //                 delivery_company_id: laundryDetails.deliveryPartnerId,
-    //                 service_provider_id: response.insert_laundry_store_one.id,
-    //                 service_provider_type: ServiceProviderType.Laundry
-    //             }
-    //         }, {
-    //             id: true,
-    //         }]
-    //     });
-    // }
+    if(laundryDetails.deliveryPartnerId) {
+        await chain.mutation({
+            insert_service_provider_delivery_partner_one: [{
+                object: {
+                    delivery_company_id: laundryDetails.deliveryPartnerId,
+                    service_provider_id: response.insert_laundry_store_one.id,
+                    service_provider_type: ServiceProviderType.Laundry
+                }
+            }, {
+                id: true,
+            }]
+        });
+    }
     if(laundryDetails.isMezAdmin == false && laundryDetails.laundryOperatorNotificationToken) {
         chain.mutation({
             insert_notification_info_one: [{

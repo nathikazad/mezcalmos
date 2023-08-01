@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRes
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/SearchItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -79,23 +80,44 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Obx(
-              () => MezButton(
-                width: 52.5.mezW,
-                height: 42.5,
-                onClick: () async {
-                  viewController.switchView();
-                },
-                icon: viewController.isMapView ? Icons.list : Icons.room,
-                label: viewController.isMapView
-                    ? '${_i18n()['viewAsList']}'
-                    : '${_i18n()['viewOnMap']}',
-                borderRadius: 50,
-              ),
+              () {
+                if (viewController.isLoading.isTrue) return SizedBox();
+
+                return MezButton(
+                  width: 52.5.mezW,
+                  height: 42.5,
+                  onClick: () async {
+                    viewController.switchView();
+                  },
+                  icon: viewController.isMapView ? Icons.list : Icons.room,
+                  label: viewController.isMapView
+                      ? '${_i18n()['viewAsList']}'
+                      : '${_i18n()['viewOnMap']}',
+                  borderRadius: 50,
+                );
+              },
             ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Obx(() {
+          if (viewController.isLoading.isTrue) {
+            return Container(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  meduimSeperator,
+                  Text(
+                    "${_i18n()['loadingText']}",
+                    style: context.textTheme.bodyMedium
+                        ?.copyWith(color: primaryBlueColor),
+                  ),
+                ],
+              ),
+            );
+          }
           if (viewController.isMapView) {
             return _mapView();
           }

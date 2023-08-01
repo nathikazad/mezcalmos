@@ -1,8 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(
@@ -443,6 +441,7 @@ class CloudFunctions {
       required Schedule schedule,
       String? laundryOperatorNotificationToken,
       required DeliveryDetails deliveryDetails,
+      num? deliveryPartnerId,
       required ServiceProviderLanguage language,
       String? uniqueId,
       required bool isMezAdmin}) async {
@@ -456,6 +455,7 @@ class CloudFunctions {
           "schedule": schedule.toFirebaseFormattedJson(),
           "laundryOperatorNotificationToken": laundryOperatorNotificationToken,
           "deliveryDetails": deliveryDetails.toFirebaseFormattedJson(),
+          "deliveryPartnerId": deliveryPartnerId,
           "language": language.toFirebaseFormattedJson(),
           "uniqueId": uniqueId,
           "isMezAdmin": isMezAdmin,

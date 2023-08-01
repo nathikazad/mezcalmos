@@ -543,6 +543,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'phone_number'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: 'accepted_payments'),
                             alias: null,
                             arguments: [],
@@ -873,6 +880,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'phone_number'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: 'accepted_payments'),
                             alias: null,
                             arguments: [],
@@ -968,6 +982,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'phone_number'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -1255,6 +1276,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'phone_number'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: 'image'),
                             alias: null,
                             arguments: [],
@@ -1523,6 +1551,13 @@ const documentNodeQuerygetBusinessCart = DocumentNode(definitions: [
                           ),
                           FieldNode(
                             name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'phone_number'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -3761,6 +3796,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     required this.name,
     required this.currency,
     required this.online_ordering,
+    this.phone_number,
     required this.accepted_payments,
     required this.image,
     required this.location,
@@ -3773,6 +3809,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$online_ordering = json['online_ordering'];
+    final l$phone_number = json['phone_number'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$location = json['location'];
@@ -3782,6 +3819,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
       name: (l$name as String),
       currency: (l$currency as String),
       online_ordering: (l$online_ordering as bool),
+      phone_number: (l$phone_number as String?),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
       location:
@@ -3798,6 +3836,8 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
   final String currency;
 
   final bool online_ordering;
+
+  final String? phone_number;
 
   final dynamic accepted_payments;
 
@@ -3818,6 +3858,8 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     _resultData['currency'] = l$currency;
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
@@ -3835,6 +3877,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     final l$name = name;
     final l$currency = currency;
     final l$online_ordering = online_ordering;
+    final l$phone_number = phone_number;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$location = location;
@@ -3844,6 +3887,7 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
       l$name,
       l$currency,
       l$online_ordering,
+      l$phone_number,
       l$accepted_payments,
       l$image,
       l$location,
@@ -3879,6 +3923,11 @@ class Query$getBusinessCart$business_cart$items$home$business$details {
     final l$online_ordering = online_ordering;
     final lOther$online_ordering = other.online_ordering;
     if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -3934,6 +3983,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$home$business$
     String? name,
     String? currency,
     bool? online_ordering,
+    String? phone_number,
     dynamic? accepted_payments,
     String? image,
     Query$getBusinessCart$business_cart$items$home$business$details$location?
@@ -3967,6 +4017,7 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$home$business$deta
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? online_ordering = _undefined,
+    Object? phone_number = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? location = _undefined,
@@ -3984,6 +4035,9 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$home$business$deta
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
                 : (online_ordering as bool),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -4022,6 +4076,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$home$business$
     String? name,
     String? currency,
     bool? online_ordering,
+    String? phone_number,
     dynamic? accepted_payments,
     String? image,
     Query$getBusinessCart$business_cart$items$home$business$details$location?
@@ -5467,6 +5522,7 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     required this.currency,
     required this.online_ordering,
     required this.id,
+    this.phone_number,
     required this.accepted_payments,
     required this.image,
     required this.$__typename,
@@ -5478,6 +5534,7 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     final l$currency = json['currency'];
     final l$online_ordering = json['online_ordering'];
     final l$id = json['id'];
+    final l$phone_number = json['phone_number'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
@@ -5486,6 +5543,7 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
       currency: (l$currency as String),
       online_ordering: (l$online_ordering as bool),
       id: (l$id as int),
+      phone_number: (l$phone_number as String?),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -5499,6 +5557,8 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
   final bool online_ordering;
 
   final int id;
+
+  final String? phone_number;
 
   final dynamic accepted_payments;
 
@@ -5516,6 +5576,8 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     _resultData['online_ordering'] = l$online_ordering;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
@@ -5531,6 +5593,7 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     final l$currency = currency;
     final l$online_ordering = online_ordering;
     final l$id = id;
+    final l$phone_number = phone_number;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$$__typename = $__typename;
@@ -5539,6 +5602,7 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
       l$currency,
       l$online_ordering,
       l$id,
+      l$phone_number,
       l$accepted_payments,
       l$image,
       l$$__typename,
@@ -5573,6 +5637,11 @@ class Query$getBusinessCart$business_cart$items$rental$business$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -5623,6 +5692,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$rental$busines
     String? currency,
     bool? online_ordering,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     String? image,
     String? $__typename,
@@ -5652,6 +5722,7 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$rental$business$de
     Object? currency = _undefined,
     Object? online_ordering = _undefined,
     Object? id = _undefined,
+    Object? phone_number = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? $__typename = _undefined,
@@ -5668,6 +5739,9 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$rental$business$de
                 ? _instance.online_ordering
                 : (online_ordering as bool),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -5696,6 +5770,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$rental$busines
     String? currency,
     bool? online_ordering,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     String? image,
     String? $__typename,
@@ -6086,6 +6161,7 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     required this.currency,
     required this.online_ordering,
     required this.id,
+    this.phone_number,
     required this.accepted_payments,
     required this.image,
     required this.$__typename,
@@ -6097,6 +6173,7 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     final l$currency = json['currency'];
     final l$online_ordering = json['online_ordering'];
     final l$id = json['id'];
+    final l$phone_number = json['phone_number'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
@@ -6105,6 +6182,7 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
       currency: (l$currency as String),
       online_ordering: (l$online_ordering as bool),
       id: (l$id as int),
+      phone_number: (l$phone_number as String?),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -6118,6 +6196,8 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
   final bool online_ordering;
 
   final int id;
+
+  final String? phone_number;
 
   final dynamic accepted_payments;
 
@@ -6135,6 +6215,8 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     _resultData['online_ordering'] = l$online_ordering;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
@@ -6150,6 +6232,7 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     final l$currency = currency;
     final l$online_ordering = online_ordering;
     final l$id = id;
+    final l$phone_number = phone_number;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$$__typename = $__typename;
@@ -6158,6 +6241,7 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
       l$currency,
       l$online_ordering,
       l$id,
+      l$phone_number,
       l$accepted_payments,
       l$image,
       l$$__typename,
@@ -6192,6 +6276,11 @@ class Query$getBusinessCart$business_cart$items$product$business$details {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -6242,6 +6331,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$product$busine
     String? currency,
     bool? online_ordering,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     String? image,
     String? $__typename,
@@ -6271,6 +6361,7 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$product$business$d
     Object? currency = _undefined,
     Object? online_ordering = _undefined,
     Object? id = _undefined,
+    Object? phone_number = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? $__typename = _undefined,
@@ -6287,6 +6378,9 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$product$business$d
                 ? _instance.online_ordering
                 : (online_ordering as bool),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -6315,6 +6409,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$product$busine
     String? currency,
     bool? online_ordering,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     String? image,
     String? $__typename,
@@ -7792,6 +7887,7 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     required this.id,
     required this.accepted_payments,
     required this.online_ordering,
+    this.phone_number,
     required this.image,
     required this.$__typename,
   });
@@ -7803,6 +7899,7 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$online_ordering = json['online_ordering'];
+    final l$phone_number = json['phone_number'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$service$business$details(
@@ -7811,6 +7908,7 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
       online_ordering: (l$online_ordering as bool),
+      phone_number: (l$phone_number as String?),
       image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -7825,6 +7923,8 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
   final dynamic accepted_payments;
 
   final bool online_ordering;
+
+  final String? phone_number;
 
   final String image;
 
@@ -7842,6 +7942,8 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$$__typename = $__typename;
@@ -7856,6 +7958,7 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     final l$id = id;
     final l$accepted_payments = accepted_payments;
     final l$online_ordering = online_ordering;
+    final l$phone_number = phone_number;
     final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -7864,6 +7967,7 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
       l$id,
       l$accepted_payments,
       l$online_ordering,
+      l$phone_number,
       l$image,
       l$$__typename,
     ]);
@@ -7902,6 +8006,11 @@ class Query$getBusinessCart$business_cart$items$service$business$details {
     final l$online_ordering = online_ordering;
     final lOther$online_ordering = other.online_ordering;
     if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$image = image;
@@ -7948,6 +8057,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$service$busine
     int? id,
     dynamic? accepted_payments,
     bool? online_ordering,
+    String? phone_number,
     String? image,
     String? $__typename,
   });
@@ -7977,6 +8087,7 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$service$business$d
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
     Object? online_ordering = _undefined,
+    Object? phone_number = _undefined,
     Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -7996,6 +8107,9 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$service$business$d
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
                 : (online_ordering as bool),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -8021,6 +8135,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$service$busine
     int? id,
     dynamic? accepted_payments,
     bool? online_ordering,
+    String? phone_number,
     String? image,
     String? $__typename,
   }) =>
@@ -9568,6 +9683,7 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     required this.online_ordering,
     required this.id,
     required this.accepted_payments,
+    this.phone_number,
     required this.image,
     required this.$__typename,
   });
@@ -9579,6 +9695,7 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     final l$online_ordering = json['online_ordering'];
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
+    final l$phone_number = json['phone_number'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$event$business$details(
@@ -9587,6 +9704,7 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
       online_ordering: (l$online_ordering as bool),
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
+      phone_number: (l$phone_number as String?),
       image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -9601,6 +9719,8 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
   final int id;
 
   final dynamic accepted_payments;
+
+  final String? phone_number;
 
   final String image;
 
@@ -9618,6 +9738,8 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     _resultData['id'] = l$id;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$$__typename = $__typename;
@@ -9632,6 +9754,7 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     final l$online_ordering = online_ordering;
     final l$id = id;
     final l$accepted_payments = accepted_payments;
+    final l$phone_number = phone_number;
     final l$image = image;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -9640,6 +9763,7 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
       l$online_ordering,
       l$id,
       l$accepted_payments,
+      l$phone_number,
       l$image,
       l$$__typename,
     ]);
@@ -9678,6 +9802,11 @@ class Query$getBusinessCart$business_cart$items$event$business$details {
     final l$accepted_payments = accepted_payments;
     final lOther$accepted_payments = other.accepted_payments;
     if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$image = image;
@@ -9724,6 +9853,7 @@ abstract class CopyWith$Query$getBusinessCart$business_cart$items$event$business
     bool? online_ordering,
     int? id,
     dynamic? accepted_payments,
+    String? phone_number,
     String? image,
     String? $__typename,
   });
@@ -9753,6 +9883,7 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$event$business$det
     Object? online_ordering = _undefined,
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
+    Object? phone_number = _undefined,
     Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -9772,6 +9903,9 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$event$business$det
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
                 : (accepted_payments as dynamic),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -9797,6 +9931,7 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items$event$business
     bool? online_ordering,
     int? id,
     dynamic? accepted_payments,
+    String? phone_number,
     String? image,
     String? $__typename,
   }) =>
@@ -14697,6 +14832,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'phone_number'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: 'accepted_payments'),
                             alias: null,
                             arguments: [],
@@ -15013,6 +15155,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'phone_number'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: 'id'),
                             alias: null,
                             arguments: [],
@@ -15101,6 +15250,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'phone_number'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -15381,6 +15537,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'phone_number'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: 'accepted_payments'),
                             alias: null,
                             arguments: [],
@@ -15649,6 +15812,13 @@ const documentNodeSubscriptionlisten_on_business_order_request =
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'phone_number'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -18074,6 +18244,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.online_ordering,
+    this.phone_number,
     required this.accepted_payments,
     required this.image,
     required this.location,
@@ -18086,6 +18257,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$online_ordering = json['online_ordering'];
+    final l$phone_number = json['phone_number'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$location = json['location'];
@@ -18095,6 +18267,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       name: (l$name as String),
       currency: (l$currency as String),
       online_ordering: (l$online_ordering as bool),
+      phone_number: (l$phone_number as String?),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
       location:
@@ -18111,6 +18284,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final bool online_ordering;
+
+  final String? phone_number;
 
   final dynamic accepted_payments;
 
@@ -18131,6 +18306,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
@@ -18148,6 +18325,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$online_ordering = online_ordering;
+    final l$phone_number = phone_number;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$location = location;
@@ -18157,6 +18335,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       l$name,
       l$currency,
       l$online_ordering,
+      l$phone_number,
       l$accepted_payments,
       l$image,
       l$location,
@@ -18192,6 +18371,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$online_ordering = online_ordering;
     final lOther$online_ordering = other.online_ordering;
     if (l$online_ordering != lOther$online_ordering) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -18248,6 +18432,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     bool? online_ordering,
+    String? phone_number,
     dynamic? accepted_payments,
     String? image,
     Subscription$listen_on_business_order_request$business_order_request$items$home$business$details$location?
@@ -18282,6 +18467,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? online_ordering = _undefined,
+    Object? phone_number = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? location = _undefined,
@@ -18300,6 +18486,9 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
                 : (online_ordering as bool),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -18338,6 +18527,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     bool? online_ordering,
+    String? phone_number,
     dynamic? accepted_payments,
     String? image,
     Subscription$listen_on_business_order_request$business_order_request$items$home$business$details$location?
@@ -19823,6 +20013,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.online_ordering,
     required this.currency,
+    this.phone_number,
     required this.id,
     required this.accepted_payments,
     required this.image,
@@ -19834,6 +20025,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$online_ordering = json['online_ordering'];
     final l$currency = json['currency'];
+    final l$phone_number = json['phone_number'];
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
@@ -19842,6 +20034,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       name: (l$name as String),
       online_ordering: (l$online_ordering as bool),
       currency: (l$currency as String),
+      phone_number: (l$phone_number as String?),
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
@@ -19854,6 +20047,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final bool online_ordering;
 
   final String currency;
+
+  final String? phone_number;
 
   final int id;
 
@@ -19871,6 +20066,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['online_ordering'] = l$online_ordering;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$accepted_payments = accepted_payments;
@@ -19887,6 +20084,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$online_ordering = online_ordering;
     final l$currency = currency;
+    final l$phone_number = phone_number;
     final l$id = id;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
@@ -19895,6 +20093,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       l$name,
       l$online_ordering,
       l$currency,
+      l$phone_number,
       l$id,
       l$accepted_payments,
       l$image,
@@ -19925,6 +20124,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$currency = currency;
     final lOther$currency = other.currency;
     if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$id = id;
@@ -19980,6 +20184,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     bool? online_ordering,
     String? currency,
+    String? phone_number,
     int? id,
     dynamic? accepted_payments,
     String? image,
@@ -20010,6 +20215,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? online_ordering = _undefined,
     Object? currency = _undefined,
+    Object? phone_number = _undefined,
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
@@ -20027,6 +20233,9 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
@@ -20055,6 +20264,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     bool? online_ordering,
     String? currency,
+    String? phone_number,
     int? id,
     dynamic? accepted_payments,
     String? image,
@@ -20454,6 +20664,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.id,
+    this.phone_number,
     required this.online_ordering,
     required this.accepted_payments,
     required this.image,
@@ -20465,6 +20676,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$phone_number = json['phone_number'];
     final l$online_ordering = json['online_ordering'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
@@ -20473,6 +20685,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      phone_number: (l$phone_number as String?),
       online_ordering: (l$online_ordering as bool),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
@@ -20485,6 +20698,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final int id;
+
+  final String? phone_number;
 
   final bool online_ordering;
 
@@ -20502,6 +20717,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
     final l$accepted_payments = accepted_payments;
@@ -20518,6 +20735,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$phone_number = phone_number;
     final l$online_ordering = online_ordering;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
@@ -20526,6 +20744,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       l$name,
       l$currency,
       l$id,
+      l$phone_number,
       l$online_ordering,
       l$accepted_payments,
       l$image,
@@ -20556,6 +20775,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$online_ordering = online_ordering;
@@ -20611,6 +20835,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     bool? online_ordering,
     dynamic? accepted_payments,
     String? image,
@@ -20641,6 +20866,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? phone_number = _undefined,
     Object? online_ordering = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
@@ -20655,6 +20881,9 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         online_ordering:
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
@@ -20686,6 +20915,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     bool? online_ordering,
     dynamic? accepted_payments,
     String? image,
@@ -22203,6 +22433,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.id,
+    this.phone_number,
     required this.accepted_payments,
     required this.online_ordering,
     required this.image,
@@ -22214,6 +22445,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$phone_number = json['phone_number'];
     final l$accepted_payments = json['accepted_payments'];
     final l$online_ordering = json['online_ordering'];
     final l$image = json['image'];
@@ -22222,6 +22454,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      phone_number: (l$phone_number as String?),
       accepted_payments: mapFromJson(l$accepted_payments),
       online_ordering: (l$online_ordering as bool),
       image: (l$image as String),
@@ -22234,6 +22467,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final int id;
+
+  final String? phone_number;
 
   final dynamic accepted_payments;
 
@@ -22251,6 +22486,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$online_ordering = online_ordering;
@@ -22267,6 +22504,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$phone_number = phone_number;
     final l$accepted_payments = accepted_payments;
     final l$online_ordering = online_ordering;
     final l$image = image;
@@ -22275,6 +22513,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       l$name,
       l$currency,
       l$id,
+      l$phone_number,
       l$accepted_payments,
       l$online_ordering,
       l$image,
@@ -22305,6 +22544,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -22360,6 +22604,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     bool? online_ordering,
     String? image,
@@ -22390,6 +22635,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? phone_number = _undefined,
     Object? accepted_payments = _undefined,
     Object? online_ordering = _undefined,
     Object? image = _undefined,
@@ -22404,6 +22650,9 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -22435,6 +22684,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     bool? online_ordering,
     String? image,
@@ -24031,6 +24281,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     required this.name,
     required this.currency,
     required this.id,
+    this.phone_number,
     required this.accepted_payments,
     required this.online_ordering,
     required this.image,
@@ -24042,6 +24293,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$phone_number = json['phone_number'];
     final l$accepted_payments = json['accepted_payments'];
     final l$online_ordering = json['online_ordering'];
     final l$image = json['image'];
@@ -24050,6 +24302,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      phone_number: (l$phone_number as String?),
       accepted_payments: mapFromJson(l$accepted_payments),
       online_ordering: (l$online_ordering as bool),
       image: (l$image as String),
@@ -24062,6 +24315,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
   final String currency;
 
   final int id;
+
+  final String? phone_number;
 
   final dynamic accepted_payments;
 
@@ -24079,6 +24334,8 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$online_ordering = online_ordering;
@@ -24095,6 +24352,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$phone_number = phone_number;
     final l$accepted_payments = accepted_payments;
     final l$online_ordering = online_ordering;
     final l$image = image;
@@ -24103,6 +24361,7 @@ class Subscription$listen_on_business_order_request$business_order_request$items
       l$name,
       l$currency,
       l$id,
+      l$phone_number,
       l$accepted_payments,
       l$online_ordering,
       l$image,
@@ -24133,6 +24392,11 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -24188,6 +24452,7 @@ abstract class CopyWith$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     bool? online_ordering,
     String? image,
@@ -24218,6 +24483,7 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? phone_number = _undefined,
     Object? accepted_payments = _undefined,
     Object? online_ordering = _undefined,
     Object? image = _undefined,
@@ -24232,6 +24498,9 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -24263,6 +24532,7 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     bool? online_ordering,
     String? image,
@@ -25523,6 +25793,13 @@ const documentNodeQueryget_business_order_request = DocumentNode(definitions: [
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'phone_number'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: 'online_ordering'),
                             alias: null,
                             arguments: [],
@@ -25832,6 +26109,13 @@ const documentNodeQueryget_business_order_request = DocumentNode(definitions: [
                             selectionSet: null,
                           ),
                           FieldNode(
+                            name: NameNode(value: 'phone_number'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
                             name: NameNode(value: 'online_ordering'),
                             alias: null,
                             arguments: [],
@@ -25934,6 +26218,13 @@ const documentNodeQueryget_business_order_request = DocumentNode(definitions: [
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'phone_number'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -26208,6 +26499,13 @@ const documentNodeQueryget_business_order_request = DocumentNode(definitions: [
                           ),
                           FieldNode(
                             name: NameNode(value: 'id'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'phone_number'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -26489,6 +26787,13 @@ const documentNodeQueryget_business_order_request = DocumentNode(definitions: [
                           ),
                           FieldNode(
                             name: NameNode(value: 'accepted_payments'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                          FieldNode(
+                            name: NameNode(value: 'phone_number'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -28930,6 +29235,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home$b
     required this.id,
     required this.name,
     required this.currency,
+    this.phone_number,
     required this.online_ordering,
     required this.accepted_payments,
     required this.image,
@@ -28942,6 +29248,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home$b
     final l$id = json['id'];
     final l$name = json['name'];
     final l$currency = json['currency'];
+    final l$phone_number = json['phone_number'];
     final l$online_ordering = json['online_ordering'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
@@ -28951,6 +29258,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home$b
       id: (l$id as int),
       name: (l$name as String),
       currency: (l$currency as String),
+      phone_number: (l$phone_number as String?),
       online_ordering: (l$online_ordering as bool),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
@@ -28966,6 +29274,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home$b
   final String name;
 
   final String currency;
+
+  final String? phone_number;
 
   final bool online_ordering;
 
@@ -28986,6 +29296,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home$b
     _resultData['name'] = l$name;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
     final l$accepted_payments = accepted_payments;
@@ -29004,6 +29316,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home$b
     final l$id = id;
     final l$name = name;
     final l$currency = currency;
+    final l$phone_number = phone_number;
     final l$online_ordering = online_ordering;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
@@ -29013,6 +29326,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home$b
       l$id,
       l$name,
       l$currency,
+      l$phone_number,
       l$online_ordering,
       l$accepted_payments,
       l$image,
@@ -29044,6 +29358,11 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home$b
     final l$currency = currency;
     final lOther$currency = other.currency;
     if (l$currency != lOther$currency) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$online_ordering = online_ordering;
@@ -29104,6 +29423,7 @@ abstract class CopyWith$Query$get_business_order_request$business_order_request_
     int? id,
     String? name,
     String? currency,
+    String? phone_number,
     bool? online_ordering,
     dynamic? accepted_payments,
     String? image,
@@ -29138,6 +29458,7 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
     Object? id = _undefined,
     Object? name = _undefined,
     Object? currency = _undefined,
+    Object? phone_number = _undefined,
     Object? online_ordering = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
@@ -29153,6 +29474,9 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         online_ordering:
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
@@ -29194,6 +29518,7 @@ class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_
     int? id,
     String? name,
     String? currency,
+    String? phone_number,
     bool? online_ordering,
     dynamic? accepted_payments,
     String? image,
@@ -30678,6 +31003,7 @@ class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_
 class Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details {
   Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details({
     required this.name,
+    this.phone_number,
     required this.online_ordering,
     required this.currency,
     required this.id,
@@ -30689,6 +31015,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$rental
   factory Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
+    final l$phone_number = json['phone_number'];
     final l$online_ordering = json['online_ordering'];
     final l$currency = json['currency'];
     final l$id = json['id'];
@@ -30697,6 +31024,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$rental
     final l$$__typename = json['__typename'];
     return Query$get_business_order_request$business_order_request_by_pk$items$rental$business$details(
       name: (l$name as String),
+      phone_number: (l$phone_number as String?),
       online_ordering: (l$online_ordering as bool),
       currency: (l$currency as String),
       id: (l$id as int),
@@ -30707,6 +31035,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$rental
   }
 
   final String name;
+
+  final String? phone_number;
 
   final bool online_ordering;
 
@@ -30724,6 +31054,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$rental
     final _resultData = <String, dynamic>{};
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
     final l$currency = currency;
@@ -30742,6 +31074,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$rental
   @override
   int get hashCode {
     final l$name = name;
+    final l$phone_number = phone_number;
     final l$online_ordering = online_ordering;
     final l$currency = currency;
     final l$id = id;
@@ -30750,6 +31083,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$rental
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
+      l$phone_number,
       l$online_ordering,
       l$currency,
       l$id,
@@ -30772,6 +31106,11 @@ class Query$get_business_order_request$business_order_request_by_pk$items$rental
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$online_ordering = online_ordering;
@@ -30835,6 +31174,7 @@ abstract class CopyWith$Query$get_business_order_request$business_order_request_
 
   TRes call({
     String? name,
+    String? phone_number,
     bool? online_ordering,
     String? currency,
     int? id,
@@ -30865,6 +31205,7 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
 
   TRes call({
     Object? name = _undefined,
+    Object? phone_number = _undefined,
     Object? online_ordering = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
@@ -30877,6 +31218,9 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         online_ordering:
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
@@ -30910,6 +31254,7 @@ class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_
 
   call({
     String? name,
+    String? phone_number,
     bool? online_ordering,
     String? currency,
     int? id,
@@ -31311,6 +31656,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$produc
     required this.name,
     required this.currency,
     required this.id,
+    this.phone_number,
     required this.online_ordering,
     required this.accepted_payments,
     required this.image,
@@ -31322,6 +31668,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$produc
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$phone_number = json['phone_number'];
     final l$online_ordering = json['online_ordering'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
@@ -31330,6 +31677,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$produc
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      phone_number: (l$phone_number as String?),
       online_ordering: (l$online_ordering as bool),
       accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
@@ -31342,6 +31690,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$produc
   final String currency;
 
   final int id;
+
+  final String? phone_number;
 
   final bool online_ordering;
 
@@ -31359,6 +31709,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$produc
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
     final l$accepted_payments = accepted_payments;
@@ -31375,6 +31727,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$produc
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$phone_number = phone_number;
     final l$online_ordering = online_ordering;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
@@ -31383,6 +31736,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$produc
       l$name,
       l$currency,
       l$id,
+      l$phone_number,
       l$online_ordering,
       l$accepted_payments,
       l$image,
@@ -31413,6 +31767,11 @@ class Query$get_business_order_request$business_order_request_by_pk$items$produc
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$online_ordering = online_ordering;
@@ -31468,6 +31827,7 @@ abstract class CopyWith$Query$get_business_order_request$business_order_request_
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     bool? online_ordering,
     dynamic? accepted_payments,
     String? image,
@@ -31498,6 +31858,7 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? phone_number = _undefined,
     Object? online_ordering = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
@@ -31512,6 +31873,9 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         online_ordering:
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
@@ -31543,6 +31907,7 @@ class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     bool? online_ordering,
     dynamic? accepted_payments,
     String? image,
@@ -33060,6 +33425,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$servic
     required this.name,
     required this.currency,
     required this.id,
+    this.phone_number,
     required this.accepted_payments,
     required this.online_ordering,
     required this.image,
@@ -33071,6 +33437,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$servic
     final l$name = json['name'];
     final l$currency = json['currency'];
     final l$id = json['id'];
+    final l$phone_number = json['phone_number'];
     final l$accepted_payments = json['accepted_payments'];
     final l$online_ordering = json['online_ordering'];
     final l$image = json['image'];
@@ -33079,6 +33446,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$servic
       name: (l$name as String),
       currency: (l$currency as String),
       id: (l$id as int),
+      phone_number: (l$phone_number as String?),
       accepted_payments: mapFromJson(l$accepted_payments),
       online_ordering: (l$online_ordering as bool),
       image: (l$image as String),
@@ -33091,6 +33459,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$servic
   final String currency;
 
   final int id;
+
+  final String? phone_number;
 
   final dynamic accepted_payments;
 
@@ -33108,6 +33478,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$servic
     _resultData['currency'] = l$currency;
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$online_ordering = online_ordering;
@@ -33124,6 +33496,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$servic
     final l$name = name;
     final l$currency = currency;
     final l$id = id;
+    final l$phone_number = phone_number;
     final l$accepted_payments = accepted_payments;
     final l$online_ordering = online_ordering;
     final l$image = image;
@@ -33132,6 +33505,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$servic
       l$name,
       l$currency,
       l$id,
+      l$phone_number,
       l$accepted_payments,
       l$online_ordering,
       l$image,
@@ -33162,6 +33536,11 @@ class Query$get_business_order_request$business_order_request_by_pk$items$servic
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -33217,6 +33596,7 @@ abstract class CopyWith$Query$get_business_order_request$business_order_request_
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     bool? online_ordering,
     String? image,
@@ -33247,6 +33627,7 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
     Object? name = _undefined,
     Object? currency = _undefined,
     Object? id = _undefined,
+    Object? phone_number = _undefined,
     Object? accepted_payments = _undefined,
     Object? online_ordering = _undefined,
     Object? image = _undefined,
@@ -33261,6 +33642,9 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
             ? _instance.currency
             : (currency as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         accepted_payments:
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
@@ -33292,6 +33676,7 @@ class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_
     String? name,
     String? currency,
     int? id,
+    String? phone_number,
     dynamic? accepted_payments,
     bool? online_ordering,
     String? image,
@@ -34889,6 +35274,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$event$
     required this.currency,
     required this.id,
     required this.accepted_payments,
+    this.phone_number,
     required this.online_ordering,
     required this.image,
     required this.$__typename,
@@ -34900,6 +35286,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$event$
     final l$currency = json['currency'];
     final l$id = json['id'];
     final l$accepted_payments = json['accepted_payments'];
+    final l$phone_number = json['phone_number'];
     final l$online_ordering = json['online_ordering'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
@@ -34908,6 +35295,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$event$
       currency: (l$currency as String),
       id: (l$id as int),
       accepted_payments: mapFromJson(l$accepted_payments),
+      phone_number: (l$phone_number as String?),
       online_ordering: (l$online_ordering as bool),
       image: (l$image as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -34921,6 +35309,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$event$
   final int id;
 
   final dynamic accepted_payments;
+
+  final String? phone_number;
 
   final bool online_ordering;
 
@@ -34938,6 +35328,8 @@ class Query$get_business_order_request$business_order_request_by_pk$items$event$
     _resultData['id'] = l$id;
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
     final l$image = image;
@@ -34953,6 +35345,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$event$
     final l$currency = currency;
     final l$id = id;
     final l$accepted_payments = accepted_payments;
+    final l$phone_number = phone_number;
     final l$online_ordering = online_ordering;
     final l$image = image;
     final l$$__typename = $__typename;
@@ -34961,6 +35354,7 @@ class Query$get_business_order_request$business_order_request_by_pk$items$event$
       l$currency,
       l$id,
       l$accepted_payments,
+      l$phone_number,
       l$online_ordering,
       l$image,
       l$$__typename,
@@ -34995,6 +35389,11 @@ class Query$get_business_order_request$business_order_request_by_pk$items$event$
     final l$accepted_payments = accepted_payments;
     final lOther$accepted_payments = other.accepted_payments;
     if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$online_ordering = online_ordering;
@@ -35046,6 +35445,7 @@ abstract class CopyWith$Query$get_business_order_request$business_order_request_
     String? currency,
     int? id,
     dynamic? accepted_payments,
+    String? phone_number,
     bool? online_ordering,
     String? image,
     String? $__typename,
@@ -35076,6 +35476,7 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
     Object? currency = _undefined,
     Object? id = _undefined,
     Object? accepted_payments = _undefined,
+    Object? phone_number = _undefined,
     Object? online_ordering = _undefined,
     Object? image = _undefined,
     Object? $__typename = _undefined,
@@ -35093,6 +35494,9 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
             accepted_payments == _undefined || accepted_payments == null
                 ? _instance.accepted_payments
                 : (accepted_payments as dynamic),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         online_ordering:
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
@@ -35121,6 +35525,7 @@ class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_
     String? currency,
     int? id,
     dynamic? accepted_payments,
+    String? phone_number,
     bool? online_ordering,
     String? image,
     String? $__typename,

@@ -64,8 +64,11 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
         return aVehicle;
       case MezService.Home:
         return aHomes;
+      case MezService.CoWorking:
+        return aCoWorking;
+      default:
+        return aUncategorized;
     }
-    return aUncategorized;
   }
 
   @override

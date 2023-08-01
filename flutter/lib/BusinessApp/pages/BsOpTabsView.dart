@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceFeedView/ServiceFeedView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -39,6 +40,7 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
     _visibleTabs = [
       BusinessOpTabView.Services,
       if (opAuthController.isOnlineOrdering) BusinessOpTabView.Orders,
+      BusinessOpTabView.Feed,
       BusinessOpTabView.Messages,
       BusinessOpTabView.Profile,
     ];
@@ -71,6 +73,10 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
         );
       case BusinessOpTabView.Orders:
         return BsOrdersListView();
+      case BusinessOpTabView.Feed:
+        return ServiceFeedView(
+          asTab: true,
+        );
       case BusinessOpTabView.Profile:
         return ServiceProfileView(
           serviceId: opAuthController.companyId,
@@ -116,6 +122,10 @@ class _BsOpTabsViewState extends State<BsOpTabsView>
                   icon: Icon(Icons.watch_later_outlined),
                   label: '${_i18n()["orders"]}',
                 ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.people),
+                label: '${_i18n()["feed"]}',
+              ),
               BottomNavigationBarItem(
                 icon: badge.Badge(
                   badgeColor: Colors.red,

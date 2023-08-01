@@ -43,7 +43,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
   });
   if(response.restaurant_operator == null) {
     throw new MezError("restaurantNotfound");
-  }
+  }  
   
   return response.restaurant_operator.map((r:any): Operator => {
     return {
@@ -146,7 +146,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
       }
     }]
   });
-  if(response.restaurant_operator == null) {
+  if(response.restaurant_operator.length == 0) {
     throw new MezError("operatorNotFound");
   }
   return {

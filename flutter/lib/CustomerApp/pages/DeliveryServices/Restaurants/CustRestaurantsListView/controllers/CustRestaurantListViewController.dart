@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/OnMapRestaurantCard.dart';
@@ -13,6 +12,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
@@ -97,20 +97,21 @@ class CustRestaurantListViewController {
   Future<void> init({required BuildContext context}) async {
     _filterInput = defaultFilters();
     ctx = context;
-
-    await locPkg.Location().getLocation().then((LocationData location) {
+    isLoading.value = true;
+    await Get.find<LocationController>()
+        .getCurrentLocation()
+        .then((LocationData location) {
       if (location.latitude != null && location.longitude != null)
         _currentLocation = LatLng(location.latitude!, location.longitude!);
     });
 
     await fetchRestaurants();
+    isLoading.value = false;
     callbackId = appLifeCycleController.attachCallback(
         AppLifecycleState.resumed, () => filter(filterInput));
   }
 
   Future<void> fetchRestaurants() async {
-    isLoading.value = true;
-
     await fetch_restaurants(
             fromLocation: cModels.Location(
                 lat: _currentLocation.latitude,
@@ -128,14 +129,12 @@ class CustRestaurantListViewController {
       _assignServiceIds();
       filter(_filterInput);
       _getCustomerCurrentLocation();
-    }).whenComplete(() {
-      isLoading.value = false;
-    });
+    }).whenComplete(() {});
   }
 
   void _getCustomerCurrentLocation() {
-    Location()
-        .getLocation()
+    Get.find<LocationController>()
+        .getCurrentLocation()
         .then((LocationData value) => customerLocation = value);
   }
 
@@ -243,7 +242,7 @@ class CustRestaurantListViewController {
               lat: fromLoc?.latitude ?? _currentLocation.latitude,
               lng: fromLoc?.longitude ?? _currentLocation.longitude,
               address: ''),
-          is_open: showOnlyOpenOnMap,
+          is_open: false,
           withCache: false,
           limit: mapMarkersFetchSize,
           offset: mapMarkersOffset,

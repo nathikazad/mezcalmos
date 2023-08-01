@@ -102,6 +102,7 @@ class DeliveryOrder extends DeliverableOrder {
   bool waitingForOffer(int driverId) {
     return driverInfo == null &&
         counterOffers?.containsKey(driverId) == true &&
+        counterOffers?[driverId]?.status == CounterOfferStatus.Requested &&
         DateTime.parse(counterOffers![driverId]!.expiryTime)
             .toLocal()
             .isAfter(DateTime.now().toLocal());
@@ -185,4 +186,16 @@ class DeliveryOrderVariables {
       this.customerOffer,
       this.cancellationTime,
       this.driverInfo});
+}
+
+Map<int, bool>? getNotifiedDrivers(dynamic notifiedDrivers) {
+  //parse the string keys to int
+  Map<int, bool>? notifiedDriversMapInt = {};
+  if (notifiedDrivers != null) {
+    notifiedDrivers.forEach((key, value) {
+      if (int.tryParse(key) != null)
+        notifiedDriversMapInt[int.tryParse(key)!] = value;
+    });
+  }
+  return notifiedDriversMapInt;
 }

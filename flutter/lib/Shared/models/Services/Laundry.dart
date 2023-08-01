@@ -98,11 +98,13 @@ class Laundry extends Service {
     return averageCost;
   }
 
-  num get getCheapestCategory {
-    final LaundryCostLineItem cheapestCostCategory = laundryCosts.lineItems
-        .reduce((LaundryCostLineItem a, LaundryCostLineItem b) =>
-            a.cost < b.cost ? a : b);
-    return cheapestCostCategory.cost;
+  num? get getCheapestCategory {
+    if (laundryCosts.lineItems.isNotEmpty) {
+      final LaundryCostLineItem cheapestCostCategory = laundryCosts.lineItems
+          .reduce((LaundryCostLineItem a, LaundryCostLineItem b) =>
+              a.cost < b.cost ? a : b);
+      return cheapestCostCategory.cost;
+    }
   }
 
   Map<String, dynamic> toJson() {

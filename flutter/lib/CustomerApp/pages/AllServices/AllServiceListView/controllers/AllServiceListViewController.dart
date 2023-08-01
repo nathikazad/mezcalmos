@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -80,15 +83,20 @@ class AllServiceListViewController {
   }
 
   Future<void> fetchServiceTree() async {
-    final locPkg.LocationData location = await locPkg.Location().getLocation();
+    logEventToServer("Fetching Service tree");
+    final locPkg.LocationData? location =
+        await Get.find<LocationController>().getCurrentLocation();
+    logEventToServer("Fetching Service tree got location");
     final ServiceTree data = await get_service_tree(
       distance: defaultDistance,
-      lat: location.latitude ?? 15.8.toDouble(),
-      lng: location.longitude ?? -97.toDouble(),
+      lat: location?.latitude ?? 15.8720.toDouble(),
+      lng: location?.longitude ?? 97.0767.toDouble(),
       withCache: true,
     );
     serviceTreeData.value = data;
     mezDbgPrint("service_tree: $data");
+    logEventToServer("Fetching Service tree finished",
+        debugData: {"serviceTree": data.toString()});
   }
 
   void setCurrentSelectedService(MezService serviceValue) {

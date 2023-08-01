@@ -47,6 +47,7 @@ class CustDeliveryOffersListController {
     CustDeliveryOffersListVariables? res =
         await get_dv_order_offers(orderId: orderId);
     if (res != null) {
+      mezDbgPrint("Customer offer =========>${res.customerOffer}");
       customerOffer.value = res.customerOffer;
       _offers.value = res.offers ?? {};
       notifiedDrivers.value = res.notifiedDrivers ?? {};
@@ -105,11 +106,17 @@ class CustDeliveryOffersListController {
   Future<void> rejectOffer({required int id}) async {
     Map<int, CounterOffer>? newOffers = offers;
     newOffers[id]?.status = CounterOfferStatus.Rejected;
-    final bool res =
-        await update_delivery_order_offers(offers: newOffers, orderId: orderId);
-    if (res == true) {
-      showSavedSnackBar(
-          title: "Rejected", subtitle: "Offer rejected successfully");
+    try {
+      final bool res = await update_delivery_order_offers(
+          offers: newOffers, orderId: orderId);
+      if (res == true) {
+        showSavedSnackBar(
+            title: "Rejected", subtitle: "Offer rejected successfully");
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      // TODO
     }
   }
 
