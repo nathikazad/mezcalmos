@@ -258,7 +258,7 @@ class CustomerRestaurantViewController {
 
   bool get showCategoriesChips {
     return restaurant.value!.getAvailableCategories.length > 1 &&
-        showInfo.isFalse;
+        mainTabController.index == 0;
   }
 
   TabController get getTabController {

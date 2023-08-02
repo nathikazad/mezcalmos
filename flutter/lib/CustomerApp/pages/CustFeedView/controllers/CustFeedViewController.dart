@@ -2,14 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
-import 'package:location/location.dart' as locPkg;
 
 class CustFeedViewController {
   AuthController _authController = Get.find<AuthController>();
@@ -96,10 +98,11 @@ class CustFeedViewController {
             lat: location.latitude!, lng: location.longitude!, address: "");
       }
       final List<Post> newData = await fetch_posts_within_distance(
-        offset: _postCurrentOffset,
-        limit: postFetchSize,
-        fromLocation: _fromLocation!,
-      );
+          offset: _postCurrentOffset,
+          limit: postFetchSize,
+          withCache: false,
+          fromLocation: _fromLocation!,
+          distance: getFetchDistance);
       print(newData.length);
       _posts.value += newData;
       if (newData.length == 0) {
@@ -122,6 +125,7 @@ class CustFeedViewController {
       final List<Offer> newData = await fetch_subscribed_promotions(
         offset: _promoCurrentOffset,
         limit: promoFetchSize,
+        withCache: false,
         customerId: _authController.hasuraUserId!,
       );
       print(newData.length);
@@ -152,6 +156,7 @@ class CustFeedViewController {
       final List<Offer> newData = await fetch_all_promotions_within_distance(
         offset: _promoCurrentOffset,
         limit: promoFetchSize,
+        distance: getFetchDistance,
         fromLocation: _fromLocation!,
       );
       print(newData.length);
@@ -168,29 +173,33 @@ class CustFeedViewController {
   }
 
   Future<void> writeComment(
-      {required int postId,
-      required TextEditingController commentController}) async {
-    if (commentController.text.isEmpty) return;
+      {required int postId, required String comment}) async {
+    if (comment.isEmpty) return;
+    mezDbgPrint("Sending comment =======>$comment");
+    try {
+      int? res = await write_comment(
+          userId: _authController.hasuraUserId!,
+          postId: postId,
+          commentMsg: comment);
 
-    commentController.text = '';
-    await write_comment(
-      userId: _authController.hasuraUserId!.toInt(),
-      postId: postId,
-      commentMsg: commentController.text,
-    );
+      mezDbgPrint("Response =======> $res");
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   Future<void> likePost(
-    Post post,
+    int postId,
   ) async {
-    final List<int> likes = post.likes;
-
-    if (likes.contains(_authController.user!.hasuraId)) {
-      likes.remove(_authController.user!.hasuraId);
+    final Post post = _posts.firstWhere((Post element) => element.id == postId);
+    if (post.likes.contains(_authController.user!.hasuraId)) {
+      post.likes.remove(_authController.user!.hasuraId);
     } else {
-      likes.add(_authController.user!.hasuraId);
+      post.likes.add(_authController.user!.hasuraId);
     }
-    await update_post_likes(postId: post.id, likes: likes);
+    _posts.refresh();
+    unawaited(update_post_likes(postId: post.id, likes: post.likes));
   }
 
   void setPostSwitch(bool value) {

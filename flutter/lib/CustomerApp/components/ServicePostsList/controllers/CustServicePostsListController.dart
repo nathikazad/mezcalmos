@@ -22,7 +22,6 @@ class CustServicePostsListController {
   TabController get feedTabController => _feedTabController;
   AuthController _authController = Get.find<AuthController>();
   AuthController get authController => _authController;
-  Rxn<ServiceInfo> service = Rxn<ServiceInfo>();
   RxList<Post> _posts = RxList.empty();
   List<Post> get posts => _posts.value;
 
@@ -48,7 +47,7 @@ class CustServicePostsListController {
     _serviceDetailsId = serviceDetailsId;
     _feedTabController = TabController(length: 2, vsync: vsync);
     isLoading.value = true;
-    await _fetchService();
+   
     mezDbgPrint(
         "========👋 init $serviceProviderType id : $serviceId feed==========");
 
@@ -62,10 +61,10 @@ class CustServicePostsListController {
     try {
       _posts.value = await fetch_service_provider_posts(
           imagesOnly: false,
+          withCache: false,
           serviceProviderId: serviceId,
           serviceProviderType: serviceProviderType);
-    } catch (e) {
-    } finally {}
+    } catch (e) {}
   }
 
   Future<void> _fetchGridImages() async {
@@ -96,16 +95,16 @@ class CustServicePostsListController {
   }
 
   Future<void> likePost(
-    Post post,
+    int postId,
   ) async {
-    final List<int> likes = post.likes;
-
-    if (likes.contains(_authController.user!.hasuraId)) {
-      likes.remove(_authController.user!.hasuraId);
+    final Post post = _posts.firstWhere((Post element) => element.id == postId);
+    if (post.likes.contains(_authController.user!.hasuraId)) {
+      post.likes.remove(_authController.user!.hasuraId);
     } else {
-      likes.add(_authController.user!.hasuraId);
+      post.likes.add(_authController.user!.hasuraId);
     }
-    await update_post_likes(postId: post.id, likes: likes);
+    _posts.refresh();
+    unawaited(update_post_likes(postId: post.id, likes: post.likes));
   }
 
   Future<void> subscribe() async {
@@ -135,12 +134,6 @@ class CustServicePostsListController {
         serviceProviderId: serviceId, serviceProviderType: serviceProviderType);
   }
 
-  Future<void> _fetchService() async {
-    service.value = await get_service_info(
-        serviceDetailsId: serviceDetailsId,
-        serviceId: serviceId,
-        withCache: false);
-  }
 
   void dispose() {}
 }

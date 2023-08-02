@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 void mezlog(log, {bool showMilliseconds = false}) {
@@ -87,18 +89,22 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
 
 void logCrashes(Object error, StackTrace? stacktrace) {
   mezDbgPrint("Logging crash $error");
-  Sentry.captureException(
-    error,
-    stackTrace: stacktrace,
-  );
+  if (MezEnv.appLaunchMode == AppLaunchMode.prod) {
+    Sentry.captureException(
+      error,
+      stackTrace: stacktrace,
+    );
+  }
 }
 
 void logEventToServer(String message, {Map<String, dynamic>? debugData}) {
-  Sentry.addBreadcrumb(
-    Breadcrumb(message: message, type: "debug", data: debugData),
-  );
-  Amplitude.getInstance().logEvent(message, eventProperties: debugData);
-  mezDbgPrint("🍞🍞🍞🍞 $message");
+  if (MezEnv.appLaunchMode == AppLaunchMode.prod) {
+    Sentry.addBreadcrumb(
+      Breadcrumb(message: message, type: "debug", data: debugData),
+    );
+    Amplitude.getInstance().logEvent(message, eventProperties: debugData);
+    mezDbgPrint("🍞🍞🍞🍞 $message");
+  }
 }
 
 // This is to get all kind of exception in our code!

@@ -92,35 +92,37 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       //  physics: NeverScrollableScrollPhysics(),
       slivers: [
         RestaurantSliverAppBar(controller: _viewController),
-        SliverPersistentHeader(
-            pinned: true,
-            delegate: MezDelegate(
-              child: _menuFilterChips(context),
-            )),
+
         SliverFillRemaining(
           child: TabBarView(
               controller: _viewController.mainTabController,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(8),
-                    physics: NeverScrollableScrollPhysics(),
-                    child: Column(
-                        children: List.generate(
-                            _viewController.isOnMenuView
-                                ? _viewController.catsList.length
-                                : _viewController.getGroupedSpecials().length,
-                            (int index) {
-                      _viewController.itemKeys[index] =
-                          RectGetter.createGlobalKey();
-                      return _viewController.isOnMenuView
-                          ? _scrollableCategoryItems(index)
-                          : _scrollableSpecialItems(index);
-                    })),
-                  ),
+                Column(
+                  children: [
+                    if (_viewController.showCategoriesChips)
+                      _menuFilterChips(context),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(8),
+                        physics: NeverScrollableScrollPhysics(),
+                        child: Column(
+                            children: List.generate(
+                                _viewController.isOnMenuView
+                                    ? _viewController.catsList.length
+                                    : _viewController
+                                        .getGroupedSpecials()
+                                        .length, (int index) {
+                          _viewController.itemKeys[index] =
+                              RectGetter.createGlobalKey();
+                          return _viewController.isOnMenuView
+                              ? _scrollableCategoryItems(index)
+                              : _scrollableSpecialItems(index);
+                        })),
+                      ),
+                    ),
+                  ],
                 ),
-                bigSeperator,
                 CustServicePostsList(
                   serviceDetailsId:
                       _viewController.restaurant.value!.serviceDetailsId,

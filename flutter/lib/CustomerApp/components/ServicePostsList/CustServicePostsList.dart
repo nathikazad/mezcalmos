@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicePostsList/controllers/CustServicePostsListController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantFeedCardPost.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/ServiceFeedPostCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
@@ -45,6 +45,7 @@ class _CustServicePostsListState extends State<CustServicePostsList>
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+      meduimSeperator,
       TabBar(
           controller: viewController.feedTabController,
           labelColor: primaryBlueColor,
@@ -92,12 +93,8 @@ class _CustServicePostsListState extends State<CustServicePostsList>
                                         postId: post.id, comment: comment);
                                   },
                                   onLikePost: (Post post) async {
-                                    await viewController.likePost(post);
+                                    await viewController.likePost(post.id);
                                   },
-                                  serviceImage:
-                                      viewController.service.value!.image,
-                                  serviceName:
-                                      viewController.service.value!.name,
                                 )),
                       ),
                     )),
