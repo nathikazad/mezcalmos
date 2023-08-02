@@ -11042,11 +11042,11 @@ class _CopyWithStubImpl$Mutation$write_comment$insert_service_provider_post_comm
 
 class Variables$Mutation$update_comment_likes {
   factory Variables$Mutation$update_comment_likes({
-    int? id,
+    required int id,
     dynamic? likes,
   }) =>
       Variables$Mutation$update_comment_likes._({
-        if (id != null) r'id': id,
+        r'id': id,
         if (likes != null) r'likes': likes,
       });
 
@@ -11055,10 +11055,8 @@ class Variables$Mutation$update_comment_likes {
   factory Variables$Mutation$update_comment_likes.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    if (data.containsKey('id')) {
-      final l$id = data['id'];
-      result$data['id'] = (l$id as int?);
-    }
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
     if (data.containsKey('likes')) {
       final l$likes = data['likes'];
       result$data['likes'] = l$likes == null ? null : mapFromJson(l$likes);
@@ -11068,14 +11066,12 @@ class Variables$Mutation$update_comment_likes {
 
   Map<String, dynamic> _$data;
 
-  int? get id => (_$data['id'] as int?);
+  int get id => (_$data['id'] as int);
   dynamic? get likes => (_$data['likes'] as dynamic?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    if (_$data.containsKey('id')) {
-      final l$id = id;
-      result$data['id'] = l$id;
-    }
+    final l$id = id;
+    result$data['id'] = l$id;
     if (_$data.containsKey('likes')) {
       final l$likes = likes;
       result$data['likes'] = l$likes == null ? null : mapToJson(l$likes);
@@ -11100,9 +11096,6 @@ class Variables$Mutation$update_comment_likes {
     }
     final l$id = id;
     final lOther$id = other.id;
-    if (_$data.containsKey('id') != other._$data.containsKey('id')) {
-      return false;
-    }
     if (l$id != lOther$id) {
       return false;
     }
@@ -11122,7 +11115,7 @@ class Variables$Mutation$update_comment_likes {
     final l$id = id;
     final l$likes = likes;
     return Object.hashAll([
-      _$data.containsKey('id') ? l$id : const {},
+      l$id,
       _$data.containsKey('likes') ? l$likes : const {},
     ]);
   }
@@ -11162,7 +11155,7 @@ class _CopyWithImpl$Variables$Mutation$update_comment_likes<TRes>
   }) =>
       _then(Variables$Mutation$update_comment_likes._({
         ..._instance._$data,
-        if (id != _undefined) 'id': (id as int?),
+        if (id != _undefined && id != null) 'id': (id as int),
         if (likes != _undefined) 'likes': (likes as dynamic?),
       }));
 }
@@ -11349,7 +11342,7 @@ const documentNodeMutationupdate_comment_likes = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'id')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -11424,7 +11417,7 @@ class Options$Mutation$update_comment_likes
     extends graphql.MutationOptions<Mutation$update_comment_likes> {
   Options$Mutation$update_comment_likes({
     String? operationName,
-    Variables$Mutation$update_comment_likes? variables,
+    required Variables$Mutation$update_comment_likes variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -11435,7 +11428,7 @@ class Options$Mutation$update_comment_likes
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -11472,7 +11465,7 @@ class WatchOptions$Mutation$update_comment_likes
     extends graphql.WatchQueryOptions<Mutation$update_comment_likes> {
   WatchOptions$Mutation$update_comment_likes({
     String? operationName,
-    Variables$Mutation$update_comment_likes? variables,
+    required Variables$Mutation$update_comment_likes variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -11483,7 +11476,7 @@ class WatchOptions$Mutation$update_comment_likes
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -11503,13 +11496,12 @@ extension ClientExtension$Mutation$update_comment_likes
     on graphql.GraphQLClient {
   Future<graphql.QueryResult<Mutation$update_comment_likes>>
       mutate$update_comment_likes(
-              [Options$Mutation$update_comment_likes? options]) async =>
-          await this.mutate(options ?? Options$Mutation$update_comment_likes());
+              Options$Mutation$update_comment_likes options) async =>
+          await this.mutate(options);
   graphql.ObservableQuery<Mutation$update_comment_likes>
       watchMutation$update_comment_likes(
-              [WatchOptions$Mutation$update_comment_likes? options]) =>
-          this.watchMutation(
-              options ?? WatchOptions$Mutation$update_comment_likes());
+              WatchOptions$Mutation$update_comment_likes options) =>
+          this.watchMutation(options);
 }
 
 class Mutation$update_comment_likes$update_service_provider_post_comment_by_pk {
@@ -11657,11 +11649,11 @@ class _CopyWithStubImpl$Mutation$update_comment_likes$update_service_provider_po
 
 class Variables$Mutation$update_post_likes {
   factory Variables$Mutation$update_post_likes({
-    int? id,
+    required int id,
     dynamic? likes,
   }) =>
       Variables$Mutation$update_post_likes._({
-        if (id != null) r'id': id,
+        r'id': id,
         if (likes != null) r'likes': likes,
       });
 
@@ -11670,10 +11662,8 @@ class Variables$Mutation$update_post_likes {
   factory Variables$Mutation$update_post_likes.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    if (data.containsKey('id')) {
-      final l$id = data['id'];
-      result$data['id'] = (l$id as int?);
-    }
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
     if (data.containsKey('likes')) {
       final l$likes = data['likes'];
       result$data['likes'] = l$likes == null ? null : mapFromJson(l$likes);
@@ -11683,14 +11673,12 @@ class Variables$Mutation$update_post_likes {
 
   Map<String, dynamic> _$data;
 
-  int? get id => (_$data['id'] as int?);
+  int get id => (_$data['id'] as int);
   dynamic? get likes => (_$data['likes'] as dynamic?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    if (_$data.containsKey('id')) {
-      final l$id = id;
-      result$data['id'] = l$id;
-    }
+    final l$id = id;
+    result$data['id'] = l$id;
     if (_$data.containsKey('likes')) {
       final l$likes = likes;
       result$data['likes'] = l$likes == null ? null : mapToJson(l$likes);
@@ -11715,9 +11703,6 @@ class Variables$Mutation$update_post_likes {
     }
     final l$id = id;
     final lOther$id = other.id;
-    if (_$data.containsKey('id') != other._$data.containsKey('id')) {
-      return false;
-    }
     if (l$id != lOther$id) {
       return false;
     }
@@ -11737,7 +11722,7 @@ class Variables$Mutation$update_post_likes {
     final l$id = id;
     final l$likes = likes;
     return Object.hashAll([
-      _$data.containsKey('id') ? l$id : const {},
+      l$id,
       _$data.containsKey('likes') ? l$likes : const {},
     ]);
   }
@@ -11777,7 +11762,7 @@ class _CopyWithImpl$Variables$Mutation$update_post_likes<TRes>
   }) =>
       _then(Variables$Mutation$update_post_likes._({
         ..._instance._$data,
-        if (id != _undefined) 'id': (id as int?),
+        if (id != _undefined && id != null) 'id': (id as int),
         if (likes != _undefined) 'likes': (likes as dynamic?),
       }));
 }
@@ -11963,7 +11948,7 @@ const documentNodeMutationupdate_post_likes = DocumentNode(definitions: [
         variable: VariableNode(name: NameNode(value: 'id')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
-          isNonNull: false,
+          isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
@@ -12038,7 +12023,7 @@ class Options$Mutation$update_post_likes
     extends graphql.MutationOptions<Mutation$update_post_likes> {
   Options$Mutation$update_post_likes({
     String? operationName,
-    Variables$Mutation$update_post_likes? variables,
+    required Variables$Mutation$update_post_likes variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -12049,7 +12034,7 @@ class Options$Mutation$update_post_likes
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -12085,7 +12070,7 @@ class WatchOptions$Mutation$update_post_likes
     extends graphql.WatchQueryOptions<Mutation$update_post_likes> {
   WatchOptions$Mutation$update_post_likes({
     String? operationName,
-    Variables$Mutation$update_post_likes? variables,
+    required Variables$Mutation$update_post_likes variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -12096,7 +12081,7 @@ class WatchOptions$Mutation$update_post_likes
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -12115,12 +12100,12 @@ class WatchOptions$Mutation$update_post_likes
 extension ClientExtension$Mutation$update_post_likes on graphql.GraphQLClient {
   Future<graphql.QueryResult<Mutation$update_post_likes>>
       mutate$update_post_likes(
-              [Options$Mutation$update_post_likes? options]) async =>
-          await this.mutate(options ?? Options$Mutation$update_post_likes());
-  graphql.ObservableQuery<
-      Mutation$update_post_likes> watchMutation$update_post_likes(
-          [WatchOptions$Mutation$update_post_likes? options]) =>
-      this.watchMutation(options ?? WatchOptions$Mutation$update_post_likes());
+              Options$Mutation$update_post_likes options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$update_post_likes>
+      watchMutation$update_post_likes(
+              WatchOptions$Mutation$update_post_likes options) =>
+          this.watchMutation(options);
 }
 
 class Mutation$update_post_likes$update_service_provider_post_by_pk {

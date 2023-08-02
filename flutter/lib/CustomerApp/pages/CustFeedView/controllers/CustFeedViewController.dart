@@ -47,11 +47,11 @@ class CustFeedViewController {
 
   void init() {
     _postScrollController.onBottomReach(
-      _postSwitch.value ? _fetchAllPosts : _fetchPosts,
+      _postSwitch.value ? _fetchPosts : _fetchAllPosts,
       sensitivity: 200,
     );
     _promoScrollController.onBottomReach(
-      _promotionSwitch.value ? _fetchAllPromotions : _fetchPromotions,
+      _promotionSwitch.value ? _fetchPromotions : _fetchAllPromotions,
       sensitivity: 200,
     );
     _fetchAllPosts();

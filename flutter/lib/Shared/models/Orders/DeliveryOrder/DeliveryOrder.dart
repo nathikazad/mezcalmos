@@ -187,3 +187,15 @@ class DeliveryOrderVariables {
       this.cancellationTime,
       this.driverInfo});
 }
+
+Map<int, bool>? getNotifiedDrivers(dynamic notifiedDrivers) {
+  //parse the string keys to int
+  Map<int, bool>? notifiedDriversMapInt = {};
+  if (notifiedDrivers != null) {
+    notifiedDrivers.forEach((key, value) {
+      if (int.tryParse(key) != null)
+        notifiedDriversMapInt[int.tryParse(key)!] = value;
+    });
+  }
+  return notifiedDriversMapInt;
+}
