@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 
 enum RestaurantsView { Rows, Grid }

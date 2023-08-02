@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -19,12 +20,11 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-class CustomerRestaurantController {
+class CustomerRestaurantViewController {
   // controllers //
   late AutoScrollController scrollController;
 
-  late TabController tabController;
-  late TabController feedTabController;
+  late TabController mainTabController;
 
   late TabController categoriesTabController;
   late TabController specialstabsController;
@@ -63,12 +63,16 @@ class CustomerRestaurantController {
     return _initialized.value;
   }
 
+  RxInt currentSelectedIndex = RxInt(0);
+
   Future<void> init(
       {required int restaurantId, required TickerProvider vsync}) async {
     scrollController = AutoScrollController();
-    tabController = TabController(length: 3, vsync: vsync);
+    mainTabController = TabController(length: 3, vsync: vsync);
 
     restaurant.value = await get_restaurant_by_id(id: restaurantId);
+    mezDbgPrint(
+        "Restaurant ⌛️ cats ======>${restaurant.value?.getAvailableCategories.length}");
     _initControllers(vsync);
     assignKeys();
     unawaited(get_service_reviews(
@@ -131,7 +135,6 @@ class CustomerRestaurantController {
         length: restaurant.value!.getAvailableCategories.length, vsync: vsync);
     specialstabsController =
         TabController(length: getGroupedSpecials().length, vsync: vsync);
-    feedTabController = TabController(length: 2, vsync: vsync);
   }
 
   // scroll methods //
@@ -151,23 +154,27 @@ class CustomerRestaurantController {
   }
 
   bool onScrollNotification(ScrollNotification notification) {
-    if (pauseRectGetterIndex.value || tabController.index != 0) return false;
-    final int lastTabIndex = getTabController.length - 1;
+    if (pauseRectGetterIndex.value || mainTabController.index != 0)
+      return false;
+    final int lastTabIndex = listLength - 1;
     final List<int> visibleItems = getVisibleItemsIndex();
     if (visibleItems.isEmpty) {
       return false;
     }
     final bool reachLastTabIndex =
-        visibleItems.length <= 2 && visibleItems.last == lastTabIndex;
+        visibleItems.length <= 1 && visibleItems.last == lastTabIndex;
     if (reachLastTabIndex) {
-      getTabController.animateTo(lastTabIndex);
+      //   getTabController.animateTo(lastTabIndex);
+      currentSelectedIndex.value = lastTabIndex;
       pauseRectGetterIndex.value = true;
     } else {
       final int sumIndex =
           visibleItems.reduce((int value, int element) => value + element);
       final int middleIndex = sumIndex ~/ visibleItems.length;
       if (getTabController.index != middleIndex)
-        getTabController.animateTo(middleIndex);
+        //   getTabController.animateTo(middleIndex);
+
+        currentSelectedIndex.value = middleIndex;
     }
 
     return false;
@@ -175,7 +182,9 @@ class CustomerRestaurantController {
 
   void animateAndScrollTo(int index) {
     pauseRectGetterIndex.value = true;
-    getTabController.animateTo(index);
+    //  getTabController.animateTo(index);
+
+    currentSelectedIndex.value = index;
     scrollController
         .scrollToIndex(index, preferPosition: AutoScrollPosition.begin)
         .whenComplete(() => pauseRectGetterIndex.value = false);
@@ -338,6 +347,14 @@ class CustomerRestaurantController {
     scrollController.dispose();
 
     categoriesTabController.dispose();
+  }
+
+  int get listLength {
+    if (isOnMenuView) {
+      return restaurant.value!.getAvailableCategories.length;
+    } else {
+      return getGroupedSpecials().length;
+    }
   }
 }
 

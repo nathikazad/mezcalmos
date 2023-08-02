@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -33,7 +33,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     required this.controller,
   }) : super(key: key);
 
-  final CustomerRestaurantController controller;
+  final CustomerRestaurantViewController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColorLight,
         elevation: 0.4,
         centerTitle: true,
-        expandedHeight: 270,
+        expandedHeight: 250,
         leadingWidth: 35,
         automaticallyImplyLeading: false,
         bottom: _tabbar(),
@@ -55,7 +55,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           expandedTitleScale: 1.6,
           titlePadding: EdgeInsets.only(bottom: _getBottomPadding()),
           centerTitle: true,
-          collapseMode: CollapseMode.pin,
+          //   collapseMode: CollapseMode.pin,
           title: Container(
             alignment: Alignment.bottomCenter,
             width: 55.w,
@@ -122,7 +122,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
             padding: EdgeInsets.zero,
             indicatorColor: primaryBlueColor,
             indicatorPadding: EdgeInsets.zero,
-            controller: controller.tabController,
+            controller: controller.mainTabController,
             unselectedLabelColor: unselectedIconColor,
             labelColor: primaryBlueColor,
             tabs: [

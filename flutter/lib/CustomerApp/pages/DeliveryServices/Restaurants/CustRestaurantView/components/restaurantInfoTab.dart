@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
+    as MapHelper;
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
@@ -15,8 +17,6 @@ import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
-    as MapHelper;
 
 final DateFormat f = new DateFormat('hh:mma');
 
@@ -26,7 +26,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
-  final CustomerRestaurantController controller;
+  final CustomerRestaurantViewController controller;
 
   const RestaurantInfoTab({
     Key? key,
@@ -314,8 +314,7 @@ class RestaurantInfoTab extends StatelessWidget {
           MapHelper.alitasLoc.toLocationData(),
           restaurant.info.location.toLocationData());
       mezDbgPrint("distance from base ========>$dist");
-      final double cost =
-          dist * restaurant.deliveryCost!.costPerKmFromBase!;
+      final double cost = dist * restaurant.deliveryCost!.costPerKmFromBase!;
       result = cost;
     }
     mezDbgPrint("shipping cost from base ==========>$result");

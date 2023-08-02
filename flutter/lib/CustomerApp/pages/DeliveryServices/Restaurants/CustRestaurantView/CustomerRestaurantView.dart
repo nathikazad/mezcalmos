@@ -6,7 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRes
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -37,7 +37,8 @@ class CustomerRestaurantView extends StatefulWidget {
 
 class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     with TickerProviderStateMixin {
-  CustomerRestaurantController _viewController = CustomerRestaurantController();
+  CustomerRestaurantViewController _viewController =
+      CustomerRestaurantViewController();
 
   @override
   void initState() {
@@ -87,41 +88,53 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
-      physics: NeverScrollableScrollPhysics(),
       controller: _viewController.scrollController,
+      //  physics: NeverScrollableScrollPhysics(),
       slivers: [
         RestaurantSliverAppBar(controller: _viewController),
+        SliverPersistentHeader(
+            pinned: true,
+            delegate: MezDelegate(
+              child: _menuFilterChips(context),
+            )),
         SliverFillRemaining(
-          child:
-              TabBarView(controller: _viewController.tabController, children: [
-            SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 12.5),
-              child: Column(
-                  children: List.generate(
-                      _viewController.isOnMenuView
-                          ? _viewController.catsList.length
-                          : _viewController.getGroupedSpecials().length,
-                      (int index) {
-                _viewController.itemKeys[index] = RectGetter.createGlobalKey();
-                return _viewController.isOnMenuView
-                    ? _scrollableCategoryItems(index)
-                    : _scrollableSpecialItems(index);
-              })),
-            ),
-            CustServicePostsList(
-              serviceDetailsId:
-                  _viewController.restaurant.value!.serviceDetailsId,
-              serviceId: _viewController.restaurant.value!.restaurantId,
-              serviceProviderType: cModels.ServiceProviderType.Restaurant,
-            ),
-            SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 12.5),
-              child: RestaurantInfoTab(
-                restaurant: _viewController.restaurant.value!,
-                controller: _viewController,
-              ),
-            ),
-          ]),
+          child: TabBarView(
+              controller: _viewController.mainTabController,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(8),
+                    physics: NeverScrollableScrollPhysics(),
+                    child: Column(
+                        children: List.generate(
+                            _viewController.isOnMenuView
+                                ? _viewController.catsList.length
+                                : _viewController.getGroupedSpecials().length,
+                            (int index) {
+                      _viewController.itemKeys[index] =
+                          RectGetter.createGlobalKey();
+                      return _viewController.isOnMenuView
+                          ? _scrollableCategoryItems(index)
+                          : _scrollableSpecialItems(index);
+                    })),
+                  ),
+                ),
+                bigSeperator,
+                CustServicePostsList(
+                  serviceDetailsId:
+                      _viewController.restaurant.value!.serviceDetailsId,
+                  serviceId: _viewController.restaurant.value!.restaurantId,
+                  serviceProviderType: cModels.ServiceProviderType.Restaurant,
+                ),
+                SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(horizontal: 12.5),
+                  child: RestaurantInfoTab(
+                    restaurant: _viewController.restaurant.value!,
+                    controller: _viewController,
+                  ),
+                ),
+              ]),
         )
 
         // Obx(() {
@@ -264,7 +277,6 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       {required List<Item> items,
       required int restaurantId,
       bool isSpecial = false}) {
-    mezDbgPrint("[66] called :: _buildResturantItems");
     if (_viewController.restaurant.value!.restaurantsView ==
             RestaurantsView.Rows ||
         isSpecial) {
@@ -323,4 +335,147 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       ),
     );
   }
+
+  Widget _menuFilterChips(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 7),
+      child: Obx(
+        () {
+          mezDbgPrint(
+              "_viewController.getTabController, ==============>👊${_viewController.getTabController.length}");
+          return Row(
+            children: (_viewController.showSpecialTabs)
+                ? List.generate(
+                    _viewController.getGroupedSpecials().length,
+                    (int index) {
+                      return FilterChip(
+                        label: Text(
+                          _viewController
+                              .getGroupedSpecials()
+                              .keys
+                              .toList()[index]
+                              .toDayName()
+                              .inCaps,
+                          // style: TextStyle(
+                          //   color:
+                          //       _viewController.getTabController.index == index
+                          //           ? primaryBlueColor
+                          //           : Colors.grey.shade800,
+                          //   fontWeight:
+                          //       _viewController.getTabController.index == index
+                          //           ? FontWeight.bold
+                          //           : FontWeight.w500,
+                          // ),
+                        ),
+                        selected: _viewController.currentSelectedIndex == index,
+                        onSelected: (bool selected) {
+                          _viewController.animateAndScrollTo(index);
+                        },
+                        selectedColor: secondaryLightBlueColor,
+                        backgroundColor: Colors.transparent,
+                        checkmarkColor: Colors.white,
+                      );
+                    },
+                  )
+                : (_viewController.showMenuTabs)
+                    ? List.generate(
+                        _viewController
+                            .restaurant.value!.getAvailableCategories.length,
+                        (int index) {
+                          return FilterChip(
+                            label: Text(
+                              _viewController.restaurant.value!
+                                      .getAvailableCategories[index].name
+                                      ?.getTranslation(userLanguage)
+                                      ?.inCaps ??
+                                  "",
+                              // style: TextStyle(
+                              //   color: _viewController.getTabController.index ==
+                              //           index
+                              //       ? primaryBlueColor
+                              //       : Colors.grey.shade800,
+                              //   fontWeight:
+                              //       _viewController.getTabController.index ==
+                              //               index
+                              //           ? FontWeight.bold
+                              //           : FontWeight.w500,
+                              // ),
+                            ),
+                            selected:
+                                _viewController.currentSelectedIndex == index,
+                            onSelected: (bool selected) {
+                              _viewController.animateAndScrollTo(index);
+                            },
+                            selectedColor: secondaryLightBlueColor,
+                            backgroundColor: Colors.transparent,
+                            checkmarkColor: Colors.white,
+                          );
+                        },
+                      )
+                    : [],
+          );
+        },
+      ),
+    );
+  }
+
+  // Widget _menuFilterChips(BuildContext context) {
+  //   return Container(
+  //     color: secondaryLightBlueColor,
+  //     padding: EdgeInsets.only(bottom: 7),
+  //     child: Obx(
+  //       () {
+  //         mezDbgPrint(
+  //             "_viewController.getTabController, ==============>👊${_viewController.getTabController.length}");
+  //         return TabBar(
+  //           padding: EdgeInsets.only(left: 6, top: 7),
+  //           isScrollable: true,
+  //           controller: _viewController.getTabController,
+  //           labelColor: primaryBlueColor,
+  //           labelStyle: context.txt.bodyLarge,
+  //           unselectedLabelStyle: context.txt.bodyLarge?.copyWith(
+  //             fontWeight: FontWeight.w500,
+  //             color: Colors.grey.shade800,
+  //           ),
+  //           unselectedLabelColor: Colors.grey.shade700,
+  //           indicatorPadding:
+  //               const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+  //           indicatorSize: TabBarIndicatorSize.tab,
+  //           indicatorColor: Colors.transparent,
+  //           indicator: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(45),
+  //             shape: BoxShape.rectangle,
+  //             color: secondaryLightBlueColor,
+  //           ),
+  //           tabs: (_viewController.showSpecialTabs)
+  //               ? List.generate(_viewController.getGroupedSpecials().length,
+  //                   (int index) {
+  //                   return Tab(
+  //                     text: _viewController
+  //                         .getGroupedSpecials()
+  //                         .keys
+  //                         .toList()[index]
+  //                         .toDayName()
+  //                         .inCaps,
+  //                   );
+  //                 })
+  //               : (_viewController.showMenuTabs)
+  //                   ? List.generate(
+  //                       _viewController.restaurant.value!.getAvailableCategories
+  //                           .length, (int index) {
+  //                       return Tab(
+  //                         text: _viewController.restaurant.value!
+  //                                 .getAvailableCategories[index].name
+  //                                 ?.getTranslation(userLanguage)
+  //                                 ?.inCaps ??
+  //                             "",
+  //                       );
+  //                     })
+  //                   : [],
+  //           onTap: _viewController.animateAndScrollTo,
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 }
