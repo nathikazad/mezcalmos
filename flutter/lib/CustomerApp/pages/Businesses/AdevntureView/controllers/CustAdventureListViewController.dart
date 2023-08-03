@@ -42,6 +42,7 @@ class CustAdventureListViewController {
   final List<EventCategory1> _filterCategories = <EventCategory1>[
     EventCategory1.Adventure,
     EventCategory1.Surf,
+    
   ];
 
   final List<EventCategory2> _categories2 = <EventCategory2>[

@@ -61,8 +61,6 @@ Future<FilterInput?> cusShowBusinessFilerSheet(
       selectedFilters["onlineOrder"]?.contains("true") ?? false;
   bool isRestaurantOpened =
       selectedFilters["restaurantOpened"]?.contains("true") ?? true;
-  mezDbgPrint(
-      "defaultFilterInput $defaultFilterInput $isOnlineOrder $selectedFilters");
 
   return showModalBottomSheet<Map<String, List<String>>?>(
       // isDismissible: false,
@@ -115,20 +113,20 @@ Future<FilterInput?> cusShowBusinessFilerSheet(
                                         defaultFilterInput.values
                                             .elementAt(index)
                                             .length, (int subIndex) {
-                                      String actualSubItem = defaultFilterInput
-                                          .values
-                                          .elementAt(index)[subIndex];
-                                      bool isScheduleClass = defaultFilterInput
-                                                  .keys
-                                                  .elementAt(index) ==
-                                              "schedule" &&
-                                          isClass;
-                                      bool isScheduleTherapy =
+                                      final String actualSubItem =
+                                          defaultFilterInput.values
+                                              .elementAt(index)[subIndex];
+                                      final bool isScheduleClass =
+                                          defaultFilterInput.keys
+                                                      .elementAt(index) ==
+                                                  "schedule" &&
+                                              isClass;
+                                      final bool isScheduleTherapy =
                                           defaultFilterInput.keys
                                                       .elementAt(index) ==
                                                   "schedule" &&
                                               isTherapy;
-                                      String title = isScheduleClass
+                                      final String title = isScheduleClass
                                           ? _i18n()["class"][actualSubItem]
                                           : isScheduleTherapy
                                               ? _i18n()["therapies"]
@@ -142,10 +140,6 @@ Future<FilterInput?> cusShowBusinessFilerSheet(
                                                 ?.contains(actualSubItem) ??
                                             false,
                                         onChanged: (bool? v) {
-                                          mezDbgPrint(
-                                              "selected ==> $selectedFilters");
-                                          mezDbgPrint(
-                                              "main one ===>$filterInput");
                                           if (v == true) {
                                             selectedFilters.update(
                                                 defaultFilterInput.keys
@@ -163,18 +157,8 @@ Future<FilterInput?> cusShowBusinessFilerSheet(
                                               value.remove(actualSubItem);
                                               return value;
                                             });
-                                            // selectedFilters.values
-                                            //     .elementAt(index)
-                                            //     .remove(actualSubItem);
                                           }
-                                          mezDbgPrint(
-                                              "selected ==> $selectedFilters");
-                                          mezDbgPrint(
-                                              "main one ===>$filterInput");
-                                          mezDbgPrint(selectedFilters[
-                                                  defaultFilterInput.keys
-                                                      .elementAt(index)]
-                                              ?.contains(actualSubItem));
+
                                           selectedFilters.refresh();
                                         },
                                       );

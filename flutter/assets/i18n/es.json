@@ -1643,6 +1643,7 @@
             "party": "Fiesta",
             "social": "Social",
             "therapy": "Terapia",
+            "uncategorized" : "Sin categoría",
             "scheduled": "Programada",
             "oneTime": "Una vez",
             "onDemand": "On demand",

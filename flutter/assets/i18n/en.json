@@ -1621,6 +1621,7 @@
             "social": "Social",
             "therapy": "Therapy",
             "languageSchool": "Language",
+            "uncategorized" : "Uncategorized",
             "scheduled": "Scheduled",
             "oneTime": "One time",
             "onDemand": "On demand",

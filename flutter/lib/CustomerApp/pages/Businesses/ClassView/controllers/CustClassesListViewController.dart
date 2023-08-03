@@ -45,6 +45,7 @@ class CustClassesListViewController {
     EventCategory1.Dance,
     EventCategory1.Yoga,
     EventCategory1.LanguageSchool,
+    EventCategory1.Uncategorized
   ];
 
   final List<EventCategory2> _categories2 = <EventCategory2>[

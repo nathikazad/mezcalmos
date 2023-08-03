@@ -102,6 +102,7 @@ class CustEventsListViewController {
     _filterCategories.addAll([
       EventCategory1.Dance,
       EventCategory1.Social,
+      EventCategory1.Uncategorized,
     ]);
     _filterInput = defaultFilters();
     try {
