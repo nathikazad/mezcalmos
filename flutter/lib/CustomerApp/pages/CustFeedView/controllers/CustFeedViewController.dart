@@ -172,24 +172,25 @@ class CustFeedViewController {
     _promotions.refresh();
   }
 
-  Future<void> writeComment(
+  Future<bool> writeComment(
       {required int postId, required String comment}) async {
-    if (comment.isEmpty) return;
+    if (comment.isEmpty) return false;
     mezDbgPrint("Sending comment =======>$comment");
     try {
       int? res = await write_comment(
           userId: _authController.hasuraUserId!,
           postId: postId,
           commentMsg: comment);
-
       mezDbgPrint("Response =======> $res");
+      return res != null;
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
+      return false;
     }
   }
 
-  Future<void> likePost(
+  Future<bool> likePost(
     int postId,
   ) async {
     final Post post = _posts.firstWhere((Post element) => element.id == postId);
@@ -198,8 +199,8 @@ class CustFeedViewController {
     } else {
       post.likes.add(_authController.user!.hasuraId);
     }
-    _posts.refresh();
-    unawaited(update_post_likes(postId: post.id, likes: post.likes));
+
+    return await update_post_likes(postId: post.id, likes: post.likes);
   }
 
   void setPostSwitch(bool value) {

@@ -29,8 +29,9 @@ Future<List<Post>> fetch_subscribed_posts(
   //   throwError(res.exception);
   // }
   final List<Post> posts = [];
-  res.parsedData?.service_provider_post.forEach((data) {
-    cModels.ServiceProviderType serviceProviderType =
+  res.parsedData?.service_provider_post
+      .forEach((Query$fetch_subscribed_posts$service_provider_post data) {
+    final cModels.ServiceProviderType serviceProviderType =
         data.service_provider_type.toServiceProviderType();
     String? serviceProviderName;
     String? serviceProviderImage;
@@ -53,7 +54,8 @@ Future<List<Post>> fetch_subscribed_posts(
         break;
     }
     List<Comment> comments = <Comment>[];
-    data.comments.forEach((element) {
+    data.comments.forEach(
+        (Query$fetch_subscribed_posts$service_provider_post$comments element) {
       comments.add(
         Comment(
           id: element.id,
@@ -120,9 +122,12 @@ Future<List<Post>> fetch_service_provider_posts(
   //   throwError(res.exception);
   // }
   final List<Post> posts = [];
-  res.parsedData?.service_provider_post.forEach((data) {
+  res.parsedData?.service_provider_post
+      .forEach((Query$fetch_service_provider_posts$service_provider_post data) {
     List<Comment> comments = <Comment>[];
-    data.comments.forEach((element) {
+    data.comments.forEach(
+        (Query$fetch_service_provider_posts$service_provider_post$comments
+            element) {
       comments.add(
         Comment(
           id: element.id,
@@ -179,8 +184,9 @@ Future<List<Post>> fetch_posts_within_distance(
   //   throwError(res.exception);
   // }
   final List<Post> posts = [];
-  res.parsedData?.service_provider_post.forEach((data) {
-    cModels.ServiceProviderType serviceProviderType =
+  res.parsedData?.service_provider_post
+      .forEach((Query$fetch_posts_within_distance$service_provider_post data) {
+    final cModels.ServiceProviderType serviceProviderType =
         data.service_provider_type.toServiceProviderType();
     String? serviceProviderName;
     String? serviceProviderImage;
@@ -203,7 +209,9 @@ Future<List<Post>> fetch_posts_within_distance(
         break;
     }
     List<Comment> comments = <Comment>[];
-    data.comments.forEach((element) {
+    data.comments.forEach(
+        (Query$fetch_posts_within_distance$service_provider_post$comments
+            element) {
       comments.add(
         Comment(
           id: element.id,
@@ -251,7 +259,8 @@ Future<List<int>> fetch_subscribers(
     ),
   );
   List<int> subscribers = <int>[];
-  res.parsedData?.service_provider_subscriber.forEach((element) {
+  res.parsedData?.service_provider_subscriber
+      .forEach((Query$fetch_subscribers$service_provider_subscriber element) {
     subscribers.add(element.customer_id);
   });
   return subscribers;
@@ -314,7 +323,7 @@ Future<int?> write_comment(
   return res.parsedData!.insert_service_provider_post_comment_one?.id;
 }
 
-Future<void> update_post_likes(
+Future<bool> update_post_likes(
     {required int postId, required List<int> likes}) async {
   final QueryResult<Mutation$update_post_likes> res =
       await _db.graphQLClient.mutate$update_post_likes(
@@ -326,9 +335,10 @@ Future<void> update_post_likes(
   if (res.parsedData?.update_service_provider_post_by_pk == null) {
     throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
   }
+  return res.parsedData?.update_service_provider_post_by_pk != null;
 }
 
-Future<void> update_comment_likes(
+Future<bool> update_comment_likes(
     {required int postId, required List<int> likes}) async {
   final QueryResult<Mutation$update_comment_likes> res =
       await _db.graphQLClient.mutate$update_comment_likes(
@@ -340,6 +350,7 @@ Future<void> update_comment_likes(
   if (res.parsedData?.update_service_provider_post_comment_by_pk == null) {
     throw Exception("🚨 like comment exception 🚨 \n ${res.exception}");
   }
+  return res.parsedData?.update_service_provider_post_comment_by_pk != null;
 }
 
 Future<int?> create_post({

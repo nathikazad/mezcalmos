@@ -6,7 +6,6 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.d
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/ServiceFeedPostCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
 
 class CustServicePostsList extends StatefulWidget {
   const CustServicePostsList(
@@ -88,12 +87,12 @@ class _CustServicePostsListState extends State<CustServicePostsList>
                             (int index) => ServiceFeedPostCard(
                                   post: viewController.posts[index],
                                   onCommentPost:
-                                      (Post post, String comment) async {
+                                      (int postId, String comment) async {
                                     await viewController.writeComment(
-                                        postId: post.id, comment: comment);
+                                        postId: postId, comment: comment);
                                   },
-                                  onLikePost: (Post post) async {
-                                    await viewController.likePost(post.id);
+                                  onLikePost: (int postId) async {
+                                    await viewController.likePost(postId);
                                   },
                                 )),
                       ),

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/PostCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPromotionsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFeedView/components/FeedPromotionCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFeedView/controllers/CustFeedViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/ServiceFeedPostCard.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -81,21 +80,23 @@ class _CustFeedViewState extends State<CustFeedView> {
                                   controller:
                                       _viewController.postScrollController,
                                   itemCount: _viewController.posts.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) =>
-                                          ServiceFeedPostCard(
-                                            //  controller: _viewController,
-                                            post: _viewController.posts[index],
-                                            onCommentPost:
-                                                (Post post, String comment) {
-                                              _viewController.writeComment(
-                                                  postId: post.id,
+                                  itemBuilder: (BuildContext context,
+                                          int index) =>
+                                      PostCard(
+                                        //  controller: _viewController,
+                                        post: _viewController.posts[index],
+                                        onPostComment:
+                                            (int postId, String comment) async {
+                                          return await _viewController
+                                              .writeComment(
+                                                  postId: postId,
                                                   comment: comment);
-                                            },
-                                            onLikePost: (Post post) {
-                                              _viewController.likePost(post.id);
-                                            },
-                                          )))
+                                        },
+                                        onLike: (int postId) async {
+                                          return await _viewController
+                                              .likePost(postId);
+                                        },
+                                      )))
                     ],
                   )),
               Obx(() => Column(
