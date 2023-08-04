@@ -4,8 +4,8 @@ mutation subscribeRestaurant($customer_id: Int, $service_provider_id: Int) {
   }
 }
 
-mutation writePost($service_provider_id: Int, $message: String, $image: String, $likes: jsonb, $comments: jsonb, $link: String) {
-  insert_service_provider_post_one(object: {service_provider_type: "restaurant", service_provider_id: $service_provider_id, message: $message, image: $image, likes: $likes, comments: $comments, link: $link}) {
+mutation writePost($service_provider_id: Int, $message: String, $image: String, $likes: jsonb, $link: String) {
+  insert_service_provider_post_one(object: {service_provider_type: "restaurant", service_provider_id: $service_provider_id, message: $message, image: $image, likes: $likes, link: $link}) {
     id
     posted_on
   }
@@ -15,7 +15,6 @@ query getFeed($_in: [Int!]) {
   service_provider_post(where: {_and: {service_provider_type: {_eq: "restaurant"}}, service_provider_id: {_in: $_in}}, order_by: {posted_on: desc}) {
     id
     image
-    comments
     likes
     message
     posted_on

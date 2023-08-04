@@ -4104,6 +4104,11 @@ type business_order_request {
   customer_id: Int!
   id: Int!
 
+  """
+  A computed field, executes function "business.order_in_process"
+  """
+  in_progress: Boolean
+
   """An array relationship"""
   items(
     """distinct select on columns"""
@@ -4197,6 +4202,7 @@ input business_order_request_bool_exp {
   customer_app_type: String_comparison_exp
   customer_id: Int_comparison_exp
   id: Int_comparison_exp
+  in_progress: Boolean_comparison_exp
   items: business_order_request_item_bool_exp
   items_aggregate: business_order_request_item_aggregate_bool_exp
   notes: String_comparison_exp
@@ -4907,6 +4913,7 @@ input business_order_request_order_by {
   customer_app_type: order_by
   customer_id: order_by
   id: order_by
+  in_progress: order_by
   items_aggregate: business_order_request_item_aggregate_order_by
   notes: order_by
   order_time: order_by
@@ -31808,9 +31815,14 @@ unique or primary key constraints on table "restaurant.operator"
 """
 enum restaurant_operator_constraint {
   """
-  unique or primary key constraint on columns "details_id", "user_id"
+  unique or primary key constraint on columns "details_id"
   """
-  operator_user_id_details_id_key
+  operator_details_id_key
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  operator_user_id_key
 
   """
   unique or primary key constraint on columns "id"
@@ -38051,11 +38063,6 @@ type service_provider_operator_details_variance_fields {
 columns and relationships of "service_provider.post"
 """
 type service_provider_post {
-  """Array of { message, date }"""
-  comments(
-    """JSON select path"""
-    path: String
-  ): jsonb!
   id: Int!
   image: String
 
@@ -38101,9 +38108,6 @@ type service_provider_post_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_append_input {
-  """Array of { message, date }"""
-  comments: jsonb
-
   """Array of customerIds"""
   likes: jsonb
 }
@@ -38121,7 +38125,6 @@ input service_provider_post_bool_exp {
   _and: [service_provider_post_bool_exp!]
   _not: service_provider_post_bool_exp
   _or: [service_provider_post_bool_exp!]
-  comments: jsonb_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
   likes: jsonb_comparison_exp
@@ -38147,9 +38150,6 @@ enum service_provider_post_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input service_provider_post_delete_at_path_input {
-  """Array of { message, date }"""
-  comments: [String!]
-
   """Array of customerIds"""
   likes: [String!]
 }
@@ -38159,9 +38159,6 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input service_provider_post_delete_elem_input {
-  """Array of { message, date }"""
-  comments: Int
-
   """Array of customerIds"""
   likes: Int
 }
@@ -38170,9 +38167,6 @@ input service_provider_post_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input service_provider_post_delete_key_input {
-  """Array of { message, date }"""
-  comments: String
-
   """Array of customerIds"""
   likes: String
 }
@@ -38189,8 +38183,6 @@ input service_provider_post_inc_input {
 input type for inserting data into table "service_provider.post"
 """
 input service_provider_post_insert_input {
-  """Array of { message, date }"""
-  comments: jsonb
   id: Int
   image: String
 
@@ -38248,7 +38240,6 @@ input service_provider_post_on_conflict {
 
 """Ordering options when selecting data from "service_provider.post"."""
 input service_provider_post_order_by {
-  comments: order_by
   id: order_by
   image: order_by
   likes: order_by
@@ -38267,9 +38258,6 @@ input service_provider_post_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_prepend_input {
-  """Array of { message, date }"""
-  comments: jsonb
-
   """Array of customerIds"""
   likes: jsonb
 }
@@ -38278,9 +38266,6 @@ input service_provider_post_prepend_input {
 select columns of table "service_provider.post"
 """
 enum service_provider_post_select_column {
-  """column name"""
-  comments
-
   """column name"""
   id
 
@@ -38310,8 +38295,6 @@ enum service_provider_post_select_column {
 input type for updating data in table "service_provider.post"
 """
 input service_provider_post_set_input {
-  """Array of { message, date }"""
-  comments: jsonb
   id: Int
   image: String
 
@@ -38355,8 +38338,6 @@ input service_provider_post_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_provider_post_stream_cursor_value_input {
-  """Array of { message, date }"""
-  comments: jsonb
   id: Int
   image: String
 
@@ -38379,9 +38360,6 @@ type service_provider_post_sum_fields {
 update columns of table "service_provider.post"
 """
 enum service_provider_post_update_column {
-  """column name"""
-  comments
-
   """column name"""
   id
 
