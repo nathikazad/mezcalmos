@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['ServicePaymentsView']['components']['ServiceAcceptedPayments'];

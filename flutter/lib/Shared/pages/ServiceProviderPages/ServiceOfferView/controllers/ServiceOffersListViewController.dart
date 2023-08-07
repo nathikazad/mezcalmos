@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OffersHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
-class ServiceOfferViewController {
+class ServiceOffersListViewController {
   late int serviceProviderId;
   int? serviceLinkId;
   late cModels.ServiceProviderType serviceProviderType;
   RxList<cModels.Offer> serviceOffers = RxList.empty();
   ScrollController scrollController = ScrollController();
   RxBool isLoading = RxBool(false);
+
+  List<cModels.Offer> get activeOffers =>
+      serviceOffers.where((cModels.Offer p0) => p0.isActive).toList();
+  List<cModels.Offer> get inActiveOffers =>
+      serviceOffers.where((cModels.Offer p0) => !p0.isActive).toList();
 
   Future<void> init({
     required int serviceProviderId,

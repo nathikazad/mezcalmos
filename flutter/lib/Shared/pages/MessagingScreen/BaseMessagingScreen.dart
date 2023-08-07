@@ -21,7 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';

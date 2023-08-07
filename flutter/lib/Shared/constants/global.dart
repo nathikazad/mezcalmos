@@ -391,6 +391,7 @@ const String businessStoryEn =
 const String businessStoryEs =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/business_story_es.png?alt=media&token=41a6bc91-e688-48cf-b975-830bea10fa95";
 
+Widget get tinySepartor => SizedBox(height: 5);
 Widget get smallSepartor => SizedBox(height: 8);
 Widget get meduimSeperator => SizedBox(height: 15);
 Widget get bigSeperator => SizedBox(height: 25);

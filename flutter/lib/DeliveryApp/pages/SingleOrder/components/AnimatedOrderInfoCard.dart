@@ -15,8 +15,8 @@ import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart'
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]

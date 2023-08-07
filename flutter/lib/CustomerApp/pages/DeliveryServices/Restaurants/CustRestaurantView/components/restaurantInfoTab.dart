@@ -26,7 +26,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class RestaurantInfoTab extends StatelessWidget {
   final Restaurant restaurant;
-  final CustomerRestaurantViewController controller;
+  final CustRestaurantViewController controller;
 
   const RestaurantInfoTab({
     Key? key,

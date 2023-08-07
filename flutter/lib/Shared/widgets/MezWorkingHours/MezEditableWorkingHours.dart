@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/SingleDayScheduleView.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezWorkingHours/controllers/MezWorkingHoursController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]

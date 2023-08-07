@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/themes/styles.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 class NoInternetScreen extends StatelessWidget {

@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/controllers/OrderMapWidgetController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]

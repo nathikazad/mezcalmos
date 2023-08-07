@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["PickLocationScreen"]["PickLocationView"];

@@ -11,9 +11,9 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/controllers/OperatorsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 

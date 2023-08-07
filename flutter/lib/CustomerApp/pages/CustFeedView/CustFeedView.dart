@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/PostCard.dart';
+import 'package:mezcalmos/CustomerApp/components/ServiceFeedPostCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPromotionsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFeedView/components/FeedPromotionCard.dart';
@@ -45,94 +46,122 @@ class _CustFeedViewState extends State<CustFeedView> {
           widget.asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: widget.asTab ? null : MezRouter.back,
           title: '${_i18n()["title"]}'),
-      body: DefaultTabController(
-          length: 2,
-          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            TabBar(
-                labelColor: primaryBlueColor,
-                unselectedLabelColor: Colors.grey.shade400,
-                tabs: [
-                  Tab(text: '${_i18n()['posts']}'),
-                  Tab(text: '${_i18n()['promotions']}')
-                ]),
-            Expanded(
-                child: TabBarView(children: <Widget>[
-              Obx(() => Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          '${_i18n()['postSwitch']}',
-                          style: context.textTheme.bodyLarge
-                              ?.copyWith(fontSize: 15),
-                        ),
-                        trailing: Switch(
-                          activeColor: primaryBlueColor,
-                          value: _viewController.postSwitch,
-                          onChanged: (bool value) {
-                            _viewController.setPostSwitch(value);
-                          },
-                        ),
-                      ),
-                      Expanded(
-                          child: _viewController.posts.isEmpty
-                              ? NoPostsFound()
-                              : ListView.builder(
-                                  controller:
-                                      _viewController.postScrollController,
-                                  itemCount: _viewController.posts.length,
-                                  itemBuilder: (BuildContext context,
-                                          int index) =>
-                                      PostCard(
-                                        //  controller: _viewController,
-                                        post: _viewController.posts[index],
-                                        onPostComment:
-                                            (int postId, String comment) async {
-                                          return await _viewController
-                                              .writeComment(
-                                                  postId: postId,
-                                                  comment: comment);
-                                        },
-                                        onLike: (int postId) async {
-                                          return await _viewController
-                                              .likePost(postId);
-                                        },
-                                      )))
-                    ],
-                  )),
-              Obx(() => Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          '${_i18n()['promotionSwitch']}',
-                          style: context.textTheme.bodyLarge
-                              ?.copyWith(fontSize: 15),
-                        ),
-                        trailing: Switch(
-                          activeColor: primaryBlueColor,
-                          value: _viewController.promotionSwitch,
-                          onChanged: (bool value) {
-                            _viewController.setPromotionSwitch(value);
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: _viewController.promotions.isEmpty
-                            ? NoPromotionsFound()
-                            : ListView.builder(
-                                controller:
-                                    _viewController.promoScrollController,
-                                itemCount: _viewController.promotions.length,
-                                itemBuilder:
-                                    (BuildContext context, int index) =>
-                                        FeedPromotionCard(
-                                  promotion: _viewController.promotions[index],
-                                ),
-                              ),
-                      )
-                    ],
-                  )),
-            ]))
-          ])),
+      body: Obx(() {
+        if (_viewController.isInitalized.isFalse) {
+          return Container(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SpinKitDualRing(
+                  color: primaryBlueColor,
+                ),
+                smallSepartor,
+                Text(
+                  "Fetching posts and promotions...",
+                  style: context.textTheme.bodyMedium
+                      ?.copyWith(color: primaryBlueColor),
+                )
+              ],
+            ),
+          );
+        }
+        return _buildBody(context);
+      }),
     );
+  }
+
+  DefaultTabController _buildBody(BuildContext context) {
+    return DefaultTabController(
+        length: 2,
+        child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          TabBar(
+              labelColor: primaryBlueColor,
+              unselectedLabelColor: Colors.grey.shade400,
+              tabs: [
+                Tab(text: '${_i18n()['posts']}'),
+                Tab(text: '${_i18n()['promotions']}')
+              ]),
+          Expanded(
+              child: TabBarView(children: <Widget>[
+            Obx(() => Container(
+                alignment: Alignment.center,
+                child: _viewController.posts.isEmpty
+                    ? NoPostsFound()
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(
+                                '${_i18n()['postSwitch']}',
+                                style: context.textTheme.bodyLarge
+                                    ?.copyWith(fontSize: 15),
+                              ),
+                              trailing: Switch(
+                                activeColor: primaryBlueColor,
+                                value: _viewController.postSwitch,
+                                onChanged: (bool value) {
+                                  _viewController.setPostSwitch(value);
+                                },
+                              ),
+                            ),
+                            ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                controller:
+                                    _viewController.postScrollController,
+                                itemCount: _viewController.posts.length,
+                                itemBuilder: (BuildContext context,
+                                        int index) =>
+                                    ServiceFeedPostCard(
+                                      //  controller: _viewController,
+                                      post: _viewController.posts[index],
+                                      onPostComment:
+                                          (int postId, String comment) async {
+                                        return await _viewController
+                                            .writeComment(
+                                                postId: postId,
+                                                comment: comment);
+                                      },
+                                      onLike: (int postId) async {
+                                        return await _viewController
+                                            .likePost(postId);
+                                      },
+                                    )),
+                          ],
+                        ),
+                      ))),
+            Obx(() => Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        '${_i18n()['promotionSwitch']}',
+                        style:
+                            context.textTheme.bodyLarge?.copyWith(fontSize: 15),
+                      ),
+                      trailing: Switch(
+                        activeColor: primaryBlueColor,
+                        value: _viewController.promotionSwitch,
+                        onChanged: (bool value) {
+                          _viewController.setPromotionSwitch(value);
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: _viewController.promotions.isEmpty
+                          ? NoPromotionsFound()
+                          : ListView.builder(
+                              controller: _viewController.promoScrollController,
+                              itemCount: _viewController.promotions.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  FeedPromotionCard(
+                                promotion: _viewController.promotions[index],
+                              ),
+                            ),
+                    )
+                  ],
+                )),
+          ]))
+        ]));
   }
 }

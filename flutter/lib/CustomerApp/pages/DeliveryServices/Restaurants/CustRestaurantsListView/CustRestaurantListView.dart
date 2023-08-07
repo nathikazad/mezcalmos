@@ -18,7 +18,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -372,7 +372,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
               customerLocation: viewController.customerLocation,
-              onClick: () => CustomerRestaurantView.navigate(
+              onClick: () => CustRestaurantView.navigate(
                 restaurantId:
                     viewController.filteredRestaurants[index].info.hasuraId,
               ),

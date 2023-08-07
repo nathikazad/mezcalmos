@@ -11,8 +11,8 @@ import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ["AdminServicesView"]["components"]["adminServiceCard"];

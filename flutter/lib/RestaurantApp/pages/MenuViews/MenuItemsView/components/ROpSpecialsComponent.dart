@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
-import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezAddButton.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]

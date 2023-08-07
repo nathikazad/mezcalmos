@@ -45,6 +45,8 @@ class CustFeedViewController {
   int _promoCurrentOffset = 0;
   bool _promoFetchingData = false;
   bool _promoReachedEndOfData = false;
+  bool get isFetching => _promoFetchingData || _postFetchingData;
+  RxBool isInitalized = RxBool(false);
   /* SCROLL CONTROLLER */
 
   void init() {
@@ -56,8 +58,8 @@ class CustFeedViewController {
       _promotionSwitch.value ? _fetchPromotions : _fetchAllPromotions,
       sensitivity: 200,
     );
-    _fetchAllPosts();
-    _fetchAllPromotions();
+    Future.wait([_fetchAllPosts(), _fetchAllPromotions()])
+        .whenComplete(() => isInitalized.value = true);
     print(_authController.hasuraUserId);
   }
 

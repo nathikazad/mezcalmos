@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOfferHelper.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 
 class CustDeliveryOffersList extends StatefulWidget {
   const CustDeliveryOffersList({super.key, required this.deliveryOrderId});

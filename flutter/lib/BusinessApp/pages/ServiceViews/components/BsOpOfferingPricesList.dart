@@ -5,7 +5,7 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpTimeUnit
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']

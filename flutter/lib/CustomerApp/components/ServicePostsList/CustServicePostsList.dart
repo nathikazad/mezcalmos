@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/ServiceFeedPostCard.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicePostsList/controllers/CustServicePostsListController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/ServiceFeedPostCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
@@ -86,13 +86,14 @@ class _CustServicePostsListState extends State<CustServicePostsList>
                             viewController.posts.length,
                             (int index) => ServiceFeedPostCard(
                                   post: viewController.posts[index],
-                                  onCommentPost:
+                                  showComments: false,
+                                  onPostComment:
                                       (int postId, String comment) async {
-                                    await viewController.writeComment(
+                                    return await viewController.writeComment(
                                         postId: postId, comment: comment);
                                   },
-                                  onLikePost: (int postId) async {
-                                    await viewController.likePost(postId);
+                                  onLike: (int postId) async {
+                                    return viewController.likePost(postId);
                                   },
                                 )),
                       ),

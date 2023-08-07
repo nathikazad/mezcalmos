@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['Components']['BsDeleteOfferButton'];

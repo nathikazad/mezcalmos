@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/BusinessApp/controllers/BusinessOpAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/graphql/business_event/hsBusinessEvent.dart';
-import 'package:mezcalmos/Shared/graphql/business_product/hsBusinessProduct.dart';
-import 'package:mezcalmos/Shared/graphql/business_rental/hsBusinessRental.dart';
-import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
-import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 
 class ServiceOfferEditViewController {
   int? offerId;
@@ -22,13 +14,12 @@ class ServiceOfferEditViewController {
 
   RxBool _isFetchingSingle = RxBool(false);
 
-  RxList<HomeCard> _homeRentals = RxList.empty();
-  RxList<RentalCard> _rentals = RxList.empty();
-  RxList<EventCard> _events = RxList.empty();
-  RxList<ServiceCard> _services = RxList.empty();
-  RxList<ProductCard> _product = RxList.empty();
+  // RxList<HomeCard> _homeRentals = RxList.empty();
+  // RxList<RentalCard> _rentals = RxList.empty();
+  // RxList<EventCard> _events = RxList.empty();
+  // RxList<ServiceCard> _services = RxList.empty();
+  // RxList<ProductCard> _product = RxList.empty();
 
-  int businessId = Get.find<BusinessOpAuthController>().companyId!;
   RxList<OfferingData> allOfferings = RxList.empty();
 
   Rxn<Offer> currentOffer = Rxn<Offer>();
@@ -91,7 +82,7 @@ class ServiceOfferEditViewController {
       "categories": <OfferingType>[],
       "nameIds": <num>[],
     };
-    allOfferings.forEach((element) {
+    allOfferings.forEach((OfferingData element) {
       if (element.value) {
         selectedOfferingItems["ids"]!.add(element.id);
         selectedOfferingItems["categories"]!.add(element.type);
@@ -156,118 +147,121 @@ class ServiceOfferEditViewController {
   }
 
   Future<void> _convertToOfferingData() async {
-    mezDbgPrint("business Id  $businessId");
-    await _fetchEvents();
-    await _fetchProducts();
-    await _fetchRentals();
-    await _fetchServices();
-    await _fetchHomeRentals();
+    mezDbgPrint("business Id  $serviceProviderId");
+    // await _fetchEvents();
+    // await _fetchProducts();
+    // await _fetchRentals();
+    // await _fetchServices();
+    // await _fetchHomeRentals();
 
-    allOfferings.clear();
-    _product.forEach((element) {
-      allOfferings.add(OfferingData(
-        nameIds: element.details.nameId?.toInt() ?? -1,
-        type: OfferingType.Product,
-        id: element.id!.toInt(),
-        name: element.details.name,
-        image: element.details.firstImage ?? defaultUserImgUrl,
-      ));
-    });
-    _services.forEach((element) {
-      allOfferings.add(OfferingData(
-        type: OfferingType.Service,
-        nameIds: element.details.nameId?.toInt() ?? -1,
-        id: element.id!.toInt(),
-        name: element.details.name,
-        image: element.details.firstImage ?? defaultUserImgUrl,
-      ));
-    });
-    _events.forEach((element) {
-      allOfferings.add(OfferingData(
-        type: OfferingType.Event,
-        nameIds: element.details.nameId?.toInt() ?? -1,
-        id: element.id!.toInt(),
-        name: element.details.name,
-        image: element.details.firstImage ?? defaultUserImgUrl,
-      ));
-    });
-    _rentals.forEach((element) {
-      allOfferings.add(OfferingData(
-        type: OfferingType.Rental,
-        nameIds: element.details.nameId?.toInt() ?? -1,
-        id: element.id!.toInt(),
-        name: element.details.name,
-        image: element.details.firstImage ?? defaultUserImgUrl,
-      ));
-    });
-    _homeRentals.forEach((element) {
-      allOfferings.add(OfferingData(
-        nameIds: element.details.nameId?.toInt() ?? -1,
-        type: OfferingType.Home,
-        id: element.id!.toInt(),
-        name: element.details.name,
-        image: element.details.firstImage ?? defaultUserImgUrl,
-      ));
-    });
+    // allOfferings.clear();
+    // _product.forEach((ProductCard element) {
+    //   allOfferings.add(OfferingData(
+    //     nameIds: element.details.nameId?.toInt() ?? -1,
+    //     type: OfferingType.Product,
+    //     id: element.id!.toInt(),
+    //     name: element.details.name,
+    //     image: element.details.firstImage ?? defaultUserImgUrl,
+    //   ));
+    // });
+    // _services.forEach((ServiceCard element) {
+    //   allOfferings.add(OfferingData(
+    //     type: OfferingType.Service,
+    //     nameIds: element.details.nameId?.toInt() ?? -1,
+    //     id: element.id!.toInt(),
+    //     name: element.details.name,
+    //     image: element.details.firstImage ?? defaultUserImgUrl,
+    //   ));
+    // });
+    // _events.forEach((EventCard element) {
+    //   allOfferings.add(OfferingData(
+    //     type: OfferingType.Event,
+    //     nameIds: element.details.nameId?.toInt() ?? -1,
+    //     id: element.id!.toInt(),
+    //     name: element.details.name,
+    //     image: element.details.firstImage ?? defaultUserImgUrl,
+    //   ));
+    // });
+    // _rentals.forEach((RentalCard element) {
+    //   allOfferings.add(OfferingData(
+    //     type: OfferingType.Rental,
+    //     nameIds: element.details.nameId?.toInt() ?? -1,
+    //     id: element.id!.toInt(),
+    //     name: element.details.name,
+    //     image: element.details.firstImage ?? defaultUserImgUrl,
+    //   ));
+    // });
+    // _homeRentals.forEach((HomeCard element) {
+    //   allOfferings.add(OfferingData(
+    //     nameIds: element.details.nameId?.toInt() ?? -1,
+    //     type: OfferingType.Home,
+    //     id: element.id!.toInt(),
+    //     name: element.details.name,
+    //     image: element.details.firstImage ?? defaultUserImgUrl,
+    //   ));
+    // });
 
-    if (isEditMode.value) {
-      // using for each or for loop add all the data to selected offering
-      // from currentOffer.value!.details.offerings
-      if (currentOffer.value!.details.items == null) {
-        return;
-      }
-      allOfferings.forEach((element) {
-        if (currentOffer.value!.details.items!.contains(element.id)) {
-          allOfferings.where((data) => data == element).first.value = true;
-        }
-      });
-    }
+    // if (isEditMode.value) {
+    //   // using for each or for loop add all the data to selected offering
+    //   // from currentOffer.value!.details.offerings
+    //   if (currentOffer.value!.details.items == null) {
+    //     return;
+    //   }
+    //   allOfferings.forEach((OfferingData element) {
+    //     if (currentOffer.value!.details.items!.contains(element.id)) {
+    //       allOfferings
+    //           .where((OfferingData data) => data == element)
+    //           .first
+    //           .value = true;
+    //     }
+    //   });
+    // }
   }
 
-  Future<void> _fetchProducts() async {
-    _isFetchingSingle.value = true;
-    _product.value = await get_business_products(
-      businessId: businessId,
-      withCache: false,
-    );
-    _isFetchingSingle.value = false;
-  }
+//   Future<void> _fetchProducts() async {
+//     _isFetchingSingle.value = true;
+//     _product.value = await get_business_products(
+//       businessId: serviceProviderId,
+//       withCache: false,
+//     );
+//     _isFetchingSingle.value = false;
+//   }
 
-  Future<void> _fetchServices() async {
-    _isFetchingSingle.value = true;
-    _services.value = await get_business_services(
-      businessId: businessId,
-      withCache: false,
-    );
-    _isFetchingSingle.value = false;
-  }
+//   Future<void> _fetchServices() async {
+//     _isFetchingSingle.value = true;
+//     _services.value = await get_business_services(
+//       businessId: serviceProviderId,
+//       withCache: false,
+//     );
+//     _isFetchingSingle.value = false;
+//   }
 
-  Future<void> _fetchEvents() async {
-    _isFetchingSingle.value = true;
-    _events.value = await get_business_events(
-      businessId: businessId,
-      withCache: false,
-    );
-    _isFetchingSingle.value = false;
-  }
+//   Future<void> _fetchEvents() async {
+//     _isFetchingSingle.value = true;
+//     _events.value = await get_business_events(
+//       businessId: serviceProviderId,
+//       withCache: false,
+//     );
+//     _isFetchingSingle.value = false;
+//   }
 
-  Future<void> _fetchRentals() async {
-    _isFetchingSingle.value = true;
-    _rentals.value = await get_business_rentals(
-      busniessId: businessId,
-      withCache: false,
-    );
-    _isFetchingSingle.value = false;
-  }
+//   Future<void> _fetchRentals() async {
+//     _isFetchingSingle.value = true;
+//     _rentals.value = await get_business_rentals(
+//       busniessId: serviceProviderId,
+//       withCache: false,
+//     );
+//     _isFetchingSingle.value = false;
+//   }
 
-  Future<void> _fetchHomeRentals() async {
-    _isFetchingSingle.value = true;
-    _homeRentals.value = await get_business_home_rentals(
-      busniessId: businessId,
-      withCache: false,
-    );
-    _isFetchingSingle.value = false;
-  }
+//   Future<void> _fetchHomeRentals() async {
+//     _isFetchingSingle.value = true;
+//     _homeRentals.value = await get_business_home_rentals(
+//       busniessId: serviceProviderId,
+//       withCache: false,
+//     );
+//     _isFetchingSingle.value = false;
+//   }
 }
 
 class OfferingData {

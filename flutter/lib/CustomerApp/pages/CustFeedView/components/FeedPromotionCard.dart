@@ -6,9 +6,9 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/SingleLaund
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
 class FeedPromotionCard extends StatelessWidget {
   const FeedPromotionCard({
@@ -72,7 +72,7 @@ class FeedPromotionCard extends StatelessWidget {
                     onPressed: () async {
                       switch (promotion.serviceProviderType) {
                         case ServiceProviderType.Restaurant:
-                          await CustomerRestaurantView.navigate(
+                          await CustRestaurantView.navigate(
                             restaurantId: promotion.serviceProviderId.toInt(),
                           );
                           return;

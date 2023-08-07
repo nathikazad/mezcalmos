@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpOrderView"]["components"]["ROpDriverCard"];

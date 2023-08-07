@@ -21,9 +21,9 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart'
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';

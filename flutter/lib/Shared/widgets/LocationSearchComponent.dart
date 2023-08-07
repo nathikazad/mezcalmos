@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 
 typedef TextFieldGotUpdated = void Function(String updatedText);
 

@@ -28,7 +28,7 @@ class RestaurantRoutes {
     QRoute(
         path: restaurantViewRoute,
         name: restaurantViewRoute,
-        builder: () => restoView.CustomerRestaurantView(),
+        builder: () => restoView.CustRestaurantView(),
         middleware: <QMiddleware>[DefferedLoader(restoView.loadLibrary)]),
     QRoute(
       path: restaurantItemViewRoute,

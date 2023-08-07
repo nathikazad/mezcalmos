@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.d
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 
 class MezMessageCard extends StatelessWidget {
   final HasuraChat chat;

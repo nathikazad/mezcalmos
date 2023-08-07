@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickD
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/ServiceOfferEditView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOfferView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOffersListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
@@ -74,7 +74,7 @@ class SharedServiceProviderRoutes {
     QRoute(
       path: kServiceOffersRoute,
       name: kServiceOffersRoute,
-      builder: () => ServiceOfferView(),
+      builder: () => ServiceOffersListView(),
     ),
     QRoute(
       path: kServiceEditOffersRoute,

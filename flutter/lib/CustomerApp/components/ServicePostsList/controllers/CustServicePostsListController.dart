@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
-import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
 
 class CustServicePostsListController {
@@ -47,7 +45,7 @@ class CustServicePostsListController {
     _serviceDetailsId = serviceDetailsId;
     _feedTabController = TabController(length: 2, vsync: vsync);
     isLoading.value = true;
-   
+
     mezDbgPrint(
         "========👋 init $serviceProviderType id : $serviceId feed==========");
 
@@ -77,24 +75,25 @@ class CustServicePostsListController {
     } finally {}
   }
 
-  Future<void> writeComment(
+  Future<bool> writeComment(
       {required int postId, required String comment}) async {
-    if (comment.isEmpty) return;
+    if (comment.isEmpty) return false;
     mezDbgPrint("Sending comment =======>$comment");
     try {
       int? res = await write_comment(
           userId: _authController.hasuraUserId!,
           postId: postId,
           commentMsg: comment);
-
       mezDbgPrint("Response =======> $res");
+      return res != null;
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
+      return false;
     }
   }
 
-  Future<void> likePost(
+  Future<bool> likePost(
     int postId,
   ) async {
     final Post post = _posts.firstWhere((Post element) => element.id == postId);
@@ -104,7 +103,7 @@ class CustServicePostsListController {
       post.likes.add(_authController.user!.hasuraId);
     }
     _posts.refresh();
-    unawaited(update_post_likes(postId: post.id, likes: post.likes));
+    return await update_post_likes(postId: post.id, likes: post.likes);
   }
 
   Future<void> subscribe() async {
@@ -133,7 +132,6 @@ class CustServicePostsListController {
     _subscribers.value = await fetch_subscribers(
         serviceProviderId: serviceId, serviceProviderType: serviceProviderType);
   }
-
 
   void dispose() {}
 }

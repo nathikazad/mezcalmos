@@ -112,6 +112,32 @@ query fetch_service_provider_posts($service_provider_id: Int, $service_provider_
     message
     link
     posted_on
+    service_provider_id
+    service_provider_type
+    restaurant {
+      details {
+        name
+        image
+      }
+    }
+    laundry {
+      details {
+        name
+        image
+      }
+    }
+    delivery_company {
+      details {
+        name
+        image
+      }
+    }
+    business {
+      details {
+        name
+        image
+      }
+    }
   }
 }
 

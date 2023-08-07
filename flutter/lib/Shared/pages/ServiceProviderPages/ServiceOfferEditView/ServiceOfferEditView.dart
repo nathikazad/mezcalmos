@@ -14,8 +14,8 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -72,7 +72,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
   void showAvailability() {
     showModalBottomSheet<void>(
       context: context,
-      builder: (context) {
+      builder: (BuildContext context) {
         return Obx(
           () => Column(
             mainAxisSize: MainAxisSize.min,
@@ -154,17 +154,25 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
-                      Builder(builder: (context) {
+                      Builder(builder: (BuildContext context) {
                         return MezStringDropDown(
                           labelText: "Select your offer",
                           langPath: _i18n(),
                           value: viewController.selectedOfferType.value
                               ?.toFirebaseFormatString(),
-                          items: [OfferType.Coupon, OfferType.Promotion]
-                              .map((e) => e.toFirebaseFormatString())
+                          items: [
+                            OfferType.Coupon,
+                            OfferType.Promotion,
+                            OfferType.MonthlySubscription
+                          ]
+                              .map((OfferType e) => e.toFirebaseFormatString())
                               .toList(),
-                          icons: [Icons.local_offer, Icons.attach_money],
-                          validator: (value) {
+                          icons: [
+                            Icons.discount_rounded,
+                            Icons.attach_money,
+                            Icons.workspace_premium_rounded
+                          ],
+                          validator: (String? value) {
                             if (value == null ||
                                 viewController.selectedOfferType.value ==
                                     null) {
@@ -172,7 +180,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                             }
                             return null;
                           },
-                          onChanged: (value) {
+                          onChanged: (String? value) {
                             if (value == null) return;
                             viewController.selectedOfferType.value =
                                 value.toOfferType();
@@ -189,7 +197,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         decoration: InputDecoration(
                           hintText: "Enter your Coupon Code",
                         ),
-                        validator: (value) {
+                        validator: (String? value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter your Coupon Code";
                           }
@@ -209,9 +217,10 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         value: viewController.selectedOfferOrderType.value
                             ?.toFirebaseFormatString(),
                         items: OfferOrderType.values
-                            .map((e) => e.toFirebaseFormatString())
+                            .map((OfferOrderType e) =>
+                                e.toFirebaseFormatString())
                             .toList(),
-                        onChanged: (value) async {
+                        onChanged: (String? value) async {
                           viewController.selectedOfferOrderType.value =
                               value!.toOfferOrderType();
                           if (viewController.selectedOfferOrderType.value ==
@@ -231,7 +240,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       Column(
                         children: List.generate(
                           viewController.allOfferings.length,
-                          (index) {
+                          (int index) {
                             return !viewController.allOfferings[index].value
                                 ? SizedBox.shrink()
                                 : MezCard(
@@ -273,8 +282,11 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                                 DiscountType.FlatAmount,
                                 DiscountType.Percentage,
                                 DiscountType.AnotherSameFlat
-                              ].map((e) => e.toFirebaseFormatString()).toList(),
-                              onChanged: (value) {
+                              ]
+                                  .map((DiscountType e) =>
+                                      e.toFirebaseFormatString())
+                                  .toList(),
+                              onChanged: (String? value) {
                                 if (value == null) return;
                                 viewController.selectedDiscountType.value =
                                     value.toDiscountType();
@@ -293,7 +305,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                                         ? Text("%")
                                         : Text("\$"),
                               ),
-                              validator: (value) {
+                              validator: (String? value) {
                                 if (value == null || value.isEmpty) {
                                   return "Please enter your Coupon Code";
                                 }
@@ -310,7 +322,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       ),
                       smallSepartor,
                       FormField(
-                        validator: (value) {
+                        validator: (Object? value) {
                           if (viewController.selectedStartDate.value == null ||
                               viewController.selectedEndDate.value == null) {
                             return "Please select your availability";
@@ -321,7 +333,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                           }
                           return null;
                         },
-                        builder: (state) {
+                        builder: (FormFieldState<Object?> state) {
                           return Obx(
                             () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -379,7 +391,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                           ),
                           Switch(
                             value: viewController.repeatOffer.value,
-                            onChanged: (value) {
+                            onChanged: (bool value) {
                               viewController.repeatOffer.value = value;
                             },
                           )

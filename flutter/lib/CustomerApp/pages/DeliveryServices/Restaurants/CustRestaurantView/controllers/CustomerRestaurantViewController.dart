@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -20,14 +21,14 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-class CustomerRestaurantViewController {
+class CustRestaurantViewController {
   // controllers //
   late AutoScrollController scrollController;
 
   late TabController mainTabController;
 
-  late TabController categoriesTabController;
-  late TabController specialstabsController;
+  // late TabController categoriesTabController;
+  // late TabController specialstabsController;
 
   // keys //
   final GlobalKey<RectGetterState> listViewKey = RectGetter.createGlobalKey();
@@ -42,6 +43,8 @@ class CustomerRestaurantViewController {
   RxBool pauseRectGetterIndex = RxBool(false);
   RxList<Item> specials = RxList.empty();
   RxBool _initialized = RxBool(false);
+  RxList<cModels.Offer> _offers = RxList<cModels.Offer>.empty();
+  List<cModels.Offer> get offers => _offers.value;
 
   AuthController _authController = Get.find<AuthController>();
   AuthController get authController => _authController;
@@ -94,10 +97,11 @@ class CustomerRestaurantViewController {
 
     unawaited(_fetchPosts());
     unawaited(_fetchGridImages());
+    unawaited(_getOffers());
 
     await _getShippingPrice();
 
-    await _fetchSubscriptions();
+    unawaited(_fetchSubscriptions());
 
     final List<Category>? _cats =
         await get_restaurant_categories_by_id(restaurantId);
@@ -131,10 +135,18 @@ class CustomerRestaurantViewController {
   }
 
   void _initControllers(TickerProvider vsync) {
-    categoriesTabController = TabController(
-        length: restaurant.value!.getAvailableCategories.length, vsync: vsync);
-    specialstabsController =
-        TabController(length: getGroupedSpecials().length, vsync: vsync);
+    // categoriesTabController = TabController(
+    //     length: restaurant.value!.getAvailableCategories.length, vsync: vsync);
+    // specialstabsController =
+    //     TabController(length: getGroupedSpecials().length, vsync: vsync);
+  }
+  Future<void> _getOffers() async {
+    _offers.value = await get_service_provider_offers(
+        serviceProviderId: restaurant.value!.restaurantId,
+        serviceProviderType: cModels.ServiceProviderType.Restaurant,
+        withCache: false);
+    mezDbgPrint(
+        "👋 👋 👋 offers +++++++++++++++++++++++++++> ${_offers.length}");
   }
 
   // scroll methods //
@@ -171,7 +183,7 @@ class CustomerRestaurantViewController {
       final int sumIndex =
           visibleItems.reduce((int value, int element) => value + element);
       final int middleIndex = sumIndex ~/ visibleItems.length;
-      if (getTabController.index != middleIndex)
+      if (currentSelectedIndex.value != middleIndex)
         //   getTabController.animateTo(middleIndex);
 
         currentSelectedIndex.value = middleIndex;
@@ -261,13 +273,13 @@ class CustomerRestaurantViewController {
         mainTabController.index == 0;
   }
 
-  TabController get getTabController {
-    if (isOnMenuView) {
-      return categoriesTabController;
-    } else {
-      return specialstabsController;
-    }
-  }
+  // TabController get getTabController {
+  //   if (isOnMenuView) {
+  //     return categoriesTabController;
+  //   } else {
+  //     return specialstabsController;
+  //   }
+  // }
 
   Future<void> _fetchPosts() async {
     try {
@@ -346,7 +358,7 @@ class CustomerRestaurantViewController {
   void dispose() {
     scrollController.dispose();
 
-    categoriesTabController.dispose();
+    // categoriesTabController.dispose();
   }
 
   int get listLength {

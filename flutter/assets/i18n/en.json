@@ -2694,6 +2694,7 @@
         "addOffer": "Add offer",
         "coupon": "Coupon",
         "promotion": "Promotion",
+        "monthlySubscription" : "Monthly Subscription",
         "anyOrder": "Any Order",
         "firstOrderOnly": "First Order Only",
         "particularService": "Particular Service",

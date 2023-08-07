@@ -13,32 +13,32 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewRestaurantScreen"]["CustomerRestaurantView"];
 
-class CustomerRestaurantView extends StatefulWidget {
+class CustRestaurantView extends StatefulWidget {
   @override
-  _CustomerRestaurantViewState createState() => _CustomerRestaurantViewState();
+  _CustRestaurantViewState createState() => _CustRestaurantViewState();
   static Future<void> navigate({required int restaurantId}) {
     return MezRouter.toPath(RestaurantRoutes.restaurantViewRoute
         .replaceAll(":restaurantId", restaurantId.toString()));
   }
 }
 
-class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
+class _CustRestaurantViewState extends State<CustRestaurantView>
     with TickerProviderStateMixin {
-  CustomerRestaurantViewController _viewController =
-      CustomerRestaurantViewController();
+  CustRestaurantViewController _viewController = CustRestaurantViewController();
 
   @override
   void initState() {
@@ -88,7 +88,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
-      controller: _viewController.scrollController,
+      // controller: _viewController.scrollController,
+      primary: true,
       //  physics: NeverScrollableScrollPhysics(),
       slivers: [
         RestaurantSliverAppBar(controller: _viewController),
@@ -96,7 +97,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         SliverFillRemaining(
           child: TabBarView(
               controller: _viewController.mainTabController,
-              physics: NeverScrollableScrollPhysics(),
+              //      physics: NeverScrollableScrollPhysics(),
               children: [
                 Column(
                   children: [
@@ -105,20 +106,73 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                     Expanded(
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.all(8),
-                        physics: NeverScrollableScrollPhysics(),
+                        controller: _viewController.scrollController,
+                        //  physics: NeverScrollableScrollPhysics(),
                         child: Column(
-                            children: List.generate(
-                                _viewController.isOnMenuView
-                                    ? _viewController.catsList.length
-                                    : _viewController
-                                        .getGroupedSpecials()
-                                        .length, (int index) {
-                          _viewController.itemKeys[index] =
-                              RectGetter.createGlobalKey();
-                          return _viewController.isOnMenuView
-                              ? _scrollableCategoryItems(index)
-                              : _scrollableSpecialItems(index);
-                        })),
+                          children: [
+                            if (_viewController.offers.isNotEmpty)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Promotions",
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                  smallSepartor,
+                                  Column(
+                                    children: List.generate(
+                                        _viewController.offers.length,
+                                        (int index) {
+                                      final cModels.Offer offer =
+                                          _viewController.offers[index];
+                                      return MezCard(
+                                        cardColor: secondaryLightBlueColor,
+                                        firstAvatarIcon: Icons.percent,
+                                        radius: 20,
+                                        firstAvatarBgColor: primaryBlueColor,
+                                        firstAvatarIconColor: Colors.white,
+                                        content: Container(
+                                          child: RichText(
+                                              text: TextSpan(children: [
+                                            TextSpan(
+                                                text:
+                                                    "${offer.details.discountValue.toPriceString()} OFF",
+                                                style: context
+                                                    .textTheme.bodyLarge
+                                                    ?.copyWith(
+                                                        color:
+                                                            primaryBlueColor)),
+                                            WidgetSpan(child: hSmallSepartor),
+                                            TextSpan(
+                                                text:
+                                                    "your order for limited time only.",
+                                                style: context
+                                                    .textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                        color:
+                                                            primaryBlueColor)),
+                                          ])),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ],
+                              ),
+                            Column(
+                                children: List.generate(
+                                    _viewController.isOnMenuView
+                                        ? _viewController.catsList.length
+                                        : _viewController
+                                            .getGroupedSpecials()
+                                            .length, (int index) {
+                              _viewController.itemKeys[index] =
+                                  RectGetter.createGlobalKey();
+                              return _viewController.isOnMenuView
+                                  ? _scrollableCategoryItems(index)
+                                  : _scrollableSpecialItems(index);
+                            })),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -214,42 +268,40 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   }
 
   Widget _buildCategory(Category category, int index) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 0),
-            child: Text(
-              category.name?.getTranslation(userLanguage)?.inCaps ??
-                  '${_i18n()["undefinedCategory"]}',
-              style: category.name?.getTranslation(userLanguage) != null
-                  ? context.txt.headlineSmall
-                  : context.txt.bodyMedium?.copyWith(
-                      color: Color(0xFF787878),
-                    ),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 10, bottom: 0),
+          child: Text(
+            category.name?.getTranslation(userLanguage)?.inCaps ??
+                '${_i18n()["undefinedCategory"]}',
+            style: category.name?.getTranslation(userLanguage) != null
+                ? context.txt.headlineSmall
+                : context.txt.bodyMedium?.copyWith(
+                    color: Color(0xFF787878),
+                  ),
           ),
-          if (category.dialog != null &&
-              category.dialog!.getTranslation(userLanguage) != null)
-            Container(
-              child: Text(
-                category.dialog!.getTranslation(userLanguage)!.inCaps,
-                style: context.txt.bodyMedium?.copyWith(
-                  color: offLightShadeGreyColor,
-                ),
+        ),
+        if (category.dialog != null &&
+            category.dialog!.getTranslation(userLanguage) != null)
+          Container(
+            child: Text(
+              category.dialog!.getTranslation(userLanguage)!.inCaps,
+              style: context.txt.bodyMedium?.copyWith(
+                color: offLightShadeGreyColor,
               ),
             ),
-          _buildResturantItems(
-            items: category.items,
-            restaurantId: _viewController.restaurant.value!.info.hasuraId,
-            isSpecial: false,
           ),
-          SizedBox(
-            height: 2,
-          )
-        ],
-      ),
+        _buildResturantItems(
+          items: category.items,
+          restaurantId: _viewController.restaurant.value!.info.hasuraId,
+          isSpecial: false,
+        ),
+        SizedBox(
+          height: 2,
+        )
+      ],
     );
   }
 
@@ -343,8 +395,6 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       padding: EdgeInsets.only(bottom: 7),
       child: Obx(
         () {
-          mezDbgPrint(
-              "_viewController.getTabController, ==============>👊${_viewController.getTabController.length}");
           return Row(
             children: (_viewController.showSpecialTabs)
                 ? List.generate(

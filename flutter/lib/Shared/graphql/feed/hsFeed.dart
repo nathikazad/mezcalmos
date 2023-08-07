@@ -143,12 +143,32 @@ Future<List<Post>> fetch_service_provider_posts(
         ),
       );
     });
+    String? serviceProviderName;
+    String? serviceProviderImage;
+    switch (serviceProviderType) {
+      case cModels.ServiceProviderType.Restaurant:
+        serviceProviderName = data.restaurant?.details?.name;
+        serviceProviderImage = data.restaurant?.details?.image;
+        break;
+      case cModels.ServiceProviderType.Laundry:
+        serviceProviderName = data.laundry?.details?.name;
+        serviceProviderImage = data.laundry?.details?.image;
+        break;
+      case cModels.ServiceProviderType.DeliveryCompany:
+        serviceProviderName = data.delivery_company?.details?.name;
+        serviceProviderImage = data.delivery_company?.details?.image;
+        break;
+      case cModels.ServiceProviderType.Business:
+        serviceProviderName = data.business?.details.name;
+        serviceProviderImage = data.business?.details.image;
+        break;
+    }
     posts.add(Post(
       id: data.id,
       serviceProviderId: serviceProviderId,
       serviceProviderType: serviceProviderType,
-      // serviceProviderName: serviceProviderName,
-      // serviceProviderImage: serviceProviderImage,
+      serviceProviderName: serviceProviderName,
+      serviceProviderImage: serviceProviderImage,
       message: data.message,
       image: data.image,
       likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
