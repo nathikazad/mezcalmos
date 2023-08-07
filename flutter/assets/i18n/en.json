@@ -2938,6 +2938,7 @@
       },
       "MezServiceOpenHours": {
         "openHours": "Open hours",
+        "closed" : "Closed",
         "weekDays": {
           "monday": "Mon",
           "tuesday": "Tue",
