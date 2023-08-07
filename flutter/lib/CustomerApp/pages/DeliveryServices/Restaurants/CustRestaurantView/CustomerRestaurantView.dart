@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestauSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
@@ -59,7 +58,6 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-     
       bottomSheet: Obx(
         () => (_viewController.restaurant.value?.isOpen == false)
             ? _schedulingOrdersBottomWidget()
@@ -108,7 +106,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                 child: Container(
               alignment: Alignment.center,
               child: Text(
-                "Some magic is happening ...",
+                "${_i18n()['magicText']}",
                 style: context.txt.bodyLarge?.copyWith(
                     color: primaryBlueColor, fontStyle: FontStyle.italic),
               ),

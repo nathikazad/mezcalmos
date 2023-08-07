@@ -72,43 +72,51 @@ class MezServiceOpenHours extends StatelessWidget {
                               context.txt.titleLarge,
                         ),
                       ),
-                      Flexible(
-                          fit: FlexFit.tight,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: List.generate(entry.value.openHours.length,
-                                  (int hourIndex) {
-                                return Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.watch_later_outlined,
-                                          size: 18),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        convertToAmPm(
-                                           entry.value.openHours[hourIndex].from[0]
-                                                .toInt(),
-                                          entry.value.openHours[hourIndex].from[1]
-                                                .toInt()),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        convertToAmPm(
-                                           entry.value.openHours[hourIndex].to[0]
-                                                .toInt(),
-                                            entry.value.openHours[hourIndex].to[1]
-                                                .toInt()),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ]);
-                              }))),
+                      (entry.value.isOpen)
+                          ? Flexible(
+                              fit: FlexFit.tight,
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: List.generate(
+                                      entry.value.openHours.length,
+                                      (int hourIndex) {
+                                    return Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.watch_later_outlined,
+                                              size: 18),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Text(
+                                            convertToAmPm(
+                                                entry.value.openHours[hourIndex]
+                                                    .from[0]
+                                                    .toInt(),
+                                                entry.value.openHours[hourIndex]
+                                                    .from[1]
+                                                    .toInt()),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            convertToAmPm(
+                                                entry.value.openHours[hourIndex]
+                                                    .to[0]
+                                                    .toInt(),
+                                                entry.value.openHours[hourIndex]
+                                                    .to[1]
+                                                    .toInt()),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ]);
+                                  })))
+                          : Text("${_i18n()['closed']}"),
                     ],
                   ),
                 ),
