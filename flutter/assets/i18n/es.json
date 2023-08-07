@@ -1214,9 +1214,10 @@
         },
         "ViewRestaurantScreen": {
           "CustomerRestaurantView": {
+            "magicText": "Alguna magia está sucediendo ...",
             "specials": "especiales",
             "undefinedCategory": "Categoría indefinida",
-            "scheduleTitle": "Solo disponible para los pedidos de programación"
+            "scheduleTitle": "Actualmente cerrado"
           },
           "components": {
             "RestaurantSliverAppBar": {

@@ -1229,8 +1229,9 @@
         "ViewRestaurantScreen": {
           "CustomerRestaurantView": {
             "specials": "Specials",
+            "magicText": "Some magic is happening ...",
             "undefinedCategory": "Undefined Category",
-            "scheduleTitle": "Only available for scheduling orders"
+            "scheduleTitle": "Currently Closed"
           },
           "components": {
             "RestaurantSliverAppBar": {
@@ -1621,7 +1622,7 @@
             "social": "Social",
             "therapy": "Therapy",
             "languageSchool": "Language",
-            "uncategorized" : "Uncategorized",
+            "uncategorized": "Uncategorized",
             "scheduled": "Scheduled",
             "oneTime": "One time",
             "onDemand": "On demand",
@@ -1787,7 +1788,7 @@
             "classes": "Classes",
             "events": "Events",
             "studio": "Studio",
-            "languageSchool":"Language",
+            "languageSchool": "Language",
             "noBusinessesFound": "No businesses found",
             "noClassesFound": "No Classes found",
             "noEventsFound": "No events found",
@@ -2472,7 +2473,7 @@
             "descriptionHintText": "Enter a description",
             "phoneText": "Phone number",
             "phoneTextDescription": "Enter your phone number",
-            "phoneNumberHelper" : "Include country code: +52XXXXXXXX",
+            "phoneNumberHelper": "Include country code: +52XXXXXXXX",
             "phoneTextError": "Enter valid phone number",
             "prLang": "Primary language",
             "sameLangErrorText": "This language is used, please enter a different language",
@@ -2615,7 +2616,7 @@
       "ServiceInfoEditView": {
         "name": "Name",
         "phoneNumber": "Phone number",
-        "phoneNumberHelper" : "Include country code: +52XXXXXXXX",
+        "phoneNumberHelper": "Include country code: +52XXXXXXXX",
         "phoneErrorText": "Please enter a valid phone number",
         "location": "Location",
         "description": "Description",
@@ -2938,7 +2939,7 @@
       },
       "MezServiceOpenHours": {
         "openHours": "Open hours",
-        "closed" : "Closed",
+        "closed": "Closed",
         "weekDays": {
           "monday": "Mon",
           "tuesday": "Tue",
