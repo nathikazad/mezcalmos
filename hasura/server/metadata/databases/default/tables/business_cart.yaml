@@ -42,8 +42,9 @@ update_permissions:
   - role: customer
     permission:
       columns:
+        - applied_offers
         - business_id
-        - customer_id
+        - discount_value
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
