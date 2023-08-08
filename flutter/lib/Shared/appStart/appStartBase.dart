@@ -8,7 +8,6 @@
 
 import 'dart:async';
 
-import 'package:amplitude_flutter/amplitude.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:device_preview/device_preview.dart';
@@ -297,7 +296,6 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
     // final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
     MezRouter.setupQR();
-    Amplitude.getInstance().init('c5b0193b3a70b991261b7792e8a88fae');
     logEventToServer("Finished Init");
 
     if (kIsWeb && 100.w > 700) {

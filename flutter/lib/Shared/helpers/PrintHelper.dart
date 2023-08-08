@@ -1,7 +1,6 @@
 // Usefull when trying to make Sizes adptable!
 import 'dart:async';
 
-import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -97,7 +96,6 @@ void logEventToServer(String message, {Map<String, dynamic>? debugData}) {
   Sentry.addBreadcrumb(
     Breadcrumb(message: message, type: "debug", data: debugData),
   );
-  Amplitude.getInstance().logEvent(message, eventProperties: debugData);
   mezDbgPrint("🍞🍞🍞🍞 $message");
 }
 
