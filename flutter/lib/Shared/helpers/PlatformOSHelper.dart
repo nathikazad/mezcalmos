@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezDialogs.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -101,7 +101,7 @@ class PlatformOSHelper {
       default:
         // Major/Minor - forcing the app to stay in AppNeedsUpdate
         MezRouter.toNamed(
-          NativeOnlyRoutes.kAppNeedsUpdateRoute,
+          SharedRoutes.kAppNeedsUpdateRoute,
           arguments: <String, dynamic>{
             "versionStatus": status,
           },

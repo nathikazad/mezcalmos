@@ -1,4 +1,5 @@
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
+import 'package:mezcalmos/Shared/pages/AppNeedsUpdateScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dart'
     deferred as otpConfirmationScreen;
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart'
@@ -53,6 +54,7 @@ class SharedRoutes {
   static const String kNotificationsRoute = '/notifications';
   static const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
   static const String kNoInternetRoute = '/noInternet';
+  static const String kAppNeedsUpdateRoute = '/needs_update';
 
   static String getMessagesRoute({required int chatId}) {
     final String mainUrl =
@@ -176,5 +178,10 @@ class SharedRoutes {
         middleware: <QMiddleware>[
           DefferedLoader(noInternetScreen.loadLibrary)
         ]),
+    QRoute(
+      name: kAppNeedsUpdateRoute,
+      path: kAppNeedsUpdateRoute,
+      builder: () => AppNeedsUpdateScreen(),
+    )
   ];
 }
