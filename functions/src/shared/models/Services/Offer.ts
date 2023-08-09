@@ -33,7 +33,7 @@ export interface Discount {
 export interface OfferDetails {
     // anyOrder/firstOrder
     offerForOrder: string, 
-    // particularItems/particularCategories/particularServices
+    // particularItems/particularCategories
     offerForItems?: string, 
      // flatAmount/percentage/anotherSameFlat/anotherSamePercentage/storeCredit
     discountType: DiscountType,

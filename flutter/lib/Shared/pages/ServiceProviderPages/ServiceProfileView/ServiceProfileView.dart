@@ -161,7 +161,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   onClick: () async {
                                     await _viewController.navigateToOffers();
                                   },
-                                  icon: Icons.calendar_month_rounded,
+                                  icon: Icons.discount_rounded,
                                   label: "${_i18n()['offers']}"),
                               if (!_viewController.isBusiness)
                                 _navigationLink(

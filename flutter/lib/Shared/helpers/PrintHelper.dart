@@ -88,7 +88,8 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
     mezDbgPrint("[MZL][ GETX ] $text");
 
 void logCrashes(Object error, StackTrace? stacktrace) {
-  mezDbgPrint("Logging crash $error");
+  mezDbgPrint("🔴 Logging crash $error");
+  mezDbgPrint("🔴 $stacktrace");
   if (MezEnv.appLaunchMode == AppLaunchMode.prod) {
     Sentry.captureException(
       error,

@@ -395,6 +395,7 @@ Widget get tinySepartor => SizedBox(height: 5);
 Widget get smallSepartor => SizedBox(height: 8);
 Widget get meduimSeperator => SizedBox(height: 15);
 Widget get bigSeperator => SizedBox(height: 25);
+Widget get hTinySepartor => SizedBox(width: 5);
 Widget get hSmallSepartor => SizedBox(width: 8);
 Widget get hMeduimSeperator => SizedBox(width: 15);
 Widget get hBigSeperator => SizedBox(width: 25);
