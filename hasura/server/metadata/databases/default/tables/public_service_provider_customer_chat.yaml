@@ -41,3 +41,18 @@ select_permissions:
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - chat_id
+        - customer_id
+        - service_provider_id
+        - service_provider_type
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -30,8 +30,9 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - customer_id
+        - applied_offers
         - business_id
+        - customer_id
         - discount_value
       computed_fields:
         - cost

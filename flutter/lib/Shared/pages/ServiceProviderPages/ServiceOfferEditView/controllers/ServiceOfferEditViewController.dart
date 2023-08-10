@@ -108,7 +108,6 @@ class ServiceOfferEditViewController {
       nameId: currentOffer.value?.nameId ?? -1,
       details: OfferDetails(
         categories: currentOffer.value?.details.categories,
-        couponReusable: currentOffer.value?.details.couponReusable,
         minimumOrderAmount: currentOffer.value?.details.minimumOrderAmount,
         offerForItems: currentOffer.value?.details.offerForItems,
         offerForOrder: selectedOfferOrderType.value!.toFirebaseFormatString(),

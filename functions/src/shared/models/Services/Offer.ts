@@ -51,7 +51,6 @@ export interface OfferDetails {
     // date_time
     validityRangeEnd?: string 
     weeklyRepeat: boolean
-    couponReusable?: boolean
 }
   
 export enum DiscountType {
