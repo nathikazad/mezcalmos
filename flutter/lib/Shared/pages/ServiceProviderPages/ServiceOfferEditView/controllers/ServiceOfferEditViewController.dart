@@ -143,7 +143,6 @@ class ServiceOfferEditViewController {
       },
       nameId: currentOffer.value?.nameId ?? -1,
       details: OfferDetails(
-        couponReusable: false,
         minimumOrderAmount: double.tryParse(minOrderCost.text),
         offerForItems:
             OfferItemType.ParticularItems.toFirebaseFormattedString(),
