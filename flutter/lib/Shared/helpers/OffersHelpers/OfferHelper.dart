@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCar
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
 enum CouponError {
   UnavailableOrExpired,
@@ -730,4 +731,49 @@ Future<String> generateOfferDescription(
         " from ${offerDetails.validityRangeStart} to ${offerDetails.validityRangeEnd}";
   }
   return description;
+}
+
+extension OfferDetailsExtensions on cModels.OfferDetails {
+  String getDescription() {
+    final StringBuffer sb = StringBuffer();
+
+    switch (discountType) {
+      case cModels.DiscountType.FlatAmount:
+        sb.write("Flat \$$discountValue off ");
+        break;
+      case cModels.DiscountType.Percentage:
+        sb.write("$discountValue% off ");
+        break;
+      case cModels.DiscountType.AnotherSameFlat:
+        sb.write("Buy 1 and Get Flat \$$discountValue off on another one ");
+        break;
+      case cModels.DiscountType.AnotherSamePercentage:
+        sb.write("Buy 1 and Get $discountValue% off on another one ");
+        break;
+      default:
+    }
+
+    if (offerForItems != null) {
+      sb.write(discountType == cModels.DiscountType.AnotherSameFlat ||
+              discountType == cModels.DiscountType.AnotherSamePercentage
+          ? "from "
+          : "on ");
+
+      sb.write(offerForItems == "particularItems"
+          ? "the following items"
+          : "the following categories");
+    }
+
+    if (offerForOrder == "firstOrder") {
+      sb.write("on your first order");
+    }
+    if (minimumOrderAmount != null) {
+      sb.write("with minimum order amount $minimumOrderAmount");
+    }
+    if (validityRangeStart != null && validityRangeEnd != null) {
+      sb.write(
+          " from ${DateTime.parse(validityRangeStart!).getOrderTime()} to ${DateTime.parse(validityRangeEnd!).getOrderTime()}");
+    }
+    return sb.toString();
+  }
 }

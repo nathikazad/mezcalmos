@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -88,16 +88,12 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
 
   Widget buildSliverScrollView() {
     return CustomScrollView(
-      // controller: _viewController.scrollController,
       primary: true,
-      //  physics: NeverScrollableScrollPhysics(),
       slivers: [
         RestaurantSliverAppBar(controller: _viewController),
-
         SliverFillRemaining(
           child: TabBarView(
               controller: _viewController.mainTabController,
-              //      physics: NeverScrollableScrollPhysics(),
               children: [
                 Column(
                   children: [
@@ -107,7 +103,6 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.all(8),
                         controller: _viewController.scrollController,
-                        //  physics: NeverScrollableScrollPhysics(),
                         child: Column(
                           children: [
                             if (_viewController.offers.isNotEmpty)
@@ -132,26 +127,13 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                                         firstAvatarBgColor: primaryBlueColor,
                                         firstAvatarIconColor: Colors.white,
                                         content: Container(
-                                          child: RichText(
-                                              text: TextSpan(children: [
-                                            TextSpan(
-                                                text:
-                                                    "${offer.details.discountValue.toPriceString()} OFF",
-                                                style: context
-                                                    .textTheme.bodyLarge
-                                                    ?.copyWith(
-                                                        color:
-                                                            primaryBlueColor)),
-                                            WidgetSpan(child: hSmallSepartor),
-                                            TextSpan(
-                                                text:
-                                                    "your order for limited time only.",
-                                                style: context
-                                                    .textTheme.bodyMedium
-                                                    ?.copyWith(
-                                                        color:
-                                                            primaryBlueColor)),
-                                          ])),
+                                          child: Text(
+                                              _viewController
+                                                  .offers[index].details
+                                                  .getDescription(),
+                                              style: context.textTheme.bodyLarge
+                                                  ?.copyWith(
+                                                      color: primaryBlueColor)),
                                         ),
                                       );
                                     }),
@@ -192,31 +174,6 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                 ),
               ]),
         )
-
-        // Obx(() {
-        //   if (_viewController.showInfo.value)
-        //     return SliverPadding(
-        //       padding: const EdgeInsets.all(12),
-        //       sliver: SliverToBoxAdapter(
-        //           child: RestaurantInfoTab(
-        //         restaurant: _viewController.restaurant.value!,
-        //         controller: _viewController,
-        //       )),
-        //     );
-        //   else if (_viewController.isInitialzed) {
-        //     return _buildItemsList();
-        //   } else {
-        //     return SliverFillRemaining(
-        //         child: Container(
-        //       alignment: Alignment.center,
-        //       child: Text(
-        //         "Some magic is happening ...",
-        //         style: context.txt.bodyLarge?.copyWith(
-        //             color: primaryBlueColor, fontStyle: FontStyle.italic),
-        //       ),
-        //     ));
-        //   }
-        // })
       ],
     );
   }
@@ -408,16 +365,6 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                               .toList()[index]
                               .toDayName()
                               .inCaps,
-                          // style: TextStyle(
-                          //   color:
-                          //       _viewController.getTabController.index == index
-                          //           ? primaryBlueColor
-                          //           : Colors.grey.shade800,
-                          //   fontWeight:
-                          //       _viewController.getTabController.index == index
-                          //           ? FontWeight.bold
-                          //           : FontWeight.w500,
-                          // ),
                         ),
                         selected: _viewController.currentSelectedIndex == index,
                         onSelected: (bool selected) {
@@ -441,17 +388,6 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                                       ?.getTranslation(userLanguage)
                                       ?.inCaps ??
                                   "",
-                              // style: TextStyle(
-                              //   color: _viewController.getTabController.index ==
-                              //           index
-                              //       ? primaryBlueColor
-                              //       : Colors.grey.shade800,
-                              //   fontWeight:
-                              //       _viewController.getTabController.index ==
-                              //               index
-                              //           ? FontWeight.bold
-                              //           : FontWeight.w500,
-                              // ),
                             ),
                             selected:
                                 _viewController.currentSelectedIndex == index,
@@ -470,64 +406,4 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
       ),
     );
   }
-
-  // Widget _menuFilterChips(BuildContext context) {
-  //   return Container(
-  //     color: secondaryLightBlueColor,
-  //     padding: EdgeInsets.only(bottom: 7),
-  //     child: Obx(
-  //       () {
-  //         mezDbgPrint(
-  //             "_viewController.getTabController, ==============>👊${_viewController.getTabController.length}");
-  //         return TabBar(
-  //           padding: EdgeInsets.only(left: 6, top: 7),
-  //           isScrollable: true,
-  //           controller: _viewController.getTabController,
-  //           labelColor: primaryBlueColor,
-  //           labelStyle: context.txt.bodyLarge,
-  //           unselectedLabelStyle: context.txt.bodyLarge?.copyWith(
-  //             fontWeight: FontWeight.w500,
-  //             color: Colors.grey.shade800,
-  //           ),
-  //           unselectedLabelColor: Colors.grey.shade700,
-  //           indicatorPadding:
-  //               const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-  //           indicatorSize: TabBarIndicatorSize.tab,
-  //           indicatorColor: Colors.transparent,
-  //           indicator: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(45),
-  //             shape: BoxShape.rectangle,
-  //             color: secondaryLightBlueColor,
-  //           ),
-  //           tabs: (_viewController.showSpecialTabs)
-  //               ? List.generate(_viewController.getGroupedSpecials().length,
-  //                   (int index) {
-  //                   return Tab(
-  //                     text: _viewController
-  //                         .getGroupedSpecials()
-  //                         .keys
-  //                         .toList()[index]
-  //                         .toDayName()
-  //                         .inCaps,
-  //                   );
-  //                 })
-  //               : (_viewController.showMenuTabs)
-  //                   ? List.generate(
-  //                       _viewController.restaurant.value!.getAvailableCategories
-  //                           .length, (int index) {
-  //                       return Tab(
-  //                         text: _viewController.restaurant.value!
-  //                                 .getAvailableCategories[index].name
-  //                                 ?.getTranslation(userLanguage)
-  //                                 ?.inCaps ??
-  //                             "",
-  //                       );
-  //                     })
-  //                   : [],
-  //           onTap: _viewController.animateAndScrollTo,
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
 }
