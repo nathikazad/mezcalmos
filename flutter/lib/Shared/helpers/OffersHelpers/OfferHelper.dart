@@ -679,3 +679,55 @@ extension OfferItemTypeExtension on OfferItemType {
     return toString().split('.').last.toLowerCase();
   }
 }
+
+Future<String> generateOfferDescription(
+    {required cModels.OfferDetails offerDetails}) async {
+  String description = "";
+
+  switch (offerDetails.discountType) {
+    case cModels.DiscountType.FlatAmount:
+      description += "Flat \$${offerDetails.discountValue} off ";
+      break;
+    case cModels.DiscountType.Percentage:
+      description += "${offerDetails.discountValue}% off ";
+      break;
+    case cModels.DiscountType.AnotherSameFlat:
+      description +=
+          "Buy 1 and Get Flat \$${offerDetails.discountValue} off on another one ";
+      break;
+    case cModels.DiscountType.AnotherSamePercentage:
+      description +=
+          "Buy 1 and Get ${offerDetails.discountValue}% off on another one ";
+      break;
+    default:
+  }
+
+  if (offerDetails.offerForItems != null) {
+    if (offerDetails.discountType == cModels.DiscountType.AnotherSameFlat ||
+        offerDetails.discountType ==
+            cModels.DiscountType.AnotherSamePercentage) {
+      description += "from ";
+    } else {
+      description += "on ";
+    }
+    if (offerDetails.offerForItems == "particularItems") {
+      description += "the following items";
+    } else if (offerDetails.offerForItems == "particularCategories") {
+      description += "the following categories";
+    }
+  }
+
+  if (offerDetails.offerForOrder == "firstOrder") {
+    description += "on your first order";
+  }
+  if (offerDetails.minimumOrderAmount != null) {
+    description +=
+        "with minimum order amount ${offerDetails.minimumOrderAmount}";
+  }
+  if (offerDetails.validityRangeStart != null &&
+      offerDetails.validityRangeEnd != null) {
+    description +=
+        " from ${offerDetails.validityRangeStart} to ${offerDetails.validityRangeEnd}";
+  }
+  return description;
+}
