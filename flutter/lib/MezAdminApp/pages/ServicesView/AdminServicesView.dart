@@ -5,7 +5,7 @@ import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminBsServi
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminDeliveryCompanyServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminLaundryServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminRestaurantServiceCard.dart';
-import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServicesViewController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';

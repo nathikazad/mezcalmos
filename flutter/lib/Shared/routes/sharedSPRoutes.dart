@@ -1,7 +1,7 @@
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferingsListView/OffersOfferingListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferItemsSelectView/OfferItemsSelectView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
@@ -84,7 +84,7 @@ class SharedServiceProviderRoutes {
     QRoute(
       path: kServiceOfferingListView,
       name: kServiceOfferingListView,
-      builder: () => OffersOfferingListView(),
+      builder: () => OfferItemsSelectView(),
     ),
     QRoute(
       path: kDeliveryCostRoute,

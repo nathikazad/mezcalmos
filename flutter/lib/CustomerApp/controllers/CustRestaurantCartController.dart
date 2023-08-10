@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/helpers/OfferHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'

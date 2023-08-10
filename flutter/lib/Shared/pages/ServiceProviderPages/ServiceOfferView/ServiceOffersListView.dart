@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/OffersHelpers/OffersHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/ServiceOfferEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/controllers/ServiceOffersListViewController.dart';

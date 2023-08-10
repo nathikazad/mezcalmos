@@ -335,3 +335,24 @@ query getRestaurantDetailsId($restauarntId: Int!) {
     details_id
   }
 }
+
+
+
+
+query getAndSearchSingleRestaurantItems($restaurant_id: Int!,$limit: Int!, $offset: Int!,$keyword: String="%%") {
+  restaurant_item(where: {restaurant_id: {_eq: $restaurant_id}, name: {translations: {value: {_like: $keyword}}}},limit : $limit,offset : $offset) {
+    id
+    name {
+      translations {
+        language_id
+        value
+      }
+      id
+    }
+  
+    cost
+    image
+ 
+    
+  }
+}

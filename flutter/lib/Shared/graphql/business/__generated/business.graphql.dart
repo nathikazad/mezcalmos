@@ -23197,3 +23197,4737 @@ class _CopyWithStubImpl$Query$get_business_id_from_details_id$business_business<
   }) =>
       _res;
 }
+
+class Variables$Query$SearchSingleBusinessItems {
+  factory Variables$Query$SearchSingleBusinessItems({
+    String? keyword,
+    required int business_id,
+    required int limit,
+    required int offset,
+  }) =>
+      Variables$Query$SearchSingleBusinessItems._({
+        if (keyword != null) r'keyword': keyword,
+        r'business_id': business_id,
+        r'limit': limit,
+        r'offset': offset,
+      });
+
+  Variables$Query$SearchSingleBusinessItems._(this._$data);
+
+  factory Variables$Query$SearchSingleBusinessItems.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    if (data.containsKey('keyword')) {
+      final l$keyword = data['keyword'];
+      result$data['keyword'] = (l$keyword as String?);
+    }
+    final l$business_id = data['business_id'];
+    result$data['business_id'] = (l$business_id as int);
+    final l$limit = data['limit'];
+    result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
+    return Variables$Query$SearchSingleBusinessItems._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String? get keyword => (_$data['keyword'] as String?);
+  int get business_id => (_$data['business_id'] as int);
+  int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    if (_$data.containsKey('keyword')) {
+      final l$keyword = keyword;
+      result$data['keyword'] = l$keyword;
+    }
+    final l$business_id = business_id;
+    result$data['business_id'] = l$business_id;
+    final l$limit = limit;
+    result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$SearchSingleBusinessItems<
+          Variables$Query$SearchSingleBusinessItems>
+      get copyWith => CopyWith$Variables$Query$SearchSingleBusinessItems(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$SearchSingleBusinessItems) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$keyword = keyword;
+    final lOther$keyword = other.keyword;
+    if (_$data.containsKey('keyword') != other._$data.containsKey('keyword')) {
+      return false;
+    }
+    if (l$keyword != lOther$keyword) {
+      return false;
+    }
+    final l$business_id = business_id;
+    final lOther$business_id = other.business_id;
+    if (l$business_id != lOther$business_id) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$keyword = keyword;
+    final l$business_id = business_id;
+    final l$limit = limit;
+    final l$offset = offset;
+    return Object.hashAll([
+      _$data.containsKey('keyword') ? l$keyword : const {},
+      l$business_id,
+      l$limit,
+      l$offset,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$SearchSingleBusinessItems<TRes> {
+  factory CopyWith$Variables$Query$SearchSingleBusinessItems(
+    Variables$Query$SearchSingleBusinessItems instance,
+    TRes Function(Variables$Query$SearchSingleBusinessItems) then,
+  ) = _CopyWithImpl$Variables$Query$SearchSingleBusinessItems;
+
+  factory CopyWith$Variables$Query$SearchSingleBusinessItems.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$SearchSingleBusinessItems;
+
+  TRes call({
+    String? keyword,
+    int? business_id,
+    int? limit,
+    int? offset,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$SearchSingleBusinessItems<TRes>
+    implements CopyWith$Variables$Query$SearchSingleBusinessItems<TRes> {
+  _CopyWithImpl$Variables$Query$SearchSingleBusinessItems(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$SearchSingleBusinessItems _instance;
+
+  final TRes Function(Variables$Query$SearchSingleBusinessItems) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? keyword = _undefined,
+    Object? business_id = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
+      _then(Variables$Query$SearchSingleBusinessItems._({
+        ..._instance._$data,
+        if (keyword != _undefined) 'keyword': (keyword as String?),
+        if (business_id != _undefined && business_id != null)
+          'business_id': (business_id as int),
+        if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$SearchSingleBusinessItems<TRes>
+    implements CopyWith$Variables$Query$SearchSingleBusinessItems<TRes> {
+  _CopyWithStubImpl$Variables$Query$SearchSingleBusinessItems(this._res);
+
+  TRes _res;
+
+  call({
+    String? keyword,
+    int? business_id,
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
+}
+
+class Query$SearchSingleBusinessItems {
+  Query$SearchSingleBusinessItems({
+    required this.events,
+    required this.services,
+    required this.products,
+    required this.home,
+    required this.rental,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems.fromJson(Map<String, dynamic> json) {
+    final l$events = json['events'];
+    final l$services = json['services'];
+    final l$products = json['products'];
+    final l$home = json['home'];
+    final l$rental = json['rental'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems(
+      events: (l$events as List<dynamic>)
+          .map((e) => Query$SearchSingleBusinessItems$events.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      services: (l$services as List<dynamic>)
+          .map((e) => Query$SearchSingleBusinessItems$services.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      products: (l$products as List<dynamic>)
+          .map((e) => Query$SearchSingleBusinessItems$products.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      home: (l$home as List<dynamic>)
+          .map((e) => Query$SearchSingleBusinessItems$home.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      rental: (l$rental as List<dynamic>)
+          .map((e) => Query$SearchSingleBusinessItems$rental.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$SearchSingleBusinessItems$events> events;
+
+  final List<Query$SearchSingleBusinessItems$services> services;
+
+  final List<Query$SearchSingleBusinessItems$products> products;
+
+  final List<Query$SearchSingleBusinessItems$home> home;
+
+  final List<Query$SearchSingleBusinessItems$rental> rental;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$events = events;
+    _resultData['events'] = l$events.map((e) => e.toJson()).toList();
+    final l$services = services;
+    _resultData['services'] = l$services.map((e) => e.toJson()).toList();
+    final l$products = products;
+    _resultData['products'] = l$products.map((e) => e.toJson()).toList();
+    final l$home = home;
+    _resultData['home'] = l$home.map((e) => e.toJson()).toList();
+    final l$rental = rental;
+    _resultData['rental'] = l$rental.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$events = events;
+    final l$services = services;
+    final l$products = products;
+    final l$home = home;
+    final l$rental = rental;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$events.map((v) => v)),
+      Object.hashAll(l$services.map((v) => v)),
+      Object.hashAll(l$products.map((v) => v)),
+      Object.hashAll(l$home.map((v) => v)),
+      Object.hashAll(l$rental.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$events = events;
+    final lOther$events = other.events;
+    if (l$events.length != lOther$events.length) {
+      return false;
+    }
+    for (int i = 0; i < l$events.length; i++) {
+      final l$events$entry = l$events[i];
+      final lOther$events$entry = lOther$events[i];
+      if (l$events$entry != lOther$events$entry) {
+        return false;
+      }
+    }
+    final l$services = services;
+    final lOther$services = other.services;
+    if (l$services.length != lOther$services.length) {
+      return false;
+    }
+    for (int i = 0; i < l$services.length; i++) {
+      final l$services$entry = l$services[i];
+      final lOther$services$entry = lOther$services[i];
+      if (l$services$entry != lOther$services$entry) {
+        return false;
+      }
+    }
+    final l$products = products;
+    final lOther$products = other.products;
+    if (l$products.length != lOther$products.length) {
+      return false;
+    }
+    for (int i = 0; i < l$products.length; i++) {
+      final l$products$entry = l$products[i];
+      final lOther$products$entry = lOther$products[i];
+      if (l$products$entry != lOther$products$entry) {
+        return false;
+      }
+    }
+    final l$home = home;
+    final lOther$home = other.home;
+    if (l$home.length != lOther$home.length) {
+      return false;
+    }
+    for (int i = 0; i < l$home.length; i++) {
+      final l$home$entry = l$home[i];
+      final lOther$home$entry = lOther$home[i];
+      if (l$home$entry != lOther$home$entry) {
+        return false;
+      }
+    }
+    final l$rental = rental;
+    final lOther$rental = other.rental;
+    if (l$rental.length != lOther$rental.length) {
+      return false;
+    }
+    for (int i = 0; i < l$rental.length; i++) {
+      final l$rental$entry = l$rental[i];
+      final lOther$rental$entry = lOther$rental[i];
+      if (l$rental$entry != lOther$rental$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems
+    on Query$SearchSingleBusinessItems {
+  CopyWith$Query$SearchSingleBusinessItems<Query$SearchSingleBusinessItems>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems(
+    Query$SearchSingleBusinessItems instance,
+    TRes Function(Query$SearchSingleBusinessItems) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems;
+
+  factory CopyWith$Query$SearchSingleBusinessItems.stub(TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems;
+
+  TRes call({
+    List<Query$SearchSingleBusinessItems$events>? events,
+    List<Query$SearchSingleBusinessItems$services>? services,
+    List<Query$SearchSingleBusinessItems$products>? products,
+    List<Query$SearchSingleBusinessItems$home>? home,
+    List<Query$SearchSingleBusinessItems$rental>? rental,
+    String? $__typename,
+  });
+  TRes events(
+      Iterable<Query$SearchSingleBusinessItems$events> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$events<
+                      Query$SearchSingleBusinessItems$events>>)
+          _fn);
+  TRes services(
+      Iterable<Query$SearchSingleBusinessItems$services> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$services<
+                      Query$SearchSingleBusinessItems$services>>)
+          _fn);
+  TRes products(
+      Iterable<Query$SearchSingleBusinessItems$products> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$products<
+                      Query$SearchSingleBusinessItems$products>>)
+          _fn);
+  TRes home(
+      Iterable<Query$SearchSingleBusinessItems$home> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$home<
+                      Query$SearchSingleBusinessItems$home>>)
+          _fn);
+  TRes rental(
+      Iterable<Query$SearchSingleBusinessItems$rental> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$rental<
+                      Query$SearchSingleBusinessItems$rental>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? events = _undefined,
+    Object? services = _undefined,
+    Object? products = _undefined,
+    Object? home = _undefined,
+    Object? rental = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems(
+        events: events == _undefined || events == null
+            ? _instance.events
+            : (events as List<Query$SearchSingleBusinessItems$events>),
+        services: services == _undefined || services == null
+            ? _instance.services
+            : (services as List<Query$SearchSingleBusinessItems$services>),
+        products: products == _undefined || products == null
+            ? _instance.products
+            : (products as List<Query$SearchSingleBusinessItems$products>),
+        home: home == _undefined || home == null
+            ? _instance.home
+            : (home as List<Query$SearchSingleBusinessItems$home>),
+        rental: rental == _undefined || rental == null
+            ? _instance.rental
+            : (rental as List<Query$SearchSingleBusinessItems$rental>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes events(
+          Iterable<Query$SearchSingleBusinessItems$events> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$events<
+                          Query$SearchSingleBusinessItems$events>>)
+              _fn) =>
+      call(
+          events: _fn(_instance.events
+              .map((e) => CopyWith$Query$SearchSingleBusinessItems$events(
+                    e,
+                    (i) => i,
+                  ))).toList());
+  TRes services(
+          Iterable<Query$SearchSingleBusinessItems$services> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$services<
+                          Query$SearchSingleBusinessItems$services>>)
+              _fn) =>
+      call(
+          services: _fn(_instance.services
+              .map((e) => CopyWith$Query$SearchSingleBusinessItems$services(
+                    e,
+                    (i) => i,
+                  ))).toList());
+  TRes products(
+          Iterable<Query$SearchSingleBusinessItems$products> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$products<
+                          Query$SearchSingleBusinessItems$products>>)
+              _fn) =>
+      call(
+          products: _fn(_instance.products
+              .map((e) => CopyWith$Query$SearchSingleBusinessItems$products(
+                    e,
+                    (i) => i,
+                  ))).toList());
+  TRes home(
+          Iterable<Query$SearchSingleBusinessItems$home> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$home<
+                          Query$SearchSingleBusinessItems$home>>)
+              _fn) =>
+      call(
+          home: _fn(_instance.home
+              .map((e) => CopyWith$Query$SearchSingleBusinessItems$home(
+                    e,
+                    (i) => i,
+                  ))).toList());
+  TRes rental(
+          Iterable<Query$SearchSingleBusinessItems$rental> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$rental<
+                          Query$SearchSingleBusinessItems$rental>>)
+              _fn) =>
+      call(
+          rental: _fn(_instance.rental
+              .map((e) => CopyWith$Query$SearchSingleBusinessItems$rental(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$SearchSingleBusinessItems$events>? events,
+    List<Query$SearchSingleBusinessItems$services>? services,
+    List<Query$SearchSingleBusinessItems$products>? products,
+    List<Query$SearchSingleBusinessItems$home>? home,
+    List<Query$SearchSingleBusinessItems$rental>? rental,
+    String? $__typename,
+  }) =>
+      _res;
+  events(_fn) => _res;
+  services(_fn) => _res;
+  products(_fn) => _res;
+  home(_fn) => _res;
+  rental(_fn) => _res;
+}
+
+const documentNodeQuerySearchSingleBusinessItems = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'SearchSingleBusinessItems'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'keyword')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(
+            value: StringValueNode(
+          value: '%%',
+          isBlock: false,
+        )),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'business_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'business_event'),
+        alias: NameNode(value: 'events'),
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: '_and'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'name'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'translations'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'value'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_ilike'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'keyword')),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'business_id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value:
+                            VariableNode(name: NameNode(value: 'business_id')),
+                      )
+                    ]),
+                  ),
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      FieldNode(
+        name: NameNode(value: 'business_service'),
+        alias: NameNode(value: 'services'),
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: '_and'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'name'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'translations'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'value'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_ilike'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'keyword')),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'business_id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value:
+                            VariableNode(name: NameNode(value: 'business_id')),
+                      )
+                    ]),
+                  ),
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      FieldNode(
+        name: NameNode(value: 'business_product'),
+        alias: NameNode(value: 'products'),
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: '_and'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'name'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'translations'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'value'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_ilike'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'keyword')),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'business_id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value:
+                            VariableNode(name: NameNode(value: 'business_id')),
+                      )
+                    ]),
+                  ),
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      FieldNode(
+        name: NameNode(value: 'business_home'),
+        alias: NameNode(value: 'home'),
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: '_and'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'name'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'translations'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'value'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_ilike'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'keyword')),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'business_id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value:
+                            VariableNode(name: NameNode(value: 'business_id')),
+                      )
+                    ]),
+                  ),
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      FieldNode(
+        name: NameNode(value: 'business_rental'),
+        alias: NameNode(value: 'rental'),
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: '_and'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'details'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: 'name'),
+                        value: ObjectValueNode(fields: [
+                          ObjectFieldNode(
+                            name: NameNode(value: 'translations'),
+                            value: ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'value'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_ilike'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'keyword')),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          )
+                        ]),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'business_id'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_eq'),
+                        value:
+                            VariableNode(name: NameNode(value: 'business_id')),
+                      )
+                    ]),
+                  ),
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'translations'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'language_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'value'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$SearchSingleBusinessItems _parserFn$Query$SearchSingleBusinessItems(
+        Map<String, dynamic> data) =>
+    Query$SearchSingleBusinessItems.fromJson(data);
+
+class Options$Query$SearchSingleBusinessItems
+    extends graphql.QueryOptions<Query$SearchSingleBusinessItems> {
+  Options$Query$SearchSingleBusinessItems({
+    String? operationName,
+    required Variables$Query$SearchSingleBusinessItems variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerySearchSingleBusinessItems,
+          parserFn: _parserFn$Query$SearchSingleBusinessItems,
+        );
+}
+
+class WatchOptions$Query$SearchSingleBusinessItems
+    extends graphql.WatchQueryOptions<Query$SearchSingleBusinessItems> {
+  WatchOptions$Query$SearchSingleBusinessItems({
+    String? operationName,
+    required Variables$Query$SearchSingleBusinessItems variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerySearchSingleBusinessItems,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$SearchSingleBusinessItems,
+        );
+}
+
+class FetchMoreOptions$Query$SearchSingleBusinessItems
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$SearchSingleBusinessItems({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$SearchSingleBusinessItems variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerySearchSingleBusinessItems,
+        );
+}
+
+extension ClientExtension$Query$SearchSingleBusinessItems
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$SearchSingleBusinessItems>>
+      query$SearchSingleBusinessItems(
+              Options$Query$SearchSingleBusinessItems options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$SearchSingleBusinessItems>
+      watchQuery$SearchSingleBusinessItems(
+              WatchOptions$Query$SearchSingleBusinessItems options) =>
+          this.watchQuery(options);
+  void writeQuery$SearchSingleBusinessItems({
+    required Query$SearchSingleBusinessItems data,
+    required Variables$Query$SearchSingleBusinessItems variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerySearchSingleBusinessItems),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$SearchSingleBusinessItems? readQuery$SearchSingleBusinessItems({
+    required Variables$Query$SearchSingleBusinessItems variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerySearchSingleBusinessItems),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$SearchSingleBusinessItems.fromJson(result);
+  }
+}
+
+class Query$SearchSingleBusinessItems$events {
+  Query$SearchSingleBusinessItems$events({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$events.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$events(
+      id: (l$id as int),
+      details: Query$SearchSingleBusinessItems$events$details.fromJson(
+          (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$SearchSingleBusinessItems$events$details details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$events) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$events
+    on Query$SearchSingleBusinessItems$events {
+  CopyWith$Query$SearchSingleBusinessItems$events<
+          Query$SearchSingleBusinessItems$events>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$events(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$events<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$events(
+    Query$SearchSingleBusinessItems$events instance,
+    TRes Function(Query$SearchSingleBusinessItems$events) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$events;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$events.stub(TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$events;
+
+  TRes call({
+    int? id,
+    Query$SearchSingleBusinessItems$events$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$events$details<TRes> get details;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$events<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$events<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$events(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$events _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$events) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$events(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as Query$SearchSingleBusinessItems$events$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$events$details<TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$SearchSingleBusinessItems$events$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$events<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$events<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$events(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$SearchSingleBusinessItems$events$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$events$details<TRes> get details =>
+      CopyWith$Query$SearchSingleBusinessItems$events$details.stub(_res);
+}
+
+class Query$SearchSingleBusinessItems$events$details {
+  Query$SearchSingleBusinessItems$events$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$events$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$events$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name: Query$SearchSingleBusinessItems$events$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$SearchSingleBusinessItems$events$details$name name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$events$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$events$details
+    on Query$SearchSingleBusinessItems$events$details {
+  CopyWith$Query$SearchSingleBusinessItems$events$details<
+          Query$SearchSingleBusinessItems$events$details>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$events$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$events$details<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$events$details(
+    Query$SearchSingleBusinessItems$events$details instance,
+    TRes Function(Query$SearchSingleBusinessItems$events$details) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$events$details;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$events$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details;
+
+  TRes call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$events$details$name? name,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$events$details$name<TRes> get name;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$events$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$events$details<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$events$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$events$details _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$events$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$events$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as Query$SearchSingleBusinessItems$events$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$events$details$name<TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$SearchSingleBusinessItems$events$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$events$details<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details(this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$events$details$name? name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$events$details$name<TRes> get name =>
+      CopyWith$Query$SearchSingleBusinessItems$events$details$name.stub(_res);
+}
+
+class Query$SearchSingleBusinessItems$events$details$name {
+  Query$SearchSingleBusinessItems$events$details$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$events$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$events$details$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$SearchSingleBusinessItems$events$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<Query$SearchSingleBusinessItems$events$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$events$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$events$details$name
+    on Query$SearchSingleBusinessItems$events$details$name {
+  CopyWith$Query$SearchSingleBusinessItems$events$details$name<
+          Query$SearchSingleBusinessItems$events$details$name>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$events$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$events$details$name<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$events$details$name(
+    Query$SearchSingleBusinessItems$events$details$name instance,
+    TRes Function(Query$SearchSingleBusinessItems$events$details$name) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$events$details$name;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$events$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details$name;
+
+  TRes call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$events$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$SearchSingleBusinessItems$events$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations<
+                      Query$SearchSingleBusinessItems$events$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$events$details$name<TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$events$details$name<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$events$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$events$details$name _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$events$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$events$details$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$SearchSingleBusinessItems$events$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$SearchSingleBusinessItems$events$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations<
+                          Query$SearchSingleBusinessItems$events$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details$name<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$events$details$name<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$events$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$SearchSingleBusinessItems$events$details$name$translations {
+  Query$SearchSingleBusinessItems$events$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$events$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$events$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$SearchSingleBusinessItems$events$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$events$details$name$translations
+    on Query$SearchSingleBusinessItems$events$details$name$translations {
+  CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations<
+          Query$SearchSingleBusinessItems$events$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations(
+    Query$SearchSingleBusinessItems$events$details$name$translations instance,
+    TRes Function(
+            Query$SearchSingleBusinessItems$events$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$events$details$name$translations;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$events$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$events$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$events$details$name$translations
+      _instance;
+
+  final TRes Function(
+      Query$SearchSingleBusinessItems$events$details$name$translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$events$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$events$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$events$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$SearchSingleBusinessItems$services {
+  Query$SearchSingleBusinessItems$services({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$services.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$services(
+      id: (l$id as int),
+      details: Query$SearchSingleBusinessItems$services$details.fromJson(
+          (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$SearchSingleBusinessItems$services$details details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$services) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$services
+    on Query$SearchSingleBusinessItems$services {
+  CopyWith$Query$SearchSingleBusinessItems$services<
+          Query$SearchSingleBusinessItems$services>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$services(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$services<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$services(
+    Query$SearchSingleBusinessItems$services instance,
+    TRes Function(Query$SearchSingleBusinessItems$services) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$services;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$services.stub(TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$services;
+
+  TRes call({
+    int? id,
+    Query$SearchSingleBusinessItems$services$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$services$details<TRes> get details;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$services<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$services<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$services(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$services _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$services) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$services(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as Query$SearchSingleBusinessItems$services$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$services$details<TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$SearchSingleBusinessItems$services$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$services<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$services<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$services(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$SearchSingleBusinessItems$services$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$services$details<TRes> get details =>
+      CopyWith$Query$SearchSingleBusinessItems$services$details.stub(_res);
+}
+
+class Query$SearchSingleBusinessItems$services$details {
+  Query$SearchSingleBusinessItems$services$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$services$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$services$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name: Query$SearchSingleBusinessItems$services$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$SearchSingleBusinessItems$services$details$name name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$services$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$services$details
+    on Query$SearchSingleBusinessItems$services$details {
+  CopyWith$Query$SearchSingleBusinessItems$services$details<
+          Query$SearchSingleBusinessItems$services$details>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$services$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$services$details<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$services$details(
+    Query$SearchSingleBusinessItems$services$details instance,
+    TRes Function(Query$SearchSingleBusinessItems$services$details) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$services$details;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$services$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details;
+
+  TRes call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$services$details$name? name,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$services$details$name<TRes> get name;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$services$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$services$details<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$services$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$services$details _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$services$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$services$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as Query$SearchSingleBusinessItems$services$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$services$details$name<TRes>
+      get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$SearchSingleBusinessItems$services$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$services$details<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details(this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$services$details$name? name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$services$details$name<TRes>
+      get name =>
+          CopyWith$Query$SearchSingleBusinessItems$services$details$name.stub(
+              _res);
+}
+
+class Query$SearchSingleBusinessItems$services$details$name {
+  Query$SearchSingleBusinessItems$services$details$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$services$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$services$details$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$SearchSingleBusinessItems$services$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<Query$SearchSingleBusinessItems$services$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$services$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$services$details$name
+    on Query$SearchSingleBusinessItems$services$details$name {
+  CopyWith$Query$SearchSingleBusinessItems$services$details$name<
+          Query$SearchSingleBusinessItems$services$details$name>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$services$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$services$details$name<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$services$details$name(
+    Query$SearchSingleBusinessItems$services$details$name instance,
+    TRes Function(Query$SearchSingleBusinessItems$services$details$name) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$services$details$name;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$services$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details$name;
+
+  TRes call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$services$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$SearchSingleBusinessItems$services$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations<
+                      Query$SearchSingleBusinessItems$services$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$services$details$name<TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$services$details$name<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$services$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$services$details$name _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$services$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$services$details$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$SearchSingleBusinessItems$services$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$SearchSingleBusinessItems$services$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations<
+                          Query$SearchSingleBusinessItems$services$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details$name<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$services$details$name<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$services$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$SearchSingleBusinessItems$services$details$name$translations {
+  Query$SearchSingleBusinessItems$services$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$services$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$services$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$SearchSingleBusinessItems$services$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$services$details$name$translations
+    on Query$SearchSingleBusinessItems$services$details$name$translations {
+  CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations<
+          Query$SearchSingleBusinessItems$services$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations(
+    Query$SearchSingleBusinessItems$services$details$name$translations instance,
+    TRes Function(
+            Query$SearchSingleBusinessItems$services$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$services$details$name$translations;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$services$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$services$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$services$details$name$translations
+      _instance;
+
+  final TRes Function(
+      Query$SearchSingleBusinessItems$services$details$name$translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$services$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$services$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$services$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$SearchSingleBusinessItems$products {
+  Query$SearchSingleBusinessItems$products({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$products.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$products(
+      id: (l$id as int),
+      details: Query$SearchSingleBusinessItems$products$details.fromJson(
+          (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$SearchSingleBusinessItems$products$details details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$products) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$products
+    on Query$SearchSingleBusinessItems$products {
+  CopyWith$Query$SearchSingleBusinessItems$products<
+          Query$SearchSingleBusinessItems$products>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$products(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$products<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$products(
+    Query$SearchSingleBusinessItems$products instance,
+    TRes Function(Query$SearchSingleBusinessItems$products) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$products;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$products.stub(TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$products;
+
+  TRes call({
+    int? id,
+    Query$SearchSingleBusinessItems$products$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$products$details<TRes> get details;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$products<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$products<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$products(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$products _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$products) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$products(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as Query$SearchSingleBusinessItems$products$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$products$details<TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$SearchSingleBusinessItems$products$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$products<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$products<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$products(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$SearchSingleBusinessItems$products$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$products$details<TRes> get details =>
+      CopyWith$Query$SearchSingleBusinessItems$products$details.stub(_res);
+}
+
+class Query$SearchSingleBusinessItems$products$details {
+  Query$SearchSingleBusinessItems$products$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$products$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$products$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name: Query$SearchSingleBusinessItems$products$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$SearchSingleBusinessItems$products$details$name name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$products$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$products$details
+    on Query$SearchSingleBusinessItems$products$details {
+  CopyWith$Query$SearchSingleBusinessItems$products$details<
+          Query$SearchSingleBusinessItems$products$details>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$products$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$products$details<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$products$details(
+    Query$SearchSingleBusinessItems$products$details instance,
+    TRes Function(Query$SearchSingleBusinessItems$products$details) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$products$details;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$products$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details;
+
+  TRes call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$products$details$name? name,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$products$details$name<TRes> get name;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$products$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$products$details<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$products$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$products$details _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$products$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$products$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as Query$SearchSingleBusinessItems$products$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$products$details$name<TRes>
+      get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$SearchSingleBusinessItems$products$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$products$details<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details(this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$products$details$name? name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$products$details$name<TRes>
+      get name =>
+          CopyWith$Query$SearchSingleBusinessItems$products$details$name.stub(
+              _res);
+}
+
+class Query$SearchSingleBusinessItems$products$details$name {
+  Query$SearchSingleBusinessItems$products$details$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$products$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$products$details$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$SearchSingleBusinessItems$products$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<Query$SearchSingleBusinessItems$products$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$products$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$products$details$name
+    on Query$SearchSingleBusinessItems$products$details$name {
+  CopyWith$Query$SearchSingleBusinessItems$products$details$name<
+          Query$SearchSingleBusinessItems$products$details$name>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$products$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$products$details$name<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$products$details$name(
+    Query$SearchSingleBusinessItems$products$details$name instance,
+    TRes Function(Query$SearchSingleBusinessItems$products$details$name) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$products$details$name;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$products$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details$name;
+
+  TRes call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$products$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$SearchSingleBusinessItems$products$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations<
+                      Query$SearchSingleBusinessItems$products$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$products$details$name<TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$products$details$name<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$products$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$products$details$name _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$products$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$products$details$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$SearchSingleBusinessItems$products$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$SearchSingleBusinessItems$products$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations<
+                          Query$SearchSingleBusinessItems$products$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details$name<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$products$details$name<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$products$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$SearchSingleBusinessItems$products$details$name$translations {
+  Query$SearchSingleBusinessItems$products$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$products$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$products$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$SearchSingleBusinessItems$products$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$products$details$name$translations
+    on Query$SearchSingleBusinessItems$products$details$name$translations {
+  CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations<
+          Query$SearchSingleBusinessItems$products$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations(
+    Query$SearchSingleBusinessItems$products$details$name$translations instance,
+    TRes Function(
+            Query$SearchSingleBusinessItems$products$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$products$details$name$translations;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$products$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$products$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$products$details$name$translations
+      _instance;
+
+  final TRes Function(
+      Query$SearchSingleBusinessItems$products$details$name$translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$products$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$products$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$SearchSingleBusinessItems$home {
+  Query$SearchSingleBusinessItems$home({
+    required this.id,
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$home.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$home(
+      id: (l$id as int),
+      details: l$details == null
+          ? null
+          : Query$SearchSingleBusinessItems$home$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$SearchSingleBusinessItems$home$details? details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$home) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$home
+    on Query$SearchSingleBusinessItems$home {
+  CopyWith$Query$SearchSingleBusinessItems$home<
+          Query$SearchSingleBusinessItems$home>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$home(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$home<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$home(
+    Query$SearchSingleBusinessItems$home instance,
+    TRes Function(Query$SearchSingleBusinessItems$home) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$home;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$home.stub(TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$home;
+
+  TRes call({
+    int? id,
+    Query$SearchSingleBusinessItems$home$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$home$details<TRes> get details;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$home<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$home<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$home(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$home _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$home) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$home(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details as Query$SearchSingleBusinessItems$home$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$home$details<TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$SearchSingleBusinessItems$home$details.stub(
+            _then(_instance))
+        : CopyWith$Query$SearchSingleBusinessItems$home$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$home<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$home<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$home(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$SearchSingleBusinessItems$home$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$home$details<TRes> get details =>
+      CopyWith$Query$SearchSingleBusinessItems$home$details.stub(_res);
+}
+
+class Query$SearchSingleBusinessItems$home$details {
+  Query$SearchSingleBusinessItems$home$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$home$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$home$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name: Query$SearchSingleBusinessItems$home$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$SearchSingleBusinessItems$home$details$name name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$home$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$home$details
+    on Query$SearchSingleBusinessItems$home$details {
+  CopyWith$Query$SearchSingleBusinessItems$home$details<
+          Query$SearchSingleBusinessItems$home$details>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$home$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$home$details<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$home$details(
+    Query$SearchSingleBusinessItems$home$details instance,
+    TRes Function(Query$SearchSingleBusinessItems$home$details) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$home$details;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$home$details.stub(TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details;
+
+  TRes call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$home$details$name? name,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$home$details$name<TRes> get name;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$home$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$home$details<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$home$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$home$details _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$home$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$home$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as Query$SearchSingleBusinessItems$home$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$home$details$name<TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$SearchSingleBusinessItems$home$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$home$details<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details(this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$home$details$name? name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$home$details$name<TRes> get name =>
+      CopyWith$Query$SearchSingleBusinessItems$home$details$name.stub(_res);
+}
+
+class Query$SearchSingleBusinessItems$home$details$name {
+  Query$SearchSingleBusinessItems$home$details$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$home$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$home$details$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$SearchSingleBusinessItems$home$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<Query$SearchSingleBusinessItems$home$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$home$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$home$details$name
+    on Query$SearchSingleBusinessItems$home$details$name {
+  CopyWith$Query$SearchSingleBusinessItems$home$details$name<
+          Query$SearchSingleBusinessItems$home$details$name>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$home$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$home$details$name<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$home$details$name(
+    Query$SearchSingleBusinessItems$home$details$name instance,
+    TRes Function(Query$SearchSingleBusinessItems$home$details$name) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$home$details$name;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$home$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details$name;
+
+  TRes call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$SearchSingleBusinessItems$home$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations<
+                      Query$SearchSingleBusinessItems$home$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$home$details$name<TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$home$details$name<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$home$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$home$details$name _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$home$details$name) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$home$details$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$SearchSingleBusinessItems$home$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$SearchSingleBusinessItems$home$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations<
+                          Query$SearchSingleBusinessItems$home$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details$name<TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$home$details$name<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$home$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$SearchSingleBusinessItems$home$details$name$translations {
+  Query$SearchSingleBusinessItems$home$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$home$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$home$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$SearchSingleBusinessItems$home$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$home$details$name$translations
+    on Query$SearchSingleBusinessItems$home$details$name$translations {
+  CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations<
+          Query$SearchSingleBusinessItems$home$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations(
+    Query$SearchSingleBusinessItems$home$details$name$translations instance,
+    TRes Function(
+            Query$SearchSingleBusinessItems$home$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$home$details$name$translations;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$home$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$home$details$name$translations
+      _instance;
+
+  final TRes Function(
+      Query$SearchSingleBusinessItems$home$details$name$translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$home$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$home$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$home$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$SearchSingleBusinessItems$rental {
+  Query$SearchSingleBusinessItems$rental({
+    required this.id,
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$rental.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$rental(
+      id: (l$id as int),
+      details: Query$SearchSingleBusinessItems$rental$details.fromJson(
+          (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$SearchSingleBusinessItems$rental$details details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$rental) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$rental
+    on Query$SearchSingleBusinessItems$rental {
+  CopyWith$Query$SearchSingleBusinessItems$rental<
+          Query$SearchSingleBusinessItems$rental>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$rental(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$rental<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$rental(
+    Query$SearchSingleBusinessItems$rental instance,
+    TRes Function(Query$SearchSingleBusinessItems$rental) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$rental;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$rental.stub(TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental;
+
+  TRes call({
+    int? id,
+    Query$SearchSingleBusinessItems$rental$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$rental$details<TRes> get details;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$rental<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$rental<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$rental(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$rental _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$rental) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$rental(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details as Query$SearchSingleBusinessItems$rental$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$rental$details<TRes> get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$SearchSingleBusinessItems$rental$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$rental<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$SearchSingleBusinessItems$rental$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$rental$details<TRes> get details =>
+      CopyWith$Query$SearchSingleBusinessItems$rental$details.stub(_res);
+}
+
+class Query$SearchSingleBusinessItems$rental$details {
+  Query$SearchSingleBusinessItems$rental$details({
+    this.image,
+    required this.name,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$rental$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$rental$details(
+      image: l$image == null ? null : mapFromJson(l$image),
+      name: Query$SearchSingleBusinessItems$rental$details$name.fromJson(
+          (l$name as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? image;
+
+  final Query$SearchSingleBusinessItems$rental$details$name name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image == null ? null : mapToJson(l$image);
+    final l$name = name;
+    _resultData['name'] = l$name.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$rental$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$rental$details
+    on Query$SearchSingleBusinessItems$rental$details {
+  CopyWith$Query$SearchSingleBusinessItems$rental$details<
+          Query$SearchSingleBusinessItems$rental$details>
+      get copyWith => CopyWith$Query$SearchSingleBusinessItems$rental$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$rental$details<TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$rental$details(
+    Query$SearchSingleBusinessItems$rental$details instance,
+    TRes Function(Query$SearchSingleBusinessItems$rental$details) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$rental$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details;
+
+  TRes call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$rental$details$name? name,
+    String? $__typename,
+  });
+  CopyWith$Query$SearchSingleBusinessItems$rental$details$name<TRes> get name;
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$rental$details<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$rental$details _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$rental$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$rental$details(
+        image: image == _undefined ? _instance.image : (image as dynamic?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as Query$SearchSingleBusinessItems$rental$details$name),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$SearchSingleBusinessItems$rental$details$name<TRes> get name {
+    final local$name = _instance.name;
+    return CopyWith$Query$SearchSingleBusinessItems$rental$details$name(
+        local$name, (e) => call(name: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details<TRes>
+    implements CopyWith$Query$SearchSingleBusinessItems$rental$details<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details(this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? image,
+    Query$SearchSingleBusinessItems$rental$details$name? name,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$SearchSingleBusinessItems$rental$details$name<TRes> get name =>
+      CopyWith$Query$SearchSingleBusinessItems$rental$details$name.stub(_res);
+}
+
+class Query$SearchSingleBusinessItems$rental$details$name {
+  Query$SearchSingleBusinessItems$rental$details$name({
+    required this.id,
+    required this.translations,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$rental$details$name.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$translations = json['translations'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$rental$details$name(
+      id: (l$id as int),
+      translations: (l$translations as List<dynamic>)
+          .map((e) =>
+              Query$SearchSingleBusinessItems$rental$details$name$translations
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final List<Query$SearchSingleBusinessItems$rental$details$name$translations>
+      translations;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$translations = translations;
+    _resultData['translations'] =
+        l$translations.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$translations = translations;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      Object.hashAll(l$translations.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$SearchSingleBusinessItems$rental$details$name) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$translations = translations;
+    final lOther$translations = other.translations;
+    if (l$translations.length != lOther$translations.length) {
+      return false;
+    }
+    for (int i = 0; i < l$translations.length; i++) {
+      final l$translations$entry = l$translations[i];
+      final lOther$translations$entry = lOther$translations[i];
+      if (l$translations$entry != lOther$translations$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$rental$details$name
+    on Query$SearchSingleBusinessItems$rental$details$name {
+  CopyWith$Query$SearchSingleBusinessItems$rental$details$name<
+          Query$SearchSingleBusinessItems$rental$details$name>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$rental$details$name(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$rental$details$name<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$rental$details$name(
+    Query$SearchSingleBusinessItems$rental$details$name instance,
+    TRes Function(Query$SearchSingleBusinessItems$rental$details$name) then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details$name;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$rental$details$name.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details$name;
+
+  TRes call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$rental$details$name$translations>?
+        translations,
+    String? $__typename,
+  });
+  TRes translations(
+      Iterable<Query$SearchSingleBusinessItems$rental$details$name$translations> Function(
+              Iterable<
+                  CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations<
+                      Query$SearchSingleBusinessItems$rental$details$name$translations>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details$name<TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$rental$details$name<TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details$name(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$rental$details$name _instance;
+
+  final TRes Function(Query$SearchSingleBusinessItems$rental$details$name)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? translations = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$rental$details$name(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        translations: translations == _undefined || translations == null
+            ? _instance.translations
+            : (translations as List<
+                Query$SearchSingleBusinessItems$rental$details$name$translations>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes translations(
+          Iterable<Query$SearchSingleBusinessItems$rental$details$name$translations> Function(
+                  Iterable<
+                      CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations<
+                          Query$SearchSingleBusinessItems$rental$details$name$translations>>)
+              _fn) =>
+      call(
+          translations: _fn(_instance.translations.map((e) =>
+              CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details$name<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$rental$details$name<TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details$name(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    List<Query$SearchSingleBusinessItems$rental$details$name$translations>?
+        translations,
+    String? $__typename,
+  }) =>
+      _res;
+  translations(_fn) => _res;
+}
+
+class Query$SearchSingleBusinessItems$rental$details$name$translations {
+  Query$SearchSingleBusinessItems$rental$details$name$translations({
+    required this.language_id,
+    required this.value,
+    required this.$__typename,
+  });
+
+  factory Query$SearchSingleBusinessItems$rental$details$name$translations.fromJson(
+      Map<String, dynamic> json) {
+    final l$language_id = json['language_id'];
+    final l$value = json['value'];
+    final l$$__typename = json['__typename'];
+    return Query$SearchSingleBusinessItems$rental$details$name$translations(
+      language_id: (l$language_id as String),
+      value: (l$value as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String language_id;
+
+  final String value;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$value = value;
+    _resultData['value'] = l$value;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$language_id = language_id;
+    final l$value = value;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$language_id,
+      l$value,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$SearchSingleBusinessItems$rental$details$name$translations) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$value = value;
+    final lOther$value = other.value;
+    if (l$value != lOther$value) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$SearchSingleBusinessItems$rental$details$name$translations
+    on Query$SearchSingleBusinessItems$rental$details$name$translations {
+  CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations<
+          Query$SearchSingleBusinessItems$rental$details$name$translations>
+      get copyWith =>
+          CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations<
+    TRes> {
+  factory CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations(
+    Query$SearchSingleBusinessItems$rental$details$name$translations instance,
+    TRes Function(
+            Query$SearchSingleBusinessItems$rental$details$name$translations)
+        then,
+  ) = _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details$name$translations;
+
+  factory CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details$name$translations;
+
+  TRes call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations<
+            TRes> {
+  _CopyWithImpl$Query$SearchSingleBusinessItems$rental$details$name$translations(
+    this._instance,
+    this._then,
+  );
+
+  final Query$SearchSingleBusinessItems$rental$details$name$translations
+      _instance;
+
+  final TRes Function(
+      Query$SearchSingleBusinessItems$rental$details$name$translations) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? language_id = _undefined,
+    Object? value = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$SearchSingleBusinessItems$rental$details$name$translations(
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        value: value == _undefined || value == null
+            ? _instance.value
+            : (value as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details$name$translations<
+        TRes>
+    implements
+        CopyWith$Query$SearchSingleBusinessItems$rental$details$name$translations<
+            TRes> {
+  _CopyWithStubImpl$Query$SearchSingleBusinessItems$rental$details$name$translations(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? language_id,
+    String? value,
+    String? $__typename,
+  }) =>
+      _res;
+}

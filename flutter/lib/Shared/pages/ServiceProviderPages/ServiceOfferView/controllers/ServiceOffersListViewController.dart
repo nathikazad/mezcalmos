@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
-import 'package:mezcalmos/Shared/helpers/OffersHelpers/OffersHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class ServiceOffersListViewController {

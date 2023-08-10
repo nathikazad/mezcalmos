@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -615,4 +616,90 @@ Future<BusinessProfile?> update_business_profile_by_id(
   }
   return res.parsedData?.update_business_business_by_pk?.profile
       .toBusinessProfile();
+}
+
+Future<List<OfferItemData>> search_business_items({
+  required int businessId,
+  required int limit,
+  required int offset,
+  String? keyword,
+  bool withCache = true,
+}) async {
+  if (keyword != null) {
+    keyword = "%$keyword%";
+  }
+
+  final QueryResult<Query$SearchSingleBusinessItems> res = await _db
+      .graphQLClient
+      .query$SearchSingleBusinessItems(Options$Query$SearchSingleBusinessItems(
+          fetchPolicy: FetchPolicy.noCache,
+          variables: Variables$Query$SearchSingleBusinessItems(
+              business_id: businessId,
+              limit: limit,
+              offset: offset,
+              keyword: keyword)));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  List<OfferItemData> events = res.parsedData?.events
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$events e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details.name.translations),
+                  nameId: e.details.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  List<OfferItemData> products = res.parsedData?.products
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$products e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details.name.translations),
+                  nameId: e.details.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  List<OfferItemData> services = res.parsedData?.services
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$services e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details.name.translations),
+                  nameId: e.details.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  List<OfferItemData> homes = res.parsedData?.home
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$home e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details?.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details!.name.translations),
+                  nameId: e.details!.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  List<OfferItemData> rentals = res.parsedData?.rental
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$rental e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details.name.translations),
+                  nameId: e.details.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  return events + products + services + homes + rentals;
 }

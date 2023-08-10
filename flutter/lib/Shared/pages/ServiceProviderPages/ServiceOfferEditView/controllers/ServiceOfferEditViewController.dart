@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class ServiceOfferEditViewController {
   int? offerId;
@@ -11,16 +14,12 @@ class ServiceOfferEditViewController {
   late ServiceProviderType serviceProviderType;
   RxBool isLoading = RxBool(false);
   RxBool isEditMode = RxBool(false);
+  bool get isCoupon => selectedOfferType.value == OfferType.Coupon;
+  bool get isPromotion => selectedOfferType.value == OfferType.Coupon;
 
   RxBool _isFetchingSingle = RxBool(false);
 
-  // RxList<HomeCard> _homeRentals = RxList.empty();
-  // RxList<RentalCard> _rentals = RxList.empty();
-  // RxList<EventCard> _events = RxList.empty();
-  // RxList<ServiceCard> _services = RxList.empty();
-  // RxList<ProductCard> _product = RxList.empty();
-
-  RxList<OfferingData> allOfferings = RxList.empty();
+  RxList<OfferItemData> selectedItems = RxList.empty();
 
   Rxn<Offer> currentOffer = Rxn<Offer>();
   Rxn<OfferType> selectedOfferType = Rxn<OfferType>();
@@ -35,6 +34,8 @@ class ServiceOfferEditViewController {
   Rxn<DateTime> selectedEndDate = Rxn<DateTime>();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool get haveItems =>
+      currentOffer.value?.details.items?.isNotEmpty == true ? true : false;
 
   RxBool repeatOffer = RxBool(false);
   bool shouldRefetch = false;
@@ -57,7 +58,13 @@ class ServiceOfferEditViewController {
     isEditMode.value = true;
     await _fetchOfferInfo();
     selectedOfferType.value = currentOffer.value!.offerType;
-    offerNameController.text = currentOffer.value!.couponCode!;
+    selectedStartDate.value = DateTime.tryParse(
+        currentOffer.value!.details.validityRangeStart.toString());
+    selectedEndDate.value = DateTime.tryParse(
+        currentOffer.value!.details.validityRangeEnd.toString());
+    offerNameController.text = (selectedOfferType.value == OfferType.Coupon)
+        ? currentOffer.value!.couponCode!
+        : currentOffer.value!.name?.getTranslation(userLanguage) ?? "";
     selectedOfferOrderType.value =
         currentOffer.value!.details.offerForOrder.toOfferOrderType();
     selectedDiscountType.value = currentOffer.value!.details.discountType;
@@ -67,13 +74,16 @@ class ServiceOfferEditViewController {
   }
 
   Future<void> _fetchOfferInfo() async {
-    final Offer? offerData = await get_offer_by_id(
-      id: offerId!,
-    );
-    if (offerData == null) {
-      return;
+    try {
+      final Offer? offerData = await get_offer_by_id(
+        id: offerId!,
+      );
+
+      currentOffer.value = offerData;
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
-    currentOffer.value = offerData;
   }
 
   Map<String, List<dynamic>> _constructSelectedOfferingItems() {
@@ -82,12 +92,10 @@ class ServiceOfferEditViewController {
       "categories": <OfferingType>[],
       "nameIds": <num>[],
     };
-    allOfferings.forEach((OfferingData element) {
-      if (element.value) {
-        selectedOfferingItems["ids"]!.add(element.id);
-        selectedOfferingItems["categories"]!.add(element.type);
-        selectedOfferingItems["nameIds"]!.add(element.nameIds);
-      }
+    selectedItems.forEach((OfferItemData element) {
+      selectedOfferingItems["ids"]!.add(element.id);
+      selectedOfferingItems["categories"]!.add(element.type);
+      selectedOfferingItems["nameIds"]!.add(element.nameId);
     });
     return selectedOfferingItems;
   }
@@ -99,7 +107,9 @@ class ServiceOfferEditViewController {
       id: currentOffer.value?.id ?? -1,
       offerType: selectedOfferType.value!,
       serviceProviderId: serviceProviderId,
-      couponCode: offerNameController.text,
+      couponCode: selectedOfferType == OfferType.Coupon
+          ? offerNameController.text
+          : null,
       serviceProviderType: serviceProviderType,
       status: OfferStatus.Active,
       name: {
@@ -107,19 +117,21 @@ class ServiceOfferEditViewController {
       },
       nameId: currentOffer.value?.nameId ?? -1,
       details: OfferDetails(
-        categories: currentOffer.value?.details.categories,
+        // couponReusable: false,
         minimumOrderAmount: currentOffer.value?.details.minimumOrderAmount,
-        offerForItems: currentOffer.value?.details.offerForItems,
+        offerForItems:
+            OfferItemType.ParticularItems.toFirebaseFormattedString(),
         offerForOrder: selectedOfferOrderType.value!.toFirebaseFormatString(),
         discountType: selectedDiscountType.value,
         discountValue: double.parse(discountController.text),
-        weeklyRepeat: repeatOffer.value,
-        items: _constructSelectedOfferingItems()["ids"] as List<num>,
-        offeringTypes: _constructSelectedOfferingItems()["categories"]
-            as List<OfferingType>?,
-        nameIds: _constructSelectedOfferingItems()["nameIds"] as List<num>?,
-        validityRangeStart: selectedStartDate.value?.toIso8601String(),
-        validityRangeEnd: selectedEndDate.value?.toIso8601String(),
+        weeklyRepeat: false,
+        items:
+            selectedItems.map((OfferItemData element) => element.id).toList(),
+        nameIds: selectedItems
+            .map((OfferItemData element) => element.nameId)
+            .toList(),
+        validityRangeStart: selectedStartDate.value?.toUtc().toString(),
+        validityRangeEnd: selectedEndDate.value?.toUtc().toString(),
       ),
     );
   }
@@ -147,142 +159,38 @@ class ServiceOfferEditViewController {
 
   Future<void> _convertToOfferingData() async {
     mezDbgPrint("business Id  $serviceProviderId");
-    // await _fetchEvents();
-    // await _fetchProducts();
-    // await _fetchRentals();
-    // await _fetchServices();
-    // await _fetchHomeRentals();
-
-    // allOfferings.clear();
-    // _product.forEach((ProductCard element) {
-    //   allOfferings.add(OfferingData(
-    //     nameIds: element.details.nameId?.toInt() ?? -1,
-    //     type: OfferingType.Product,
-    //     id: element.id!.toInt(),
-    //     name: element.details.name,
-    //     image: element.details.firstImage ?? defaultUserImgUrl,
-    //   ));
-    // });
-    // _services.forEach((ServiceCard element) {
-    //   allOfferings.add(OfferingData(
-    //     type: OfferingType.Service,
-    //     nameIds: element.details.nameId?.toInt() ?? -1,
-    //     id: element.id!.toInt(),
-    //     name: element.details.name,
-    //     image: element.details.firstImage ?? defaultUserImgUrl,
-    //   ));
-    // });
-    // _events.forEach((EventCard element) {
-    //   allOfferings.add(OfferingData(
-    //     type: OfferingType.Event,
-    //     nameIds: element.details.nameId?.toInt() ?? -1,
-    //     id: element.id!.toInt(),
-    //     name: element.details.name,
-    //     image: element.details.firstImage ?? defaultUserImgUrl,
-    //   ));
-    // });
-    // _rentals.forEach((RentalCard element) {
-    //   allOfferings.add(OfferingData(
-    //     type: OfferingType.Rental,
-    //     nameIds: element.details.nameId?.toInt() ?? -1,
-    //     id: element.id!.toInt(),
-    //     name: element.details.name,
-    //     image: element.details.firstImage ?? defaultUserImgUrl,
-    //   ));
-    // });
-    // _homeRentals.forEach((HomeCard element) {
-    //   allOfferings.add(OfferingData(
-    //     nameIds: element.details.nameId?.toInt() ?? -1,
-    //     type: OfferingType.Home,
-    //     id: element.id!.toInt(),
-    //     name: element.details.name,
-    //     image: element.details.firstImage ?? defaultUserImgUrl,
-    //   ));
-    // });
-
-    // if (isEditMode.value) {
-    //   // using for each or for loop add all the data to selected offering
-    //   // from currentOffer.value!.details.offerings
-    //   if (currentOffer.value!.details.items == null) {
-    //     return;
-    //   }
-    //   allOfferings.forEach((OfferingData element) {
-    //     if (currentOffer.value!.details.items!.contains(element.id)) {
-    //       allOfferings
-    //           .where((OfferingData data) => data == element)
-    //           .first
-    //           .value = true;
-    //     }
-    //   });
-    // }
   }
 
-//   Future<void> _fetchProducts() async {
-//     _isFetchingSingle.value = true;
-//     _product.value = await get_business_products(
-//       businessId: serviceProviderId,
-//       withCache: false,
-//     );
-//     _isFetchingSingle.value = false;
-//   }
+  void switchOfferType(OfferType offerType) {
+    mezDbgPrint("Switching to ========>${offerType.name}");
+    selectedOfferType.value = offerType;
+  }
 
-//   Future<void> _fetchServices() async {
-//     _isFetchingSingle.value = true;
-//     _services.value = await get_business_services(
-//       businessId: serviceProviderId,
-//       withCache: false,
-//     );
-//     _isFetchingSingle.value = false;
-//   }
-
-//   Future<void> _fetchEvents() async {
-//     _isFetchingSingle.value = true;
-//     _events.value = await get_business_events(
-//       businessId: serviceProviderId,
-//       withCache: false,
-//     );
-//     _isFetchingSingle.value = false;
-//   }
-
-//   Future<void> _fetchRentals() async {
-//     _isFetchingSingle.value = true;
-//     _rentals.value = await get_business_rentals(
-//       busniessId: serviceProviderId,
-//       withCache: false,
-//     );
-//     _isFetchingSingle.value = false;
-//   }
-
-//   Future<void> _fetchHomeRentals() async {
-//     _isFetchingSingle.value = true;
-//     _homeRentals.value = await get_business_home_rentals(
-//       busniessId: serviceProviderId,
-//       withCache: false,
-//     );
-//     _isFetchingSingle.value = false;
-//   }
+  void removeItem({required int id}) {
+    selectedItems.removeWhere((OfferItemData element) => element.id == id);
+    selectedItems.refresh();
+  }
 }
 
-class OfferingData {
+class OfferItemData {
   int id;
-  int nameIds;
+  int nameId;
   Map<Language, String> name;
   String image;
   OfferingType type;
-  bool value;
-  OfferingData({
+
+  OfferItemData({
     required this.id,
     required this.name,
     required this.image,
-    required this.nameIds,
+    required this.nameId,
     required this.type,
-    this.value = false,
   });
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is OfferingData && other.id == id && other.type == type;
+    return other is OfferItemData && other.id == id && other.type == type;
   }
 }

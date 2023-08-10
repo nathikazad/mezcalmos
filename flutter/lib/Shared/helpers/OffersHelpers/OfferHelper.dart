@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
@@ -15,7 +17,8 @@ enum CouponError {
   AlreadyApplied,
   NotApplicable,
   InvalidCouponCode,
-  OrderAmountTooLow
+  OrderAmountTooLow,
+  NotReusable
 }
 
 Future<CouponError?> applyRestaurantCoupon(
@@ -75,6 +78,14 @@ Future<CouponError?> applyRestaurantCoupon(
             restaurantId: cart.restaurant!.restaurantId);
     if (numberOfCustomerRestaurantOrders > 0) return CouponError.FirstOrderOnly;
   }
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Restaurant)) {
+    return CouponError.NotReusable;
+  }
+  // }
   final num discount = calculateRestaurantCartDiscount(cart, coupon);
   if (discount == 0) return CouponError.NotApplicable;
   cart.discountValue += discount;
@@ -349,6 +360,14 @@ Future<CouponError?> applyBusinessCoupon(
             customerId: customerId, businessId: cart.businessId!.toInt());
     if (numberOfCustomerBusinessOrders > 0) return CouponError.FirstOrderOnly;
   }
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Business)) {
+    return CouponError.NotReusable;
+  }
+  // }
   final num discount = calculateBusinessCartDiscount(cart, coupon);
   if (discount == 0) return CouponError.NotApplicable;
   cart.discountValue += discount;
@@ -596,5 +615,67 @@ Future<CouponError?> checkLaundryCoupon(
             customerId: customerId, storeId: laundryStoreId);
     if (numberOfCustomerLaundryOrders > 0) return CouponError.FirstOrderOnly;
   }
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Laundry)) {
+    return CouponError.NotReusable;
+  }
+  // }
   return null;
+}
+
+extension OffersHelper on cModels.Offer {
+  bool get isActive {
+    if (details.validityRangeStart != null &&
+        details.validityRangeEnd != null &&
+        status == cModels.OfferStatus.Active) {
+      final DateTime now = DateTime.now();
+      final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+      final DateTime startDate = dateFormat.parse(details.validityRangeStart!);
+      final DateTime endDate = dateFormat.parse(details.validityRangeEnd!);
+
+      if (now.isAfter(startDate) && now.isBefore(endDate)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  DateTime? get startDate {
+    if (details.validityRangeStart != null) {
+      return DateTime.parse(details.validityRangeStart!);
+    }
+    return null;
+  }
+
+  DateTime? get endDate {
+    if (details.validityRangeEnd != null) {
+      return DateTime.parse(details.validityRangeEnd!);
+    }
+    return null;
+  }
+
+  IconData get icon {
+    switch (offerType) {
+      case cModels.OfferType.Coupon:
+        return Icons.discount_rounded;
+      case cModels.OfferType.Promotion:
+        return Icons.price_check;
+      case cModels.OfferType.MonthlySubscription:
+        return Icons.workspace_premium_rounded;
+    }
+  }
+}
+
+enum OfferItemType {
+  ParticularItems,
+  ParticularCategories,
+}
+
+extension OfferItemTypeExtension on OfferItemType {
+  String toFirebaseFormattedString() {
+    return toString().split('.').last.toLowerCase();
+  }
 }
