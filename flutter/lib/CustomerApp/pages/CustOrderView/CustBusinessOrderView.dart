@@ -325,6 +325,7 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
   }
 
   String? getBusinessPhone() {
+    if (cartController.currentOrderInView.value == null) return null;
     switch (cartController.currentOrderInView.value!.items.first.offeringType) {
       case OfferingType.Rental:
         return cartController

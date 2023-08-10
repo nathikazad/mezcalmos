@@ -13,12 +13,12 @@ import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 
 enum CouponError {
   UnavailableOrExpired,
-  Notreusable,
   FirstOrderOnly,
   AlreadyApplied,
   NotApplicable,
   InvalidCouponCode,
-  OrderAmountTooLow
+  OrderAmountTooLow,
+  NotReusable
 }
 
 Future<CouponError?> applyRestaurantCoupon(
@@ -78,14 +78,14 @@ Future<CouponError?> applyRestaurantCoupon(
             restaurantId: cart.restaurant!.restaurantId);
     if (numberOfCustomerRestaurantOrders > 0) return CouponError.FirstOrderOnly;
   }
-  if (coupon.details.couponReusable != true) {
-    if (await check_offer_applied(
-        customerId: customerId,
-        offerId: coupon.id.toInt(),
-        orderType: cModels.OrderType.Restaurant)) {
-      return CouponError.Notreusable;
-    }
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Restaurant)) {
+    return CouponError.NotReusable;
   }
+  // }
   final num discount = calculateRestaurantCartDiscount(cart, coupon);
   if (discount == 0) return CouponError.NotApplicable;
   cart.discountValue += discount;
@@ -360,14 +360,14 @@ Future<CouponError?> applyBusinessCoupon(
             customerId: customerId, businessId: cart.businessId!.toInt());
     if (numberOfCustomerBusinessOrders > 0) return CouponError.FirstOrderOnly;
   }
-  if (coupon.details.couponReusable != true) {
-    if (await check_offer_applied(
-        customerId: customerId,
-        offerId: coupon.id.toInt(),
-        orderType: cModels.OrderType.Business)) {
-      return CouponError.Notreusable;
-    }
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Business)) {
+    return CouponError.NotReusable;
   }
+  // }
   final num discount = calculateBusinessCartDiscount(cart, coupon);
   if (discount == 0) return CouponError.NotApplicable;
   cart.discountValue += discount;
@@ -615,14 +615,14 @@ Future<CouponError?> checkLaundryCoupon(
             customerId: customerId, storeId: laundryStoreId);
     if (numberOfCustomerLaundryOrders > 0) return CouponError.FirstOrderOnly;
   }
-  if (coupon.details.couponReusable != true) {
-    if (await check_offer_applied(
-        customerId: customerId,
-        offerId: coupon.id.toInt(),
-        orderType: cModels.OrderType.Laundry)) {
-      return CouponError.Notreusable;
-    }
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Laundry)) {
+    return CouponError.NotReusable;
   }
+  // }
   return null;
 }
 
@@ -678,4 +678,56 @@ extension OfferItemTypeExtension on OfferItemType {
   String toFirebaseFormattedString() {
     return toString().split('.').last.toLowerCase();
   }
+}
+
+Future<String> generateOfferDescription(
+    {required cModels.OfferDetails offerDetails}) async {
+  String description = "";
+
+  switch (offerDetails.discountType) {
+    case cModels.DiscountType.FlatAmount:
+      description += "Flat \$${offerDetails.discountValue} off ";
+      break;
+    case cModels.DiscountType.Percentage:
+      description += "${offerDetails.discountValue}% off ";
+      break;
+    case cModels.DiscountType.AnotherSameFlat:
+      description +=
+          "Buy 1 and Get Flat \$${offerDetails.discountValue} off on another one ";
+      break;
+    case cModels.DiscountType.AnotherSamePercentage:
+      description +=
+          "Buy 1 and Get ${offerDetails.discountValue}% off on another one ";
+      break;
+    default:
+  }
+
+  if (offerDetails.offerForItems != null) {
+    if (offerDetails.discountType == cModels.DiscountType.AnotherSameFlat ||
+        offerDetails.discountType ==
+            cModels.DiscountType.AnotherSamePercentage) {
+      description += "from ";
+    } else {
+      description += "on ";
+    }
+    if (offerDetails.offerForItems == "particularItems") {
+      description += "the following items";
+    } else if (offerDetails.offerForItems == "particularCategories") {
+      description += "the following categories";
+    }
+  }
+
+  if (offerDetails.offerForOrder == "firstOrder") {
+    description += "on your first order";
+  }
+  if (offerDetails.minimumOrderAmount != null) {
+    description +=
+        "with minimum order amount ${offerDetails.minimumOrderAmount}";
+  }
+  if (offerDetails.validityRangeStart != null &&
+      offerDetails.validityRangeEnd != null) {
+    description +=
+        " from ${offerDetails.validityRangeStart} to ${offerDetails.validityRangeEnd}";
+  }
+  return description;
 }

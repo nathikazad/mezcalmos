@@ -520,7 +520,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
           discountValue: data.details["discountValue"],
           weeklyRepeat: data.details["weeklyRepeat"],
           categories: data.details["categories"],
-          couponReusable: data.details["couponReusable"],
+          // couponReusable: data.details["couponReusable"],
           offeringTypes: data.details["offeringTypes"] == null
               ? <cModels.OfferingType>[]
               : data.details["offeringTypes"]
@@ -628,7 +628,7 @@ Future<cModels.Offer?> get_offer_by_id({
         discountValue: data.details["discountValue"],
         weeklyRepeat: data.details["weeklyRepeat"],
         categories: data.details["categories"],
-        couponReusable: data.details["couponReusable"],
+        // couponReusable: data.details["couponReusable"],
         offeringTypes: data.details["offeringTypes"] == null
             ? <cModels.OfferingType>[]
             : data.details["offeringTypes"]

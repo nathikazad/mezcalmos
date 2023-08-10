@@ -29,13 +29,17 @@ insert_permissions:
         customer_id:
           _eq: X-Hasura-User-Id
       columns:
+        - applied_offers
         - customer_id
+        - discount_value
         - restaurant_id
 select_permissions:
   - role: customer
     permission:
       columns:
+        - applied_offers
         - customer_id
+        - discount_value
         - restaurant_id
       computed_fields:
         - cost
@@ -46,6 +50,8 @@ update_permissions:
   - role: customer
     permission:
       columns:
+        - applied_offers
+        - discount_value
         - restaurant_id
       filter:
         customer_id:

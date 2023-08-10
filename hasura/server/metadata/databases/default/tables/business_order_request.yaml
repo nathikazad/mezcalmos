@@ -82,6 +82,7 @@ select_permissions:
         - review_id
         - customer_app_type
         - notes
+        - order_type
         - status
         - cancellation_time
         - order_time

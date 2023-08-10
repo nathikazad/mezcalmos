@@ -6604,12 +6604,12 @@ extension ClientExtension$Query$get_home_by_id on graphql.GraphQLClient {
 
 class Query$get_home_by_id$business_home_by_pk {
   Query$get_home_by_id$business_home_by_pk({
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.available_for,
     required this.offering_type,
     required this.location_id,
@@ -6629,21 +6629,15 @@ class Query$get_home_by_id$business_home_by_pk {
     final l$location_id = json['location_id'];
     final l$$__typename = json['__typename'];
     return Query$get_home_by_id$business_home_by_pk(
-      details: l$details == null
-          ? null
-          : Query$get_home_by_id$business_home_by_pk$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$get_home_by_id$business_home_by_pk$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$get_home_by_id$business_home_by_pk$business.fromJson(
-              (l$business as Map<String, dynamic>)),
+      business: Query$get_home_by_id$business_home_by_pk$business.fromJson(
+          (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$get_home_by_id$business_home_by_pk$location.fromJson(
-              (l$location as Map<String, dynamic>)),
+      location: Query$get_home_by_id$business_home_by_pk$location.fromJson(
+          (l$location as Map<String, dynamic>)),
       available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       location_id: (l$location_id as int),
@@ -6651,17 +6645,17 @@ class Query$get_home_by_id$business_home_by_pk {
     );
   }
 
-  final Query$get_home_by_id$business_home_by_pk$details? details;
+  final Query$get_home_by_id$business_home_by_pk$details details;
 
   final int id;
 
-  final Query$get_home_by_id$business_home_by_pk$business? business;
+  final Query$get_home_by_id$business_home_by_pk$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$get_home_by_id$business_home_by_pk$location? location;
+  final Query$get_home_by_id$business_home_by_pk$location location;
 
   final String available_for;
 
@@ -6674,17 +6668,17 @@ class Query$get_home_by_id$business_home_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
@@ -6847,22 +6841,22 @@ class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_home_by_id$business_home_by_pk(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
-            : (details as Query$get_home_by_id$business_home_by_pk$details?),
+            : (details as Query$get_home_by_id$business_home_by_pk$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
-            : (business as Query$get_home_by_id$business_home_by_pk$business?),
+            : (business as Query$get_home_by_id$business_home_by_pk$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
-            : (location as Query$get_home_by_id$business_home_by_pk$location?),
+            : (location as Query$get_home_by_id$business_home_by_pk$location),
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
@@ -6878,31 +6872,22 @@ class _CopyWithImpl$Query$get_home_by_id$business_home_by_pk<TRes>
       ));
   CopyWith$Query$get_home_by_id$business_home_by_pk$details<TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$get_home_by_id$business_home_by_pk$details.stub(
-            _then(_instance))
-        : CopyWith$Query$get_home_by_id$business_home_by_pk$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$get_home_by_id$business_home_by_pk$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_home_by_id$business_home_by_pk$business<TRes>
       get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$get_home_by_id$business_home_by_pk$business.stub(
-            _then(_instance))
-        : CopyWith$Query$get_home_by_id$business_home_by_pk$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$get_home_by_id$business_home_by_pk$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$get_home_by_id$business_home_by_pk$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_home_by_id$business_home_by_pk$location.stub(
-            _then(_instance))
-        : CopyWith$Query$get_home_by_id$business_home_by_pk$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_home_by_id$business_home_by_pk$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -10103,12 +10088,12 @@ extension ClientExtension$Query$get_home on graphql.GraphQLClient {
 
 class Query$get_home$business_home {
   Query$get_home$business_home({
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.available_for,
     required this.offering_type,
     required this.location_id,
@@ -10127,21 +10112,15 @@ class Query$get_home$business_home {
     final l$location_id = json['location_id'];
     final l$$__typename = json['__typename'];
     return Query$get_home$business_home(
-      details: l$details == null
-          ? null
-          : Query$get_home$business_home$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$get_home$business_home$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$get_home$business_home$business.fromJson(
-              (l$business as Map<String, dynamic>)),
+      business: Query$get_home$business_home$business.fromJson(
+          (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$get_home$business_home$location.fromJson(
-              (l$location as Map<String, dynamic>)),
+      location: Query$get_home$business_home$location.fromJson(
+          (l$location as Map<String, dynamic>)),
       available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       location_id: (l$location_id as int),
@@ -10149,17 +10128,17 @@ class Query$get_home$business_home {
     );
   }
 
-  final Query$get_home$business_home$details? details;
+  final Query$get_home$business_home$details details;
 
   final int id;
 
-  final Query$get_home$business_home$business? business;
+  final Query$get_home$business_home$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$get_home$business_home$location? location;
+  final Query$get_home$business_home$location location;
 
   final String available_for;
 
@@ -10172,17 +10151,17 @@ class Query$get_home$business_home {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
@@ -10344,22 +10323,22 @@ class _CopyWithImpl$Query$get_home$business_home<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_home$business_home(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
-            : (details as Query$get_home$business_home$details?),
+            : (details as Query$get_home$business_home$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
-            : (business as Query$get_home$business_home$business?),
+            : (business as Query$get_home$business_home$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
-            : (location as Query$get_home$business_home$location?),
+            : (location as Query$get_home$business_home$location),
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
@@ -10375,26 +10354,20 @@ class _CopyWithImpl$Query$get_home$business_home<TRes>
       ));
   CopyWith$Query$get_home$business_home$details<TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$get_home$business_home$details.stub(_then(_instance))
-        : CopyWith$Query$get_home$business_home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$get_home$business_home$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_home$business_home$business<TRes> get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$get_home$business_home$business.stub(_then(_instance))
-        : CopyWith$Query$get_home$business_home$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$get_home$business_home$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$get_home$business_home$location<TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_home$business_home$location.stub(_then(_instance))
-        : CopyWith$Query$get_home$business_home$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_home$business_home$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -12728,12 +12701,12 @@ extension ClientExtension$Query$get_real_estates on graphql.GraphQLClient {
 
 class Query$get_real_estates$business_home {
   Query$get_real_estates$business_home({
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.available_for,
     required this.offering_type,
     required this.location_id,
@@ -12753,21 +12726,15 @@ class Query$get_real_estates$business_home {
     final l$location_id = json['location_id'];
     final l$$__typename = json['__typename'];
     return Query$get_real_estates$business_home(
-      details: l$details == null
-          ? null
-          : Query$get_real_estates$business_home$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$get_real_estates$business_home$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$get_real_estates$business_home$business.fromJson(
-              (l$business as Map<String, dynamic>)),
+      business: Query$get_real_estates$business_home$business.fromJson(
+          (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$get_real_estates$business_home$location.fromJson(
-              (l$location as Map<String, dynamic>)),
+      location: Query$get_real_estates$business_home$location.fromJson(
+          (l$location as Map<String, dynamic>)),
       available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       location_id: (l$location_id as int),
@@ -12775,17 +12742,17 @@ class Query$get_real_estates$business_home {
     );
   }
 
-  final Query$get_real_estates$business_home$details? details;
+  final Query$get_real_estates$business_home$details details;
 
   final int id;
 
-  final Query$get_real_estates$business_home$business? business;
+  final Query$get_real_estates$business_home$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$get_real_estates$business_home$location? location;
+  final Query$get_real_estates$business_home$location location;
 
   final String available_for;
 
@@ -12798,17 +12765,17 @@ class Query$get_real_estates$business_home {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
@@ -12971,22 +12938,22 @@ class _CopyWithImpl$Query$get_real_estates$business_home<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_real_estates$business_home(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
-            : (details as Query$get_real_estates$business_home$details?),
+            : (details as Query$get_real_estates$business_home$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
-            : (business as Query$get_real_estates$business_home$business?),
+            : (business as Query$get_real_estates$business_home$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
-            : (location as Query$get_real_estates$business_home$location?),
+            : (location as Query$get_real_estates$business_home$location),
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
@@ -13002,29 +12969,20 @@ class _CopyWithImpl$Query$get_real_estates$business_home<TRes>
       ));
   CopyWith$Query$get_real_estates$business_home$details<TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$get_real_estates$business_home$details.stub(
-            _then(_instance))
-        : CopyWith$Query$get_real_estates$business_home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$get_real_estates$business_home$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_real_estates$business_home$business<TRes> get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$get_real_estates$business_home$business.stub(
-            _then(_instance))
-        : CopyWith$Query$get_real_estates$business_home$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$get_real_estates$business_home$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$get_real_estates$business_home$location<TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_real_estates$business_home$location.stub(
-            _then(_instance))
-        : CopyWith$Query$get_real_estates$business_home$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_real_estates$business_home$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -15239,12 +15197,12 @@ extension ClientExtension$Query$get_business_home on graphql.GraphQLClient {
 
 class Query$get_business_home$business_home {
   Query$get_business_home$business_home({
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.available_for,
     required this.offering_type,
     required this.location_id,
@@ -15264,21 +15222,15 @@ class Query$get_business_home$business_home {
     final l$location_id = json['location_id'];
     final l$$__typename = json['__typename'];
     return Query$get_business_home$business_home(
-      details: l$details == null
-          ? null
-          : Query$get_business_home$business_home$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$get_business_home$business_home$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$get_business_home$business_home$business.fromJson(
-              (l$business as Map<String, dynamic>)),
+      business: Query$get_business_home$business_home$business.fromJson(
+          (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$get_business_home$business_home$location.fromJson(
-              (l$location as Map<String, dynamic>)),
+      location: Query$get_business_home$business_home$location.fromJson(
+          (l$location as Map<String, dynamic>)),
       available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       location_id: (l$location_id as int),
@@ -15286,17 +15238,17 @@ class Query$get_business_home$business_home {
     );
   }
 
-  final Query$get_business_home$business_home$details? details;
+  final Query$get_business_home$business_home$details details;
 
   final int id;
 
-  final Query$get_business_home$business_home$business? business;
+  final Query$get_business_home$business_home$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$get_business_home$business_home$location? location;
+  final Query$get_business_home$business_home$location location;
 
   final String available_for;
 
@@ -15309,17 +15261,17 @@ class Query$get_business_home$business_home {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
@@ -15482,22 +15434,22 @@ class _CopyWithImpl$Query$get_business_home$business_home<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_business_home$business_home(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
-            : (details as Query$get_business_home$business_home$details?),
+            : (details as Query$get_business_home$business_home$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
-            : (business as Query$get_business_home$business_home$business?),
+            : (business as Query$get_business_home$business_home$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
-            : (location as Query$get_business_home$business_home$location?),
+            : (location as Query$get_business_home$business_home$location),
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
@@ -15513,29 +15465,20 @@ class _CopyWithImpl$Query$get_business_home$business_home<TRes>
       ));
   CopyWith$Query$get_business_home$business_home$details<TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$get_business_home$business_home$details.stub(
-            _then(_instance))
-        : CopyWith$Query$get_business_home$business_home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$get_business_home$business_home$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_business_home$business_home$business<TRes> get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$get_business_home$business_home$business.stub(
-            _then(_instance))
-        : CopyWith$Query$get_business_home$business_home$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$get_business_home$business_home$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$get_business_home$business_home$location<TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_business_home$business_home$location.stub(
-            _then(_instance))
-        : CopyWith$Query$get_business_home$business_home$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_business_home$business_home$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -17772,12 +17715,12 @@ extension ClientExtension$Query$get_business_real_estate
 
 class Query$get_business_real_estate$business_home {
   Query$get_business_real_estate$business_home({
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.available_for,
     required this.offering_type,
     required this.location_id,
@@ -17797,21 +17740,15 @@ class Query$get_business_real_estate$business_home {
     final l$location_id = json['location_id'];
     final l$$__typename = json['__typename'];
     return Query$get_business_real_estate$business_home(
-      details: l$details == null
-          ? null
-          : Query$get_business_real_estate$business_home$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$get_business_real_estate$business_home$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$get_business_real_estate$business_home$business.fromJson(
-              (l$business as Map<String, dynamic>)),
+      business: Query$get_business_real_estate$business_home$business.fromJson(
+          (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$get_business_real_estate$business_home$location.fromJson(
-              (l$location as Map<String, dynamic>)),
+      location: Query$get_business_real_estate$business_home$location.fromJson(
+          (l$location as Map<String, dynamic>)),
       available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       location_id: (l$location_id as int),
@@ -17819,17 +17756,17 @@ class Query$get_business_real_estate$business_home {
     );
   }
 
-  final Query$get_business_real_estate$business_home$details? details;
+  final Query$get_business_real_estate$business_home$details details;
 
   final int id;
 
-  final Query$get_business_real_estate$business_home$business? business;
+  final Query$get_business_real_estate$business_home$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$get_business_real_estate$business_home$location? location;
+  final Query$get_business_real_estate$business_home$location location;
 
   final String available_for;
 
@@ -17842,17 +17779,17 @@ class Query$get_business_real_estate$business_home {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
@@ -18018,25 +17955,24 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_business_real_estate$business_home(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
-            : (details
-                as Query$get_business_real_estate$business_home$details?),
+            : (details as Query$get_business_real_estate$business_home$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
             : (business
-                as Query$get_business_real_estate$business_home$business?),
+                as Query$get_business_real_estate$business_home$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_business_real_estate$business_home$location?),
+                as Query$get_business_real_estate$business_home$location),
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
@@ -18053,31 +17989,22 @@ class _CopyWithImpl$Query$get_business_real_estate$business_home<TRes>
   CopyWith$Query$get_business_real_estate$business_home$details<TRes>
       get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$get_business_real_estate$business_home$details.stub(
-            _then(_instance))
-        : CopyWith$Query$get_business_real_estate$business_home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$get_business_real_estate$business_home$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_business_real_estate$business_home$business<TRes>
       get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$get_business_real_estate$business_home$business.stub(
-            _then(_instance))
-        : CopyWith$Query$get_business_real_estate$business_home$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$get_business_real_estate$business_home$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$get_business_real_estate$business_home$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_business_real_estate$business_home$location.stub(
-            _then(_instance))
-        : CopyWith$Query$get_business_real_estate$business_home$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_business_real_estate$business_home$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -23060,12 +22987,12 @@ extension ClientExtension$Mutation$update_home_by_id on graphql.GraphQLClient {
 
 class Mutation$update_home_by_id$update_business_home_by_pk {
   Mutation$update_home_by_id$update_business_home_by_pk({
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.available_for,
     required this.offering_type,
     required this.location_id,
@@ -23085,21 +23012,15 @@ class Mutation$update_home_by_id$update_business_home_by_pk {
     final l$location_id = json['location_id'];
     final l$$__typename = json['__typename'];
     return Mutation$update_home_by_id$update_business_home_by_pk(
-      details: l$details == null
-          ? null
-          : Mutation$update_home_by_id$update_business_home_by_pk$details
-              .fromJson((l$details as Map<String, dynamic>)),
+      details: Mutation$update_home_by_id$update_business_home_by_pk$details
+          .fromJson((l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Mutation$update_home_by_id$update_business_home_by_pk$business
-              .fromJson((l$business as Map<String, dynamic>)),
+      business: Mutation$update_home_by_id$update_business_home_by_pk$business
+          .fromJson((l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Mutation$update_home_by_id$update_business_home_by_pk$location
-              .fromJson((l$location as Map<String, dynamic>)),
+      location: Mutation$update_home_by_id$update_business_home_by_pk$location
+          .fromJson((l$location as Map<String, dynamic>)),
       available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       location_id: (l$location_id as int),
@@ -23107,19 +23028,17 @@ class Mutation$update_home_by_id$update_business_home_by_pk {
     );
   }
 
-  final Mutation$update_home_by_id$update_business_home_by_pk$details? details;
+  final Mutation$update_home_by_id$update_business_home_by_pk$details details;
 
   final int id;
 
-  final Mutation$update_home_by_id$update_business_home_by_pk$business?
-      business;
+  final Mutation$update_home_by_id$update_business_home_by_pk$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Mutation$update_home_by_id$update_business_home_by_pk$location?
-      location;
+  final Mutation$update_home_by_id$update_business_home_by_pk$location location;
 
   final String available_for;
 
@@ -23132,17 +23051,17 @@ class Mutation$update_home_by_id$update_business_home_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
@@ -23313,25 +23232,25 @@ class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$update_home_by_id$update_business_home_by_pk(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Mutation$update_home_by_id$update_business_home_by_pk$details?),
+                as Mutation$update_home_by_id$update_business_home_by_pk$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
             : (business
-                as Mutation$update_home_by_id$update_business_home_by_pk$business?),
+                as Mutation$update_home_by_id$update_business_home_by_pk$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Mutation$update_home_by_id$update_business_home_by_pk$location?),
+                as Mutation$update_home_by_id$update_business_home_by_pk$location),
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
@@ -23348,31 +23267,22 @@ class _CopyWithImpl$Mutation$update_home_by_id$update_business_home_by_pk<TRes>
   CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details<TRes>
       get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details
-            .stub(_then(_instance))
-        : CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business<TRes>
       get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business
-            .stub(_then(_instance))
-        : CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location
-            .stub(_then(_instance))
-        : CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Mutation$update_home_by_id$update_business_home_by_pk$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -33478,7 +33388,7 @@ class _CopyWithStubImpl$Query$getHomeRentalOrderRequest$business_order_request_b
 class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home {
   Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home({
     required this.id,
-    this.details,
+    required this.details,
     required this.$__typename,
   });
 
@@ -33489,9 +33399,8 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home {
     final l$$__typename = json['__typename'];
     return Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
       id: (l$id as int),
-      details: l$details == null
-          ? null
-          : Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+      details:
+          Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -33499,7 +33408,7 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home {
 
   final int id;
 
-  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?
+  final Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
       details;
 
   final String $__typename;
@@ -33509,7 +33418,7 @@ class Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home {
     final l$id = id;
     _resultData['id'] = l$id;
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -33618,10 +33527,10 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
       _then(
           Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?),
+                as Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -33629,11 +33538,8 @@ class _CopyWithImpl$Query$getHomeRentalOrderRequest$business_order_request_by_pk
   CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
       TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
-            .stub(_then(_instance))
-        : CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$getHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+        local$details, (e) => call(details: e));
   }
 }
 
@@ -40498,7 +40404,7 @@ class _CopyWithStubImpl$Subscription$listenHomeRentalOrderRequest$business_order
 class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home {
   Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home({
     required this.id,
-    this.details,
+    required this.details,
     required this.$__typename,
   });
 
@@ -40509,9 +40415,8 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
     final l$$__typename = json['__typename'];
     return Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
       id: (l$id as int),
-      details: l$details == null
-          ? null
-          : Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
+      details:
+          Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -40519,7 +40424,7 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
 
   final int id;
 
-  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?
+  final Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
       details;
 
   final String $__typename;
@@ -40529,7 +40434,7 @@ class Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$ite
     final l$id = id;
     _resultData['id'] = l$id;
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -40638,10 +40543,10 @@ class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_req
       _then(
           Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details?),
+                as Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -40649,11 +40554,8 @@ class _CopyWithImpl$Subscription$listenHomeRentalOrderRequest$business_order_req
   CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details<
       TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Subscription$listenHomeRentalOrderRequest$business_order_request_by_pk$items$home$details(
+        local$details, (e) => call(details: e));
   }
 }
 
@@ -45437,12 +45339,12 @@ extension ClientExtension$Query$get_coworking on graphql.GraphQLClient {
 
 class Query$get_coworking$business_home {
   Query$get_coworking$business_home({
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.available_for,
     required this.offering_type,
     required this.location_id,
@@ -45462,21 +45364,15 @@ class Query$get_coworking$business_home {
     final l$location_id = json['location_id'];
     final l$$__typename = json['__typename'];
     return Query$get_coworking$business_home(
-      details: l$details == null
-          ? null
-          : Query$get_coworking$business_home$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$get_coworking$business_home$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$get_coworking$business_home$business.fromJson(
-              (l$business as Map<String, dynamic>)),
+      business: Query$get_coworking$business_home$business.fromJson(
+          (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$get_coworking$business_home$location.fromJson(
-              (l$location as Map<String, dynamic>)),
+      location: Query$get_coworking$business_home$location.fromJson(
+          (l$location as Map<String, dynamic>)),
       available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       location_id: (l$location_id as int),
@@ -45484,17 +45380,17 @@ class Query$get_coworking$business_home {
     );
   }
 
-  final Query$get_coworking$business_home$details? details;
+  final Query$get_coworking$business_home$details details;
 
   final int id;
 
-  final Query$get_coworking$business_home$business? business;
+  final Query$get_coworking$business_home$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$get_coworking$business_home$location? location;
+  final Query$get_coworking$business_home$location location;
 
   final String available_for;
 
@@ -45507,17 +45403,17 @@ class Query$get_coworking$business_home {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
@@ -45679,22 +45575,22 @@ class _CopyWithImpl$Query$get_coworking$business_home<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_coworking$business_home(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
-            : (details as Query$get_coworking$business_home$details?),
+            : (details as Query$get_coworking$business_home$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
-            : (business as Query$get_coworking$business_home$business?),
+            : (business as Query$get_coworking$business_home$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
-            : (location as Query$get_coworking$business_home$location?),
+            : (location as Query$get_coworking$business_home$location),
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
@@ -45710,29 +45606,20 @@ class _CopyWithImpl$Query$get_coworking$business_home<TRes>
       ));
   CopyWith$Query$get_coworking$business_home$details<TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$get_coworking$business_home$details.stub(
-            _then(_instance))
-        : CopyWith$Query$get_coworking$business_home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$get_coworking$business_home$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_coworking$business_home$business<TRes> get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$get_coworking$business_home$business.stub(
-            _then(_instance))
-        : CopyWith$Query$get_coworking$business_home$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$get_coworking$business_home$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$get_coworking$business_home$location<TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_coworking$business_home$location.stub(
-            _then(_instance))
-        : CopyWith$Query$get_coworking$business_home$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_coworking$business_home$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -47936,12 +47823,12 @@ extension ClientExtension$Query$get_coworking_by_id on graphql.GraphQLClient {
 
 class Query$get_coworking_by_id$business_home_by_pk {
   Query$get_coworking_by_id$business_home_by_pk({
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.available_for,
     required this.offering_type,
     required this.location_id,
@@ -47961,21 +47848,15 @@ class Query$get_coworking_by_id$business_home_by_pk {
     final l$location_id = json['location_id'];
     final l$$__typename = json['__typename'];
     return Query$get_coworking_by_id$business_home_by_pk(
-      details: l$details == null
-          ? null
-          : Query$get_coworking_by_id$business_home_by_pk$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$get_coworking_by_id$business_home_by_pk$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$get_coworking_by_id$business_home_by_pk$business.fromJson(
-              (l$business as Map<String, dynamic>)),
+      business: Query$get_coworking_by_id$business_home_by_pk$business.fromJson(
+          (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$get_coworking_by_id$business_home_by_pk$location.fromJson(
-              (l$location as Map<String, dynamic>)),
+      location: Query$get_coworking_by_id$business_home_by_pk$location.fromJson(
+          (l$location as Map<String, dynamic>)),
       available_for: (l$available_for as String),
       offering_type: (l$offering_type as String),
       location_id: (l$location_id as int),
@@ -47983,17 +47864,17 @@ class Query$get_coworking_by_id$business_home_by_pk {
     );
   }
 
-  final Query$get_coworking_by_id$business_home_by_pk$details? details;
+  final Query$get_coworking_by_id$business_home_by_pk$details details;
 
   final int id;
 
-  final Query$get_coworking_by_id$business_home_by_pk$business? business;
+  final Query$get_coworking_by_id$business_home_by_pk$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$get_coworking_by_id$business_home_by_pk$location? location;
+  final Query$get_coworking_by_id$business_home_by_pk$location location;
 
   final String available_for;
 
@@ -48006,17 +47887,17 @@ class Query$get_coworking_by_id$business_home_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$offering_type = offering_type;
@@ -48183,25 +48064,25 @@ class _CopyWithImpl$Query$get_coworking_by_id$business_home_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_coworking_by_id$business_home_by_pk(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$get_coworking_by_id$business_home_by_pk$details?),
+                as Query$get_coworking_by_id$business_home_by_pk$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
             : (business
-                as Query$get_coworking_by_id$business_home_by_pk$business?),
+                as Query$get_coworking_by_id$business_home_by_pk$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_coworking_by_id$business_home_by_pk$location?),
+                as Query$get_coworking_by_id$business_home_by_pk$location),
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
@@ -48218,31 +48099,22 @@ class _CopyWithImpl$Query$get_coworking_by_id$business_home_by_pk<TRes>
   CopyWith$Query$get_coworking_by_id$business_home_by_pk$details<TRes>
       get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$get_coworking_by_id$business_home_by_pk$details.stub(
-            _then(_instance))
-        : CopyWith$Query$get_coworking_by_id$business_home_by_pk$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$get_coworking_by_id$business_home_by_pk$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_coworking_by_id$business_home_by_pk$business<TRes>
       get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$get_coworking_by_id$business_home_by_pk$business.stub(
-            _then(_instance))
-        : CopyWith$Query$get_coworking_by_id$business_home_by_pk$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$get_coworking_by_id$business_home_by_pk$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$get_coworking_by_id$business_home_by_pk$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_coworking_by_id$business_home_by_pk$location.stub(
-            _then(_instance))
-        : CopyWith$Query$get_coworking_by_id$business_home_by_pk$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_coworking_by_id$business_home_by_pk$location(
+        local$location, (e) => call(location: e));
   }
 }
 

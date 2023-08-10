@@ -2589,12 +2589,12 @@ class _CopyWithStubImpl$Query$getBusinessCart$business_cart$items<TRes>
 class Query$getBusinessCart$business_cart$items$home {
   Query$getBusinessCart$business_cart$items$home({
     required this.available_for,
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.offering_type,
     required this.$__typename,
   });
@@ -2612,20 +2612,16 @@ class Query$getBusinessCart$business_cart$items$home {
     final l$$__typename = json['__typename'];
     return Query$getBusinessCart$business_cart$items$home(
       available_for: (l$available_for as String),
-      details: l$details == null
-          ? null
-          : Query$getBusinessCart$business_cart$items$home$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$getBusinessCart$business_cart$items$home$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$getBusinessCart$business_cart$items$home$business.fromJson(
+      business:
+          Query$getBusinessCart$business_cart$items$home$business.fromJson(
               (l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$getBusinessCart$business_cart$items$home$location.fromJson(
+      location:
+          Query$getBusinessCart$business_cart$items$home$location.fromJson(
               (l$location as Map<String, dynamic>)),
       offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2634,17 +2630,17 @@ class Query$getBusinessCart$business_cart$items$home {
 
   final String available_for;
 
-  final Query$getBusinessCart$business_cart$items$home$details? details;
+  final Query$getBusinessCart$business_cart$items$home$details details;
 
   final int id;
 
-  final Query$getBusinessCart$business_cart$items$home$business? business;
+  final Query$getBusinessCart$business_cart$items$home$business business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$getBusinessCart$business_cart$items$home$location? location;
+  final Query$getBusinessCart$business_cart$items$home$location location;
 
   final String offering_type;
 
@@ -2655,17 +2651,17 @@ class Query$getBusinessCart$business_cart$items$home {
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$offering_type = offering_type;
     _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
@@ -2822,25 +2818,25 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$home<TRes>
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$getBusinessCart$business_cart$items$home$details?),
+                as Query$getBusinessCart$business_cart$items$home$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
             : (business
-                as Query$getBusinessCart$business_cart$items$home$business?),
+                as Query$getBusinessCart$business_cart$items$home$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$getBusinessCart$business_cart$items$home$location?),
+                as Query$getBusinessCart$business_cart$items$home$location),
         offering_type: offering_type == _undefined || offering_type == null
             ? _instance.offering_type
             : (offering_type as String),
@@ -2851,31 +2847,22 @@ class _CopyWithImpl$Query$getBusinessCart$business_cart$items$home<TRes>
   CopyWith$Query$getBusinessCart$business_cart$items$home$details<TRes>
       get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$getBusinessCart$business_cart$items$home$details.stub(
-            _then(_instance))
-        : CopyWith$Query$getBusinessCart$business_cart$items$home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$getBusinessCart$business_cart$items$home$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$getBusinessCart$business_cart$items$home$business<TRes>
       get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$getBusinessCart$business_cart$items$home$business.stub(
-            _then(_instance))
-        : CopyWith$Query$getBusinessCart$business_cart$items$home$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$getBusinessCart$business_cart$items$home$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$getBusinessCart$business_cart$items$home$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$getBusinessCart$business_cart$items$home$location.stub(
-            _then(_instance))
-        : CopyWith$Query$getBusinessCart$business_cart$items$home$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$getBusinessCart$business_cart$items$home$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -16975,12 +16962,12 @@ class _CopyWithStubImpl$Subscription$listen_on_business_order_request$business_o
 class Subscription$listen_on_business_order_request$business_order_request$items$home {
   Subscription$listen_on_business_order_request$business_order_request$items$home({
     required this.available_for,
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.offering_type,
     required this.$__typename,
   });
@@ -16998,20 +16985,17 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_business_order_request$business_order_request$items$home(
       available_for: (l$available_for as String),
-      details: l$details == null
-          ? null
-          : Subscription$listen_on_business_order_request$business_order_request$items$home$details
+      details:
+          Subscription$listen_on_business_order_request$business_order_request$items$home$details
               .fromJson((l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Subscription$listen_on_business_order_request$business_order_request$items$home$business
+      business:
+          Subscription$listen_on_business_order_request$business_order_request$items$home$business
               .fromJson((l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Subscription$listen_on_business_order_request$business_order_request$items$home$location
+      location:
+          Subscription$listen_on_business_order_request$business_order_request$items$home$location
               .fromJson((l$location as Map<String, dynamic>)),
       offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -17020,19 +17004,19 @@ class Subscription$listen_on_business_order_request$business_order_request$items
 
   final String available_for;
 
-  final Subscription$listen_on_business_order_request$business_order_request$items$home$details?
+  final Subscription$listen_on_business_order_request$business_order_request$items$home$details
       details;
 
   final int id;
 
-  final Subscription$listen_on_business_order_request$business_order_request$items$home$business?
+  final Subscription$listen_on_business_order_request$business_order_request$items$home$business
       business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Subscription$listen_on_business_order_request$business_order_request$items$home$location?
+  final Subscription$listen_on_business_order_request$business_order_request$items$home$location
       location;
 
   final String offering_type;
@@ -17044,17 +17028,17 @@ class Subscription$listen_on_business_order_request$business_order_request$items
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$offering_type = offering_type;
     _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
@@ -17227,25 +17211,25 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Subscription$listen_on_business_order_request$business_order_request$items$home$details?),
+                as Subscription$listen_on_business_order_request$business_order_request$items$home$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
             : (business
-                as Subscription$listen_on_business_order_request$business_order_request$items$home$business?),
+                as Subscription$listen_on_business_order_request$business_order_request$items$home$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Subscription$listen_on_business_order_request$business_order_request$items$home$location?),
+                as Subscription$listen_on_business_order_request$business_order_request$items$home$location),
         offering_type: offering_type == _undefined || offering_type == null
             ? _instance.offering_type
             : (offering_type as String),
@@ -17256,31 +17240,22 @@ class _CopyWithImpl$Subscription$listen_on_business_order_request$business_order
   CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$details<
       TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$details
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$business<
       TRes> get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$business
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$location
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Subscription$listen_on_business_order_request$business_order_request$items$home$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -27967,12 +27942,12 @@ class _CopyWithStubImpl$Query$get_business_order_request$business_order_request_
 class Query$get_business_order_request$business_order_request_by_pk$items$home {
   Query$get_business_order_request$business_order_request_by_pk$items$home({
     required this.available_for,
-    this.details,
+    required this.details,
     required this.id,
-    this.business,
+    required this.business,
     required this.bathrooms,
     required this.bedrooms,
-    this.location,
+    required this.location,
     required this.offering_type,
     required this.$__typename,
   });
@@ -27990,20 +27965,17 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home {
     final l$$__typename = json['__typename'];
     return Query$get_business_order_request$business_order_request_by_pk$items$home(
       available_for: (l$available_for as String),
-      details: l$details == null
-          ? null
-          : Query$get_business_order_request$business_order_request_by_pk$items$home$details
+      details:
+          Query$get_business_order_request$business_order_request_by_pk$items$home$details
               .fromJson((l$details as Map<String, dynamic>)),
       id: (l$id as int),
-      business: l$business == null
-          ? null
-          : Query$get_business_order_request$business_order_request_by_pk$items$home$business
+      business:
+          Query$get_business_order_request$business_order_request_by_pk$items$home$business
               .fromJson((l$business as Map<String, dynamic>)),
       bathrooms: (l$bathrooms as int),
       bedrooms: (l$bedrooms as int),
-      location: l$location == null
-          ? null
-          : Query$get_business_order_request$business_order_request_by_pk$items$home$location
+      location:
+          Query$get_business_order_request$business_order_request_by_pk$items$home$location
               .fromJson((l$location as Map<String, dynamic>)),
       offering_type: (l$offering_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -28012,19 +27984,19 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home {
 
   final String available_for;
 
-  final Query$get_business_order_request$business_order_request_by_pk$items$home$details?
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$details
       details;
 
   final int id;
 
-  final Query$get_business_order_request$business_order_request_by_pk$items$home$business?
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$business
       business;
 
   final int bathrooms;
 
   final int bedrooms;
 
-  final Query$get_business_order_request$business_order_request_by_pk$items$home$location?
+  final Query$get_business_order_request$business_order_request_by_pk$items$home$location
       location;
 
   final String offering_type;
@@ -28036,17 +28008,17 @@ class Query$get_business_order_request$business_order_request_by_pk$items$home {
     final l$available_for = available_for;
     _resultData['available_for'] = l$available_for;
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$business = business;
-    _resultData['business'] = l$business?.toJson();
+    _resultData['business'] = l$business.toJson();
     final l$bathrooms = bathrooms;
     _resultData['bathrooms'] = l$bathrooms;
     final l$bedrooms = bedrooms;
     _resultData['bedrooms'] = l$bedrooms;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$offering_type = offering_type;
     _resultData['offering_type'] = l$offering_type;
     final l$$__typename = $__typename;
@@ -28219,25 +28191,25 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
         available_for: available_for == _undefined || available_for == null
             ? _instance.available_for
             : (available_for as String),
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$get_business_order_request$business_order_request_by_pk$items$home$details?),
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$details),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        business: business == _undefined
+        business: business == _undefined || business == null
             ? _instance.business
             : (business
-                as Query$get_business_order_request$business_order_request_by_pk$items$home$business?),
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$business),
         bathrooms: bathrooms == _undefined || bathrooms == null
             ? _instance.bathrooms
             : (bathrooms as int),
         bedrooms: bedrooms == _undefined || bedrooms == null
             ? _instance.bedrooms
             : (bedrooms as int),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_business_order_request$business_order_request_by_pk$items$home$location?),
+                as Query$get_business_order_request$business_order_request_by_pk$items$home$location),
         offering_type: offering_type == _undefined || offering_type == null
             ? _instance.offering_type
             : (offering_type as String),
@@ -28248,31 +28220,22 @@ class _CopyWithImpl$Query$get_business_order_request$business_order_request_by_p
   CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details<
       TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details
-            .stub(_then(_instance))
-        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$details(
+        local$details, (e) => call(details: e));
   }
 
   CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business<
       TRes> get business {
     final local$business = _instance.business;
-    return local$business == null
-        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business
-            .stub(_then(_instance))
-        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business(
-            local$business, (e) => call(business: e));
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$business(
+        local$business, (e) => call(business: e));
   }
 
   CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location
-            .stub(_then(_instance))
-        : CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_business_order_request$business_order_request_by_pk$items$home$location(
+        local$location, (e) => call(location: e));
   }
 }
 
