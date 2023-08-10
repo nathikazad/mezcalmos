@@ -63,10 +63,19 @@ class LocationController extends GetxController {
         if (kIsWeb) {
           mezDbgPrint("entering is web");
           try {
-            final LocationData _locationData =
-                await Get.find<LocationController>().getCurrentLocation();
-            mezDbgPrint(_locationData.latitude);
-            return Future.value(LocationPermissionsStatus.Ok);
+            final LocationData locationData =
+                await Location().getLocation().timeout(
+              Duration(seconds: 3),
+              onTimeout: () {
+                return LocationData.fromMap({
+                  'latitude': null,
+                  'longitude': null,
+                });
+              },
+            );
+            if (locationData.latitude != null) {
+              statusSnapshot.value = LocationPermissionsStatus.Ok;
+            }
           } catch (e) {
             mezDbgPrint("failed web location get");
             return Future.value(statusSnapshot.value);
