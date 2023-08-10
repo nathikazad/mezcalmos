@@ -51,19 +51,24 @@ class CustFeedViewController {
 
   void init() {
     _postScrollController.onBottomReach(
-      _postSwitch.value ? _fetchPosts : _fetchAllPosts,
+      () {
+        postSwitch ? _fetchPosts() : _fetchAllPosts();
+      },
       sensitivity: 200,
     );
     _promoScrollController.onBottomReach(
-      _promotionSwitch.value ? _fetchPromotions : _fetchAllPromotions,
+      () {
+        promotionSwitch ? _fetchPromotions : _fetchAllPromotions();
+      },
       sensitivity: 200,
     );
-    Future.wait([_fetchAllPosts(), _fetchAllPromotions()])
+    Future.wait([_fetchPosts(), _fetchPromotions()])
         .whenComplete(() => isInitalized.value = true);
     print(_authController.hasuraUserId);
   }
 
   Future<void> _fetchPosts() async {
+    mezDbgPrint("👋 Called fetch post with post switch =====>$postSwitch");
     if (_postFetchingData || _postReachedEndOfData) {
       return;
     }
@@ -84,10 +89,12 @@ class CustFeedViewController {
       _postFetchingData = false;
     }
 
-    _posts.refresh();
+    // _posts.refresh();
   }
 
   Future<void> _fetchAllPosts() async {
+    mezDbgPrint(
+        "👋 Called fetch post with post switch =====>$postSwitch === _postReachedEndOfData $_postReachedEndOfData");
     if (_postFetchingData || _postReachedEndOfData) {
       return;
     }
@@ -115,7 +122,7 @@ class CustFeedViewController {
       _postFetchingData = false;
     }
 
-    _posts.refresh();
+    // _posts.refresh();
   }
 
   Future<void> _fetchPromotions() async {
@@ -140,7 +147,7 @@ class CustFeedViewController {
       _promoFetchingData = false;
     }
 
-    _promotions.refresh();
+    // _promotions.refresh();
   }
 
   Future<void> _fetchAllPromotions() async {
@@ -171,7 +178,7 @@ class CustFeedViewController {
       _promoFetchingData = false;
     }
 
-    _promotions.refresh();
+    // _promotions.refresh();
   }
 
   Future<bool> writeComment(

@@ -11,11 +11,13 @@ import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
 class CustServicePostsListController {
   late TabController _feedTabController;
   late int _serviceId;
-  late int _serviceDetailsId;
+  // late int _serviceDetailsId;
   late ServiceProviderType _serviceProviderType;
+  late String serviceName;
+  late String serviceImage;
 
   int get serviceId => _serviceId;
-  int get serviceDetailsId => _serviceDetailsId;
+  //int get serviceDetailsId => _serviceDetailsId;
   ServiceProviderType get serviceProviderType => _serviceProviderType;
   TabController get feedTabController => _feedTabController;
   AuthController _authController = Get.find<AuthController>();
@@ -25,24 +27,28 @@ class CustServicePostsListController {
 
   RxList<int> _subscribers = RxList.empty();
   List<int> get subscribers => _subscribers.value;
-  bool _canSubscribe = true;
-  RxBool get _isSubscribed =>
-      _subscribers.contains(_authController.user?.hasuraId).obs;
-  bool get isSubscribed => _isSubscribed.value;
+  RxBool showOnlyImages = RxBool(false);
+  bool get _isSubscribed =>
+      _subscribers.contains(_authController.user?.hasuraId);
+  bool get isSubscribed => _isSubscribed;
 
   RxList<Post> _gridImages = RxList.empty();
   List<Post> get gridImages => _gridImages.value;
   RxBool isLoading = RxBool(false);
+  List<Post> get filteredPosts => showOnlyImages.isTrue ? _gridImages : _posts;
 
   // methods
   Future<void> init(
       {required int serviceId,
-      required int serviceDetailsId,
+      required String serviceName,
+      required String serviceImage,
       required ServiceProviderType type,
       required TickerProvider vsync}) async {
     _serviceId = serviceId;
     _serviceProviderType = type;
-    _serviceDetailsId = serviceDetailsId;
+    //  _serviceDetailsId = serviceDetailsId;
+    this.serviceName = serviceName;
+    this.serviceImage = serviceImage;
     _feedTabController = TabController(length: 2, vsync: vsync);
     isLoading.value = true;
 
@@ -69,9 +75,12 @@ class CustServicePostsListController {
     try {
       _gridImages.value = await fetch_service_provider_posts(
           imagesOnly: true,
+          withCache: false,
           serviceProviderId: serviceId,
           serviceProviderType: serviceProviderType);
-    } catch (e) {
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     } finally {}
   }
 
@@ -107,12 +116,6 @@ class CustServicePostsListController {
   }
 
   Future<void> subscribe() async {
-    if (!_canSubscribe) return;
-
-    _canSubscribe = false;
-
-    await _fetchSubscriptions();
-
     if (_subscribers.contains(_authController.user?.hasuraId)) {
       await unsubscribe_service_provider(
           customerId: _authController.user!.hasuraId,
@@ -124,14 +127,19 @@ class CustServicePostsListController {
           serviceProviderId: serviceId,
           serviceProviderType: serviceProviderType);
     }
-    _isSubscribed.refresh();
-    _canSubscribe = true;
+    await _fetchSubscriptions();
   }
 
   Future<void> _fetchSubscriptions() async {
     _subscribers.value = await fetch_subscribers(
-        serviceProviderId: serviceId, serviceProviderType: serviceProviderType);
+        serviceProviderId: serviceId,
+        serviceProviderType: serviceProviderType,
+        withCache: false);
   }
 
   void dispose() {}
+
+  void switchPostsType(bool value) {
+    showOnlyImages.value = value;
+  }
 }

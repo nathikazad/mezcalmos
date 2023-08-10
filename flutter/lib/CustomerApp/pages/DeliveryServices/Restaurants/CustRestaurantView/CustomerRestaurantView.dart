@@ -178,8 +178,8 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                   ],
                 ),
                 CustServicePostsList(
-                  serviceDetailsId:
-                      _viewController.restaurant.value!.serviceDetailsId,
+                  serviceName: _viewController.restaurant.value!.info.name,
+                  serviceImage: _viewController.restaurant.value!.info.image,
                   serviceId: _viewController.restaurant.value!.restaurantId,
                   serviceProviderType: cModels.ServiceProviderType.Restaurant,
                 ),

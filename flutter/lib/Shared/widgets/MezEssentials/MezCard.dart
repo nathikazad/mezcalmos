@@ -121,7 +121,7 @@ class MezCard extends StatelessWidget {
                                 secondAvatarBgImage != null ||
                                 secondAvatarIcon != null))
                         ? 40
-                        : 5,
+                        : 10,
                   ),
                   Flexible(fit: FlexFit.tight, child: content),
 

@@ -1,14 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/ServicePostsList/CustServicePostsList.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessHomeCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessPaymentMethods.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessProductCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessRentalCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessServiceCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoPostsFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/components/CustBusinessEventCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/BusinessFeedCardPost.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/components/CustBusinessAppbar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/controllers/cusBusinessViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
@@ -121,84 +119,12 @@ class _CustBusinessViewState extends State<CustBusinessView>
                   ],
                 ),
               ),
-              Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Container(
-                  color: Colors.white,
-                  width: double.infinity,
-                  child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider(
-                            _viewController.business?.details.image ?? ''),
-                      ),
-                      title: Text('${_viewController.business?.details.name}'),
-                      titleTextStyle: context.textTheme.bodyLarge
-                          ?.copyWith(fontWeight: FontWeight.w700),
-                      subtitle: Text(
-                          '${_viewController.subscribers.length} subscribers'),
-                      subtitleTextStyle: context.textTheme.bodyMedium
-                          ?.copyWith(fontSize: 12.5),
-                      trailing: RawChip(
-                        shape: StadiumBorder(),
-                        label: Text(
-                          _viewController.isSubscribed
-                              ? 'Unsubscribe'
-                              : 'Subscribe',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        backgroundColor: primaryBlueColor,
-                        onPressed: () => _viewController.subscribe(),
-                      )),
-                ),
-                Expanded(
-                  child: DefaultTabController(
-                      length: 2,
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            TabBar(
-                                labelColor: primaryBlueColor,
-                                unselectedLabelColor: Colors.grey.shade400,
-                                tabs: [
-                                  Tab(icon: Icon(Icons.newspaper)),
-                                  Tab(icon: Icon(Icons.grid_on))
-                                ]),
-                            Expanded(
-                                child: TabBarView(children: <Widget>[
-                              Obx(() => _viewController.posts.isEmpty
-                                  ? NoPostsFound()
-                                  : SingleChildScrollView(
-                                      child: Column(
-                                        children: List.generate(
-                                            _viewController.posts.length,
-                                            (int index) => BusinessFeedCardPost(
-                                                controller: _viewController,
-                                                business:
-                                                    _viewController.business!,
-                                                post: _viewController
-                                                    .posts[index])),
-                                      ),
-                                    )),
-                              GridView.builder(
-                                  padding: EdgeInsets.zero,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          childAspectRatio: 1,
-                                          crossAxisSpacing: 1,
-                                          mainAxisSpacing: 1),
-                                  itemCount: _viewController.gridImages.length,
-                                  itemBuilder: (BuildContext ctx, int index) {
-                                    return CachedNetworkImage(
-                                        fit: BoxFit.cover,
-                                        imageUrl: _viewController
-                                            .gridImages[index].image!);
-                                  })
-                            ]))
-                          ])),
-                )
-              ]),
+              CustServicePostsList(
+                serviceId: _viewController.businessId,
+                serviceImage: _viewController.business!.details.image,
+                serviceName: _viewController.business!.details.name,
+                serviceProviderType: ServiceProviderType.Business,
+              ),
               Container(
                 child: ListView(
                   padding: EdgeInsets.all(16),
@@ -296,7 +222,7 @@ class _CustBusinessViewState extends State<CustBusinessView>
         ),
         SizedBox(height: 5),
         ..._viewController.promotions.map(
-          (element) {
+          (Offer element) {
             return Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(

@@ -84,55 +84,29 @@ class _CustFeedViewState extends State<CustFeedView> {
               ]),
           Expanded(
               child: TabBarView(children: <Widget>[
-            Obx(() => Container(
-                alignment: Alignment.center,
-                child: _viewController.posts.isEmpty
-                    ? NoPostsFound()
-                    : SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Text(
-                                '${_i18n()['postSwitch']}',
-                                style: context.textTheme.bodyLarge
-                                    ?.copyWith(fontSize: 15),
-                              ),
-                              trailing: Switch(
-                                activeColor: primaryBlueColor,
-                                value: _viewController.postSwitch,
-                                onChanged: (bool value) {
-                                  _viewController.setPostSwitch(value);
-                                },
-                              ),
-                            ),
-                            ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                controller:
-                                    _viewController.postScrollController,
-                                itemCount: _viewController.posts.length,
-                                itemBuilder: (BuildContext context,
-                                        int index) =>
-                                    ServiceFeedPostCard(
-                                      //  controller: _viewController,
-                                      post: _viewController.posts[index],
-                                      onPostComment:
-                                          (int postId, String comment) async {
-                                        return await _viewController
-                                            .writeComment(
-                                                postId: postId,
-                                                comment: comment);
-                                      },
-                                      onLike: (int postId) async {
-                                        return await _viewController
-                                            .likePost(postId);
-                                      },
-                                    )),
-                          ],
-                        ),
-                      ))),
             Obx(() => Column(
                   children: [
+                    if (_viewController.isFetching) LinearProgressIndicator(),
+                    ListTile(
+                      title: Text(
+                        '${_i18n()['postSwitch']}',
+                        style:
+                            context.textTheme.bodyLarge?.copyWith(fontSize: 15),
+                      ),
+                      trailing: Switch(
+                        activeColor: primaryBlueColor,
+                        value: _viewController.postSwitch,
+                        onChanged: (bool value) {
+                          _viewController.setPostSwitch(value);
+                        },
+                      ),
+                    ),
+                    _buildPosts(),
+                  ],
+                )),
+            Obx(() => Column(
+                  children: [
+                    if (_viewController.isFetching) LinearProgressIndicator(),
                     ListTile(
                       title: Text(
                         '${_i18n()['promotionSwitch']}',
@@ -148,7 +122,8 @@ class _CustFeedViewState extends State<CustFeedView> {
                       ),
                     ),
                     Expanded(
-                      child: _viewController.promotions.isEmpty
+                      child: _viewController.promotions.isEmpty &&
+                              !_viewController.isFetching
                           ? NoPromotionsFound()
                           : ListView.builder(
                               controller: _viewController.promoScrollController,
@@ -163,5 +138,26 @@ class _CustFeedViewState extends State<CustFeedView> {
                 )),
           ]))
         ]));
+  }
+
+  Widget _buildPosts() {
+    return Expanded(
+        child: _viewController.posts.isEmpty && !_viewController.isFetching
+            ? NoPostsFound()
+            : ListView.builder(
+                controller: _viewController.postScrollController,
+                itemCount: _viewController.posts.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    ServiceFeedPostCard(
+                      //  controller: _viewController,
+                      post: _viewController.posts[index],
+                      onPostComment: (int postId, String comment) async {
+                        return await _viewController.writeComment(
+                            postId: postId, comment: comment);
+                      },
+                      onLike: (int postId) async {
+                        return await _viewController.likePost(postId);
+                      },
+                    )));
   }
 }
