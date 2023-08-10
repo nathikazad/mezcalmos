@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -18,6 +21,7 @@ class ServiceOfferEditViewController {
   bool get isPromotion => selectedOfferType.value == OfferType.Coupon;
 
   RxBool _isFetchingSingle = RxBool(false);
+  RxList<LanguageMap> itemsNames = RxList<LanguageMap>.empty();
 
   RxList<OfferItemData> selectedItems = RxList.empty();
 
@@ -29,7 +33,7 @@ class ServiceOfferEditViewController {
   Rx<DiscountType> selectedDiscountType =
       Rx<DiscountType>(DiscountType.FlatAmount);
   TextEditingController discountController = TextEditingController();
-  TextEditingController minAmountController = TextEditingController();
+  TextEditingController minOrderCost = TextEditingController();
   Rxn<DateTime> selectedStartDate = Rxn<DateTime>();
   Rxn<DateTime> selectedEndDate = Rxn<DateTime>();
 
@@ -39,6 +43,13 @@ class ServiceOfferEditViewController {
 
   RxBool repeatOffer = RxBool(false);
   bool shouldRefetch = false;
+
+  List<int> get initalItemsIds =>
+      (isEditMode.value && selectedItems.isEmpty && itemsNames.isNotEmpty)
+          ? currentOffer.value!.details.items!
+              .map<int>((num e) => e.toInt())
+              .toList()
+          : selectedItems.map((OfferItemData element) => element.id).toList();
 
   void init({
     required int? offerId,
@@ -57,6 +68,10 @@ class ServiceOfferEditViewController {
   Future<void> _initEditMode() async {
     isEditMode.value = true;
     await _fetchOfferInfo();
+    if (currentOffer.value?.details.items != null) {
+      unawaited(_fetchNames());
+    }
+
     selectedOfferType.value = currentOffer.value!.offerType;
     selectedStartDate.value = DateTime.tryParse(
         currentOffer.value!.details.validityRangeStart.toString());
@@ -70,7 +85,18 @@ class ServiceOfferEditViewController {
     selectedDiscountType.value = currentOffer.value!.details.discountType;
     discountController.text =
         currentOffer.value!.details.discountValue.toString();
+    if (currentOffer.value!.details.minimumOrderAmount != null) {
+      minOrderCost.text =
+          currentOffer.value!.details.minimumOrderAmount.toString();
+    }
     repeatOffer.value = currentOffer.value!.details.weeklyRepeat;
+  }
+
+  Future<void> _fetchNames() async {
+    itemsNames.value = await fetch_translations(
+        nameIds: currentOffer.value!.details.items!
+            .map<int>((num e) => e.toInt())
+            .toList());
   }
 
   Future<void> _fetchOfferInfo() async {
@@ -118,15 +144,14 @@ class ServiceOfferEditViewController {
       nameId: currentOffer.value?.nameId ?? -1,
       details: OfferDetails(
         couponReusable: false,
-        minimumOrderAmount: currentOffer.value?.details.minimumOrderAmount,
+        minimumOrderAmount: double.tryParse(minOrderCost.text),
         offerForItems:
             OfferItemType.ParticularItems.toFirebaseFormattedString(),
         offerForOrder: selectedOfferOrderType.value!.toFirebaseFormatString(),
         discountType: selectedDiscountType.value,
         discountValue: double.parse(discountController.text),
         weeklyRepeat: false,
-        items:
-            selectedItems.map((OfferItemData element) => element.id).toList(),
+        items: initalItemsIds,
         nameIds: selectedItems
             .map((OfferItemData element) => element.nameId)
             .toList(),

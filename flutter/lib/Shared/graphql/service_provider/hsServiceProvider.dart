@@ -616,6 +616,8 @@ Future<cModels.Offer?> get_offer_by_id({
   return cModels.Offer(
       id: data.id,
       name: toLanguageMap(translations: data.name.translations),
+      
+      
       serviceProviderId: data.service_provider_id,
       serviceProviderType: data.service_provider_type.toServiceProviderType(),
       offerType: data.offer_type.toOfferType(),

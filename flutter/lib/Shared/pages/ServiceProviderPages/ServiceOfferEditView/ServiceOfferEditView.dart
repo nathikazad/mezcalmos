@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferItemsSelectView/OfferItemsSelectView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
@@ -190,7 +191,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       ),
                       smallSepartor,
                       if (viewController.selectedItems.isEmpty &&
-                          viewController.haveItems == false)
+                          viewController.itemsNames.isEmpty)
                         Container(
                           margin: const EdgeInsets.all(5),
                           child: Column(
@@ -222,10 +223,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         onClick: () async {
                           final List<OfferItemData>? data =
                               await OfferItemsSelectView.navigate(
-                                  selectedItems: viewController.selectedItems
-                                      .map(
-                                          (OfferItemData element) => element.id)
-                                      .toList(),
+                                  selectedItems: viewController.initalItemsIds,
                                   serviceProviderId: serviceProviderId!,
                                   serviceProviderType: serviceProviderType);
 
@@ -235,19 +233,31 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         },
                         title: "Select items",
                       ),
-                      if (viewController.currentOffer.value?.details.items
-                                  ?.isNotEmpty ==
-                              true &&
+                      if (viewController.itemsNames.isNotEmpty &&
                           viewController.selectedItems.isEmpty)
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Offer applied to ${viewController.currentOffer.value!.details.items?.length} items click select items to manage items",
-                            textAlign: TextAlign.center,
-                            style: context.textTheme.bodyLarge
-                                ?.copyWith(color: primaryBlueColor),
-                          ),
+                        Column(
+                          children: List.generate(
+                              viewController.itemsNames.length,
+                              (int index) => MezCard(
+                                    contentPadding: EdgeInsets.all(8),
+                                    content: Text(
+                                      viewController.itemsNames[index]
+                                              .getTranslation(userLanguage) ??
+                                          "",
+                                      style: context.textTheme.bodyLarge,
+                                    ),
+                                    action: MezIconButton(
+                                      elevation: 0,
+                                      padding: const EdgeInsets.all(3),
+                                      onTap: () {
+                                        viewController.itemsNames.remove(
+                                            viewController.itemsNames[index]);
+                                      },
+                                      icon: Icons.remove,
+                                      iconColor: redAccentColor,
+                                      backgroundColor: offRedColor,
+                                    ),
+                                  )),
                         ),
 
                       _offerItems(),
@@ -325,71 +335,34 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         ),
                       meduimSeperator,
                       Text(
+                        "Minimum order cost",
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      smallSepartor,
+                      TextFormField(
+                        controller: viewController.minOrderCost,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        decoration: InputDecoration(
+                            focusColor: primaryBlueColor,
+                            hintText:
+                                "Leave it empty if there no minimum order cost",
+                            suffixIcon: Icon(Icons.attach_money)),
+                        validator: (String? value) {
+                          if (value != null && double.tryParse(value) == null) {
+                            return "Not valid";
+                          }
+                          return null;
+                        },
+                      ),
+
+                      meduimSeperator,
+                      Text(
                         "Select your availability",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
-                      FormField(
-                        validator: (Object? value) {
-                          if (viewController.selectedStartDate.value == null ||
-                              viewController.selectedEndDate.value == null) {
-                            return "Please select your availability";
-                          }
-                          if (viewController.selectedStartDate.value!
-                              .isAfter(viewController.selectedEndDate.value!)) {
-                            return "Start date must be before end date";
-                          }
-                          return null;
-                        },
-                        builder: (FormFieldState<Object?> state) {
-                          return Obx(
-                            () => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: () async {
-                                    showAvailability();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 15, horizontal: 10),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.grey.shade200,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.access_time_filled),
-                                        hTinySepartor,
-                                        viewController.selectedStartDate
-                                                        .value !=
-                                                    null &&
-                                                viewController.selectedEndDate
-                                                        .value !=
-                                                    null
-                                            ? Text(
-                                                "${viewController.selectedStartDate.value!.getOrderTime()} - ${viewController.selectedEndDate.value!.getOrderTime()}")
-                                            : Text(
-                                                "Select your time",
-                                              ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                if (state.hasError)
-                                  Text(
-                                    state.errorText!,
-                                    style:
-                                        context.textTheme.bodyMedium!.copyWith(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                      _timeSelector(context),
                       smallSepartor,
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -417,6 +390,64 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                 ),
               ),
       ),
+    );
+  }
+
+  FormField<Object> _timeSelector(BuildContext context) {
+    return FormField(
+      validator: (Object? value) {
+        if (viewController.selectedStartDate.value == null ||
+            viewController.selectedEndDate.value == null) {
+          return "Please select your availability";
+        }
+        if (viewController.selectedStartDate.value!
+            .isAfter(viewController.selectedEndDate.value!)) {
+          return "Start date must be before end date";
+        }
+        return null;
+      },
+      builder: (FormFieldState<Object?> state) {
+        return Obx(
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () async {
+                  showAvailability();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey.shade200,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.access_time_filled),
+                      hTinySepartor,
+                      viewController.selectedStartDate.value != null &&
+                              viewController.selectedEndDate.value != null
+                          ? Text(
+                              "${viewController.selectedStartDate.value!.getOrderTime()} - ${viewController.selectedEndDate.value!.getOrderTime()}")
+                          : Text(
+                              "Select your time",
+                            ),
+                    ],
+                  ),
+                ),
+              ),
+              if (state.hasError)
+                Text(
+                  state.errorText!,
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    color: Colors.red,
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 
