@@ -34,6 +34,8 @@ class ServiceOfferEditViewController {
   Rxn<DateTime> selectedEndDate = Rxn<DateTime>();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool get haveItems =>
+      currentOffer.value?.details.items?.isNotEmpty == true ? true : false;
 
   RxBool repeatOffer = RxBool(false);
   bool shouldRefetch = false;

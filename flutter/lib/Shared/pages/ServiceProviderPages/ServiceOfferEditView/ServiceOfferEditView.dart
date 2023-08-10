@@ -190,9 +190,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       ),
                       smallSepartor,
                       if (viewController.selectedItems.isEmpty &&
-                          viewController
-                                  .currentOffer.value?.details.items?.isEmpty ==
-                              true)
+                          viewController.haveItems == false)
                         Container(
                           margin: const EdgeInsets.all(5),
                           child: Column(
