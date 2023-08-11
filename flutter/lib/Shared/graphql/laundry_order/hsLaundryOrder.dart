@@ -30,6 +30,17 @@ Stream<List<MinimalOrder>?> listen_on_laundry_orders(
     List<Subscription$listen_on_laundry_orders$laundry_order>? ordersData =
         event.parsedData?.laundry_order;
     if (ordersData != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_laundry_orders")) {
+        Get.find<HasuraDb>().dataConsumption["listen_on_laundry_orders"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>().dataConsumption["listen_on_laundry_orders"]![1] +=
+            1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_laundry_orders"] =
+            <int>[event.data?.toString().length ?? 0, 1];
+      }
       final List<MinimalOrder> orders = ordersData
           .map((Subscription$listen_on_laundry_orders$laundry_order orderData) {
         return MinimalOrder(
@@ -240,12 +251,12 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
           .containsKey("listen_on_laundry_order_by_id")) {
         Get.find<HasuraDb>()
                 .dataConsumption["listen_on_laundry_order_by_id"]![0] +=
-            event.data.toString().length;
+            event.data?.toString().length ?? 0;
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_laundry_order_by_id"]![1] += 1;
       } else {
         Get.find<HasuraDb>().dataConsumption["listen_on_laundry_order_by_id"] =
-            <int>[event.data.toString().length, 1];
+            <int>[event.data?.toString().length ?? 0, 1];
       }
       mezDbgPrint(
           "✅✅✅✅✅listen_on_laundry_order_by_id: ${Get.find<HasuraDb>().dataConsumption["listen_on_laundry_order_by_id"]}");

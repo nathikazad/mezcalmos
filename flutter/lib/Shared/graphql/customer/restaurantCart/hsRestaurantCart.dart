@@ -272,6 +272,19 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             ? cart.parsedData?.restaurant_cart.first
             : null;
     if (parsedCart != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_customer_cart")) {
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_cart"]![0] +=
+            cart.data?.toString().length ?? 0;
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_cart"]![1] +=
+            1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_cart"] = <int>[
+          cart.data?.toString().length ?? 0,
+          1
+        ];
+      }
       Subscription$listen_on_customer_cart$restaurant_cart$restaurant? _res =
           cart.parsedData?.restaurant_cart.first.restaurant;
       PaymentInfo paymentInfo = PaymentInfo();
@@ -284,7 +297,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       if (cart.parsedData?.restaurant_cart.first.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
           onlineOrdering: _res!.details!.online_ordering ?? false,
-          isOpen: _res!.details!.is_open ?? false,
+          isOpen: _res.details!.is_open ?? false,
           languages: convertToLanguages(_res.details!.language),
           serviceDetailsId: _res.details_id,
           deliveryCost: (_res.delivery_details_of_deliverer == null)

@@ -99,6 +99,18 @@ Stream<AgentStatus> listen_operator_status({required int operatorId}) {
       throw Exception(
           "🚨🚨 Stream on operator status exceptions =>${event.exception}");
     } else {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("restaurantOperatorStatusStream")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["restaurantOperatorStatusStream"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>()
+            .dataConsumption["restaurantOperatorStatusStream"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["restaurantOperatorStatusStream"] =
+            <int>[event.data?.toString().length ?? 0, 1];
+      }
       return event.parsedData!.restaurant_operator.first.operator_details.status
           .toAgentStatus();
     }

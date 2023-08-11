@@ -11,13 +11,10 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
-
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -204,6 +201,18 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
       StripeOrderPaymentInfo? _paymentInfo;
       if (orderData.stripe_info != null) {
         _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
+      }
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("delivery_courier_order_by_pk")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["delivery_courier_order_by_pk"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>()
+            .dataConsumption["delivery_courier_order_by_pk"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["delivery_courier_order_by_pk"] =
+            <int>[event.data?.toString().length ?? 0, 1];
       }
       return CourierOrder(
         orderType: cModels.OrderType.Courier,

@@ -65,6 +65,17 @@ Stream<List<SavedLocation>?> listen_on_customer_locations(
           "[+] listen_on_customer_locations :: exception :: ${locations_res.exception}");
       return null;
     } else {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_saved_locations")) {
+        Get.find<HasuraDb>().dataConsumption["listen_on_saved_locations"]![0] +=
+            locations_res.data?.toString().length ?? 0;
+        Get.find<HasuraDb>().dataConsumption["listen_on_saved_locations"]![1] +=
+            1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_saved_locations"] =
+            <int>[locations_res.data?.toString().length ?? 0, 1];
+      }
       final List<SavedLocation> ls = [];
       locations_res.parsedData?.customer_saved_location.forEach(
           (Subscription$listen_on_saved_locations$customer_saved_location
@@ -127,8 +138,8 @@ Future<SavedLocation?> update_saved_location(
   if (res.parsedData?.update_customer_saved_location_by_pk == null) {
     throwError(res.exception);
   } else {
-    Mutation$updateSavedLocation$update_customer_saved_location_by_pk data =
-        res.parsedData!.update_customer_saved_location_by_pk!;
+    final Mutation$updateSavedLocation$update_customer_saved_location_by_pk
+        data = res.parsedData!.update_customer_saved_location_by_pk!;
     return SavedLocation(
       name: data.name,
       id: data.id,
@@ -190,8 +201,8 @@ Future<SavedLocation?> add_saved_location(
     if (resp.parsedData?.insert_customer_saved_location_one == null) {
       throwError(resp.exception);
     } else {
-      Mutation$add_saved_location$insert_customer_saved_location_one data =
-          resp.parsedData!.insert_customer_saved_location_one!;
+      final Mutation$add_saved_location$insert_customer_saved_location_one
+          data = resp.parsedData!.insert_customer_saved_location_one!;
       return SavedLocation(
         name: data.name,
         id: data.id,

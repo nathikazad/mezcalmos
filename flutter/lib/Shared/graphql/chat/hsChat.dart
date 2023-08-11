@@ -299,6 +299,21 @@ Stream<List<Message>?> listen_on_service_provider_chats({
       throwError(event.exception);
     }
     if (event.parsedData?.service_provider_customer_chat != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_service_provider_chats")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_service_provider_chats"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_service_provider_chats"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_service_provider_chats"] = <int>[
+          event.data?.toString().length ?? 0,
+          1
+        ];
+      }
       return event.parsedData!.service_provider_customer_chat
           .map<Message>(
               (Subscription$listen_on_service_provider_chats$service_provider_customer_chat
@@ -332,6 +347,17 @@ Stream<List<Message>?> listen_on_customer_chats({
       throwError(event.exception);
     }
     if (event.parsedData?.service_provider_customer_chat != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_customer_chats")) {
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_chats"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_chats"]![1] +=
+            1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_chats"] =
+            <int>[event.data?.toString().length ?? 0, 1];
+      }
       return event.parsedData!.service_provider_customer_chat
           .map<Message>(
               (Subscription$listen_on_customer_chats$service_provider_customer_chat
@@ -418,6 +444,18 @@ Stream<List<Message>?> listen_on_admin_services_chats({
       throwError(event.exception);
     }
     if (event.parsedData?.mez_admin_chat != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_admin_chats")) {
+        Get.find<HasuraDb>().dataConsumption["listen_on_admin_chats"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>().dataConsumption["listen_on_admin_chats"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_admin_chats"] = <int>[
+          event.data?.toString().length ?? 0,
+          1
+        ];
+      }
       return event.parsedData!.mez_admin_chat
           .map<Message>(
               (Subscription$listen_on_admin_chats$mez_admin_chat e) => Message(
@@ -503,6 +541,21 @@ Stream<List<Message>?> listen_on_admin_customers_chats({
       throwError(event.exception);
     }
     if (event.parsedData?.service_provider_customer_chat != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_admin_service_customer_chats")) {
+        Get.find<HasuraDb>().dataConsumption[
+                "listen_on_admin_service_customer_chats"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_admin_service_customer_chats"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_admin_service_customer_chats"] = <int>[
+          event.data?.toString().length ?? 0,
+          1
+        ];
+      }
       return event.parsedData!.service_provider_customer_chat
           .map<Message>(
               (Subscription$listen_on_admin_service_customer_chats$service_provider_customer_chat
@@ -572,6 +625,18 @@ Stream<List<Message>> listen_on_chat_messages({required int chatId}) {
         ),
       );
     });
+    if (Get.find<HasuraDb>()
+        .dataConsumption
+        .containsKey("listen_on_chat_messages")) {
+      Get.find<HasuraDb>().dataConsumption["listen_on_chat_messages"]![0] +=
+          event.data?.toString().length ?? 0;
+      Get.find<HasuraDb>().dataConsumption["listen_on_chat_messages"]![1] += 1;
+    } else {
+      Get.find<HasuraDb>().dataConsumption["listen_on_chat_messages"] = <int>[
+        event.data?.toString().length ?? 0,
+        1
+      ];
+    }
     return msgs;
   });
 }

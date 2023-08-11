@@ -49,7 +49,16 @@ Stream<List<MinimalBsOrder>?> listen_on_bs_orders({
     if (event.hasException) {
       throw event.exception!;
     }
-
+    if (Get.find<HasuraDb>().dataConsumption.containsKey("listenToBsOrders")) {
+      Get.find<HasuraDb>().dataConsumption["listenToBsOrders"]![0] +=
+          event.data?.toString().length ?? 0;
+      Get.find<HasuraDb>().dataConsumption["listenToBsOrders"]![1] += 1;
+    } else {
+      Get.find<HasuraDb>().dataConsumption["listenToBsOrders"] = <int>[
+        event.data?.toString().length ?? 0,
+        1
+      ];
+    }
     return event.parsedData!.business_order_request.map<MinimalBsOrder>(
         (Subscription$listenToBsOrders$business_order_request data) {
       return MinimalBsOrder(

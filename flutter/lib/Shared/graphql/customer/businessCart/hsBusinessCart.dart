@@ -547,6 +547,21 @@ Stream<List<CustBusinessCart>?> listen_on_business_order_request(
             }
           }
 
+          if (Get.find<HasuraDb>()
+              .dataConsumption
+              .containsKey("listen_on_business_order_request")) {
+            Get.find<HasuraDb>()
+                    .dataConsumption["listen_on_business_order_request"]![0] +=
+                cart.data?.toString().length ?? 0;
+            Get.find<HasuraDb>()
+                .dataConsumption["listen_on_business_order_request"]![1] += 1;
+          } else {
+            Get.find<HasuraDb>()
+                .dataConsumption["listen_on_business_order_request"] = <int>[
+              cart.data?.toString().length ?? 0,
+              1
+            ];
+          }
           final List<
                   Subscription$listen_on_business_order_request$business_order_request>
               _res = cart.parsedData!.business_order_request;

@@ -5,19 +5,13 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -39,13 +33,13 @@ Stream<DeliveryOrderVariables?> listen_on_driver_order_variables(
           .containsKey("listen_on_driver_order_variables")) {
         Get.find<HasuraDb>()
                 .dataConsumption["listen_on_driver_order_variables"]![0] +=
-            event.data.toString().length;
+            event.data?.toString().length ?? 0;
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_driver_order_variables"]![1] += 1;
       } else {
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_driver_order_variables"] = <int>[
-          event.data.toString().length,
+          event.data?.toString().length ?? 0,
           1
         ];
       }
@@ -102,13 +96,13 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
           .containsKey("listen_on_current_driver_orders")) {
         Get.find<HasuraDb>()
                 .dataConsumption["listen_on_current_driver_orders"]![0] +=
-            event.data.toString().length;
+            event.data?.toString().length ?? 0;
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_current_driver_orders"]![1] += 1;
       } else {
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_current_driver_orders"] = <int>[
-          event.data.toString().length,
+          event.data?.toString().length ?? 0,
           1
         ];
       }
@@ -156,12 +150,12 @@ Stream<List<MinimalOrder>?> listen_on_open_driver_orders(
           .containsKey("listen_on_open_driver_orders")) {
         Get.find<HasuraDb>()
                 .dataConsumption["listen_on_open_driver_orders"]![0] +=
-            event.data.toString().length;
+            event.data?.toString().length ?? 0;
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_open_driver_orders"]![1] += 1;
       } else {
         Get.find<HasuraDb>().dataConsumption["listen_on_open_driver_orders"] =
-            <int>[event.data.toString().length, 1];
+            <int>[event.data?.toString().length ?? 0, 1];
       }
       final List<MinimalOrder> orders = ordersData.map(
           (Subscription$listen_open_driver_orders$delivery_order orderData) {
@@ -206,13 +200,13 @@ Stream<List<MinimalOrder>?> listen_on_current_dvcompany_orders(
           .containsKey("listen_on_current_dvcompany_orders")) {
         Get.find<HasuraDb>()
                 .dataConsumption["listen_on_current_dvcompany_orders"]![0] +=
-            event.data.toString().length;
+            event.data?.toString().length ?? 0;
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_current_dvcompany_orders"]![1] += 1;
       } else {
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_current_dvcompany_orders"] = <int>[
-          event.data.toString().length,
+          event.data?.toString().length ?? 0,
           1
         ];
       }
@@ -254,14 +248,14 @@ Stream<LatLng?> listen_order_driver_location({required int orderId}) {
           .containsKey("listen_order_driver_location")) {
         Get.find<HasuraDb>()
                 .dataConsumption["listen_order_driver_location"]![0] +=
-            event.data.toString().length;
+            event.data?.toString().length ?? 0;
         Get.find<HasuraDb>()
             .dataConsumption["listen_order_driver_location"]![1] += 1;
       } else {
         Get.find<HasuraDb>().dataConsumption["listen_order_driver_location"] =
-            <int>[event.data.toString().length, 1];
+            <int>[event.data?.toString().length ?? 0, 1];
       }
-      Geography data = event
+      final Geography data = event
           .parsedData!.delivery_order_by_pk!.delivery_driver!.current_location!;
       return LatLng(data.latitude, data.longitude);
     }
@@ -283,7 +277,7 @@ ServiceInfo? _getServiceInfo(orderData) {
           image: orderData.restaurant_order!.restaurant.details.image,
           name: orderData.restaurant_order!.restaurant.details.name);
     case cModels.OrderType.Laundry:
-      dynamic laundryOrder =
+      final dynamic laundryOrder =
           orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
       return ServiceInfo(
           location: MezLocation.fromHasura(
@@ -324,16 +318,16 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
           .containsKey("listen_on_driver_order_costs")) {
         Get.find<HasuraDb>()
                 .dataConsumption["listen_on_driver_order_costs"]![0] +=
-            event.data.toString().length;
+            event.data?.toString().length ?? 0;
         Get.find<HasuraDb>()
             .dataConsumption["listen_on_driver_order_costs"]![1] += 1;
       } else {
         Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"] =
-            <int>[event.data.toString().length, 1];
+            <int>[event.data?.toString().length ?? 0, 1];
       }
       mezDbgPrint(
           "listen_on_driver_order_costs: ${Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"]}");
-      Subscription$listen_driver_order_prices$delivery_order_by_pk data =
+      final Subscription$listen_driver_order_prices$delivery_order_by_pk data =
           event.parsedData!.delivery_order_by_pk!;
       return OrderCosts(
           deliveryCost: data.delivery_cost.toDouble(),

@@ -1107,6 +1107,18 @@ Stream<BusinessOrder?> listen_home_rental_order_req({required int id}) {
     }
 
     if (data != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listenHomeRentalOrderRequest")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listenHomeRentalOrderRequest"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>()
+            .dataConsumption["listenHomeRentalOrderRequest"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listenHomeRentalOrderRequest"] =
+            <int>[event.data?.toString().length ?? 0, 1];
+      }
       return BusinessOrder(
           orderId: data.id,
           chatId: data.chat_id,

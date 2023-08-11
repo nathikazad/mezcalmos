@@ -38,6 +38,21 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         "Event from hs restaurant order 🚀🚀🚀 =====>driver ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
 
     if (event.parsedData?.restaurant_order_by_pk != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_restaurant_order_by_id")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_restaurant_order_by_id"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_restaurant_order_by_id"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_restaurant_order_by_id"] = <int>[
+          event.data?.toString().length ?? 0,
+          1
+        ];
+      }
       final List<RestaurantOrderItem> items = [];
       final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk
           orderData = event.parsedData!.restaurant_order_by_pk!;
@@ -370,6 +385,21 @@ Stream<List<MinimalOrder>?> listen_on_current_restaurant_orders(
     final List<Subscription$listen_restaurant_current_orders$restaurant_order>?
         ordersData = event.parsedData?.restaurant_order;
     if (ordersData != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_current_restaurant_orders")) {
+        Get.find<HasuraDb>()
+                .dataConsumption["listen_on_current_restaurant_orders"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_restaurant_orders"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>()
+            .dataConsumption["listen_on_current_restaurant_orders"] = <int>[
+          event.data?.toString().length ?? 0,
+          1
+        ];
+      }
       final List<MinimalOrder> orders = ordersData.map(
           (Subscription$listen_restaurant_current_orders$restaurant_order
               orderData) {

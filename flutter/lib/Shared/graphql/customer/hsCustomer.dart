@@ -214,6 +214,17 @@ Stream<List<MinimalOrder>?> listen_on_customer_orders(
       .map<List<MinimalOrder>?>(
           (QueryResult<Subscription$listen_on_customer_orders> event) {
     if (event.parsedData?.customer_minimal_orders != null) {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("listen_on_customer_orders")) {
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_orders"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_orders"]![1] +=
+            1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["listen_on_customer_orders"] =
+            <int>[event.data?.toString().length ?? 0, 1];
+      }
       final List<MinimalOrder> minOrders = event
           .parsedData!.customer_minimal_orders
           .map((Subscription$listen_on_customer_orders$customer_minimal_orders

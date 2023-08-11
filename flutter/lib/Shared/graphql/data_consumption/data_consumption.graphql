@@ -1,4 +1,4 @@
-mutation updateSubscriptionDataConsumption($name_of_subscription: String, $user_id: Int, $total_size: Int, $number_of_events: Int) {
+mutation updateSubscriptionDataConsumption($name_of_subscription: String, $user_id: Int, $total_size: Int, $number_of_events: Int, $app_type_id: String!) {
   update_data_consumption(
     where: {
       name_of_subscription: {
@@ -9,6 +9,9 @@ mutation updateSubscriptionDataConsumption($name_of_subscription: String, $user_
       }, 
       date: {
         _eq: "now()"
+      },
+      app_type_id: {
+        _eq: $app_type_id
       }
     }, 
     _inc: {
@@ -20,8 +23,8 @@ mutation updateSubscriptionDataConsumption($name_of_subscription: String, $user_
   }
 }
 
-mutation insertSubscriptionDataConsumption($name_of_subscription: String, $total_size: Int, $user_id: Int) {
-  insert_data_consumption_one(object: {name_of_subscription: $name_of_subscription, total_size: $total_size, user_id: $user_id}) {
+mutation insertSubscriptionDataConsumption($name_of_subscription: String, $total_size: Int, $user_id: Int, $app_type_id: String!) {
+  insert_data_consumption_one(object: {name_of_subscription: $name_of_subscription, total_size: $total_size, user_id: $user_id, app_type_id: $app_type_id}) {
     date
   }
 }

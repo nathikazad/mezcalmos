@@ -221,6 +221,18 @@ Stream<AgentStatus?> listen_driver_status({required int driverId}) {
         event.parsedData!.delivery_driver.isEmpty) {
       return null;
     } else {
+      if (Get.find<HasuraDb>()
+          .dataConsumption
+          .containsKey("driverStatusStream")) {
+        Get.find<HasuraDb>().dataConsumption["driverStatusStream"]![0] +=
+            event.data?.toString().length ?? 0;
+        Get.find<HasuraDb>().dataConsumption["driverStatusStream"]![1] += 1;
+      } else {
+        Get.find<HasuraDb>().dataConsumption["driverStatusStream"] = <int>[
+          event.data?.toString().length ?? 0,
+          1
+        ];
+      }
       return event.parsedData!.delivery_driver.first.status.toAgentStatus();
     }
   });

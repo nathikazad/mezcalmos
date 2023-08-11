@@ -236,7 +236,8 @@ class HasuraDb {
               nameOfSubscription: key,
               totalSize: value[0],
               numberOfEvents: value[1],
-              userId: Get.find<AuthController>().hasuraUserId!);
+              userId: Get.find<AuthController>().hasuraUserId!,
+              appType: MezEnv.appType);
         });
         dataConsumption.clear();
       }

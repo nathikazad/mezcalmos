@@ -8,6 +8,7 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
     int? user_id,
     int? total_size,
     int? number_of_events,
+    required String app_type_id,
   }) =>
       Variables$Mutation$updateSubscriptionDataConsumption._({
         if (name_of_subscription != null)
@@ -15,6 +16,7 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
         if (user_id != null) r'user_id': user_id,
         if (total_size != null) r'total_size': total_size,
         if (number_of_events != null) r'number_of_events': number_of_events,
+        r'app_type_id': app_type_id,
       });
 
   Variables$Mutation$updateSubscriptionDataConsumption._(this._$data);
@@ -38,6 +40,8 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
       final l$number_of_events = data['number_of_events'];
       result$data['number_of_events'] = (l$number_of_events as int?);
     }
+    final l$app_type_id = data['app_type_id'];
+    result$data['app_type_id'] = (l$app_type_id as String);
     return Variables$Mutation$updateSubscriptionDataConsumption._(result$data);
   }
 
@@ -48,6 +52,7 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
   int? get user_id => (_$data['user_id'] as int?);
   int? get total_size => (_$data['total_size'] as int?);
   int? get number_of_events => (_$data['number_of_events'] as int?);
+  String get app_type_id => (_$data['app_type_id'] as String);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('name_of_subscription')) {
@@ -66,6 +71,8 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
       final l$number_of_events = number_of_events;
       result$data['number_of_events'] = l$number_of_events;
     }
+    final l$app_type_id = app_type_id;
+    result$data['app_type_id'] = l$app_type_id;
     return result$data;
   }
 
@@ -120,6 +127,11 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
     if (l$number_of_events != lOther$number_of_events) {
       return false;
     }
+    final l$app_type_id = app_type_id;
+    final lOther$app_type_id = other.app_type_id;
+    if (l$app_type_id != lOther$app_type_id) {
+      return false;
+    }
     return true;
   }
 
@@ -129,6 +141,7 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
     final l$user_id = user_id;
     final l$total_size = total_size;
     final l$number_of_events = number_of_events;
+    final l$app_type_id = app_type_id;
     return Object.hashAll([
       _$data.containsKey('name_of_subscription')
           ? l$name_of_subscription
@@ -136,6 +149,7 @@ class Variables$Mutation$updateSubscriptionDataConsumption {
       _$data.containsKey('user_id') ? l$user_id : const {},
       _$data.containsKey('total_size') ? l$total_size : const {},
       _$data.containsKey('number_of_events') ? l$number_of_events : const {},
+      l$app_type_id,
     ]);
   }
 }
@@ -156,6 +170,7 @@ abstract class CopyWith$Variables$Mutation$updateSubscriptionDataConsumption<
     int? user_id,
     int? total_size,
     int? number_of_events,
+    String? app_type_id,
   });
 }
 
@@ -179,6 +194,7 @@ class _CopyWithImpl$Variables$Mutation$updateSubscriptionDataConsumption<TRes>
     Object? user_id = _undefined,
     Object? total_size = _undefined,
     Object? number_of_events = _undefined,
+    Object? app_type_id = _undefined,
   }) =>
       _then(Variables$Mutation$updateSubscriptionDataConsumption._({
         ..._instance._$data,
@@ -188,6 +204,8 @@ class _CopyWithImpl$Variables$Mutation$updateSubscriptionDataConsumption<TRes>
         if (total_size != _undefined) 'total_size': (total_size as int?),
         if (number_of_events != _undefined)
           'number_of_events': (number_of_events as int?),
+        if (app_type_id != _undefined && app_type_id != null)
+          'app_type_id': (app_type_id as String),
       }));
 }
 
@@ -205,6 +223,7 @@ class _CopyWithStubImpl$Variables$Mutation$updateSubscriptionDataConsumption<
     int? user_id,
     int? total_size,
     int? number_of_events,
+    String? app_type_id,
   }) =>
       _res;
 }
@@ -403,6 +422,15 @@ const documentNodeMutationupdateSubscriptionDataConsumption =
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'app_type_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -441,6 +469,15 @@ const documentNodeMutationupdateSubscriptionDataConsumption =
                       value: 'now()',
                       isBlock: false,
                     ),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'app_type_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'app_type_id')),
                   )
                 ]),
               ),
@@ -496,7 +533,7 @@ class Options$Mutation$updateSubscriptionDataConsumption extends graphql
     .MutationOptions<Mutation$updateSubscriptionDataConsumption> {
   Options$Mutation$updateSubscriptionDataConsumption({
     String? operationName,
-    Variables$Mutation$updateSubscriptionDataConsumption? variables,
+    required Variables$Mutation$updateSubscriptionDataConsumption variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -508,7 +545,7 @@ class Options$Mutation$updateSubscriptionDataConsumption extends graphql
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -546,7 +583,7 @@ class WatchOptions$Mutation$updateSubscriptionDataConsumption extends graphql
     .WatchQueryOptions<Mutation$updateSubscriptionDataConsumption> {
   WatchOptions$Mutation$updateSubscriptionDataConsumption({
     String? operationName,
-    Variables$Mutation$updateSubscriptionDataConsumption? variables,
+    required Variables$Mutation$updateSubscriptionDataConsumption variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -557,7 +594,7 @@ class WatchOptions$Mutation$updateSubscriptionDataConsumption extends graphql
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -577,16 +614,14 @@ extension ClientExtension$Mutation$updateSubscriptionDataConsumption
     on graphql.GraphQLClient {
   Future<graphql.QueryResult<Mutation$updateSubscriptionDataConsumption>>
       mutate$updateSubscriptionDataConsumption(
-              [Options$Mutation$updateSubscriptionDataConsumption?
-                  options]) async =>
-          await this.mutate(
-              options ?? Options$Mutation$updateSubscriptionDataConsumption());
+              Options$Mutation$updateSubscriptionDataConsumption
+                  options) async =>
+          await this.mutate(options);
   graphql.ObservableQuery<Mutation$updateSubscriptionDataConsumption>
       watchMutation$updateSubscriptionDataConsumption(
-              [WatchOptions$Mutation$updateSubscriptionDataConsumption?
-                  options]) =>
-          this.watchMutation(options ??
-              WatchOptions$Mutation$updateSubscriptionDataConsumption());
+              WatchOptions$Mutation$updateSubscriptionDataConsumption
+                  options) =>
+          this.watchMutation(options);
 }
 
 class Mutation$updateSubscriptionDataConsumption$update_data_consumption {
@@ -736,12 +771,14 @@ class Variables$Mutation$insertSubscriptionDataConsumption {
     String? name_of_subscription,
     int? total_size,
     int? user_id,
+    required String app_type_id,
   }) =>
       Variables$Mutation$insertSubscriptionDataConsumption._({
         if (name_of_subscription != null)
           r'name_of_subscription': name_of_subscription,
         if (total_size != null) r'total_size': total_size,
         if (user_id != null) r'user_id': user_id,
+        r'app_type_id': app_type_id,
       });
 
   Variables$Mutation$insertSubscriptionDataConsumption._(this._$data);
@@ -761,6 +798,8 @@ class Variables$Mutation$insertSubscriptionDataConsumption {
       final l$user_id = data['user_id'];
       result$data['user_id'] = (l$user_id as int?);
     }
+    final l$app_type_id = data['app_type_id'];
+    result$data['app_type_id'] = (l$app_type_id as String);
     return Variables$Mutation$insertSubscriptionDataConsumption._(result$data);
   }
 
@@ -770,6 +809,7 @@ class Variables$Mutation$insertSubscriptionDataConsumption {
       (_$data['name_of_subscription'] as String?);
   int? get total_size => (_$data['total_size'] as int?);
   int? get user_id => (_$data['user_id'] as int?);
+  String get app_type_id => (_$data['app_type_id'] as String);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('name_of_subscription')) {
@@ -784,6 +824,8 @@ class Variables$Mutation$insertSubscriptionDataConsumption {
       final l$user_id = user_id;
       result$data['user_id'] = l$user_id;
     }
+    final l$app_type_id = app_type_id;
+    result$data['app_type_id'] = l$app_type_id;
     return result$data;
   }
 
@@ -829,6 +871,11 @@ class Variables$Mutation$insertSubscriptionDataConsumption {
     if (l$user_id != lOther$user_id) {
       return false;
     }
+    final l$app_type_id = app_type_id;
+    final lOther$app_type_id = other.app_type_id;
+    if (l$app_type_id != lOther$app_type_id) {
+      return false;
+    }
     return true;
   }
 
@@ -837,12 +884,14 @@ class Variables$Mutation$insertSubscriptionDataConsumption {
     final l$name_of_subscription = name_of_subscription;
     final l$total_size = total_size;
     final l$user_id = user_id;
+    final l$app_type_id = app_type_id;
     return Object.hashAll([
       _$data.containsKey('name_of_subscription')
           ? l$name_of_subscription
           : const {},
       _$data.containsKey('total_size') ? l$total_size : const {},
       _$data.containsKey('user_id') ? l$user_id : const {},
+      l$app_type_id,
     ]);
   }
 }
@@ -862,6 +911,7 @@ abstract class CopyWith$Variables$Mutation$insertSubscriptionDataConsumption<
     String? name_of_subscription,
     int? total_size,
     int? user_id,
+    String? app_type_id,
   });
 }
 
@@ -884,6 +934,7 @@ class _CopyWithImpl$Variables$Mutation$insertSubscriptionDataConsumption<TRes>
     Object? name_of_subscription = _undefined,
     Object? total_size = _undefined,
     Object? user_id = _undefined,
+    Object? app_type_id = _undefined,
   }) =>
       _then(Variables$Mutation$insertSubscriptionDataConsumption._({
         ..._instance._$data,
@@ -891,6 +942,8 @@ class _CopyWithImpl$Variables$Mutation$insertSubscriptionDataConsumption<TRes>
           'name_of_subscription': (name_of_subscription as String?),
         if (total_size != _undefined) 'total_size': (total_size as int?),
         if (user_id != _undefined) 'user_id': (user_id as int?),
+        if (app_type_id != _undefined && app_type_id != null)
+          'app_type_id': (app_type_id as String),
       }));
 }
 
@@ -907,6 +960,7 @@ class _CopyWithStubImpl$Variables$Mutation$insertSubscriptionDataConsumption<
     String? name_of_subscription,
     int? total_size,
     int? user_id,
+    String? app_type_id,
   }) =>
       _res;
 }
@@ -1099,6 +1153,15 @@ const documentNodeMutationinsertSubscriptionDataConsumption =
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'app_type_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -1121,6 +1184,10 @@ const documentNodeMutationinsertSubscriptionDataConsumption =
               ObjectFieldNode(
                 name: NameNode(value: 'user_id'),
                 value: VariableNode(name: NameNode(value: 'user_id')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'app_type_id'),
+                value: VariableNode(name: NameNode(value: 'app_type_id')),
               ),
             ]),
           )
@@ -1161,7 +1228,7 @@ class Options$Mutation$insertSubscriptionDataConsumption extends graphql
     .MutationOptions<Mutation$insertSubscriptionDataConsumption> {
   Options$Mutation$insertSubscriptionDataConsumption({
     String? operationName,
-    Variables$Mutation$insertSubscriptionDataConsumption? variables,
+    required Variables$Mutation$insertSubscriptionDataConsumption variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1173,7 +1240,7 @@ class Options$Mutation$insertSubscriptionDataConsumption extends graphql
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -1211,7 +1278,7 @@ class WatchOptions$Mutation$insertSubscriptionDataConsumption extends graphql
     .WatchQueryOptions<Mutation$insertSubscriptionDataConsumption> {
   WatchOptions$Mutation$insertSubscriptionDataConsumption({
     String? operationName,
-    Variables$Mutation$insertSubscriptionDataConsumption? variables,
+    required Variables$Mutation$insertSubscriptionDataConsumption variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1222,7 +1289,7 @@ class WatchOptions$Mutation$insertSubscriptionDataConsumption extends graphql
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -1242,16 +1309,14 @@ extension ClientExtension$Mutation$insertSubscriptionDataConsumption
     on graphql.GraphQLClient {
   Future<graphql.QueryResult<Mutation$insertSubscriptionDataConsumption>>
       mutate$insertSubscriptionDataConsumption(
-              [Options$Mutation$insertSubscriptionDataConsumption?
-                  options]) async =>
-          await this.mutate(
-              options ?? Options$Mutation$insertSubscriptionDataConsumption());
+              Options$Mutation$insertSubscriptionDataConsumption
+                  options) async =>
+          await this.mutate(options);
   graphql.ObservableQuery<Mutation$insertSubscriptionDataConsumption>
       watchMutation$insertSubscriptionDataConsumption(
-              [WatchOptions$Mutation$insertSubscriptionDataConsumption?
-                  options]) =>
-          this.watchMutation(options ??
-              WatchOptions$Mutation$insertSubscriptionDataConsumption());
+              WatchOptions$Mutation$insertSubscriptionDataConsumption
+                  options) =>
+          this.watchMutation(options);
 }
 
 class Mutation$insertSubscriptionDataConsumption$insert_data_consumption_one {

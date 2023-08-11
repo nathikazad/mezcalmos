@@ -631,7 +631,6 @@ class Variables$Mutation$writePost {
     String? message,
     String? image,
     dynamic? likes,
-    dynamic? comments,
     String? link,
   }) =>
       Variables$Mutation$writePost._({
@@ -640,7 +639,6 @@ class Variables$Mutation$writePost {
         if (message != null) r'message': message,
         if (image != null) r'image': image,
         if (likes != null) r'likes': likes,
-        if (comments != null) r'comments': comments,
         if (link != null) r'link': link,
       });
 
@@ -664,11 +662,6 @@ class Variables$Mutation$writePost {
       final l$likes = data['likes'];
       result$data['likes'] = l$likes == null ? null : mapFromJson(l$likes);
     }
-    if (data.containsKey('comments')) {
-      final l$comments = data['comments'];
-      result$data['comments'] =
-          l$comments == null ? null : mapFromJson(l$comments);
-    }
     if (data.containsKey('link')) {
       final l$link = data['link'];
       result$data['link'] = (l$link as String?);
@@ -682,7 +675,6 @@ class Variables$Mutation$writePost {
   String? get message => (_$data['message'] as String?);
   String? get image => (_$data['image'] as String?);
   dynamic? get likes => (_$data['likes'] as dynamic?);
-  dynamic? get comments => (_$data['comments'] as dynamic?);
   String? get link => (_$data['link'] as String?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
@@ -701,11 +693,6 @@ class Variables$Mutation$writePost {
     if (_$data.containsKey('likes')) {
       final l$likes = likes;
       result$data['likes'] = l$likes == null ? null : mapToJson(l$likes);
-    }
-    if (_$data.containsKey('comments')) {
-      final l$comments = comments;
-      result$data['comments'] =
-          l$comments == null ? null : mapToJson(l$comments);
     }
     if (_$data.containsKey('link')) {
       final l$link = link;
@@ -761,15 +748,6 @@ class Variables$Mutation$writePost {
     if (l$likes != lOther$likes) {
       return false;
     }
-    final l$comments = comments;
-    final lOther$comments = other.comments;
-    if (_$data.containsKey('comments') !=
-        other._$data.containsKey('comments')) {
-      return false;
-    }
-    if (l$comments != lOther$comments) {
-      return false;
-    }
     final l$link = link;
     final lOther$link = other.link;
     if (_$data.containsKey('link') != other._$data.containsKey('link')) {
@@ -787,7 +765,6 @@ class Variables$Mutation$writePost {
     final l$message = message;
     final l$image = image;
     final l$likes = likes;
-    final l$comments = comments;
     final l$link = link;
     return Object.hashAll([
       _$data.containsKey('service_provider_id')
@@ -796,7 +773,6 @@ class Variables$Mutation$writePost {
       _$data.containsKey('message') ? l$message : const {},
       _$data.containsKey('image') ? l$image : const {},
       _$data.containsKey('likes') ? l$likes : const {},
-      _$data.containsKey('comments') ? l$comments : const {},
       _$data.containsKey('link') ? l$link : const {},
     ]);
   }
@@ -816,7 +792,6 @@ abstract class CopyWith$Variables$Mutation$writePost<TRes> {
     String? message,
     String? image,
     dynamic? likes,
-    dynamic? comments,
     String? link,
   });
 }
@@ -839,7 +814,6 @@ class _CopyWithImpl$Variables$Mutation$writePost<TRes>
     Object? message = _undefined,
     Object? image = _undefined,
     Object? likes = _undefined,
-    Object? comments = _undefined,
     Object? link = _undefined,
   }) =>
       _then(Variables$Mutation$writePost._({
@@ -849,7 +823,6 @@ class _CopyWithImpl$Variables$Mutation$writePost<TRes>
         if (message != _undefined) 'message': (message as String?),
         if (image != _undefined) 'image': (image as String?),
         if (likes != _undefined) 'likes': (likes as dynamic?),
-        if (comments != _undefined) 'comments': (comments as dynamic?),
         if (link != _undefined) 'link': (link as String?),
       }));
 }
@@ -865,7 +838,6 @@ class _CopyWithStubImpl$Variables$Mutation$writePost<TRes>
     String? message,
     String? image,
     dynamic? likes,
-    dynamic? comments,
     String? link,
   }) =>
       _res;
@@ -1066,15 +1038,6 @@ const documentNodeMutationwritePost = DocumentNode(definitions: [
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'comments')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'jsonb'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'link')),
         type: NamedTypeNode(
           name: NameNode(value: 'String'),
@@ -1116,10 +1079,6 @@ const documentNodeMutationwritePost = DocumentNode(definitions: [
               ObjectFieldNode(
                 name: NameNode(value: 'likes'),
                 value: VariableNode(name: NameNode(value: 'likes')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'comments'),
-                value: VariableNode(name: NameNode(value: 'comments')),
               ),
               ObjectFieldNode(
                 name: NameNode(value: 'link'),
@@ -1758,13 +1717,6 @@ const documentNodeQuerygetFeed = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'comments'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'likes'),
             alias: null,
             arguments: [],
@@ -1950,8 +1902,7 @@ class Query$getFeed$service_provider_post {
   Query$getFeed$service_provider_post({
     required this.id,
     this.image,
-    this.comments,
-    this.likes,
+    required this.likes,
     required this.message,
     required this.posted_on,
     this.restaurant,
@@ -1962,7 +1913,6 @@ class Query$getFeed$service_provider_post {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$image = json['image'];
-    final l$comments = json['comments'];
     final l$likes = json['likes'];
     final l$message = json['message'];
     final l$posted_on = json['posted_on'];
@@ -1971,8 +1921,7 @@ class Query$getFeed$service_provider_post {
     return Query$getFeed$service_provider_post(
       id: (l$id as int),
       image: (l$image as String?),
-      comments: l$comments == null ? null : mapFromJson(l$comments),
-      likes: l$likes == null ? null : mapFromJson(l$likes),
+      likes: mapFromJson(l$likes),
       message: (l$message as String),
       posted_on: (l$posted_on as String),
       restaurant: l$restaurant == null
@@ -1987,9 +1936,7 @@ class Query$getFeed$service_provider_post {
 
   final String? image;
 
-  final dynamic? comments;
-
-  final dynamic? likes;
+  final dynamic likes;
 
   final String message;
 
@@ -2005,10 +1952,8 @@ class Query$getFeed$service_provider_post {
     _resultData['id'] = l$id;
     final l$image = image;
     _resultData['image'] = l$image;
-    final l$comments = comments;
-    _resultData['comments'] = l$comments == null ? null : mapToJson(l$comments);
     final l$likes = likes;
-    _resultData['likes'] = l$likes == null ? null : mapToJson(l$likes);
+    _resultData['likes'] = mapToJson(l$likes);
     final l$message = message;
     _resultData['message'] = l$message;
     final l$posted_on = posted_on;
@@ -2024,7 +1969,6 @@ class Query$getFeed$service_provider_post {
   int get hashCode {
     final l$id = id;
     final l$image = image;
-    final l$comments = comments;
     final l$likes = likes;
     final l$message = message;
     final l$posted_on = posted_on;
@@ -2033,7 +1977,6 @@ class Query$getFeed$service_provider_post {
     return Object.hashAll([
       l$id,
       l$image,
-      l$comments,
       l$likes,
       l$message,
       l$posted_on,
@@ -2059,11 +2002,6 @@ class Query$getFeed$service_provider_post {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
-      return false;
-    }
-    final l$comments = comments;
-    final lOther$comments = other.comments;
-    if (l$comments != lOther$comments) {
       return false;
     }
     final l$likes = likes;
@@ -2117,7 +2055,6 @@ abstract class CopyWith$Query$getFeed$service_provider_post<TRes> {
   TRes call({
     int? id,
     String? image,
-    dynamic? comments,
     dynamic? likes,
     String? message,
     String? posted_on,
@@ -2143,7 +2080,6 @@ class _CopyWithImpl$Query$getFeed$service_provider_post<TRes>
   TRes call({
     Object? id = _undefined,
     Object? image = _undefined,
-    Object? comments = _undefined,
     Object? likes = _undefined,
     Object? message = _undefined,
     Object? posted_on = _undefined,
@@ -2153,10 +2089,9 @@ class _CopyWithImpl$Query$getFeed$service_provider_post<TRes>
       _then(Query$getFeed$service_provider_post(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
-        comments: comments == _undefined
-            ? _instance.comments
-            : (comments as dynamic?),
-        likes: likes == _undefined ? _instance.likes : (likes as dynamic?),
+        likes: likes == _undefined || likes == null
+            ? _instance.likes
+            : (likes as dynamic),
         message: message == _undefined || message == null
             ? _instance.message
             : (message as String),
@@ -2189,7 +2124,6 @@ class _CopyWithStubImpl$Query$getFeed$service_provider_post<TRes>
   call({
     int? id,
     String? image,
-    dynamic? comments,
     dynamic? likes,
     String? message,
     String? posted_on,
