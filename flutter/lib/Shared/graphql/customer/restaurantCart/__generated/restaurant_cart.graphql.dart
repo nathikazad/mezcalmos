@@ -2087,6 +2087,20 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'discount_value'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'restaurant'),
             alias: null,
             arguments: [],
@@ -3030,6 +3044,8 @@ extension ClientExtension$Query$getCustomerCart on graphql.GraphQLClient {
 
 class Query$getCustomerCart$restaurant_cart {
   Query$getCustomerCart$restaurant_cart({
+    this.cost,
+    required this.discount_value,
     this.restaurant,
     required this.items,
     required this.$__typename,
@@ -3037,10 +3053,14 @@ class Query$getCustomerCart$restaurant_cart {
 
   factory Query$getCustomerCart$restaurant_cart.fromJson(
       Map<String, dynamic> json) {
+    final l$cost = json['cost'];
+    final l$discount_value = json['discount_value'];
     final l$restaurant = json['restaurant'];
     final l$items = json['items'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$restaurant_cart(
+      cost: l$cost == null ? null : moneyFromJson(l$cost),
+      discount_value: moneyFromJson(l$discount_value),
       restaurant: l$restaurant == null
           ? null
           : Query$getCustomerCart$restaurant_cart$restaurant.fromJson(
@@ -3053,6 +3073,10 @@ class Query$getCustomerCart$restaurant_cart {
     );
   }
 
+  final double? cost;
+
+  final double discount_value;
+
   final Query$getCustomerCart$restaurant_cart$restaurant? restaurant;
 
   final List<Query$getCustomerCart$restaurant_cart$items> items;
@@ -3061,6 +3085,10 @@ class Query$getCustomerCart$restaurant_cart {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$cost = cost;
+    _resultData['cost'] = l$cost == null ? null : moneyToJson(l$cost);
+    final l$discount_value = discount_value;
+    _resultData['discount_value'] = moneyToJson(l$discount_value);
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant?.toJson();
     final l$items = items;
@@ -3072,10 +3100,14 @@ class Query$getCustomerCart$restaurant_cart {
 
   @override
   int get hashCode {
+    final l$cost = cost;
+    final l$discount_value = discount_value;
     final l$restaurant = restaurant;
     final l$items = items;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$cost,
+      l$discount_value,
       l$restaurant,
       Object.hashAll(l$items.map((v) => v)),
       l$$__typename,
@@ -3089,6 +3121,16 @@ class Query$getCustomerCart$restaurant_cart {
     }
     if (!(other is Query$getCustomerCart$restaurant_cart) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
+      return false;
+    }
+    final l$discount_value = discount_value;
+    final lOther$discount_value = other.discount_value;
+    if (l$discount_value != lOther$discount_value) {
       return false;
     }
     final l$restaurant = restaurant;
@@ -3137,6 +3179,8 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart<TRes> {
       _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart;
 
   TRes call({
+    double? cost,
+    double? discount_value,
     Query$getCustomerCart$restaurant_cart$restaurant? restaurant,
     List<Query$getCustomerCart$restaurant_cart$items>? items,
     String? $__typename,
@@ -3165,11 +3209,17 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? cost = _undefined,
+    Object? discount_value = _undefined,
     Object? restaurant = _undefined,
     Object? items = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCustomerCart$restaurant_cart(
+        cost: cost == _undefined ? _instance.cost : (cost as double?),
+        discount_value: discount_value == _undefined || discount_value == null
+            ? _instance.discount_value
+            : (discount_value as double),
         restaurant: restaurant == _undefined
             ? _instance.restaurant
             : (restaurant as Query$getCustomerCart$restaurant_cart$restaurant?),
@@ -3211,6 +3261,8 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart<TRes>
   TRes _res;
 
   call({
+    double? cost,
+    double? discount_value,
     Query$getCustomerCart$restaurant_cart$restaurant? restaurant,
     List<Query$getCustomerCart$restaurant_cart$items>? items,
     String? $__typename,
@@ -8983,6 +9035,13 @@ const documentNodeSubscriptionlisten_on_customer_cart =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'restaurant'),
             alias: null,
             arguments: [],
@@ -9903,6 +9962,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart_by_pk {
     this.restaurant_id,
     required this.discount_value,
     required this.applied_offers,
+    this.cost,
     this.restaurant,
     required this.items,
     required this.$__typename,
@@ -9913,6 +9973,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart_by_pk {
     final l$restaurant_id = json['restaurant_id'];
     final l$discount_value = json['discount_value'];
     final l$applied_offers = json['applied_offers'];
+    final l$cost = json['cost'];
     final l$restaurant = json['restaurant'];
     final l$items = json['items'];
     final l$$__typename = json['__typename'];
@@ -9920,6 +9981,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart_by_pk {
       restaurant_id: (l$restaurant_id as int?),
       discount_value: moneyFromJson(l$discount_value),
       applied_offers: mapFromJson(l$applied_offers),
+      cost: l$cost == null ? null : moneyFromJson(l$cost),
       restaurant: l$restaurant == null
           ? null
           : Subscription$listen_on_customer_cart$restaurant_cart_by_pk$restaurant
@@ -9939,6 +10001,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart_by_pk {
 
   final dynamic applied_offers;
 
+  final double? cost;
+
   final Subscription$listen_on_customer_cart$restaurant_cart_by_pk$restaurant?
       restaurant;
 
@@ -9955,6 +10019,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart_by_pk {
     _resultData['discount_value'] = moneyToJson(l$discount_value);
     final l$applied_offers = applied_offers;
     _resultData['applied_offers'] = mapToJson(l$applied_offers);
+    final l$cost = cost;
+    _resultData['cost'] = l$cost == null ? null : moneyToJson(l$cost);
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant?.toJson();
     final l$items = items;
@@ -9969,6 +10035,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart_by_pk {
     final l$restaurant_id = restaurant_id;
     final l$discount_value = discount_value;
     final l$applied_offers = applied_offers;
+    final l$cost = cost;
     final l$restaurant = restaurant;
     final l$items = items;
     final l$$__typename = $__typename;
@@ -9976,6 +10043,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart_by_pk {
       l$restaurant_id,
       l$discount_value,
       l$applied_offers,
+      l$cost,
       l$restaurant,
       Object.hashAll(l$items.map((v) => v)),
       l$$__typename,
@@ -10005,6 +10073,11 @@ class Subscription$listen_on_customer_cart$restaurant_cart_by_pk {
     final l$applied_offers = applied_offers;
     final lOther$applied_offers = other.applied_offers;
     if (l$applied_offers != lOther$applied_offers) {
+      return false;
+    }
+    final l$cost = cost;
+    final lOther$cost = other.cost;
+    if (l$cost != lOther$cost) {
       return false;
     }
     final l$restaurant = restaurant;
@@ -10060,6 +10133,7 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart_by_
     int? restaurant_id,
     double? discount_value,
     dynamic? applied_offers,
+    double? cost,
     Subscription$listen_on_customer_cart$restaurant_cart_by_pk$restaurant?
         restaurant,
     List<Subscription$listen_on_customer_cart$restaurant_cart_by_pk$items>?
@@ -10097,6 +10171,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart_by_pk<
     Object? restaurant_id = _undefined,
     Object? discount_value = _undefined,
     Object? applied_offers = _undefined,
+    Object? cost = _undefined,
     Object? restaurant = _undefined,
     Object? items = _undefined,
     Object? $__typename = _undefined,
@@ -10111,6 +10186,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart_by_pk<
         applied_offers: applied_offers == _undefined || applied_offers == null
             ? _instance.applied_offers
             : (applied_offers as dynamic),
+        cost: cost == _undefined ? _instance.cost : (cost as double?),
         restaurant: restaurant == _undefined
             ? _instance.restaurant
             : (restaurant
@@ -10161,6 +10237,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart_by_
     int? restaurant_id,
     double? discount_value,
     dynamic? applied_offers,
+    double? cost,
     Subscription$listen_on_customer_cart$restaurant_cart_by_pk$restaurant?
         restaurant,
     List<Subscription$listen_on_customer_cart$restaurant_cart_by_pk$items>?

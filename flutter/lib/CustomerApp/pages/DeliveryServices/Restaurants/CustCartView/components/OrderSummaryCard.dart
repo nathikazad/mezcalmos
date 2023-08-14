@@ -63,7 +63,7 @@ class CardSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(controller.cart.itemsCost().toPriceString(),
+                        child: Text(controller.cart.itemsCost.toPriceString(),
                             style: txt.bodyMedium),
                       ),
                     )
@@ -138,6 +138,30 @@ class CardSummaryCard extends StatelessWidget {
                     ],
                   ),
                 ),
+              //==================discount value :==================
+              if(controller.cart.discountValue > 0)
+              Container(
+                padding: const EdgeInsets.only(bottom: 4),
+                width: Get.width,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        child: Text("${_i18n()["discount"]}",
+                            style: txt.bodyMedium),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                            controller.cart.discountValue.toPriceString(),
+                            style: txt.bodyMedium),
+                      ),
+                    )
+                  ],
+                ),
+              ),
               //=======================Total cost : ==================
               Container(
                 padding: EdgeInsets.only(bottom: 4, top: 3),
@@ -155,10 +179,7 @@ class CardSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(
-                            (controller.cart.totalCost +
-                                    controller.estDeliveryCost.value)
-                                .toPriceString(),
+                        child: Text(controller.getTotalCost().toPriceString(),
                             style: txt.headlineSmall),
                       ),
                     ),

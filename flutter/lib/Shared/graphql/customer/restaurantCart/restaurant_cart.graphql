@@ -29,10 +29,12 @@ mutation set_cart_restaurant_id($restaurant_id: Int!, $customer_id: Int!) {
 
 query getCustomerCart($customer_id: Int!) {
   restaurant_cart(where: { customer_id: { _eq: $customer_id } }) {
+    cost
+    discount_value
     restaurant {
       id
 
-      delivery_details{
+      delivery_details {
         cost_per_km
         free_delivery_km_range
         free_delivery_minimum_cost
@@ -166,10 +168,11 @@ subscription listen_on_customer_cart($customer_id: Int!) {
     restaurant_id
     discount_value
     applied_offers
+    cost
     restaurant {
       id
       details_id
-      delivery_details{
+      delivery_details {
         cost_per_km
         cost_per_km_from_base
         free_delivery_km_range
@@ -305,8 +308,15 @@ mutation updateRestaurantCartItem(
   }
 }
 
-mutation update_cart_discount($customer_id: Int!, $applied_offers: jsonb, $discount_value: money) {
-  update_restaurant_cart_by_pk(pk_columns: {customer_id: $customer_id}, _set: {applied_offers: $applied_offers, discount_value: $discount_value}) {
+mutation update_cart_discount(
+  $customer_id: Int!
+  $applied_offers: jsonb
+  $discount_value: money
+) {
+  update_restaurant_cart_by_pk(
+    pk_columns: { customer_id: $customer_id }
+    _set: { applied_offers: $applied_offers, discount_value: $discount_value }
+  ) {
     discount_value
   }
 }

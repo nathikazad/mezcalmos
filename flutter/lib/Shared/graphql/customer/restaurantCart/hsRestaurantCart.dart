@@ -150,6 +150,8 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
           data.item.options.addAll(_convertOptionFromQuerry(listOfOptions));
         });
         cart.addItem(data);
+        cart.itemsCost = cartData.cost ?? 0;
+        cart.discountValue = cartData.discount_value ?? 0;
       }
     });
     return cart;
@@ -314,6 +316,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         );
       }
       _cartEvent.discountValue = parsedCart.discount_value;
+      _cartEvent.itemsCost = parsedCart.cost ?? 0;
       _cartEvent.offersApplied = parsedCart.applied_offers
               ?.map<int>((value) => int.parse(value.toString()))
               .toList() ??

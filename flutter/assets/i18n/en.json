@@ -1108,6 +1108,7 @@
               "orderCost": "Order cost",
               "deliveryCost": "Delivery cost",
               "stripeFees": "Card fees",
+              "discount" : "Discount",
               "totalCost": "Total cost",
               "deliveryLocation": "Delivery location",
               "toBeCalc": "Calculating..."

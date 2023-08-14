@@ -26615,7 +26615,7 @@ class _CopyWithStubImpl$Query$SearchSingleBusinessItems$products$details$name$tr
 class Query$SearchSingleBusinessItems$home {
   Query$SearchSingleBusinessItems$home({
     required this.id,
-    this.details,
+    required this.details,
     required this.$__typename,
   });
 
@@ -26626,17 +26626,15 @@ class Query$SearchSingleBusinessItems$home {
     final l$$__typename = json['__typename'];
     return Query$SearchSingleBusinessItems$home(
       id: (l$id as int),
-      details: l$details == null
-          ? null
-          : Query$SearchSingleBusinessItems$home$details.fromJson(
-              (l$details as Map<String, dynamic>)),
+      details: Query$SearchSingleBusinessItems$home$details.fromJson(
+          (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final Query$SearchSingleBusinessItems$home$details? details;
+  final Query$SearchSingleBusinessItems$home$details details;
 
   final String $__typename;
 
@@ -26645,7 +26643,7 @@ class Query$SearchSingleBusinessItems$home {
     final l$id = id;
     _resultData['id'] = l$id;
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -26738,20 +26736,17 @@ class _CopyWithImpl$Query$SearchSingleBusinessItems$home<TRes>
   }) =>
       _then(Query$SearchSingleBusinessItems$home(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
-            : (details as Query$SearchSingleBusinessItems$home$details?),
+            : (details as Query$SearchSingleBusinessItems$home$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   CopyWith$Query$SearchSingleBusinessItems$home$details<TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$SearchSingleBusinessItems$home$details.stub(
-            _then(_instance))
-        : CopyWith$Query$SearchSingleBusinessItems$home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$SearchSingleBusinessItems$home$details(
+        local$details, (e) => call(details: e));
   }
 }
 

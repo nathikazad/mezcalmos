@@ -73,8 +73,7 @@ class CustRestaurantCartViewController {
   Cart get cart => cartController.cart.value ?? Cart();
 
   Rxn<Cart> get _cartRxn => cartController.cart;
-  bool get showDelivery =>
-      dvType.value == cModels.DeliveryType.Delivery;
+  bool get showDelivery => dvType.value == cModels.DeliveryType.Delivery;
 
   // init //
   Future<void> init() async {
@@ -452,6 +451,12 @@ class CustRestaurantCartViewController {
     if (_cartRxn.value?.deliveryType == cModels.DeliveryType.Pickup) {
       _cartRxn.value?.shippingCost = null;
     }
+  }
+
+  num getTotalCost() {
+    final num totalCost =
+        (cart.totalCost + estDeliveryCost.value) - cart.discountValue;
+    return totalCost;
   }
 }
 

@@ -38,7 +38,7 @@ Future<CouponError?> applyRestaurantCoupon(
     return CouponError.AlreadyApplied;
   }
   if (coupon.details.minimumOrderAmount != null &&
-      coupon.details.minimumOrderAmount! > cart.itemsCost()) {
+      coupon.details.minimumOrderAmount! > cart.itemsCost) {
     return CouponError.OrderAmountTooLow;
   }
   bool isValid = true;
@@ -188,7 +188,7 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
   num discount = 0;
 
   if (offer.details.minimumOrderAmount != null &&
-      offer.details.minimumOrderAmount! > cart.itemsCost()) {
+      offer.details.minimumOrderAmount! > cart.itemsCost) {
     return 0;
   }
 

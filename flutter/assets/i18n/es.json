@@ -1102,6 +1102,7 @@
               "deliveryCost": "Costo de envío",
               "stripeFees": "Tarifas de tarjeta",
               "totalCost": "Costo Total",
+              "discount" : "Descuento",
               "deliveryLocation": "Lugar De rntrega",
               "toBeCalc": "Calculando ..."
             },
