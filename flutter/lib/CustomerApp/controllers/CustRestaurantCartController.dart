@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
@@ -11,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -231,7 +231,7 @@ class CustRestaurantCartController extends GetxController {
             ),
           ).toFirebaseFormattedJson(),
       "deliveryCost": cart.value?.shippingCost ?? 0,
-      "itemsCost": cart.value?.itemsCost(),
+      "itemsCost": cart.value?.itemsCost,
       "scheduledTime": cart.value?.deliveryTime?.toUtc().toString(),
       "paymentType": cart.value?.paymentType.toFirebaseFormatString(),
       "notes": cart.value?.notes,

@@ -165,8 +165,11 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
     } else {
       minutesFormattedString = "$minutes";
     }
-    if (hours <= 12) {
+
+    if (hours < 12) {
       formattedString = "$hours:$minutesFormattedString AM";
+    } else if (hours == 12) {
+      formattedString = "$hours:$minutesFormattedString PM";
     } else {
       formattedString = "${hours - 12}:$minutesFormattedString PM";
     }
