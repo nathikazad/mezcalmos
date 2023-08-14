@@ -1807,7 +1807,8 @@
             "surf": "Surf",
             "yoga": "Yoga",
             "fitness": "Fitness",
-            "dance": "Dance"
+            "dance": "Dance",
+            "uncategorized" : "Uncategorized"
           }
         },
         "TherapyView": {

@@ -1823,7 +1823,8 @@
             "surf": "Surf",
             "yoga": "yoga",
             "fitness": "Aptitud física",
-            "dance": "Bailar"
+            "dance": "Bailar",
+            "uncategorized" :"Sin categoría"
           }
         },
         "TherapyView": {
