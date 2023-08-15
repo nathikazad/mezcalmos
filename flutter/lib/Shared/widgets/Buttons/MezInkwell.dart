@@ -21,6 +21,7 @@ class MezInkwell extends StatefulWidget {
     this.margin,
     this.border,
     this.icon,
+    this.showLabelWhileLoading = true,
     this.padding = const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
     this.label,
     this.onClick,
@@ -31,7 +32,7 @@ class MezInkwell extends StatefulWidget {
   final bool enabled;
   final bool withGradient;
   final String? label;
-
+  final bool showLabelWhileLoading;
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? textColor;
@@ -118,7 +119,7 @@ class _MezInkwellState extends State<MezInkwell> {
                           size: 15.mezSp,
                         ),
                       ),
-                    if (widget.label != null)
+                    if (shouldShowLabel)
                       Flexible(
                         child: Text(
                           widget.label!,
@@ -143,5 +144,10 @@ class _MezInkwellState extends State<MezInkwell> {
             )),
       );
     });
+  }
+
+  bool get shouldShowLabel {
+    return widget.label != null &&
+        (!isLoading.value || (isLoading.value && widget.showLabelWhileLoading));
   }
 }

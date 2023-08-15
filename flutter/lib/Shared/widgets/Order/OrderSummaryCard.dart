@@ -197,6 +197,23 @@ class OrderSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                if (showNullValues || costs.discountValue != null)
+                  Container(
+                    margin: EdgeInsets.only(top: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          '${_i18n()["discount"]}',
+                        ),
+                        Text(
+                          (costs.discountValue! > 0)
+                              ? costs.discountValue?.toPriceString() ?? "-"
+                              : "-",
+                        ),
+                      ],
+                    ),
+                  ),
                 if (showNullValues || costs.totalCost != null)
                   Container(
                     margin: EdgeInsets.only(top: 2),

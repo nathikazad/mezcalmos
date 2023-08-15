@@ -110,6 +110,7 @@ class _CustRestaurantCartViewState extends State<CustRestaurantCartView> {
                       },
                     ),
                   ),
+                  
 
                 CardSummaryCard(
                   controller: viewController,

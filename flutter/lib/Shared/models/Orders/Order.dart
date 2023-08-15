@@ -320,12 +320,14 @@ class OrderCosts {
   ChangePriceRequest? changePriceRequest;
   num? tax;
   num? orderItemsCost;
+  num? discountValue;
   num? totalCost;
   OrderCosts({
     required this.deliveryCost,
     this.changePriceRequest,
     required this.refundAmmount,
     required this.tax,
+    this.discountValue,
     required this.orderItemsCost,
     required this.totalCost,
   });

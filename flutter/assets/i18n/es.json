@@ -1036,7 +1036,7 @@
           },
           "ListRestaurantScreen": {
             "restaurants": "Restaurantes",
-            "loadingText" : "Llegar a los restaurantes cercanos ...",
+            "loadingText": "Llegar a los restaurantes cercanos ...",
             "search": "Búsqueda",
             "offerOnly": "Reserva en línea",
             "filter": "Filtrar",
@@ -1102,7 +1102,7 @@
               "deliveryCost": "Costo de envío",
               "stripeFees": "Tarifas de tarjeta",
               "totalCost": "Costo Total",
-              "discount" : "Descuento",
+              "discount": "Descuento",
               "deliveryLocation": "Lugar De rntrega",
               "toBeCalc": "Calculando ..."
             },
@@ -1850,7 +1850,7 @@
             "classes": "Clases",
             "events": "Eventos",
             "studio": "Estudio",
-            "languageSchool":"Idioma",
+            "languageSchool": "Idioma",
             "noBusinessesFound": "No se encontraron negocios",
             "noClassesFound": "No se encontraron clases",
             "noEventsFound": "No se encuentran eventos",
@@ -2616,7 +2616,7 @@
             "imageError": "Se requiere una imagen",
             "description": "Descripción",
             "descriptionHintText": "Ingrese una descripción",
-            "phoneNumberHelper" : "Incluye el código de país: +52XXXXXXXX",
+            "phoneNumberHelper": "Incluye el código de país: +52XXXXXXXX",
             "phoneText": "Número de teléfono",
             "phoneTextDescription": "Ingrese su número telefónico",
             "phoneTextError": "Ingrese un número de teléfono válido",
@@ -2754,7 +2754,7 @@
         "offers": "Oferta",
         "addOffer": "Añadir oferta",
         "coupon": "Cupón",
-        "monthlySubscription" : "Suscripción mensual",
+        "monthlySubscription": "Suscripción mensual",
         "promotion": "Promoción",
         "anyOrder": "Cualquier orden",
         "firstOrderOnly": "Solo de primer orden",
@@ -2774,7 +2774,7 @@
       "ServiceInfoEditView": {
         "name": "Nombre",
         "phoneNumber": "Número de teléfono",
-        "phoneNumberHelper" : "Incluye el código de país: +52XXXXXXXX",
+        "phoneNumberHelper": "Incluye el código de país: +52XXXXXXXX",
         "location": "Localización",
         "phoneErrorText": "Por favor ingrese un número de teléfono válido",
         "description": "Descripción",
@@ -3047,6 +3047,7 @@
         "refundAmount": "Cantidad devuelta",
         "toBeCalc": "Para ser calculado",
         "add": "Agregar",
+        "discount": "Descuento",
         "waitingForCustomer": "Esperando aceptar"
       },
       "OrderPaymentMethod": {
@@ -3814,9 +3815,9 @@
         "restaurant": "Restaurante",
         "laundry": "Lavadero",
         "courier": "Entrega abierta",
-        "cancel" : "Cancelar",
-        "counterOffer" : "Contraoferta",
-        "reqCounterOffer" : "Solicitar"
+        "cancel": "Cancelar",
+        "counterOffer": "Contraoferta",
+        "reqCounterOffer": "Solicitar"
       }
     },
     "notificationHandler": {

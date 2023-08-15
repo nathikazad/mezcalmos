@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
@@ -18,6 +17,7 @@ import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class CustBusinessCartController extends GetxController {
@@ -348,11 +348,27 @@ class CustBusinessCartController extends GetxController {
   }
 
   Future<void> applyCoupon() async {
-    CouponError? response = await applyBusinessCoupon(
-      cart: cart.value!,
-      customerId: _auth.hasuraUserId!,
-      couponCode: couponController.text.trim(),
-    );
-    mezDbgPrint("response: ${response?.name}");
+    if (couponController.text.isNotEmpty) {
+      try {
+        CouponError? response = await applyBusinessCoupon(
+          cart: cart.value!,
+          customerId: _auth.hasuraUserId!,
+          couponCode: couponController.text.trim(),
+        );
+
+        if (response != null) {
+          showErrorSnackBar(errorText: response.name);
+        } else {
+          couponController.clear();
+          showSavedSnackBar(
+              title: "Applied",
+              subtitle: "Your coupon have been successfully applied");
+        }
+      } catch (e, stk) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
+    }
   }
 }

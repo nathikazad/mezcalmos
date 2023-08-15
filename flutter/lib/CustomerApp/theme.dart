@@ -60,7 +60,7 @@ class CustomerAppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Colors.grey.shade200,
           //isDense: true,
           errorStyle: TextStyle(
             fontFamily: "Nunito",
@@ -70,6 +70,16 @@ class CustomerAppTheme {
           ),
           focusColor: Color(0xFF6779FE),
           prefixIconColor: Color(0xFF6779FE),
+          suffixIconColor:
+              MaterialStateColor.resolveWith((Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused)) {
+              return primaryBlueColor;
+            }
+            if (states.contains(MaterialState.error)) {
+              return redAccentColor;
+            }
+            return Colors.grey;
+          }),
           alignLabelWithHint: true,
           hintStyle: TextStyle(
             fontWeight: FontWeight.w400,
@@ -77,6 +87,16 @@ class CustomerAppTheme {
             fontSize: 10.mezSp,
             color: Colors.black.withOpacity(0.8),
           ),
+          iconColor:
+              MaterialStateColor.resolveWith((Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused)) {
+              return primaryBlueColor;
+            }
+            if (states.contains(MaterialState.error)) {
+              return redAccentColor;
+            }
+            return Colors.grey;
+          }),
           contentPadding: EdgeInsets.all(12),
           isDense: true,
           border: OutlineInputBorder(
