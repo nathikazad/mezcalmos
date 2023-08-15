@@ -269,7 +269,7 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
           }
         }
       });
-      discount += offer.details.discountValue * (sameItems / 2);
+      discount += offer.details.discountValue * (sameItems ~/ 2);
       break;
     case cModels.DiscountType.AnotherSamePercentage:
       int sameItems = 0;
@@ -294,7 +294,7 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
         }
       });
       discount +=
-          oneItemCost * offer.details.discountValue / 100.0 * (sameItems / 2);
+          oneItemCost * offer.details.discountValue / 100.0 * (sameItems ~/ 2);
       break;
   }
   if (discount > 0) {
@@ -474,8 +474,7 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
         cart.items.forEach((BusinessCartItem cartItem) {
           if (offer.details.offerForItems == "particularItems") {
             for (int i = 0; i < offer.details.items!.length; i++) {
-              if (offer.details.items![i] == cartItem.itemId &&
-                  offer.details.offeringTypes![i] == cartItem.offeringType) {
+              if (offer.details.items![i] == cartItem.itemId) {
                 discount += offer.details.discountValue;
                 break;
               }
@@ -493,8 +492,7 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       cart.items.forEach((BusinessCartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
           for (int i = 0; i < offer.details.items!.length; i++) {
-            if (offer.details.items![i] == cartItem.itemId &&
-                offer.details.offeringTypes![i] == cartItem.offeringType) {
+            if (offer.details.items![i] == cartItem.itemId) {
               discount += cartItem.cost * offer.details.discountValue / 100.0;
               break;
             }
@@ -517,8 +515,7 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       cart.items.forEach((BusinessCartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
           for (int i = 0; i < offer.details.items!.length; i++) {
-            if (offer.details.items![i] == cartItem.itemId &&
-                offer.details.offeringTypes![i] == cartItem.offeringType) {
+            if (offer.details.items![i] == cartItem.itemId) {
               sameItems++;
               break;
             }
@@ -532,7 +529,7 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
           }
         }
       });
-      discount += offer.details.discountValue * (sameItems / 2);
+      discount += offer.details.discountValue * (sameItems ~/ 2);
       break;
     case cModels.DiscountType.AnotherSamePercentage:
       int sameItems = 0;
@@ -540,8 +537,8 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       cart.items.forEach((BusinessCartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
           for (int i = 0; i < offer.details.items!.length; i++) {
-            if (offer.details.items![i] == cartItem.itemId &&
-                offer.details.offeringTypes![i] == cartItem.offeringType) {
+            if (offer.details.items![i] == cartItem.itemId) {
+              oneItemCost = cartItem.cost;
               sameItems++;
               break;
             }
@@ -557,7 +554,7 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
         }
       });
       discount +=
-          oneItemCost * offer.details.discountValue / 100.0 * (sameItems / 2);
+          oneItemCost * offer.details.discountValue / 100.0 * (sameItems ~/ 2);
       break;
   }
   if (discount > 0) {
