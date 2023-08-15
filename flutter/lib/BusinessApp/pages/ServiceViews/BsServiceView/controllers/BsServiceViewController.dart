@@ -42,6 +42,7 @@ class BsServiceViewController {
     TimeUnit.PerHour,
     TimeUnit.PerDay,
   ];
+  bool get isBeauty => serviceCategory == ServiceCategory1.Beauty;
   List<TimeUnit> get avalbleUnits => _possibleTimeUnits
       .where((TimeUnit element) =>
           detailsController.priceTimeUnitMap.keys.contains(element) == false)
@@ -70,7 +71,8 @@ class BsServiceViewController {
         language: languages!,
         businessDetailsId: detailsId);
     this.serviceCategory = serviceCategory;
-    if (serviceCategory == ServiceCategory1.MealPlanning) {
+    if (serviceCategory == ServiceCategory1.MealPlanning ||
+        serviceCategory == ServiceCategory1.Beauty) {
       _possibleTimeUnits = [TimeUnit.Unit];
     }
     detailsController.addPriceTimeUnit(timeUnit: avalbleUnits.first);
