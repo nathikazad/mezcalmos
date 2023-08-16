@@ -4,8 +4,9 @@ import { MezError } from "../shared/models/Generic/Generic";
 import * as sms from "./senders/sms";
 
 interface SendOtpInterface {
-  language: string,
-  phoneNumber: string
+  language?: sms.AllowedLocales,
+  phoneNumber: string,
+  channel?: sms.AllowedChannels
 }
 
 interface SendOtpResponse {
@@ -22,6 +23,27 @@ enum SendOtpError {
 }
 
 export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<SendOtpResponse> {
+  console.log(data);
+  const lastSentRef = firebase.database().ref(`/metadata/sms`);
+  const result = await lastSentRef.transaction((sms) => {
+    const currentTime = new Date().getTime();
+    if (sms?.lastSentTime && currentTime - sms.lastSentTime < (sms?.timeout ?? 10000)) {
+      return; // Abort the transaction
+    }
+    return {lastSentTime:currentTime,
+            count: (sms?.count ?? 0) + 1,
+          timeout: sms?.timeout ?? 10000}; // Update the last sent timestamp
+  });
+
+  if (!result.committed) {
+    console.log("too soon")
+    return {
+      success: false,
+      error: SendOtpError.OTPAskedTooSoon
+    };
+  }
+  console.log("not too soon")
+
   try {
     let user;
     try {
@@ -42,7 +64,18 @@ export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<Sen
         throw new MezError(SendOtpError.UserNotFound);
       }
     }
-    await sendOTP(data, user.uid);
+    let payload: sms.OTPPayload = {
+      phoneNumber: data.phoneNumber,
+      channel: data.channel ?? "whatsapp",
+      locale: data.language ?? "en"
+    }
+    try {
+      await sms.sendOTP(payload)
+    } catch (error) {
+      functions.logger.error(error);
+      throw new MezError(SendOtpError.SMSSendError);
+    }
+    console.log("success")
     return {
       success: true
     }
@@ -68,6 +101,7 @@ export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<Sen
 }
 interface VerifyOtpInterface {
   phoneNumber: string,
+  channel: sms.AllowedChannels,
   OTPCode: string
 }
 export interface AuthResponse {
@@ -100,7 +134,9 @@ export async function getAuthUsingOTP(_:any, data: VerifyOtpInterface): Promise<
     if (data.phoneNumber == "+12098628445" && data.OTPCode == "111111") {
     // this condition for google and apple to gain instant Access.  
     } else {
-      await confirmOTP(data, user.uid);
+      let approved:boolean = await sms.confirmOTP(data.phoneNumber, data.OTPCode);
+      if(!approved)
+        throw AuthOtpError.InvalidOTPCode;
     }
 
     let customToken;
@@ -133,69 +169,5 @@ export async function getAuthUsingOTP(_:any, data: VerifyOtpInterface): Promise<
   }
 }
 
-async function sendOTP(data: SendOtpInterface, userId: string) {
-
-  let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
-  if (auth && auth.codeGeneratedTime) {
-    let lastCodeGeneratedTime = new Date(auth.codeGeneratedTime);
-    let validTimeForNextCodeGeneration = new Date(lastCodeGeneratedTime.getTime() + 60 * 1000);
-    if (new Date() < validTimeForNextCodeGeneration) {
-      let secondsLeft = (validTimeForNextCodeGeneration.getTime() - Date.now()) / 1000;
-
-      throw new MezError(SendOtpError.OTPAskedTooSoon, {secondsLeft});
-      // return {
-      //   success: false,
-      //   errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
-      //   secondsLeft: secondsLeft,
-      // }
-    }
-  }
-  let randomNumber: number = Math.trunc(Math.random() * 1000000)
-  let OTPCode = String(randomNumber).padStart(6, '0')
-
-  let payload: sms.Payload = {
-    message: (data.language == "es") ? `Su código OTP único de Mezcalmos es ${OTPCode}` : `Your one time Mezcalmos OTP code is ${OTPCode}`,
-    phoneNumber: data.phoneNumber
-  }
-
-  try {
-    await sms.send(payload)
-  } catch (error) {
-    functions.logger.error(error);
-    throw new MezError(SendOtpError.SMSSendError);
-  }
-
-  let newCodeEntry = {
-    OTPCode: OTPCode,
-    codeGeneratedTime: new Date().toISOString(),
-    attempts: 0
-  }
-  firebase.database().ref(`users/${userId}/auth`).set(newCodeEntry)
-}
 
 
-async function confirmOTP(data: VerifyOtpInterface, userId: string) {
-
-  let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
-  if (!auth || !auth.OTPCode || !auth.codeGeneratedTime) {
-
-    throw new MezError(AuthOtpError.InvalidOTPCode);
-  }
-
-  if (parseInt(auth.attempts) > 3) {
-    throw new MezError(AuthOtpError.ExceededNumberOfTries);
-  }
-
-  firebase.database().ref(`users/${userId}/auth/attempts`).set(parseInt(auth.attempts + 1))
-
-  let generatedTime = new Date(auth.codeGeneratedTime)
-  let expirationTime = new Date(generatedTime.getTime() + 10 * 60 * 1000)
-  if (new Date() > expirationTime) {
-
-    throw new MezError(AuthOtpError.InvalidOTPCode);
-  }
-  if (auth.OTPCode != data.OTPCode) {
-
-    throw new MezError(AuthOtpError.InvalidOTPCode);
-  }
-}
