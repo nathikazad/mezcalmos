@@ -2731,6 +2731,7 @@ class BusinessOrder {
   num? chatId;
   String? cancellationTime;
   UserInfo? customer;
+  num? discountValue;
   BusinessOrder(
       {required this.orderId,
       required this.customerId,
@@ -2746,7 +2747,8 @@ class BusinessOrder {
       this.notes,
       this.chatId,
       this.cancellationTime,
-      this.customer});
+      this.customer,
+      this.discountValue});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "orderId": orderId,
@@ -2764,6 +2766,7 @@ class BusinessOrder {
       "chatId": chatId,
       "cancellationTime": cancellationTime,
       "customer": customer,
+      "discountValue": discountValue,
     };
   }
 }
@@ -2834,13 +2837,15 @@ class BusinessCart {
   num? businessId;
   num cost;
   List<BusinessOrderItem> items;
-  num? discountValue;
+  num discountValue;
+  List<num> appliedOffers;
   BusinessCart(
       {required this.customerId,
       this.businessId,
       required this.cost,
       required this.items,
-      this.discountValue});
+      required this.discountValue,
+      required this.appliedOffers});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "customerId": customerId,
@@ -2848,6 +2853,7 @@ class BusinessCart {
       "cost": cost,
       "items": items,
       "discountValue": discountValue,
+      "appliedOffers": appliedOffers,
     };
   }
 }
