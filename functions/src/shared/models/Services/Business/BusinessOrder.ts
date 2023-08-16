@@ -19,6 +19,7 @@ export interface BusinessOrder {
     chatId?: number;
     cancellationTime?: string;
     customer?: UserInfo,
+    discountValue?: number;
 }
 
 export interface BusinessOrderItem {
@@ -54,7 +55,8 @@ export interface BusinessCart {
     businessId?: number;
     cost: number;
     items: Array<BusinessOrderItem>;
-    discountValue?: number;
+    discountValue: number;
+    appliedOffers: Array<number>;
 }
 
 export interface NewBusinessOrderRequestNotification extends OrderNotification {

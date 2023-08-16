@@ -94,8 +94,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     }
     // clear user cart 
     clearCart(customerId);
-
-    updateOffersApplied(orderResponse.restaurantOrder.orderId!, customerCart.appliedOffers, customerCart.discountValue, OrderType.Restaurant);
+    if(customerCart.appliedOffers.length > 0)
+      updateOffersApplied(orderResponse.restaurantOrder.orderId, customerCart.appliedOffers, customerCart.discountValue, OrderType.Restaurant);
 
     return {
       success: true,

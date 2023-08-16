@@ -154,7 +154,8 @@ Future<bool> check_offer_applied(
     ),
   );
   mezDbgPrint("👋 called check offer applied ===========>${res.data}");
-  if (res.parsedData?.service_provider_offer_applied.length == 0) {
+  if (res.parsedData == null ||
+      res.parsedData!.service_provider_offer_applied.length == 0) {
     return false;
   }
   return true;
