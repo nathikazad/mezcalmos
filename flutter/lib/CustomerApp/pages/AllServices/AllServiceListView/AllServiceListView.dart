@@ -13,6 +13,7 @@ import 'package:mezcalmos/CustomerApp/pages/Businesses/TherapyView/CustTherapyLi
 import 'package:mezcalmos/CustomerApp/pages/Businesses/VolunteerView/CustVolunteerListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/TaxiRequestOrderView/TaxiRequestOrderView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
@@ -57,8 +58,11 @@ class _AllServiceListViewState extends State<AllServiceListView> {
         );
         return;
       case MezService.Courier:
-      
         await CustRequestCourierView.navigate();
+
+        return;
+      case MezService.Taxi:
+        await TaxiRequestOrderView.navigate();
 
         return;
       case MezService.Rentals:

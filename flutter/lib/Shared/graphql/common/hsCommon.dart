@@ -390,6 +390,7 @@ class ServiceTree {
 
 enum MezService {
   Root,
+  Taxi,
   Deliveries,
   Food,
   Rentals,

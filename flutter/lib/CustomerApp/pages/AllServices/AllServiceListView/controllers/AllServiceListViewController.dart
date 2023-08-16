@@ -35,6 +35,10 @@ class AllServiceListViewController {
         "icon": aDelivery,
         "title": "deliveries",
       },
+      MezService.Taxi: {
+        "icon": aTaxiService,
+        "title": "taxi",
+      },
       MezService.Courier: {
         "icon": aDelivery,
         "title": "courier",
@@ -94,6 +98,7 @@ class AllServiceListViewController {
       withCache: true,
     );
     serviceTreeData.value = data;
+    serviceTreeData.value?.children.add(ServiceTree(MezService.Taxi, 2, null));
     mezDbgPrint("service_tree: $data");
     logEventToServer("Fetching Service tree finished",
         debugData: {"serviceTree": data.toString()});

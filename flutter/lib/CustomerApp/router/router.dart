@@ -1,4 +1,3 @@
-
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart'
     deferred as customerWrapper;
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart'
@@ -10,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/taxiOrderRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -25,7 +25,6 @@ class XRouter {
             middleware: <QMiddleware>[
               DefferedLoader(customerWrapper.loadLibrary)
             ]),
-       
         QRoute(
             name: deliveryServicesRoute,
             path: deliveryServicesRoute,
@@ -39,5 +38,6 @@ class XRouter {
       LaundryRoutes().routes +
       RestaurantRoutes().routes +
       CustomerRoutes().routes +
+      TaxiOrderRoutes().routes +
       CourierRoutes().routes;
 }

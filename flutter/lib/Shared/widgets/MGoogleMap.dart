@@ -11,11 +11,11 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart'
     as LocationModel;
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSmartPointer.dart';
 
 class MGoogleMap extends StatefulWidget {
@@ -213,9 +213,12 @@ class MGoogleMapState extends State<MGoogleMap> {
 
   Positioned locateMeButton() {
     return Positioned(
-      right: 10,
-      bottom: 10,
-      child: InkWell(
+      right: 12,
+      bottom: widget.recenterBtnBottomPadding,
+      child: MezIconButton(
+        icon: Icons.gps_fixed_rounded,
+        backgroundColor: Colors.white,
+        iconColor: Colors.black,
         onTap: () async {
           final LocationData? _tmpCurrentLoc = await _currentLocation();
           if (_tmpCurrentLoc != null) {
@@ -231,24 +234,41 @@ class MGoogleMapState extends State<MGoogleMap> {
             );
           }
         },
-        child: Container(
-          height: 35.mezSp,
-          width: 35.mezSp,
-          decoration: BoxDecoration(
-            color: Color(0xffffffff),
-            boxShadow: <BoxShadow>[
-              BoxShadow(blurRadius: 8, color: Colors.black38, spreadRadius: 1)
-            ],
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Icon(
-              Icons.gps_fixed_rounded,
-              color: Color(0xffa8a8a8),
-            ),
-          ),
-        ),
       ),
+      // child: InkWell(
+      //   onTap: () async {
+      //     final LocationData? _tmpCurrentLoc = await _currentLocation();
+      //     if (_tmpCurrentLoc != null) {
+      //       await widget.mGoogleMapController.controller.value?.animateCamera(
+      //         CameraUpdate.newCameraPosition(
+      //           CameraPosition(
+      //             target: LatLng(
+      //               _tmpCurrentLoc.latitude!,
+      //               _tmpCurrentLoc.longitude!,
+      //             ),
+      //           ),
+      //         ),
+      //       );
+      //     }
+      //   },
+      //   child: Container(
+      //     height: 35.mezSp,
+      //     width: 35.mezSp,
+      //     decoration: BoxDecoration(
+      //       color: Color(0xffffffff),
+      //       boxShadow: <BoxShadow>[
+      //         BoxShadow(blurRadius: 8, color: Colors.black38, spreadRadius: 1)
+      //       ],
+      //       shape: BoxShape.circle,
+      //     ),
+      //     child: Center(
+      //       child: Icon(
+      //         Icons.gps_fixed_rounded,
+      //         color: primaryBlueColor,
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 

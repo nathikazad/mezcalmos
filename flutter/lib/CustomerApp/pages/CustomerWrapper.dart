@@ -12,7 +12,6 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFeedView/CustFeedView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
