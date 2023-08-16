@@ -12,6 +12,8 @@ import { MezError } from "../shared/models/Generic/Generic";
 import { UserInfo } from "../shared/models/Generic/User";
 import { AuthorizeOperatorNotification, NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
 import { Operator, ServiceProvider, ServiceProviderType } from "../shared/models/Services/Service";
+import { createBusinessOperator } from "../shared/graphql/business/operator/createOperator";
+import { getBusinessOperators } from "../shared/graphql/business/operator/getBusinessOperator";
 
 export interface AddOperatorDetails {
     uniqueId: string,
@@ -31,7 +33,9 @@ export enum AddOperatorError {
     OperatorCreationError = "operatorCreationError",
     RestaurantNotfound = "restaurantNotfound",
     DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
-    LaundryStoreNotfound = "laundryStoreNotfound"
+    LaundryStoreNotfound = "laundryStoreNotfound",
+    BusinessNotfound = "businessNotfound",
+    InvalidServiceProviderType = "invalidServiceProviderType"
 }
 export async function addOperator(operatorUserId: number, addOpDetails: AddOperatorDetails): Promise<AddOperatorResponse> {
     try {
@@ -48,8 +52,11 @@ export async function addOperator(operatorUserId: number, addOpDetails: AddOpera
             case ServiceProviderType.Laundry:
                 await createLaundryOperator(operatorUserId, addOpDetails, serviceProvider)
                 break;
-            default:
+            case ServiceProviderType.Business:
+                await createBusinessOperator(operatorUserId, addOpDetails, serviceProvider)
                 break;
+            default:
+                throw new MezError(AddOperatorError.InvalidServiceProviderType)
         }
         
         notify(operatorUserInfo, serviceProvider);
@@ -114,6 +121,9 @@ async function notify(operatorUserInfo: UserInfo, serviceProvider: ServiceProvid
             operators = await getLaundryOperators(serviceProvider.id);
             participantType = ParticipantType.LaundryOperator;
             break;
+        case ServiceProviderType.Business:
+            operators = await getBusinessOperators(serviceProvider.id);
+            participantType = ParticipantType.BusinessOperator;
         default:
             return;
     }

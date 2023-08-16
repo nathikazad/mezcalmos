@@ -21,7 +21,7 @@ class OnMapRestaurantCard extends StatelessWidget {
     return Padding(
       padding: margin,
       child: RestaurantCard(
-          onClick: () => CustomerRestaurantView.navigate(
+          onClick: () => CustRestaurantView.navigate(
                 restaurantId: restaurant.info.hasuraId,
               ),
           restaurant: restaurant,

@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
@@ -62,7 +62,7 @@ class _DvOrderStatusControllButtonsState
     } else if (clicked) {
       return _loadingPlaceholder();
     } else {
-      return _getFooterComponent();
+      return Container(height: 70, child: _getFooterComponent());
     }
   }
 
@@ -70,6 +70,7 @@ class _DvOrderStatusControllButtonsState
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Transform.scale(
             scale: 0.8,
@@ -79,29 +80,36 @@ class _DvOrderStatusControllButtonsState
             width: 10,
           ),
           Flexible(
-            child: RichText(
-                text: TextSpan(children: [
-              TextSpan(
-                text:
-                    "Waiting for customer to accept or reject your counter offer of ",
-                style: context.textTheme.bodyMedium?.copyWith(height: 0),
-              ),
-              TextSpan(
-                  text:
-                      "${widget.viewController.driverOffer!.toPriceString()}.",
-                  style: context.textTheme.bodyLarge),
-              WidgetSpan(
-                  child: MezInkwell(
-                label: "Cancel",
-                onClick: () async {
-                  await widget.viewController.cancelOffer();
-                },
-                textColor: redAccentColor,
-                backgroundColor: Colors.transparent,
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              ))
-            ])),
-          )
+              fit: FlexFit.tight,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Waiting for customer",
+                      style: context.textTheme.bodyMedium?.copyWith(height: 0),
+                    ),
+                    Row(
+                      children: [
+                        Text("Offer : "),
+                        Text(
+                            "${widget.viewController.driverOffer!.toPriceString()}",
+                            style: context.textTheme.bodyLarge),
+                      ],
+                    ),
+                  ])),
+          SizedBox(
+            width: 10,
+          ),
+          MezInkwell(
+            label: "Cancel",
+            onClick: () async {
+              await widget.viewController.cancelOffer();
+            },
+            textColor: redAccentColor,
+            backgroundColor: Colors.transparent,
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          ),
         ],
       ),
     );
@@ -237,6 +245,7 @@ class _DvOrderStatusControllButtonsState
 
   Widget _loadingPlaceholder() {
     return Container(
+      height: 70,
       color: Get.theme.primaryColorLight,
       child: Center(
         child: CircularProgressIndicator(

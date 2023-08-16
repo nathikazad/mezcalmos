@@ -84,8 +84,11 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       }
 
       final RestaurantOrder res = RestaurantOrder(
+        deliveryType: orderData.delivery_type.toString().toDeliveryType(),
+
         deliveryProviderType:
-            orderData.delivery!.service_provider_type.toServiceProviderType(),
+            orderData.delivery?.service_provider_type.toServiceProviderType() ??
+                cModels.ServiceProviderType.DeliveryCompany,
         serviceProviderDriverChatId:
             orderData.delivery?.chat_with_service_provider_id,
         chatId: orderData.chat_id!,
@@ -174,6 +177,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
             deliveryCost: orderData.delivery_cost,
             refundAmmount: orderData.refund_amount,
             tax: null,
+            discountValue: orderData.discount_value,
             orderItemsCost: orderData.items_cost,
             totalCost: orderData.total_cost),
         deliveryCompany: null, driverLocation: null,
@@ -252,8 +256,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   }
   final RestaurantOrder res = RestaurantOrder(
     pickupLocation: null,
+    deliveryType: orderData.delivery_type.toString().toDeliveryType(),
     deliveryProviderType:
-        orderData.delivery!.service_provider_type.toServiceProviderType(),
+        orderData.delivery?.service_provider_type.toServiceProviderType() ??
+            cModels.ServiceProviderType.DeliveryCompany,
     serviceProviderDriverChatId:
         orderData.delivery?.chat_with_service_provider_id,
     chatId: orderData.chat_id!,
@@ -341,6 +347,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     costs: OrderCosts(
         deliveryCost: orderData.delivery_cost,
         refundAmmount: orderData.refund_amount,
+        discountValue: orderData.discount_value,
         tax: null,
         orderItemsCost: orderData.items_cost,
         totalCost: orderData.total_cost),

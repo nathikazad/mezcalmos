@@ -17,6 +17,7 @@ class CourierOrder extends DeliveryOrder {
       required super.costs,
       required super.packageReady,
       required super.serviceOrderId,
+      super.deliveryType = cModels.DeliveryType.Delivery,
       required super.driverInfo,
       required super.status,
       super.review,

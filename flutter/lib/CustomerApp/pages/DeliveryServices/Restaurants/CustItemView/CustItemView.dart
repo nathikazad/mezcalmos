@@ -241,7 +241,7 @@ class _CustItemViewState extends State<CustItemView> {
               ? InkWell(
                   borderRadius: BorderRadius.circular(18),
                   onTap: () {
-                    CustomerRestaurantView.navigate(
+                    CustRestaurantView.navigate(
                       restaurantId:
                           viewController.restaurant.value!.restaurantId,
                     );

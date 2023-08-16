@@ -4,9 +4,9 @@ import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsHomeRentalView/contro
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/components/BsOpTimeUnitSelectorSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['BusinessApp']
     ['pages']['services']["price"];
@@ -119,23 +119,25 @@ class BsOpOfferingPricesList extends StatelessWidget {
                 return null;
               },
               keyboardType: TextInputType.number,
+              textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(
                 hintText: _i18n()["price"],
                 hintStyle: context.textTheme.bodyLarge!.copyWith(
                   color: Theme.of(context).disabledColor,
                 ),
+
                 suffixIconConstraints: needSuffix
                     ? BoxConstraints(
                         minWidth: 0,
                         minHeight: 0,
                       ).tighten(width: 100)
                     : null,
-                prefixIconConstraints: BoxConstraints.tight(Size(24, 24)),
+                // prefixIconConstraints: BoxConstraints.tight(Size(24, 24)),
                 prefixIcon: Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: const Icon(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: Icon(
                       Icons.attach_money,
-                      color: Colors.black,
+                      color: Colors.grey.shade600,
                     )),
                 suffixIcon: needSuffix
                     ? Align(

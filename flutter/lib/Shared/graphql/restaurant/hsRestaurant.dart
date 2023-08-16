@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -15,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -29,13 +31,13 @@ Future<List<Restaurant>> fetch_restaurants(
   final List<Restaurant> _restaurants = <Restaurant>[];
   dynamic parsedData;
   dynamic exception;
-  Input$Boolean_comparison_exp? is_open_exp;
+  Input$Boolean_comparison_exp? isOpenExp;
   if (is_open == true) {
-    is_open_exp = Input$Boolean_comparison_exp($_eq: true);
+    isOpenExp = Input$Boolean_comparison_exp($_eq: true);
   }
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
   final QueryResult<Query$getRestaurants> response = await _db.graphQLClient
       .query$getRestaurants(Options$Query$getRestaurants(
@@ -43,8 +45,8 @@ Future<List<Restaurant>> fetch_restaurants(
               from: Geography(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               distance: distance,
-              is_open: is_open_exp,
-              online_ordering: online_ordering_exp,
+              is_open: isOpenExp,
+              online_ordering: onlineOrderingExp,
               limit: limit,
               offset: offset),
           fetchPolicy: withCache
@@ -70,26 +72,24 @@ Future<List<Restaurant>> fetch_restaurants(
             descriptionId: data.details!.description_id,
             location: MezLocation.fromHasura(
                 data.details!.location.gps, data.details!.location.address)),
-        deliveryCost: (data.delivery_details_of_deliverer == null)
+        deliveryCost: (data.delivery_details == null)
             ? null
             : DeliveryCost(
-                id: data.delivery_details_of_deliverer!.first.id,
-                selfDelivery:
-                    data.delivery_details_of_deliverer!.first.self_delivery,
-                freeDeliveryMinimumCost: data.delivery_details_of_deliverer!
-                    .first.free_delivery_minimum_cost,
-                costPerKm:
-                    data.delivery_details_of_deliverer!.first.cost_per_km,
-                minimumCost:
-                    data.delivery_details_of_deliverer!.first.minimum_cost,
-                freeDeliveryKmRange: data.delivery_details_of_deliverer!.first
-                    .free_delivery_km_range,
+                id: data.delivery_details.id,
+                selfDelivery: data.delivery_details.self_delivery,
+                freeDeliveryMinimumCost:
+                    data.delivery_details.free_delivery_minimum_cost,
+                costPerKm: data.delivery_details.cost_per_km,
+                minimumCost: data.delivery_details.minimum_cost,
+                freeDeliveryKmRange:
+                    data.delivery_details.free_delivery_km_range,
               ),
         schedule: data.details!.schedule != null
             ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: PaymentInfo(),
         rate: data.reviews_aggregate.aggregate?.avg?.rating,
+        reviewCount: data.reviews_aggregate.aggregate?.count,
         restaurantState: ServiceState(
             data.details!.open_status.toServiceStatus(),
             data.details!.approved),
@@ -165,28 +165,25 @@ Future<Restaurant?> get_restaurant_by_id(
 
     if (data != null) {
       return Restaurant(
-        averageRating: data.reviews_aggregate.aggregate?.avg?.rating??0.0,
-        reviewCount: data.reviews_aggregate.aggregate?.count??0,
+        averageRating: data.reviews_aggregate.aggregate?.avg?.rating ?? 0.0,
+        reviewCount: data.reviews_aggregate.aggregate?.count ?? 0,
         lastActive: DateTime.parse(data.details!.last_active_time),
         onlineOrdering: data.details!.online_ordering,
         isOpen: data.details!.is_open ?? false,
         languages: convertToLanguages(data.details!.language),
         serviceDetailsId: data.details!.id,
         deliveryDetailsId: data.delivery_details_id,
-        deliveryCost: (data.delivery_details_of_deliverer == null)
+        deliveryCost: (data.delivery_details == null)
             ? null
             : DeliveryCost(
-                id: data.delivery_details_of_deliverer!.first.id,
-                selfDelivery:
-                    data.delivery_details_of_deliverer!.first.self_delivery,
-                freeDeliveryMinimumCost: data.delivery_details_of_deliverer!
-                    .first.free_delivery_minimum_cost,
-                costPerKm:
-                    data.delivery_details_of_deliverer!.first.cost_per_km,
-                minimumCost:
-                    data.delivery_details_of_deliverer!.first.minimum_cost,
-                freeDeliveryKmRange: data.delivery_details_of_deliverer!.first
-                    .free_delivery_km_range,
+                id: data.delivery_details.id,
+                selfDelivery: data.delivery_details.self_delivery,
+                freeDeliveryMinimumCost:
+                    data.delivery_details.free_delivery_minimum_cost,
+                costPerKm: data.delivery_details.cost_per_km,
+                minimumCost: data.delivery_details.minimum_cost,
+                freeDeliveryKmRange:
+                    data.delivery_details.free_delivery_km_range,
               ),
         userInfo: ServiceInfo(
             locationId: data.details!.location_id,
@@ -204,7 +201,7 @@ Future<Restaurant?> get_restaurant_by_id(
             ? scheduleFromData(data.details!.schedule)
             : null,
         paymentInfo: null,
-        selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
+        selfDelivery: data.delivery_details.self_delivery,
         restaurantState: ServiceState(
             data.details!.open_status.toServiceStatus(),
             data.details!.approved),
@@ -320,4 +317,38 @@ Future<int> get_restaurant_details_id({required int restaurantId}) async {
     throwError(res.exception);
   }
   return res.parsedData!.restaurant_restaurant_by_pk!.details_id;
+}
+
+Future<List<OfferItemData>> get_restaurant_offer_items(
+    {required int restuarntId,
+    required int offset,
+    required int limit,
+    bool withCache = true,
+    String? keyword}) async {
+  QueryResult<Query$getAndSearchSingleRestaurantItems> res =
+      await _db.graphQLClient.query$getAndSearchSingleRestaurantItems(
+          Options$Query$getAndSearchSingleRestaurantItems(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+              variables: Variables$Query$getAndSearchSingleRestaurantItems(
+                  restaurant_id: restuarntId,
+                  limit: limit,
+                  offset: offset,
+                  keyword: keyword != null ? "%$keyword%" : null)));
+  mezDbgPrint("👋 res =======%$keyword%====>$res");
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+
+  return res.parsedData?.restaurant_item
+          .map<OfferItemData>(
+              (Query$getAndSearchSingleRestaurantItems$restaurant_item e) =>
+                  OfferItemData(
+                      id: e.id,
+                      name: toLanguageMap(translations: e.name.translations),
+                      image: e.image ?? defaultUserImgUrl,
+                      nameId: e.name.id,
+                      type: cModels.OfferingType.Event))
+          .toList() ??
+      [];
 }

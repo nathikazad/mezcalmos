@@ -118,7 +118,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                 order: viewController.order.value!,
                               ),
                             ),
-                            if (viewController.order.value?.driverInfo == null)
+                            if (viewController.showOffers)
                               CustDeliveryOffersList(
                                 deliveryOrderId:
                                     viewController.order.value!.deliveryOrderId,

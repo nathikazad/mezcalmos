@@ -83,6 +83,13 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
         [ChatInfoAppName.CustomerApp]: {
           parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
           participantType: ParticipantType.DeliveryDriver
+        },
+        [ChatInfoAppName.MezAdminApp]: {
+          chatTitle: customer.name ?? "Customer",
+          chatImage: customer.image,
+          phoneNumber: customer.phoneNumber,
+          participantType: ParticipantType.Customer,
+          parentLink: `/restaurantOrders/${restaurantOrder.orderId}`
         }
       }
     });
@@ -111,8 +118,11 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
           participantType: ParticipantType.DeliveryDriver,
         },
         [ChatInfoAppName.MezAdminApp]: {
+          chatTitle: restaurant.name,
+          chatImage: restaurant.image,
+          phoneNumber: restaurant.phoneNumber,
+          participantType: ParticipantType.RestaurantOperator,
           parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
-          participantType: ParticipantType.DeliveryDriver,
         }
       }
     });
@@ -178,7 +188,14 @@ export async function setLaundryOrderChatInfo(
       [ChatInfoAppName.CustomerApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
         participantType: ParticipantType.DeliveryDriver
-      }
+      },
+      [ChatInfoAppName.MezAdminApp]: {
+        chatTitle: customer.name ?? "Customer",
+        chatImage: customer.image,
+        phoneNumber: customer.phoneNumber,
+        participantType: ParticipantType.Customer,
+        parentLink: `/laundryOrders/${laundryOrder.orderId}`,
+      },
     }
 
     chain.mutation({
@@ -209,8 +226,11 @@ export async function setLaundryOrderChatInfo(
         participantType: ParticipantType.DeliveryDriver,
       },
       [ChatInfoAppName.MezAdminApp]: {
+        chatTitle: laundryStore.name,
+        chatImage: laundryStore.image,
+        phoneNumber: laundryStore.phoneNumber,
+        participantType: ParticipantType.LaundryOperator,
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
-        participantType: ParticipantType.DeliveryDriver,
       }
     }
 
@@ -252,7 +272,14 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
       [ChatInfoAppName.CustomerApp]: {
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
         participantType: ParticipantType.DeliveryDriver
-      }
+      },
+      [ChatInfoAppName.MezAdminApp]: {
+        chatTitle: customer.name ?? "Customer",
+        chatImage: customer.image,
+        phoneNumber: customer.phoneNumber,
+        participantType: ParticipantType.Customer,
+        parentLink: `/laundryOrders/${laundryOrder.orderId}`,
+      },
     }
 
     chain.mutation({
@@ -283,8 +310,11 @@ export async function setLaundryToCustomerDeliveryOrderChatInfo(
         participantType: ParticipantType.DeliveryDriver,
       },
       [ChatInfoAppName.MezAdminApp]: {
+        chatTitle: laundryStore.name,
+        chatImage: laundryStore.image,
+        phoneNumber: laundryStore.phoneNumber,
+        participantType: ParticipantType.LaundryOperator,
         parentLink: `/laundryOrders/${laundryOrder.orderId}`,
-        participantType: ParticipantType.DeliveryDriver,
       }
     }
 
@@ -372,12 +402,12 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
     default:
       break;
   }
-  chatInfo.MezAdminApp = {
-    ...chatInfo.MezAdminApp,
-    chatTitle: deliveryDriver.user?.name ?? "Delivery Driver",
-    chatImage: deliveryDriver.user?.image,
-    phoneNumber: deliveryDriver.user?.phoneNumber
-  }
+  // chatInfo.MezAdminApp = {
+  //   ...chatInfo.MezAdminApp,
+  //   chatTitle: deliveryDriver.user?.name ?? "Delivery Driver",
+  //   chatImage: deliveryDriver.user?.image,
+  //   phoneNumber: deliveryDriver.user?.phoneNumber
+  // }
   chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {

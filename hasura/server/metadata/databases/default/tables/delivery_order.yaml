@@ -424,6 +424,8 @@ update_permissions:
   - role: customer
     permission:
       columns:
+        - counter_offers
+        - customer_offer
         - driver_review_by_customer_id
       filter:
         customer_id:
@@ -434,15 +436,25 @@ update_permissions:
   - role: delivery_driver
     permission:
       columns:
+        - counter_offers
         - customer_review_by_driver_id
         - estimated_arrival_at_dropoff_time
         - estimated_arrival_at_pickup_time
         - service_provider_review_by_driver_id
       filter:
-        delivery_driver:
-          user_id:
-            _eq: X-Hasura-User-Id
-      check: null
+        _or:
+          - delivery_driver:
+              user_id:
+                _eq: X-Hasura-User-Id
+          - delivery_driver_id:
+              _is_null: true
+      check:
+        _or:
+          - delivery_driver:
+              user_id:
+                _eq: X-Hasura-User-Id
+          - delivery_driver_id:
+              _is_null: true
   - role: laundry_operator
     permission:
       columns:

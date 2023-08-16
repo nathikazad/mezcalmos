@@ -17,7 +17,7 @@ class CustomerLinkHandler {
     if (servicProviderInfo != null) {
       switch (servicProviderInfo.serviceProviderType) {
         case ServiceProviderType.Restaurant:
-          unawaited(CustomerRestaurantView.navigate(
+          unawaited(CustRestaurantView.navigate(
               restaurantId: servicProviderInfo.serviceProviderId));
           break;
         case ServiceProviderType.Laundry:

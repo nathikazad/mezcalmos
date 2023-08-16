@@ -8,10 +8,11 @@ import { deleteRestaurantOperator } from "../shared/graphql/restaurant/operators
 import { getRestaurantOperator, getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { isMezAdmin } from "../shared/helper";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryOperatorApprovedNotification } from "../shared/models/Generic/Delivery";
 import { MezError } from "../shared/models/Generic/Generic";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Operator, OperatorApprovedNotification } from "../shared/models/Services/Service";
+import { getBusinessOperator, getBusinessOperatorByUserId } from "../shared/graphql/business/operator/getBusinessOperator";
+import { deleteBusinessOperator } from "../shared/graphql/business/operator/deleteOperator";
 
 export interface AuthorizeDetails {
     newOperatorId: number,
@@ -29,12 +30,12 @@ export enum AuthOperatorError {
     UnauthorizedAccess = "unauthorizedAccess",
     IncorrectOperatorId = "incorrectOperatorId",
     OperatorDetailsNotFound = "operatorDetailsNotFound",
+    InvalidParticipantType = "invalidParticipantType",
 }
 
 export async function authorizeOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails): Promise<AuthOperatorResponse> {
     try {
-        let operator: Operator;
-        let operatorDetailsId: number = 0;
+        let operator: Operator | undefined;
 
         await authorizationCheck();
         
@@ -42,39 +43,38 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             case ParticipantType.RestaurantOperator:
                 operator = await getRestaurantOperator(authorizeDetails.newOperatorId);
 
-                if (authorizeDetails.approved) {
-                    operatorDetailsId = operator.detailsId;
-                } else {
+                if (authorizeDetails.approved == false) {
                     await deleteRestaurantOperator(operator);
                 }
-                notifyOperator(ParticipantType.RestaurantOperator, operator);
                 break;
             case ParticipantType.DeliveryOperator:
-                let deliveryOperator: Operator = await getDeliveryOperator(authorizeDetails.newOperatorId);
+                operator = await getDeliveryOperator(authorizeDetails.newOperatorId);
 
-                if(authorizeDetails.approved) {
-                    operatorDetailsId = deliveryOperator.detailsId;
-                } else {
-                    await deleteDeliveryOperator(deliveryOperator);
+                if(authorizeDetails.approved == false) {
+                    await deleteDeliveryOperator(operator);
                 }
-                notifyDeliveryOperator(deliveryOperator);
                 break;
             case ParticipantType.LaundryOperator:
                 operator = await getLaundryOperator(authorizeDetails.newOperatorId);
 
-                if (authorizeDetails.approved) {
-                    operatorDetailsId = operator.detailsId;
-                } else {
+                if (authorizeDetails.approved == false) {
                     await deleteLaundryOperator(operator);
                 }
-                notifyOperator(ParticipantType.LaundryOperator, operator);
+                break;
+            case ParticipantType.BusinessOperator:
+                operator = await getBusinessOperator(authorizeDetails.newOperatorId);
+
+                if (authorizeDetails.approved == false) {
+                    await deleteBusinessOperator(operator);
+                }
                 break;
             default:
-                break;
+                throw new MezError(AuthOperatorError.InvalidParticipantType);
         }
-        if(operatorDetailsId != 0) {
-            await updateOperatorStatusToAuthorized(operatorDetailsId);
-        }
+        if(authorizeDetails.approved)
+            await updateOperatorStatusToAuthorized(operator, authorizeDetails.participantType);
+
+        notifyOperator(authorizeDetails.participantType, operator);
         return {
             success: true
         }
@@ -141,47 +141,6 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
         }
     }
 
-    function notifyDeliveryOperator(deliveryOperator: Operator) {
-        let notification: Notification = {
-            foreground: <DeliveryOperatorApprovedNotification>{
-                operatorId: authorizeDetails.newOperatorId,
-                approved: authorizeDetails.approved,
-                time: (new Date()).toISOString(),
-                notificationType: NotificationType.OperatorApproved,
-                notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-            },
-            background: (authorizeDetails.approved) ? {
-                en: {
-                    title: `Authorized`,
-                    body: `You have been approved as an operator`
-                },
-                es: {
-                    title: `Autorizado`,
-                    body: `Has sido aprobado como operador`
-                }
-            } : {
-                en: {
-                    title: `Not approved`,
-                    body: `Your request to become an operator has been denied`
-                },
-                es: {
-                    title: `No aprovado`,
-                    body: `Tu solicitud para convertirte en operador ha sido denegada`
-                }
-            },
-            linkUrl: `/`
-        };
-        if (deliveryOperator.user) {
-            pushNotification(
-                deliveryOperator.user.firebaseId,
-                notification,
-                deliveryOperator.notificationInfo,
-                ParticipantType.DeliveryOperator,
-                deliveryOperator.user.language
-            );
-        }
-    }
-
     async function authorizationCheck() {
         if((await isMezAdmin(ownerUserId)) == true)
             return;
@@ -197,6 +156,8 @@ export async function authorizeOperator(ownerUserId: number, authorizeDetails: A
             case ParticipantType.LaundryOperator:
                 owner = await getLaundryOperatorByUserId(ownerUserId);
                 break;
+            case ParticipantType.BusinessOperator:
+                owner = await getBusinessOperatorByUserId(ownerUserId);
             default:
                 throw new MezError(AuthOperatorError.UnauthorizedAccess);
         }

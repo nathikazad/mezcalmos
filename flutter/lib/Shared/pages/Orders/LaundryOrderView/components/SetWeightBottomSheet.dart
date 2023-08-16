@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/components/LaundryOrderWeightSelector.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpSetCategoryComponent'];

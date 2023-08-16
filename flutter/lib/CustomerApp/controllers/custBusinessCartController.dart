@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/helpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustEventView/CustEventView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessItemHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class CustBusinessCartController extends GetxController {
@@ -50,6 +51,8 @@ class CustBusinessCartController extends GetxController {
   StreamSubscription<List<CustBusinessCart>?>? cartStream;
   String? subscriptionId;
   int _numberOfOldBusinessOrders = 0;
+
+  TextEditingController couponController = TextEditingController();
 
   @override
   Future<void> onInit() async {
@@ -90,7 +93,7 @@ class CustBusinessCartController extends GetxController {
               .listen((List<CustBusinessCart>? event) {
         if (event != null) {
           mezDbgPrint(
-              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.length}");
+              "Stream triggred from business cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.length}");
           if (previousOrders.value != null) {
             previousOrders.value?.clear();
             previousOrders.value?.addAll(event);
@@ -341,6 +344,31 @@ class CustBusinessCartController extends GetxController {
         return;
       case OfferingType.Product:
         return;
+    }
+  }
+
+  Future<void> applyCoupon() async {
+    if (couponController.text.isNotEmpty) {
+      try {
+        CouponError? response = await applyBusinessCoupon(
+          cart: cart.value!,
+          customerId: _auth.hasuraUserId!,
+          couponCode: couponController.text.trim(),
+        );
+
+        if (response != null) {
+          showErrorSnackBar(errorText: response.name);
+        } else {
+          couponController.clear();
+          showSavedSnackBar(
+              title: "Applied",
+              subtitle: "Your coupon have been successfully applied");
+        }
+      } catch (e, stk) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
     }
   }
 }

@@ -58,6 +58,24 @@ insert_permissions:
         - service_provider_type
         - service_provider_id
         - status
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - coupon_code
+        - details
+        - name_id
+        - offer_type
+        - service_provider_id
+        - service_provider_type
+        - status
 select_permissions:
   - role: business_operator
     permission:
@@ -71,6 +89,37 @@ select_permissions:
         - status
         - details
       filter: {}
+  - role: customer
+    permission:
+      columns:
+        - id
+        - name_id
+        - service_provider_id
+        - coupon_code
+        - offer_type
+        - service_provider_type
+        - status
+        - details
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - name_id
+        - service_provider_id
+        - coupon_code
+        - offer_type
+        - service_provider_type
+        - status
+        - details
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
   - role: business_operator
     permission:
@@ -82,3 +131,27 @@ update_permissions:
         - status
       filter: {}
       check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - coupon_code
+        - details
+        - name_id
+        - offer_type
+        - status
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -1036,6 +1036,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'image'),
                     alias: null,
                     arguments: [],
@@ -6457,6 +6464,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
   Query$get_driver_order$delivery_order_by_pk$restaurant$details({
     required this.id,
     this.firebase_id,
+    this.phone_number,
     required this.image,
     required this.name,
     required this.location,
@@ -6469,6 +6477,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
+    final l$phone_number = json['phone_number'];
     final l$image = json['image'];
     final l$name = json['name'];
     final l$location = json['location'];
@@ -6478,6 +6487,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     return Query$get_driver_order$delivery_order_by_pk$restaurant$details(
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
+      phone_number: (l$phone_number as String?),
       image: (l$image as String),
       name: (l$name as String),
       location:
@@ -6492,6 +6502,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
   final int id;
 
   final String? firebase_id;
+
+  final String? phone_number;
 
   final String image;
 
@@ -6512,6 +6524,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$name = name;
@@ -6531,6 +6545,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
   int get hashCode {
     final l$id = id;
     final l$firebase_id = firebase_id;
+    final l$phone_number = phone_number;
     final l$image = image;
     final l$name = name;
     final l$location = location;
@@ -6540,6 +6555,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     return Object.hashAll([
       l$id,
       l$firebase_id,
+      l$phone_number,
       l$image,
       l$name,
       l$location,
@@ -6567,6 +6583,11 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     final l$firebase_id = firebase_id;
     final lOther$firebase_id = other.firebase_id;
     if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$image = image;
@@ -6630,6 +6651,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$d
   TRes call({
     int? id,
     String? firebase_id,
+    String? phone_number,
     String? image,
     String? name,
     Query$get_driver_order$delivery_order_by_pk$restaurant$details$location?
@@ -6663,6 +6685,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$detai
   TRes call({
     Object? id = _undefined,
     Object? firebase_id = _undefined,
+    Object? phone_number = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
@@ -6675,6 +6698,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$detai
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -6716,6 +6742,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$d
   call({
     int? id,
     String? firebase_id,
+    String? phone_number,
     String? image,
     String? name,
     Query$get_driver_order$delivery_order_by_pk$restaurant$details$location?
@@ -8489,6 +8516,13 @@ const documentNodeSubscriptionlisten_on_driver_order_variables =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'customer_offer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'counter_offers'),
             alias: null,
             arguments: [],
@@ -8658,6 +8692,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     this.estimated_arrival_at_pickup_time,
     this.estimated_package_ready_time,
     required this.status,
+    this.customer_offer,
     this.counter_offers,
     required this.package_ready,
     this.delivery_driver,
@@ -8674,6 +8709,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
         json['estimated_arrival_at_pickup_time'];
     final l$estimated_package_ready_time = json['estimated_package_ready_time'];
     final l$status = json['status'];
+    final l$customer_offer = json['customer_offer'];
     final l$counter_offers = json['counter_offers'];
     final l$package_ready = json['package_ready'];
     final l$delivery_driver = json['delivery_driver'];
@@ -8687,6 +8723,8 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
           (l$estimated_arrival_at_pickup_time as String?),
       estimated_package_ready_time: (l$estimated_package_ready_time as String?),
       status: (l$status as String),
+      customer_offer:
+          l$customer_offer == null ? null : moneyFromJson(l$customer_offer),
       counter_offers:
           l$counter_offers == null ? null : mapFromJson(l$counter_offers),
       package_ready: (l$package_ready as bool),
@@ -8709,6 +8747,8 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
   final String? estimated_package_ready_time;
 
   final String status;
+
+  final double? customer_offer;
 
   final dynamic? counter_offers;
 
@@ -8737,6 +8777,9 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
         l$estimated_package_ready_time;
     final l$status = status;
     _resultData['status'] = l$status;
+    final l$customer_offer = customer_offer;
+    _resultData['customer_offer'] =
+        l$customer_offer == null ? null : moneyToJson(l$customer_offer);
     final l$counter_offers = counter_offers;
     _resultData['counter_offers'] =
         l$counter_offers == null ? null : mapToJson(l$counter_offers);
@@ -8758,6 +8801,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     final l$estimated_package_ready_time = estimated_package_ready_time;
     final l$status = status;
+    final l$customer_offer = customer_offer;
     final l$counter_offers = counter_offers;
     final l$package_ready = package_ready;
     final l$delivery_driver = delivery_driver;
@@ -8769,6 +8813,7 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
       l$estimated_arrival_at_pickup_time,
       l$estimated_package_ready_time,
       l$status,
+      l$customer_offer,
       l$counter_offers,
       l$package_ready,
       l$delivery_driver,
@@ -8820,6 +8865,11 @@ class Subscription$listen_on_driver_order_variables$delivery_order_by_pk {
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
+      return false;
+    }
+    final l$customer_offer = customer_offer;
+    final lOther$customer_offer = other.customer_offer;
+    if (l$customer_offer != lOther$customer_offer) {
       return false;
     }
     final l$counter_offers = counter_offers;
@@ -8877,6 +8927,7 @@ abstract class CopyWith$Subscription$listen_on_driver_order_variables$delivery_o
     String? estimated_arrival_at_pickup_time,
     String? estimated_package_ready_time,
     String? status,
+    double? customer_offer,
     dynamic? counter_offers,
     bool? package_ready,
     Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?
@@ -8912,6 +8963,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order
     Object? estimated_arrival_at_pickup_time = _undefined,
     Object? estimated_package_ready_time = _undefined,
     Object? status = _undefined,
+    Object? customer_offer = _undefined,
     Object? counter_offers = _undefined,
     Object? package_ready = _undefined,
     Object? delivery_driver = _undefined,
@@ -8938,6 +8990,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order_variables$delivery_order
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
+        customer_offer: customer_offer == _undefined
+            ? _instance.customer_offer
+            : (customer_offer as double?),
         counter_offers: counter_offers == _undefined
             ? _instance.counter_offers
             : (counter_offers as dynamic?),
@@ -8980,6 +9035,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order_variables$delivery_o
     String? estimated_arrival_at_pickup_time,
     String? estimated_package_ready_time,
     String? status,
+    double? customer_offer,
     dynamic? counter_offers,
     bool? package_ready,
     Subscription$listen_on_driver_order_variables$delivery_order_by_pk$delivery_driver?
@@ -13034,6 +13090,13 @@ const documentNodeQueryget_past_driver_orders = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -14113,6 +14176,7 @@ class _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant<
 
 class Query$get_past_driver_orders$delivery_order$restaurant$details {
   Query$get_past_driver_orders$delivery_order$restaurant$details({
+    this.phone_number,
     required this.id,
     this.firebase_id,
     required this.image,
@@ -14125,6 +14189,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant$details {
 
   factory Query$get_past_driver_orders$delivery_order$restaurant$details.fromJson(
       Map<String, dynamic> json) {
+    final l$phone_number = json['phone_number'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -14134,6 +14199,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant$details {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$get_past_driver_orders$delivery_order$restaurant$details(
+      phone_number: (l$phone_number as String?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
@@ -14146,6 +14212,8 @@ class Query$get_past_driver_orders$delivery_order$restaurant$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? phone_number;
 
   final int id;
 
@@ -14166,6 +14234,8 @@ class Query$get_past_driver_orders$delivery_order$restaurant$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -14187,6 +14257,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant$details {
 
   @override
   int get hashCode {
+    final l$phone_number = phone_number;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -14196,6 +14267,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant$details {
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$phone_number,
       l$id,
       l$firebase_id,
       l$image,
@@ -14215,6 +14287,11 @@ class Query$get_past_driver_orders$delivery_order$restaurant$details {
     if (!(other
             is Query$get_past_driver_orders$delivery_order$restaurant$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$id = id;
@@ -14286,6 +14363,7 @@ abstract class CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$d
       _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant$details;
 
   TRes call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -14319,6 +14397,7 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant$detai
   static const _undefined = {};
 
   TRes call({
+    Object? phone_number = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -14329,6 +14408,9 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant$detai
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_past_driver_orders$delivery_order$restaurant$details(
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -14372,6 +14454,7 @@ class _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant$d
   TRes _res;
 
   call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -15014,6 +15097,13 @@ const documentNodeQueryget_inprocess_driver_orders = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -16132,6 +16222,7 @@ class _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaur
 
 class Query$get_inprocess_driver_orders$delivery_order$restaurant$details {
   Query$get_inprocess_driver_orders$delivery_order$restaurant$details({
+    this.phone_number,
     required this.id,
     this.firebase_id,
     required this.image,
@@ -16144,6 +16235,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant$details {
 
   factory Query$get_inprocess_driver_orders$delivery_order$restaurant$details.fromJson(
       Map<String, dynamic> json) {
+    final l$phone_number = json['phone_number'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -16153,6 +16245,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant$details {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$get_inprocess_driver_orders$delivery_order$restaurant$details(
+      phone_number: (l$phone_number as String?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
@@ -16165,6 +16258,8 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? phone_number;
 
   final int id;
 
@@ -16185,6 +16280,8 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -16206,6 +16303,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant$details {
 
   @override
   int get hashCode {
+    final l$phone_number = phone_number;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -16215,6 +16313,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant$details {
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$phone_number,
       l$id,
       l$firebase_id,
       l$image,
@@ -16234,6 +16333,11 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant$details {
     if (!(other
             is Query$get_inprocess_driver_orders$delivery_order$restaurant$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$id = id;
@@ -16306,6 +16410,7 @@ abstract class CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaur
       _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$details;
 
   TRes call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -16340,6 +16445,7 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$
   static const _undefined = {};
 
   TRes call({
+    Object? phone_number = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -16350,6 +16456,9 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_inprocess_driver_orders$delivery_order$restaurant$details(
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -16393,6 +16502,7 @@ class _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaur
   TRes _res;
 
   call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -17026,6 +17136,13 @@ const documentNodeQueryget_open_driver_orders = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -18126,6 +18243,7 @@ class _CopyWithStubImpl$Query$get_open_driver_orders$delivery_order$restaurant<
 
 class Query$get_open_driver_orders$delivery_order$restaurant$details {
   Query$get_open_driver_orders$delivery_order$restaurant$details({
+    this.phone_number,
     required this.id,
     this.firebase_id,
     required this.image,
@@ -18138,6 +18256,7 @@ class Query$get_open_driver_orders$delivery_order$restaurant$details {
 
   factory Query$get_open_driver_orders$delivery_order$restaurant$details.fromJson(
       Map<String, dynamic> json) {
+    final l$phone_number = json['phone_number'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -18147,6 +18266,7 @@ class Query$get_open_driver_orders$delivery_order$restaurant$details {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$get_open_driver_orders$delivery_order$restaurant$details(
+      phone_number: (l$phone_number as String?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
@@ -18159,6 +18279,8 @@ class Query$get_open_driver_orders$delivery_order$restaurant$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? phone_number;
 
   final int id;
 
@@ -18179,6 +18301,8 @@ class Query$get_open_driver_orders$delivery_order$restaurant$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -18200,6 +18324,7 @@ class Query$get_open_driver_orders$delivery_order$restaurant$details {
 
   @override
   int get hashCode {
+    final l$phone_number = phone_number;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -18209,6 +18334,7 @@ class Query$get_open_driver_orders$delivery_order$restaurant$details {
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$phone_number,
       l$id,
       l$firebase_id,
       l$image,
@@ -18228,6 +18354,11 @@ class Query$get_open_driver_orders$delivery_order$restaurant$details {
     if (!(other
             is Query$get_open_driver_orders$delivery_order$restaurant$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$id = id;
@@ -18299,6 +18430,7 @@ abstract class CopyWith$Query$get_open_driver_orders$delivery_order$restaurant$d
       _CopyWithStubImpl$Query$get_open_driver_orders$delivery_order$restaurant$details;
 
   TRes call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -18332,6 +18464,7 @@ class _CopyWithImpl$Query$get_open_driver_orders$delivery_order$restaurant$detai
   static const _undefined = {};
 
   TRes call({
+    Object? phone_number = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -18342,6 +18475,9 @@ class _CopyWithImpl$Query$get_open_driver_orders$delivery_order$restaurant$detai
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_open_driver_orders$delivery_order$restaurant$details(
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -18385,6 +18521,7 @@ class _CopyWithStubImpl$Query$get_open_driver_orders$delivery_order$restaurant$d
   TRes _res;
 
   call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -19025,6 +19162,13 @@ const documentNodeSubscriptionlisten_open_driver_orders =
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -20131,6 +20275,7 @@ class _CopyWithStubImpl$Subscription$listen_open_driver_orders$delivery_order$re
 
 class Subscription$listen_open_driver_orders$delivery_order$restaurant$details {
   Subscription$listen_open_driver_orders$delivery_order$restaurant$details({
+    this.phone_number,
     required this.id,
     this.firebase_id,
     required this.image,
@@ -20143,6 +20288,7 @@ class Subscription$listen_open_driver_orders$delivery_order$restaurant$details {
 
   factory Subscription$listen_open_driver_orders$delivery_order$restaurant$details.fromJson(
       Map<String, dynamic> json) {
+    final l$phone_number = json['phone_number'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -20152,6 +20298,7 @@ class Subscription$listen_open_driver_orders$delivery_order$restaurant$details {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_open_driver_orders$delivery_order$restaurant$details(
+      phone_number: (l$phone_number as String?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
@@ -20164,6 +20311,8 @@ class Subscription$listen_open_driver_orders$delivery_order$restaurant$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? phone_number;
 
   final int id;
 
@@ -20184,6 +20333,8 @@ class Subscription$listen_open_driver_orders$delivery_order$restaurant$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -20205,6 +20356,7 @@ class Subscription$listen_open_driver_orders$delivery_order$restaurant$details {
 
   @override
   int get hashCode {
+    final l$phone_number = phone_number;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -20214,6 +20366,7 @@ class Subscription$listen_open_driver_orders$delivery_order$restaurant$details {
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$phone_number,
       l$id,
       l$firebase_id,
       l$image,
@@ -20233,6 +20386,11 @@ class Subscription$listen_open_driver_orders$delivery_order$restaurant$details {
     if (!(other
             is Subscription$listen_open_driver_orders$delivery_order$restaurant$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$id = id;
@@ -20305,6 +20463,7 @@ abstract class CopyWith$Subscription$listen_open_driver_orders$delivery_order$re
       _CopyWithStubImpl$Subscription$listen_open_driver_orders$delivery_order$restaurant$details;
 
   TRes call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -20339,6 +20498,7 @@ class _CopyWithImpl$Subscription$listen_open_driver_orders$delivery_order$restau
   static const _undefined = {};
 
   TRes call({
+    Object? phone_number = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -20350,6 +20510,9 @@ class _CopyWithImpl$Subscription$listen_open_driver_orders$delivery_order$restau
   }) =>
       _then(
           Subscription$listen_open_driver_orders$delivery_order$restaurant$details(
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -20393,6 +20556,7 @@ class _CopyWithStubImpl$Subscription$listen_open_driver_orders$delivery_order$re
   TRes _res;
 
   call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -21052,6 +21216,13 @@ const documentNodeSubscriptionlisten_delivery_company_current_orders =
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -22194,6 +22365,7 @@ class _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$deli
 
 class Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$details {
   Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$details({
+    this.phone_number,
     required this.id,
     this.firebase_id,
     required this.image,
@@ -22206,6 +22378,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
 
   factory Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$details.fromJson(
       Map<String, dynamic> json) {
+    final l$phone_number = json['phone_number'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -22215,6 +22388,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$details(
+      phone_number: (l$phone_number as String?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
@@ -22227,6 +22401,8 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? phone_number;
 
   final int id;
 
@@ -22247,6 +22423,8 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -22268,6 +22446,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
 
   @override
   int get hashCode {
+    final l$phone_number = phone_number;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -22277,6 +22456,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$phone_number,
       l$id,
       l$firebase_id,
       l$image,
@@ -22296,6 +22476,11 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     if (!(other
             is Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$id = id;
@@ -22368,6 +22553,7 @@ abstract class CopyWith$Subscription$listen_delivery_company_current_orders$deli
       _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$details;
 
   TRes call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -22402,6 +22588,7 @@ class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery
   static const _undefined = {};
 
   TRes call({
+    Object? phone_number = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -22413,6 +22600,9 @@ class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery
   }) =>
       _then(
           Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$details(
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -22456,6 +22646,7 @@ class _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$deli
   TRes _res;
 
   call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -23180,6 +23371,13 @@ const documentNodeQueryget_delivery_company_past_orders =
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -24299,6 +24497,7 @@ class _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$re
 
 class Query$get_delivery_company_past_orders$delivery_order$restaurant$details {
   Query$get_delivery_company_past_orders$delivery_order$restaurant$details({
+    this.phone_number,
     required this.id,
     this.firebase_id,
     required this.image,
@@ -24311,6 +24510,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant$details {
 
   factory Query$get_delivery_company_past_orders$delivery_order$restaurant$details.fromJson(
       Map<String, dynamic> json) {
+    final l$phone_number = json['phone_number'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -24320,6 +24520,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant$details {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$get_delivery_company_past_orders$delivery_order$restaurant$details(
+      phone_number: (l$phone_number as String?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
@@ -24332,6 +24533,8 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? phone_number;
 
   final int id;
 
@@ -24352,6 +24555,8 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -24373,6 +24578,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant$details {
 
   @override
   int get hashCode {
+    final l$phone_number = phone_number;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -24382,6 +24588,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant$details {
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$phone_number,
       l$id,
       l$firebase_id,
       l$image,
@@ -24401,6 +24608,11 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant$details {
     if (!(other
             is Query$get_delivery_company_past_orders$delivery_order$restaurant$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$id = id;
@@ -24473,6 +24685,7 @@ abstract class CopyWith$Query$get_delivery_company_past_orders$delivery_order$re
       _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant$details;
 
   TRes call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -24507,6 +24720,7 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restau
   static const _undefined = {};
 
   TRes call({
+    Object? phone_number = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -24518,6 +24732,9 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restau
   }) =>
       _then(
           Query$get_delivery_company_past_orders$delivery_order$restaurant$details(
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -24561,6 +24778,7 @@ class _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$re
   TRes _res;
 
   call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -25205,6 +25423,13 @@ const documentNodeQueryget_delivery_company_inprocess_orders =
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -26365,6 +26590,7 @@ class _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_ord
 
 class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$details {
   Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$details({
+    this.phone_number,
     required this.id,
     this.firebase_id,
     required this.image,
@@ -26377,6 +26603,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$deta
 
   factory Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$details.fromJson(
       Map<String, dynamic> json) {
+    final l$phone_number = json['phone_number'];
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -26386,6 +26613,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$deta
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$details(
+      phone_number: (l$phone_number as String?),
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
@@ -26398,6 +26626,8 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$deta
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? phone_number;
 
   final int id;
 
@@ -26418,6 +26648,8 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$deta
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
@@ -26439,6 +26671,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$deta
 
   @override
   int get hashCode {
+    final l$phone_number = phone_number;
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -26448,6 +26681,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$deta
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$phone_number,
       l$id,
       l$firebase_id,
       l$image,
@@ -26467,6 +26701,11 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$deta
     if (!(other
             is Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$id = id;
@@ -26539,6 +26778,7 @@ abstract class CopyWith$Query$get_delivery_company_inprocess_orders$delivery_ord
       _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$details;
 
   TRes call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -26573,6 +26813,7 @@ class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$r
   static const _undefined = {};
 
   TRes call({
+    Object? phone_number = _undefined,
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -26584,6 +26825,9 @@ class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$r
   }) =>
       _then(
           Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$details(
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
@@ -26627,6 +26871,7 @@ class _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_ord
   TRes _res;
 
   call({
+    String? phone_number,
     int? id,
     String? firebase_id,
     String? image,
@@ -34020,6 +34265,13 @@ const documentNodeSubscriptionlistenOnOrderOffers = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'notified_drivers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'counter_offers'),
             alias: null,
             arguments: [],
@@ -34123,20 +34375,26 @@ extension ClientExtension$Subscription$listenOnOrderOffers
 
 class Subscription$listenOnOrderOffers$delivery_order_by_pk {
   Subscription$listenOnOrderOffers$delivery_order_by_pk({
+    this.notified_drivers,
     this.counter_offers,
     required this.$__typename,
   });
 
   factory Subscription$listenOnOrderOffers$delivery_order_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$notified_drivers = json['notified_drivers'];
     final l$counter_offers = json['counter_offers'];
     final l$$__typename = json['__typename'];
     return Subscription$listenOnOrderOffers$delivery_order_by_pk(
+      notified_drivers:
+          l$notified_drivers == null ? null : mapFromJson(l$notified_drivers),
       counter_offers:
           l$counter_offers == null ? null : mapFromJson(l$counter_offers),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final dynamic? notified_drivers;
 
   final dynamic? counter_offers;
 
@@ -34144,6 +34402,9 @@ class Subscription$listenOnOrderOffers$delivery_order_by_pk {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$notified_drivers = notified_drivers;
+    _resultData['notified_drivers'] =
+        l$notified_drivers == null ? null : mapToJson(l$notified_drivers);
     final l$counter_offers = counter_offers;
     _resultData['counter_offers'] =
         l$counter_offers == null ? null : mapToJson(l$counter_offers);
@@ -34154,9 +34415,11 @@ class Subscription$listenOnOrderOffers$delivery_order_by_pk {
 
   @override
   int get hashCode {
+    final l$notified_drivers = notified_drivers;
     final l$counter_offers = counter_offers;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$notified_drivers,
       l$counter_offers,
       l$$__typename,
     ]);
@@ -34169,6 +34432,11 @@ class Subscription$listenOnOrderOffers$delivery_order_by_pk {
     }
     if (!(other is Subscription$listenOnOrderOffers$delivery_order_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$notified_drivers = notified_drivers;
+    final lOther$notified_drivers = other.notified_drivers;
+    if (l$notified_drivers != lOther$notified_drivers) {
       return false;
     }
     final l$counter_offers = counter_offers;
@@ -34208,6 +34476,7 @@ abstract class CopyWith$Subscription$listenOnOrderOffers$delivery_order_by_pk<
       _CopyWithStubImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk;
 
   TRes call({
+    dynamic? notified_drivers,
     dynamic? counter_offers,
     String? $__typename,
   });
@@ -34229,10 +34498,14 @@ class _CopyWithImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? notified_drivers = _undefined,
     Object? counter_offers = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listenOnOrderOffers$delivery_order_by_pk(
+        notified_drivers: notified_drivers == _undefined
+            ? _instance.notified_drivers
+            : (notified_drivers as dynamic?),
         counter_offers: counter_offers == _undefined
             ? _instance.counter_offers
             : (counter_offers as dynamic?),
@@ -34252,6 +34525,7 @@ class _CopyWithStubImpl$Subscription$listenOnOrderOffers$delivery_order_by_pk<
   TRes _res;
 
   call({
+    dynamic? notified_drivers,
     dynamic? counter_offers,
     String? $__typename,
   }) =>
@@ -34524,7 +34798,21 @@ const documentNodeQuerygetOrderOffers = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
+            name: NameNode(value: 'notified_drivers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'counter_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer_offer'),
             alias: null,
             arguments: [],
             directives: [],
@@ -34652,30 +34940,48 @@ extension ClientExtension$Query$getOrderOffers on graphql.GraphQLClient {
 
 class Query$getOrderOffers$delivery_order_by_pk {
   Query$getOrderOffers$delivery_order_by_pk({
+    this.notified_drivers,
     this.counter_offers,
+    this.customer_offer,
     required this.$__typename,
   });
 
   factory Query$getOrderOffers$delivery_order_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$notified_drivers = json['notified_drivers'];
     final l$counter_offers = json['counter_offers'];
+    final l$customer_offer = json['customer_offer'];
     final l$$__typename = json['__typename'];
     return Query$getOrderOffers$delivery_order_by_pk(
+      notified_drivers:
+          l$notified_drivers == null ? null : mapFromJson(l$notified_drivers),
       counter_offers:
           l$counter_offers == null ? null : mapFromJson(l$counter_offers),
+      customer_offer:
+          l$customer_offer == null ? null : moneyFromJson(l$customer_offer),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
+  final dynamic? notified_drivers;
+
   final dynamic? counter_offers;
+
+  final double? customer_offer;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$notified_drivers = notified_drivers;
+    _resultData['notified_drivers'] =
+        l$notified_drivers == null ? null : mapToJson(l$notified_drivers);
     final l$counter_offers = counter_offers;
     _resultData['counter_offers'] =
         l$counter_offers == null ? null : mapToJson(l$counter_offers);
+    final l$customer_offer = customer_offer;
+    _resultData['customer_offer'] =
+        l$customer_offer == null ? null : moneyToJson(l$customer_offer);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -34683,10 +34989,14 @@ class Query$getOrderOffers$delivery_order_by_pk {
 
   @override
   int get hashCode {
+    final l$notified_drivers = notified_drivers;
     final l$counter_offers = counter_offers;
+    final l$customer_offer = customer_offer;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$notified_drivers,
       l$counter_offers,
+      l$customer_offer,
       l$$__typename,
     ]);
   }
@@ -34700,9 +35010,19 @@ class Query$getOrderOffers$delivery_order_by_pk {
         runtimeType != other.runtimeType) {
       return false;
     }
+    final l$notified_drivers = notified_drivers;
+    final lOther$notified_drivers = other.notified_drivers;
+    if (l$notified_drivers != lOther$notified_drivers) {
+      return false;
+    }
     final l$counter_offers = counter_offers;
     final lOther$counter_offers = other.counter_offers;
     if (l$counter_offers != lOther$counter_offers) {
+      return false;
+    }
+    final l$customer_offer = customer_offer;
+    final lOther$customer_offer = other.customer_offer;
+    if (l$customer_offer != lOther$customer_offer) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -34734,7 +35054,9 @@ abstract class CopyWith$Query$getOrderOffers$delivery_order_by_pk<TRes> {
       _CopyWithStubImpl$Query$getOrderOffers$delivery_order_by_pk;
 
   TRes call({
+    dynamic? notified_drivers,
     dynamic? counter_offers,
+    double? customer_offer,
     String? $__typename,
   });
 }
@@ -34753,13 +35075,21 @@ class _CopyWithImpl$Query$getOrderOffers$delivery_order_by_pk<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? notified_drivers = _undefined,
     Object? counter_offers = _undefined,
+    Object? customer_offer = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOrderOffers$delivery_order_by_pk(
+        notified_drivers: notified_drivers == _undefined
+            ? _instance.notified_drivers
+            : (notified_drivers as dynamic?),
         counter_offers: counter_offers == _undefined
             ? _instance.counter_offers
             : (counter_offers as dynamic?),
+        customer_offer: customer_offer == _undefined
+            ? _instance.customer_offer
+            : (customer_offer as double?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -34773,7 +35103,9 @@ class _CopyWithStubImpl$Query$getOrderOffers$delivery_order_by_pk<TRes>
   TRes _res;
 
   call({
+    dynamic? notified_drivers,
     dynamic? counter_offers,
+    double? customer_offer,
     String? $__typename,
   }) =>
       _res;

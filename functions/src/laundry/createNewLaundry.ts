@@ -19,10 +19,11 @@ export interface LaundryDetails {
   phoneNumber: string,
   schedule: Schedule,
   laundryOperatorNotificationToken?: string,
-  firebaseId?: string,
   deliveryDetails: DeliveryDetails,
+  deliveryPartnerId?: number,
   language: ServiceProviderLanguage,
-  uniqueId?: string
+  uniqueId?: string,
+  isMezAdmin: boolean
 }
 export interface LaundryResponse {
   success: boolean,
@@ -36,7 +37,8 @@ export enum LaundryError {
   DeepLinkError = "deepLinkError",
   QRGenerationError = "qrGenerationError",
   LaundryCreationError = "laundryCreationError",
-  UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
+  UniqueIdAlreadyExists = "uniqueIdAlreadyExists",
+  UnauthorizedAccess = "unauthorizedAccess"
 }
 
 export async function createLaundry(userId: number, laundryDetails: LaundryDetails): Promise<LaundryResponse> {
@@ -51,6 +53,10 @@ export async function createLaundry(userId: number, laundryDetails: LaundryDetai
     let mezAdminsPromise = getMezAdmins();
     let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
     let mezAdmins: MezAdmin[] = promiseResponse[1];
+
+    if(laundryDetails.isMezAdmin && !mezAdmins.find((m) => m.id == userId)) {
+      throw new MezError(LaundryError.UnauthorizedAccess);
+    }
   
     let laundryStore: ServiceProvider = await createLaundryStore(laundryDetails, userId);
   

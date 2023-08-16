@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/components/EventCartItemCard.dart';
@@ -14,13 +15,15 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/BusinessOrderHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustOrderView']['CustOrderView'];
@@ -32,7 +35,8 @@ class CustBusinessOrderView extends StatefulWidget {
   State<CustBusinessOrderView> createState() => _CustBusinessOrderViewState();
 
   static Future<void> navigate({required int orderId, EntityType? entityType}) {
-    return MezRouter.toPath(constructPath(orderId));
+    return MezRouter.toPath(constructPath(orderId),
+        arguments: {"entityType": entityType});
   }
 
   static String constructPath(int orderId) {
@@ -86,7 +90,8 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
       bottomNavigationBar: entityType == EntityType.Admin
           ? null
           : Obx(() {
-              if (custBusinessOrderController.currentOrderInView.value == null) {
+              if (custBusinessOrderController.currentOrderInView.value ==
+                  null) {
                 return SizedBox.shrink();
               }
               // else if (custBusinessOrderController
@@ -143,6 +148,15 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
                                     ),
                                   ),
                                 ),
+                                if (getBusinessPhone() != null)
+                                  MezIconButton(
+                                    onTap: () {
+                                      callWhatsappNumber(getBusinessPhone()!);
+                                    },
+                                    icon: Ionicons.logo_whatsapp,
+                                    iconColor: Colors.green,
+                                    backgroundColor: Colors.white,
+                                  ),
                                 MessageButton(
                                   chatId: custBusinessOrderController
                                       .currentOrderInView.value!.chatId!
@@ -310,6 +324,27 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
     }
   }
 
+  String? getBusinessPhone() {
+    if (cartController.currentOrderInView.value == null) return null;
+    switch (cartController.currentOrderInView.value!.items.first.offeringType) {
+      case OfferingType.Rental:
+        return cartController
+            .currentOrderInView.value!.items.first.rental!.business.phoneNo;
+      case OfferingType.Event:
+        return cartController
+            .currentOrderInView.value!.items.first.event!.business.phoneNo;
+      case OfferingType.Service:
+        return cartController
+            .currentOrderInView.value!.items.first.service!.business.phoneNo;
+      case OfferingType.Product:
+        return cartController
+            .currentOrderInView.value!.items.first.product!.business.phoneNo;
+      case OfferingType.Home:
+        return cartController
+            .currentOrderInView.value!.items.first.home!.business.phoneNo;
+    }
+  }
+
   Widget bottomButtons(BuildContext context) {
     if (custBusinessOrderController.currentOrderInView.value == null) {
       return SizedBox.shrink();
@@ -325,9 +360,7 @@ class _CustBusinessOrderViewState extends State<CustBusinessOrderView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (custBusinessOrderController.currentOrderInView.value!.status !=
-                BusinessOrderRequestStatus.Confirmed &&
-            custBusinessOrderController.currentOrderInView.value!.status !=
-                BusinessOrderRequestStatus.Completed)
+            BusinessOrderRequestStatus.Confirmed)
           MezCard(
             content: Row(
               children: [

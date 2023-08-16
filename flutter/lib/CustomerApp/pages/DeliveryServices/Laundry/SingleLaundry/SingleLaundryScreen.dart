@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessMessageCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/components/CustDeliveryMessageCard.dart';
@@ -253,7 +252,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
               color: primaryBlueColor,
             )),
         Text(
-            "${_i18n()["startingFrom"]} ${laundry.value!.getCheapestCategory.toPriceString()}/kg",
+            "${_i18n()["startingFrom"]} ${laundry.value!.getCheapestCategory?.toPriceString()}/kg",
             //maxLines: 2,
             textAlign: TextAlign.center,
             style: context.txt.titleSmall?.copyWith(

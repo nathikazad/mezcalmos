@@ -11,13 +11,14 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRes
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/components/SearchItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -79,23 +80,44 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Obx(
-              () => MezButton(
-                width: 52.5.mezW,
-                height: 42.5,
-                onClick: () async {
-                  viewController.switchView();
-                },
-                icon: viewController.isMapView ? Icons.list : Icons.room,
-                label: viewController.isMapView
-                    ? '${_i18n()['viewAsList']}'
-                    : '${_i18n()['viewOnMap']}',
-                borderRadius: 50,
-              ),
+              () {
+                if (viewController.isLoading.isTrue) return SizedBox();
+
+                return MezButton(
+                  width: 52.5.mezW,
+                  height: 42.5,
+                  onClick: () async {
+                    viewController.switchView();
+                  },
+                  icon: viewController.isMapView ? Icons.list : Icons.room,
+                  label: viewController.isMapView
+                      ? '${_i18n()['viewAsList']}'
+                      : '${_i18n()['viewOnMap']}',
+                  borderRadius: 50,
+                );
+              },
             ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Obx(() {
+          if (viewController.isLoading.isTrue) {
+            return Container(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  meduimSeperator,
+                  Text(
+                    "${_i18n()['loadingText']}",
+                    style: context.textTheme.bodyMedium
+                        ?.copyWith(color: primaryBlueColor),
+                  ),
+                ],
+              ),
+            );
+          }
           if (viewController.isMapView) {
             return _mapView();
           }
@@ -350,7 +372,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
               customerLocation: viewController.customerLocation,
-              onClick: () => CustomerRestaurantView.navigate(
+              onClick: () => CustRestaurantView.navigate(
                 restaurantId:
                     viewController.filteredRestaurants[index].info.hasuraId,
               ),

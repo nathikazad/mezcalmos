@@ -28,7 +28,6 @@ class CustomerAppTheme {
       sliderTheme: SliderThemeData(
         thumbColor: primaryBlueColor,
         showValueIndicator: ShowValueIndicator.always,
-        
         valueIndicatorColor: secondaryLightBlueColor,
         valueIndicatorShape: PaddleSliderValueIndicatorShape(),
         inactiveTrackColor: secondaryLightBlueColor,
@@ -71,6 +70,16 @@ class CustomerAppTheme {
           ),
           focusColor: Color(0xFF6779FE),
           prefixIconColor: Color(0xFF6779FE),
+          suffixIconColor:
+              MaterialStateColor.resolveWith((Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused)) {
+              return primaryBlueColor;
+            }
+            if (states.contains(MaterialState.error)) {
+              return redAccentColor;
+            }
+            return Colors.grey;
+          }),
           alignLabelWithHint: true,
           hintStyle: TextStyle(
             fontWeight: FontWeight.w400,
@@ -78,7 +87,27 @@ class CustomerAppTheme {
             fontSize: 10.mezSp,
             color: Colors.black.withOpacity(0.8),
           ),
-          border: InputBorder.none,
+          iconColor:
+              MaterialStateColor.resolveWith((Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused)) {
+              return primaryBlueColor;
+            }
+            if (states.contains(MaterialState.error)) {
+              return redAccentColor;
+            }
+            return Colors.grey;
+          }),
+          contentPadding: EdgeInsets.all(12),
+          isDense: true,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide.none),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide(width: 1, color: Colors.grey.shade400)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+              borderSide: BorderSide.none),
           floatingLabelBehavior: FloatingLabelBehavior.never),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,

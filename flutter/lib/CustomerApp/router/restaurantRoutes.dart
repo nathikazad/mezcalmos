@@ -1,14 +1,14 @@
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/CustRestaurantCartView.dart'
+    deferred as viewCart;
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustItemView/CustItemView.dart'
     deferred as restoItemView;
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart'
-    deferred as restoList;
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart'
-    deferred as restoView;
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart'
     deferred as restaurantOrder;
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/CustCartView.dart'
-    deferred as viewCart;
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart'
+    deferred as restoView;
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart'
+    deferred as restoList;
+import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantRoutes {
@@ -28,7 +28,7 @@ class RestaurantRoutes {
     QRoute(
         path: restaurantViewRoute,
         name: restaurantViewRoute,
-        builder: () => restoView.CustomerRestaurantView(),
+        builder: () => restoView.CustRestaurantView(),
         middleware: <QMiddleware>[DefferedLoader(restoView.loadLibrary)]),
     QRoute(
       path: restaurantItemViewRoute,
@@ -44,7 +44,7 @@ class RestaurantRoutes {
     QRoute(
         path: cartRoute,
         name: cartRoute,
-        builder: () => viewCart.ViewCartScreen(),
+        builder: () => viewCart.CustRestaurantCartView(),
         middleware: <QMiddleware>[DefferedLoader(viewCart.loadLibrary)]),
     QRoute(
       path: cartItemViewRoute,

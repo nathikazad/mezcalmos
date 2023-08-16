@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrderModels.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -16,8 +18,10 @@ class CustDeliveryOffersListController {
   HasuraDb _db = Get.find<HasuraDb>();
   //
   late int orderId;
+  Rxn<num> customerOffer = Rxn<num>();
   RxMap<int, CounterOffer> _offers = RxMap({});
   Map<int, CounterOffer> get offers => _offers.value;
+  RxMap<int, bool> notifiedDrivers = RxMap<int, bool>({});
 
   Map<int, CounterOffer> get counterOffers {
     return offers.entries
@@ -31,18 +35,29 @@ class CustDeliveryOffersListController {
     });
   }
 
+  int get driversSawOfferCount => notifiedDrivers.entries
+      .where((MapEntry<int, bool> element) => element.value == true)
+      .length;
   // streams //
-  StreamSubscription<Map<int, CounterOffer>?>? _streamSubscription;
+  StreamSubscription? _streamSubscription;
   String? subscriptionId;
 
   Future<void> init({required int orderId}) async {
     this.orderId = orderId;
-    _offers.value = await get_dv_order_offers(orderId: orderId) ?? {};
+    CustDeliveryOffersListVariables? res =
+        await get_dv_order_offers(orderId: orderId);
+    if (res != null) {
+      mezDbgPrint("Customer offer =========>${res.customerOffer}");
+      customerOffer.value = res.customerOffer;
+      _offers.value = res.offers ?? {};
+      notifiedDrivers.value = res.notifiedDrivers ?? {};
+    }
     subscriptionId = _db.createSubscription(start: () {
       _streamSubscription = listen_on_dv_order_offers(orderId: orderId)
-          .listen((Map<int, CounterOffer>? event) {
+          .listen((CustDeliveryOffersListVariables? event) {
         if (event != null) {
-          _offers.value = event;
+          _offers.value = event.offers ?? {};
+          notifiedDrivers.value = event.notifiedDrivers ?? {};
         }
       });
     }, cancel: () {
@@ -91,11 +106,25 @@ class CustDeliveryOffersListController {
   Future<void> rejectOffer({required int id}) async {
     Map<int, CounterOffer>? newOffers = offers;
     newOffers[id]?.status = CounterOfferStatus.Rejected;
-    final bool res =
-        await update_delivery_order_offers(offers: newOffers, orderId: orderId);
-    if (res == true) {
-      showSavedSnackBar(
-          title: "Rejected", subtitle: "Offer rejected successfully");
+    try {
+      final bool res = await update_delivery_order_offers(
+          offers: newOffers, orderId: orderId);
+      if (res == true) {
+        showSavedSnackBar(
+            title: "Rejected", subtitle: "Offer rejected successfully");
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      // TODO
+    }
+  }
+
+  Future<void> updateCustomerOffer() async {
+    num? res = await update_delivery_order_customer_offer(
+        customerOffer: customerOffer.value! + 10, orderId: orderId);
+    if (res != null) {
+      customerOffer.value = res;
     }
   }
 }

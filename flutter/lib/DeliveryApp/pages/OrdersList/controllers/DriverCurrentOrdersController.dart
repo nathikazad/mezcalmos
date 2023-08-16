@@ -51,7 +51,9 @@ class DriverCurrentOrdersController {
   Future<void> _initOrders() async {
     currentOrders.value =
         await get_current_driver_orders(driverId: driverId) ?? [];
-    openOrders.value = await get_open_driver_orders(driverId: driverId) ?? [];
+    if (!opAuthController.driver!.isSpAssociated) {
+      openOrders.value = await get_open_driver_orders(driverId: driverId) ?? [];
+    }
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener =
           listen_on_current_driver_orders(driverId: driverId)
@@ -60,12 +62,14 @@ class DriverCurrentOrdersController {
           currentOrders.value = event;
         }
       });
-      openOrdersListener = listen_on_open_driver_orders(driverId: driverId)
-          .listen((List<MinimalOrder>? event) {
-        if (event != null) {
-          openOrders.value = event;
-        }
-      });
+      if (!opAuthController.driver!.isSpAssociated) {
+        openOrdersListener = listen_on_open_driver_orders(driverId: driverId)
+            .listen((List<MinimalOrder>? event) {
+          if (event != null) {
+            openOrders.value = event;
+          }
+        });
+      }
     }, cancel: () {
       currentOrdersListener?.cancel();
       currentOrdersListener = null;

@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustDeliveryTypePicker.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryRequestView/controllers/CustLaundryOrderRequestViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
@@ -17,7 +19,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/CustOrderDeliverySelector.dart';
 import 'package:sizer/sizer.dart';
 
@@ -124,66 +126,77 @@ class _CustLaundryOrderRequestViewState
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: 15,
+                          CustDeliveryTypeSelector(
+                            onDeliveryTypeChanged: (DeliveryType value) {
+                              viewController.switchDeliveryType(type: value);
+                              mezDbgPrint(
+                                  "Changed from parent callback ==>$value");
+                            },
                           ),
-                          Container(
-                            child: Text(
-                              '${_i18n()["deliveryLocation"]}',
-                              style: Theme.of(context).textTheme.bodyLarge,
+                          if (viewController.showDelivery) ...[
+                            SizedBox(
+                              height: 15,
                             ),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Obx(
-                            () => viewController.authController.user != null
-                                ? Form(
-                                    key: viewController.formKey,
-                                    child: Container(
-                                      decoration: BoxDecoration(boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.shade300,
-                                            blurRadius: 1,
-                                            offset: Offset(0, .5))
-                                      ]),
-                                      child: DropDownLocationList(
-                                        ensureVisible: false,
-                                        onValueChangeCallback:
-                                            (MezLocation location) {
-                                          mezDbgPrint(
-                                              "Loctaion ::::::::====>$location");
-                                          if (viewController
-                                                  .formKey.currentState
-                                                  ?.validate() ==
-                                              true) {
-                                            viewController
-                                                .switchLocation(location);
+                            Container(
+                              child: Text(
+                                '${_i18n()["deliveryLocation"]}',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Obx(
+                              () => viewController.authController.user != null
+                                  ? Form(
+                                      key: viewController.formKey,
+                                      child: Container(
+                                        decoration: BoxDecoration(boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.grey.shade300,
+                                              blurRadius: 1,
+                                              offset: Offset(0, .5))
+                                        ]),
+                                        child: DropDownLocationList(
+                                          ensureVisible: false,
+                                          onValueChangeCallback:
+                                              (MezLocation location) {
+                                            mezDbgPrint(
+                                                "Loctaion ::::::::====>$location");
+                                            if (viewController
+                                                    .formKey.currentState
+                                                    ?.validate() ==
+                                                true) {
+                                              viewController
+                                                  .switchLocation(location);
 
-                                            // ignore: unawaited_futures
-                                          }
-                                        },
-                                        bgColor: Colors.white,
-                                        checkDistance: true,
-                                        serviceProviderLocation: viewController
-                                            .laundry.value!.info.location,
+                                              // ignore: unawaited_futures
+                                            }
+                                          },
+                                          bgColor: Colors.white,
+                                          checkDistance: true,
+                                          serviceProviderLocation:
+                                              viewController
+                                                  .laundry.value!.info.location,
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                : pickFromMapComponent(context),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          CustOrderDeliverySelector(
-                            onSelectionUpdate: (List<int> value) {
-                              viewController.selectedCompanies = value;
-                            },
-                            distanceInKm: viewController.getOrderDistance,
-                            onEstDeliveryPriceChange: (double value) {
-                              viewController.estDeliveryCost.value = value;
-                            },
-                          ),
+                                    )
+                                  : pickFromMapComponent(context),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            if (!viewController.laundry.value!.selfDelivery)
+                              CustOrderDeliverySelector(
+                                onSelectionUpdate: (List<int> value) {
+                                  viewController.selectedCompanies = value;
+                                },
+                                distanceInKm: viewController.getOrderDistance,
+                                onEstDeliveryPriceChange: (double value) {
+                                  viewController.estDeliveryCost.value = value;
+                                },
+                              ),
+                          ],
                           SizedBox(
                             height: 10,
                           ),
@@ -230,28 +243,30 @@ class _CustLaundryOrderRequestViewState
                 style: context.txt.bodyLarge,
               ),
             ),
-            SizedBox(height: 4),
-            Container(
-              padding: EdgeInsets.only(
-                bottom: 4,
-              ),
-              width: Get.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Text("${_i18n()["deliveryCost"]}",
-                          style: context.txt.bodyMedium),
+            if (viewController.showDelivery) ...[
+              SizedBox(height: 4),
+              Container(
+                padding: EdgeInsets.only(
+                  bottom: 4,
+                ),
+                width: Get.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        child: Text("${_i18n()["deliveryCost"]}",
+                            style: context.txt.bodyMedium),
+                      ),
                     ),
-                  ),
-                  Text(
-                    "${viewController.estDeliveryCost.value.toPriceString()} x 2",
-                    style: context.txt.bodyMedium,
-                  )
-                ],
+                    Text(
+                      "${viewController.estDeliveryCost.value.toPriceString()} x 2",
+                      style: context.txt.bodyMedium,
+                    )
+                  ],
+                ),
               ),
-            ),
+            ]
             // SizedBox(
             //   height: 8,
             // ),
@@ -345,7 +360,10 @@ class _CustLaundryOrderRequestViewState
         onClick: () async {
           if (viewController.isUserSignedIn) {
             mezDbgPrint(viewController.formKey.currentState?.validate());
-            if (viewController.formKey.currentState?.validate() == true) {
+            if (viewController.showDelivery &&
+                viewController.formKey.currentState?.validate() == true) {
+              await viewController.createLaundryOrder();
+            } else if (!viewController.showDelivery) {
               await viewController.createLaundryOrder();
             }
           } else {

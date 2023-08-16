@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/location/hsServiceLocation.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
@@ -21,7 +22,7 @@ class ServiceInfoEditViewController {
   // TEXT INPUTS //
   TextEditingController serviceNameTxt = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
-  TextEditingController prefixTextFieldController = TextEditingController();
+  // TextEditingController prefixTextFieldController = TextEditingController();
   TextEditingController primaryServiceDesc = TextEditingController();
   TextEditingController secondayServiceDesc = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -38,6 +39,8 @@ class ServiceInfoEditViewController {
   final RxBool imageLoading = RxBool(false);
   final RxBool isAvailable = RxBool(false);
   final RxBool isApproved = RxBool(true);
+  Rxn<BusinessProfile> mainBusniessProfile = Rxn<BusinessProfile>();
+  Rxn<BusinessProfile> newBusniessProfile = Rxn<BusinessProfile>();
 
 // LATE VARS
   late int detailsId;
@@ -47,6 +50,8 @@ class ServiceInfoEditViewController {
   int? newDescId;
 
   Language? get secLang => languages.value?.secondary;
+
+  bool get isBusiness => serviceType == ServiceProviderType.Business;
 // INIT //
 
   Future<void> init({
@@ -54,14 +59,23 @@ class ServiceInfoEditViewController {
     required int serviceId,
     required ServiceProviderType serviceProvidertype,
   }) async {
-    prefixTextFieldController.text = '+52';
     serviceType = serviceProvidertype;
     detailsId = serviceDetailsId;
     this.serviceId = serviceId;
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$detailsId");
 
     await fetchService();
+
     _setServiceInfo();
+    if (isBusiness) {
+      unawaited(_fetchBusinessProfile());
+    }
+  }
+
+  Future<void> _fetchBusinessProfile() async {
+    mainBusniessProfile.value =
+        await get_business_profile_by_id(businessId: serviceId);
+    newBusniessProfile.value = mainBusniessProfile.value;
   }
 
   Future<void> fetchService() async {
@@ -77,15 +91,9 @@ class ServiceInfoEditViewController {
       // phoneNumber.text = service.value?.phoneNumber ?? '';
 
       if (service.value!.phoneNumber == null) {
-        prefixTextFieldController.text = '';
         phoneNumber.text = '+52';
-      } else if (service.value!.phoneNumber!.contains(' ')) {
-        prefixTextFieldController.text =
-            service.value?.phoneNumber?.split(' ')[0] ?? '';
-        phoneNumber.text = service.value?.phoneNumber?.split(' ')[1] ?? '';
       } else {
-        phoneNumber.text = service.value?.phoneNumber ?? '';
-        prefixTextFieldController.text = '+52';
+        phoneNumber.text = service.value!.phoneNumber!;
       }
 
       newLocation.value = service.value!.location;
@@ -146,6 +154,7 @@ class ServiceInfoEditViewController {
     try {
       await updateServiceDescription();
       await updateServiceLocation();
+      await updateBsProfile();
       if (newImageFile.value != null) {
         final String path = "/services/${serviceType.name}/$serviceId/images";
         newImageUrl.value = await uploadImgToFbStorage(
@@ -171,7 +180,7 @@ class ServiceInfoEditViewController {
         location: newLocation.value!,
         hasuraId: 1,
         languages: languages.value!,
-        phoneNumber: '${prefixTextFieldController.text} ${phoneNumber.text}',
+        phoneNumber: phoneNumber.text,
         descriptionId: newDescId,
         image: newImageUrl.value,
         name: serviceNameTxt.text.inCaps);
@@ -217,6 +226,16 @@ class ServiceInfoEditViewController {
     }
   }
 
+  Future<void> updateBsProfile() async {
+    if (isBusiness && mainBusniessProfile.value != newBusniessProfile.value) {
+      mezDbgPrint(
+          "👋 updating business profile to =====>${newBusniessProfile.value}");
+      mainBusniessProfile.value = await update_business_profile_by_id(
+          businessId: serviceId, newProfile: newBusniessProfile.value!);
+      newBusniessProfile.value = mainBusniessProfile.value;
+    }
+  }
+
   // bool _updatePrDesc() {
   //   return (primaryServiceDesc.text != '' &&
   //       primaryServiceDesc.text != service.value?.description?[primaryLang]);
@@ -249,5 +268,12 @@ class ServiceInfoEditViewController {
     data.addAll(Language.values);
     data.remove(languages.value!.primary);
     return data.map((Language e) => e.toFirebaseFormatString()).toList();
+  }
+
+  void switchBusinessType({required BusinessProfile type}) {
+    newBusniessProfile.value = type;
+
+    mezDbgPrint("old business Profile =======>${mainBusniessProfile.value}");
+    mezDbgPrint("New business Profile =======>${newBusniessProfile.value}");
   }
 }

@@ -43,6 +43,7 @@ export interface OfferDetails {
     items?: Array<number>, 
     // Array<categoryIds>,
     categories?: Array<number>,
+    nameIds?: Array<number>,
     // Array<offeringTypes>,
     offeringTypes?: Array<OfferingType>,
     // date_time both for coupon and promo
@@ -50,7 +51,6 @@ export interface OfferDetails {
     // date_time
     validityRangeEnd?: string 
     weeklyRepeat: boolean
-    couponReusable?: boolean
 }
   
 export enum DiscountType {

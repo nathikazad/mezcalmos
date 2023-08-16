@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
@@ -21,12 +22,13 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart'
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -472,7 +474,29 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     BaseMessagingScreen.navigate(
                         chatId: viewController
                             .order.value!.serviceProviderDriverChatId!);
-                  })
+                  }),
+            if (viewController.restaurantPhoneNumber != null)
+              MezIconButton(
+                onTap: () async {
+                  final String recieverNumber =
+                      "${viewController.restaurantPhoneNumber}";
+                  final String text =
+                      viewController.restaurantOrderClipBoardText(userLanguage);
+                  final String whatsappUrl =
+                      "whatsapp://send?phone=$recieverNumber" + "&text=$text";
+                  try {
+                    await launchUrlString(whatsappUrl);
+                  } catch (e) {
+                    showErrorSnackBar();
+                    mezDbgPrint("Error 🔴 ====> $e");
+                  } finally {
+                    // await MezRouter.back();
+                  }
+                },
+                icon: Ionicons.logo_whatsapp,
+                backgroundColor: Colors.white,
+                elevation: 0.5,
+              )
           ],
         ),
       ),

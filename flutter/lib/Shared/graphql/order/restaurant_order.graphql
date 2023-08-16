@@ -4,6 +4,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     id
     notes
     scheduled_time
+    delivery_type
     stripe_info
     restaurant {
       id
@@ -59,6 +60,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     estimated_food_ready_time
     actual_food_ready_time
     refund_amount
+    discount_value
     delivery_id
     status
     review_id
@@ -66,10 +68,10 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       created_at
       from_entity_id
       from_entity_type
-       from_name,
-    from_image,
-    to_name,
-    to_image,
+      from_name
+      from_image
+      to_name
+      to_image
       id
       note
       rating
@@ -129,7 +131,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
-
+    delivery_type
     scheduled_time
     stripe_info
     restaurant {
@@ -181,6 +183,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
       quantity
     }
     payment_type
+    discount_value
     to_location_gps
     to_location_address
     estimated_food_ready_time
@@ -190,10 +193,10 @@ query get_restaurant_order_by_id($order_id: Int!) {
     status
     review_id
     review {
-       from_name,
-    from_image,
-    to_name,
-    to_image,
+      from_name
+      from_image
+      to_name
+      to_image
       created_at
       from_entity_id
       from_entity_type
@@ -342,7 +345,7 @@ mutation setRestaurantOrderEstFoodReadyTime(
   }
 }
 query get_restaurant_order_items_by_id($deliveryOrderId: Int!) {
-  restaurant_order(where: {delivery_id: {_eq: $deliveryOrderId}}) {
+  restaurant_order(where: { delivery_id: { _eq: $deliveryOrderId } }) {
     items {
       id
       notes
@@ -364,8 +367,16 @@ query get_restaurant_order_items_by_id($deliveryOrderId: Int!) {
   }
 }
 
-query number_of_customer_restaurant_orders($customer_id: Int, $restaurant_id: Int) {
-  restaurant_order_aggregate(where: {customer_id: {_eq: $customer_id}, restaurant_id: {_eq: $restaurant_id}}) {
+query number_of_customer_restaurant_orders(
+  $customer_id: Int
+  $restaurant_id: Int
+) {
+  restaurant_order_aggregate(
+    where: {
+      customer_id: { _eq: $customer_id }
+      restaurant_id: { _eq: $restaurant_id }
+    }
+  ) {
     aggregate {
       count
     }

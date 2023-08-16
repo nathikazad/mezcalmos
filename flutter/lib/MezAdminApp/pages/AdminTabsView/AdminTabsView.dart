@@ -4,7 +4,7 @@ import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminMessagesView/AdminMessagesView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/AdminOrdersListView.dart';
-import 'package:mezcalmos/MezAdminApp/pages/ServicesView/AdminServiceView.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServicesView/AdminServicesView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';

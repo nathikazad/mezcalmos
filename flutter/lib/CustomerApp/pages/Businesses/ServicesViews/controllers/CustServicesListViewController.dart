@@ -4,6 +4,7 @@ import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/business/hsBusiness.dart';
 import 'package:mezcalmos/Shared/graphql/business_service/hsBusinessService.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -82,7 +83,8 @@ class CustServiceListViewController {
     try {
       _isLoading.value = true;
 
-      locPkg.LocationData location = await locPkg.Location().getLocation();
+      final locPkg.LocationData location =
+          await Get.find<LocationController>().getCurrentLocation();
       if (location.latitude != null && location.longitude != null) {
         _fromLocation = Location(
           lat: location.latitude!,

@@ -65,6 +65,7 @@
 - "!include service_provider_offer_applied.yaml"
 - "!include service_provider_operator_details.yaml"
 - "!include service_provider_post.yaml"
+- "!include service_provider_post_comment.yaml"
 - "!include service_provider_referral.yaml"
 - "!include service_provider_service_link.yaml"
 - "!include service_provider_store_credit.yaml"

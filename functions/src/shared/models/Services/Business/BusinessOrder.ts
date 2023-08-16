@@ -19,6 +19,7 @@ export interface BusinessOrder {
     chatId?: number;
     cancellationTime?: string;
     customer?: UserInfo,
+    discountValue?: number;
 }
 
 export interface BusinessOrderItem {
@@ -46,8 +47,7 @@ export enum BusinessOrderRequestStatus {
     ModificationRequestByBusiness = "modificationRequestByBusiness",
     CancelledByBusiness = "cancelledByBusiness",
     Confirmed = "confirmed",
-    CancelledByCustomer = "cancelledByCustomer",
-    Completed = "completed"
+    CancelledByCustomer = "cancelledByCustomer"
 }
 
 export interface BusinessCart {
@@ -55,7 +55,8 @@ export interface BusinessCart {
     businessId?: number;
     cost: number;
     items: Array<BusinessOrderItem>;
-    discountValue?: number;
+    discountValue: number;
+    appliedOffers: Array<number>;
 }
 
 export interface NewBusinessOrderRequestNotification extends OrderNotification {

@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -115,6 +115,9 @@ class CustBusinessViewAppbar extends StatelessWidget {
             tabs: [
               Tab(
                 icon: Icon(Icons.store_outlined),
+              ),
+              Tab(
+                icon: Icon(Icons.article),
               ),
               Tab(
                 icon: Icon(Icons.info_outline),

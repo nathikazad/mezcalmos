@@ -30,3 +30,85 @@ object_relationships:
         remote_table:
           name: user
           schema: public
+insert_permissions:
+  - role: customer
+    permission:
+      check:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      columns:
+        - customer_id
+        - service_provider_id
+        - service_provider_type
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - service_provider_type
+        - service_provider_id
+        - customer_id
+      filter: {}
+      allow_aggregations: true
+  - role: business_operator
+    permission:
+      columns:
+        - customer_id
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+      allow_aggregations: true
+  - role: customer
+    permission:
+      columns:
+        - customer_id
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      allow_aggregations: true
+  - role: delivery_operator
+    permission:
+      columns:
+        - customer_id
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+      allow_aggregations: true
+  - role: laundry_operator
+    permission:
+      columns:
+        - customer_id
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+      allow_aggregations: true
+  - role: mez_admin
+    permission:
+      columns:
+        - customer_id
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+      allow_aggregations: true
+  - role: restaurant_operator
+    permission:
+      columns:
+        - customer_id
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+      allow_aggregations: true
+delete_permissions:
+  - role: customer
+    permission:
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

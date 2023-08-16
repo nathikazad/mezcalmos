@@ -3,18 +3,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/controllers/CustomerRestaurantViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -33,7 +30,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     required this.controller,
   }) : super(key: key);
 
-  final CustomerRestaurantController controller;
+  final CustRestaurantViewController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +39,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColorLight,
         elevation: 0.4,
         centerTitle: true,
-        expandedHeight: 270,
+        expandedHeight: 250,
         leadingWidth: 35,
         automaticallyImplyLeading: false,
-        bottom: getBottom(context),
+        bottom: _tabbar(),
         leading: _BackButtonAppBar(),
         actions: <Widget>[
           getAppbarIconsButton(),
@@ -55,7 +52,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           expandedTitleScale: 1.6,
           titlePadding: EdgeInsets.only(bottom: _getBottomPadding()),
           centerTitle: true,
-          collapseMode: CollapseMode.pin,
+          //   collapseMode: CollapseMode.pin,
           title: Container(
             alignment: Alignment.bottomCenter,
             width: 55.w,
@@ -68,32 +65,29 @@ class RestaurantSliverAppBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Flexible(
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      //  margin: const EdgeInsets.only(bottom: 3),
-                      child: Text(
-                        (controller.showInfo.value)
-                            ? "${_i18n()["info"]}"
-                            : controller.restaurant.value!.info.name,
-                        style: context.txt.displaySmall
-                            ?.copyWith(color: Colors.white, fontSize: 14.mezSp),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  if (!controller.showInfo.value)
-                    Container(
-                      margin: const EdgeInsets.only(left: 5, right: 5, top: 2),
-                      child: InkWell(
-                          onTap: controller.onInfoTap,
-                          child: Icon(
-                            Icons.info_outline_rounded,
-                            size: 15.mezSp,
-                            color: Colors.white,
-                          )),
-                    )
+                      child: Container(
+                          alignment: Alignment.bottomCenter,
+                          //  margin: const EdgeInsets.only(bottom: 3),
+                          child: Text(
+                              (controller.showInfo.value)
+                                  ? "${_i18n()["info"]}"
+                                  : controller.restaurant.value!.info.name,
+                              style: context.txt.displaySmall?.copyWith(
+                                  color: Colors.white, fontSize: 14.mezSp),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center)))
+                  // if (!controller.showInfo.value)
+                  //   Container(
+                  //     margin: const EdgeInsets.only(left: 5, right: 5, top: 2),
+                  //     child: InkWell(
+                  //         onTap: controller.onInfoTap,
+                  //         child: Icon(
+                  //           Icons.info_outline_rounded,
+                  //           size: 15.mezSp,
+                  //           color: Colors.white,
+                  //         )),
+                  //   )
                 ],
               ),
             ),
@@ -110,10 +104,35 @@ class RestaurantSliverAppBar extends StatelessWidget {
         preferredSize: Size.fromHeight(15),
         child: LinearProgressIndicator(color: primaryBlueColor),
       );
-    } else if (controller.showInfo.isFalse) {
-      return bottomFilters(context);
     }
     return null;
+  }
+
+  PreferredSize _tabbar() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(kTextTabBarHeight),
+      child: Container(
+        color: Colors.white,
+        child: TabBar(
+            padding: EdgeInsets.zero,
+            indicatorColor: primaryBlueColor,
+            indicatorPadding: EdgeInsets.zero,
+            controller: controller.mainTabController,
+            unselectedLabelColor: unselectedIconColor,
+            labelColor: primaryBlueColor,
+            tabs: [
+              Tab(
+                icon: Icon(Icons.store_outlined),
+              ),
+              Tab(
+                icon: Icon(Icons.article),
+              ),
+              Tab(
+                icon: Icon(Icons.info_outline),
+              ),
+            ]),
+      ),
+    );
   }
 
   Widget _backgroundImageComponent() {
@@ -176,85 +195,22 @@ class RestaurantSliverAppBar extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget bottomFilters(BuildContext context) {
-    final Language userLanguage =
-        Get.find<LanguageController>().userLanguageKey;
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(60),
-      child: Theme(
-        data: Get.theme.copyWith(dividerColor: Colors.transparent),
-        child: Column(
-          children: [
-            if (controller.showSpecials) _mainMenuTabs(context),
-            _menuFilterChips(userLanguage, context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _menuFilterChips(Language userLanguage, BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Get.theme.scaffoldBackgroundColor,
-      padding: EdgeInsets.only(bottom: 7),
-      child: Obx(
-        () {
-          if (controller.showMenuTabs || controller.showSpecialTabs) {
-            return TabBar(
-              padding: EdgeInsets.only(left: 6, top: 7),
-              isScrollable: true,
-              controller: controller.getTabController,
-              labelColor: primaryBlueColor,
-              labelStyle: context.txt.bodyLarge,
-              unselectedLabelStyle: context.txt.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w500,
-                color: Colors.grey.shade800,
-              ),
-              unselectedLabelColor: Colors.grey.shade700,
-              indicatorPadding:
-                  const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: Colors.transparent,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(45),
-                shape: BoxShape.rectangle,
-                color: secondaryLightBlueColor,
-              ),
-              tabs: (controller.showSpecialTabs)
-                  ? List.generate(controller.getGroupedSpecials().length,
-                      (int index) {
-                      return Tab(
-                        text: controller
-                            .getGroupedSpecials()
-                            .keys
-                            .toList()[index]
-                            .toDayName()
-                            .inCaps,
-                      );
-                    })
-                  : (controller.showMenuTabs)
-                      ? List.generate(
-                          controller.restaurant.value!.getAvailableCategories
-                              .length, (int index) {
-                          return Tab(
-                            text: controller.restaurant.value!
-                                    .getAvailableCategories[index].name
-                                    ?.getTranslation(userLanguage)
-                                    ?.inCaps ??
-                                "",
-                          );
-                        })
-                      : [],
-              onTap: controller.animateAndScrollTo,
-            );
-          } else {
-            return SizedBox();
-          }
-        },
-      ),
-    );
-  }
+  // PreferredSizeWidget bottomFilters(BuildContext context) {
+  //   final Language userLanguage =
+  //       Get.find<LanguageController>().userLanguageKey;
+  //   return PreferredSize(
+  //     preferredSize: const Size.fromHeight(60),
+  //     child: Theme(
+  //       data: Get.theme.copyWith(dividerColor: Colors.transparent),
+  //       child: Column(
+  //         children: [
+  //           if (controller.showSpecials) _mainMenuTabs(context),
+  //           _menuFilterChips(userLanguage, context),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _mainMenuTabs(BuildContext context) {
     return Obx(
@@ -470,16 +426,16 @@ class RestaurantSliverAppBar extends StatelessWidget {
   }
 
   double _getBottomPadding() {
-    double pad = 12;
-    if (controller.showSpecials) {
-      pad = 60;
-    }
-    if (controller.showMenuTabs || controller.showSpecialTabs) {
-      pad = pad + 50;
-    }
-    if (controller.showInfo.isTrue) {
-      pad = 12;
-    }
+    final double pad = 50;
+    // if (controller.showSpecials) {
+    //   pad = 60;
+    // }
+    // if (controller.showMenuTabs || controller.showSpecialTabs) {
+    //   pad = pad + 50;
+    // }
+    // if (controller.showInfo.isTrue) {
+    //   pad = 12;
+    // }
 
     return pad;
   }

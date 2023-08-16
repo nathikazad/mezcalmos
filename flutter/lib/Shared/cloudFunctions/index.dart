@@ -1,8 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(
@@ -260,11 +258,11 @@ class CloudFunctions {
       required Location location,
       required Schedule schedule,
       String? restaurantOperatorNotificationToken,
-      String? firebaseId,
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
       required ServiceProviderLanguage language,
-      String? uniqueId}) async {
+      String? uniqueId,
+      required bool isMezAdmin}) async {
     return RestaurantResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "restaurant3-createRestaurant",
         parameters: <String, dynamic>{
@@ -275,11 +273,11 @@ class CloudFunctions {
           "schedule": schedule.toFirebaseFormattedJson(),
           "restaurantOperatorNotificationToken":
               restaurantOperatorNotificationToken,
-          "firebaseId": firebaseId,
           "deliveryPartnerId": deliveryPartnerId,
           "deliveryDetails": deliveryDetails.toFirebaseFormattedJson(),
           "language": language.toFirebaseFormattedJson(),
           "uniqueId": uniqueId,
+          "isMezAdmin": isMezAdmin,
         }));
   }
 
@@ -381,8 +379,8 @@ class CloudFunctions {
       String? businessOperatorNotificationToken,
       required ServiceProviderLanguage language,
       String? uniqueId,
-      String? firebaseId,
-      required Schedule schedule}) async {
+      required Schedule schedule,
+      required bool isMezAdmin}) async {
     return BusinessResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "business-createBusiness",
         parameters: <String, dynamic>{
@@ -395,8 +393,8 @@ class CloudFunctions {
               businessOperatorNotificationToken,
           "language": language.toFirebaseFormattedJson(),
           "uniqueId": uniqueId,
-          "firebaseId": firebaseId,
           "schedule": schedule.toFirebaseFormattedJson(),
+          "isMezAdmin": isMezAdmin,
         }));
   }
 
@@ -442,10 +440,11 @@ class CloudFunctions {
       required String phoneNumber,
       required Schedule schedule,
       String? laundryOperatorNotificationToken,
-      String? firebaseId,
       required DeliveryDetails deliveryDetails,
+      num? deliveryPartnerId,
       required ServiceProviderLanguage language,
-      String? uniqueId}) async {
+      String? uniqueId,
+      required bool isMezAdmin}) async {
     return LaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "laundry3-createLaundry",
         parameters: <String, dynamic>{
@@ -455,10 +454,11 @@ class CloudFunctions {
           "phoneNumber": phoneNumber,
           "schedule": schedule.toFirebaseFormattedJson(),
           "laundryOperatorNotificationToken": laundryOperatorNotificationToken,
-          "firebaseId": firebaseId,
           "deliveryDetails": deliveryDetails.toFirebaseFormattedJson(),
+          "deliveryPartnerId": deliveryPartnerId,
           "language": language.toFirebaseFormattedJson(),
           "uniqueId": uniqueId,
+          "isMezAdmin": isMezAdmin,
         }));
   }
 

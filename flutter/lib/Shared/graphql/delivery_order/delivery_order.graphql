@@ -114,6 +114,7 @@ query get_driver_order($orderId: Int!) {
       details {
         id
         firebase_id
+        phone_number
         image
         name
         location {
@@ -180,6 +181,7 @@ subscription listen_on_driver_order_variables($orderId: Int!) {
     estimated_arrival_at_pickup_time
     estimated_package_ready_time
     status
+    customer_offer
 
     counter_offers
     package_ready
@@ -272,6 +274,7 @@ query get_past_driver_orders($driverId: Int!, $offset: Int, $limit: Int) {
     restaurant {
       id
       details {
+        phone_number
         id
         firebase_id
         image
@@ -313,6 +316,7 @@ query get_inprocess_driver_orders($driverId: Int!) {
     restaurant {
       id
       details {
+        phone_number
         id
         firebase_id
         image
@@ -355,6 +359,7 @@ query get_open_driver_orders($in_process: Boolean!) {
     restaurant {
       id
       details {
+        phone_number
         id
         firebase_id
         image
@@ -398,6 +403,7 @@ subscription listen_open_driver_orders($in_process: Boolean!) {
     restaurant {
       id
       details {
+        phone_number
         id
         firebase_id
         image
@@ -439,6 +445,7 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     restaurant {
       id
       details {
+        phone_number
         id
         firebase_id
         image
@@ -486,6 +493,7 @@ query get_delivery_company_past_orders(
     restaurant {
       id
       details {
+        phone_number
         id
         firebase_id
         image
@@ -527,6 +535,7 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
     restaurant {
       id
       details {
+        phone_number
         id
         firebase_id
         image
@@ -650,12 +659,14 @@ subscription listen_driver_order_prices($orderId: Int!) {
 
 subscription listenOnOrderOffers($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-   
+    notified_drivers
     counter_offers
   }
-}query getOrderOffers($orderId: Int!) {
+}
+query getOrderOffers($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
-   
+    notified_drivers
     counter_offers
+    customer_offer
   }
 }

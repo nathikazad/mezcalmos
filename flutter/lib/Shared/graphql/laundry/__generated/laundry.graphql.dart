@@ -653,7 +653,7 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_details_of_deliverer'),
+            name: NameNode(value: 'delivery_details'),
             alias: null,
             arguments: [],
             directives: [],
@@ -1106,7 +1106,7 @@ class Query$getLaundries$laundry_store {
     required this.delivery_details_id,
     required this.normal_delivery_time,
     required this.categories,
-    this.delivery_details_of_deliverer,
+    required this.delivery_details,
     this.details,
     required this.$__typename,
   });
@@ -1118,8 +1118,7 @@ class Query$getLaundries$laundry_store {
     final l$delivery_details_id = json['delivery_details_id'];
     final l$normal_delivery_time = json['normal_delivery_time'];
     final l$categories = json['categories'];
-    final l$delivery_details_of_deliverer =
-        json['delivery_details_of_deliverer'];
+    final l$delivery_details = json['delivery_details'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getLaundries$laundry_store(
@@ -1134,12 +1133,9 @@ class Query$getLaundries$laundry_store {
           .map((e) => Query$getLaundries$laundry_store$categories.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
-      delivery_details_of_deliverer:
-          (l$delivery_details_of_deliverer as List<dynamic>?)
-              ?.map((e) =>
-                  Query$getLaundries$laundry_store$delivery_details_of_deliverer
-                      .fromJson((e as Map<String, dynamic>)))
-              .toList(),
+      delivery_details:
+          Query$getLaundries$laundry_store$delivery_details.fromJson(
+              (l$delivery_details as Map<String, dynamic>)),
       details: l$details == null
           ? null
           : Query$getLaundries$laundry_store$details.fromJson(
@@ -1160,8 +1156,7 @@ class Query$getLaundries$laundry_store {
 
   final List<Query$getLaundries$laundry_store$categories> categories;
 
-  final List<Query$getLaundries$laundry_store$delivery_details_of_deliverer>?
-      delivery_details_of_deliverer;
+  final Query$getLaundries$laundry_store$delivery_details delivery_details;
 
   final Query$getLaundries$laundry_store$details? details;
 
@@ -1181,9 +1176,8 @@ class Query$getLaundries$laundry_store {
     _resultData['normal_delivery_time'] = l$normal_delivery_time;
     final l$categories = categories;
     _resultData['categories'] = l$categories.map((e) => e.toJson()).toList();
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    _resultData['delivery_details_of_deliverer'] =
-        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
+    final l$delivery_details = delivery_details;
+    _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
     final l$$__typename = $__typename;
@@ -1199,7 +1193,7 @@ class Query$getLaundries$laundry_store {
     final l$delivery_details_id = delivery_details_id;
     final l$normal_delivery_time = normal_delivery_time;
     final l$categories = categories;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final l$delivery_details = delivery_details;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -1209,9 +1203,7 @@ class Query$getLaundries$laundry_store {
       l$delivery_details_id,
       l$normal_delivery_time,
       Object.hashAll(l$categories.map((v) => v)),
-      l$delivery_details_of_deliverer == null
-          ? null
-          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
+      l$delivery_details,
       l$details,
       l$$__typename,
     ]);
@@ -1263,27 +1255,9 @@ class Query$getLaundries$laundry_store {
         return false;
       }
     }
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final lOther$delivery_details_of_deliverer =
-        other.delivery_details_of_deliverer;
-    if (l$delivery_details_of_deliverer != null &&
-        lOther$delivery_details_of_deliverer != null) {
-      if (l$delivery_details_of_deliverer.length !=
-          lOther$delivery_details_of_deliverer.length) {
-        return false;
-      }
-      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
-        final l$delivery_details_of_deliverer$entry =
-            l$delivery_details_of_deliverer[i];
-        final lOther$delivery_details_of_deliverer$entry =
-            lOther$delivery_details_of_deliverer[i];
-        if (l$delivery_details_of_deliverer$entry !=
-            lOther$delivery_details_of_deliverer$entry) {
-          return false;
-        }
-      }
-    } else if (l$delivery_details_of_deliverer !=
-        lOther$delivery_details_of_deliverer) {
+    final l$delivery_details = delivery_details;
+    final lOther$delivery_details = other.delivery_details;
+    if (l$delivery_details != lOther$delivery_details) {
       return false;
     }
     final l$details = details;
@@ -1325,8 +1299,7 @@ abstract class CopyWith$Query$getLaundries$laundry_store<TRes> {
     int? delivery_details_id,
     int? normal_delivery_time,
     List<Query$getLaundries$laundry_store$categories>? categories,
-    List<Query$getLaundries$laundry_store$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getLaundries$laundry_store$delivery_details? delivery_details,
     Query$getLaundries$laundry_store$details? details,
     String? $__typename,
   });
@@ -1338,12 +1311,8 @@ abstract class CopyWith$Query$getLaundries$laundry_store<TRes> {
                   CopyWith$Query$getLaundries$laundry_store$categories<
                       Query$getLaundries$laundry_store$categories>>)
           _fn);
-  TRes delivery_details_of_deliverer(
-      Iterable<Query$getLaundries$laundry_store$delivery_details_of_deliverer>? Function(
-              Iterable<
-                  CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
-                      Query$getLaundries$laundry_store$delivery_details_of_deliverer>>?)
-          _fn);
+  CopyWith$Query$getLaundries$laundry_store$delivery_details<TRes>
+      get delivery_details;
   CopyWith$Query$getLaundries$laundry_store$details<TRes> get details;
 }
 
@@ -1367,7 +1336,7 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
     Object? delivery_details_id = _undefined,
     Object? normal_delivery_time = _undefined,
     Object? categories = _undefined,
-    Object? delivery_details_of_deliverer = _undefined,
+    Object? delivery_details = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -1392,11 +1361,11 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
         categories: categories == _undefined || categories == null
             ? _instance.categories
             : (categories as List<Query$getLaundries$laundry_store$categories>),
-        delivery_details_of_deliverer: delivery_details_of_deliverer ==
-                _undefined
-            ? _instance.delivery_details_of_deliverer
-            : (delivery_details_of_deliverer as List<
-                Query$getLaundries$laundry_store$delivery_details_of_deliverer>?),
+        delivery_details:
+            delivery_details == _undefined || delivery_details == null
+                ? _instance.delivery_details
+                : (delivery_details
+                    as Query$getLaundries$laundry_store$delivery_details),
         details: details == _undefined
             ? _instance.details
             : (details as Query$getLaundries$laundry_store$details?),
@@ -1423,19 +1392,13 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
                     e,
                     (i) => i,
                   ))).toList());
-  TRes delivery_details_of_deliverer(
-          Iterable<Query$getLaundries$laundry_store$delivery_details_of_deliverer>? Function(
-                  Iterable<
-                      CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
-                          Query$getLaundries$laundry_store$delivery_details_of_deliverer>>?)
-              _fn) =>
-      call(
-          delivery_details_of_deliverer: _fn(
-              _instance.delivery_details_of_deliverer?.map((e) =>
-                  CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
-                    e,
-                    (i) => i,
-                  )))?.toList());
+  CopyWith$Query$getLaundries$laundry_store$delivery_details<TRes>
+      get delivery_details {
+    final local$delivery_details = _instance.delivery_details;
+    return CopyWith$Query$getLaundries$laundry_store$delivery_details(
+        local$delivery_details, (e) => call(delivery_details: e));
+  }
+
   CopyWith$Query$getLaundries$laundry_store$details<TRes> get details {
     final local$details = _instance.details;
     return local$details == null
@@ -1459,8 +1422,7 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store<TRes>
     int? delivery_details_id,
     int? normal_delivery_time,
     List<Query$getLaundries$laundry_store$categories>? categories,
-    List<Query$getLaundries$laundry_store$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getLaundries$laundry_store$delivery_details? delivery_details,
     Query$getLaundries$laundry_store$details? details,
     String? $__typename,
   }) =>
@@ -1470,7 +1432,9 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store<TRes>
           CopyWith$Query$getLaundries$laundry_store$reviews_aggregate.stub(
               _res);
   categories(_fn) => _res;
-  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Query$getLaundries$laundry_store$delivery_details<TRes>
+      get delivery_details =>
+          CopyWith$Query$getLaundries$laundry_store$delivery_details.stub(_res);
   CopyWith$Query$getLaundries$laundry_store$details<TRes> get details =>
       CopyWith$Query$getLaundries$laundry_store$details.stub(_res);
 }
@@ -2464,8 +2428,8 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$categories$name$transla
       _res;
 }
 
-class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
-  Query$getLaundries$laundry_store$delivery_details_of_deliverer({
+class Query$getLaundries$laundry_store$delivery_details {
+  Query$getLaundries$laundry_store$delivery_details({
     required this.cost_per_km,
     required this.cost_per_km_from_base,
     this.free_delivery_km_range,
@@ -2477,7 +2441,7 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     required this.$__typename,
   });
 
-  factory Query$getLaundries$laundry_store$delivery_details_of_deliverer.fromJson(
+  factory Query$getLaundries$laundry_store$delivery_details.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
     final l$cost_per_km_from_base = json['cost_per_km_from_base'];
@@ -2488,7 +2452,7 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     final l$minimum_cost = json['minimum_cost'];
     final l$radius = json['radius'];
     final l$$__typename = json['__typename'];
-    return Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+    return Query$getLaundries$laundry_store$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
@@ -2576,8 +2540,7 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$getLaundries$laundry_store$delivery_details_of_deliverer) ||
+    if (!(other is Query$getLaundries$laundry_store$delivery_details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2630,29 +2593,27 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
   }
 }
 
-extension UtilityExtension$Query$getLaundries$laundry_store$delivery_details_of_deliverer
-    on Query$getLaundries$laundry_store$delivery_details_of_deliverer {
-  CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
-          Query$getLaundries$laundry_store$delivery_details_of_deliverer>
+extension UtilityExtension$Query$getLaundries$laundry_store$delivery_details
+    on Query$getLaundries$laundry_store$delivery_details {
+  CopyWith$Query$getLaundries$laundry_store$delivery_details<
+          Query$getLaundries$laundry_store$delivery_details>
       get copyWith =>
-          CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+          CopyWith$Query$getLaundries$laundry_store$delivery_details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+abstract class CopyWith$Query$getLaundries$laundry_store$delivery_details<
     TRes> {
-  factory CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
-    Query$getLaundries$laundry_store$delivery_details_of_deliverer instance,
-    TRes Function(
-            Query$getLaundries$laundry_store$delivery_details_of_deliverer)
-        then,
-  ) = _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer;
+  factory CopyWith$Query$getLaundries$laundry_store$delivery_details(
+    Query$getLaundries$laundry_store$delivery_details instance,
+    TRes Function(Query$getLaundries$laundry_store$delivery_details) then,
+  ) = _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details;
 
-  factory CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer.stub(
+  factory CopyWith$Query$getLaundries$laundry_store$delivery_details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer;
+      _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details;
 
   TRes call({
     double? cost_per_km,
@@ -2667,21 +2628,17 @@ abstract class CopyWith$Query$getLaundries$laundry_store$delivery_details_of_del
   });
 }
 
-class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
-        TRes>
+class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details<TRes>
     implements
-        CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
-            TRes> {
-  _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+        CopyWith$Query$getLaundries$laundry_store$delivery_details<TRes> {
+  _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details(
     this._instance,
     this._then,
   );
 
-  final Query$getLaundries$laundry_store$delivery_details_of_deliverer
-      _instance;
+  final Query$getLaundries$laundry_store$delivery_details _instance;
 
-  final TRes Function(
-      Query$getLaundries$laundry_store$delivery_details_of_deliverer) _then;
+  final TRes Function(Query$getLaundries$laundry_store$delivery_details) _then;
 
   static const _undefined = {};
 
@@ -2696,7 +2653,7 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliver
     Object? radius = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+      _then(Query$getLaundries$laundry_store$delivery_details(
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -2726,12 +2683,10 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliver
       ));
 }
 
-class _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
-        TRes>
+class _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details<TRes>
     implements
-        CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
-            TRes> {
-  _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+        CopyWith$Query$getLaundries$laundry_store$delivery_details<TRes> {
+  _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details(
       this._res);
 
   TRes _res;
@@ -4429,7 +4384,7 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_details_of_deliverer'),
+            name: NameNode(value: 'delivery_details'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4895,7 +4850,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     required this.normal_delivery_time,
     required this.minimum_cost,
     required this.categories,
-    this.delivery_details_of_deliverer,
+    required this.delivery_details,
     this.details,
     required this.$__typename,
   });
@@ -4908,8 +4863,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$normal_delivery_time = json['normal_delivery_time'];
     final l$minimum_cost = json['minimum_cost'];
     final l$categories = json['categories'];
-    final l$delivery_details_of_deliverer =
-        json['delivery_details_of_deliverer'];
+    final l$delivery_details = json['delivery_details'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getLaundryStoreById$laundry_store_by_pk(
@@ -4925,12 +4879,9 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
               Query$getLaundryStoreById$laundry_store_by_pk$categories.fromJson(
                   (e as Map<String, dynamic>)))
           .toList(),
-      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
-              as List<dynamic>?)
-          ?.map((e) =>
-              Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      delivery_details:
+          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details
+              .fromJson((l$delivery_details as Map<String, dynamic>)),
       details: l$details == null
           ? null
           : Query$getLaundryStoreById$laundry_store_by_pk$details.fromJson(
@@ -4953,9 +4904,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
   final List<Query$getLaundryStoreById$laundry_store_by_pk$categories>
       categories;
 
-  final List<
-          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>?
-      delivery_details_of_deliverer;
+  final Query$getLaundryStoreById$laundry_store_by_pk$delivery_details
+      delivery_details;
 
   final Query$getLaundryStoreById$laundry_store_by_pk$details? details;
 
@@ -4975,9 +4925,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
     final l$categories = categories;
     _resultData['categories'] = l$categories.map((e) => e.toJson()).toList();
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    _resultData['delivery_details_of_deliverer'] =
-        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
+    final l$delivery_details = delivery_details;
+    _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
     final l$$__typename = $__typename;
@@ -4993,7 +4942,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$normal_delivery_time = normal_delivery_time;
     final l$minimum_cost = minimum_cost;
     final l$categories = categories;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final l$delivery_details = delivery_details;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -5003,9 +4952,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
       l$normal_delivery_time,
       l$minimum_cost,
       Object.hashAll(l$categories.map((v) => v)),
-      l$delivery_details_of_deliverer == null
-          ? null
-          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
+      l$delivery_details,
       l$details,
       l$$__typename,
     ]);
@@ -5057,27 +5004,9 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
         return false;
       }
     }
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final lOther$delivery_details_of_deliverer =
-        other.delivery_details_of_deliverer;
-    if (l$delivery_details_of_deliverer != null &&
-        lOther$delivery_details_of_deliverer != null) {
-      if (l$delivery_details_of_deliverer.length !=
-          lOther$delivery_details_of_deliverer.length) {
-        return false;
-      }
-      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
-        final l$delivery_details_of_deliverer$entry =
-            l$delivery_details_of_deliverer[i];
-        final lOther$delivery_details_of_deliverer$entry =
-            lOther$delivery_details_of_deliverer[i];
-        if (l$delivery_details_of_deliverer$entry !=
-            lOther$delivery_details_of_deliverer$entry) {
-          return false;
-        }
-      }
-    } else if (l$delivery_details_of_deliverer !=
-        lOther$delivery_details_of_deliverer) {
+    final l$delivery_details = delivery_details;
+    final lOther$delivery_details = other.delivery_details;
+    if (l$delivery_details != lOther$delivery_details) {
       return false;
     }
     final l$details = details;
@@ -5122,8 +5051,8 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk<TRes> {
     int? normal_delivery_time,
     double? minimum_cost,
     List<Query$getLaundryStoreById$laundry_store_by_pk$categories>? categories,
-    List<Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getLaundryStoreById$laundry_store_by_pk$delivery_details?
+        delivery_details,
     Query$getLaundryStoreById$laundry_store_by_pk$details? details,
     String? $__typename,
   });
@@ -5135,12 +5064,8 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk<TRes> {
                   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$categories<
                       Query$getLaundryStoreById$laundry_store_by_pk$categories>>)
           _fn);
-  TRes delivery_details_of_deliverer(
-      Iterable<Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>? Function(
-              Iterable<
-                  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
-                      Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>>?)
-          _fn);
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<TRes>
+      get delivery_details;
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
       get details;
 }
@@ -5165,7 +5090,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
     Object? normal_delivery_time = _undefined,
     Object? minimum_cost = _undefined,
     Object? categories = _undefined,
-    Object? delivery_details_of_deliverer = _undefined,
+    Object? delivery_details = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -5191,11 +5116,11 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
             ? _instance.categories
             : (categories as List<
                 Query$getLaundryStoreById$laundry_store_by_pk$categories>),
-        delivery_details_of_deliverer: delivery_details_of_deliverer ==
-                _undefined
-            ? _instance.delivery_details_of_deliverer
-            : (delivery_details_of_deliverer as List<
-                Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>?),
+        delivery_details: delivery_details == _undefined ||
+                delivery_details == null
+            ? _instance.delivery_details
+            : (delivery_details
+                as Query$getLaundryStoreById$laundry_store_by_pk$delivery_details),
         details: details == _undefined
             ? _instance.details
             : (details
@@ -5223,19 +5148,13 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
                 e,
                 (i) => i,
               ))).toList());
-  TRes delivery_details_of_deliverer(
-          Iterable<Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>? Function(
-                  Iterable<
-                      CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
-                          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>>?)
-              _fn) =>
-      call(
-          delivery_details_of_deliverer: _fn(
-              _instance.delivery_details_of_deliverer?.map((e) =>
-                  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
-                    e,
-                    (i) => i,
-                  )))?.toList());
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<TRes>
+      get delivery_details {
+    final local$delivery_details = _instance.delivery_details;
+    return CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details(
+        local$delivery_details, (e) => call(delivery_details: e));
+  }
+
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
       get details {
     final local$details = _instance.details;
@@ -5261,8 +5180,8 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
     int? normal_delivery_time,
     double? minimum_cost,
     List<Query$getLaundryStoreById$laundry_store_by_pk$categories>? categories,
-    List<Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getLaundryStoreById$laundry_store_by_pk$delivery_details?
+        delivery_details,
     Query$getLaundryStoreById$laundry_store_by_pk$details? details,
     String? $__typename,
   }) =>
@@ -5272,7 +5191,10 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
           CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$reviews_aggregate
               .stub(_res);
   categories(_fn) => _res;
-  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<TRes>
+      get delivery_details =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details
+              .stub(_res);
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
       get details =>
           CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details.stub(
@@ -6347,8 +6269,8 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$categories
       _res;
 }
 
-class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer {
-  Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer({
+class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details {
+  Query$getLaundryStoreById$laundry_store_by_pk$delivery_details({
     required this.cost_per_km,
     required this.cost_per_km_from_base,
     this.free_delivery_km_range,
@@ -6360,7 +6282,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     required this.$__typename,
   });
 
-  factory Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer.fromJson(
+  factory Query$getLaundryStoreById$laundry_store_by_pk$delivery_details.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
     final l$cost_per_km_from_base = json['cost_per_km_from_base'];
@@ -6371,7 +6293,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     final l$self_delivery = json['self_delivery'];
     final l$radius = json['radius'];
     final l$$__typename = json['__typename'];
-    return Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+    return Query$getLaundryStoreById$laundry_store_by_pk$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
@@ -6460,7 +6382,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
       return true;
     }
     if (!(other
-            is Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer) ||
+            is Query$getLaundryStoreById$laundry_store_by_pk$delivery_details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -6513,30 +6435,29 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
   }
 }
 
-extension UtilityExtension$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer
-    on Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer {
-  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
-          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>
+extension UtilityExtension$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details
+    on Query$getLaundryStoreById$laundry_store_by_pk$delivery_details {
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<
+          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details>
       get copyWith =>
-          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<
     TRes> {
-  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
-    Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer
-        instance,
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details(
+    Query$getLaundryStoreById$laundry_store_by_pk$delivery_details instance,
     TRes Function(
-            Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer)
+            Query$getLaundryStoreById$laundry_store_by_pk$delivery_details)
         then,
-  ) = _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer;
+  ) = _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details;
 
-  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer.stub(
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer;
+      _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details;
 
   TRes call({
     double? cost_per_km,
@@ -6551,22 +6472,21 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_d
   });
 }
 
-class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<
         TRes>
     implements
-        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<
             TRes> {
-  _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+  _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details(
     this._instance,
     this._then,
   );
 
-  final Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer
+  final Query$getLaundryStoreById$laundry_store_by_pk$delivery_details
       _instance;
 
   final TRes Function(
-          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer)
-      _then;
+      Query$getLaundryStoreById$laundry_store_by_pk$delivery_details) _then;
 
   static const _undefined = {};
 
@@ -6581,8 +6501,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_detai
     Object? radius = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+      _then(Query$getLaundryStoreById$laundry_store_by_pk$delivery_details(
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -6612,12 +6531,12 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_detai
       ));
 }
 
-class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<
         TRes>
     implements
-        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details<
             TRes> {
-  _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+  _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details(
       this._res);
 
   TRes _res;

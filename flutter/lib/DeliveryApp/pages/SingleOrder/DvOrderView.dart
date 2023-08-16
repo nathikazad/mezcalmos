@@ -13,14 +13,14 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
-    ["pages"]["RestaurantOrderView"];
+    ["pages"]["DvOrderView"];
 //
 
 class DvOrderView extends StatefulWidget {
@@ -88,7 +88,7 @@ class _DvOrderViewState extends State<DvOrderView> {
             )),
       ),
       bottomNavigationBar: Obx(
-        () => (viewController.hasData && !viewController.showSendOfferButton)
+        () => (viewController.hasData)
             ? DvOrderStatusControllButtons(
                 viewController: viewController,
               )
@@ -177,7 +177,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                       if (viewController.showSendOfferButton) ...[
                         smallSepartor,
                         MezButton(
-                          label: "Send offer",
+                          label: "Counter Offer",
                           onClick: () async {
                             double? newPrice = await _showCostSheet(context);
                             if (newPrice != null) {
@@ -220,13 +220,15 @@ Future<double?> _showCostSheet(BuildContext context) {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    "${_i18n()['actualCost']}",
-                    style: context.textTheme.bodyLarge,
+                  Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.all(8),
+                    child: Text(
+                      "${_i18n()['counterOffer']}",
+                      style: context.textTheme.bodyLarge,
+                    ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  meduimSeperator,
                   TextFormField(
                     controller: _textEditingController,
                     style: context.textTheme.bodyLarge,
@@ -243,9 +245,7 @@ Future<double?> _showCostSheet(BuildContext context) {
                       FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
                     ],
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  meduimSeperator,
                   Row(
                     children: [
                       Flexible(
@@ -265,7 +265,7 @@ Future<double?> _showCostSheet(BuildContext context) {
                       Flexible(
                         child: MezButton(
                           height: 45,
-                          label: "${_i18n()['save']}",
+                          label: "${_i18n()['reqCounterOffer']}",
                           onClick: () async {
                             Navigator.pop(context,
                                 double.tryParse(_textEditingController.text));
@@ -274,9 +274,7 @@ Future<double?> _showCostSheet(BuildContext context) {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  meduimSeperator
                 ],
               )),
         );

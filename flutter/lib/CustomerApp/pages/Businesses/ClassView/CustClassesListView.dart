@@ -24,8 +24,8 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['ClassView']['CustEventsListView'];
@@ -57,7 +57,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-         actionIcons: [
+        actionIcons: [
           FloatingCartComponent(
             cartType: CartType.business,
           ),
@@ -250,7 +250,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                                     WidgetSpan(
                                         alignment: PlaceholderAlignment.middle,
                                         child: Text(
-                                            '${viewController.businesses[index].avgRating}',
+                                            '${viewController.businesses[index].avgRating?.toStringAsFixed(1)}',
                                             style:
                                                 context.textTheme.bodySmall)),
                                     WidgetSpan(

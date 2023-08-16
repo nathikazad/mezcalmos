@@ -210,12 +210,6 @@ mutation update_business_online_ordering(
   }
 }
 
-mutation subscribe_service_provider($customer_id: Int, $service_provider_id: Int, $service_provider_type: String) {
-  insert_service_provider_subscriber_one(object: {customer_id: $customer_id, service_provider_id: $service_provider_id, service_provider_type: $service_provider_type}) {
-    id
-  }
-}
-
 mutation add_new_offer($object: service_provider_offer_insert_input!) {
   insert_service_provider_offer_one(object: $object) {
     id

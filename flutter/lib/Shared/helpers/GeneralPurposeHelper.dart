@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -14,10 +17,11 @@ import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
     ["GeneralPurposeHelper"];
@@ -864,3 +868,28 @@ class DashedLineVerticalPainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
+
+Future<void> callWhatsappNumber(String number) async {
+  mezDbgPrint("contact $number");
+  final String androidUrl = "whatsapp://send?phone=$number";
+  final String iosUrl = "https://wa.me/$number}";
+  if (kIsWeb) {
+    final Uri launchUri = Uri(
+      scheme: 'https',
+      path: 'web.whatsapp.com/send?phone=$number',
+    );
+    await launchUrl(launchUri);
+  } else {
+    if (number != null) {
+      if (Platform.isIOS) {
+        await launchUrl(Uri.parse(iosUrl));
+      } else {
+        await launchUrl(Uri.parse(androidUrl));
+      }
+    } else {
+      showErrorSnackBar(errorTitle: "Not available");
+    }
+  }
+}
+
+

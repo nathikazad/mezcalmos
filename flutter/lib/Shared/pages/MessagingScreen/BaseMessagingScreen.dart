@@ -21,7 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -39,21 +39,17 @@ class BaseMessagingScreen extends StatefulWidget {
   BaseMessagingScreenState createState() => BaseMessagingScreenState();
 
   static Future<void> navigate(
-      {required int chatId,
-      String? phoneNumber,
-      IncomingViewLink? incomingViewLink}) {
+      {required int chatId, IncomingViewLink? incomingViewLink}) {
     return MezRouter.toPath(
         SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()),
         arguments: {
           "incomingViewLink": incomingViewLink,
-          "phoneNumber": phoneNumber
         });
   }
 }
 
 class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   late final int chatId;
-  late final String? phoneNumber;
 
   ParticipantType recipientType = ParticipantType.Customer;
   String? recipientId;
@@ -68,7 +64,6 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
 
   @override
   void initState() {
-    phoneNumber = MezRouter.bodyArguments?['phoneNumber'];
     if (MezRouter.urlArguments['chatId'] == null) {
       customSnackBar(
         title: 'Error',
@@ -299,7 +294,12 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
           },
         ),
         actions: <Widget>[
-          if (phoneNumber != null || !kIsWeb) _whatsAppButton(),
+          Obx(() {
+            if (controller.chat.value?.chatInfo.phoneNumber != null)
+              return _whatsAppButton();
+            else
+              return SizedBox();
+          }),
           if (controller.chat.value?.chatInfo.phoneNumber != null || !kIsWeb)
             _callButton(context),
 
@@ -387,19 +387,21 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
     return GestureDetector(
       onTap: () {
         // To Add WhatsApp call
-        final String? contact = phoneNumber;
+        final String? contact = controller.chat.value?.chatInfo.phoneNumber;
         mezDbgPrint("contact $contact");
         final String androidUrl = "whatsapp://send?phone=$contact";
-        final String iosUrl = "https://wa.me/$contact}";
+        final String iosUrl = "https://wa.me/$contact";
         if (kIsWeb) {
           final Uri launchUri = Uri(
             scheme: 'https',
-            path: 'web.whatsapp.com/send?phone=$phoneNumber',
+            path: 'web.whatsapp.com/send?phone=$contact',
           );
           launchUrl(launchUri);
         } else {
           if (contact != null) {
             if (Platform.isIOS) {
+              mezDbgPrint(iosUrl);
+              mezDbgPrint("https://wa.me/+529541283454");
               launchUrl(Uri.parse(iosUrl));
             } else {
               launchUrl(Uri.parse(androidUrl));

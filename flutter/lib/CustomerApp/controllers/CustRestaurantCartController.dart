@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/helpers/OfferHelper.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
@@ -11,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -25,11 +25,9 @@ class CustRestaurantCartController extends GetxController {
   StreamSubscription<Cart?>? cartStream;
   String? subscriptionId;
   @override
-  Future<void> onInit() async {
+  void onInit() {
     if (_auth.hasuraUserId != null) {
-      await _initCart();
-
-      cart.refresh();
+      _initCart();
     }
     super.onInit();
   }
@@ -37,41 +35,44 @@ class CustRestaurantCartController extends GetxController {
   Future<void> _initCart() async {
     await fetchCart();
     await _handlerRestaurantId();
-    subscriptionId = _hasuraDb.createSubscription(start: () {
-      cartStream = listen_on_customer_cart(customer_id: _auth.hasuraUserId!)
-          .listen((Cart? event) async {
-        if (event != null) {
-          mezDbgPrint(
-              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length} \n restaurant isOpen =====> ${event.restaurant?.isOpen}");
-          if (cart.value != null) {
-            cart.value?.cartItems.clear();
-            cart.value?.cartItems.addAll(event.cartItems);
-            cart.value?.restaurant = null;
-            cart.value?.restaurant = event.restaurant;
+    if (cart.value != null) {
+      subscriptionId = _hasuraDb.createSubscription(start: () {
+        cartStream = listen_on_customer_cart(customer_id: _auth.hasuraUserId!)
+            .listen((Cart? event) async {
+          if (event != null) {
             mezDbgPrint(
-                " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
+                "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length} \n restaurant isOpen =====> ${event.restaurant?.isOpen}");
+            if (cart.value != null) {
+              cart.value?.cartItems.clear();
+              cart.value?.cartItems.addAll(event.cartItems);
+              cart.value?.restaurant = null;
+              cart.value?.restaurant = event.restaurant;
+
+              mezDbgPrint(
+                  " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
+            } else {
+              cart.value = event;
+              mezDbgPrint(
+                  " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
+            }
+            if (event.restaurant == null && event.cartItems.isNotEmpty) {
+              await _handlerRestaurantId();
+            }
+            await applyOffersToRestaurantCart(
+                customerId: _auth.hasuraUserId!, cart: cart.value!);
+            mezDbgPrint(
+                "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
+            cart.refresh();
           } else {
-            cart.value = event;
-            mezDbgPrint(
-                " 😍😍😍😍😍 Restaurant open status :================>${event.restaurant?.isOpen}");
+            cart.value = null;
+            cart.refresh();
           }
-          if (event.restaurant == null && event.cartItems.isNotEmpty) {
-            await _handlerRestaurantId();
-          }
-          await applyOffersToRestaurantCart(
-              customerId: _auth.hasuraUserId!, cart: cart.value!);
-          mezDbgPrint(
-              "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
-          cart.refresh();
-        } else {
-          cart.value = null;
-          cart.refresh();
-        }
+        });
+      }, cancel: () {
+        cartStream?.cancel();
+        cartStream = null;
       });
-    }, cancel: () {
-      cartStream?.cancel();
-      cartStream = null;
-    });
+    }
   }
 
   Future<void> _handlerRestaurantId() async {
@@ -96,6 +97,9 @@ class CustRestaurantCartController extends GetxController {
       if (value != null) {
         cart.value = value;
         cart.value?.restaurant = value.restaurant;
+        mezDbgPrint(
+            "✅ fetched restaurant cart ======>${cart.value?.cartItems.length}");
+        cart.refresh();
       } else {
         await create_customer_cart();
       }
@@ -182,7 +186,7 @@ class CustRestaurantCartController extends GetxController {
                     lng: cart.value!.toLocation!.longitude,
                     address: cart.value!.toLocation!.address),
                 // deliveryCost: cart.value!.shippingCost!,
-                customerDeliveryOffer: cart.value!.shippingCost!,
+                customerDeliveryOffer: cart.value!.shippingCost ?? 0,
                 paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
                 notes: cart.value?.notes,
                 restaurantId: cart.value!.restaurant!.info.hasuraId,
@@ -190,8 +194,7 @@ class CustRestaurantCartController extends GetxController {
                     cart.value!.getRouteInfo!.distance.distanceInMeters,
                 tripDuration: cart.value!.getRouteInfo!.duration.seconds,
                 tripPolyline: cart.value!.getRouteInfo!.polyline,
-                deliveryType: cloudFunctionModels.DeliveryType.Delivery,
-                scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
+                deliveryType: cart.value!.deliveryType,
                 stripePaymentId: stripePaymentId,
                 stripeFees: cart.value?.stripeFees);
         if (res.success == false) {
@@ -228,7 +231,7 @@ class CustRestaurantCartController extends GetxController {
             ),
           ).toFirebaseFormattedJson(),
       "deliveryCost": cart.value?.shippingCost ?? 0,
-      "itemsCost": cart.value?.itemsCost(),
+      "itemsCost": cart.value?.itemsCost,
       "scheduledTime": cart.value?.deliveryTime?.toUtc().toString(),
       "paymentType": cart.value?.paymentType.toFirebaseFormatString(),
       "notes": cart.value?.notes,

@@ -46,6 +46,7 @@ export async function createOrderRequest(
                 status: BusinessOrderRequestStatus.RequestReceived,
                 customer_app_type: orderRequestDetails.customerAppType,
                 notes: orderRequestDetails.notes,
+                discount_value: cart.discountValue,
                 items: {
                     data: $`items`
                 },
@@ -89,6 +90,7 @@ export async function createOrderRequest(
         cost: response.insert_business_order_request_one.cost,
         orderTime: response.insert_business_order_request_one.order_time,
         status: BusinessOrderRequestStatus.RequestReceived,
+        discountValue: cart.discountValue,
         items: cart.items.map((i:BusinessOrderItem) => {
             return {
                 id: 0,

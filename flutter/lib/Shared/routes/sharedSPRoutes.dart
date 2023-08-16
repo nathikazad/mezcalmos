@@ -1,12 +1,12 @@
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferingsListView/OffersOfferingListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferItemsSelectView/OfferItemsSelectView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/ServiceOfferEditView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOfferView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOffersListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
@@ -74,7 +74,7 @@ class SharedServiceProviderRoutes {
     QRoute(
       path: kServiceOffersRoute,
       name: kServiceOffersRoute,
-      builder: () => ServiceOfferView(),
+      builder: () => ServiceOffersListView(),
     ),
     QRoute(
       path: kServiceEditOffersRoute,
@@ -84,7 +84,7 @@ class SharedServiceProviderRoutes {
     QRoute(
       path: kServiceOfferingListView,
       name: kServiceOfferingListView,
-      builder: () => OffersOfferingListView(),
+      builder: () => OfferItemsSelectView(),
     ),
     QRoute(
       path: kDeliveryCostRoute,

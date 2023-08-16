@@ -161,8 +161,8 @@ query get_business_by_rental_category1(
   $from: geography!
   $categories1: [String!]
   $offset: Int
-  $limit: Int,
-  $online_ordering: Boolean_comparison_exp = {},
+  $limit: Int
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -170,10 +170,10 @@ query get_business_by_rental_category1(
         details: {
           location: {
             gps: { _st_d_within: { distance: $distance, from: $from } }
-          },
-          online_ordering: $online_ordering,
-          approved: { _eq: true },
-          open_status: { _neq: "closedIndefinitely" },
+          }
+          online_ordering: $online_ordering
+          approved: { _eq: true }
+          open_status: { _neq: "closedIndefinitely" }
         }
         rentals: { details: { category1: { _in: $categories1 } } }
       }
@@ -212,7 +212,7 @@ query get_business_by_home(
   $offset: Int
   $limit: Int
   $homeType: String!
-  $online_ordering: Boolean_comparison_exp = {},
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -220,7 +220,7 @@ query get_business_by_home(
         details: {
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
-          online_ordering: $online_ordering,
+          online_ordering: $online_ordering
         }
         home: {
           _and: {
@@ -268,7 +268,7 @@ query get_business_by_event_category1(
   $limit: Int
   $categories1: [String!]
   $schedule_type: [String!]
-  $online_ordering: Boolean_comparison_exp = {},
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -279,7 +279,7 @@ query get_business_by_event_category1(
           }
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
-          online_ordering: $online_ordering,
+          online_ordering: $online_ordering
         }
         events: {
           details: { category1: { _in: $categories1 } }
@@ -317,7 +317,7 @@ query get_business_by_service_category1(
   $categories1: [String!]
   $offset: Int
   $limit: Int
-  $online_ordering: Boolean_comparison_exp = {},
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -328,7 +328,7 @@ query get_business_by_service_category1(
           }
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
-          online_ordering: $online_ordering,
+          online_ordering: $online_ordering
         }
         services: { details: { category1: { _in: $categories1 } } }
       }
@@ -363,7 +363,7 @@ query get_business_by_product_category1(
   $categories1: [String!]
   $offset: Int
   $limit: Int
-  $online_ordering: Boolean_comparison_exp = {},
+  $online_ordering: Boolean_comparison_exp = {}
 ) {
   business_business(
     where: {
@@ -374,7 +374,7 @@ query get_business_by_product_category1(
           }
           approved: { _eq: true }
           open_status: { _neq: "closedIndefinitely" }
-          online_ordering: $online_ordering,
+          online_ordering: $online_ordering
         }
         products: { details: { category1: { _in: $categories1 } } }
       }
@@ -457,8 +457,139 @@ query get_business_lang($id: Int!) {
     }
   }
 }
+query get_business_profile($id: Int!) {
+  business_business_by_pk(id: $id) {
+    profile
+  }
+}
+mutation update_business_by_id(
+  $id: Int!
+  $object: business_business_set_input
+) {
+  update_business_business_by_pk(pk_columns: { id: $id }, _set: $object) {
+    id
+    profile
+  }
+}
 query get_business_id_from_details_id($businessDetailsId: Int!) {
   business_business(where: { details_id: { _eq: $businessDetailsId } }) {
     id
+  }
+}
+query SearchSingleBusinessItems(
+  $keyword: String = "%%"
+  $business_id: Int!
+  $limit: Int!
+  $offset: Int!
+) {
+  events: business_event(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+  services: business_service(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+  products: business_product(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+  home: business_home(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+  rental: business_rental(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
   }
 }

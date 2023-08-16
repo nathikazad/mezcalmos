@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -22,9 +23,9 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
   final QueryResult<Query$get_business_by_rental_category1> response =
       await _db.graphQLClient.query$get_business_by_rental_category1(
@@ -37,7 +38,7 @@ Future<List<BusinessCard>> get_business_by_rental_category1(
                       .map((RentalCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  online_ordering: online_ordering_exp,
+                  online_ordering: onlineOrderingExp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
                   offset: offset,
@@ -77,9 +78,9 @@ Future<List<BusinessCard>> get_business_by_home(
     required HomeAvailabilityOption? homeType,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_business_by_home> response = await _db
@@ -90,7 +91,7 @@ Future<List<BusinessCard>> get_business_by_home(
           variables: Variables$Query$get_business_by_home(
               distance: distance,
               homeType: homeType!.toFirebaseFormatString(),
-              online_ordering: online_ordering_exp,
+              online_ordering: onlineOrderingExp,
               from: Geography(
                   fromLocation.lat as double, fromLocation.lng as double),
               offset: offset,
@@ -145,8 +146,6 @@ Future<Business?> get_business_by_id(
       data.home.forEach(
           (Query$get_business_by_id$business_business_by_pk$home home) async {
         _home.add(Home(
-          
-       
           availableFor: home.available_for.toHomeAvailabilityOption(),
           location: HomeLocation(
             name: home.location!.name,
@@ -313,9 +312,9 @@ Future<List<BusinessCard>> get_business_by_event_category1(
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_business_by_event_category1> response =
@@ -332,7 +331,7 @@ Future<List<BusinessCard>> get_business_by_event_category1(
                       .map((ScheduleType e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  online_ordering: online_ordering_exp,
+                  online_ordering: onlineOrderingExp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
                   offset: offset,
@@ -370,9 +369,9 @@ Future<List<BusinessCard>> get_business_by_service_category1(
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_business_by_service_category1> response =
@@ -387,7 +386,7 @@ Future<List<BusinessCard>> get_business_by_service_category1(
                           (ServiceCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  online_ordering: online_ordering_exp,
+                  online_ordering: onlineOrderingExp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
                   offset: offset,
@@ -425,9 +424,9 @@ Future<List<BusinessCard>> get_business_by_product_category1(
     int? limit,
     required bool withCache}) async {
   final List<BusinessCard> _businesses = <BusinessCard>[];
-  Input$Boolean_comparison_exp? online_ordering_exp;
+  Input$Boolean_comparison_exp? onlineOrderingExp;
   if (online_ordering != null) {
-    online_ordering_exp = Input$Boolean_comparison_exp($_eq: online_ordering);
+    onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
 
   final QueryResult<Query$get_business_by_product_category1> response =
@@ -441,7 +440,7 @@ Future<List<BusinessCard>> get_business_by_product_category1(
                       .map((ProductCategory1 e) => e.toFirebaseFormatString())
                       .toList(),
                   distance: distance,
-                  online_ordering: online_ordering_exp,
+                  online_ordering: onlineOrderingExp,
                   from: Geography(
                       fromLocation.lat as double, fromLocation.lng as double),
                   offset: offset,
@@ -586,4 +585,121 @@ Future<int?> get_businessId_from_item_detailsId(
     return data.first.id;
   }
   return null;
+}
+
+Future<BusinessProfile?> get_business_profile_by_id(
+    {required int businessId}) async {
+  QueryResult<Query$get_business_profile> res = await _db.graphQLClient
+      .query$get_business_profile(Options$Query$get_business_profile(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$get_business_profile(id: businessId)));
+  mezDbgPrint("💀 Getting business profile by id ======>$res");
+
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.business_business_by_pk?.profile.toBusinessProfile();
+}
+
+Future<BusinessProfile?> update_business_profile_by_id(
+    {required int businessId, required BusinessProfile newProfile}) async {
+  final QueryResult<Mutation$update_business_by_id> res = await _db
+      .graphQLClient
+      .mutate$update_business_by_id(Options$Mutation$update_business_by_id(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Mutation$update_business_by_id(
+              id: businessId,
+              object: Input$business_business_set_input(
+                  profile: newProfile.toFirebaseFormatString()))));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  return res.parsedData?.update_business_business_by_pk?.profile
+      .toBusinessProfile();
+}
+
+Future<List<OfferItemData>> search_business_items({
+  required int businessId,
+  required int limit,
+  required int offset,
+  String? keyword,
+  bool withCache = true,
+}) async {
+  if (keyword != null) {
+    keyword = "%$keyword%";
+  }
+
+  final QueryResult<Query$SearchSingleBusinessItems> res = await _db
+      .graphQLClient
+      .query$SearchSingleBusinessItems(Options$Query$SearchSingleBusinessItems(
+          fetchPolicy: FetchPolicy.noCache,
+          variables: Variables$Query$SearchSingleBusinessItems(
+              business_id: businessId,
+              limit: limit,
+              offset: offset,
+              keyword: keyword)));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  List<OfferItemData> events = res.parsedData?.events
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$events e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details.name.translations),
+                  nameId: e.details.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  List<OfferItemData> products = res.parsedData?.products
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$products e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details.name.translations),
+                  nameId: e.details.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  List<OfferItemData> services = res.parsedData?.services
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$services e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details.name.translations),
+                  nameId: e.details.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  List<OfferItemData> homes = res.parsedData?.home
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$home e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details?.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details!.name.translations),
+                  nameId: e.details!.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  List<OfferItemData> rentals = res.parsedData?.rental
+          .map<OfferItemData>((Query$SearchSingleBusinessItems$rental e) =>
+              OfferItemData(
+                  id: e.id,
+                  image:
+                      e.details.image.map((e) => e.toString()).toList().first,
+                  name:
+                      toLanguageMap(translations: e.details.name.translations),
+                  nameId: e.details.name.id,
+                  type: OfferingType.Event))
+          .toList() ??
+      [];
+  return events + products + services + homes + rentals;
 }

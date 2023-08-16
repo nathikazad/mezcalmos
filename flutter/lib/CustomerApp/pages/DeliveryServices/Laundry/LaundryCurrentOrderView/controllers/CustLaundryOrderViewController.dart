@@ -12,8 +12,6 @@ import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustLaundryOrderViewController {
@@ -35,6 +33,11 @@ class CustLaundryOrderViewController {
   // streams //
   StreamSubscription<LaundryOrder?>? orderStream;
   String? subscriptionId;
+
+  bool get showOffers =>
+      order.value?.getDriverByPhase == null &&
+      order.value!.inProcess() &&
+      order.value!.isSelfDelivery() == false;
 
   // init
   Future<void> init({required int orderId}) async {
@@ -86,7 +89,7 @@ class CustLaundryOrderViewController {
 
   Future<bool> cancelOrder() async {
     try {
-      cModels.CancelLaundryResponse res =
+      final cModels.CancelLaundryResponse res =
           await CloudFunctions.laundry3_cancelFromCustomer(
               orderId: order.value!.orderId);
       if (res.success == false) {

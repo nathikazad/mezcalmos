@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 //
@@ -25,10 +25,12 @@ class CreateServiceView extends StatefulWidget {
   const CreateServiceView({super.key});
 
   static Future<void> navigate(
-      {required ServiceProviderType serviceProviderType}) {
+      {required ServiceProviderType serviceProviderType,
+      bool fromMezAdmin = false}) {
     return MezRouter.toPath(SharedServiceProviderRoutes.kCreateServiceRoute,
         arguments: <String, dynamic>{
           "serviceProviderType": serviceProviderType,
+          "fromMezAdmin": fromMezAdmin
         });
   }
 
@@ -44,7 +46,10 @@ class _CreateServiceViewState extends State<CreateServiceView> {
   void initState() {
     serviceProviderType =
         MezRouter.bodyArguments?["serviceProviderType"] as ServiceProviderType;
-    viewController.init(serviceProviderType: serviceProviderType!);
+    final bool fromMezAdmin =
+        MezRouter.bodyArguments?["fromMezAdmin"] as bool? ?? false;
+    viewController.init(
+        serviceProviderType: serviceProviderType!, fromMezAdmin: fromMezAdmin);
     super.initState();
   }
 
@@ -56,7 +61,8 @@ class _CreateServiceViewState extends State<CreateServiceView> {
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: Obx(
           () => MezcalmosAppBar(
-              (viewController.currentPage.value != 0)
+              (viewController.currentPage.value != 0 ||
+                      viewController.fromMezAdmin)
                   ? AppBarLeftButtonType.Back
                   : AppBarLeftButtonType.Menu,
               showNotifications: true,

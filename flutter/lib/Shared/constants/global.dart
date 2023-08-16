@@ -164,6 +164,7 @@ const String aAtLaundry = "assets/images/shared/notifications/atLaundry.png";
 const String aNoMessages = "assets/images/shared/noMessages.png";
 const String aNoResults = "assets/images/shared/noresults.png";
 const String aNoServices = "assets/images/shared/noServicesAdded.png";
+const String aNoPosts = "assets/images/shared/noPosts.png";
 const String aReadyDeliveryLaundry =
     "assets/images/shared/notifications/readyForDelivery.png";
 const rive.RiveAnimation aDriverAnimation = rive.RiveAnimation.asset(
@@ -204,6 +205,7 @@ const String aTourismAgency = "assets/images/customer/tourismAgency.png";
 const String aMealPlanning = "assets/images/customer/mealPlanning.png";
 const String aRealEstate = "assets/images/customer/realEstate.png";
 const String aLanguageSchool = "assets/images/customer/languageSchool.png";
+const String aCoWorking = "assets/images/customer/coWorking.png";
 
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";
@@ -389,9 +391,11 @@ const String businessStoryEn =
 const String businessStoryEs =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/business_story_es.png?alt=media&token=41a6bc91-e688-48cf-b975-830bea10fa95";
 
+Widget get tinySepartor => SizedBox(height: 5);
 Widget get smallSepartor => SizedBox(height: 8);
 Widget get meduimSeperator => SizedBox(height: 15);
 Widget get bigSeperator => SizedBox(height: 25);
+Widget get hTinySepartor => SizedBox(width: 5);
 Widget get hSmallSepartor => SizedBox(width: 8);
 Widget get hMeduimSeperator => SizedBox(width: 15);
 Widget get hBigSeperator => SizedBox(width: 25);

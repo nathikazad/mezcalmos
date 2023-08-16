@@ -13,12 +13,14 @@ class DeliveryOrder extends DeliverableOrder {
   DeliveryOrderStatus status;
 
   bool packageReady;
+  String? serviceProviderPhoneNumber;
 
   //bool driverAssigned;
   DeliveryOrder(
       {required super.orderType,
       required super.paymentType,
       required super.deliveryOrderId,
+      super.deliveryType = DeliveryType.Delivery,
       required super.orderTime,
       required this.customerOffer,
       super.stripePaymentInfo,
@@ -26,6 +28,7 @@ class DeliveryOrder extends DeliverableOrder {
       super.serviceReviewByDriver,
       this.counterOffers,
       this.notifiedDrivers,
+      this.serviceProviderPhoneNumber,
       required super.costs,
       required this.packageReady,
       required this.serviceOrderId,
@@ -101,6 +104,7 @@ class DeliveryOrder extends DeliverableOrder {
   bool waitingForOffer(int driverId) {
     return driverInfo == null &&
         counterOffers?.containsKey(driverId) == true &&
+        counterOffers?[driverId]?.status == CounterOfferStatus.Requested &&
         DateTime.parse(counterOffers![driverId]!.expiryTime)
             .toLocal()
             .isAfter(DateTime.now().toLocal());
@@ -167,6 +171,8 @@ class DeliveryOrderVariables {
   DateTime? estimatedPackageReadyTime;
   DateTime? scheduleTime;
   DateTime? cancellationTime;
+  double? customerOffer;
+
   DeliveryOrderStatus status;
   user.UserInfo? driverInfo;
   Map<int, CounterOffer>? counterOffers;
@@ -179,6 +185,19 @@ class DeliveryOrderVariables {
       this.estimatedPackageReadyTime,
       this.scheduleTime,
       this.counterOffers,
+      this.customerOffer,
       this.cancellationTime,
       this.driverInfo});
+}
+
+Map<int, bool>? getNotifiedDrivers(dynamic notifiedDrivers) {
+  //parse the string keys to int
+  Map<int, bool>? notifiedDriversMapInt = {};
+  if (notifiedDrivers != null) {
+    notifiedDrivers.forEach((key, value) {
+      if (int.tryParse(key) != null)
+        notifiedDriversMapInt[int.tryParse(key)!] = value;
+    });
+  }
+  return notifiedDriversMapInt;
 }

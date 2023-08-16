@@ -148,6 +148,6 @@ class AdminMessagesViewController {
     IncomingViewLink? viewLink,
   }) async {
     await BaseMessagingScreen.navigate(
-        chatId: chatid, incomingViewLink: viewLink, phoneNumber: phoneNumber);
+        chatId: chatid, incomingViewLink: viewLink);
   }
 }

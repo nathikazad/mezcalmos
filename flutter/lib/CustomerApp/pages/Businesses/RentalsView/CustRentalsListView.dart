@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/NoServicesFound.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/CustRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/RentalsView/controllers/CustRentalsListViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -22,9 +22,8 @@ import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['RentalsView']['CustRentalsListView'];
@@ -62,11 +61,11 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
-           actionIcons: [
-          FloatingCartComponent(
-            cartType: CartType.business,
-          ),
-        ],
+          actionIcons: [
+            FloatingCartComponent(
+              cartType: CartType.business,
+            ),
+          ],
           titleWidget: Obx(() => Text(
                 viewController.isMapView
                     ? '${_i18n()['map']}'
@@ -133,7 +132,6 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
 
   Widget _mapView() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-   
       Obx(
         () => Expanded(
           child: MezServicesMapView(
@@ -149,6 +147,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
       ),
     ]);
   }
+
   Widget _viewBusinessesSwitcher() {
     IconData firstButtonIcon = Icons.motorcycle;
     switch (viewController.rentalCategory) {
@@ -326,7 +325,7 @@ class _CustRentalsListViewState extends State<CustRentalsListView> {
                               width: 2,
                             ),
                             Text(
-                                '${viewController.businesses[index].avgRating}',
+                                '${viewController.businesses[index].avgRating?.toStringAsFixed(1)}',
                                 style: context.textTheme.bodySmall),
                             Padding(
                               padding: const EdgeInsets.only(left: 2),

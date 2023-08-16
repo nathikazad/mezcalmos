@@ -315,6 +315,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'stripe_info'),
             alias: null,
             arguments: [],
@@ -696,6 +703,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
           ),
           FieldNode(
             name: NameNode(value: 'refund_amount'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'discount_value'),
             alias: null,
             arguments: [],
             directives: [],
@@ -1245,6 +1259,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     required this.id,
     this.notes,
     this.scheduled_time,
+    required this.delivery_type,
     this.stripe_info,
     required this.restaurant,
     required this.items,
@@ -1254,6 +1269,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     this.estimated_food_ready_time,
     this.actual_food_ready_time,
     required this.refund_amount,
+    required this.discount_value,
     this.delivery_id,
     required this.status,
     this.review_id,
@@ -1275,6 +1291,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$id = json['id'];
     final l$notes = json['notes'];
     final l$scheduled_time = json['scheduled_time'];
+    final l$delivery_type = json['delivery_type'];
     final l$stripe_info = json['stripe_info'];
     final l$restaurant = json['restaurant'];
     final l$items = json['items'];
@@ -1284,6 +1301,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$estimated_food_ready_time = json['estimated_food_ready_time'];
     final l$actual_food_ready_time = json['actual_food_ready_time'];
     final l$refund_amount = json['refund_amount'];
+    final l$discount_value = json['discount_value'];
     final l$delivery_id = json['delivery_id'];
     final l$status = json['status'];
     final l$review_id = json['review_id'];
@@ -1302,6 +1320,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       id: (l$id as int),
       notes: (l$notes as String?),
       scheduled_time: (l$scheduled_time as String?),
+      delivery_type: (l$delivery_type as String),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       restaurant:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant
@@ -1319,6 +1338,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
       refund_amount: moneyFromJson(l$refund_amount),
+      discount_value: moneyFromJson(l$discount_value),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
       review_id: (l$review_id as int?),
@@ -1350,6 +1370,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
 
   final String? scheduled_time;
 
+  final String delivery_type;
+
   final dynamic? stripe_info;
 
   final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant
@@ -1370,6 +1392,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
   final String? actual_food_ready_time;
 
   final double refund_amount;
+
+  final double discount_value;
 
   final int? delivery_id;
 
@@ -1410,6 +1434,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['notes'] = l$notes;
     final l$scheduled_time = scheduled_time;
     _resultData['scheduled_time'] = l$scheduled_time;
+    final l$delivery_type = delivery_type;
+    _resultData['delivery_type'] = l$delivery_type;
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] =
         l$stripe_info == null ? null : mapToJson(l$stripe_info);
@@ -1430,6 +1456,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['actual_food_ready_time'] = l$actual_food_ready_time;
     final l$refund_amount = refund_amount;
     _resultData['refund_amount'] = moneyToJson(l$refund_amount);
+    final l$discount_value = discount_value;
+    _resultData['discount_value'] = moneyToJson(l$discount_value);
     final l$delivery_id = delivery_id;
     _resultData['delivery_id'] = l$delivery_id;
     final l$status = status;
@@ -1468,6 +1496,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$id = id;
     final l$notes = notes;
     final l$scheduled_time = scheduled_time;
+    final l$delivery_type = delivery_type;
     final l$stripe_info = stripe_info;
     final l$restaurant = restaurant;
     final l$items = items;
@@ -1477,6 +1506,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$estimated_food_ready_time = estimated_food_ready_time;
     final l$actual_food_ready_time = actual_food_ready_time;
     final l$refund_amount = refund_amount;
+    final l$discount_value = discount_value;
     final l$delivery_id = delivery_id;
     final l$status = status;
     final l$review_id = review_id;
@@ -1495,6 +1525,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       l$id,
       l$notes,
       l$scheduled_time,
+      l$delivery_type,
       l$stripe_info,
       l$restaurant,
       Object.hashAll(l$items.map((v) => v)),
@@ -1504,6 +1535,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       l$estimated_food_ready_time,
       l$actual_food_ready_time,
       l$refund_amount,
+      l$discount_value,
       l$delivery_id,
       l$status,
       l$review_id,
@@ -1544,6 +1576,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$scheduled_time = scheduled_time;
     final lOther$scheduled_time = other.scheduled_time;
     if (l$scheduled_time != lOther$scheduled_time) {
+      return false;
+    }
+    final l$delivery_type = delivery_type;
+    final lOther$delivery_type = other.delivery_type;
+    if (l$delivery_type != lOther$delivery_type) {
       return false;
     }
     final l$stripe_info = stripe_info;
@@ -1596,6 +1633,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$refund_amount = refund_amount;
     final lOther$refund_amount = other.refund_amount;
     if (l$refund_amount != lOther$refund_amount) {
+      return false;
+    }
+    final l$discount_value = discount_value;
+    final lOther$discount_value = other.discount_value;
+    if (l$discount_value != lOther$discount_value) {
       return false;
     }
     final l$delivery_id = delivery_id;
@@ -1701,6 +1743,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? id,
     String? notes,
     String? scheduled_time,
+    String? delivery_type,
     dynamic? stripe_info,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
         restaurant,
@@ -1712,6 +1755,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
     double? refund_amount,
+    double? discount_value,
     int? delivery_id,
     String? status,
     int? review_id,
@@ -1769,6 +1813,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? id = _undefined,
     Object? notes = _undefined,
     Object? scheduled_time = _undefined,
+    Object? delivery_type = _undefined,
     Object? stripe_info = _undefined,
     Object? restaurant = _undefined,
     Object? items = _undefined,
@@ -1778,6 +1823,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? estimated_food_ready_time = _undefined,
     Object? actual_food_ready_time = _undefined,
     Object? refund_amount = _undefined,
+    Object? discount_value = _undefined,
     Object? delivery_id = _undefined,
     Object? status = _undefined,
     Object? review_id = _undefined,
@@ -1800,6 +1846,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         scheduled_time: scheduled_time == _undefined
             ? _instance.scheduled_time
             : (scheduled_time as String?),
+        delivery_type: delivery_type == _undefined || delivery_type == null
+            ? _instance.delivery_type
+            : (delivery_type as String),
         stripe_info: stripe_info == _undefined
             ? _instance.stripe_info
             : (stripe_info as dynamic?),
@@ -1829,6 +1878,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         refund_amount: refund_amount == _undefined || refund_amount == null
             ? _instance.refund_amount
             : (refund_amount as double),
+        discount_value: discount_value == _undefined || discount_value == null
+            ? _instance.discount_value
+            : (discount_value as double),
         delivery_id: delivery_id == _undefined
             ? _instance.delivery_id
             : (delivery_id as int?),
@@ -1932,6 +1984,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? id,
     String? notes,
     String? scheduled_time,
+    String? delivery_type,
     dynamic? stripe_info,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
         restaurant,
@@ -1943,6 +1996,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
     double? refund_amount,
+    double? discount_value,
     int? delivery_id,
     String? status,
     int? review_id,
@@ -6182,6 +6236,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'scheduled_time'),
             alias: null,
             arguments: [],
@@ -6535,6 +6596,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
           ),
           FieldNode(
             name: NameNode(value: 'payment_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'discount_value'),
             alias: null,
             arguments: [],
             directives: [],
@@ -7148,11 +7216,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
   Query$get_restaurant_order_by_id$restaurant_order_by_pk({
     required this.id,
     this.notes,
+    required this.delivery_type,
     this.scheduled_time,
     this.stripe_info,
     required this.restaurant,
     required this.items,
     required this.payment_type,
+    required this.discount_value,
     this.to_location_gps,
     this.to_location_address,
     this.estimated_food_ready_time,
@@ -7178,11 +7248,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$notes = json['notes'];
+    final l$delivery_type = json['delivery_type'];
     final l$scheduled_time = json['scheduled_time'];
     final l$stripe_info = json['stripe_info'];
     final l$restaurant = json['restaurant'];
     final l$items = json['items'];
     final l$payment_type = json['payment_type'];
+    final l$discount_value = json['discount_value'];
     final l$to_location_gps = json['to_location_gps'];
     final l$to_location_address = json['to_location_address'];
     final l$estimated_food_ready_time = json['estimated_food_ready_time'];
@@ -7205,6 +7277,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk(
       id: (l$id as int),
       notes: (l$notes as String?),
+      delivery_type: (l$delivery_type as String),
       scheduled_time: (l$scheduled_time as String?),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       restaurant:
@@ -7216,6 +7289,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       payment_type: (l$payment_type as String),
+      discount_value: moneyFromJson(l$discount_value),
       to_location_gps: l$to_location_gps == null
           ? null
           : geographyFromJson(l$to_location_gps),
@@ -7251,6 +7325,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
 
   final String? notes;
 
+  final String delivery_type;
+
   final String? scheduled_time;
 
   final dynamic? stripe_info;
@@ -7262,6 +7338,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       items;
 
   final String payment_type;
+
+  final double discount_value;
 
   final Geography? to_location_gps;
 
@@ -7309,6 +7387,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['id'] = l$id;
     final l$notes = notes;
     _resultData['notes'] = l$notes;
+    final l$delivery_type = delivery_type;
+    _resultData['delivery_type'] = l$delivery_type;
     final l$scheduled_time = scheduled_time;
     _resultData['scheduled_time'] = l$scheduled_time;
     final l$stripe_info = stripe_info;
@@ -7320,6 +7400,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['items'] = l$items.map((e) => e.toJson()).toList();
     final l$payment_type = payment_type;
     _resultData['payment_type'] = l$payment_type;
+    final l$discount_value = discount_value;
+    _resultData['discount_value'] = moneyToJson(l$discount_value);
     final l$to_location_gps = to_location_gps;
     _resultData['to_location_gps'] =
         l$to_location_gps == null ? null : geographyToJson(l$to_location_gps);
@@ -7368,11 +7450,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
   int get hashCode {
     final l$id = id;
     final l$notes = notes;
+    final l$delivery_type = delivery_type;
     final l$scheduled_time = scheduled_time;
     final l$stripe_info = stripe_info;
     final l$restaurant = restaurant;
     final l$items = items;
     final l$payment_type = payment_type;
+    final l$discount_value = discount_value;
     final l$to_location_gps = to_location_gps;
     final l$to_location_address = to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
@@ -7395,11 +7479,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     return Object.hashAll([
       l$id,
       l$notes,
+      l$delivery_type,
       l$scheduled_time,
       l$stripe_info,
       l$restaurant,
       Object.hashAll(l$items.map((v) => v)),
       l$payment_type,
+      l$discount_value,
       l$to_location_gps,
       l$to_location_address,
       l$estimated_food_ready_time,
@@ -7441,6 +7527,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     if (l$notes != lOther$notes) {
       return false;
     }
+    final l$delivery_type = delivery_type;
+    final lOther$delivery_type = other.delivery_type;
+    if (l$delivery_type != lOther$delivery_type) {
+      return false;
+    }
     final l$scheduled_time = scheduled_time;
     final lOther$scheduled_time = other.scheduled_time;
     if (l$scheduled_time != lOther$scheduled_time) {
@@ -7471,6 +7562,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$payment_type = payment_type;
     final lOther$payment_type = other.payment_type;
     if (l$payment_type != lOther$payment_type) {
+      return false;
+    }
+    final l$discount_value = discount_value;
+    final lOther$discount_value = other.discount_value;
+    if (l$discount_value != lOther$discount_value) {
       return false;
     }
     final l$to_location_gps = to_location_gps;
@@ -7597,12 +7693,14 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
   TRes call({
     int? id,
     String? notes,
+    String? delivery_type,
     String? scheduled_time,
     dynamic? stripe_info,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
         restaurant,
     List<Query$get_restaurant_order_by_id$restaurant_order_by_pk$items>? items,
     String? payment_type,
+    double? discount_value,
     Geography? to_location_gps,
     String? to_location_address,
     String? estimated_food_ready_time,
@@ -7658,11 +7756,13 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
   TRes call({
     Object? id = _undefined,
     Object? notes = _undefined,
+    Object? delivery_type = _undefined,
     Object? scheduled_time = _undefined,
     Object? stripe_info = _undefined,
     Object? restaurant = _undefined,
     Object? items = _undefined,
     Object? payment_type = _undefined,
+    Object? discount_value = _undefined,
     Object? to_location_gps = _undefined,
     Object? to_location_address = _undefined,
     Object? estimated_food_ready_time = _undefined,
@@ -7686,6 +7786,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
       _then(Query$get_restaurant_order_by_id$restaurant_order_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         notes: notes == _undefined ? _instance.notes : (notes as String?),
+        delivery_type: delivery_type == _undefined || delivery_type == null
+            ? _instance.delivery_type
+            : (delivery_type as String),
         scheduled_time: scheduled_time == _undefined
             ? _instance.scheduled_time
             : (scheduled_time as String?),
@@ -7703,6 +7806,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         payment_type: payment_type == _undefined || payment_type == null
             ? _instance.payment_type
             : (payment_type as String),
+        discount_value: discount_value == _undefined || discount_value == null
+            ? _instance.discount_value
+            : (discount_value as double),
         to_location_gps: to_location_gps == _undefined
             ? _instance.to_location_gps
             : (to_location_gps as Geography?),
@@ -7819,12 +7925,14 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
   call({
     int? id,
     String? notes,
+    String? delivery_type,
     String? scheduled_time,
     dynamic? stripe_info,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
         restaurant,
     List<Query$get_restaurant_order_by_id$restaurant_order_by_pk$items>? items,
     String? payment_type,
+    double? discount_value,
     Geography? to_location_gps,
     String? to_location_address,
     String? estimated_food_ready_time,

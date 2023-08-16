@@ -29,6 +29,18 @@ export async function createLaundryOrder(
           app_type_id: AppType.MezAdmin
         };
     });
+    let params: any = {
+        "customer_location_gps": {
+            "type": "Point",
+            "coordinates": [laundryRequestDetails.customerLocation.lng, laundryRequestDetails.customerLocation.lat ],
+        },
+    }
+    if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
+        params["dropoff_gps"] = {
+            "type": "Point",
+            "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
+        }
+    }
 
     let response = await chain.mutation({
         insert_laundry_order_one: [{
@@ -39,10 +51,10 @@ export async function createLaundryOrder(
                 delivery_type: laundryRequestDetails.deliveryType,
                 customer_app_type: laundryRequestDetails.customerAppType,
                 notes: laundryRequestDetails.notes,
-                tax: laundryRequestDetails.tax ?? undefined,
+                tax: laundryRequestDetails.tax ?? 0,
                 scheduled_time: laundryRequestDetails.scheduledTime,
-                stripe_fees: laundryRequestDetails.stripeFees ?? undefined,
-                discount_value: laundryRequestDetails.discountValue ?? undefined,
+                stripe_fees: laundryRequestDetails.stripeFees ?? 0,
+                discount_value: laundryRequestDetails.discountValue ?? 0,
                 customer_location_gps: $`customer_location_gps`,
                 customer_address: laundryRequestDetails.customerLocation.address,
                 // delivery_cost: laundryRequestDetails.deliveryCost,
@@ -118,16 +130,7 @@ export async function createLaundryOrder(
                 chat_with_service_provider_id: true,
             },
         }],
-    }, {
-        "customer_location_gps": {
-            "type": "Point",
-            "coordinates": [laundryRequestDetails.customerLocation.lng, laundryRequestDetails.customerLocation.lat ],
-        },
-        "dropoff_gps": {
-            "type": "Point",
-            "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
-        }
-    })
+    }, params)
 
     if(response.insert_laundry_order_one == null) {
         throw new MezError(ReqLaundryError.OrderCreationError);

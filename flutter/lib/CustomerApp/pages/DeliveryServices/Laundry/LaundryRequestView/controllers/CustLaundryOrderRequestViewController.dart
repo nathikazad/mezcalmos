@@ -36,6 +36,11 @@ class CustLaundryOrderRequestViewController {
   Rxn<Laundry> laundry = Rxn();
   Rxn<MezLocation> customerLoc = Rxn();
   RxnNum shippingCost = RxnNum();
+  Rx<cloudFunctionModels.DeliveryType> dvType =
+      Rx(cloudFunctionModels.DeliveryType.Delivery);
+  bool get showDelivery =>
+      dvType.value == cloudFunctionModels.DeliveryType.Delivery;
+
   DeliveryCost? get deliveryCost {
     return laundry.value!.deliveryCost;
   }
@@ -52,6 +57,8 @@ class CustLaundryOrderRequestViewController {
         _orderDistanceInKm <= 10 &&
         isShippingSet.isTrue;
   }
+
+  bool get isSelfDelivery => laundry.value?.selfDelivery ?? false;
 
   Future<void> init({required Laundry laundry}) async {
     this.laundry.value = laundry;
@@ -101,6 +108,9 @@ class CustLaundryOrderRequestViewController {
             shippingCost.value = deliveryCost!.minimumCost.ceil();
           } else {
             shippingCost.value = _shippingCost.ceil();
+          }
+          if (shippingCost.value != null) {
+            estDeliveryCost.value = shippingCost.value!.toDouble();
           }
 
           // await saveCart();
@@ -164,6 +174,7 @@ class CustLaundryOrderRequestViewController {
   }
 
   Future<void> createLaundryOrder() async {
+    mezDbgPrint("Called create laundry order 🔴");
     final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
     bool? isOpen =
@@ -192,6 +203,7 @@ class CustLaundryOrderRequestViewController {
           await CloudFunctions.laundry3_requestLaundry(
         fromCustomerDeliveryOffer: estDeliveryCost.value,
         chosenCompanies: selectedCompanies,
+
         storeId: laundryRequest.laundryId,
         customerAppType: cloudFunctionModels.CustomerAppType.Native,
         customerLocation: cloudFunctionModels.Location(
@@ -205,7 +217,7 @@ class CustLaundryOrderRequestViewController {
             laundryRequest.routeInformation!.distance.distanceInMeters,
         tripDuration: laundryRequest.routeInformation!.duration.seconds,
         tripPolyline: laundryRequest.routeInformation!.polyline,
-        deliveryType: cloudFunctionModels.DeliveryType.Delivery,
+        deliveryType: dvType.value,
       );
       if (response.orderId == null) {
         mezDbgPrint(response.error);
@@ -223,6 +235,15 @@ class CustLaundryOrderRequestViewController {
     } catch (e) {
       showErrorSnackBar();
       mezDbgPrint(e);
+    }
+  }
+
+  void switchDeliveryType({required cloudFunctionModels.DeliveryType type}) {
+    dvType.value = type;
+
+    //  _cartRxn.value?.deliveryType = dvType.value;
+    if (dvType.value == cloudFunctionModels.DeliveryType.Pickup) {
+      shippingCost.value = null;
     }
   }
 }

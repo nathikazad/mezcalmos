@@ -374,6 +374,30 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                         phone: true,
                     }
                 }]
+            },
+            business: {
+                id: true,
+                // business_operators: [{}, {
+                //     id: true,
+                //     user_id: true,
+                //     operator_details: {
+                //         id: true,
+                //         status: true,
+                //         owner: true,
+                //         online: true,
+                //         notification_info: {
+                //             token: true,
+                //             turn_off_notifications: true
+                //         }
+                //     },
+                //     user: {
+                //         firebase_id: true,
+                //         language_id: true,
+                //         name: true,
+                //         email: true,
+                //         phone: true,
+                //     }
+                // }]
             }
         }]
     });
@@ -582,6 +606,45 @@ export async function getServiceProviderFromUniqueId(uniqueId: string): Promise<
                 // deliveryPartnerId: response.laundry_store_by_pk.delivery_partners[0] 
                 //     ? response.laundry_store_by_pk.delivery_partners[0].delivery_company_id
                 //     : undefined,
+            }
+        case ServiceProviderType.Business:
+            return {
+                id: response.service_provider_details[0].business!.id,
+                serviceProviderDetailsId: response.service_provider_details[0].id,
+                serviceProviderType: response.service_provider_details[0].service_provider_type as ServiceProviderType,
+                name: response.service_provider_details[0].name,
+                image: response.service_provider_details[0].image,
+                location: {
+                    lat: response.service_provider_details[0].location.gps.coordinates[1],
+                    lng: response.service_provider_details[0].location.gps.coordinates[0],
+                    address: response.service_provider_details[0].location.address,
+                },
+                description: response.service_provider_details[0].description?.translations.reduce((prev:Record<any, any>, current: any) => {
+                    prev[current.language_id] = current.value;
+                    return prev;
+                }, {}),
+                openStatus: response.service_provider_details[0].open_status as OpenStatus,
+                stripeInfo: (response.service_provider_details[0].stripe_info) 
+                ? {
+                    id: response.service_provider_details[0].stripe_info.stripe_id,
+                    status: response.service_provider_details[0].stripe_info.status,
+                    chargeFeesOnCustomer: response.service_provider_details[0].stripe_info.charge_fees_on_customer ?? null,
+                    chargesEnabled: response.service_provider_details[0].stripe_info.charges_enabled,
+                    detailsSubmitted: response.service_provider_details[0].stripe_info.details_submitted,
+                    payoutsEnabled: response.service_provider_details[0].stripe_info.payouts_enabled,
+                    email: response.service_provider_details[0].stripe_info.email ?? null,
+                    requirements: (response.service_provider_details[0].stripe_info.requirements)
+                }: undefined,
+                acceptedPayments: (response.service_provider_details[0].accepted_payments),
+                approved: response.service_provider_details[0].approved,
+                creationTime: response.service_provider_details[0].creation_time,
+                language: /*(*/response.service_provider_details[0].language,
+                schedule: (response.service_provider_details[0].schedule),
+                deliveryDetails: {
+                    customerPickup: false,
+                    deliveryAvailable: false,
+                    selfDelivery: false
+                }
             }
         default:
             throw new MezError("serviceProviderDetailsNotFound");

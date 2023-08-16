@@ -48,6 +48,16 @@ class BusinessAppTheme {
           ),
           focusColor: Color(0xFF6779FE),
           prefixIconColor: Color(0xFF6779FE),
+          suffixIconColor:
+              MaterialStateColor.resolveWith((Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused)) {
+              return primaryBlueColor;
+            }
+            if (states.contains(MaterialState.error)) {
+              return redAccentColor;
+            }
+            return Colors.grey;
+          }),
           alignLabelWithHint: true,
           hintStyle: TextStyle(
             fontWeight: FontWeight.w400,
@@ -55,6 +65,16 @@ class BusinessAppTheme {
             fontSize: 10.sp,
             color: Colors.black.withOpacity(0.8),
           ),
+          iconColor:
+              MaterialStateColor.resolveWith((Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused)) {
+              return primaryBlueColor;
+            }
+            if (states.contains(MaterialState.error)) {
+              return redAccentColor;
+            }
+            return Colors.grey;
+          }),
           contentPadding: EdgeInsets.all(12),
           isDense: true,
           border: OutlineInputBorder(

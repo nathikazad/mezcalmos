@@ -1,18 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/context_extensions.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/CustRentalView/CustRentalView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['components']['CustBusinessRentalCard'];
@@ -41,7 +38,7 @@ class CustBusinessRentalCard extends StatelessWidget {
         // if (rental.category1 == RentalCategory1.Home) {
         //   CustHomeRentalView.navigate(rentalId: rental.details.id.toInt());
         // } else {
-          CustRentalView.navigate(rentalId: rental.details.id.toInt());
+        CustRentalView.navigate(rentalId: rental.details.id.toInt());
         // }
       },
       firstAvatarBgImage:

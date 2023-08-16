@@ -19,10 +19,9 @@ import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart'
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezExpandableCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderBillImage.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
@@ -108,47 +107,7 @@ class _CustCourierOrderViewState extends State<CustCourierOrderView> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  if (viewController.order.notifiedDrivers != null)
-                    Card(
-                      margin: EdgeInsets.only(top: 15),
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  fit: FlexFit.tight,
-                                  child: Text(
-                                    "Your offered delivery price",
-                                    style: context.textTheme.bodyLarge,
-                                  ),
-                                ),
-                                Text(
-                                  viewController.order.customerOffer
-                                          ?.toPriceString() ??
-                                      "-",
-                                  style: context.textTheme.bodyLarge,
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                MezIconButton(
-                                  icon: Icons.add,
-                                  iconSize: 22,
-                                  padding: EdgeInsets.all(3),
-                                  onTap: () async {},
-                                ),
-                              ],
-                            ),
-                            smallSepartor,
-                            Text(
-                                "${viewController.order.driversSawOfferCount} out of ${viewController.order.notifiedDrivers?.length} drivers have seen your order and not accepted it")
-                          ],
-                        ),
-                      ),
-                    ),
-                  if (viewController.order.isDriverAssigned)
+                  if (viewController.showDeliveryOffers)
                     CustDeliveryOffersList(
                       deliveryOrderId: viewController.order.deliveryOrderId!,
                     ),

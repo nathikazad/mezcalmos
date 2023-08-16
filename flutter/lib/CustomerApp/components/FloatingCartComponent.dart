@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/CustCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/CustRestaurantCartView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -71,7 +71,7 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
                     customBorder: CircleBorder(),
                     onTap: () {
                       if (widget.cartType == CartType.restaurant) {
-                        ViewCartScreen.navigate();
+                        CustRestaurantCartView.navigate();
                       } else {
                         CustCartView.navigate();
                       }

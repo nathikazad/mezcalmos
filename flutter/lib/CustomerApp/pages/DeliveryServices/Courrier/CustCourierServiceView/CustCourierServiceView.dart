@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/DialogRequiredSignIn.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSliverAppbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';

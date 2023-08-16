@@ -60,11 +60,17 @@ class JoinUsController {
       'appStoreUrl': _mezBizAppStoreUrl,
       'imageUrl': aVehicle
     },
-    'yogaStudio': {
+    'languageSchool': {
       'packageName': 'Mezbiz',
       'playStoreUrl': _mezBizPlayStoreUrl,
       'appStoreUrl': _mezBizAppStoreUrl,
-      'imageUrl': aYoga
+      'imageUrl': aLanguageSchool
+    },
+    'coWorking': {
+      'packageName': 'Mezbiz',
+      'playStoreUrl': _mezBizPlayStoreUrl,
+      'appStoreUrl': _mezBizAppStoreUrl,
+      'imageUrl': aCoWorking
     },
     'wellnessPractitioner': {
       'packageName': 'Mezbiz',
@@ -137,12 +143,6 @@ class JoinUsController {
       'playStoreUrl': _mezBizPlayStoreUrl,
       'appStoreUrl': _mezBizAppStoreUrl,
       'imageUrl': aRealEstate
-    },
-    'languageSchool': {
-      'packageName': 'Mezbiz',
-      'playStoreUrl': _mezBizPlayStoreUrl,
-      'appStoreUrl': _mezBizAppStoreUrl,
-      'imageUrl': aLanguageSchool
     }
   };
 

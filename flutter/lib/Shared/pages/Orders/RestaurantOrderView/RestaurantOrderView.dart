@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -11,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderCustomer.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderEstTime.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderHandleButton.dart';
@@ -22,7 +22,8 @@ import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/controller/Res
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
@@ -132,7 +133,20 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                             viewController.order.value!.restaurant.name,
                             style: context.txt.bodyLarge,
                           ),
-                          //   action: MessageButton(chatId: viewController.order.value.c),
+                          action: (viewController
+                                      .order.value!.restaurant.phoneNumber !=
+                                  null)
+                              ? MezIconButton(
+                                  onTap: () async {
+                                    final String number = viewController
+                                        .order.value!.restaurant.phoneNumber!;
+                                    await callWhatsappNumber(number);
+                                  },
+                                  icon: Ionicons.logo_whatsapp,
+                                  iconColor: Colors.green,
+                                  backgroundColor: Colors.white,
+                                )
+                              : null,
                         ),
                       ],
                     ),

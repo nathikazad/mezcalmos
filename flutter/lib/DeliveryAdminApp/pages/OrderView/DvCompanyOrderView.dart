@@ -11,13 +11,14 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
+import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
@@ -335,7 +336,10 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
             viewController.order.value!.serviceProvider!.image),
         action: MessageButton(
           chatId: 55,
-          onTap: () {},
+          onTap: () {
+            BaseMessagingScreen.navigate(
+                chatId: viewController.order.value!.chatId);
+          },
         ),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

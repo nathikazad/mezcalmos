@@ -131,6 +131,10 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                                 Text(
                                   laundry.rate!.toStringAsFixed(1),
                                   style: context.txt.bodySmall,
+                                ),
+                                Text(
+                                  '(${laundry.reviewCount})',
+                                  style: context.txt.bodySmall,
                                 )
                               ],
                             ),
@@ -153,7 +157,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                                 ),
                                 Flexible(
                                   child: Text(
-                                      "${laundry.getCheapestCategory.toPriceString()}/kg",
+                                      "${laundry.getCheapestCategory?.toPriceString()}/kg",
                                       style: context.txt.bodySmall),
                                 ),
                               ],

@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/components/CreateServiceImageComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 //
@@ -117,6 +117,8 @@ class CreateServiceInfoPage extends StatelessWidget {
                     },
                     style: context.txt.bodyLarge,
                     decoration: InputDecoration(
+                        helperText:
+                      "${_i18n()['phoneNumberHelper']}",
                         hintStyle: context.txt.bodyMedium,
                         hintText: "${_i18n()['phoneTextDescription']}"),
                   ),

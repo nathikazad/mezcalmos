@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/helpers/services/DeliveryOfferHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -42,16 +42,8 @@ class CustCourierOrderViewController {
     return _order.value!.status;
   }
 
-  bool get showOffers {
-    return order.counterOffers?.isNotEmpty == true &&
-        order.counterOffers!.entries
-                .where((MapEntry<int, cModels.CounterOffer> element) =>
-                    element.value.isExpired == false &&
-                    element.value.isRequested == true)
-                .isNotEmpty ==
-            true &&
-        order.isDriverAssigned == false;
-  }
+  bool get showDeliveryOffers =>
+      !order.inStorePickup && order.inProcess() && order.driverInfo == null;
 
   Map<int, cModels.CounterOffer> get counterOffers {
     return order.counterOffers!.entries

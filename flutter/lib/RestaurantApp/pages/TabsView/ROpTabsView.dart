@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mezcalmos/RestaurantApp/pages/FeedView/RsFeedView.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
@@ -54,11 +55,16 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
         );
 
       case 1:
+        return RsFeedView(
+          asTab: true,
+        );
+
+      case 2:
         return ROpMenuView(
           restID: opAuthController.restaurantId!,
           canGoBack: false,
         );
-      case 2:
+      case 3:
         return ServiceProfileView(
           serviceId: opAuthController.restaurantId,
           serviceDetailsId:
@@ -92,6 +98,10 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
                   BottomNavigationBarItem(
                     icon: Icon(Icons.history),
                     label: '${_i18n()["orders"]}',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.people),
+                    label: '${_i18n()["feed"]}',
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Icons.flatware),

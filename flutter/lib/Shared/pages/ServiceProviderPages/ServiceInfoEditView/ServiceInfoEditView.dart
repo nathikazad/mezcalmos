@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 //
@@ -179,6 +179,42 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                             // SizedBox(
                             //   height: 15,
                             // ),
+                            if (viewController.isBusiness)
+                              Obx(() => (viewController
+                                          .mainBusniessProfile.value !=
+                                      null)
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                          meduimSeperator,
+                                          Text(
+                                            "Business type",
+                                            style: context.textTheme.bodyLarge,
+                                          ),
+                                          smallSepartor,
+                                          MezStringDropDown(
+                                              value: viewController
+                                                  .mainBusniessProfile.value!
+                                                  .toFirebaseFormatString(),
+                                              labelText: "Business type",
+                                              elementsTextStyle:
+                                                  context.textTheme.bodyLarge,
+                                              langPath:
+                                                  _i18n()['businessProfile'],
+                                              items: BusinessProfile.values
+                                                  .map((BusinessProfile e) => e
+                                                      .toFirebaseFormatString())
+                                                  .toList(),
+                                              onChanged: (String? v) {
+                                                viewController.switchBusinessType(
+                                                    type: v
+                                                        .toString()
+                                                        .toBusinessProfile());
+                                              }),
+                                          meduimSeperator
+                                        ])
+                                  : SizedBox()),
                             Text(
                               "${_i18n()['location']}",
                               style: context.textTheme.bodyLarge,
@@ -337,50 +373,65 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
           style: context.textTheme.bodyLarge,
         ),
         SizedBox(height: 7.5),
-        Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: TextFormField(
-                  style: context.txt.bodyLarge,
-                  onChanged: (String s) {
-                    // if (_prefixTextFieldController.value.text.length > 0 &&
-                    //     _numberTextFieldController.value.text.length >= 8) {
-                    //   canSendOtp.value = true;
-                    // } else {
-                    //   canSendOtp.value = false;
-                    // }
-                    // mezDbgPrint(canSendOtp.value);
-                  },
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: "+52",
-                  ),
-                  controller: viewController.prefixTextFieldController,
-                  keyboardType: TextInputType.phone),
-            ),
-            SizedBox(width: 10),
-            Expanded(
-              flex: 3,
-              child: TextFormField(
-                controller: viewController.phoneNumber,
-                style: context.txt.bodyLarge,
-                keyboardType: TextInputType.phone,
-                validator: (String? v) {
-                  if (v == null || v.isEmpty) {
-                    return null;
-                  } else if ((viewController.prefixTextFieldController.text +
-                              viewController.phoneNumber.text)
-                          .validatePhoneNumber() ==
-                      false) {
-                    return "${_i18n()['phoneErrorText']}";
-                  }
-                  return null;
-                },
-              ),
-            )
-          ],
+        TextFormField(
+          controller: viewController.phoneNumber,
+          keyboardType: TextInputType.phone,
+          validator: (String? v) {
+            if (v == null || v.isEmpty || v.validatePhoneNumber() == false) {
+              return "${_i18n()['phoneTextError']}";
+            }
+            return null;
+          },
+          style: context.txt.bodyLarge,
+          decoration: InputDecoration(
+              helperText: "${_i18n()['phoneNumberHelper']}",
+              hintStyle: context.txt.bodyMedium,
+              hintText: "${_i18n()['phoneErrorText']}"),
         ),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       flex: 1,
+        //       child: TextFormField(
+        //           style: context.txt.bodyLarge,
+        //           onChanged: (String s) {
+        //             // if (_prefixTextFieldController.value.text.length > 0 &&
+        //             //     _numberTextFieldController.value.text.length >= 8) {
+        //             //   canSendOtp.value = true;
+        //             // } else {
+        //             //   canSendOtp.value = false;
+        //             // }
+        //             // mezDbgPrint(canSendOtp.value);
+        //           },
+        //           textAlign: TextAlign.center,
+        //           decoration: InputDecoration(
+        //             hintText: "+52",
+        //           ),
+        //           controller: viewController.prefixTextFieldController,
+        //           keyboardType: TextInputType.phone),
+        //     ),
+        //     SizedBox(width: 10),
+        //     Expanded(
+        //       flex: 3,
+        //       child: TextFormField(
+        //         controller: viewController.phoneNumber,
+        //         style: context.txt.bodyLarge,
+        //         keyboardType: TextInputType.phone,
+        //         validator: (String? v) {
+        //           if (v == null || v.isEmpty) {
+        //             return null;
+        //           } else if ((viewController.prefixTextFieldController.text +
+        //                       viewController.phoneNumber.text)
+        //                   .validatePhoneNumber() ==
+        //               false) {
+        //             return "${_i18n()['phoneErrorText']}";
+        //           }
+        //           return null;
+        //         },
+        //       ),
+        //     )
+        //   ],
+        // ),
         SizedBox(height: 15),
       ],
     );

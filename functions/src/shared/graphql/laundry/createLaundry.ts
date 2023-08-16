@@ -44,9 +44,9 @@ export async function createLaundryStore(
                     self_delivery: laundryDetails.deliveryDetails.selfDelivery,
                     delivery_available: laundryDetails.deliveryDetails.deliveryAvailable,
                     customer_pickup: laundryDetails.deliveryDetails.customerPickup,
-                    minimum_cost: laundryDetails.deliveryDetails.minimumCost,
-                    cost_per_km: laundryDetails.deliveryDetails.costPerKm,
-                    radius: laundryDetails.deliveryDetails.radius,
+                    minimum_cost: laundryDetails.deliveryDetails.minimumCost ?? 0,
+                    cost_per_km: laundryDetails.deliveryDetails.costPerKm ?? 0,
+                    radius: laundryDetails.deliveryDetails.radius ?? 0,
                     free_delivery_minimum_cost: laundryDetails.deliveryDetails.freeDeliveryMinimumCost,
                     free_delivery_km_range: laundryDetails.deliveryDetails.freeDeliveryKmRange
                 }},
@@ -55,7 +55,6 @@ export async function createLaundryStore(
                         name: laundryDetails.name,
                         image: laundryDetails.image,
                         schedule: $`schedule`,
-                        firebase_id: laundryDetails.firebaseId ?? undefined,
                         language: $`language`,
                         service_provider_type: ServiceProviderType.Laundry,
                         unique_id: uniqueId,
@@ -78,7 +77,7 @@ export async function createLaundryStore(
                           }
                     }
                 },
-                operators: {
+                operators: (laundryDetails.isMezAdmin == false) ? {
                     data: [{
                         user_id: laundryOperatorUserId,
                         operator_details: {
@@ -98,7 +97,7 @@ export async function createLaundryStore(
                         }
                         
                     }]
-                },
+                }: undefined,
                 
             }
         }, {
@@ -135,24 +134,23 @@ export async function createLaundryStore(
         schedule: laundryDetails.schedule,
         deliveryDetails: laundryDetails.deliveryDetails,
         language: laundryDetails.language,
-        firebaseId: laundryDetails.firebaseId,
         serviceProviderType: ServiceProviderType.Laundry,
         uniqueId
     }
-    // if(laundryDetails.deliveryPartnerId) {
-    //     await chain.mutation({
-    //         insert_service_provider_delivery_partner_one: [{
-    //             object: {
-    //                 delivery_company_id: laundryDetails.deliveryPartnerId,
-    //                 service_provider_id: response.insert_laundry_store_one.id,
-    //                 service_provider_type: ServiceProviderType.Laundry
-    //             }
-    //         }, {
-    //             id: true,
-    //         }]
-    //     });
-    // }
-    if(laundryDetails.laundryOperatorNotificationToken) {
+    if(laundryDetails.deliveryPartnerId) {
+        await chain.mutation({
+            insert_service_provider_delivery_partner_one: [{
+                object: {
+                    delivery_company_id: laundryDetails.deliveryPartnerId,
+                    service_provider_id: response.insert_laundry_store_one.id,
+                    service_provider_type: ServiceProviderType.Laundry
+                }
+            }, {
+                id: true,
+            }]
+        });
+    }
+    if(laundryDetails.isMezAdmin == false && laundryDetails.laundryOperatorNotificationToken) {
         chain.mutation({
             insert_notification_info_one: [{
                 object: {

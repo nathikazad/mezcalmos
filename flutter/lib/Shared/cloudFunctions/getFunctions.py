@@ -191,7 +191,7 @@ def extractFunctionNamesGroupAsString(line):
   if exportConstStarted == True:
     if "//" not in line:
       exportConstValue += line
-    if "}" in line:
+    if "}" in line and "memory" not in line:
       exportConstStarted = False
       functionNamesGroup1.append(exportConstValue)
   if "export const" in line and "//" not in line:
@@ -267,7 +267,7 @@ def printDartFormatEnum(key, values):
 
   converter = '''extension Parse####ToString on #### {
   String toFirebaseFormatString() {
-    String str = toString().split('.').last;
+    final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
 }

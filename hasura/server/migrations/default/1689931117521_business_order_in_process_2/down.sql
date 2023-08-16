@@ -1,0 +1,9 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- CREATE OR REPLACE FUNCTION business.order_in_process(order_row business.order_request)
+--  RETURNS boolean
+--  LANGUAGE sql
+--  STABLE
+-- AS $function$
+--     SELECT order_row.status = 'requestReceived' OR order_row.status = 'modificationRequestByBusiness'
+-- $function$;

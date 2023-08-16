@@ -11,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["LaundriesListView"];
@@ -98,15 +98,15 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
   Widget _mapView() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Obx(() => Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CustSwitchOpenService(
+            padding: const EdgeInsets.all(8.0),
+            child: CustSwitchOpenService(
               label: '${_i18n()["showOnlyOpenLaundries"]}',
               showOnlyOpen: viewController.showOnlyOpen.value,
               onChange: (bool value) {
                 viewController.changeAlwaysOpenSwitch(value);
               },
             ),
-      )),
+          )),
       Obx(
         () => Expanded(
           child: MezServicesMapView(

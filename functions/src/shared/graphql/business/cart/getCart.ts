@@ -25,7 +25,7 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         }]
     });
 
-    if(response.business_cart_by_pk == null) {
+    if(response.business_cart_by_pk == null || response.business_cart_by_pk.business_id == null) {
         throw new MezError("cartNotFound");
     }
     
@@ -46,5 +46,6 @@ export async function getBusinessCart(customerId: number): Promise<BusinessCart>
         items,
         cost: response.business_cart_by_pk.cost,
         discountValue: response.business_cart_by_pk.discount_value,
+        appliedOffers: response.business_cart_by_pk.applied_offers,
     }
 }

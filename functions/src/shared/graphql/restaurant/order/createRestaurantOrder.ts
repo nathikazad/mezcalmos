@@ -27,6 +27,33 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       app_type_id: AppType.MezAdmin
     };
   });
+  let params: any = {
+    "dropoff_gps": {
+      "type": "Point",
+      "coordinates": [checkoutReq.customerLocation.lng, checkoutReq.customerLocation.lat ],
+    },
+    "data": customerCart.items!.map((i:any) => {
+      console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
+      console.log("+ ItemName ", i.name);
+      return {
+        cost_per_one: i.costPerOne,
+        notes: i.notes,
+        quantity: i.quantity,
+        restaurant_item_id: i.itemId,
+        in_json: {
+          name: i.name,
+          image : i.image,
+          selected_options: parseSelectedOptions(i.selectedOptions)
+        },
+      };
+    })
+  }
+  if(checkoutReq.deliveryType == DeliveryType.Delivery) {
+    params["pickup_gps"] = {
+      "type": "Point",
+      "coordinates": [restaurant.location.lng, restaurant.location.lat],
+    }
+  }
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
@@ -98,7 +125,8 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         notes: checkoutReq.notes,
         status: RestaurantOrderStatus.OrderReceived,
         discount_value: customerCart.discountValue,
-        tax: checkoutReq.tax ?? undefined,
+        stripe_fees: checkoutReq.stripeFees ?? 0,
+        tax: checkoutReq.tax ?? 0,
         items: {
           data: $`data` 
         },
@@ -113,36 +141,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         chat_with_service_provider_id: true,
       }
     }],
-  }, {
-    "dropoff_gps": {
-      "type": "Point",
-      "coordinates": [checkoutReq.customerLocation.lng, checkoutReq.customerLocation.lat ],
-    },
-    "pickup_gps": {
-      "type": "Point",
-      "coordinates": [restaurant.location.lng, restaurant.location.lat ],
-    },
-    "data": customerCart.items!.map((i:any) => {
-      console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
-      console.log("+ ItemName ", i.name);
-      return {
-        cost_per_one: i.costPerOne,
-        notes: i.notes,
-        quantity: i.quantity,
-        restaurant_item_id: i.itemId,
-        in_json: {
-          name: i.name,
-          image : i.image,
-          selected_options: parseSelectedOptions(i.selectedOptions)
-        },
-      };
-    })
-  });
-
-
-  
-
-  
+  }, params);
 
   if(response.insert_restaurant_order_one == null) {
     throw new MezError("orderCreationError");

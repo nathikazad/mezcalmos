@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
@@ -53,8 +54,8 @@ class CustCourierServicesListViewController {
   }
 
   void _getCustomerCurrentLocation() {
-    Location()
-        .getLocation()
+    Get.find<LocationController>()
+        .getCurrentLocation()
         .then((LocationData value) => customerLocation = value);
   }
 
