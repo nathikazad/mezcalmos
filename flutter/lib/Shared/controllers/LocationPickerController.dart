@@ -32,7 +32,8 @@ class LocationPickerController extends MGoogleMapController {
   /// blackScreenBottomTextMargin
   RxDouble blackScreenBottomTextMargin = 0.0.obs;
 
-  LocationPickerController({bool myLocationButtonEnabled = true})
+  LocationPickerController(
+      {bool myLocationButtonEnabled = true, super.enableMezSmartPointer})
       : super(myLocationButtonEnabled: myLocationButtonEnabled);
 
   void showOrHideBlackScreen(bool value) {
@@ -46,6 +47,10 @@ class LocationPickerController extends MGoogleMapController {
   void showFakeMarkerAndPickButton() {
     _showFakeMarker.value = true;
     _bottomButtomToShow.value = BottomButtomToShow.Pick;
+  }
+
+  void showFakeMarker() {
+    _showFakeMarker.value = true;
   }
 
   void hideFakeMarker() {

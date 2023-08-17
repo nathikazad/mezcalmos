@@ -78,6 +78,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
       optionsViewBuilder: (BuildContext context, onSelected,
           Iterable<MapHelper.AutoCompleteResult> options) {
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: List.generate(
               options.length,
               (int index) => MezCard(
@@ -108,12 +109,12 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
           controller: _controller,
           focusNode: _focusNode,
           decoration: _inputDecoration(),
-          onChanged: (String v) {
-            widget.controller?.text = v;
-            if (v.length.isEven == true && v.length > 3) {
-              setState(() {});
-            }
-          },
+          // onChanged: (String v) {
+          //   widget.controller?.text = v;
+          //   if (v.length.isEven == true && v.length > 3) {
+          //     setState(() {});
+          //   }
+          // },
           style: widget.textStyle ??
               widget.labelStyle.copyWith(
                 fontSize: 14,
@@ -147,6 +148,9 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
         _controller.text = selection.description;
         _focusNode?.unfocus();
         if (selection.placeId != null) {
+          if (widget.controller != null) {
+            widget.controller?.text = selection.description;
+          }
           MapHelper.getLocationFromPlaceId(
                   selection.placeId!, selection.description)
               .then((MezLocation? value) {
@@ -280,11 +284,11 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
             overflow: TextOverflow.ellipsis,
           ),
       isDense: true,
-      suffixIconConstraints: BoxConstraints(
-        maxWidth: 30,
-      ),
+      // suffixIconConstraints: BoxConstraints(
+      //   maxWidth: 40,
+      // ),
       suffixIcon: Padding(
-        padding: EdgeInsets.only(right: 3),
+        padding: EdgeInsets.symmetric(horizontal: 8),
         child: setSuffixIcon(),
       ),
       border: OutlineInputBorder(

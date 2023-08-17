@@ -88,9 +88,9 @@ class BusinessAppTheme {
               borderSide: BorderSide.none),
           floatingLabelBehavior: FloatingLabelBehavior.never),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: Colors.white,
-        elevation: 1.0,
-      ),
+          backgroundColor: Colors.white,
+          elevation: 1.0,
+          selectedItemColor: primaryBlueColor),
       bottomAppBarTheme:
           BottomAppBarTheme(color: Color(0xFF6779FE), elevation: 1.0),
 

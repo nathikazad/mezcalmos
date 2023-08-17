@@ -60,7 +60,7 @@ class CustomerAppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: Colors.white,
+          fillColor: Colors.grey.shade200,
           //isDense: true,
           errorStyle: TextStyle(
             fontFamily: "Nunito",
@@ -70,6 +70,16 @@ class CustomerAppTheme {
           ),
           focusColor: Color(0xFF6779FE),
           prefixIconColor: Color(0xFF6779FE),
+          suffixIconColor:
+              MaterialStateColor.resolveWith((Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused)) {
+              return primaryBlueColor;
+            }
+            if (states.contains(MaterialState.error)) {
+              return redAccentColor;
+            }
+            return Colors.grey;
+          }),
           alignLabelWithHint: true,
           hintStyle: TextStyle(
             fontWeight: FontWeight.w400,
@@ -77,6 +87,16 @@ class CustomerAppTheme {
             fontSize: 10.mezSp,
             color: Colors.black.withOpacity(0.8),
           ),
+          iconColor:
+              MaterialStateColor.resolveWith((Set<MaterialState> states) {
+            if (states.contains(MaterialState.focused)) {
+              return primaryBlueColor;
+            }
+            if (states.contains(MaterialState.error)) {
+              return redAccentColor;
+            }
+            return Colors.grey;
+          }),
           contentPadding: EdgeInsets.all(12),
           isDense: true,
           border: OutlineInputBorder(
@@ -89,14 +109,13 @@ class CustomerAppTheme {
               borderRadius: BorderRadius.circular(5.0),
               borderSide: BorderSide.none),
           floatingLabelBehavior: FloatingLabelBehavior.never),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: Colors.white,
-        selectedItemColor: primaryBlueColor,
-        elevation: 1.0,
-      ),
+
       bottomAppBarTheme:
           BottomAppBarTheme(color: Color(0xFF6779FE), elevation: 1.0),
-
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+          elevation: 1.0,
+          selectedItemColor: primaryBlueColor),
       buttonTheme:
           ButtonThemeData(shape: CircleBorder(), padding: EdgeInsets.all(8)),
       dialogTheme: DialogTheme(
@@ -202,9 +221,9 @@ class CustomerAppTheme {
         ),
         titleSmall: TextStyle(
           fontFamily: "Montserrat",
-          fontWeight: FontWeight.w500,
-          fontSize: 12.mezSp,
-          color: Color(0xFF494949),
+          fontWeight: FontWeight.w600,
+          fontSize: 11.mezSp,
+          color: Colors.black,
         ),
         titleMedium: TextStyle(
           fontFamily: "Nunito",
