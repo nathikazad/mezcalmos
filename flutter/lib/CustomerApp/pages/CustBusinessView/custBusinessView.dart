@@ -18,10 +18,10 @@ import 'package:mezcalmos/Shared/helpers/BusinessHelpers/EventHelper.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/RentalHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart' as review;
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
@@ -212,48 +212,53 @@ class _CustBusinessViewState extends State<CustBusinessView>
     }));
   }
 
-  Column _promotions(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Promotions',
-          style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
-        ),
-        SizedBox(height: 5),
-        ..._viewController.promotions.map(
-          (Offer element) {
-            return Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Color(0xFFF0F2FF),
-              ),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    child: Image.asset(
-                      aPriceCheck,
-                      color: Colors.white,
-                      height: 48,
-                      width: 48,
+  Widget _promotions(BuildContext context) {
+    return Flexible(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Promotions',
+            style: context.textTheme.displayMedium?.copyWith(fontSize: 20),
+          ),
+          SizedBox(height: 5),
+          ..._viewController.promotions.map(
+            (Offer element) {
+              return Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xFFF0F2FF),
+                ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      child: Image.asset(
+                        aPriceCheck,
+                        color: Colors.white,
+                        height: 48,
+                        width: 48,
+                      ),
+                      radius: 24,
+                      backgroundColor: primaryBlueColor,
                     ),
-                    radius: 24,
-                    backgroundColor: primaryBlueColor,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    element.name!.getTranslation(userLanguage) ?? "",
-                    style: context.textTheme.bodyMedium!.copyWith(
-                      color: primaryBlueColor,
+                    SizedBox(width: 10),
+                    Flexible(
+                      child: Text(
+                        element.details.getDescription(),
+                        maxLines: 2,
+                        style: context.textTheme.bodyMedium!.copyWith(
+                          color: primaryBlueColor,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ],
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
