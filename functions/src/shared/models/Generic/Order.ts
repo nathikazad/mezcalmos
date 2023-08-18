@@ -84,3 +84,58 @@ export interface TwoWayDeliverableOrder extends DeliverableOrder {
 
 export interface DeliveryDriverInfo extends UserInfo {
 }
+
+export interface CounterOffer {
+  price: number;
+  time: string;
+  name?: string;
+  image?: string;
+  status: CounterOfferStatus;
+  expiryTime: string;
+}
+export enum CounterOfferStatus {
+  Requested = "requested",
+  Accepted = "accepted",
+  Rejected = "rejected",
+  Cancelled = "cancelled",
+}
+export interface CounterOfferResponse {
+  success: boolean,
+  error?: CounterOfferError
+  unhandledError?: string,
+}
+export enum CounterOfferError {
+  UnhandledError = "unhandledError",
+  OrderNotFound = "orderNotFound",
+  DriverNotFound = "driverNotFound",
+  DriverAlreadyAssigned = "driverAlreadyAssigned",
+  InvalidDriverId = "invalidDriverId",
+  StatusNotOrderReceived = "statusNotOrderReceived",
+  DriverUnAuthorized = "driverUnAuthorized",
+  DriverCompanyNotChosen = "driverCompanyNotChosen",
+  CustomerNotFound = "customerNotFound",
+}
+
+export interface AssignDriverDetails {
+  orderId: number,
+  driverId: number,
+  changeDriver?: boolean,
+}
+export interface AssignDriverResponse {
+  success: boolean,
+  error?: AssignDriverError
+  unhandledError?: string,
+}
+
+export enum AssignDriverError {
+  UnhandledError = "unhandledError",
+  OrderNotFound = "orderNotFound",
+  DriverNotFound = "driverNotFound",
+  OperatorNotFound = "operatorNotFound",
+  InvalidOperator = "invalidOperator",
+  UnauthorizedDriver = "unauthorizedDriver",
+  ServiceProviderDeliveryChatNotFound = "serviceProviderDeliveryChatNotFound",
+  DriverAlreadyAssigned = "driverAlreadyAssigned",
+  IncorrectOrderId = "incorrectOrderId",
+  NoCustomerOffer = "noCustomerOffer",
+}

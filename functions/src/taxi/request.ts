@@ -1,12 +1,10 @@
 import { CustomerAppType, Location, MezError, } from "../shared/models/Generic/Generic";
-import { DeliveryAdmin } from "../shared/models/Generic/Delivery";
-import { CreateCourierError } from "../delivery/createCourierOrder";
-import { setCourierChatInfo, setTaxiChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { setTaxiChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
-import { notifyDeliveryDrivers } from "../shared/helper";
+import { notifyAdminsNewOrder, notifyTaxiDrivers } from "../shared/helper";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
-import { PaymentType } from "../shared/models/Generic/Order";
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { createNewTaxiOrder } from "../shared/graphql/taxi/order/createOrder";
 import { TaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
  
@@ -38,9 +36,8 @@ export enum TaxiRequestError {
     UnhandledError = "unhandledError",
     CustomerNotFound = "customerNotFound",
     OrderCreationError = "orderCreationError",
-    NoDeliveryCompanyFound = "noDeliveryCompanyFound",
-    DeliveryCompaniesHaveNoDrivers = "deliveryCompaniesHaveNoDrivers",
-
+    NoTaxiCompanyFound = "noTaxiCompanyFound",
+    TaxiCompaniesHaveNoDrivers = "taxiCompaniesHaveNoDrivers",
 }
 export async function requestTaxi(customerId: number, taxiRequestDetails: TaxiRequestDetails): Promise<TaxiRequestResponse> {
 
@@ -51,26 +48,19 @@ export async function requestTaxi(customerId: number, taxiRequestDetails: TaxiRe
 
         let order: TaxiOrder = await createNewTaxiOrder(customerId, taxiRequestDetails, mezAdmins);
 
-        setTaxiChatInfo(order, customer);
+        setTaxiChatInfo(order, customer); 
         
-        await notifyDeliveryDrivers(courierOrder.deliveryOrder);
+        await notifyTaxiDrivers(order);
         
-        notifyAdmins(mezAdmins, courierOrder.id);
-
-
-        // let userInfo = await getUser(parseInt(customerId));
-        // let order = constructTaxiOrder(orderRequest, userInfo);
-        // let orderRef = await customerNodes.inProcessOrders(customerId).push(order);
-        // let orderId = orderRef.key!
-        // rootNodes.openOrders(OrderType.Taxi, orderId).set(order);
+        notifyAdminsNewOrder(mezAdmins, order.id, OrderType.Courier);
 
         return {
           success: true,
-          orderId: courierOrder.id
+          orderId: order.id
         }
     } catch(e: any) {
         if (e instanceof MezError) {
-            if (Object.values(CreateCourierError).includes(e.message as any)) {
+            if (Object.values(TaxiRequestError).includes(e.message as any)) {
                 return {
                     success: false,
                     error: e.message as any
@@ -78,7 +68,7 @@ export async function requestTaxi(customerId: number, taxiRequestDetails: TaxiRe
             } else {
                 return {
                     success: false,
-                    error: CreateCourierError.UnhandledError,
+                    error: TaxiRequestError.UnhandledError,
                     unhandledError: e.message as any
                 }
             }
@@ -87,7 +77,3 @@ export async function requestTaxi(customerId: number, taxiRequestDetails: TaxiRe
         }
     }
 };
-
-async function notifyDeliveryAdminsNewOrder(deliveryAdmins: Record<string, DeliveryAdmin>, orderId: string) {
-
-}

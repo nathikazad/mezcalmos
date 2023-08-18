@@ -10,7 +10,7 @@
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 
 // export interface AssignCompanyDetails {
-//     deliveryCompanyId: number,
+//     companyId: number,
 //     restaurantOrderId: number
 // }
 
@@ -24,10 +24,10 @@
 //             "restaurant order delivery id is not set"
 //         );
 //     }
-//     updateDeliveryOrderCompany(restaurantOrder.deliveryId, assignDetails.deliveryCompanyId);
+//     updateDeliveryOrderCompany(restaurantOrder.deliveryId, assignDetails.companyId);
 
 //     //notify delivery operator  
-//     let deliveryOperators = await getDeliveryOperators(assignDetails.deliveryCompanyId);
+//     let deliveryOperators = await getDeliveryOperators(assignDetails.companyId);
 
 //     let notification: Notification = {
 //         foreground: <OrderNotification>{

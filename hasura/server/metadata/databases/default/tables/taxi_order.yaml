@@ -20,3 +20,9 @@ object_relationships:
   - name: taxi_company
     using:
       foreign_key_constraint_on: taxi_company_id
+computed_fields:
+  - name: final_cost
+    definition:
+      function:
+        name: finalcost
+        schema: taxi

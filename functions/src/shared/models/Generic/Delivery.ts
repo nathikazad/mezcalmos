@@ -1,5 +1,5 @@
 import { AuthorizationStatus, Location, NotificationInfo } from "./Generic";
-import { OrderType, PaymentType } from "./Order";
+import { CounterOffer, OrderType, PaymentType } from "./Order";
 import { UserInfo } from "./User";
 import {
   ForegroundNotification,
@@ -13,7 +13,7 @@ export interface DeliveryOrder {
   pickupLocation?: Location;
   pickupLocationText?: string;
   dropoffLocation: Location;
-  deliveryDriverId?: number;
+  driverId?: number;
   chatWithServiceProviderId?: number;
   packageReady: boolean;
   chatWithCustomerId: number;
@@ -52,15 +52,6 @@ export interface DeliveryOrder {
   notifiedDrivers: Record<number, boolean>;
 }
 
-export interface CounterOffer {
-  price: number;
-  time: string;
-  name?: string;
-  image?: string;
-  status: CounterOfferStatus;
-  expiryTime: string;
-}
-
 export enum DeliveryDirection {
   FromCustomer = "fromCustomer",
   ToCustomer = "toCustomer",
@@ -70,7 +61,7 @@ export interface DeliveryDriver {
   id: number;
   userId: number;
   deliveryCompanyType: DeliveryServiceProviderType;
-  deliveryCompanyId: number;
+  companyId: number;
   status: AuthorizationStatus;
   appVersion?: string;
   currentLocation?: Location;
@@ -93,12 +84,7 @@ export interface DeliveryDetails {
     selfDelivery: boolean;
 }
 
-export enum CounterOfferStatus {
-  Requested = "requested",
-  Accepted = "accepted",
-  Rejected = "rejected",
-  Cancelled = "cancelled",
-}
+
 export enum DeliveryOrderStatus {
   OrderReceived = "orderReceived",
   OnTheWayToPickup = "onTheWayToPickup",
@@ -136,14 +122,14 @@ export interface AssignDeliveryCompanyNotification
   extends ForegroundNotification {
   orderType: OrderType;
   orderId: number;
-  deliveryCompanyId: number;
+  companyId: number;
 }
 
 export interface AssignDeliveryCompanyNotificationForQueue
   extends NotificationForQueue {
   orderType: OrderType;
   orderId: number;
-  deliveryCompanyId: number;
+  companyId: number;
 }
 
 export interface AuthorizeDriverNotification extends ForegroundNotification {

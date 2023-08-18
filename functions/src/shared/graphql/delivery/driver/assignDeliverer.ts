@@ -14,7 +14,7 @@ export async function assignDeliveryDriver(deliveryOrder: DeliveryOrder, driver:
       },
       _set: {
         delivery_driver_id: driver.id,
-        service_provider_id: driver.deliveryCompanyId,
+        service_provider_id: driver.companyId,
         counter_offers: $`counter_offers`,
         delivery_cost: deliveryOrder.deliveryCost,
       }

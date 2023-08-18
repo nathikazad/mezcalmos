@@ -5,11 +5,3 @@ object_relationships:
   - name: business
     using:
       foreign_key_constraint_on: business_id
-array_relationships:
-  - name: operators
-    using:
-      foreign_key_constraint_on:
-        column: company_id
-        table:
-          name: operator
-          schema: taxi

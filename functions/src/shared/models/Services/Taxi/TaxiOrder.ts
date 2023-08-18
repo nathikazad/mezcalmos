@@ -1,10 +1,9 @@
-import { PaymentType } from "../../Generic/Order"
+import { CounterOffer, PaymentType } from "../../Generic/Order"
 import { UserInfo } from "../../Generic/User"
 import { CustomerAppType, Location } from '../../Generic/Generic';
 // import { RouteInformation } from '../../Generic/RouteInformation';
 import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../../Notification";
 import { OrderStripeInfo } from "../../stripe";
-import { CounterOffer } from "../../Generic/Delivery";
 
 export interface TaxiOrder  {
   id: number;
@@ -21,6 +20,7 @@ export interface TaxiOrder  {
   refundAmount: number;
   chatId: number;
   cost: number;
+  finalCost?: number;
   driverId?: number;
   cancellationTime?: string;
   estimatedArrivalAtPickupTime?: string;
@@ -37,8 +37,8 @@ export interface TaxiOrder  {
   billImage?: string;
   currentGps?: Location
   notifiedDrivers: Record<number, boolean>;
-  chosenCompanies?: Array<number>;
-  counterOffers?: Record<number, CounterOffer>;
+  chosenCompanies: Array<number>;
+  counterOffers: Record<number, CounterOffer>;
   scheduledTime?: string,
 
   // routeInformation: RouteInformation,

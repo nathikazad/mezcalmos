@@ -3,14 +3,14 @@ import { AppType, Language, MezError, NotificationInfo } from "../../../models/G
 import { AuthorizationStatus } from "../../../models/Generic/Generic";
 import { Operator } from "../../../models/Services/Service";
 
-export async function getDeliveryOperators(deliveryCompanyId: number): Promise<Operator[]> {
+export async function getDeliveryOperators(companyId: number): Promise<Operator[]> {
     let chain = getHasura();
 
     let response = await chain.query({
         delivery_operator: [{
             where: {
                 delivery_company_id: {
-                    _eq: deliveryCompanyId
+                    _eq: companyId
                 }
             }
         }, {
@@ -41,7 +41,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<O
             id: d.id,
             userId: d.user_id,
             detailsId: d.operator_details.id,
-            serviceProviderId: deliveryCompanyId,
+            serviceProviderId: companyId,
             status: d.operator_details.status as AuthorizationStatus,
             owner: d.operator_details.owner,
             online: d.operator_details.online,

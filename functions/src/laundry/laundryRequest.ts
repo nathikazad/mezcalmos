@@ -151,7 +151,7 @@ async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider,
                 body: `There is a new laundry order`
             }
         },
-        linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
+        linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId)
     }
     mezAdmins.forEach((m) => {
         pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);

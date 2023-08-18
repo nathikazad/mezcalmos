@@ -3,14 +3,11 @@ import { createNewCourierOrder } from "../shared/graphql/delivery/courier/create
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { notifyDeliveryDrivers } from "../shared/helper";
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { CustomerAppType, Language, Location, MezError } from "../shared/models/Generic/Generic";
+import { CustomerAppType, Location, MezError } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
-import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
 import { CourierItem, CourierOrder } from "../shared/models/Services/Courier/Courier";
-import { orderUrl } from "../utilities/senders/appRoutes";
-import { pushNotification } from "../utilities/senders/notifyUser";
+import { notifyAdminsNewOrder } from "../shared/helper";
 
 export interface CourierRequest {
     toLocation: Location,
@@ -55,7 +52,7 @@ export async function createCourierOrder(customerId: number, courierRequest: Cou
         
         await notifyDeliveryDrivers(courierOrder.deliveryOrder);
         
-        notifyAdmins(mezAdmins, courierOrder.id);
+        notifyAdminsNewOrder(mezAdmins, courierOrder.id, OrderType.Courier);
         
         return {
             success: true,
@@ -79,31 +76,4 @@ export async function createCourierOrder(customerId: number, courierRequest: Cou
         throw e
         }
     }
-}
-
-function notifyAdmins(mezAdmins: MezAdmin[], orderId: number) {
-
-    let notification: Notification = {
-        foreground: <OrderNotification>{
-            time: (new Date()).toISOString(),
-            notificationType: NotificationType.NewOrder,
-            orderType: OrderType.Courier,
-            orderId: orderId,
-            notificationAction: NotificationAction.ShowSnackBarAlways,
-        },
-        background: {
-            [Language.ES]: {
-                title: "Nueva Pedido",
-                body: `Hay un nuevo pedido de mensajería`
-            },
-            [Language.EN]: {
-                title: "New Order",
-                body: `There is a new courier order`
-            }
-        },
-        linkUrl: orderUrl(OrderType.Courier, orderId)
-    }
-    mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin, m.language);
-    });
 }

@@ -1,4 +1,5 @@
-import { AuthorizationStatus } from "../../Generic/Generic";
+import { AuthorizationStatus, Location, NotificationInfo } from "../../Generic/Generic";
+import { UserInfo } from "../../Generic/User";
 import { ForegroundNotification } from "../../Notification";
 import { Business } from "../Business/Business";
 
@@ -15,6 +16,8 @@ export interface Taxi {
   id: number,
   carNumber: string,  
   carName: string,
+  minimumCost?: number,
+  costPerKm?: number
 }
 
 export interface State {
@@ -23,6 +26,18 @@ export interface State {
   currentOrderId?: string;
 }
 
+export interface TaxiDriver {
+  id: number;
+  userId: number;
+  companyId: number;
+  status: AuthorizationStatus;
+  appVersion?: string;
+  currentLocation?: Location;
+  user?: UserInfo;
+  online?: boolean;
+  notificationInfo?: NotificationInfo;
+  taxi: Taxi;
+}
 
 
 

@@ -99,7 +99,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     deliveryDriver: (response.delivery_order_by_pk.delivery_driver) ? {
       id: response.delivery_order_by_pk.delivery_driver.id,
       deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
-      deliveryCompanyId: response.delivery_order_by_pk.delivery_driver.delivery_company_id,
+      companyId: response.delivery_order_by_pk.delivery_driver.delivery_company_id,
       status: response.delivery_order_by_pk.delivery_driver.status as AuthorizationStatus,
       userId: response.delivery_order_by_pk.delivery_driver.user.id,
       user: {
@@ -159,12 +159,12 @@ export async function getNotifiedDrivers(): Promise<any> {
     }
   });
 }
-export async function getDeliveryCompany(deliveryCompanyId: number): Promise<ServiceProvider> {
+export async function getDeliveryCompany(companyId: number): Promise<ServiceProvider> {
   let chain = getHasura();
 
   let response = await chain.query({
     delivery_company_by_pk: [{
-      id: deliveryCompanyId,
+      id: companyId,
     }, {
       details: {
         id: true,
@@ -201,7 +201,7 @@ export async function getDeliveryCompany(deliveryCompanyId: number): Promise<Ser
     return {
       id: o.id,
       detailsId: o.details_id,
-      serviceProviderId: deliveryCompanyId,
+      serviceProviderId: companyId,
       userId: o.user_id,
       status: o.operator_details.status as AuthorizationStatus,
       online: o.operator_details.online,
@@ -209,7 +209,7 @@ export async function getDeliveryCompany(deliveryCompanyId: number): Promise<Ser
   })
 
   return {
-    id: deliveryCompanyId,
+    id: companyId,
     serviceProviderDetailsId: response.delivery_company_by_pk.details.id,
     name: response.delivery_company_by_pk.details.name,
     image: response.delivery_company_by_pk.details.image,

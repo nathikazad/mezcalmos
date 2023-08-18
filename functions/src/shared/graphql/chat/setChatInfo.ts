@@ -11,6 +11,7 @@ import { CourierOrder } from "../../models/Services/Courier/Courier";
 import { LaundryOrder } from "../../models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
 import { ServiceProvider } from "../../models/Services/Service";
+import { TaxiDriver } from "../../models/Services/Taxi/Taxi";
 import { TaxiOrder } from "../../models/Services/Taxi/TaxiOrder";
 
 export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: ServiceProvider, delivery: DeliveryOrder, customer: CustomerInfo) {
@@ -548,4 +549,38 @@ export async function setTaxiChatInfo(taxiOrder: TaxiOrder, customer: CustomerIn
     }
   });
   
+}
+
+
+export async function updateTaxiChatInfo(order: TaxiOrder, driver: TaxiDriver) {
+  let chain = getHasura();
+
+  let response = await chain.query({
+    chat_by_pk: [{
+      id: order.chatId
+    }, {
+      chat_info: [{}, true]
+    }]
+  })
+  let chatInfo = (response.chat_by_pk?.chat_info)
+  chatInfo.CustomerApp = {
+    ...chatInfo.CustomerApp,
+    chatTitle: driver.user?.name ?? "Driver",
+    chatImage: driver.user?.image,
+    phoneNumber: driver.user?.phoneNumber
+  }
+  chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: order.chatId
+      },
+      _set: {
+        chat_info: $`chat_info`,
+      } 
+    }, {
+      id: true
+    }]
+  }, {
+    "chat_info": chatInfo
+  });
 }

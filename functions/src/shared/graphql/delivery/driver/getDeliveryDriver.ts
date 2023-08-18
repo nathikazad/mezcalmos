@@ -80,7 +80,7 @@ export async function getDeliveryDriver(deliveryDriverId: number): Promise<Deliv
       id: deliveryDriverId,
       userId: response.delivery_driver_by_pk.user_id,
       deliveryCompanyType: response.delivery_driver_by_pk.delivery_company_type as DeliveryServiceProviderType,
-      deliveryCompanyId: response.delivery_driver_by_pk.delivery_company_id,
+      companyId: response.delivery_driver_by_pk.delivery_company_id,
       status: response.delivery_driver_by_pk.status as AuthorizationStatus,
       online: response.delivery_driver_by_pk.online,
       user: {
@@ -158,7 +158,7 @@ export async function getDeliveryDrivers(deliveryCompanyIds: number[]): Promise<
         id: d.id,
         userId: d.user_id,
         deliveryCompanyType: DeliveryServiceProviderType.DeliveryCompany,
-        deliveryCompanyId: d.delivery_company_id,
+        companyId: d.delivery_company_id,
         status: d.status as AuthorizationStatus,
         online: d.online,
         user: {
@@ -233,7 +233,7 @@ export async function getAllDrivers(): Promise<DeliveryDriver[]> {
         id: d.id,
         userId: d.user_id,
         deliveryCompanyType: DeliveryServiceProviderType.DeliveryCompany,
-        deliveryCompanyId: d.delivery_company_id,
+        companyId: d.delivery_company_id,
         status: d.status as AuthorizationStatus,
         online: d.online,
         user: {

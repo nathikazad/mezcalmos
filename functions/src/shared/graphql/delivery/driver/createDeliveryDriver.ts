@@ -91,7 +91,7 @@ export async function createDeliveryDriver(userId: number, serviceProvider: Serv
         id: mutationResponse.insert_delivery_driver_one?.id,
         userId,
         deliveryCompanyType,
-        deliveryCompanyId: serviceProvider.id,
+        companyId: serviceProvider.id,
         status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: (addDriverDetails.notificationToken) ? {
             appType: AppType.Delivery,

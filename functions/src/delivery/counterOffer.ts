@@ -1,45 +1,17 @@
-import { getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { updateDeliveryCounterOffers } from "../shared/graphql/delivery/updateDelivery";
-import { getLaundryOrderFromDelivery } from "../shared/graphql/laundry/order/getLaundryOrder";
-import { getRestaurantOrderFromDelivery } from "../shared/graphql/restaurant/order/getRestaurantOrder";
-import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
-import { ParticipantType } from "../shared/models/Generic/Chat";
-import { CounterOfferStatus, DeliveryDriver, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
-import { AuthorizationStatus, MezError } from "../shared/models/Generic/Generic";
-import { OrderType } from "../shared/models/Generic/Order";
-import { CustomerInfo } from "../shared/models/Generic/User";
-import { OrderNotification, NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
-import { CourierOrder } from "../shared/models/Services/Courier/Courier";
-import { LaundryOrder } from "../shared/models/Services/Laundry/LaundryOrder";
-import { RestaurantOrder } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import { pushNotification } from "../utilities/senders/notifyUser";
+import { counterOfferErrorCheck, notifyCounterOffer } from "../shared/helper";
+import { DeliveryDriver, DeliveryOrder } from "../shared/models/Generic/Delivery";
+import { CounterOfferError, CounterOfferResponse, CounterOfferStatus, MezError } from "../shared/models/Generic/Generic";
 
-export interface CounterOfferRequest {
+export interface DeliveryCounterOfferRequest {
     deliveryOrderId: number,
-
     deliveryDriverId: number,
     newPrice: number,
 }
-export interface CounterOfferResponse {
-    success: boolean,
-    error?: CounterOfferError
-    unhandledError?: string,
 
-}
-export enum CounterOfferError {
-    UnhandledError = "unhandledError",
-    OrderNotFound = "orderNotFound",
-    DriverNotFound = "driverNotFound",
-    DriverAlreadyAssigned = "driverAlreadyAssigned",
-    InvalidDriverId = "invalidDriverId",
-    StatusNotOrderReceived = "statusNotOrderReceived",
-    DriverUnAuthorized = "driverUnAuthorized",
-    DriverCompanyNotChosen = "driverCompanyNotChosen",
-    CustomerNotFound = "customerNotFound",
-}
-export async function requestCounterOffer(userId: number, counterOfferRequest: CounterOfferRequest): Promise<CounterOfferResponse> {
+export async function requestDeliveryCounterOffer(userId: number, counterOfferRequest: DeliveryCounterOfferRequest): Promise<CounterOfferResponse> {
     try {
         let deliveryOrder: DeliveryOrder = await getDeliveryOrder(counterOfferRequest.deliveryOrderId);
         let deliveryDriver: DeliveryDriver = await getDeliveryDriver(counterOfferRequest.deliveryDriverId);
@@ -58,7 +30,7 @@ export async function requestCounterOffer(userId: number, counterOfferRequest: C
         
         updateDeliveryCounterOffers(deliveryOrder);
 
-        notifyCounterOffer(deliveryOrder)
+        notifyCounterOffer(deliveryOrder.orderType, deliveryOrder.customerId, 0, deliveryOrder)
         return {
             success: true,
         }
@@ -80,74 +52,4 @@ export async function requestCounterOffer(userId: number, counterOfferRequest: C
         throw e
         }
     }
-}
-
-function counterOfferErrorCheck(deliveryOrder: DeliveryOrder, deliveryDriver: DeliveryDriver, userId: number) {
-    if(deliveryOrder.deliveryDriver) {
-        throw new MezError(CounterOfferError.DriverAlreadyAssigned);
-    }
-    if(deliveryDriver.userId != userId) {
-        throw new MezError(CounterOfferError.InvalidDriverId);
-    }
-    if (deliveryOrder.status != DeliveryOrderStatus.OrderReceived) {
-        throw new MezError(CounterOfferError.StatusNotOrderReceived);
-    }
-    if(deliveryDriver.status != AuthorizationStatus.Authorized) {
-        throw new MezError(CounterOfferError.DriverUnAuthorized);
-    }
-    if(deliveryOrder.chosenCompanies?.find(id => id == deliveryDriver.deliveryCompanyId) == undefined) {
-        throw new MezError(CounterOfferError.DriverCompanyNotChosen);
-    }
-}
-
-async function notifyCounterOffer(deliveryOrder: DeliveryOrder) {
-    let customer: CustomerInfo = await getCustomer(deliveryOrder.customerId);
-    let orderId: number;
-    let linkUrlForCustomer: string;
-    switch (deliveryOrder.orderType) {
-        case OrderType.Restaurant:
-            let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(deliveryOrder.deliveryId);
-            orderId = restaurantOrder.orderId;
-            linkUrlForCustomer = `/restaurantOrders/${orderId}`;
-            break;
-        case OrderType.Laundry:
-            let laundryOrder: LaundryOrder = await getLaundryOrderFromDelivery(deliveryOrder);
-            orderId = laundryOrder.orderId;
-            linkUrlForCustomer = `/laundryOrders/${orderId}`;
-            break;
-        default:
-            let courierOrder: CourierOrder = await getCourierOrderFromDelivery(deliveryOrder);
-            orderId = courierOrder.id;
-            linkUrlForCustomer = `/courierOrders/${orderId}`;
-            break;
-    }
-
-    let notification: Notification = {
-        foreground: <OrderNotification>{
-            time: (new Date()).toISOString(),
-            notificationType: NotificationType.NewCounterOffer,
-            orderType: deliveryOrder.orderType,
-            notificationAction: NotificationAction.NavigteToLinkUrl,
-            orderId
-        },
-        background: {
-            en: {
-                title: `Delivery Counter Offer`,
-                body: `Driver is requesting counter offer in delivery price`
-            },
-            es: {
-                title: `Oferta de mostrador de entrega`,
-                body: `El conductor está solicitando una contraoferta en el precio de entrega.`
-            }
-        },
-        linkUrl: linkUrlForCustomer
-    };
-    pushNotification(
-        customer.firebaseId,
-        notification,
-        customer.notificationInfo,
-        ParticipantType.Customer,
-        customer.language
-    );
-
 }

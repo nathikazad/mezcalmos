@@ -2,68 +2,35 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, CounterOfferStatus, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
+import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
-import { deleteDeliveryChatMessagesAndParticipant } from "../shared/graphql/chat/deleteChatMessages";
-import { isMezAdmin } from "../shared/helper";
-import { AuthorizationStatus, MezError } from "../shared/models/Generic/Generic"
+import { deleteChatMessagesAndParticipant } from "../shared/graphql/chat/deleteChatMessages";
+import { assignDriverErrorChecks } from "../shared/helper";
+import {  MezError } from "../shared/models/Generic/Generic"
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { clearLock, setLockTime } from "../shared/graphql/delivery/updateDelivery";
-import { checkOperator } from "../shared/graphql/operator/updateOperatorStatus";
-// import { ParticipantType } from "../shared/models/Generic/Chat";
+import { AssignDriverDetails, AssignDriverResponse, AssignDriverError, CounterOfferStatus } from "../shared/models/Generic/Order";
 
-export interface AssignDriverDetails {
-  deliveryOrderId: number,
-  deliveryDriverId: number,
-  changeDriver?: boolean,
-}
-export interface AssignDriverResponse {
-  success: boolean,
-  error?: AssignDriverError
-  unhandledError?: string,
-}
-
-export enum AssignDriverError {
-  UnhandledError = "unhandledError",
-  OrderNotFound = "orderNotFound",
-  DriverNotFound = "driverNotFound",
-  OperatorNotFound = "operatorNotFound",
-  InvalidOperator = "invalidOperator",
-  UnauthorizedDriver = "unauthorizedDriver",
-  ServiceProviderDeliveryChatNotFound = "serviceProviderDeliveryChatNotFound",
-  DriverAlreadyAssigned = "driverAlreadyAssigned",
-  IncorrectOrderId = "incorrectOrderId",
-  NoCustomerOffer = "noCustomerOffer",
-}
 
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails): Promise<AssignDriverResponse> {
-  // assignDriverDetails.deliveryDriverType = 'delivery_driver';
+  
   try {
     if(assignDriverDetails.changeDriver == null) {
-      await setLockTime(assignDriverDetails.deliveryOrderId)
+      await setLockTime(assignDriverDetails.orderId)
     }
-    let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryOrderId);
-    let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId)//, assignDriverDetails.deliveryDriverType);
+    let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.orderId);
+    let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.driverId)
     let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
     let deliveryOrder: DeliveryOrder = promiseResponse[0];
     let deliveryDriver: DeliveryDriver = promiseResponse[1];
 
-    if((await isMezAdmin(userId)) == false  && deliveryDriver.userId != userId && deliveryOrder.customerId != userId) {
-      // await checkIfOperatorAuthorized(deliveryOrder, userId);
-      
-      if(deliveryOrder.serviceProviderType != DeliveryServiceProviderType.DeliveryCompany)
-        checkOperator(userId, deliveryOrder.serviceProviderId!, deliveryOrder.serviceProviderType);
-      else
-        throw new MezError(AssignDriverError.IncorrectOrderId);
-    }
-    if(deliveryDriver.status != AuthorizationStatus.Authorized) {
-      throw new MezError(AssignDriverError.UnauthorizedDriver);
-    }
-    if (deliveryOrder.deliveryDriverId != null) {
+    await assignDriverErrorChecks(userId, deliveryDriver, deliveryOrder.customerId, deliveryOrder);
+
+    if (deliveryOrder.driverId != null) {
       if (assignDriverDetails.changeDriver) {
-        await deleteDeliveryChatMessagesAndParticipant(deliveryOrder);
+        await deleteChatMessagesAndParticipant(deliveryOrder.driverId, deliveryOrder.chatWithCustomerId, deliveryOrder.chatWithServiceProviderId);
       } else {
         throw new MezError(AssignDriverError.DriverAlreadyAssigned);
       }
@@ -74,7 +41,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
     deliveryOrder.deliveryCost = deliveryOrder.customerOffer;
     for (let driverId in deliveryOrder.counterOffers) {
       if(deliveryOrder.counterOffers[parseInt(driverId)].status == CounterOfferStatus.Requested) {
-        if(parseInt(driverId) != assignDriverDetails.deliveryDriverId) {
+        if(parseInt(driverId) != assignDriverDetails.driverId) {
           deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Rejected;
         } else {
           deliveryOrder.counterOffers[parseInt(driverId)].status = CounterOfferStatus.Accepted;
@@ -112,7 +79,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
     }
 
   } finally {
-    clearLock(assignDriverDetails.deliveryOrderId);
+    clearLock(assignDriverDetails.orderId);
   }
 };
 

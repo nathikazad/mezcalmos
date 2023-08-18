@@ -7,9 +7,7 @@ import { TaxiOrder, TaxiOrderStatus } from "../../../models/Services/Taxi/TaxiOr
 
 export async function createNewTaxiOrder(
     customerId: number,
-    // restaurant: ServiceProvider, 
     taxiRequestDetails: TaxiRequestDetails,
-    // customerCart: Cart, 
     mezAdmins: MezAdmin[]
 ): Promise<TaxiOrder> {
 
@@ -67,9 +65,6 @@ export async function createNewTaxiOrder(
             id: true,
             order_time: true,
             chat_id: true,
-            // items: [{}, {
-            //     id: true,
-            // }]
         }]
     }, params);
     if (response.insert_taxi_order_one == null) {
@@ -96,6 +91,7 @@ export async function createNewTaxiOrder(
         tripPolyline: taxiRequestDetails.tripPolyline,
         scheduledTime: taxiRequestDetails.scheduledTime,
         chosenCompanies: taxiRequestDetails.chosenCompanies,
-        notifiedDrivers: [],
+        notifiedDrivers: {},
+        counterOffers: {}
     }
 }

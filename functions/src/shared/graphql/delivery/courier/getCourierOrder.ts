@@ -147,7 +147,7 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
             deliveryDriver: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver) ? {
                 id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.id,
                 deliveryCompanyType: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
-                deliveryCompanyId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_id,
+                companyId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_id,
                 status: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.status as AuthorizationStatus,
                 userId: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.user.id,
                 user: {
@@ -383,7 +383,7 @@ export async function getCourierOrderByDeliveryId(deliveryOrderId: number): Prom
             deliveryDriver: (response.delivery_courier_order[0].delivery_order.delivery_driver) ? {
                 id: response.delivery_courier_order[0].delivery_order.delivery_driver.id,
                 deliveryCompanyType: response.delivery_courier_order[0].delivery_order.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
-                deliveryCompanyId: response.delivery_courier_order[0].delivery_order.delivery_driver.delivery_company_id,
+                companyId: response.delivery_courier_order[0].delivery_order.delivery_driver.delivery_company_id,
                 status: response.delivery_courier_order[0].delivery_order.delivery_driver.status as AuthorizationStatus,
                 userId: response.delivery_courier_order[0].delivery_order.delivery_driver.user.id,
                 user: {

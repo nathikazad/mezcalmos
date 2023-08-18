@@ -22,7 +22,7 @@ export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   });
 }
 
-// export async function updateDeliveryOrderCompany(deliveryOrderId: number, deliveryCompanyId: number) {
+// export async function updateDeliveryOrderCompany(deliveryOrderId: number, companyId: number) {
 //   let chain = getHasura();
 
 //   await chain.mutation({
@@ -32,7 +32,7 @@ export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
 //       },
 //       _set: {
 //         service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
-//         service_provider_id: deliveryCompanyId
+//         service_provider_id: companyId
 //       }
 //     }, {
 //       delivery_company: {
@@ -142,7 +142,7 @@ export async function updateDeliveryCounterOffers(deliveryOrder: DeliveryOrder) 
   
 }
 
-export async function setNotifiedDrivers(deliveryOrder: DeliveryOrder) {
+export async function setNotifiedDeliveryDrivers(deliveryOrder: DeliveryOrder) {
   let chain = getHasura();
 
   await chain.mutation({
