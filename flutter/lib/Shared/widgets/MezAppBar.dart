@@ -31,6 +31,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     bool showUserIcon = true,
     Widget? titleWidget,
     bool showNotifications = true,
+    bool backButtonGradient = true,
     String? ordersRoute,
     bool showLoadingEffect = false,
     PreferredSizeWidget? tabBar,
@@ -40,8 +41,8 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
         return _backButton(
-          click: autoBack ? (onClick ?? () => MezRouter.back()) : onClick,
-        );
+            click: autoBack ? (onClick ?? () => MezRouter.back()) : onClick,
+            withGradient: backButtonGradient);
       case AppBarLeftButtonType.Menu:
       default:
         return _menuButton();
@@ -205,7 +206,7 @@ bool get showIntallAppBtn {
           defaultTargetPlatform == TargetPlatform.iOS);
 }
 
-Widget _backButton({required VoidCallback? click}) {
+Widget _backButton({required VoidCallback? click, bool withGradient = true}) {
   return Transform.scale(
     scale: 0.6,
     child: InkWell(
@@ -221,8 +222,8 @@ Widget _backButton({required VoidCallback? click}) {
               offset: Offset(0, 7), // changes position of shadow
             ),
           ],
-          color: click == null ? Colors.grey.shade200 : null,
-          gradient: click == null
+          color: click == null ? Colors.grey.shade200 : primaryBlueColor,
+          gradient: click == null || withGradient == false
               ? null
               : LinearGradient(colors: [
                   Color.fromARGB(255, 97, 127, 255),

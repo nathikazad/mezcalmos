@@ -47,7 +47,7 @@ class _CustTaxiOrderViewState extends State<CustTaxiOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back, title: "Order"),
+          onClick: MezRouter.back, title: "Order", backButtonGradient: false),
       body: Stack(
         children: [
           MGoogleMap(
