@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfluencersView/components/ServiceInfluencerCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfluencersView/controllers/ServiceInfluencersViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -57,8 +59,20 @@ class _ServiceInfluencersViewState extends State<ServiceInfluencersView>
         controller: viewController.tabController,
         children: [
           SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
             child: Column(
-              children: [Text("Partners")],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(
+                  () => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(
+                        viewController.partners.length,
+                        (int index) => ServiceInfluencerCard(
+                            influencer: viewController.partners[index])),
+                  ),
+                )
+              ],
             ),
           ),
           SingleChildScrollView(

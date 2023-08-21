@@ -1,4 +1,16 @@
 extension ParseNumber on num {
+  String get toCount {
+    if (this < 1000) {
+      return toStringAsFixed(0);
+    } else if (this < 1000000) {
+      final int thousands = (this / 1000).truncate();
+      return thousands.toString() + 'k';
+    } else {
+      final int millions = (this / 1000000).truncate();
+      return millions.toString() + 'M';
+    }
+  }
+
   num get doubleWithoutDecimalToInt {
     return this % 1 == 0 ? toInt() : this;
   }

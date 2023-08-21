@@ -20,6 +20,7 @@ class MezCard extends StatelessWidget {
       this.secondAvatarBgColor,
       this.secondAvatarBgImage,
       this.borderRadius = 10,
+      this.bottomWidget,
       this.secondAvatarIcon,
       this.secondAvatarIconColor,
       this.leading,
@@ -39,6 +40,7 @@ class MezCard extends StatelessWidget {
   final double radius;
   final Widget content;
   final Widget? action;
+  final Widget? bottomWidget;
   final Widget? leading;
   final double borderRadius;
   final double? elevation;
@@ -67,69 +69,75 @@ class MezCard extends StatelessWidget {
             onTap: onClick,
             child: Container(
               padding: contentPadding,
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // leading //
-                  if (leading != null) leading!,
+                  Row(
+                    children: [
+                      // leading //
+                      if (leading != null) leading!,
 
-                  // first avatars//
-                  if (firstAvatarBgImage != null ||
-                      firstAvatarIcon != null ||
-                      firstAvatarBgColor != null)
-                    Stack(
-                      alignment: Alignment.center,
-                      clipBehavior: Clip.none,
-                      children: [
-                        CircleAvatar(
-                          radius: radius,
-                          backgroundColor: firstAvatarBgColor,
-                          backgroundImage: firstAvatarBgImage,
-                          child: Icon(
-                            firstAvatarIcon,
-                            color: firstAvatarIconColor,
-                            size: radius + 3,
-                          ),
-                        ),
-                        if (secondAvatarBgImage != null ||
-                            secondAvatarIcon != null ||
-                            secondAvatarBgColor != null)
-                          Positioned(
-                            right: -35,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: radius + 2,
-                              child: CircleAvatar(
-                                radius: radius,
-                                backgroundColor: secondAvatarBgColor,
-                                backgroundImage: secondAvatarBgImage,
-                                child: Icon(
-                                  secondAvatarIcon,
-                                  size: radius + 3,
-                                  color: secondAvatarIconColor,
-                                ),
+                      // first avatars//
+                      if (firstAvatarBgImage != null ||
+                          firstAvatarIcon != null ||
+                          firstAvatarBgColor != null)
+                        Stack(
+                          alignment: Alignment.center,
+                          clipBehavior: Clip.none,
+                          children: [
+                            CircleAvatar(
+                              radius: radius,
+                              backgroundColor: firstAvatarBgColor,
+                              backgroundImage: firstAvatarBgImage,
+                              child: Icon(
+                                firstAvatarIcon,
+                                color: firstAvatarIconColor,
+                                size: radius + 3,
                               ),
                             ),
-                          )
-                      ],
-                    ),
+                            if (secondAvatarBgImage != null ||
+                                secondAvatarIcon != null ||
+                                secondAvatarBgColor != null)
+                              Positioned(
+                                right: -35,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: radius + 2,
+                                  child: CircleAvatar(
+                                    radius: radius,
+                                    backgroundColor: secondAvatarBgColor,
+                                    backgroundImage: secondAvatarBgImage,
+                                    child: Icon(
+                                      secondAvatarIcon,
+                                      size: radius + 3,
+                                      color: secondAvatarIconColor,
+                                    ),
+                                  ),
+                                ),
+                              )
+                          ],
+                        ),
 
-                  SizedBox(
-                    width: ((firstAvatarBgImage != null ||
-                                firstAvatarIcon != null ||
-                                firstAvatarBgColor != null) &&
-                            (secondAvatarBgColor != null ||
-                                secondAvatarBgImage != null ||
-                                secondAvatarIcon != null))
-                        ? 40
-                        : 10,
-                  ),
-                  Flexible(fit: FlexFit.tight, child: content),
+                      SizedBox(
+                        width: ((firstAvatarBgImage != null ||
+                                    firstAvatarIcon != null ||
+                                    firstAvatarBgColor != null) &&
+                                (secondAvatarBgColor != null ||
+                                    secondAvatarBgImage != null ||
+                                    secondAvatarIcon != null))
+                            ? 40
+                            : 10,
+                      ),
+                      Flexible(fit: FlexFit.tight, child: content),
 
-                  // buttons //
-                  SizedBox(
-                    width: 5,
+                      // buttons //
+                      SizedBox(
+                        width: 5,
+                      ),
+                      if (action != null) action!,
+                    ],
                   ),
-                  if (action != null) action!,
+                  if (bottomWidget != null) ...[Divider(), bottomWidget!]
                 ],
               ),
             ),
