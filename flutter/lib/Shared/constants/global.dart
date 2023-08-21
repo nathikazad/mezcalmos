@@ -6,7 +6,9 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:rive/rive.dart' as rive;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -403,3 +405,8 @@ Widget get hBigSeperator => SizedBox(width: 25);
 
 //
 const double defaultDistance = 1000000000;
+MezLocation aDefaultLocation = MezLocation(
+    "Test _ Location ",
+    LocationData.fromMap(
+      {"latitude": 15.872451864887513, "longitude": -97.0771243663329},
+    ));

@@ -48,8 +48,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                       null
                   ? LocationPicker(
                       showBottomButton: false,
-
-                      //  recenterBtnBottomPadding: 220,
+                      recenterBtnBottomPadding: 80,
                       locationPickerMapController:
                           viewController.locationPickerController,
                       notifyParentOfConfirm: (_) {},

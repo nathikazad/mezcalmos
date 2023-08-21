@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierServiceView/CustCourierServiceView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/CustOrderDeliverySelector.dart';
 
 class CustOrderDeliverySelectorController {
@@ -33,8 +39,77 @@ class CustOrderDeliverySelectorController {
     _onSelectionUpdate = onSelectionUpdate;
     _onEstDeliveryPriceChange = onEstDeliveryPriceChange;
     mezDbgPrint("Distance $distance");
-
-    _fetchCompanies();
+    if (type == CustDeliverySelectorType.Taxi) {
+      deliveryCompanies.value = [
+        DeliveryCompany(
+            rate: 3.7,
+            numberOfReviews: 4,
+            info: ServiceInfo(
+                location: aDefaultLocation,
+                hasuraId: 0,
+                image:
+                    "https://t4.ftcdn.net/jpg/01/51/73/15/360_F_151731523_9svpFTdFSaOC0gcoEeMuDqckjPS3mvmm.jpg",
+                name: "MezTaxi"),
+            state: ServiceState(ServiceStatus.Open, true),
+            isOpen: true,
+            serviceDetailsId: 1,
+            languages: ServiceProviderLanguage(primary: Language.EN),
+            schedule: null,
+            deliveryCost: DeliveryCost(
+              costPerKm: 25,
+              id: null,
+              minimumCost: 0,
+              selfDelivery: true,
+            ),
+            onlineOrdering: true,
+            creationTime: DateTime.now()),
+        DeliveryCompany(
+            rate: 4,
+            numberOfReviews: 5,
+            info: ServiceInfo(
+                location: aDefaultLocation,
+                hasuraId: 1,
+                image:
+                    "https://t3.ftcdn.net/jpg/05/24/56/02/360_F_524560208_1O26bz3jdLuZHt77Yu82dXcL0ZvECaZN.jpg",
+                name: "NearTaxi"),
+            state: ServiceState(ServiceStatus.Open, true),
+            isOpen: true,
+            serviceDetailsId: 3,
+            languages: ServiceProviderLanguage(primary: Language.EN),
+            schedule: null,
+            deliveryCost: DeliveryCost(
+              costPerKm: 15,
+              id: null,
+              minimumCost: 0,
+              selfDelivery: true,
+            ),
+            onlineOrdering: true,
+            creationTime: DateTime.now()),
+        DeliveryCompany(
+            rate: 4.2,
+            numberOfReviews: 2,
+            info: ServiceInfo(
+                location: aDefaultLocation,
+                hasuraId: 2,
+                image:
+                    "https://st.depositphotos.com/1987177/2213/v/600/depositphotos_22137639-stock-illustration-city-taxi-logo.jpg",
+                name: "BeeTaxi"),
+            state: ServiceState(ServiceStatus.Open, true),
+            isOpen: true,
+            serviceDetailsId: 5,
+            languages: ServiceProviderLanguage(primary: Language.EN),
+            schedule: null,
+            deliveryCost: DeliveryCost(
+              costPerKm: 24,
+              id: null,
+              minimumCost: 0,
+              selfDelivery: true,
+            ),
+            onlineOrdering: true,
+            creationTime: DateTime.now()),
+      ];
+    } else
+      _fetchCompanies();
   }
 
   Future<void> _fetchCompanies() async {

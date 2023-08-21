@@ -97,7 +97,7 @@ class _CustOrderDeliverySelectorState extends State<CustOrderDeliverySelector> {
         meduimSeperator,
         Text(
           _viewController.isTaxi
-              ? 'Choose your taxi@ company'
+              ? 'Choose your taxi company'
               : 'Choose your delivery company',
           style: context.textTheme.bodyLarge,
         ),
