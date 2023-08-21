@@ -257,6 +257,53 @@ query fetch_subscribers($service_provider_id: Int, $service_provider_type: Strin
   }
 }
 
+query getPost($id: Int!) {
+  service_provider_post_by_pk(id: $id) {
+    image
+    likes
+    link
+    message
+    posted_on
+    service_provider_id
+    service_provider_type
+    restaurant {
+      details {
+        name
+        image
+      }
+    }
+    laundry {
+      details {
+        name
+        image
+      }
+    }
+    delivery_company {
+      details {
+        name
+        image
+      }
+    }
+    business {
+      details {
+        name
+        image
+      }
+    }
+    comments {
+      commented_on
+      id
+      likes
+      message
+      user {
+        id
+        name
+        image
+      }
+    }
+  }
+}
+
 mutation subscribe_service_provider($customer_id: Int, $service_provider_id: Int, $service_provider_type: String) {
   insert_service_provider_subscriber_one(object: {customer_id: $customer_id, service_provider_id: $service_provider_id, service_provider_type: $service_provider_type}) {
     id
