@@ -10766,6 +10766,2797 @@ class _CopyWithStubImpl$Query$fetch_subscribers$service_provider_subscriber<
       _res;
 }
 
+class Variables$Query$getPost {
+  factory Variables$Query$getPost({required int id}) =>
+      Variables$Query$getPost._({
+        r'id': id,
+      });
+
+  Variables$Query$getPost._(this._$data);
+
+  factory Variables$Query$getPost.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Query$getPost._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getPost<Variables$Query$getPost> get copyWith =>
+      CopyWith$Variables$Query$getPost(
+        this,
+        (i) => i,
+      );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getPost) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    return Object.hashAll([l$id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getPost<TRes> {
+  factory CopyWith$Variables$Query$getPost(
+    Variables$Query$getPost instance,
+    TRes Function(Variables$Query$getPost) then,
+  ) = _CopyWithImpl$Variables$Query$getPost;
+
+  factory CopyWith$Variables$Query$getPost.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getPost;
+
+  TRes call({int? id});
+}
+
+class _CopyWithImpl$Variables$Query$getPost<TRes>
+    implements CopyWith$Variables$Query$getPost<TRes> {
+  _CopyWithImpl$Variables$Query$getPost(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getPost _instance;
+
+  final TRes Function(Variables$Query$getPost) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? id = _undefined}) => _then(Variables$Query$getPost._({
+        ..._instance._$data,
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getPost<TRes>
+    implements CopyWith$Variables$Query$getPost<TRes> {
+  _CopyWithStubImpl$Variables$Query$getPost(this._res);
+
+  TRes _res;
+
+  call({int? id}) => _res;
+}
+
+class Query$getPost {
+  Query$getPost({
+    this.service_provider_post_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getPost.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_post_by_pk = json['service_provider_post_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost(
+      service_provider_post_by_pk: l$service_provider_post_by_pk == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk.fromJson(
+              (l$service_provider_post_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getPost$service_provider_post_by_pk? service_provider_post_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_post_by_pk = service_provider_post_by_pk;
+    _resultData['service_provider_post_by_pk'] =
+        l$service_provider_post_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_post_by_pk = service_provider_post_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_post_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPost) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_post_by_pk = service_provider_post_by_pk;
+    final lOther$service_provider_post_by_pk =
+        other.service_provider_post_by_pk;
+    if (l$service_provider_post_by_pk != lOther$service_provider_post_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost on Query$getPost {
+  CopyWith$Query$getPost<Query$getPost> get copyWith => CopyWith$Query$getPost(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getPost<TRes> {
+  factory CopyWith$Query$getPost(
+    Query$getPost instance,
+    TRes Function(Query$getPost) then,
+  ) = _CopyWithImpl$Query$getPost;
+
+  factory CopyWith$Query$getPost.stub(TRes res) =
+      _CopyWithStubImpl$Query$getPost;
+
+  TRes call({
+    Query$getPost$service_provider_post_by_pk? service_provider_post_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getPost$service_provider_post_by_pk<TRes>
+      get service_provider_post_by_pk;
+}
+
+class _CopyWithImpl$Query$getPost<TRes>
+    implements CopyWith$Query$getPost<TRes> {
+  _CopyWithImpl$Query$getPost(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost _instance;
+
+  final TRes Function(Query$getPost) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_post_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost(
+        service_provider_post_by_pk: service_provider_post_by_pk == _undefined
+            ? _instance.service_provider_post_by_pk
+            : (service_provider_post_by_pk
+                as Query$getPost$service_provider_post_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getPost$service_provider_post_by_pk<TRes>
+      get service_provider_post_by_pk {
+    final local$service_provider_post_by_pk =
+        _instance.service_provider_post_by_pk;
+    return local$service_provider_post_by_pk == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk(
+            local$service_provider_post_by_pk,
+            (e) => call(service_provider_post_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getPost<TRes>
+    implements CopyWith$Query$getPost<TRes> {
+  _CopyWithStubImpl$Query$getPost(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getPost$service_provider_post_by_pk? service_provider_post_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk<TRes>
+      get service_provider_post_by_pk =>
+          CopyWith$Query$getPost$service_provider_post_by_pk.stub(_res);
+}
+
+const documentNodeQuerygetPost = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getPost'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_post_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'likes'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'link'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'message'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'posted_on'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'service_provider_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'service_provider_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'restaurant'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'laundry'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_company'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'business'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'comments'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'commented_on'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'likes'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'message'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getPost _parserFn$Query$getPost(Map<String, dynamic> data) =>
+    Query$getPost.fromJson(data);
+
+class Options$Query$getPost extends graphql.QueryOptions<Query$getPost> {
+  Options$Query$getPost({
+    String? operationName,
+    required Variables$Query$getPost variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetPost,
+          parserFn: _parserFn$Query$getPost,
+        );
+}
+
+class WatchOptions$Query$getPost
+    extends graphql.WatchQueryOptions<Query$getPost> {
+  WatchOptions$Query$getPost({
+    String? operationName,
+    required Variables$Query$getPost variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetPost,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getPost,
+        );
+}
+
+class FetchMoreOptions$Query$getPost extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getPost({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getPost variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetPost,
+        );
+}
+
+extension ClientExtension$Query$getPost on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getPost>> query$getPost(
+          Options$Query$getPost options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$getPost> watchQuery$getPost(
+          WatchOptions$Query$getPost options) =>
+      this.watchQuery(options);
+  void writeQuery$getPost({
+    required Query$getPost data,
+    required Variables$Query$getPost variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(document: documentNodeQuerygetPost),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getPost? readQuery$getPost({
+    required Variables$Query$getPost variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(document: documentNodeQuerygetPost),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getPost.fromJson(result);
+  }
+}
+
+class Query$getPost$service_provider_post_by_pk {
+  Query$getPost$service_provider_post_by_pk({
+    this.image,
+    required this.likes,
+    this.link,
+    required this.message,
+    required this.posted_on,
+    required this.service_provider_id,
+    required this.service_provider_type,
+    this.restaurant,
+    this.laundry,
+    this.delivery_company,
+    this.business,
+    required this.comments,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$likes = json['likes'];
+    final l$link = json['link'];
+    final l$message = json['message'];
+    final l$posted_on = json['posted_on'];
+    final l$service_provider_id = json['service_provider_id'];
+    final l$service_provider_type = json['service_provider_type'];
+    final l$restaurant = json['restaurant'];
+    final l$laundry = json['laundry'];
+    final l$delivery_company = json['delivery_company'];
+    final l$business = json['business'];
+    final l$comments = json['comments'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk(
+      image: (l$image as String?),
+      likes: mapFromJson(l$likes),
+      link: (l$link as String?),
+      message: (l$message as String),
+      posted_on: (l$posted_on as String),
+      service_provider_id: (l$service_provider_id as int),
+      service_provider_type: (l$service_provider_type as String),
+      restaurant: l$restaurant == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk$restaurant.fromJson(
+              (l$restaurant as Map<String, dynamic>)),
+      laundry: l$laundry == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk$laundry.fromJson(
+              (l$laundry as Map<String, dynamic>)),
+      delivery_company: l$delivery_company == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk$delivery_company.fromJson(
+              (l$delivery_company as Map<String, dynamic>)),
+      business: l$business == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk$business.fromJson(
+              (l$business as Map<String, dynamic>)),
+      comments: (l$comments as List<dynamic>)
+          .map((e) =>
+              Query$getPost$service_provider_post_by_pk$comments.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? image;
+
+  final dynamic likes;
+
+  final String? link;
+
+  final String message;
+
+  final String posted_on;
+
+  final int service_provider_id;
+
+  final String service_provider_type;
+
+  final Query$getPost$service_provider_post_by_pk$restaurant? restaurant;
+
+  final Query$getPost$service_provider_post_by_pk$laundry? laundry;
+
+  final Query$getPost$service_provider_post_by_pk$delivery_company?
+      delivery_company;
+
+  final Query$getPost$service_provider_post_by_pk$business? business;
+
+  final List<Query$getPost$service_provider_post_by_pk$comments> comments;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$likes = likes;
+    _resultData['likes'] = mapToJson(l$likes);
+    final l$link = link;
+    _resultData['link'] = l$link;
+    final l$message = message;
+    _resultData['message'] = l$message;
+    final l$posted_on = posted_on;
+    _resultData['posted_on'] = l$posted_on;
+    final l$service_provider_id = service_provider_id;
+    _resultData['service_provider_id'] = l$service_provider_id;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant?.toJson();
+    final l$laundry = laundry;
+    _resultData['laundry'] = l$laundry?.toJson();
+    final l$delivery_company = delivery_company;
+    _resultData['delivery_company'] = l$delivery_company?.toJson();
+    final l$business = business;
+    _resultData['business'] = l$business?.toJson();
+    final l$comments = comments;
+    _resultData['comments'] = l$comments.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$likes = likes;
+    final l$link = link;
+    final l$message = message;
+    final l$posted_on = posted_on;
+    final l$service_provider_id = service_provider_id;
+    final l$service_provider_type = service_provider_type;
+    final l$restaurant = restaurant;
+    final l$laundry = laundry;
+    final l$delivery_company = delivery_company;
+    final l$business = business;
+    final l$comments = comments;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$likes,
+      l$link,
+      l$message,
+      l$posted_on,
+      l$service_provider_id,
+      l$service_provider_type,
+      l$restaurant,
+      l$laundry,
+      l$delivery_company,
+      l$business,
+      Object.hashAll(l$comments.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPost$service_provider_post_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$likes = likes;
+    final lOther$likes = other.likes;
+    if (l$likes != lOther$likes) {
+      return false;
+    }
+    final l$link = link;
+    final lOther$link = other.link;
+    if (l$link != lOther$link) {
+      return false;
+    }
+    final l$message = message;
+    final lOther$message = other.message;
+    if (l$message != lOther$message) {
+      return false;
+    }
+    final l$posted_on = posted_on;
+    final lOther$posted_on = other.posted_on;
+    if (l$posted_on != lOther$posted_on) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant != lOther$restaurant) {
+      return false;
+    }
+    final l$laundry = laundry;
+    final lOther$laundry = other.laundry;
+    if (l$laundry != lOther$laundry) {
+      return false;
+    }
+    final l$delivery_company = delivery_company;
+    final lOther$delivery_company = other.delivery_company;
+    if (l$delivery_company != lOther$delivery_company) {
+      return false;
+    }
+    final l$business = business;
+    final lOther$business = other.business;
+    if (l$business != lOther$business) {
+      return false;
+    }
+    final l$comments = comments;
+    final lOther$comments = other.comments;
+    if (l$comments.length != lOther$comments.length) {
+      return false;
+    }
+    for (int i = 0; i < l$comments.length; i++) {
+      final l$comments$entry = l$comments[i];
+      final lOther$comments$entry = lOther$comments[i];
+      if (l$comments$entry != lOther$comments$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk
+    on Query$getPost$service_provider_post_by_pk {
+  CopyWith$Query$getPost$service_provider_post_by_pk<
+          Query$getPost$service_provider_post_by_pk>
+      get copyWith => CopyWith$Query$getPost$service_provider_post_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk<TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk(
+    Query$getPost$service_provider_post_by_pk instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk) then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk.stub(TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk;
+
+  TRes call({
+    String? image,
+    dynamic? likes,
+    String? link,
+    String? message,
+    String? posted_on,
+    int? service_provider_id,
+    String? service_provider_type,
+    Query$getPost$service_provider_post_by_pk$restaurant? restaurant,
+    Query$getPost$service_provider_post_by_pk$laundry? laundry,
+    Query$getPost$service_provider_post_by_pk$delivery_company?
+        delivery_company,
+    Query$getPost$service_provider_post_by_pk$business? business,
+    List<Query$getPost$service_provider_post_by_pk$comments>? comments,
+    String? $__typename,
+  });
+  CopyWith$Query$getPost$service_provider_post_by_pk$restaurant<TRes>
+      get restaurant;
+  CopyWith$Query$getPost$service_provider_post_by_pk$laundry<TRes> get laundry;
+  CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company<TRes>
+      get delivery_company;
+  CopyWith$Query$getPost$service_provider_post_by_pk$business<TRes>
+      get business;
+  TRes comments(
+      Iterable<Query$getPost$service_provider_post_by_pk$comments> Function(
+              Iterable<
+                  CopyWith$Query$getPost$service_provider_post_by_pk$comments<
+                      Query$getPost$service_provider_post_by_pk$comments>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk<TRes>
+    implements CopyWith$Query$getPost$service_provider_post_by_pk<TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk _instance;
+
+  final TRes Function(Query$getPost$service_provider_post_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? likes = _undefined,
+    Object? link = _undefined,
+    Object? message = _undefined,
+    Object? posted_on = _undefined,
+    Object? service_provider_id = _undefined,
+    Object? service_provider_type = _undefined,
+    Object? restaurant = _undefined,
+    Object? laundry = _undefined,
+    Object? delivery_company = _undefined,
+    Object? business = _undefined,
+    Object? comments = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk(
+        image: image == _undefined ? _instance.image : (image as String?),
+        likes: likes == _undefined || likes == null
+            ? _instance.likes
+            : (likes as dynamic),
+        link: link == _undefined ? _instance.link : (link as String?),
+        message: message == _undefined || message == null
+            ? _instance.message
+            : (message as String),
+        posted_on: posted_on == _undefined || posted_on == null
+            ? _instance.posted_on
+            : (posted_on as String),
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
+        restaurant: restaurant == _undefined
+            ? _instance.restaurant
+            : (restaurant
+                as Query$getPost$service_provider_post_by_pk$restaurant?),
+        laundry: laundry == _undefined
+            ? _instance.laundry
+            : (laundry as Query$getPost$service_provider_post_by_pk$laundry?),
+        delivery_company: delivery_company == _undefined
+            ? _instance.delivery_company
+            : (delivery_company
+                as Query$getPost$service_provider_post_by_pk$delivery_company?),
+        business: business == _undefined
+            ? _instance.business
+            : (business as Query$getPost$service_provider_post_by_pk$business?),
+        comments: comments == _undefined || comments == null
+            ? _instance.comments
+            : (comments
+                as List<Query$getPost$service_provider_post_by_pk$comments>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getPost$service_provider_post_by_pk$restaurant<TRes>
+      get restaurant {
+    final local$restaurant = _instance.restaurant;
+    return local$restaurant == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk$restaurant.stub(
+            _then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk$restaurant(
+            local$restaurant, (e) => call(restaurant: e));
+  }
+
+  CopyWith$Query$getPost$service_provider_post_by_pk$laundry<TRes> get laundry {
+    final local$laundry = _instance.laundry;
+    return local$laundry == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk$laundry.stub(
+            _then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk$laundry(
+            local$laundry, (e) => call(laundry: e));
+  }
+
+  CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company<TRes>
+      get delivery_company {
+    final local$delivery_company = _instance.delivery_company;
+    return local$delivery_company == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company
+            .stub(_then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company(
+            local$delivery_company, (e) => call(delivery_company: e));
+  }
+
+  CopyWith$Query$getPost$service_provider_post_by_pk$business<TRes>
+      get business {
+    final local$business = _instance.business;
+    return local$business == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk$business.stub(
+            _then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk$business(
+            local$business, (e) => call(business: e));
+  }
+
+  TRes comments(
+          Iterable<Query$getPost$service_provider_post_by_pk$comments> Function(
+                  Iterable<
+                      CopyWith$Query$getPost$service_provider_post_by_pk$comments<
+                          Query$getPost$service_provider_post_by_pk$comments>>)
+              _fn) =>
+      call(
+          comments: _fn(_instance.comments.map((e) =>
+              CopyWith$Query$getPost$service_provider_post_by_pk$comments(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk<TRes>
+    implements CopyWith$Query$getPost$service_provider_post_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    String? image,
+    dynamic? likes,
+    String? link,
+    String? message,
+    String? posted_on,
+    int? service_provider_id,
+    String? service_provider_type,
+    Query$getPost$service_provider_post_by_pk$restaurant? restaurant,
+    Query$getPost$service_provider_post_by_pk$laundry? laundry,
+    Query$getPost$service_provider_post_by_pk$delivery_company?
+        delivery_company,
+    Query$getPost$service_provider_post_by_pk$business? business,
+    List<Query$getPost$service_provider_post_by_pk$comments>? comments,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk$restaurant<TRes>
+      get restaurant =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$restaurant.stub(
+              _res);
+  CopyWith$Query$getPost$service_provider_post_by_pk$laundry<TRes>
+      get laundry =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$laundry.stub(_res);
+  CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company<TRes>
+      get delivery_company =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company
+              .stub(_res);
+  CopyWith$Query$getPost$service_provider_post_by_pk$business<TRes>
+      get business =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$business.stub(
+              _res);
+  comments(_fn) => _res;
+}
+
+class Query$getPost$service_provider_post_by_pk$restaurant {
+  Query$getPost$service_provider_post_by_pk$restaurant({
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$restaurant.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$restaurant(
+      details: l$details == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk$restaurant$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getPost$service_provider_post_by_pk$restaurant$details? details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPost$service_provider_post_by_pk$restaurant) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$restaurant
+    on Query$getPost$service_provider_post_by_pk$restaurant {
+  CopyWith$Query$getPost$service_provider_post_by_pk$restaurant<
+          Query$getPost$service_provider_post_by_pk$restaurant>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$restaurant(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$restaurant<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$restaurant(
+    Query$getPost$service_provider_post_by_pk$restaurant instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$restaurant) then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$restaurant;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$restaurant.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$restaurant;
+
+  TRes call({
+    Query$getPost$service_provider_post_by_pk$restaurant$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details<TRes>
+      get details;
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$restaurant<TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$restaurant<TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$restaurant(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$restaurant _instance;
+
+  final TRes Function(Query$getPost$service_provider_post_by_pk$restaurant)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$restaurant(
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getPost$service_provider_post_by_pk$restaurant$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$restaurant<TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getPost$service_provider_post_by_pk$restaurant$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details<TRes>
+      get details =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details
+              .stub(_res);
+}
+
+class Query$getPost$service_provider_post_by_pk$restaurant$details {
+  Query$getPost$service_provider_post_by_pk$restaurant$details({
+    required this.name,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$restaurant$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$restaurant$details(
+      name: (l$name as String),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getPost$service_provider_post_by_pk$restaurant$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$restaurant$details
+    on Query$getPost$service_provider_post_by_pk$restaurant$details {
+  CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details<
+          Query$getPost$service_provider_post_by_pk$restaurant$details>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details(
+    Query$getPost$service_provider_post_by_pk$restaurant$details instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$restaurant$details)
+        then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$restaurant$details;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$restaurant$details;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details<
+            TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$restaurant$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$restaurant$details _instance;
+
+  final TRes Function(
+      Query$getPost$service_provider_post_by_pk$restaurant$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$restaurant$details(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$restaurant$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$restaurant$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getPost$service_provider_post_by_pk$laundry {
+  Query$getPost$service_provider_post_by_pk$laundry({
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$laundry.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$laundry(
+      details: l$details == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk$laundry$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getPost$service_provider_post_by_pk$laundry$details? details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPost$service_provider_post_by_pk$laundry) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$laundry
+    on Query$getPost$service_provider_post_by_pk$laundry {
+  CopyWith$Query$getPost$service_provider_post_by_pk$laundry<
+          Query$getPost$service_provider_post_by_pk$laundry>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$laundry(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$laundry<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$laundry(
+    Query$getPost$service_provider_post_by_pk$laundry instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$laundry) then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$laundry;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$laundry.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$laundry;
+
+  TRes call({
+    Query$getPost$service_provider_post_by_pk$laundry$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details<TRes>
+      get details;
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$laundry<TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$laundry<TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$laundry(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$laundry _instance;
+
+  final TRes Function(Query$getPost$service_provider_post_by_pk$laundry) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$laundry(
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getPost$service_provider_post_by_pk$laundry$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$laundry<TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$laundry<TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$laundry(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getPost$service_provider_post_by_pk$laundry$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details<TRes>
+      get details =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details
+              .stub(_res);
+}
+
+class Query$getPost$service_provider_post_by_pk$laundry$details {
+  Query$getPost$service_provider_post_by_pk$laundry$details({
+    required this.name,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$laundry$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$laundry$details(
+      name: (l$name as String),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPost$service_provider_post_by_pk$laundry$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$laundry$details
+    on Query$getPost$service_provider_post_by_pk$laundry$details {
+  CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details<
+          Query$getPost$service_provider_post_by_pk$laundry$details>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details(
+    Query$getPost$service_provider_post_by_pk$laundry$details instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$laundry$details)
+        then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$laundry$details;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$laundry$details;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$laundry$details<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details<
+            TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$laundry$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$laundry$details _instance;
+
+  final TRes Function(Query$getPost$service_provider_post_by_pk$laundry$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$laundry$details(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$laundry$details<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$laundry$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$laundry$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getPost$service_provider_post_by_pk$delivery_company {
+  Query$getPost$service_provider_post_by_pk$delivery_company({
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$delivery_company.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$delivery_company(
+      details: l$details == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk$delivery_company$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getPost$service_provider_post_by_pk$delivery_company$details?
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getPost$service_provider_post_by_pk$delivery_company) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$delivery_company
+    on Query$getPost$service_provider_post_by_pk$delivery_company {
+  CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company<
+          Query$getPost$service_provider_post_by_pk$delivery_company>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company(
+    Query$getPost$service_provider_post_by_pk$delivery_company instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$delivery_company)
+        then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$delivery_company;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$delivery_company;
+
+  TRes call({
+    Query$getPost$service_provider_post_by_pk$delivery_company$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$delivery_company<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company<
+            TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$delivery_company(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$delivery_company _instance;
+
+  final TRes Function(
+      Query$getPost$service_provider_post_by_pk$delivery_company) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$delivery_company(
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getPost$service_provider_post_by_pk$delivery_company$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$delivery_company<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company<
+            TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$delivery_company(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getPost$service_provider_post_by_pk$delivery_company$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details
+              .stub(_res);
+}
+
+class Query$getPost$service_provider_post_by_pk$delivery_company$details {
+  Query$getPost$service_provider_post_by_pk$delivery_company$details({
+    required this.name,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$delivery_company$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$delivery_company$details(
+      name: (l$name as String),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getPost$service_provider_post_by_pk$delivery_company$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$delivery_company$details
+    on Query$getPost$service_provider_post_by_pk$delivery_company$details {
+  CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+          Query$getPost$service_provider_post_by_pk$delivery_company$details>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details(
+    Query$getPost$service_provider_post_by_pk$delivery_company$details instance,
+    TRes Function(
+            Query$getPost$service_provider_post_by_pk$delivery_company$details)
+        then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$delivery_company$details;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$delivery_company$details;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+            TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$delivery_company$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$delivery_company$details
+      _instance;
+
+  final TRes Function(
+      Query$getPost$service_provider_post_by_pk$delivery_company$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$delivery_company$details(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$delivery_company$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$delivery_company$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getPost$service_provider_post_by_pk$business {
+  Query$getPost$service_provider_post_by_pk$business({
+    required this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$business.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$business(
+      details:
+          Query$getPost$service_provider_post_by_pk$business$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getPost$service_provider_post_by_pk$business$details details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPost$service_provider_post_by_pk$business) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$business
+    on Query$getPost$service_provider_post_by_pk$business {
+  CopyWith$Query$getPost$service_provider_post_by_pk$business<
+          Query$getPost$service_provider_post_by_pk$business>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$business(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$business<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$business(
+    Query$getPost$service_provider_post_by_pk$business instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$business) then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$business;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$business.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$business;
+
+  TRes call({
+    Query$getPost$service_provider_post_by_pk$business$details? details,
+    String? $__typename,
+  });
+  CopyWith$Query$getPost$service_provider_post_by_pk$business$details<TRes>
+      get details;
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$business<TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$business<TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$business(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$business _instance;
+
+  final TRes Function(Query$getPost$service_provider_post_by_pk$business) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$business(
+        details: details == _undefined || details == null
+            ? _instance.details
+            : (details
+                as Query$getPost$service_provider_post_by_pk$business$details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getPost$service_provider_post_by_pk$business$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return CopyWith$Query$getPost$service_provider_post_by_pk$business$details(
+        local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$business<TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$business<TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$business(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getPost$service_provider_post_by_pk$business$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk$business$details<TRes>
+      get details =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$business$details
+              .stub(_res);
+}
+
+class Query$getPost$service_provider_post_by_pk$business$details {
+  Query$getPost$service_provider_post_by_pk$business$details({
+    required this.name,
+    required this.image,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$business$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$business$details(
+      name: (l$name as String),
+      image: (l$image as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getPost$service_provider_post_by_pk$business$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$business$details
+    on Query$getPost$service_provider_post_by_pk$business$details {
+  CopyWith$Query$getPost$service_provider_post_by_pk$business$details<
+          Query$getPost$service_provider_post_by_pk$business$details>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$business$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$business$details<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$business$details(
+    Query$getPost$service_provider_post_by_pk$business$details instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$business$details)
+        then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$business$details;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$business$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$business$details;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$business$details<
+            TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$business$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$business$details _instance;
+
+  final TRes Function(
+      Query$getPost$service_provider_post_by_pk$business$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$business$details(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$business$details<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$business$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$business$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getPost$service_provider_post_by_pk$comments {
+  Query$getPost$service_provider_post_by_pk$comments({
+    required this.commented_on,
+    required this.id,
+    required this.likes,
+    required this.message,
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$comments.fromJson(
+      Map<String, dynamic> json) {
+    final l$commented_on = json['commented_on'];
+    final l$id = json['id'];
+    final l$likes = json['likes'];
+    final l$message = json['message'];
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$comments(
+      commented_on: (l$commented_on as String),
+      id: (l$id as int),
+      likes: mapFromJson(l$likes),
+      message: (l$message as String),
+      user: Query$getPost$service_provider_post_by_pk$comments$user.fromJson(
+          (l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String commented_on;
+
+  final int id;
+
+  final dynamic likes;
+
+  final String message;
+
+  final Query$getPost$service_provider_post_by_pk$comments$user user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$commented_on = commented_on;
+    _resultData['commented_on'] = l$commented_on;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$likes = likes;
+    _resultData['likes'] = mapToJson(l$likes);
+    final l$message = message;
+    _resultData['message'] = l$message;
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$commented_on = commented_on;
+    final l$id = id;
+    final l$likes = likes;
+    final l$message = message;
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$commented_on,
+      l$id,
+      l$likes,
+      l$message,
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPost$service_provider_post_by_pk$comments) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$commented_on = commented_on;
+    final lOther$commented_on = other.commented_on;
+    if (l$commented_on != lOther$commented_on) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$likes = likes;
+    final lOther$likes = other.likes;
+    if (l$likes != lOther$likes) {
+      return false;
+    }
+    final l$message = message;
+    final lOther$message = other.message;
+    if (l$message != lOther$message) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$comments
+    on Query$getPost$service_provider_post_by_pk$comments {
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments<
+          Query$getPost$service_provider_post_by_pk$comments>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$comments(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$comments<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments(
+    Query$getPost$service_provider_post_by_pk$comments instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$comments) then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments;
+
+  TRes call({
+    String? commented_on,
+    int? id,
+    dynamic? likes,
+    String? message,
+    Query$getPost$service_provider_post_by_pk$comments$user? user,
+    String? $__typename,
+  });
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes>
+      get user;
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments<TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$comments<TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$comments _instance;
+
+  final TRes Function(Query$getPost$service_provider_post_by_pk$comments) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? commented_on = _undefined,
+    Object? id = _undefined,
+    Object? likes = _undefined,
+    Object? message = _undefined,
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$comments(
+        commented_on: commented_on == _undefined || commented_on == null
+            ? _instance.commented_on
+            : (commented_on as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        likes: likes == _undefined || likes == null
+            ? _instance.likes
+            : (likes as dynamic),
+        message: message == _undefined || message == null
+            ? _instance.message
+            : (message as String),
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user as Query$getPost$service_provider_post_by_pk$comments$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes>
+      get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$getPost$service_provider_post_by_pk$comments$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments<TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$comments<TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? commented_on,
+    int? id,
+    dynamic? likes,
+    String? message,
+    Query$getPost$service_provider_post_by_pk$comments$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes>
+      get user =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$comments$user.stub(
+              _res);
+}
+
+class Query$getPost$service_provider_post_by_pk$comments$user {
+  Query$getPost$service_provider_post_by_pk$comments$user({
+    required this.id,
+    this.name,
+    this.image,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$comments$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$comments$user(
+      id: (l$id as int),
+      name: (l$name as String?),
+      image: (l$image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? name;
+
+  final String? image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPost$service_provider_post_by_pk$comments$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$comments$user
+    on Query$getPost$service_provider_post_by_pk$comments$user {
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<
+          Query$getPost$service_provider_post_by_pk$comments$user>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$comments$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments$user(
+    Query$getPost$service_provider_post_by_pk$comments$user instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$comments$user) then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments$user;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments$user;
+
+  TRes call({
+    int? id,
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments$user<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$comments$user _instance;
+
+  final TRes Function(Query$getPost$service_provider_post_by_pk$comments$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$comments$user(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments$user<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$subscribe_service_provider {
   factory Variables$Mutation$subscribe_service_provider({
     int? customer_id,
