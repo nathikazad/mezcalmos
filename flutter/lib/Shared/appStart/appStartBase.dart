@@ -330,7 +330,9 @@ Widget _actualApp(ThemeData appTheme, List<QRoute> routes) {
       // onInit: () async => _initializeConfig(),
       title: "Mezkala",
       theme: appTheme,
+      
       color: Colors.white,
+
 
       routerDelegate: QRouterDelegate(
         routes,

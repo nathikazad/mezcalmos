@@ -20,6 +20,8 @@ import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DvOrderDetailsViewController {
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
@@ -65,6 +67,10 @@ class DvOrderDetailsViewController {
   bool get isCourier => order.value?.orderType == cModels.OrderType.Courier;
 
   bool get taxSetted => _orderCosts.value?.tax != null;
+
+  bool get isRestaurantOrder =>
+      order.value?.orderType == cModels.OrderType.Restaurant;
+  String? get restaurantPhoneNumber => order.value?.serviceProviderPhoneNumber;
   // methods //
   Future<void> init({required int orderId}) async {
     this.orderId = orderId;
@@ -93,7 +99,7 @@ class DvOrderDetailsViewController {
       if (order.value!.orderType == cModels.OrderType.Courier) {
         unawaited(_fetchOrderItems(orderId));
         unawaited(_fetchOrderBill(orderId));
-      } else {
+      } else if (isRestaurantOrder) {
         unawaited(_fetchRestaurantOrderItems());
         // unawaited(_fetchOrderBill(orderId));
       }
@@ -245,6 +251,41 @@ class DvOrderDetailsViewController {
       showErrorSnackBar(errorText: e.message.toString());
     }
     return false;
+  }
+
+  String restaurantOrderClipBoardText(cModels.Language languageType) {
+    final String url =
+        "https://www.google.com/maps/dir/?api=1&destination=${order.value!.dropOffLocation.position.latitude},${order.value!.dropOffLocation.position.longitude}";
+
+    String text = "";
+    text += "${order.value?.serviceProvider?.name}\n";
+    if (restaurantOrderItem.value != null) {
+      text += restaurantOrderItem.value!.fold<String>("",
+          (String mainString, RestaurantOrderItem item) {
+        mainString +=
+            "  ${item.name[languageType]} x${item.quantity} ${item.totalCost}\n";
+
+        item.optionNames.forEach((String optionId, LanguageMap languageMap) {
+          if (item.chosenChoices.containsKey(optionId)) {
+            mainString += "    ${languageMap[languageType]}\n";
+            mainString += item.chosenChoices[optionId]!.fold("",
+                (String thirdString, Choice choice) {
+              return "$thirdString      ${choice.name[languageType]}\n";
+            });
+          }
+        });
+        if (item.notes != null && item.notes!.length > 0)
+          mainString += "    ${item.notes}\n";
+        return mainString;
+      });
+    }
+    text += "${order.value?.notes}\n";
+
+    text += "${order.value?.customer.name}\n";
+    text += "${order.value!.dropOffLocation.address}\n";
+    text += "$url\n";
+
+    return text;
   }
 
   void dispose() {

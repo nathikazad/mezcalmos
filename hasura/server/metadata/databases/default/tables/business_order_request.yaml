@@ -52,6 +52,7 @@ select_permissions:
           operators:
             user_id:
               _eq: X-Hasura-User-Id
+      allow_aggregations: true
   - role: customer
     permission:
       columns:
@@ -82,6 +83,7 @@ select_permissions:
         - review_id
         - customer_app_type
         - notes
+        - order_type
         - status
         - cancellation_time
         - order_time

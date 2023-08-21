@@ -12,6 +12,7 @@ class MezCard extends StatelessWidget {
       required this.content,
       this.action,
       this.label,
+      this.cardColor,
       this.firstAvatarBgColor,
       this.firstAvatarBgImage,
       this.firstAvatarIcon,
@@ -31,6 +32,7 @@ class MezCard extends StatelessWidget {
   final ImageProvider? firstAvatarBgImage;
   final IconData? firstAvatarIcon;
   final Color? secondAvatarBgColor;
+  final Color? cardColor;
   final Color? secondAvatarIconColor;
   final ImageProvider? secondAvatarBgImage;
   final IconData? secondAvatarIcon;
@@ -57,6 +59,7 @@ class MezCard extends StatelessWidget {
           // ),
           elevation: elevation,
           margin: margin,
+          color: cardColor,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius)),
           child: InkWell(
@@ -118,7 +121,7 @@ class MezCard extends StatelessWidget {
                                 secondAvatarBgImage != null ||
                                 secondAvatarIcon != null))
                         ? 40
-                        : 5,
+                        : 10,
                   ),
                   Flexible(fit: FlexFit.tight, child: content),
 

@@ -15,6 +15,7 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { clearBusinessCart } from "../shared/graphql/business/cart/clearCart";
 import { OpenStatus } from "../shared/models/Services/Service";
+import { updateOffersApplied } from "../shared/graphql/offer/updateOffer";
 
 export interface OrderRequestDetails {
     customerAppType: CustomerAppType,
@@ -60,6 +61,9 @@ export async function requestOrder(customerId: number, orderRequestDetails: Orde
     notify(order, business, mezAdmins);
 
     clearBusinessCart(customerId);
+
+    if(cart.appliedOffers.length > 0)
+      updateOffersApplied(order.orderId, cart.appliedOffers, cart.discountValue, OrderType.Business);
     
     return {
       success: true,

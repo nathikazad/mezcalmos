@@ -1,3 +1,4 @@
+import '../../service_provider/__generated/service_provider.graphql.dart';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';

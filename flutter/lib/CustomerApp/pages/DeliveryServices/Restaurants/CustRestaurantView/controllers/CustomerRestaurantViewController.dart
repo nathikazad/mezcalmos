@@ -9,8 +9,10 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -19,15 +21,14 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-class CustomerRestaurantController {
+class CustRestaurantViewController {
   // controllers //
   late AutoScrollController scrollController;
 
-  late TabController tabController;
-  late TabController feedTabController;
+  late TabController mainTabController;
 
-  late TabController categoriesTabController;
-  late TabController specialstabsController;
+  // late TabController categoriesTabController;
+  // late TabController specialstabsController;
 
   // keys //
   final GlobalKey<RectGetterState> listViewKey = RectGetter.createGlobalKey();
@@ -42,6 +43,8 @@ class CustomerRestaurantController {
   RxBool pauseRectGetterIndex = RxBool(false);
   RxList<Item> specials = RxList.empty();
   RxBool _initialized = RxBool(false);
+  RxList<cModels.Offer> _offers = RxList<cModels.Offer>.empty();
+  List<cModels.Offer> get offers => _offers.value;
 
   AuthController _authController = Get.find<AuthController>();
   AuthController get authController => _authController;
@@ -63,12 +66,16 @@ class CustomerRestaurantController {
     return _initialized.value;
   }
 
+  RxInt currentSelectedIndex = RxInt(0);
+
   Future<void> init(
       {required int restaurantId, required TickerProvider vsync}) async {
     scrollController = AutoScrollController();
-    tabController = TabController(length: 3, vsync: vsync);
+    mainTabController = TabController(length: 3, vsync: vsync);
 
     restaurant.value = await get_restaurant_by_id(id: restaurantId);
+    mezDbgPrint(
+        "Restaurant ⌛️ cats ======>${restaurant.value?.getAvailableCategories.length}");
     _initControllers(vsync);
     assignKeys();
     unawaited(get_service_reviews(
@@ -90,10 +97,11 @@ class CustomerRestaurantController {
 
     unawaited(_fetchPosts());
     unawaited(_fetchGridImages());
+    unawaited(_getOffers());
 
     await _getShippingPrice();
 
-    await _fetchSubscriptions();
+    unawaited(_fetchSubscriptions());
 
     final List<Category>? _cats =
         await get_restaurant_categories_by_id(restaurantId);
@@ -127,11 +135,18 @@ class CustomerRestaurantController {
   }
 
   void _initControllers(TickerProvider vsync) {
-    categoriesTabController = TabController(
-        length: restaurant.value!.getAvailableCategories.length, vsync: vsync);
-    specialstabsController =
-        TabController(length: getGroupedSpecials().length, vsync: vsync);
-    feedTabController = TabController(length: 2, vsync: vsync);
+    // categoriesTabController = TabController(
+    //     length: restaurant.value!.getAvailableCategories.length, vsync: vsync);
+    // specialstabsController =
+    //     TabController(length: getGroupedSpecials().length, vsync: vsync);
+  }
+  Future<void> _getOffers() async {
+    _offers.value = await get_service_provider_offers(
+        serviceProviderId: restaurant.value!.restaurantId,
+        serviceProviderType: cModels.ServiceProviderType.Restaurant,
+        withCache: false);
+    mezDbgPrint(
+        "👋 👋 👋 offers +++++++++++++++++++++++++++> ${_offers.length}");
   }
 
   // scroll methods //
@@ -151,23 +166,27 @@ class CustomerRestaurantController {
   }
 
   bool onScrollNotification(ScrollNotification notification) {
-    if (pauseRectGetterIndex.value || tabController.index != 0) return false;
-    final int lastTabIndex = getTabController.length - 1;
+    if (pauseRectGetterIndex.value || mainTabController.index != 0)
+      return false;
+    final int lastTabIndex = listLength - 1;
     final List<int> visibleItems = getVisibleItemsIndex();
     if (visibleItems.isEmpty) {
       return false;
     }
     final bool reachLastTabIndex =
-        visibleItems.length <= 2 && visibleItems.last == lastTabIndex;
+        visibleItems.length <= 1 && visibleItems.last == lastTabIndex;
     if (reachLastTabIndex) {
-      getTabController.animateTo(lastTabIndex);
+      //   getTabController.animateTo(lastTabIndex);
+      currentSelectedIndex.value = lastTabIndex;
       pauseRectGetterIndex.value = true;
     } else {
       final int sumIndex =
           visibleItems.reduce((int value, int element) => value + element);
       final int middleIndex = sumIndex ~/ visibleItems.length;
-      if (getTabController.index != middleIndex)
-        getTabController.animateTo(middleIndex);
+      if (currentSelectedIndex.value != middleIndex)
+        //   getTabController.animateTo(middleIndex);
+
+        currentSelectedIndex.value = middleIndex;
     }
 
     return false;
@@ -175,7 +194,9 @@ class CustomerRestaurantController {
 
   void animateAndScrollTo(int index) {
     pauseRectGetterIndex.value = true;
-    getTabController.animateTo(index);
+    //  getTabController.animateTo(index);
+
+    currentSelectedIndex.value = index;
     scrollController
         .scrollToIndex(index, preferPosition: AutoScrollPosition.begin)
         .whenComplete(() => pauseRectGetterIndex.value = false);
@@ -249,16 +270,16 @@ class CustomerRestaurantController {
 
   bool get showCategoriesChips {
     return restaurant.value!.getAvailableCategories.length > 1 &&
-        showInfo.isFalse;
+        mainTabController.index == 0;
   }
 
-  TabController get getTabController {
-    if (isOnMenuView) {
-      return categoriesTabController;
-    } else {
-      return specialstabsController;
-    }
-  }
+  // TabController get getTabController {
+  //   if (isOnMenuView) {
+  //     return categoriesTabController;
+  //   } else {
+  //     return specialstabsController;
+  //   }
+  // }
 
   Future<void> _fetchPosts() async {
     try {
@@ -337,7 +358,15 @@ class CustomerRestaurantController {
   void dispose() {
     scrollController.dispose();
 
-    categoriesTabController.dispose();
+    // categoriesTabController.dispose();
+  }
+
+  int get listLength {
+    if (isOnMenuView) {
+      return restaurant.value!.getAvailableCategories.length;
+    } else {
+      return getGroupedSpecials().length;
+    }
   }
 }
 

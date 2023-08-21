@@ -1,4 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
@@ -8,14 +9,17 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/BusinessHelpers/ServiceOfferHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferingsListView/OffersOfferingListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferItemsSelectView/OfferItemsSelectView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezAddButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -69,55 +73,6 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
     );
   }
 
-  void showAvailability() {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (context) {
-        return Obx(
-          () => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BsOpDateTimePicker(
-                fillColor: Colors.white,
-                onNewPeriodSelected: (DateTime v) {
-                  viewController.selectedStartDate.value = v;
-                },
-                label: "choostTime",
-                validator: (DateTime? p0) {
-                  if (p0 == null) {
-                    BotToast.showText(
-                        text: "Please select a time",
-                        duration: Duration(seconds: 5));
-                    return "Please select a time";
-                  }
-                  return null;
-                },
-                time: viewController.selectedStartDate.value,
-              ),
-              BsOpDateTimePicker(
-                fillColor: Colors.white,
-                onNewPeriodSelected: (DateTime v) {
-                  viewController.selectedEndDate.value = v;
-                },
-                label: "choostTime",
-                validator: (DateTime? p0) {
-                  if (p0 == null) {
-                    BotToast.showText(
-                        text: "Please select a time",
-                        duration: Duration(seconds: 5));
-                    return "Please select a time";
-                  }
-                  return null;
-                },
-                time: viewController.selectedEndDate.value,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -154,17 +109,25 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
-                      Builder(builder: (context) {
+                      Builder(builder: (BuildContext context) {
                         return MezStringDropDown(
                           labelText: "Select your offer",
                           langPath: _i18n(),
                           value: viewController.selectedOfferType.value
                               ?.toFirebaseFormatString(),
-                          items: [OfferType.Coupon, OfferType.Promotion]
-                              .map((e) => e.toFirebaseFormatString())
+                          items: [
+                            OfferType.Coupon,
+                            OfferType.Promotion,
+                            //     OfferType.MonthlySubscription
+                          ]
+                              .map((OfferType e) => e.toFirebaseFormatString())
                               .toList(),
-                          icons: [Icons.local_offer, Icons.attach_money],
-                          validator: (value) {
+                          icons: [
+                            Icons.discount_rounded,
+                            Icons.attach_money,
+                            //  Icons.workspace_premium_rounded
+                          ],
+                          validator: (String? value) {
                             if (value == null ||
                                 viewController.selectedOfferType.value ==
                                     null) {
@@ -172,31 +135,35 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                             }
                             return null;
                           },
-                          onChanged: (value) {
+                          onChanged: (String? value) {
                             if (value == null) return;
-                            viewController.selectedOfferType.value =
-                                value.toOfferType();
+                            viewController.switchOfferType(value.toOfferType());
                           },
                         );
                       }),
-                      Text(
-                        "Coupon Code",
-                        style: context.textTheme.bodyLarge,
+                      meduimSeperator,
+                      Obx(
+                        () => Text(
+                          viewController.isCoupon ? "Coupon Code" : "Name",
+                          style: context.textTheme.bodyLarge,
+                        ),
                       ),
                       smallSepartor,
                       TextFormField(
                         controller: viewController.offerNameController,
                         decoration: InputDecoration(
-                          hintText: "Enter your Coupon Code",
+                          hintText: viewController.isCoupon
+                              ? "Enter your Coupon Code"
+                              : "Enter your promotion name",
                         ),
-                        validator: (value) {
+                        validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return "Please enter your Coupon Code";
+                            return "Required";
                           }
                           return null;
                         },
                       ),
-                      smallSepartor,
+                      meduimSeperator,
                       Text(
                         "Select type of order",
                         style: context.textTheme.bodyLarge,
@@ -208,54 +175,94 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                             .strings['Shared']['pages']['ServiceOfferView'],
                         value: viewController.selectedOfferOrderType.value
                             ?.toFirebaseFormatString(),
-                        items: OfferOrderType.values
-                            .map((e) => e.toFirebaseFormatString())
-                            .toList(),
-                        onChanged: (value) async {
+                        items: [
+                          OfferOrderType.AnyOrder.toFirebaseFormatString(),
+                          OfferOrderType.FirstOrderOnly.toFirebaseFormatString()
+                        ],
+                        onChanged: (String? value) async {
                           viewController.selectedOfferOrderType.value =
                               value!.toOfferOrderType();
-                          if (viewController.selectedOfferOrderType.value ==
-                              OfferOrderType.ParticularService) {
-                            final List<OfferingData> data =
-                                await OffersOfferingListView.navigate(
-                              selectedOfferingData: viewController.allOfferings,
-                            );
-                            final List<OfferingData> newOfferingsList = [
-                              ...data
-                            ];
-                            viewController.allOfferings.value =
-                                newOfferingsList;
-                          }
                         },
                       ),
-                      Column(
-                        children: List.generate(
-                          viewController.allOfferings.length,
-                          (index) {
-                            return !viewController.allOfferings[index].value
-                                ? SizedBox.shrink()
-                                : MezCard(
-                                    content: ListTile(
-                                      title: Text(
-                                        viewController.allOfferings[index].name
-                                                .getTranslation(Get.find<
-                                                        LanguageController>()
-                                                    .userLanguageKey) ??
-                                            "",
-                                      ),
-                                      trailing: IconButton(
-                                        icon: Icon(Icons.delete),
-                                        onPressed: () {
-                                          viewController.allOfferings[index]
-                                              .value = false;
-                                          viewController.allOfferings.refresh();
-                                        },
-                                      ),
-                                    ),
-                                  );
-                          },
-                        ),
+                      meduimSeperator,
+                      Text(
+                        "Items",
+                        style: context.textTheme.bodyLarge,
                       ),
+                      smallSepartor,
+                      if (viewController.selectedItems.isEmpty &&
+                          viewController.itemsNames.isEmpty)
+                        Container(
+                          margin: const EdgeInsets.all(5),
+                          child: Column(
+                            children: [
+                              RichText(
+                                text: TextSpan(children: [
+                                  WidgetSpan(
+                                      child: Icon(
+                                    Icons.check_circle_rounded,
+                                    color: primaryBlueColor,
+                                  )),
+                                  WidgetSpan(child: hTinySepartor),
+                                  TextSpan(
+                                      text: "All items",
+                                      style: context.textTheme.bodyLarge)
+                                ]),
+                              ),
+                              smallSepartor,
+                              Text(
+                                "No particular items have been selected this offer will be applied to all items",
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                      MezAddButton(
+                        btnHeight: 45,
+                        onClick: () async {
+                          final List<OfferItemData>? data =
+                              await OfferItemsSelectView.navigate(
+                                  selectedItems: viewController.initalItemsIds,
+                                  serviceProviderId: serviceProviderId!,
+                                  serviceProviderType: serviceProviderType);
+
+                          if (data != null) {
+                            viewController.selectedItems.value = data;
+                          }
+                        },
+                        title: "Select items",
+                      ),
+                      if (viewController.itemsNames.isNotEmpty &&
+                          viewController.selectedItems.isEmpty)
+                        Column(
+                          children: List.generate(
+                              viewController.itemsNames.length,
+                              (int index) => MezCard(
+                                    contentPadding: EdgeInsets.all(8),
+                                    content: Text(
+                                      viewController.itemsNames[index]
+                                              .getTranslation(userLanguage) ??
+                                          "",
+                                      style: context.textTheme.bodyLarge,
+                                    ),
+                                    action: MezIconButton(
+                                      elevation: 0,
+                                      padding: const EdgeInsets.all(3),
+                                      onTap: () {
+                                        viewController.itemsNames.remove(
+                                            viewController.itemsNames[index]);
+                                      },
+                                      icon: Icons.remove,
+                                      iconColor: redAccentColor,
+                                      backgroundColor: offRedColor,
+                                    ),
+                                  )),
+                        ),
+
+                      _offerItems(),
+
+                      meduimSeperator,
                       Text(
                         "Discount type",
                         style: context.textTheme.bodyLarge,
@@ -272,9 +279,12 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                               items: [
                                 DiscountType.FlatAmount,
                                 DiscountType.Percentage,
-                                DiscountType.AnotherSameFlat
-                              ].map((e) => e.toFirebaseFormatString()).toList(),
-                              onChanged: (value) {
+                                // DiscountType.AnotherSameFlat
+                              ]
+                                  .map((DiscountType e) =>
+                                      e.toFirebaseFormatString())
+                                  .toList(),
+                              onChanged: (String? value) {
                                 if (value == null) return;
                                 viewController.selectedDiscountType.value =
                                     value.toDiscountType();
@@ -285,15 +295,19 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                           Expanded(
                             child: TextFormField(
                               controller: viewController.discountController,
+                              textAlignVertical: TextAlignVertical.top,
                               decoration: InputDecoration(
                                 hintText: "0",
-                                suffixIcon:
-                                    viewController.selectedDiscountType.value ==
-                                            DiscountType.Percentage
+                                label: null,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
+                                suffix:
+                                    viewController.selectedDiscountType.value !=
+                                            DiscountType.FlatAmount
                                         ? Text("%")
                                         : Text("\$"),
                               ),
-                              validator: (value) {
+                              validator: (String? value) {
                                 if (value == null || value.isEmpty) {
                                   return "Please enter your Coupon Code";
                                 }
@@ -303,98 +317,246 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                           ),
                         ],
                       ),
+                      if (viewController.selectedDiscountType.value ==
+                          DiscountType.AnotherSameFlat)
+                        Container(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: RichText(
+                              text: TextSpan(children: [
+                            WidgetSpan(
+                                child: Icon(Icons.info,
+                                    color: primaryBlueColor, size: 18)),
+                            TextSpan(
+                                text:
+                                    "When customer adds two then the second gets discount.",
+                                style: context.textTheme.bodyMedium
+                                    ?.copyWith(color: primaryBlueColor))
+                          ])),
+                        ),
+                      meduimSeperator,
+                      Text(
+                        "Minimum order cost",
+                        style: context.textTheme.bodyLarge,
+                      ),
                       smallSepartor,
+                      TextFormField(
+                        controller: viewController.minOrderCost,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        decoration: InputDecoration(
+                            focusColor: primaryBlueColor,
+                            hintText:
+                                "Leave it empty if there no minimum order cost",
+                            suffixIcon: Icon(Icons.attach_money)),
+                        validator: (String? value) {
+                          if (value != null && double.tryParse(value) == null) {
+                            return "Not valid";
+                          }
+                          return null;
+                        },
+                      ),
+
+                      meduimSeperator,
                       Text(
                         "Select your availability",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
-                      FormField(
-                        validator: (value) {
-                          if (viewController.selectedStartDate.value == null ||
-                              viewController.selectedEndDate.value == null) {
-                            return "Please select your availability";
-                          }
-                          if (viewController.selectedStartDate.value!
-                              .isAfter(viewController.selectedEndDate.value!)) {
-                            return "Start date must be before end date";
-                          }
-                          return null;
-                        },
-                        builder: (state) {
-                          return Obx(
-                            () => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  onTap: () async {
-                                    showAvailability();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 20),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      color: Colors.grey.shade200,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.access_time_filled),
-                                        viewController.selectedStartDate
-                                                        .value !=
-                                                    null &&
-                                                viewController.selectedEndDate
-                                                        .value !=
-                                                    null
-                                            ? Text(
-                                                "${viewController.selectedStartDate.value!.getOrderTime()} - ${viewController.selectedEndDate.value!.getOrderTime()}")
-                                            : Text(
-                                                "Select your time",
-                                              ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                if (state.hasError)
-                                  Text(
-                                    state.errorText!,
-                                    style:
-                                        context.textTheme.bodyMedium!.copyWith(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                      _timeSelector(context),
                       smallSepartor,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Repeat this offer every week",
-                            style: context.textTheme.bodyLarge,
-                          ),
-                          Switch(
-                            value: viewController.repeatOffer.value,
-                            onChanged: (value) {
-                              viewController.repeatOffer.value = value;
-                            },
-                          )
-                        ],
-                      ),
-                      if (viewController.selectedOfferType.value ==
-                          OfferType.Coupon)
-                        Column(),
-                      if (viewController.selectedOfferType.value ==
-                          OfferType.Promotion)
-                        Column(),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Text(
+                      //       "Repeat this offer every week",
+                      //       style: context.textTheme.bodyLarge,
+                      //     ),
+                      //     Switch(
+                      //       value: viewController.repeatOffer.value,
+                      //       onChanged: (bool value) {
+                      //         viewController.repeatOffer.value = value;
+                      //       },
+                      //     )
+                      //   ],
+                      // ),
+                      // if (viewController.selectedOfferType.value ==
+                      //     OfferType.Coupon)
+                      //   Column(),
+                      // if (viewController.selectedOfferType.value ==
+                      //     OfferType.Promotion)
+                      //   Column(),
                     ],
                   ),
                 ),
               ),
+      ),
+    );
+  }
+
+  FormField<Object> _timeSelector(BuildContext context) {
+    return FormField(
+      validator: (Object? value) {
+        if (viewController.selectedStartDate.value == null ||
+            viewController.selectedEndDate.value == null) {
+          return "Please select your availability";
+        }
+        if (viewController.selectedStartDate.value!
+            .isAfter(viewController.selectedEndDate.value!)) {
+          return "Start date must be before end date";
+        }
+        return null;
+      },
+      builder: (FormFieldState<Object?> state) {
+        return Obx(
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              InkWell(
+                onTap: () async {
+                  showAvailability();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey.shade200,
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.access_time_filled),
+                      hTinySepartor,
+                      viewController.selectedStartDate.value != null &&
+                              viewController.selectedEndDate.value != null
+                          ? Text(
+                              "${viewController.selectedStartDate.value!.getOrderTime()} - ${viewController.selectedEndDate.value!.getOrderTime()}")
+                          : Text(
+                              "Select your time",
+                            ),
+                    ],
+                  ),
+                ),
+              ),
+              if (state.hasError)
+                Text(
+                  state.errorText!,
+                  style: context.textTheme.bodyMedium!.copyWith(
+                    color: Colors.red,
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void showAvailability() {
+    showModalBottomSheet<void>(
+      context: context,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+      builder: (BuildContext context) {
+        return Obx(
+          () => Container(
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                    margin: const EdgeInsets.all(5),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Offer Availibilty",
+                      style: context.textTheme.bodyLarge,
+                    )),
+                Divider(
+                  thickness: 0.3,
+                ),
+                meduimSeperator,
+                BsOpDateTimePicker(
+                  fillColor: Colors.white,
+                  onNewPeriodSelected: (DateTime v) {
+                    viewController.selectedStartDate.value = v;
+                  },
+                  label: "Start date",
+                  validator: (DateTime? p0) {
+                    if (p0 == null) {
+                      BotToast.showText(
+                          text: "Please select a time",
+                          duration: Duration(seconds: 5));
+                      return "Please select a time";
+                    }
+                    return null;
+                  },
+                  time: viewController.selectedStartDate.value,
+                ),
+                bigSeperator,
+                BsOpDateTimePicker(
+                  fillColor: Colors.white,
+                  onNewPeriodSelected: (DateTime v) {
+                    viewController.selectedEndDate.value = v;
+                  },
+                  label: "End Date",
+                  validator: (DateTime? p0) {
+                    if (p0 == null) {
+                      BotToast.showText(
+                          text: "Please select a time",
+                          duration: Duration(seconds: 5));
+                      return "Please select a time";
+                    }
+                    return null;
+                  },
+                  time: viewController.selectedEndDate.value,
+                ),
+                bigSeperator,
+                MezButton(
+                  height: 50,
+                  label: "Save",
+                  onClick: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+                bigSeperator
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _offerItems() {
+    return Column(
+      children: List.generate(
+        viewController.selectedItems.length,
+        (int index) {
+          return MezCard(
+            elevation: 0,
+            margin: EdgeInsets.only(bottom: 8),
+            radius: 17,
+            firstAvatarBgImage: CachedNetworkImageProvider(
+                viewController.selectedItems[index].image),
+            content: Text(
+              viewController.selectedItems[index].name.getTranslation(
+                      Get.find<LanguageController>().userLanguageKey) ??
+                  "",
+              style: context.textTheme.bodyLarge,
+            ),
+            action: MezIconButton(
+              elevation: 0,
+              padding: const EdgeInsets.all(3),
+              onTap: () {
+                viewController.removeItem(
+                    id: viewController.selectedItems[index].id);
+              },
+              icon: Icons.remove,
+              iconColor: redAccentColor,
+              backgroundColor: offRedColor,
+            ),
+          );
+        },
       ),
     );
   }

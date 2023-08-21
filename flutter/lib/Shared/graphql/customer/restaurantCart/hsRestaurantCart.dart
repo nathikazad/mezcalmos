@@ -150,6 +150,8 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
           data.item.options.addAll(_convertOptionFromQuerry(listOfOptions));
         });
         cart.addItem(data);
+        cart.itemsCost = cartData.cost ?? 0;
+        cart.discountValue = cartData.discount_value;
       }
     });
     return cart;
@@ -254,7 +256,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
     final Subscription$listen_on_customer_cart$restaurant_cart_by_pk?
         parsedCart = cart.parsedData?.restaurant_cart_by_pk;
 
-    mezDbgPrint("♥️ Cart Event From HsFile ===========>${cart.data}");
+    mezDbgPrint(
+        "♥️♥️♥️♥️♥️♥️♥️♥️♥️ Cart Event From HsFile ===========>${cart.parsedData?.restaurant_cart_by_pk?.discount_value}");
     if (parsedCart != null) {
       Subscription$listen_on_customer_cart$restaurant_cart_by_pk$restaurant?
           _res = cart.parsedData?.restaurant_cart_by_pk?.restaurant;
@@ -314,6 +317,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         );
       }
       _cartEvent.discountValue = parsedCart.discount_value;
+      _cartEvent.itemsCost = parsedCart.cost ?? 0;
       _cartEvent.offersApplied = parsedCart.applied_offers
               ?.map<int>((value) => int.parse(value.toString()))
               .toList() ??

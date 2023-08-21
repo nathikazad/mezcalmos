@@ -177,6 +177,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
             deliveryCost: orderData.delivery_cost,
             refundAmmount: orderData.refund_amount,
             tax: null,
+            discountValue: orderData.discount_value,
             orderItemsCost: orderData.items_cost,
             totalCost: orderData.total_cost),
         deliveryCompany: null, driverLocation: null,
@@ -346,6 +347,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     costs: OrderCosts(
         deliveryCost: orderData.delivery_cost,
         refundAmmount: orderData.refund_amount,
+        discountValue: orderData.discount_value,
         tax: null,
         orderItemsCost: orderData.items_cost,
         totalCost: orderData.total_cost),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
 class MezIconButton extends StatefulWidget {
   const MezIconButton({
@@ -69,7 +71,7 @@ class _MezIconButtonState extends State<MezIconButton> {
         borderRadius: widget.borderRadius,
         shape: widget.shape == null ? CircleBorder() : null,
         child: InkWell(
-          onTap: isLoading ? null : _handleTap,
+          onTap: isLoading || widget.onTap == null ? null : _handleTap,
           borderRadius: widget.borderRadius,
           customBorder: widget.shape == null ? CircleBorder() : null,
           child: Ink(
@@ -92,11 +94,11 @@ class _MezIconButtonState extends State<MezIconButton> {
                         size: widget.iconSize ?? 20,
                       ),
                 if (isLoading) // Show the loading spinner if loading
-                  Transform.scale(
-                      scale: 0.5,
-                      child: CircularProgressIndicator(
-                        color: widget.iconColor ?? primaryBlueColor,
-                      )),
+                  SpinKitRing(
+                    color: widget.iconColor ?? primaryBlueColor,
+                    size: 25.mezSp,
+                    lineWidth: 5,
+                  )
               ],
             ),
           ),

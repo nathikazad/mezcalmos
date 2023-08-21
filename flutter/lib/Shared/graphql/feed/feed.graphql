@@ -112,6 +112,32 @@ query fetch_service_provider_posts($service_provider_id: Int, $service_provider_
     message
     link
     posted_on
+    service_provider_id
+    service_provider_type
+    restaurant {
+      details {
+        name
+        image
+      }
+    }
+    laundry {
+      details {
+        name
+        image
+      }
+    }
+    delivery_company {
+      details {
+        name
+        image
+      }
+    }
+    business {
+      details {
+        name
+        image
+      }
+    }
   }
 }
 
@@ -228,6 +254,53 @@ query fetch_subscribers($service_provider_id: Int, $service_provider_type: Strin
   service_provider_subscriber(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}}) {
     customer_id
     id
+  }
+}
+
+query getPost($id: Int!) {
+  service_provider_post_by_pk(id: $id) {
+    image
+    likes
+    link
+    message
+    posted_on
+    service_provider_id
+    service_provider_type
+    restaurant {
+      details {
+        name
+        image
+      }
+    }
+    laundry {
+      details {
+        name
+        image
+      }
+    }
+    delivery_company {
+      details {
+        name
+        image
+      }
+    }
+    business {
+      details {
+        name
+        image
+      }
+    }
+    comments {
+      commented_on
+      id
+      likes
+      message
+      user {
+        id
+        name
+        image
+      }
+    }
   }
 }
 

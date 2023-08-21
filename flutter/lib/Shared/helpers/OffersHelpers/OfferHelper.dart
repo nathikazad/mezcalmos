@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/models/BusinessCartItem.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
@@ -8,15 +10,16 @@ import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCar
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
 enum CouponError {
   UnavailableOrExpired,
-  Notreusable,
   FirstOrderOnly,
   AlreadyApplied,
   NotApplicable,
   InvalidCouponCode,
-  OrderAmountTooLow
+  OrderAmountTooLow,
+  NotReusable
 }
 
 Future<CouponError?> applyRestaurantCoupon(
@@ -31,20 +34,20 @@ Future<CouponError?> applyRestaurantCoupon(
   if (coupon == null) {
     return CouponError.InvalidCouponCode;
   }
-  if (cart.offersApplied.firstWhereOrNull((o) => o == coupon.id) != null) {
+  if (cart.offersApplied.firstWhereOrNull((int o) => o == coupon.id) != null) {
     return CouponError.AlreadyApplied;
   }
   if (coupon.details.minimumOrderAmount != null &&
-      coupon.details.minimumOrderAmount! > cart.itemsCost()) {
+      coupon.details.minimumOrderAmount! > cart.itemsCost) {
     return CouponError.OrderAmountTooLow;
   }
   bool isValid = true;
   if (coupon.details.validityRangeStart != null &&
       coupon.details.validityRangeEnd != null) {
-    DateTime currentTime = DateTime.now();
-    DateTime validityRangeStart =
+    final DateTime currentTime = DateTime.now();
+    final DateTime validityRangeStart =
         DateTime.parse(coupon.details.validityRangeStart!);
-    DateTime validityRangeEnd =
+    final DateTime validityRangeEnd =
         DateTime.parse(coupon.details.validityRangeEnd!);
 
     if (coupon.details.weeklyRepeat) {
@@ -76,14 +79,14 @@ Future<CouponError?> applyRestaurantCoupon(
             restaurantId: cart.restaurant!.restaurantId);
     if (numberOfCustomerRestaurantOrders > 0) return CouponError.FirstOrderOnly;
   }
-  if (coupon.details.couponReusable != true) {
-    if (await check_offer_applied(
-        customerId: customerId,
-        offerId: coupon.id!.toInt(),
-        orderType: cModels.OrderType.Restaurant)) {
-      return CouponError.Notreusable;
-    }
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Restaurant)) {
+    return CouponError.NotReusable;
   }
+  // }
   final num discount = calculateRestaurantCartDiscount(cart, coupon);
   if (discount == 0) return CouponError.NotApplicable;
   cart.discountValue += discount;
@@ -118,7 +121,7 @@ Future<void> applyOffersToRestaurantCart(
           offer.offerType == cModels.OfferType.Coupon &&
           offer.status == cModels.OfferStatus.Active)
       .toList();
-  appliedOffers.forEach((o) {
+  appliedOffers.forEach((int o) {
     cModels.Offer? coupon = activeCoupons
         .firstWhereOrNull((cModels.Offer coupon) => o == coupon.id);
     if (coupon != null) {
@@ -144,10 +147,10 @@ Future<void> applyOffersToRestaurantCart(
   for (cModels.Offer promo in activePromotions) {
     if (promo.details.validityRangeStart != null &&
         promo.details.validityRangeEnd != null) {
-      DateTime currentTime = DateTime.now();
-      DateTime validityRangeStart =
+      final DateTime currentTime = DateTime.now();
+      final DateTime validityRangeStart =
           DateTime.parse(promo.details.validityRangeStart!);
-      DateTime validityRangeEnd =
+      final DateTime validityRangeEnd =
           DateTime.parse(promo.details.validityRangeEnd!);
 
       if (promo.details.weeklyRepeat) {
@@ -185,7 +188,7 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
   num discount = 0;
 
   if (offer.details.minimumOrderAmount != null &&
-      offer.details.minimumOrderAmount! > cart.itemsCost()) {
+      offer.details.minimumOrderAmount! > cart.itemsCost) {
     return 0;
   }
 
@@ -196,9 +199,9 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
       if (offer.details.offerForItems == null) {
         discount += offer.details.discountValue;
       } else {
-        cart.cartItems.forEach((cartItem) {
+        cart.cartItems.forEach((CartItem cartItem) {
           if (offer.details.offerForItems == "particularItems") {
-            offer.details.items!.forEach((c) => {
+            offer.details.items!.forEach((num c) => {
                   if (c == cartItem.item.id)
                     {
                       discount +=
@@ -206,7 +209,7 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
                     }
                 });
           } else if (offer.details.offerForItems == "particularCategories") {
-            offer.details.categories!.forEach((c) => {
+            offer.details.categories!.forEach((num c) => {
                   if (c == cartItem.item.categoryId)
                     {
                       discount +=
@@ -218,9 +221,9 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
       }
       break;
     case cModels.DiscountType.Percentage:
-      cart.cartItems.forEach((cartItem) {
+      cart.cartItems.forEach((CartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
-          offer.details.items!.forEach((c) => {
+          offer.details.items!.forEach((num c) => {
                 if (c == cartItem.item.id)
                   {
                     discount += cartItem.item.cost *
@@ -230,7 +233,7 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
                   }
               });
         } else if (offer.details.offerForItems == "particularCategories") {
-          offer.details.categories!.forEach((c) => {
+          offer.details.categories!.forEach((num c) => {
                 if (c == cartItem.item.categoryId)
                   {
                     discount += cartItem.item.cost *
@@ -249,7 +252,7 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
       break;
     case cModels.DiscountType.AnotherSameFlat:
       int sameItems = 0;
-      cart.cartItems.forEach((cartItem) {
+      cart.cartItems.forEach((CartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
           for (num c in offer.details.items!) {
             if (c == cartItem.item.id) {
@@ -266,12 +269,12 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
           }
         }
       });
-      discount += offer.details.discountValue * (sameItems / 2);
+      discount += offer.details.discountValue * (sameItems ~/ 2);
       break;
     case cModels.DiscountType.AnotherSamePercentage:
       int sameItems = 0;
       num oneItemCost = 0;
-      cart.cartItems.forEach((cartItem) {
+      cart.cartItems.forEach((CartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
           for (num c in offer.details.items!) {
             if (c == cartItem.item.id) {
@@ -291,12 +294,12 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
         }
       });
       discount +=
-          oneItemCost * offer.details.discountValue / 100.0 * (sameItems / 2);
+          oneItemCost * offer.details.discountValue / 100.0 * (sameItems ~/ 2);
       break;
   }
   if (discount > 0) {
     // if (cart.offersApplied.firstWhereOrNull((o) => o == offer.id) == null) {
-    cart.offersApplied.add(offer.id!.toInt());
+    cart.offersApplied.add(offer.id.toInt());
     // }
   }
   return discount;
@@ -314,7 +317,7 @@ Future<CouponError?> applyBusinessCoupon(
   if (coupon == null) {
     return CouponError.InvalidCouponCode;
   }
-  if (cart.appliedOffers.firstWhereOrNull((o) => o == coupon.id) != null) {
+  if (cart.appliedOffers.firstWhereOrNull((int o) => o == coupon.id) != null) {
     return CouponError.AlreadyApplied;
   }
   if (coupon.details.minimumOrderAmount != null &&
@@ -324,10 +327,10 @@ Future<CouponError?> applyBusinessCoupon(
   bool isValid = true;
   if (coupon.details.validityRangeStart != null &&
       coupon.details.validityRangeEnd != null) {
-    DateTime currentTime = DateTime.now();
-    DateTime validityRangeStart =
+    final DateTime currentTime = DateTime.now();
+    final DateTime validityRangeStart =
         DateTime.parse(coupon.details.validityRangeStart!);
-    DateTime validityRangeEnd =
+    final DateTime validityRangeEnd =
         DateTime.parse(coupon.details.validityRangeEnd!);
 
     if (coupon.details.weeklyRepeat) {
@@ -358,14 +361,14 @@ Future<CouponError?> applyBusinessCoupon(
             customerId: customerId, businessId: cart.businessId!.toInt());
     if (numberOfCustomerBusinessOrders > 0) return CouponError.FirstOrderOnly;
   }
-  if (coupon.details.couponReusable != true) {
-    if (await check_offer_applied(
-        customerId: customerId,
-        offerId: coupon.id!.toInt(),
-        orderType: cModels.OrderType.Business)) {
-      return CouponError.Notreusable;
-    }
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Business)) {
+    return CouponError.NotReusable;
   }
+  // }
   final num discount = calculateBusinessCartDiscount(cart, coupon);
   if (discount == 0) return CouponError.NotApplicable;
   cart.discountValue += discount;
@@ -393,7 +396,7 @@ Future<void> applyOffersToBusinessCart(
           offer.offerType == cModels.OfferType.Coupon &&
           offer.status == cModels.OfferStatus.Active)
       .toList();
-  appliedOffers.forEach((o) {
+  appliedOffers.forEach((int o) {
     cModels.Offer? coupon = activeCoupons
         .firstWhereOrNull((cModels.Offer coupon) => o == coupon.id);
     if (coupon != null) {
@@ -417,10 +420,10 @@ Future<void> applyOffersToBusinessCart(
   for (cModels.Offer promo in activePromotions) {
     if (promo.details.validityRangeStart != null &&
         promo.details.validityRangeEnd != null) {
-      DateTime currentTime = DateTime.now();
-      DateTime validityRangeStart =
+      final DateTime currentTime = DateTime.now();
+      final DateTime validityRangeStart =
           DateTime.parse(promo.details.validityRangeStart!);
-      DateTime validityRangeEnd =
+      final DateTime validityRangeEnd =
           DateTime.parse(promo.details.validityRangeEnd!);
 
       if (promo.details.weeklyRepeat) {
@@ -468,17 +471,16 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       if (offer.details.offerForItems == null) {
         discount += offer.details.discountValue;
       } else {
-        cart.items.forEach((cartItem) {
+        cart.items.forEach((BusinessCartItem cartItem) {
           if (offer.details.offerForItems == "particularItems") {
             for (int i = 0; i < offer.details.items!.length; i++) {
-              if (offer.details.items![i] == cartItem.itemId &&
-                  offer.details.offeringTypes![i] == cartItem.offeringType) {
+              if (offer.details.items![i] == cartItem.itemId) {
                 discount += offer.details.discountValue;
                 break;
               }
             }
           } else if (offer.details.offerForItems == "particularServices") {
-            offer.details.offeringTypes!.forEach((c) => {
+            offer.details.offeringTypes!.forEach((cModels.OfferingType c) => {
                   if (c == cartItem.offeringType)
                     {discount += offer.details.discountValue}
                 });
@@ -487,17 +489,16 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       }
       break;
     case cModels.DiscountType.Percentage:
-      cart.items.forEach((cartItem) {
+      cart.items.forEach((BusinessCartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
           for (int i = 0; i < offer.details.items!.length; i++) {
-            if (offer.details.items![i] == cartItem.itemId &&
-                offer.details.offeringTypes![i] == cartItem.offeringType) {
+            if (offer.details.items![i] == cartItem.itemId) {
               discount += cartItem.cost * offer.details.discountValue / 100.0;
               break;
             }
           }
         } else if (offer.details.offerForItems == "particularServices") {
-          offer.details.offeringTypes!.forEach((c) => {
+          offer.details.offeringTypes!.forEach((cModels.OfferingType c) => {
                 if (c == cartItem.offeringType)
                   {
                     discount +=
@@ -511,11 +512,10 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
       break;
     case cModels.DiscountType.AnotherSameFlat:
       int sameItems = 0;
-      cart.items.forEach((cartItem) {
+      cart.items.forEach((BusinessCartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
           for (int i = 0; i < offer.details.items!.length; i++) {
-            if (offer.details.items![i] == cartItem.itemId &&
-                offer.details.offeringTypes![i] == cartItem.offeringType) {
+            if (offer.details.items![i] == cartItem.itemId) {
               sameItems++;
               break;
             }
@@ -529,16 +529,16 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
           }
         }
       });
-      discount += offer.details.discountValue * (sameItems / 2);
+      discount += offer.details.discountValue * (sameItems ~/ 2);
       break;
     case cModels.DiscountType.AnotherSamePercentage:
       int sameItems = 0;
       num oneItemCost = 0;
-      cart.items.forEach((cartItem) {
+      cart.items.forEach((BusinessCartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
           for (int i = 0; i < offer.details.items!.length; i++) {
-            if (offer.details.items![i] == cartItem.itemId &&
-                offer.details.offeringTypes![i] == cartItem.offeringType) {
+            if (offer.details.items![i] == cartItem.itemId) {
+              oneItemCost = cartItem.cost;
               sameItems++;
               break;
             }
@@ -554,12 +554,12 @@ num calculateBusinessCartDiscount(CustBusinessCart cart, cModels.Offer offer) {
         }
       });
       discount +=
-          oneItemCost * offer.details.discountValue / 100.0 * (sameItems / 2);
+          oneItemCost * offer.details.discountValue / 100.0 * (sameItems ~/ 2);
       break;
   }
   if (discount > 0) {
-    if (cart.appliedOffers.firstWhereOrNull((o) => o == offer.id) == null) {
-      cart.appliedOffers.add(offer.id!.toInt());
+    if (cart.appliedOffers.firstWhereOrNull((int o) => o == offer.id) == null) {
+      cart.appliedOffers.add(offer.id.toInt());
     }
   }
   return discount;
@@ -579,10 +579,10 @@ Future<CouponError?> checkLaundryCoupon(
   bool isValid = true;
   if (coupon.details.validityRangeStart != null &&
       coupon.details.validityRangeEnd != null) {
-    DateTime currentTime = DateTime.now();
-    DateTime validityRangeStart =
+    final DateTime currentTime = DateTime.now();
+    final DateTime validityRangeStart =
         DateTime.parse(coupon.details.validityRangeStart!);
-    DateTime validityRangeEnd =
+    final DateTime validityRangeEnd =
         DateTime.parse(coupon.details.validityRangeEnd!);
 
     if (coupon.details.weeklyRepeat) {
@@ -613,13 +613,164 @@ Future<CouponError?> checkLaundryCoupon(
             customerId: customerId, storeId: laundryStoreId);
     if (numberOfCustomerLaundryOrders > 0) return CouponError.FirstOrderOnly;
   }
-  if (coupon.details.couponReusable != true) {
-    if (await check_offer_applied(
-        customerId: customerId,
-        offerId: coupon.id!.toInt(),
-        orderType: cModels.OrderType.Laundry)) {
-      return CouponError.Notreusable;
+  // if (coupon.details.couponReusable != true) {
+  if (await check_offer_applied(
+      customerId: customerId,
+      offerId: coupon.id.toInt(),
+      orderType: cModels.OrderType.Laundry)) {
+    return CouponError.NotReusable;
+  }
+  // }
+  return null;
+}
+
+extension OffersHelper on cModels.Offer {
+  bool get isActive {
+    if (details.validityRangeStart != null &&
+        details.validityRangeEnd != null &&
+        status == cModels.OfferStatus.Active) {
+      final DateTime now = DateTime.now();
+      final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+      final DateTime startDate = dateFormat.parse(details.validityRangeStart!);
+      final DateTime endDate = dateFormat.parse(details.validityRangeEnd!);
+
+      if (now.isAfter(startDate) && now.isBefore(endDate)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  DateTime? get startDate {
+    if (details.validityRangeStart != null) {
+      return DateTime.parse(details.validityRangeStart!);
+    }
+    return null;
+  }
+
+  DateTime? get endDate {
+    if (details.validityRangeEnd != null) {
+      return DateTime.parse(details.validityRangeEnd!);
+    }
+    return null;
+  }
+
+  IconData get icon {
+    switch (offerType) {
+      case cModels.OfferType.Coupon:
+        return Icons.discount_rounded;
+      case cModels.OfferType.Promotion:
+        return Icons.price_check;
+      case cModels.OfferType.MonthlySubscription:
+        return Icons.workspace_premium_rounded;
     }
   }
-  return null;
+}
+
+enum OfferItemType {
+  ParticularItems,
+  ParticularCategories,
+}
+
+extension OfferItemTypeExtension on OfferItemType {
+  String toFirebaseFormattedString() {
+    return toString().split('.').last.toLowerCase();
+  }
+}
+
+Future<String> generateOfferDescription(
+    {required cModels.OfferDetails offerDetails}) async {
+  String description = "";
+
+  switch (offerDetails.discountType) {
+    case cModels.DiscountType.FlatAmount:
+      description += "Flat \$${offerDetails.discountValue} off ";
+      break;
+    case cModels.DiscountType.Percentage:
+      description += "${offerDetails.discountValue}% off ";
+      break;
+    case cModels.DiscountType.AnotherSameFlat:
+      description +=
+          "Buy 1 and Get Flat \$${offerDetails.discountValue} off on another one ";
+      break;
+    case cModels.DiscountType.AnotherSamePercentage:
+      description +=
+          "Buy 1 and Get ${offerDetails.discountValue}% off on another one ";
+      break;
+    default:
+  }
+
+  if (offerDetails.offerForItems != null) {
+    if (offerDetails.discountType == cModels.DiscountType.AnotherSameFlat ||
+        offerDetails.discountType ==
+            cModels.DiscountType.AnotherSamePercentage) {
+      description += "from ";
+    } else {
+      description += "on ";
+    }
+    if (offerDetails.offerForItems == "particularItems") {
+      description += "the following items";
+    } else if (offerDetails.offerForItems == "particularCategories") {
+      description += "the following categories";
+    }
+  }
+
+  if (offerDetails.offerForOrder == "firstOrder") {
+    description += "on your first order";
+  }
+  if (offerDetails.minimumOrderAmount != null) {
+    description +=
+        "with minimum order amount ${offerDetails.minimumOrderAmount}";
+  }
+  if (offerDetails.validityRangeStart != null &&
+      offerDetails.validityRangeEnd != null) {
+    description +=
+        " from ${offerDetails.validityRangeStart} to ${offerDetails.validityRangeEnd}";
+  }
+  return description;
+}
+
+extension OfferDetailsExtensions on cModels.OfferDetails {
+  String getDescription() {
+    final StringBuffer sb = StringBuffer();
+
+    switch (discountType) {
+      case cModels.DiscountType.FlatAmount:
+        sb.write("Flat \$$discountValue off ");
+        break;
+      case cModels.DiscountType.Percentage:
+        sb.write("$discountValue% off ");
+        break;
+      case cModels.DiscountType.AnotherSameFlat:
+        sb.write("Buy 1 and Get Flat \$$discountValue off on another one ");
+        break;
+      case cModels.DiscountType.AnotherSamePercentage:
+        sb.write("Buy 1 and Get $discountValue% off on another one ");
+        break;
+      default:
+    }
+
+    if (offerForItems != null) {
+      sb.write(discountType == cModels.DiscountType.AnotherSameFlat ||
+              discountType == cModels.DiscountType.AnotherSamePercentage
+          ? "from "
+          : "on ");
+
+      sb.write(offerForItems == "particularItems"
+          ? "the following items"
+          : "the following categories");
+    }
+
+    if (offerForOrder == "firstOrder") {
+      sb.write("on your first order");
+    }
+    if (minimumOrderAmount != null) {
+      sb.write("with minimum order amount $minimumOrderAmount");
+    }
+    if (validityRangeStart != null && validityRangeEnd != null) {
+      sb.write(
+          " from ${DateTime.parse(validityRangeStart!).getOrderTime()} to ${DateTime.parse(validityRangeEnd!).getOrderTime()}");
+    }
+    return sb.toString();
+  }
 }

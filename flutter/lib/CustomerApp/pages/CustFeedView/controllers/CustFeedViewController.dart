@@ -2,14 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart' as locPkg;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/feed/hsFeed.dart';
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Post.dart';
-import 'package:location/location.dart' as locPkg;
 
 class CustFeedViewController {
   AuthController _authController = Get.find<AuthController>();
@@ -43,23 +45,30 @@ class CustFeedViewController {
   int _promoCurrentOffset = 0;
   bool _promoFetchingData = false;
   bool _promoReachedEndOfData = false;
+  bool get isFetching => _promoFetchingData || _postFetchingData;
+  RxBool isInitalized = RxBool(false);
   /* SCROLL CONTROLLER */
 
   void init() {
     _postScrollController.onBottomReach(
-      _postSwitch.value ? _fetchPosts : _fetchAllPosts,
+      () {
+        postSwitch ? _fetchPosts() : _fetchAllPosts();
+      },
       sensitivity: 200,
     );
     _promoScrollController.onBottomReach(
-      _promotionSwitch.value ? _fetchPromotions : _fetchAllPromotions,
+      () {
+        promotionSwitch ? _fetchPromotions : _fetchAllPromotions();
+      },
       sensitivity: 200,
     );
-    _fetchAllPosts();
-    _fetchAllPromotions();
+    Future.wait([_fetchPosts(), _fetchPromotions()])
+        .whenComplete(() => isInitalized.value = true);
     print(_authController.hasuraUserId);
   }
 
   Future<void> _fetchPosts() async {
+    mezDbgPrint("👋 Called fetch post with post switch =====>$postSwitch");
     if (_postFetchingData || _postReachedEndOfData) {
       return;
     }
@@ -80,10 +89,12 @@ class CustFeedViewController {
       _postFetchingData = false;
     }
 
-    _posts.refresh();
+    // _posts.refresh();
   }
 
   Future<void> _fetchAllPosts() async {
+    mezDbgPrint(
+        "👋 Called fetch post with post switch =====>$postSwitch === _postReachedEndOfData $_postReachedEndOfData");
     if (_postFetchingData || _postReachedEndOfData) {
       return;
     }
@@ -96,10 +107,11 @@ class CustFeedViewController {
             lat: location.latitude!, lng: location.longitude!, address: "");
       }
       final List<Post> newData = await fetch_posts_within_distance(
-        offset: _postCurrentOffset,
-        limit: postFetchSize,
-        fromLocation: _fromLocation!,
-      );
+          offset: _postCurrentOffset,
+          limit: postFetchSize,
+          withCache: false,
+          fromLocation: _fromLocation!,
+          distance: getFetchDistance);
       print(newData.length);
       _posts.value += newData;
       if (newData.length == 0) {
@@ -110,7 +122,7 @@ class CustFeedViewController {
       _postFetchingData = false;
     }
 
-    _posts.refresh();
+    // _posts.refresh();
   }
 
   Future<void> _fetchPromotions() async {
@@ -122,6 +134,7 @@ class CustFeedViewController {
       final List<Offer> newData = await fetch_subscribed_promotions(
         offset: _promoCurrentOffset,
         limit: promoFetchSize,
+        withCache: false,
         customerId: _authController.hasuraUserId!,
       );
       print(newData.length);
@@ -134,7 +147,7 @@ class CustFeedViewController {
       _promoFetchingData = false;
     }
 
-    _promotions.refresh();
+    // _promotions.refresh();
   }
 
   Future<void> _fetchAllPromotions() async {
@@ -152,6 +165,7 @@ class CustFeedViewController {
       final List<Offer> newData = await fetch_all_promotions_within_distance(
         offset: _promoCurrentOffset,
         limit: promoFetchSize,
+        distance: getFetchDistance,
         fromLocation: _fromLocation!,
       );
       print(newData.length);
@@ -164,33 +178,38 @@ class CustFeedViewController {
       _promoFetchingData = false;
     }
 
-    _promotions.refresh();
+    // _promotions.refresh();
   }
 
-  Future<void> writeComment(
-      {required int postId,
-      required TextEditingController commentController}) async {
-    if (commentController.text.isEmpty) return;
-
-    commentController.text = '';
-    await write_comment(
-      userId: _authController.hasuraUserId!.toInt(),
-      postId: postId,
-      commentMsg: commentController.text,
-    );
-  }
-
-  Future<void> likePost(
-    Post post,
-  ) async {
-    final List<int> likes = post.likes;
-
-    if (likes.contains(_authController.user!.hasuraId)) {
-      likes.remove(_authController.user!.hasuraId);
-    } else {
-      likes.add(_authController.user!.hasuraId);
+  Future<bool> writeComment(
+      {required int postId, required String comment}) async {
+    if (comment.isEmpty) return false;
+    mezDbgPrint("Sending comment =======>$comment");
+    try {
+      int? res = await write_comment(
+          userId: _authController.hasuraUserId!,
+          postId: postId,
+          commentMsg: comment);
+      mezDbgPrint("Response =======> $res");
+      return res != null;
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      return false;
     }
-    await update_post_likes(postId: post.id, likes: likes);
+  }
+
+  Future<bool> likePost(
+    int postId,
+  ) async {
+    final Post post = _posts.firstWhere((Post element) => element.id == postId);
+    if (post.likes.contains(_authController.user!.hasuraId)) {
+      post.likes.remove(_authController.user!.hasuraId);
+    } else {
+      post.likes.add(_authController.user!.hasuraId);
+    }
+
+    return await update_post_likes(postId: post.id, likes: post.likes);
   }
 
   void setPostSwitch(bool value) {

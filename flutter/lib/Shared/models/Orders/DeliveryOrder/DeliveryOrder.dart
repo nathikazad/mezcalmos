@@ -13,6 +13,7 @@ class DeliveryOrder extends DeliverableOrder {
   DeliveryOrderStatus status;
 
   bool packageReady;
+  String? serviceProviderPhoneNumber;
 
   //bool driverAssigned;
   DeliveryOrder(
@@ -27,6 +28,7 @@ class DeliveryOrder extends DeliverableOrder {
       super.serviceReviewByDriver,
       this.counterOffers,
       this.notifiedDrivers,
+      this.serviceProviderPhoneNumber,
       required super.costs,
       required this.packageReady,
       required this.serviceOrderId,

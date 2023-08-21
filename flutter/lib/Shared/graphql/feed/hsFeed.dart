@@ -29,8 +29,9 @@ Future<List<Post>> fetch_subscribed_posts(
   //   throwError(res.exception);
   // }
   final List<Post> posts = [];
-  res.parsedData?.service_provider_post.forEach((data) {
-    cModels.ServiceProviderType serviceProviderType =
+  res.parsedData?.service_provider_post
+      .forEach((Query$fetch_subscribed_posts$service_provider_post data) {
+    final cModels.ServiceProviderType serviceProviderType =
         data.service_provider_type.toServiceProviderType();
     String? serviceProviderName;
     String? serviceProviderImage;
@@ -53,7 +54,8 @@ Future<List<Post>> fetch_subscribed_posts(
         break;
     }
     List<Comment> comments = <Comment>[];
-    data.comments.forEach((element) {
+    data.comments.forEach(
+        (Query$fetch_subscribed_posts$service_provider_post$comments element) {
       comments.add(
         Comment(
           id: element.id,
@@ -120,9 +122,12 @@ Future<List<Post>> fetch_service_provider_posts(
   //   throwError(res.exception);
   // }
   final List<Post> posts = [];
-  res.parsedData?.service_provider_post.forEach((data) {
+  res.parsedData?.service_provider_post
+      .forEach((Query$fetch_service_provider_posts$service_provider_post data) {
     List<Comment> comments = <Comment>[];
-    data.comments.forEach((element) {
+    data.comments.forEach(
+        (Query$fetch_service_provider_posts$service_provider_post$comments
+            element) {
       comments.add(
         Comment(
           id: element.id,
@@ -138,12 +143,32 @@ Future<List<Post>> fetch_service_provider_posts(
         ),
       );
     });
+    String? serviceProviderName;
+    String? serviceProviderImage;
+    switch (serviceProviderType) {
+      case cModels.ServiceProviderType.Restaurant:
+        serviceProviderName = data.restaurant?.details?.name;
+        serviceProviderImage = data.restaurant?.details?.image;
+        break;
+      case cModels.ServiceProviderType.Laundry:
+        serviceProviderName = data.laundry?.details?.name;
+        serviceProviderImage = data.laundry?.details?.image;
+        break;
+      case cModels.ServiceProviderType.DeliveryCompany:
+        serviceProviderName = data.delivery_company?.details?.name;
+        serviceProviderImage = data.delivery_company?.details?.image;
+        break;
+      case cModels.ServiceProviderType.Business:
+        serviceProviderName = data.business?.details.name;
+        serviceProviderImage = data.business?.details.image;
+        break;
+    }
     posts.add(Post(
       id: data.id,
       serviceProviderId: serviceProviderId,
       serviceProviderType: serviceProviderType,
-      // serviceProviderName: serviceProviderName,
-      // serviceProviderImage: serviceProviderImage,
+      serviceProviderName: serviceProviderName,
+      serviceProviderImage: serviceProviderImage,
       message: data.message,
       image: data.image,
       likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
@@ -179,8 +204,9 @@ Future<List<Post>> fetch_posts_within_distance(
   //   throwError(res.exception);
   // }
   final List<Post> posts = [];
-  res.parsedData?.service_provider_post.forEach((data) {
-    cModels.ServiceProviderType serviceProviderType =
+  res.parsedData?.service_provider_post
+      .forEach((Query$fetch_posts_within_distance$service_provider_post data) {
+    final cModels.ServiceProviderType serviceProviderType =
         data.service_provider_type.toServiceProviderType();
     String? serviceProviderName;
     String? serviceProviderImage;
@@ -203,7 +229,9 @@ Future<List<Post>> fetch_posts_within_distance(
         break;
     }
     List<Comment> comments = <Comment>[];
-    data.comments.forEach((element) {
+    data.comments.forEach(
+        (Query$fetch_posts_within_distance$service_provider_post$comments
+            element) {
       comments.add(
         Comment(
           id: element.id,
@@ -251,10 +279,80 @@ Future<List<int>> fetch_subscribers(
     ),
   );
   List<int> subscribers = <int>[];
-  res.parsedData?.service_provider_subscriber.forEach((element) {
+  res.parsedData?.service_provider_subscriber
+      .forEach((Query$fetch_subscribers$service_provider_subscriber element) {
     subscribers.add(element.customer_id);
   });
   return subscribers;
+}
+
+Future<Post> get_post({required int postId, bool withCache = true}) async {
+  QueryResult<Query$getPost> res = await _db.graphQLClient.query$getPost(
+    Options$Query$getPost(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$getPost(id: postId),
+    ),
+  );
+  if (res.parsedData?.service_provider_post_by_pk == null) {
+    throwError(res.exception);
+  }
+  final Query$getPost$service_provider_post_by_pk data =
+      res.parsedData!.service_provider_post_by_pk!;
+  final cModels.ServiceProviderType serviceProviderType =
+      data.service_provider_type.toServiceProviderType();
+  String? serviceProviderName;
+  String? serviceProviderImage;
+  switch (serviceProviderType) {
+    case cModels.ServiceProviderType.Restaurant:
+      serviceProviderName = data.restaurant?.details?.name;
+      serviceProviderImage = data.restaurant?.details?.image;
+      break;
+    case cModels.ServiceProviderType.Laundry:
+      serviceProviderName = data.laundry?.details?.name;
+      serviceProviderImage = data.laundry?.details?.image;
+      break;
+    case cModels.ServiceProviderType.DeliveryCompany:
+      serviceProviderName = data.delivery_company?.details?.name;
+      serviceProviderImage = data.delivery_company?.details?.image;
+      break;
+    case cModels.ServiceProviderType.Business:
+      serviceProviderName = data.business?.details.name;
+      serviceProviderImage = data.business?.details.image;
+      break;
+  }
+
+  List<Comment> comments = <Comment>[];
+  res.parsedData?.service_provider_post_by_pk?.comments
+      .forEach((Query$getPost$service_provider_post_by_pk$comments comment) {
+    comments.add(
+      Comment(
+        id: comment.id,
+        message: comment.message,
+        likes: //element.likes == null
+            // ? List<int>.empty() :
+            comment.likes.map<int>((e) => int.parse(e.toString())).toList(),
+        postId: postId,
+        userId: comment.user.id,
+        userName: comment.user.name,
+        userImage: comment.user.image,
+        commentedOn: DateTime.parse(comment.commented_on),
+      ),
+    );
+  });
+  return Post(
+    id: postId,
+    serviceProviderId: data.service_provider_id,
+    serviceProviderType: serviceProviderType,
+    serviceProviderName: serviceProviderName,
+    serviceProviderImage: serviceProviderImage,
+    message: data.message,
+    image: data.image,
+    likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
+    comments: comments,
+    postedOn: DateTime.parse(data.posted_on),
+    link: data.link,
+  );
 }
 
 Future<int?> subscribe_service_provider(
@@ -314,7 +412,7 @@ Future<int?> write_comment(
   return res.parsedData!.insert_service_provider_post_comment_one?.id;
 }
 
-Future<void> update_post_likes(
+Future<bool> update_post_likes(
     {required int postId, required List<int> likes}) async {
   final QueryResult<Mutation$update_post_likes> res =
       await _db.graphQLClient.mutate$update_post_likes(
@@ -326,9 +424,10 @@ Future<void> update_post_likes(
   if (res.parsedData?.update_service_provider_post_by_pk == null) {
     throw Exception("🚨 like post exception 🚨 \n ${res.exception}");
   }
+  return res.parsedData?.update_service_provider_post_by_pk != null;
 }
 
-Future<void> update_comment_likes(
+Future<bool> update_comment_likes(
     {required int postId, required List<int> likes}) async {
   final QueryResult<Mutation$update_comment_likes> res =
       await _db.graphQLClient.mutate$update_comment_likes(
@@ -340,6 +439,7 @@ Future<void> update_comment_likes(
   if (res.parsedData?.update_service_provider_post_comment_by_pk == null) {
     throw Exception("🚨 like comment exception 🚨 \n ${res.exception}");
   }
+  return res.parsedData?.update_service_provider_post_comment_by_pk != null;
 }
 
 Future<int?> create_post({

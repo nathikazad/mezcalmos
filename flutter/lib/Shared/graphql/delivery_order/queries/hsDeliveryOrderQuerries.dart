@@ -58,6 +58,7 @@ Future<DeliveryOrder?> get_driver_order_by_id(
     notifiedDrivers: getNotifiedDrivers(orderData.notified_drivers),
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
+    serviceProviderPhoneNumber: orderData.restaurant?.details?.phone_number,
     serviceOrderId: orderData.restaurant_order?.id,
     deliveryCompany: _getDeliveryCompany(orderData),
     serviceProvider: _getServiceInfo(orderData),

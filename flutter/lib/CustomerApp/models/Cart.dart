@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -22,6 +21,8 @@ class Cart {
   DateTime? deliveryTime;
   cModels.DeliveryType? deliveryType;
   num discountValue = 0;
+  num itemsCost = 0;
+
   List<int> offersApplied = <int>[];
   String? notes;
   cModels.PaymentType paymentType = cModels.PaymentType.Cash;
@@ -88,7 +89,7 @@ class Cart {
       "serviceProviderId": restaurant?.info.hasuraId.toString(),
       "quantity": quantity(),
       "cost": totalCost.toInt(),
-      "itemsCost": itemsCost().toInt(),
+      "itemsCost": itemsCost.toInt(),
       "shippingCost": shippingCost,
       "stripeFees": stripeFees,
       "items": items,
@@ -106,14 +107,8 @@ class Cart {
         0, (int sum, CartItem cartItem) => sum + cartItem.quantity);
   }
 
-  num itemsCost() {
-    if (cartItems.length == 0) return 0;
-    return cartItems.fold<num>(
-        0, (num sum, CartItem cartItem) => sum + cartItem.totalCost());
-  }
-
   num get totalCost {
-    num tcost = itemsCost() + (shippingCost ?? 0);
+    num tcost = itemsCost + (shippingCost ?? 0);
     if (paymentType == cModels.PaymentType.Card &&
         restaurant!.paymentInfo?.stripe?.chargeFeesOnCustomer == true) {
       tcost += stripeFees;
@@ -122,7 +117,7 @@ class Cart {
   }
 
   num get stripeFees => paymentType == cModels.PaymentType.Card
-      ? getStripeCost(itemsCost() + (shippingCost ?? 0))
+      ? getStripeCost(itemsCost + (shippingCost ?? 0))
       : 0;
 
   void addItem(CartItem cartItem) {

@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceFeedView/comp
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceFeedView/controllers/ServiceFeedViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezStringDropDown.dart';
 

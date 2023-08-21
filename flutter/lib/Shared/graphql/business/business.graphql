@@ -476,3 +476,120 @@ query get_business_id_from_details_id($businessDetailsId: Int!) {
     id
   }
 }
+query SearchSingleBusinessItems(
+  $keyword: String = "%%"
+  $business_id: Int!
+  $limit: Int!
+  $offset: Int!
+) {
+  events: business_event(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+  services: business_service(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+  products: business_product(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+  home: business_home(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+  rental: business_rental(
+    limit: $limit
+    offset: $offset
+    where: {
+      _and: {
+        details: { name: { translations: { value: { _ilike: $keyword } } } }
+        business_id: { _eq: $business_id }
+      }
+    }
+  ) {
+    id
+    details {
+      image
+      name {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+    }
+  }
+}

@@ -8,7 +8,10 @@ import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
@@ -51,6 +54,7 @@ class CustRestaurantCartViewController {
 
   // texts
   TextEditingController noteText = TextEditingController();
+  TextEditingController couponTextController = TextEditingController();
 
   // getters //
   // CardChoice get getCardChoice {
@@ -73,8 +77,7 @@ class CustRestaurantCartViewController {
   Cart get cart => cartController.cart.value ?? Cart();
 
   Rxn<Cart> get _cartRxn => cartController.cart;
-  bool get showDelivery =>
-      dvType.value == cModels.DeliveryType.Delivery;
+  bool get showDelivery => dvType.value == cModels.DeliveryType.Delivery;
 
   // init //
   Future<void> init() async {
@@ -451,6 +454,40 @@ class CustRestaurantCartViewController {
     _cartRxn.value?.deliveryType = dvType.value;
     if (_cartRxn.value?.deliveryType == cModels.DeliveryType.Pickup) {
       _cartRxn.value?.shippingCost = null;
+    }
+  }
+
+  num getTotalCost() {
+    num _deliveryCost = estDeliveryCost.value;
+    if (dvType.value != cModels.DeliveryType.Delivery) {
+      _deliveryCost = 0;
+    }
+    final num totalCost = (cart.totalCost + _deliveryCost) - cart.discountValue;
+    return totalCost;
+  }
+
+  Future<void> applyCoupon() async {
+    if (couponTextController.text.isNotEmpty) {
+      try {
+        CouponError? response = await applyRestaurantCoupon(
+          cart: cart,
+          customerId: Get.find<AuthController>().hasuraUserId!,
+          couponCode: couponTextController.text.trim(),
+        );
+
+        if (response != null) {
+          showErrorSnackBar(errorText: response.name);
+        } else {
+          couponTextController.clear();
+          showSavedSnackBar(
+              title: "Applied",
+              subtitle: "Your coupon have been successfully applied");
+        }
+      } catch (e, stk) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
     }
   }
 }

@@ -268,20 +268,30 @@ extension WorkingDayExtension on WorkingDay {
   }
 
   bool get hasOverlaps {
-    openHours
-        .sort((OpenHours a, OpenHours b) => a.from[0].compareTo(b.from[0]));
-
     for (int i = 0; i < openHours.length - 1; i++) {
-      final OpenHours current = openHours[i];
-      final OpenHours next = openHours[i + 1];
-      mezDbgPrint("current ${current.from[0]} next ${next.from[0]}");
-
-      if (current.toOld[0] > next.fromOld[0]) {
-        return true;
+      for (int j = i + 1; j < openHours.length; j++) {
+        if (openHours[i].overlapsWith(openHours[j])) {
+          return true;
+        }
       }
     }
     return false;
   }
+  // bool get hasOverlaps {
+  //   openHours
+  //       .sort((OpenHours a, OpenHours b) => a.from[0].compareTo(b.from[0]));
+
+  //   for (int i = 0; i < openHours.length - 1; i++) {
+  //     final OpenHours current = openHours[i];
+  //     final OpenHours next = openHours[i + 1];
+  //     mezDbgPrint("current ${current.from[0]} next ${next.from[0]}");
+
+  //     if (current.toOld[0] > next.fromOld[0]) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 }
 
 // open hours
@@ -334,6 +344,23 @@ extension OpenHoursFunctions on OpenHours {
       from: from,
       to: to,
     );
+  }
+
+  DateTime parseTimeString(String time) {
+    final List<int> timeComponents = time.split(':').map(int.parse).toList();
+    return DateTime(2023, 1, 1, timeComponents[0], timeComponents[1]);
+  }
+
+  bool overlapsWith(OpenHours other) {
+    final DateTime thisFromTime = parseTimeString(from);
+    final DateTime thisToTime = parseTimeString(to);
+    final DateTime otherFromTime = parseTimeString(other.from);
+    final DateTime otherToTime = parseTimeString(other.to);
+
+    return (thisFromTime.isBefore(otherToTime) &&
+            thisToTime.isAfter(otherFromTime)) ||
+        (otherFromTime.isBefore(thisToTime) &&
+            otherToTime.isAfter(thisFromTime));
   }
 }
 

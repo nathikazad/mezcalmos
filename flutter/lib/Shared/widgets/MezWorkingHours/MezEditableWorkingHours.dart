@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/SingleDayScheduleView.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezWorkingHours/controllers/MezWorkingHoursController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -165,8 +165,11 @@ class _MezEditableWorkingHoursState extends State<MezEditableWorkingHours> {
     } else {
       minutesFormattedString = "$minutes";
     }
-    if (hours <= 12) {
+
+    if (hours < 12) {
       formattedString = "$hours:$minutesFormattedString AM";
+    } else if (hours == 12) {
+      formattedString = "$hours:$minutesFormattedString PM";
     } else {
       formattedString = "${hours - 12}:$minutesFormattedString PM";
     }

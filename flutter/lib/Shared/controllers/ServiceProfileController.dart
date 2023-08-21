@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
@@ -16,14 +18,11 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOfferView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOffersListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
-
-import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
-import 'package:permission_handler/permission_handler.dart' as pHandler;
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart' as pHandler;
 
 class ServiceProfileController extends GetxController {
   // constants //
@@ -167,7 +166,7 @@ class ServiceProfileController extends GetxController {
 
   Future<void> navigateToOffers() async {
     // ignore: unawaited_futures
-    ServiceOfferView.navigate(
+    ServiceOffersListView.navigate(
         serviceProviderId: serviceId,
         serviceLinkId: service.serviceLinkId,
         serviceProviderType: service.serviceProviderType!);

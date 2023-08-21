@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -20,6 +21,7 @@ class MezInkwell extends StatefulWidget {
     this.margin,
     this.border,
     this.icon,
+    this.showLabelWhileLoading = true,
     this.padding = const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
     this.label,
     this.onClick,
@@ -30,7 +32,7 @@ class MezInkwell extends StatefulWidget {
   final bool enabled;
   final bool withGradient;
   final String? label;
-
+  final bool showLabelWhileLoading;
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? textColor;
@@ -90,7 +92,9 @@ class _MezInkwellState extends State<MezInkwell> {
                           widget.onClick != null
                       ? bluePurpleGradient
                       : null,
-                  color: (widget.enabled && widget.onClick != null)
+                  color: (widget.enabled &&
+                          widget.onClick != null &&
+                          isLoading.value == false)
                       ? (widget.backgroundColor != null)
                           ? widget.backgroundColor
                           : primaryBlueColor
@@ -99,48 +103,51 @@ class _MezInkwellState extends State<MezInkwell> {
               child: Container(
                 // alignment: Alignment.center,
                 padding: widget.padding,
-                child: (isLoading.value)
-                    ? SizedBox(
-                        // height: 50,
-                        // width: 50,
-                        child: Center(
-                            child: CircularProgressIndicator(
-                        color: widget.textColor ?? Colors.white,
-
-                        //   strokeWidth: 1.5,
-                      )))
-                    : Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (widget.icon != null)
-                            Padding(
-                              padding: (widget.label != null)
-                                  ? const EdgeInsets.only(right: 12)
-                                  : EdgeInsets.all(3),
-                              child: Icon(
-                                widget.icon,
-                                color: widget.textColor ?? Colors.white,
-                                size: 15.mezSp,
-                              ),
-                            ),
-                          if (widget.label != null)
-                            Flexible(
-                              child: Text(
-                                widget.label!,
-                                style: widget.textStyle ??
-                                    context.textTheme.bodyLarge?.copyWith(
-                                        fontSize: widget.fontSize,
-                                        color:
-                                            widget.textColor ?? Colors.white),
-                              ),
-                            ),
-                        ],
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (widget.icon != null)
+                      Padding(
+                        padding: (widget.label != null)
+                            ? const EdgeInsets.only(right: 12)
+                            : EdgeInsets.all(3),
+                        child: Icon(
+                          widget.icon,
+                          color: widget.textColor ?? Colors.white,
+                          size: 15.mezSp,
+                        ),
                       ),
+                    if (shouldShowLabel)
+                      Flexible(
+                        child: Text(
+                          widget.label!,
+                          style: widget.textStyle ??
+                              context.textTheme.bodyLarge?.copyWith(
+                                  fontSize: widget.fontSize,
+                                  color: widget.textColor ?? Colors.white),
+                        ),
+                      ),
+                    if (isLoading.isTrue)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SpinKitFadingCircle(
+                          //    lineWidth: 3,
+                          color: widget.textColor ?? Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             )),
       );
     });
+  }
+
+  bool get shouldShowLabel {
+    return widget.label != null &&
+        (!isLoading.value || (isLoading.value && widget.showLabelWhileLoading));
   }
 }

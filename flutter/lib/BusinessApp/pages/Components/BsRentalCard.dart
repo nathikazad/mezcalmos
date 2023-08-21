@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsToggleButton.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 
@@ -47,7 +47,9 @@ class BsRentalCard extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                rental.details.name.getTranslation(viewController.primaryLang)!.inCaps,
+                rental.details.name
+                    .getTranslation(viewController.primaryLang)!
+                    .inCaps,
                 style: context.textTheme.bodyLarge,
                 overflow: TextOverflow.ellipsis,
               ),

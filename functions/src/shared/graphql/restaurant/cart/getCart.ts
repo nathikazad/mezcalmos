@@ -6,12 +6,8 @@ export async function getCart(customerId: number): Promise<Cart> {
     let chain = getHasura();
    
     let response =  await chain.query({
-        restaurant_cart: [{
-            where: {
-                customer_id: {
-                    _eq: customerId
-                }
-            }
+        restaurant_cart_by_pk: [{
+            customer_id: customerId
         }, {
             restaurant_id: true,
             cost: true,
@@ -38,12 +34,12 @@ export async function getCart(customerId: number): Promise<Cart> {
         }]
     });
 
-    if(response.restaurant_cart == null || response.restaurant_cart.length == 0 || response.restaurant_cart[0].restaurant_id == null) {
+    if(response.restaurant_cart_by_pk == null ||  response.restaurant_cart_by_pk.restaurant_id == null) {
         throw new MezError("cartNotFound");
     }
-    // console.log("[GLOBAL[0]] SelectedOptions ===> ", response.restaurant_cart[0].items[0].selected_options);
+    // console.log("[GLOBAL[0]] SelectedOptions ===> ", response.restaurant_cart_by_pk.items[0].selected_options);
     
-    let items: CartItem[] = response.restaurant_cart[0].items.map((i:any) => {
+    let items: CartItem[] = response.restaurant_cart_by_pk.items.map((i:any) => {
         // console.log("SelectedOptions ===> ", i.selected_options);
         return {
             cartItemId: i.id,
@@ -63,10 +59,10 @@ export async function getCart(customerId: number): Promise<Cart> {
     })
     return {
         customerId,
-        restaurantId: response.restaurant_cart[0].restaurant_id,
-        cost: response.restaurant_cart[0].cost,
+        restaurantId: response.restaurant_cart_by_pk.restaurant_id,
+        cost: response.restaurant_cart_by_pk.cost,
         items,
-        discountValue: response.restaurant_cart[0].discount_value,
-        appliedOffers: response.restaurant_cart[0].applied_offers
+        discountValue: response.restaurant_cart_by_pk.discount_value,
+        appliedOffers: response.restaurant_cart_by_pk.applied_offers
     }
 }

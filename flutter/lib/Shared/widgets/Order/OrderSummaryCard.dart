@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -194,6 +194,23 @@ class OrderSummaryCard extends StatelessWidget {
                             margin: const EdgeInsets.only(left: 3),
                             child: Text("${costs.tax?.toPriceString() ?? "-"}"),
                           )
+                      ],
+                    ),
+                  ),
+                if (showNullValues || costs.discountValue != null)
+                  Container(
+                    margin: EdgeInsets.only(top: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          '${_i18n()["discount"]}',
+                        ),
+                        Text(
+                          (costs.discountValue! > 0)
+                              ? costs.discountValue?.toPriceString() ?? "-"
+                              : "-",
+                        ),
                       ],
                     ),
                   ),

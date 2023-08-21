@@ -4,8 +4,8 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/offer/__generated/offer.graphql.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -28,7 +28,8 @@ Future<List<cModels.Offer>> get_service_provider_offers(
   //   throwError(res.exception);
   // }
   final List<cModels.Offer> offers = [];
-  res.parsedData?.service_provider_offer.forEach((data) {
+  res.parsedData?.service_provider_offer
+      .forEach((Query$get_service_provider_offers$service_provider_offer data) {
     offers.add(cModels.Offer(
         id: data.id,
         name: toLanguageMap(translations: data.name.translations),
@@ -51,7 +52,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
               : data.details["nameIds"]
                   .map<int>((e) => int.parse(e.toString()))
                   .toList(),
-          couponReusable: data.details["couponReusable"],
+          // couponReusable: data.details["couponReusable"],
           offeringTypes: data.details["offeringTypes"] == null
               ? <cModels.OfferingType>[]
               : data.details["offeringTypes"]
@@ -116,7 +117,7 @@ Future<cModels.Offer?> check_coupon(
             : data.details["nameIds"]
                 .map<int>((e) => int.parse(e.toString()))
                 .toList(),
-        couponReusable: data.details["couponReusable"],
+        // couponReusable: data.details["couponReusable"],
         offeringTypes: data.details["offeringTypes"] == null
             ? <cModels.OfferingType>[]
             : data.details["offeringTypes"]
@@ -153,7 +154,8 @@ Future<bool> check_offer_applied(
     ),
   );
   mezDbgPrint("👋 called check offer applied ===========>${res.data}");
-  if (res.parsedData?.service_provider_offer_applied.length == 0) {
+  if (res.parsedData == null ||
+      res.parsedData!.service_provider_offer_applied.length == 0) {
     return false;
   }
   return true;
@@ -177,7 +179,8 @@ Future<List<cModels.Offer>> fetch_promotions(
   //   throwError(res.exception);
   // }
   final List<cModels.Offer> offers = [];
-  res.parsedData?.service_provider_offer.forEach((data) {
+  res.parsedData?.service_provider_offer
+      .forEach((Query$fetchPromotions$service_provider_offer data) {
     offers.add(cModels.Offer(
         id: data.id,
         name: toLanguageMap(translations: data.name.translations),
@@ -200,7 +203,7 @@ Future<List<cModels.Offer>> fetch_promotions(
               : data.details["nameIds"]
                   .map<int>((e) => int.parse(e.toString()))
                   .toList(),
-          couponReusable: data.details["couponReusable"],
+          // couponReusable: data.details["couponReusable"],
           offeringTypes: data.details["offeringTypes"] == null
               ? <cModels.OfferingType>[]
               : data.details["offeringTypes"]
@@ -246,15 +249,16 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
     for (int i = 0; i < res.parsedData!.service_provider_offer.length; i++) {
       alltranslations.add(await fetch_translations(
           nameIds: res.parsedData?.service_provider_offer[i].details["nameIds"]
-              .map<int>((e) => int.parse(e.toString()))
+              ?.map<int>((e) => int.parse(e.toString()))
               .toList()));
     }
   }
   int index = 0;
 
   final List<cModels.Offer> offers = [];
-  res.parsedData?.service_provider_offer.forEach((data) {
-    cModels.ServiceProviderType serviceProviderType =
+  res.parsedData?.service_provider_offer
+      .forEach((Query$fetch_subscribed_promotions$service_provider_offer data) {
+    final cModels.ServiceProviderType serviceProviderType =
         data.service_provider_type.toServiceProviderType();
     String? serviceProviderName;
     String? serviceProviderImage;
@@ -299,7 +303,7 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
             : data.details["nameIds"]
                 .map<int>((e) => int.parse(e.toString()))
                 .toList(),
-        couponReusable: data.details["couponReusable"],
+        // couponReusable: data.details["couponReusable"],
         offeringTypes: data.details["offeringTypes"] == null
             ? <cModels.OfferingType>[]
             : data.details["offeringTypes"]
@@ -352,17 +356,22 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
   List<List<Map<cModels.Language, String>>> alltranslations = [];
   if (res.parsedData?.service_provider_offer != null) {
     for (int i = 0; i < res.parsedData!.service_provider_offer.length; i++) {
-      alltranslations.add(await fetch_translations(
-          nameIds: res.parsedData?.service_provider_offer[i].details["nameIds"]
-              .map<int>((e) => int.parse(e.toString()))
-              .toList()));
+      if (res.parsedData?.service_provider_offer[i].details["nameIds"] !=
+          null) {
+        alltranslations.add(await fetch_translations(
+            nameIds: res
+                .parsedData?.service_provider_offer[i].details["nameIds"]
+                ?.map<int>((e) => int.parse(e.toString()))
+                .toList()));
+      }
     }
   }
   int index = 0;
 
   final List<cModels.Offer> offers = [];
-  res.parsedData?.service_provider_offer.forEach((data) {
-    cModels.ServiceProviderType serviceProviderType =
+  res.parsedData?.service_provider_offer.forEach(
+      (Query$fetch_all_promotions_within_distance$service_provider_offer data) {
+    final cModels.ServiceProviderType serviceProviderType =
         data.service_provider_type.toServiceProviderType();
     String? serviceProviderName;
     String? serviceProviderImage;
@@ -407,7 +416,7 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
             : data.details["nameIds"]
                 .map<int>((e) => int.parse(e.toString()))
                 .toList(),
-        couponReusable: data.details["couponReusable"],
+        // couponReusable: data.details["couponReusable"],
         offeringTypes: data.details["offeringTypes"] == null
             ? <cModels.OfferingType>[]
             : data.details["offeringTypes"]

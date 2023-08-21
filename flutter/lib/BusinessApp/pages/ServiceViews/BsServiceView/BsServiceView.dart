@@ -11,10 +11,9 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezItemAvSwitcher.dart';
 
 dynamic _i18n() =>
@@ -277,21 +276,22 @@ class _BsOpServiceViewState extends State<BsOpServiceView>
             seletedPrices: viewController.detailsController.priceTimeUnitMap,
           ),
           smallSepartor,
-          Obx(
-            () => BsOpScheduleSelector(
-              validator: (String? p0) {
-                if (viewController.serviceSchedule.value == null) {
-                  return _i18n()["scheduleError"];
-                }
-                return null;
-              },
-              scheduleType: ScheduleType.OnDemand,
-              onScheduleSelected: (Schedule? schedule) {
-                viewController.changeSchedule(schedule);
-              },
-              schedule: viewController.serviceSchedule.value,
+          if (!viewController.isBeauty)
+            Obx(
+              () => BsOpScheduleSelector(
+                validator: (String? p0) {
+                  if (viewController.serviceSchedule.value == null) {
+                    return _i18n()["scheduleError"];
+                  }
+                  return null;
+                },
+                scheduleType: ScheduleType.OnDemand,
+                onScheduleSelected: (Schedule? schedule) {
+                  viewController.changeSchedule(schedule);
+                },
+                schedule: viewController.serviceSchedule.value,
+              ),
             ),
-          ),
           if (viewController.isEditing)
             BsDeleteOfferButton(
               onDelete: () async {

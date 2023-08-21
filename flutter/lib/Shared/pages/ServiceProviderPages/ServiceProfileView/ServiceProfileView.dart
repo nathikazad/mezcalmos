@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/S
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:share_plus/share_plus.dart';
@@ -161,7 +161,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   onClick: () async {
                                     await _viewController.navigateToOffers();
                                   },
-                                  icon: Icons.calendar_month_rounded,
+                                  icon: Icons.discount_rounded,
                                   label: "${_i18n()['offers']}"),
                               if (!_viewController.isBusiness)
                                 _navigationLink(

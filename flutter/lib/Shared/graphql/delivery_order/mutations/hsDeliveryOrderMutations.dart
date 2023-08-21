@@ -115,7 +115,10 @@ Future<num?> update_delivery_order_customer_offer(
 }
 
 Future<num?> update_delivery_order_notified_drivers(
-    {required int orderId, required Map<int, bool> notifiedDrivers}) async {
+    {required int orderId,
+    required Map<int, bool> notifiedDrivers,
+    required int driverId}) async {
+  notifiedDrivers[driverId] = true;
   final QueryResult<Mutation$updateDeliveryOrder> res = await _hasuraDb
       .graphQLClient
       .mutate$updateDeliveryOrder(Options$Mutation$updateDeliveryOrder(

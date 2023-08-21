@@ -24,7 +24,7 @@ import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustGuestPicker.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustOrderCostCard.dart';
 
 dynamic _i18n() =>
@@ -387,7 +387,8 @@ class _CustBusinessAdditionalData extends StatelessWidget {
           additionalData += ' • ';
         }
       }
-      additionalData += homeRental?.details.additionalParameters?["petFriendly"] != null
+      additionalData +=
+          homeRental?.details.additionalParameters?["petFriendly"] != null
               ? ' • ${_i18n()["petFriendly"] ?? ''}'
               : "";
       return additionalData;

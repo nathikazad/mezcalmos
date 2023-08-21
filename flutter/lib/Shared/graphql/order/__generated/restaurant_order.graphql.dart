@@ -709,6 +709,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'discount_value'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_id'),
             alias: null,
             arguments: [],
@@ -1262,6 +1269,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     this.estimated_food_ready_time,
     this.actual_food_ready_time,
     required this.refund_amount,
+    required this.discount_value,
     this.delivery_id,
     required this.status,
     this.review_id,
@@ -1293,6 +1301,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$estimated_food_ready_time = json['estimated_food_ready_time'];
     final l$actual_food_ready_time = json['actual_food_ready_time'];
     final l$refund_amount = json['refund_amount'];
+    final l$discount_value = json['discount_value'];
     final l$delivery_id = json['delivery_id'];
     final l$status = json['status'];
     final l$review_id = json['review_id'];
@@ -1329,6 +1338,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       estimated_food_ready_time: (l$estimated_food_ready_time as String?),
       actual_food_ready_time: (l$actual_food_ready_time as String?),
       refund_amount: moneyFromJson(l$refund_amount),
+      discount_value: moneyFromJson(l$discount_value),
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
       review_id: (l$review_id as int?),
@@ -1382,6 +1392,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
   final String? actual_food_ready_time;
 
   final double refund_amount;
+
+  final double discount_value;
 
   final int? delivery_id;
 
@@ -1444,6 +1456,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['actual_food_ready_time'] = l$actual_food_ready_time;
     final l$refund_amount = refund_amount;
     _resultData['refund_amount'] = moneyToJson(l$refund_amount);
+    final l$discount_value = discount_value;
+    _resultData['discount_value'] = moneyToJson(l$discount_value);
     final l$delivery_id = delivery_id;
     _resultData['delivery_id'] = l$delivery_id;
     final l$status = status;
@@ -1492,6 +1506,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$estimated_food_ready_time = estimated_food_ready_time;
     final l$actual_food_ready_time = actual_food_ready_time;
     final l$refund_amount = refund_amount;
+    final l$discount_value = discount_value;
     final l$delivery_id = delivery_id;
     final l$status = status;
     final l$review_id = review_id;
@@ -1520,6 +1535,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       l$estimated_food_ready_time,
       l$actual_food_ready_time,
       l$refund_amount,
+      l$discount_value,
       l$delivery_id,
       l$status,
       l$review_id,
@@ -1617,6 +1633,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$refund_amount = refund_amount;
     final lOther$refund_amount = other.refund_amount;
     if (l$refund_amount != lOther$refund_amount) {
+      return false;
+    }
+    final l$discount_value = discount_value;
+    final lOther$discount_value = other.discount_value;
+    if (l$discount_value != lOther$discount_value) {
       return false;
     }
     final l$delivery_id = delivery_id;
@@ -1734,6 +1755,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
     double? refund_amount,
+    double? discount_value,
     int? delivery_id,
     String? status,
     int? review_id,
@@ -1801,6 +1823,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? estimated_food_ready_time = _undefined,
     Object? actual_food_ready_time = _undefined,
     Object? refund_amount = _undefined,
+    Object? discount_value = _undefined,
     Object? delivery_id = _undefined,
     Object? status = _undefined,
     Object? review_id = _undefined,
@@ -1855,6 +1878,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         refund_amount: refund_amount == _undefined || refund_amount == null
             ? _instance.refund_amount
             : (refund_amount as double),
+        discount_value: discount_value == _undefined || discount_value == null
+            ? _instance.discount_value
+            : (discount_value as double),
         delivery_id: delivery_id == _undefined
             ? _instance.delivery_id
             : (delivery_id as int?),
@@ -1970,6 +1996,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? estimated_food_ready_time,
     String? actual_food_ready_time,
     double? refund_amount,
+    double? discount_value,
     int? delivery_id,
     String? status,
     int? review_id,
@@ -6575,6 +6602,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'discount_value'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'to_location_gps'),
             alias: null,
             arguments: [],
@@ -7188,6 +7222,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     required this.restaurant,
     required this.items,
     required this.payment_type,
+    required this.discount_value,
     this.to_location_gps,
     this.to_location_address,
     this.estimated_food_ready_time,
@@ -7219,6 +7254,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$restaurant = json['restaurant'];
     final l$items = json['items'];
     final l$payment_type = json['payment_type'];
+    final l$discount_value = json['discount_value'];
     final l$to_location_gps = json['to_location_gps'];
     final l$to_location_address = json['to_location_address'];
     final l$estimated_food_ready_time = json['estimated_food_ready_time'];
@@ -7253,6 +7289,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       payment_type: (l$payment_type as String),
+      discount_value: moneyFromJson(l$discount_value),
       to_location_gps: l$to_location_gps == null
           ? null
           : geographyFromJson(l$to_location_gps),
@@ -7301,6 +7338,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       items;
 
   final String payment_type;
+
+  final double discount_value;
 
   final Geography? to_location_gps;
 
@@ -7361,6 +7400,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['items'] = l$items.map((e) => e.toJson()).toList();
     final l$payment_type = payment_type;
     _resultData['payment_type'] = l$payment_type;
+    final l$discount_value = discount_value;
+    _resultData['discount_value'] = moneyToJson(l$discount_value);
     final l$to_location_gps = to_location_gps;
     _resultData['to_location_gps'] =
         l$to_location_gps == null ? null : geographyToJson(l$to_location_gps);
@@ -7415,6 +7456,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$restaurant = restaurant;
     final l$items = items;
     final l$payment_type = payment_type;
+    final l$discount_value = discount_value;
     final l$to_location_gps = to_location_gps;
     final l$to_location_address = to_location_address;
     final l$estimated_food_ready_time = estimated_food_ready_time;
@@ -7443,6 +7485,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       l$restaurant,
       Object.hashAll(l$items.map((v) => v)),
       l$payment_type,
+      l$discount_value,
       l$to_location_gps,
       l$to_location_address,
       l$estimated_food_ready_time,
@@ -7519,6 +7562,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$payment_type = payment_type;
     final lOther$payment_type = other.payment_type;
     if (l$payment_type != lOther$payment_type) {
+      return false;
+    }
+    final l$discount_value = discount_value;
+    final lOther$discount_value = other.discount_value;
+    if (l$discount_value != lOther$discount_value) {
       return false;
     }
     final l$to_location_gps = to_location_gps;
@@ -7652,6 +7700,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         restaurant,
     List<Query$get_restaurant_order_by_id$restaurant_order_by_pk$items>? items,
     String? payment_type,
+    double? discount_value,
     Geography? to_location_gps,
     String? to_location_address,
     String? estimated_food_ready_time,
@@ -7713,6 +7762,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     Object? restaurant = _undefined,
     Object? items = _undefined,
     Object? payment_type = _undefined,
+    Object? discount_value = _undefined,
     Object? to_location_gps = _undefined,
     Object? to_location_address = _undefined,
     Object? estimated_food_ready_time = _undefined,
@@ -7756,6 +7806,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         payment_type: payment_type == _undefined || payment_type == null
             ? _instance.payment_type
             : (payment_type as String),
+        discount_value: discount_value == _undefined || discount_value == null
+            ? _instance.discount_value
+            : (discount_value as double),
         to_location_gps: to_location_gps == _undefined
             ? _instance.to_location_gps
             : (to_location_gps as Geography?),
@@ -7879,6 +7932,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         restaurant,
     List<Query$get_restaurant_order_by_id$restaurant_order_by_pk$items>? items,
     String? payment_type,
+    double? discount_value,
     Geography? to_location_gps,
     String? to_location_address,
     String? estimated_food_ready_time,

@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/__generated/service_provider.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -18,7 +19,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
-import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -37,7 +37,7 @@ Future<ServiceLink?> get_service_link_by_id(
   Map<cModels.Language, String> convertCustomerFlyerLinks(
       Map<String, dynamic> map) {
     final Map<cModels.Language, String> list = {};
-    map.forEach((key, value) {
+    map.forEach((String key, value) {
       list.addAll({
         key.toLanguage(): value,
       });
@@ -505,7 +505,8 @@ Future<List<cModels.Offer>> get_service_provider_offers(
   //   throwError(res.exception);
   // }
   final List<cModels.Offer> offers = [];
-  res.parsedData?.service_provider_offer.forEach((data) {
+  res.parsedData?.service_provider_offer
+      .forEach((Query$get_service_provider_offers$service_provider_offer data) {
     offers.add(cModels.Offer(
         id: data.id,
         name: toLanguageMap(translations: data.name.translations),
@@ -519,7 +520,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
           discountValue: data.details["discountValue"],
           weeklyRepeat: data.details["weeklyRepeat"],
           categories: data.details["categories"],
-          couponReusable: data.details["couponReusable"],
+          // couponReusable: data.details["couponReusable"],
           offeringTypes: data.details["offeringTypes"] == null
               ? <cModels.OfferingType>[]
               : data.details["offeringTypes"]
@@ -607,13 +608,16 @@ Future<cModels.Offer?> get_offer_by_id({
   if (res.parsedData == null) {
     throwError(res.exception);
   }
-  var data = res.parsedData!.service_provider_offer_by_pk;
+  Query$get_offer_by_id$service_provider_offer_by_pk? data =
+      res.parsedData!.service_provider_offer_by_pk;
   if (data == null) {
     return null;
   }
   return cModels.Offer(
       id: data.id,
       name: toLanguageMap(translations: data.name.translations),
+      
+      
       serviceProviderId: data.service_provider_id,
       serviceProviderType: data.service_provider_type.toServiceProviderType(),
       offerType: data.offer_type.toOfferType(),
@@ -624,14 +628,14 @@ Future<cModels.Offer?> get_offer_by_id({
         discountValue: data.details["discountValue"],
         weeklyRepeat: data.details["weeklyRepeat"],
         categories: data.details["categories"],
-        couponReusable: data.details["couponReusable"],
+        // couponReusable: data.details["couponReusable"],
         offeringTypes: data.details["offeringTypes"] == null
             ? <cModels.OfferingType>[]
             : data.details["offeringTypes"]
                 .map<cModels.OfferingType>((e) => e.toString().toOfferingType())
                 .toList(),
         items: data.details["items"] == null
-            ? <num>[]
+            ? <int>[]
             : data.details["items"]
                 .map<int>((e) => int.parse(e.toString()))
                 .toList(),
@@ -661,7 +665,8 @@ Future<int?> add_service_offer({
             translations: Input$translation_value_arr_rel_insert_input(
                 data: offer.name == null
                     ? []
-                    : offer.name!.entries.map((e) {
+                    : offer.name!.entries
+                        .map((MapEntry<cModels.Language, String> e) {
                         return Input$translation_value_insert_input(
                             language_id: e.key.toFirebaseFormatString(),
                             value: e.value);
@@ -705,7 +710,7 @@ Future<int?> update_service_offer({
     )),
   );
 
-  offer.name!.forEach((key, value) async {
+  offer.name!.forEach((cModels.Language key, String value) async {
     await update_translation(
         langType: key, value: value, translationId: offer.nameId!.toInt());
   });

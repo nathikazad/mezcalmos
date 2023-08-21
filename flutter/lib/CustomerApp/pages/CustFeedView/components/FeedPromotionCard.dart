@@ -6,9 +6,10 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/SingleLaund
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelpers/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 
 class FeedPromotionCard extends StatelessWidget {
   const FeedPromotionCard({
@@ -37,42 +38,50 @@ class FeedPromotionCard extends StatelessWidget {
                         ? NetworkImage(promotion.serviceProviderImage!)
                         : NetworkImage(defaultUserImgUrl),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text.rich(
-                            textAlign: TextAlign.center,
-                            style: context.textTheme.bodyLarge
-                                ?.copyWith(fontSize: 15),
-                            TextSpan(
-                                text:
-                                    '${promotion.name!.getTranslation(userLanguage)}',
-                                children: [
-                                  WidgetSpan(child: hSmallSepartor),
-                                  TextSpan(
-                                      text: '●',
-                                      style: TextStyle(fontSize: 10)),
-                                  WidgetSpan(child: hSmallSepartor),
-                                  TextSpan(
-                                      text:
-                                          '${promotion.name!.getTranslation(userLanguage)}')
-                                ])),
-                        Text(
-                          '${DateTime.parse(promotion.details.validityRangeStart ?? DateTime.now().toString()).getOrderTime()} - ${DateTime.parse(promotion.details.validityRangeEnd ?? DateTime.now().toString()).getOrderTime()}',
-                          style: context.textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey.shade400, fontSize: 13),
-                        ),
-                      ],
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text.rich(
+                              textAlign: TextAlign.center,
+                              style: context.textTheme.bodyLarge
+                                  ?.copyWith(fontSize: 15),
+                              TextSpan(
+                                  text:
+                                      '${promotion.name!.getTranslation(userLanguage)}',
+                                  children: [
+                                    WidgetSpan(child: hSmallSepartor),
+                                    TextSpan(
+                                        text: '●',
+                                        style: TextStyle(fontSize: 10)),
+                                    WidgetSpan(child: hSmallSepartor),
+                                    TextSpan(
+                                        text:
+                                            '${promotion.name!.getTranslation(userLanguage)}')
+                                  ])),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 5),
+                            child: Text(promotion.details.getDescription(),
+                                style: context.textTheme.bodyMedium
+                                    ?.copyWith(color: primaryBlueColor)),
+                          ),
+                          Text(
+                            '${DateTime.parse(promotion.details.validityRangeStart ?? DateTime.now().toString()).getOrderTime()} - ${DateTime.parse(promotion.details.validityRangeEnd ?? DateTime.now().toString()).getOrderTime()}',
+                            style: context.textTheme.bodyMedium?.copyWith(
+                                color: Colors.grey.shade400, fontSize: 13),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Spacer(),
                   IconButton(
                     onPressed: () async {
                       switch (promotion.serviceProviderType) {
                         case ServiceProviderType.Restaurant:
-                          await CustomerRestaurantView.navigate(
+                          await CustRestaurantView.navigate(
                             restaurantId: promotion.serviceProviderId.toInt(),
                           );
                           return;
@@ -120,7 +129,7 @@ class FeedPromotionCard extends StatelessWidget {
                     ),
                     smallSepartor,
                     Text(
-                      '${promotion.nameTranslations!.map((e) {
+                      '${promotion.nameTranslations!.map((Map<Language, String> e) {
                         return '${e.getTranslation(userLanguage) ?? ''}';
                       })}',
                       style: context.textTheme.bodyLarge

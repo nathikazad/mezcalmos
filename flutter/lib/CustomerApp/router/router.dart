@@ -1,4 +1,3 @@
-
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart'
     deferred as customerWrapper;
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart'
@@ -25,7 +24,6 @@ class XRouter {
             middleware: <QMiddleware>[
               DefferedLoader(customerWrapper.loadLibrary)
             ]),
-       
         QRoute(
             name: deliveryServicesRoute,
             path: deliveryServicesRoute,

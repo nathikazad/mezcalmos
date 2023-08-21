@@ -9047,7 +9047,7 @@ class _CopyWithStubImpl$Query$getBsRentalUpcomingOrdersItems$business_order_requ
 
 class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home {
   Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home({
-    this.details,
+    required this.details,
     required this.$__typename,
   });
 
@@ -9056,15 +9056,14 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home {
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
-      details: l$details == null
-          ? null
-          : Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
+      details:
+          Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details?
+  final Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
       details;
 
   final String $__typename;
@@ -9072,7 +9071,7 @@ class Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -9171,10 +9170,10 @@ class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_
   }) =>
       _then(
           Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details?),
+                as Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -9182,11 +9181,8 @@ class _CopyWithImpl$Query$getBsRentalUpcomingOrdersItems$business_order_request_
   CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details<
       TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details
-            .stub(_then(_instance))
-        : CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$getBsRentalUpcomingOrdersItems$business_order_request_item$home$details(
+        local$details, (e) => call(details: e));
   }
 }
 
@@ -14507,7 +14503,7 @@ class _CopyWithStubImpl$Query$getBsRentalPastOrdersItems$business_order_request_
 
 class Query$getBsRentalPastOrdersItems$business_order_request_item$home {
   Query$getBsRentalPastOrdersItems$business_order_request_item$home({
-    this.details,
+    required this.details,
     required this.$__typename,
   });
 
@@ -14516,15 +14512,14 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item$home {
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getBsRentalPastOrdersItems$business_order_request_item$home(
-      details: l$details == null
-          ? null
-          : Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
+      details:
+          Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
               .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$getBsRentalPastOrdersItems$business_order_request_item$home$details?
+  final Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
       details;
 
   final String $__typename;
@@ -14532,7 +14527,7 @@ class Query$getBsRentalPastOrdersItems$business_order_request_item$home {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$details = details;
-    _resultData['details'] = l$details?.toJson();
+    _resultData['details'] = l$details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -14628,10 +14623,10 @@ class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getBsRentalPastOrdersItems$business_order_request_item$home(
-        details: details == _undefined
+        details: details == _undefined || details == null
             ? _instance.details
             : (details
-                as Query$getBsRentalPastOrdersItems$business_order_request_item$home$details?),
+                as Query$getBsRentalPastOrdersItems$business_order_request_item$home$details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -14639,11 +14634,8 @@ class _CopyWithImpl$Query$getBsRentalPastOrdersItems$business_order_request_item
   CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details<
       TRes> get details {
     final local$details = _instance.details;
-    return local$details == null
-        ? CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details
-            .stub(_then(_instance))
-        : CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
-            local$details, (e) => call(details: e));
+    return CopyWith$Query$getBsRentalPastOrdersItems$business_order_request_item$home$details(
+        local$details, (e) => call(details: e));
   }
 }
 

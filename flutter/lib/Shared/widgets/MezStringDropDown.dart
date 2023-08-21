@@ -50,29 +50,33 @@ class _MezStringDropDownState extends State<MezStringDropDown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      itemHeight: 50,
       padding: EdgeInsets.zero,
       isExpanded: widget.isExpanded,
       value: _selectedValue,
+      isDense: true,
+      alignment: AlignmentDirectional.centerStart,
       decoration: InputDecoration(
-        constraints: BoxConstraints(maxHeight: 50),
-        labelText: widget.labelText,
+        contentPadding: EdgeInsets.all(8),
+        labelText: (widget.value == null) ? widget.labelText : null,
         errorMaxLines: 2,
         alignLabelWithHint: false,
+        isDense: false,
         floatingLabelBehavior: FloatingLabelBehavior.never,
-        //  border: OutlineInputBorder(),
       ),
       items: (widget.withNoneItem ? widget.items + ["none"] : widget.items)
           .map((String item) => DropdownMenuItem(
                 value: item,
+                alignment: AlignmentDirectional.centerStart,
                 child: widget.icons.isNotEmpty
-                    ? Row(children: [
-                        Icon(widget.icons[widget.items.indexOf(item)]),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("${widget.langPath['$item']}"),
-                      ])
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                            Icon(widget.icons[widget.items.indexOf(item)]),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("${widget.langPath['$item']}"),
+                          ])
                     : Text("${widget.langPath['$item']}",
                         style: widget.elementsTextStyle),
               ))
