@@ -161,12 +161,12 @@ class TaxiOrderViewController {
   }
 
   Future<void> addOffersWithDelay() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 12));
     for (CustomerTaxiOffer offer in offersToAdd) {
       List<CustomerTaxiOffer> newOffers = offers + [offersToAdd[offers.length]];
 
       _offerSink.add(newOffers);
-      await Future.delayed(Duration(seconds: 10));
+      await Future.delayed(Duration(seconds: 8));
     }
   }
 
