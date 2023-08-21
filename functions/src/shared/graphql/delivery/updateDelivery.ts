@@ -1,8 +1,8 @@
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
-import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
 import { DeliveryOrder, DeliveryOrderStatus } from "../../models/Generic/Delivery";
 import { MezError } from "../../models/Generic/Generic";
+import { AssignDriverError } from "../../models/Generic/Order";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   let chain = getHasura();
@@ -102,7 +102,7 @@ export async function clearLock(deliveryOrderId: number) {
   });
 }
 
-export async function unassignDriver(deliveryOrderId: number) {
+export async function unassignDeliveryDriver(deliveryOrderId: number) {
   let chain = getHasura();
 
   await chain.mutation({

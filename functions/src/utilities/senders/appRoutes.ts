@@ -17,6 +17,9 @@ export function laundryUrl(laundryStoreId: number) {
 export function businessUrl(businessId: number) {
   return `/Business/${businessId}`
 }
+export function taxiCompanyUrl(taxiCompanyId: number) {
+  return `/taxiCompany/${taxiCompanyId}`
+}
 
 export function chatUrl(chatId: number): string {
   let str = `/messages/${chatId}`;

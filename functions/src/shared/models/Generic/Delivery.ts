@@ -105,6 +105,14 @@ export enum DeliveryServiceProviderType {
   Laundry = "laundry",
 }
 
+export function orderInProcess(status: DeliveryOrderStatus): boolean {
+  return !(status == DeliveryOrderStatus.Delivered ||
+    status == DeliveryOrderStatus.CancelledByCustomer ||
+    status == DeliveryOrderStatus.CancelledByServiceProvider || 
+    status == DeliveryOrderStatus.CancelledByDeliverer || 
+    status == DeliveryOrderStatus.CancelledByAdmin)
+}
+
 export interface NewDeliveryOrderNotification extends OrderNotification {
   deliveryDriverType: ParticipantType;
 }

@@ -1,6 +1,5 @@
 import { deleteChatMessagesAndParticipant } from "../shared/graphql/chat/deleteChatMessages";
 import { updateTaxiChatInfo } from "../shared/graphql/chat/setChatInfo";
-import { clearLock } from "../shared/graphql/delivery/updateDelivery";
 import { getTaxiDriver } from "../shared/graphql/taxi/driver/getTaxiDriver";
 import { updateTaxiDriver } from "../shared/graphql/taxi/driver/updateDriver";
 import { getTaxiOrder } from "../shared/graphql/taxi/order/getTaxiOrder";
@@ -68,7 +67,7 @@ export async function assignTaxiDriver(userId: number, assignDriverDetails: Assi
             throw e
         }
     } finally {
-        clearLock(assignDriverDetails.orderId);
+        // clearLock(assignDriverDetails.orderId);
     }
 }
 

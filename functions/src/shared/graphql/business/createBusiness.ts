@@ -1,4 +1,4 @@
-import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
+import { $, notification_info_constraint, notification_info_update_column } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { BusinessDetails, BusinessError } from "../../../business/createNewBusiness";
 import { getHasura } from "../../../utilities/hasura";
 import { QRFlyerLinks, createQRFlyerPDF } from "../../../utilities/links/flyer";
@@ -126,6 +126,12 @@ export async function createBusiness(businessDetails: BusinessDetails, businessO
                     user_id: businessOperatorUserId,
                     app_type_id: AppType.Business,
                     token: businessDetails.businessOperatorNotificationToken
+                },
+                on_conflict: {
+                    constraint: (
+                      notification_info_constraint.notification_info_app_type_id_user_id_key
+                    ),
+                    update_columns: [notification_info_update_column.token]
                 }
             }, {
                 id: true

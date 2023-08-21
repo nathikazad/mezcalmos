@@ -58,7 +58,7 @@ export async function getTaxiDrivers(taxiCompanyIds: number[]): Promise<TaxiDriv
       return {
         id: d.id,
         userId: d.user_id,
-        taxiCompanyId: d.taxi_company_id,
+        companyId: d.taxi_company_id,
         status: d.status as AuthorizationStatus,
         online: d.online,
         user: {
@@ -122,7 +122,7 @@ export async function getTaxiDriver(driverId: number): Promise<TaxiDriver> {
     return {
       id: driverId,
       userId: response.taxi_driver_by_pk.user_id,
-      taxiCompanyId: response.taxi_driver_by_pk.taxi_company_id,
+      companyId: response.taxi_driver_by_pk.taxi_company_id,
       status: response.taxi_driver_by_pk.status as AuthorizationStatus,
       online: response.taxi_driver_by_pk.online,
       user: {

@@ -4,7 +4,7 @@ import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
+import { updateDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { deleteChatMessagesAndParticipant } from "../shared/graphql/chat/deleteChatMessages";
 import { assignDriverErrorChecks } from "../shared/helper";
@@ -14,7 +14,7 @@ import { clearLock, setLockTime } from "../shared/graphql/delivery/updateDeliver
 import { AssignDriverDetails, AssignDriverResponse, AssignDriverError, CounterOfferStatus } from "../shared/models/Generic/Order";
 
 
-export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails): Promise<AssignDriverResponse> {
+export async function assignDeliveryDriver(userId: number, assignDriverDetails: AssignDriverDetails): Promise<AssignDriverResponse> {
   
   try {
     if(assignDriverDetails.changeDriver == null) {
@@ -49,7 +49,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
         }
       }
     }
-    await assignDeliveryDriver(deliveryOrder, deliveryDriver);
+    await updateDeliveryDriver(deliveryOrder, deliveryDriver);
 
     setDeliveryChatInfo(deliveryOrder, deliveryDriver, deliveryOrder.orderType);
 

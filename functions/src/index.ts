@@ -12,7 +12,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 
 import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
 import * as userChanges from './utilities/userChanges'
-import { assignDriver } from "./delivery/assignDriver";
+import { assignDeliveryDriver } from "./delivery/assignDriver";
 import { addDriver } from "./serviceProvider/addDriver";
 import { callUser } from "./utilities/agora";
 import { requestLaundry } from "./laundry/laundryRequest";
@@ -23,7 +23,6 @@ import { addOperator } from "./serviceProvider/addOperator";
 import { authorizeOperator } from "./serviceProvider/authorizeOperator";
 import { createCourierOrder } from "./delivery/createCourierOrder";
 import { cancelCourierFromCustomer } from "./delivery/cancelCourierFromCustomer";
-import { requestCounterOffer } from "./delivery/counterOffer";
 import { createNewBusiness } from "./business/createNewBusiness";
 import { createNewMezAdminChat, createServiceProviderChat } from "./shared/chat/createChat";
 import { authorizeDriver } from "./serviceProvider/authorizeDriver";
@@ -36,6 +35,12 @@ import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
 import { requestLaundryDelivery } from "./laundry/deliveryRequest";
 import { RuntimeOptions } from "firebase-functions";
+import { requestDeliveryCounterOffer } from "./delivery/counterOffer";
+import { assignTaxiDriver } from "./taxi/assignDriver";
+import { requestTaxiCounterOffer } from "./taxi/counterOffer";
+import { requestTaxi } from "./taxi/request";
+import { changeTaxiStatus } from "./taxi/taxiStatusChange";
+import { createTaxiCompany } from "./taxi/createTaxiCompany";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -115,13 +120,13 @@ export const laundry3 = {
 }
 
 export const delivery3 = {
-  assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
+  assignDriver: authenticatedCall((userId, data) => assignDeliveryDriver(userId, data)),
   changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
   createCourierOrder: authenticatedCall((userId, data) => createCourierOrder(userId, data)),
   // changeDeliveryPrice: authenticatedCall((userId, data) => changeDeliveryPrice(userId, data)),
   // changeDeliveryPriceResponse: authenticatedCall((userId, data) => changeDeliveryPriceResponse(userId, data)),
   cancelCourierFromCustomer: authenticatedCall((userId, data) => cancelCourierFromCustomer(userId, data)),
-  requestCounterOffer: authenticatedCall((userId, data) => requestCounterOffer(userId, data)),
+  requestCounterOffer: authenticatedCall((userId, data) => requestDeliveryCounterOffer(userId, data)),
   // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
   // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
   // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),
@@ -131,6 +136,23 @@ export const delivery3 = {
   // laundryPickedUpFromLaundry: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromLaundry(userId, data)),
   // laundryFinishDropoff: authenticatedCall((userId, data) => laundryDelivery.finishDropoff(userId, data)),
   // setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
+}
+
+export const taxi = {
+  assignDriver: authenticatedCall((userId, data) => assignTaxiDriver(userId, data)),
+  changeStatus: authenticatedCall((userId, data) => changeTaxiStatus(userId, data)),
+  requestTaxi: authenticatedCall((userId, data) => requestTaxi(userId, data)),
+  requestCounterOffer: authenticatedCall((userId, data) => requestTaxiCounterOffer(userId, data)),
+  createTaxiCompany: authenticatedCall((userId, data) => createTaxiCompany(userId, data)),
+//   requestRide: authenticatedCall((userId, data) => requestRide(userId, data)),
+//   startScheduledRide: authenticatedCall((userId, data) => taxiStatusChange.startScheduledRide(userId, data)),
+//   acceptRide: authenticatedCall((userId, data) => acceptRide(userId, data)),
+//   startRide: authenticatedCall((userId, data) => taxiStatusChange.startRide(userId, data)),
+//   cancelFromCustomer: authenticatedCall((userId, data) => cancelTaxiFromCustomer(userId, data)),
+//   cancelFromDriver: authenticatedCall((userId, data) => taxiStatusChange.cancelTaxiFromDriver(userId, data)),
+//   finishRide: authenticatedCall((userId, data) => taxiStatusChange.finishRide(userId, data)),
+//   forwardToLocalCompany: authenticatedCall((userId, data) => adminStatusChanges.forwardToLocalCompany(userId, data)),
+//   submitForwardResult: authenticatedCall((userId, data) => adminStatusChanges.submitForwardResult(userId, data)),
 }
 
 type AuthenticatedFunction = (userId:number, data:any) => any;
@@ -156,17 +178,6 @@ function authenticatedCall(func:AuthenticatedFunction, runtimeOptions:RuntimeOpt
 }
 
 
-// export const taxi = {
-//   requestRide: authenticatedCall((userId, data) => requestRide(userId, data)),
-//   startScheduledRide: authenticatedCall((userId, data) => taxiStatusChange.startScheduledRide(userId, data)),
-//   acceptRide: authenticatedCall((userId, data) => acceptRide(userId, data)),
-//   startRide: authenticatedCall((userId, data) => taxiStatusChange.startRide(userId, data)),
-//   cancelFromCustomer: authenticatedCall((userId, data) => cancelTaxiFromCustomer(userId, data)),
-//   cancelFromDriver: authenticatedCall((userId, data) => taxiStatusChange.cancelTaxiFromDriver(userId, data)),
-//   finishRide: authenticatedCall((userId, data) => taxiStatusChange.finishRide(userId, data)),
-//   forwardToLocalCompany: authenticatedCall((userId, data) => adminStatusChanges.forwardToLocalCompany(userId, data)),
-//   submitForwardResult: authenticatedCall((userId, data) => adminStatusChanges.submitForwardResult(userId, data)),
-// }
 
 // function adminOnlyCall(func:AuthenticatedFunction) {
 //   return functions.https.onCall(async (data, context) => {

@@ -3,7 +3,8 @@ import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { updateDeliveryCounterOffers } from "../shared/graphql/delivery/updateDelivery";
 import { counterOfferErrorCheck, notifyCounterOffer } from "../shared/helper";
 import { DeliveryDriver, DeliveryOrder } from "../shared/models/Generic/Delivery";
-import { CounterOfferError, CounterOfferResponse, CounterOfferStatus, MezError } from "../shared/models/Generic/Generic";
+import { MezError } from "../shared/models/Generic/Generic";
+import { CounterOfferResponse, CounterOfferStatus, CounterOfferError } from "../shared/models/Generic/Order";
 
 export interface DeliveryCounterOfferRequest {
     deliveryOrderId: number,

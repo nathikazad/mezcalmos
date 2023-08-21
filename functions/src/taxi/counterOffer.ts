@@ -2,8 +2,8 @@ import { getTaxiDriver } from "../shared/graphql/taxi/driver/getTaxiDriver";
 import { getTaxiOrder } from "../shared/graphql/taxi/order/getTaxiOrder";
 import { updateTaxiCounterOffers } from "../shared/graphql/taxi/order/updateOrder";
 import { counterOfferErrorCheck, notifyCounterOffer } from "../shared/helper";
-import { CounterOfferError, CounterOfferResponse, CounterOfferStatus, MezError } from "../shared/models/Generic/Generic";
-import { OrderType } from "../shared/models/Generic/Order";
+import { MezError } from "../shared/models/Generic/Generic";
+import { CounterOfferError, CounterOfferResponse, CounterOfferStatus, OrderType } from "../shared/models/Generic/Order";
 import { TaxiDriver } from "../shared/models/Services/Taxi/Taxi";
 import { TaxiOrder } from "../shared/models/Services/Taxi/TaxiOrder";
 

@@ -4,7 +4,7 @@ import { DeliveryDriver, DeliveryOrder } from "../../../models/Generic/Delivery"
 import { AppType, MezError } from "../../../models/Generic/Generic";
 import { OrderType } from "../../../models/Generic/Order";
 
-export async function assignDeliveryDriver(deliveryOrder: DeliveryOrder, driver: DeliveryDriver) {
+export async function updateDeliveryDriver(deliveryOrder: DeliveryOrder, driver: DeliveryDriver) {
   let chain = getHasura();
   
   let response = await chain.mutation({

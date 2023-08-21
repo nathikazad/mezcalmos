@@ -10,6 +10,10 @@ import { Schedule } from "../shared/models/Generic/Schedule";
 import { NewTaxiCompanyNotification } from "../shared/models/Services/Taxi/Taxi";
 import { TaxiCompany } from "../shared/models/Services/Taxi/Taxi";
 import { createNewTaxiCompany } from "../shared/graphql/taxi/createCompany";
+import { BusinessDetails } from "../business/createNewBusiness";
+import { Business, BusinessProfile } from "../shared/models/Services/Business/Business";
+import { createBusiness } from "../shared/graphql/business/createBusiness";
+import { taxiCompanyUrl } from "../utilities/senders/appRoutes";
 
 export interface TaxiCompanyDetails {
     name: string,
@@ -22,8 +26,10 @@ export interface TaxiCompanyDetails {
     firebaseId?: string,
     minimumCost: number,
     costPerKm: number,
+    maximumDeliveryDistance: number,
     language: ServiceProviderLanguage,
-    uniqueId?: string
+    uniqueId?: string,
+    isMezAdmin: boolean
 }
 export interface TaxiCompanyResponse {
     success: boolean,
@@ -36,19 +42,38 @@ export enum TaxiCompanyError {
     DeepLinkError = "deepLinkError",
     QRGenerationError = "qrGenerationError",
     TaxiCompanyCreationError = "taxiCompanyCreationError",
-    UniqueIdAlreadyExists = "uniqueIdAlreadyExists"
+    UniqueIdAlreadyExists = "uniqueIdAlreadyExists",
+    BusinessCreationError = "businessCreationError",
+    UnauthorizedAccess = "unauthorizedAccess",
 }
 
 export async function createTaxiCompany(userId: number, taxiCompanyDetails: TaxiCompanyDetails): Promise<TaxiCompanyResponse> {
     try {
-        let userPromise = getUser(userId);
-        let mezAdminsPromise = getMezAdmins();
-        let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+        let promiseResponse = await Promise.all([getUser(userId), getMezAdmins()]);
         let mezAdmins: MezAdmin[] = promiseResponse[1];
+
+        if(taxiCompanyDetails.isMezAdmin && !mezAdmins.find((m) => m.id == userId)) {
+            throw new MezError(TaxiCompanyError.UnauthorizedAccess);
+        }
+
+        let businessDetails: BusinessDetails = {
+            name: taxiCompanyDetails.name,
+            image: taxiCompanyDetails.image,
+            location: taxiCompanyDetails.location,
+            phoneNumber: taxiCompanyDetails.phoneNumber,
+            profile: BusinessProfile.TaxiCompany,
+            businessOperatorNotificationToken: taxiCompanyDetails.taxiOperatorNotificationToken,
+            language: taxiCompanyDetails.language,
+            uniqueId: taxiCompanyDetails.uniqueId,
+            schedule: taxiCompanyDetails.schedule,
+            isMezAdmin: taxiCompanyDetails.isMezAdmin
+        };
+
+        let business: Business = await createBusiness(businessDetails, userId);
     
-        let taxiCompany: TaxiCompany = await createNewTaxiCompany(taxiCompanyDetails, userId);
+        let taxiCompany: TaxiCompany = await createNewTaxiCompany(business, taxiCompanyDetails);
     
-        notifyAdmins(taxiCompany, mezAdmins);  
+        notifyAdmins(taxiCompany.business.details, mezAdmins);  
         return {
             success: true
         }

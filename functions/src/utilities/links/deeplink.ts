@@ -16,7 +16,7 @@ const appPackageIds: Record<AppType, string> =  {
   [AppType.DeliveryAdmin]: "com.mezcalmos.deliveryadmin",
   [AppType.MezAdmin]: "com.mezcalmos.mezadmin",
   [AppType.Business]: "com.mezcalmos.business",
-  [AppType.TaxiAdmin]: "com.mezcalmos.taxiadmin",
+  [AppType.Taxi]: "com.mezcalmos.taxi",
 }
 
 const appStoreIds: Record<AppType, string | undefined> =  {
@@ -27,7 +27,7 @@ const appStoreIds: Record<AppType, string | undefined> =  {
   [AppType.DeliveryAdmin]: undefined,
   [AppType.MezAdmin]: undefined,
   [AppType.Business]: undefined,
-  [AppType.TaxiAdmin]: undefined,
+  [AppType.Taxi]: undefined,
 }
 
 export enum DeepLinkType {

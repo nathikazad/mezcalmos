@@ -24,7 +24,7 @@ export interface ServiceProvider {
   creationTime?: string;
   language: ServiceProviderLanguage;
   schedule?: Schedule;
-  deliveryDetails?: DeliveryDetails;
+  deliveryDetails: DeliveryDetails;
   operators?: Array<Operator>;
   serviceProviderType: ServiceProviderType;
   uniqueId?: string;
@@ -111,7 +111,7 @@ export const ServiceProviderToAppType: Record<ServiceProviderType, AppType> = {
   [ServiceProviderType.DeliveryCompany]: AppType.DeliveryAdmin,
   [ServiceProviderType.Customer]: AppType.Customer,
   [ServiceProviderType.DeliveryDriver]: AppType.Delivery,
-  [ServiceProviderType.Taxi]: AppType.TaxiAdmin,
+  [ServiceProviderType.Taxi]: AppType.Business,
 }
 
 export interface ServiceProviderDeletedNotification extends ForegroundNotification {

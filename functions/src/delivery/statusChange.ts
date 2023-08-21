@@ -1,6 +1,6 @@
-import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus, orderInProcess } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { unassignDriver, updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
+import { unassignDeliveryDriver, updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { OrderType } from "../shared/models/Generic/Order";
@@ -17,7 +17,7 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
 import { cancelCourierFromDelivery } from "../shared/models/Services/Courier/updateCourier";
 
-let statusArrayInSeq: Array<DeliveryOrderStatus> = [
+const statusArrayInSeq: Array<DeliveryOrderStatus> = [
   DeliveryOrderStatus.OrderReceived,
   DeliveryOrderStatus.OnTheWayToPickup,
   DeliveryOrderStatus.AtPickup,
@@ -33,12 +33,7 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
     }
     return;
   }
-  if ((newStatus == DeliveryOrderStatus.OnTheWayToPickup)
-    && (currentStatus != DeliveryOrderStatus.OrderReceived)
-  ) {
-    throw new MezError(ChangeDeliveryStatusError.InvalidStatus);
-
-  } else if (currentStatus != statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == newStatus) - 1]) {
+  if (currentStatus != statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == newStatus) - 1]) {
     throw new MezError(ChangeDeliveryStatusError.InvalidStatus);
   }
 }
@@ -98,7 +93,7 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
       case OrderType.Courier:
         switch (deliveryOrder.status) {
           case DeliveryOrderStatus.CancelledByDeliverer:
-            unassignDriver(deliveryOrder.deliveryId);
+            unassignDeliveryDriver(deliveryOrder.deliveryId);
             notifyDeliveryDrivers(deliveryOrder)
             break;
           case DeliveryOrderStatus.CancelledByAdmin:
@@ -135,11 +130,7 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
 }
 
 async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStatus: DeliveryOrderStatus) {
-  if (deliveryOrder.status == DeliveryOrderStatus.Delivered
-    || deliveryOrder.status == DeliveryOrderStatus.CancelledByCustomer
-    || deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer
-    || deliveryOrder.status == DeliveryOrderStatus.CancelledByServiceProvider
-  ) {
+  if (!orderInProcess(deliveryOrder.status)) {
     throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
   }
   if (!(await isMezAdmin(userId))) {

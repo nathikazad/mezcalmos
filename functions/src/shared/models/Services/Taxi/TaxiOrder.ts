@@ -4,6 +4,7 @@ import { CustomerAppType, Location } from '../../Generic/Generic';
 // import { RouteInformation } from '../../Generic/RouteInformation';
 import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../../Notification";
 import { OrderStripeInfo } from "../../stripe";
+import { TaxiDriver } from "./Taxi";
 
 export interface TaxiOrder  {
   id: number;
@@ -40,7 +41,7 @@ export interface TaxiOrder  {
   chosenCompanies: Array<number>;
   counterOffers: Record<number, CounterOffer>;
   scheduledTime?: string,
-
+  driver?: TaxiDriver;
   // routeInformation: RouteInformation,
   // acceptRideTime?: string,
   // startRideTime?: string,

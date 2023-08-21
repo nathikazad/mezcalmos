@@ -33,14 +33,14 @@ export enum BusinessError {
   UserNotFound = "userNotFound",
   BusinessCreationError = "businessCreationError",
   UniqueIdAlreadyExists = "uniqueIdAlreadyExists",
-  UnauthorizedAccess = "unauthorizedAccess"
+  UnauthorizedAccess = "unauthorizedAccess",
+  DeepLinkError = "deepLinkError",
+  QRGenerationError = "qrGenerationError",
 }
 
 export async function createNewBusiness(userId: number, businessDetails: BusinessDetails): Promise<BusinessResponse> {
   try {
-    let userPromise = getUser(userId);
-    let mezAdminsPromise = getMezAdmins();
-    let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+    let promiseResponse = await Promise.all([getUser(userId), getMezAdmins()]);
     let mezAdmins: MezAdmin[] = promiseResponse[1];
 
     if(businessDetails.isMezAdmin && !mezAdmins.find((m) => m.id == userId)) {

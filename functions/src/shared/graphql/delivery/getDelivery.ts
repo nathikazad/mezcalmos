@@ -92,7 +92,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     orderTime: response.delivery_order_by_pk.order_time,
     serviceProviderType: response.delivery_order_by_pk.service_provider_type as DeliveryServiceProviderType,
     direction: response.delivery_order_by_pk.direction as DeliveryDirection,
-    deliveryDriverId: response.delivery_order_by_pk.delivery_driver_id,
+    driverId: response.delivery_order_by_pk.delivery_driver_id,
     tripDistance: response.delivery_order_by_pk.trip_distance,
     tripDuration: response.delivery_order_by_pk.trip_duration,
     tripPolyline: response.delivery_order_by_pk.trip_polyline,

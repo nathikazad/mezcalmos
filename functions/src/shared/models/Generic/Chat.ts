@@ -31,7 +31,7 @@ export const AppTypeToChatInfoAppName: Record<AppType, ChatInfoAppName> = {
   [AppType.Business]: ChatInfoAppName.BusinessApp,
   [AppType.Restaurant]: ChatInfoAppName.RestaurantApp,
   [AppType.Laundry]: ChatInfoAppName.LaundryApp,
-  [AppType.TaxiAdmin]: ChatInfoAppName.TaxiAdminApp,
+  // [AppType.TaxiAdmin]: ChatInfoAppName.TaxiAdminApp,
   [AppType.Taxi]: ChatInfoAppName.TaxiApp,
 }
 
@@ -51,7 +51,7 @@ export enum ParticipantType {
   RestaurantOperator = "restaurantOperator",
   MezAdmin = "mezAdmin",
   BusinessOperator = "businessOperator",
-  TaxiAdmin = "taxiAdmin",
+  // TaxiAdmin = "taxiAdmin",
   TaxiDriver = "taxiDriver",
 }
 
@@ -89,7 +89,7 @@ export const AppParticipant: Record<AppType, ParticipantType> = {
   [AppType.Business]: ParticipantType.BusinessOperator,
   [AppType.Restaurant]: ParticipantType.RestaurantOperator,
   [AppType.Laundry]: ParticipantType.LaundryOperator,
-  [AppType.TaxiAdmin]: ParticipantType.TaxiAdmin,
+  // [AppType.TaxiAdmin]: ParticipantType.TaxiAdmin,
   [AppType.Taxi]: ParticipantType.TaxiDriver,
 }
 

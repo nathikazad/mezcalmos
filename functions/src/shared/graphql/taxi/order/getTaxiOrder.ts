@@ -1,5 +1,5 @@
 import { getHasura } from "../../../../utilities/hasura";
-import { CustomerAppType, MezError } from "../../../models/Generic/Generic";
+import { AuthorizationStatus, CustomerAppType, Language, MezError } from "../../../models/Generic/Generic";
 import { PaymentType } from "../../../models/Generic/Order";
 import { TaxiOrder, TaxiOrderStatus } from "../../../models/Services/Taxi/TaxiOrder";
 import { OrderStripeInfo } from "../../../models/stripe";
@@ -43,6 +43,19 @@ export async function getTaxiOrder(orderId: number): Promise<TaxiOrder> {
                     },
                     app_version: true,
                 },
+                driver: {
+                    user_id: true,
+                    status: true,
+                    user: {
+                        firebase_id: true,
+                        language_id: true,
+                    },
+                    taxi: {
+                        id: true,
+                        car_number: true,
+                        car_name: true,
+                    }
+                }
             }
         ]
     })
@@ -82,6 +95,22 @@ export async function getTaxiOrder(orderId: number): Promise<TaxiOrder> {
         chosenCompanies: response.taxi_order_by_pk.chosen_companies,
         counterOffers: response.taxi_order_by_pk.counter_offers,
         chatId: response.taxi_order_by_pk.chat_id,
+        driver: (response.taxi_order_by_pk.driver) ? {
+            id: response.taxi_order_by_pk.driver_id!,
+            userId: response.taxi_order_by_pk.driver.user_id,
+            status: response.taxi_order_by_pk.driver.status as AuthorizationStatus,
+            companyId: response.taxi_order_by_pk.taxi_company!.id,
+            user: {
+                firebaseId: response.taxi_order_by_pk.driver.user.firebase_id,
+                language: response.taxi_order_by_pk.driver.user.language_id as Language,
+                id: response.taxi_order_by_pk.driver.user_id,
+            },
+            taxi: {
+                id: response.taxi_order_by_pk.driver.taxi.id,
+                carName: response.taxi_order_by_pk.driver.taxi.car_name,
+                carNumber: response.taxi_order_by_pk.driver.taxi.car_number,
+            }
+        }: undefined,
         // spDetailsId: response.taxi_order_by_pk.restaurant.details_id,
     }
     return order;

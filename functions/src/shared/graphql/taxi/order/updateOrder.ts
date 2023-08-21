@@ -1,6 +1,6 @@
 import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { getHasura } from "../../../../utilities/hasura";
-import { TaxiOrder } from "../../../models/Services/Taxi/TaxiOrder";
+import { TaxiOrder, TaxiOrderStatus } from "../../../models/Services/Taxi/TaxiOrder";
 
 export async function setNotifiedTaxiDrivers(taxiOrder: TaxiOrder) {
     let chain = getHasura();
@@ -40,4 +40,43 @@ export async function updateTaxiCounterOffers(order: TaxiOrder) {
     })
     
   }
+
+export async function updateTaxiOrderStatus(taxiOrder: TaxiOrder) {
+  let chain = getHasura();
+
+  await chain.mutation({
+    update_taxi_order_by_pk: [{
+      pk_columns: {
+        id: taxiOrder.id
+      }, 
+      _set: {
+        status: taxiOrder.status,
+        cancellation_time: (taxiOrder.status == TaxiOrderStatus.CancelledByAdmin || taxiOrder.status == TaxiOrderStatus.CancelledByCustomer) 
+          ? new Date() 
+          : undefined,
+      }
+    }, { 
+      status: true
+    }]
+  });
+}
+  
+export async function unassignTaxiDriver(taxiOrderId: number) {
+  let chain = getHasura();
+
+  await chain.mutation({
+    update_taxi_order_by_pk: [{
+      pk_columns: {
+        id: taxiOrderId
+      }, 
+      _set: {
+        driver_id: null!,
+        status: TaxiOrderStatus.OrderReceived
+      }
+    }, { 
+      driver_id: true
+    
+    }]
+  });
+}
   
