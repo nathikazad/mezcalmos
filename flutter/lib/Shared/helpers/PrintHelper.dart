@@ -94,6 +94,8 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
 
 void logCrashes(Object error, StackTrace? stacktrace) {
   mezDbgPrint("Logging crash $error");
+  mezDbgPrint(error);
+  mezDbgPrint(stacktrace);
   if (stacktrace != null) {
     final String caller = getStackTrace(stacktrace);
     mezDbgPrint("Logging crash $caller");

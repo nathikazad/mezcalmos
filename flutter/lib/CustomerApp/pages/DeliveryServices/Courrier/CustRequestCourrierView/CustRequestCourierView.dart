@@ -99,6 +99,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustOrderDeliverySelector(
+            type: CustDeliverySelectorType.Driver,
             onSelectionUpdate: (List<int> value) {
               viewController.selectedCompanies.value = value;
             },

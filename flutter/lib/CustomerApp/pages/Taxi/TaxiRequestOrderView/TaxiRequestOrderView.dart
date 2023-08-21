@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 
 class TaxiRequestOrderView extends StatefulWidget {
   const TaxiRequestOrderView({super.key});
@@ -164,7 +165,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                         : "Next",
                     borderRadius: 0,
                     onClick: () async {
-                      await viewController.selectCurrentLocation();
+                      await viewController.handleNext();
                     },
                   ),
                 ),
@@ -201,7 +202,39 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
         child: IntrinsicHeight(
           child: Row(
             children: [
-              Flexible(child: Container()),
+              Flexible(
+                  child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    MezIconButton(
+                        backgroundColor: Colors.transparent,
+                        iconColor: Colors.black,
+                        onTap: () {
+                          viewController.removeSeat();
+                        },
+                        icon: Icons.remove_circle_outline),
+                    Obx(
+                      () => Text.rich(TextSpan(children: [
+                        WidgetSpan(
+                            child: Icon(Icons.airline_seat_recline_normal)),
+                        WidgetSpan(child: hSmallSepartor),
+                        TextSpan(
+                            text: "${viewController.numbOfSeats}",
+                            style: context.textTheme.bodyLarge)
+                      ])),
+                    ),
+                    MezIconButton(
+                        backgroundColor: Colors.transparent,
+                        iconColor: Colors.black,
+                        onTap: () {
+                          viewController.addSeat();
+                        },
+                        icon: Icons.add_circle_outline),
+                  ],
+                ),
+              )),
               VerticalDivider(),
               Column(
                 children: [

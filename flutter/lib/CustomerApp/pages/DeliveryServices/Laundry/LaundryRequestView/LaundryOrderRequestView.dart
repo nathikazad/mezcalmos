@@ -188,6 +188,7 @@ class _CustLaundryOrderRequestViewState
                             ),
                             if (!viewController.laundry.value!.selfDelivery)
                               CustOrderDeliverySelector(
+                                type: CustDeliverySelectorType.Driver,
                                 onSelectionUpdate: (List<int> value) {
                                   viewController.selectedCompanies = value;
                                 },

@@ -9,13 +9,17 @@ import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/controllers/CustOrderDeliverySelectorController.dart';
 import 'package:sizer/sizer.dart';
 
+enum CustDeliverySelectorType { Taxi, Driver }
+
 class CustOrderDeliverySelector extends StatefulWidget {
   final ValueChanged<List<int>> onSelectionUpdate;
   final ValueChanged<double> onEstDeliveryPriceChange;
+  final CustDeliverySelectorType type;
   final num? distanceInKm;
 
   const CustOrderDeliverySelector({
     required this.onSelectionUpdate,
+    required this.type,
     required this.onEstDeliveryPriceChange,
     this.distanceInKm,
   });
@@ -33,6 +37,7 @@ class _CustOrderDeliverySelectorState extends State<CustOrderDeliverySelector> {
   void initState() {
     mezlog("Distanc in widget ===>${widget.distanceInKm}");
     _viewController.init(
+        type: widget.type,
         distance: widget.distanceInKm,
         onSelectionUpdate: widget.onSelectionUpdate,
         onEstDeliveryPriceChange: widget.onEstDeliveryPriceChange);
@@ -76,7 +81,7 @@ class _CustOrderDeliverySelectorState extends State<CustOrderDeliverySelector> {
             CircularProgressIndicator(),
             meduimSeperator,
             Text(
-              "Getting delivery comapnies near you ...",
+              "Getting comapnies near you ...",
               textAlign: TextAlign.center,
               style: context.textTheme.bodyMedium
                   ?.copyWith(color: primaryBlueColor),
@@ -91,7 +96,9 @@ class _CustOrderDeliverySelectorState extends State<CustOrderDeliverySelector> {
       children: [
         meduimSeperator,
         Text(
-          'Choose your delivery company',
+          _viewController.isTaxi
+              ? 'Choose your taxi@ company'
+              : 'Choose your delivery company',
           style: context.textTheme.bodyLarge,
         ),
         smallSepartor,

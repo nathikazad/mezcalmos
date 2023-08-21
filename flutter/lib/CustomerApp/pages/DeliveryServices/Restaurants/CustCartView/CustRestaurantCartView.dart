@@ -101,6 +101,7 @@ class _CustRestaurantCartViewState extends State<CustRestaurantCartView> {
                 if (viewController.showDelivery)
                   Obx(
                     () => CustOrderDeliverySelector(
+                      type: CustDeliverySelectorType.Driver,
                       onSelectionUpdate: (List<int> value) {
                         viewController.selectedCompanies = value;
                       },

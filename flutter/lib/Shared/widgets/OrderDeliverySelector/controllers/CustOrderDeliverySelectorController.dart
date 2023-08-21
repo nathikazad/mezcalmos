@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/CustOrderDeliverySelector.dart';
 
 class CustOrderDeliverySelectorController {
   RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
@@ -19,12 +20,16 @@ class CustOrderDeliverySelectorController {
   num? distance;
   late ValueChanged<List<int>> _onSelectionUpdate;
   late ValueChanged<double> _onEstDeliveryPriceChange;
+  late CustDeliverySelectorType type;
+  bool get isTaxi => type == CustDeliverySelectorType.Taxi;
 
   void init(
       {num? distance,
+      required CustDeliverySelectorType type,
       required ValueChanged<List<int>> onSelectionUpdate,
       required ValueChanged<double> onEstDeliveryPriceChange}) {
     this.distance = distance;
+    this.type = type;
     _onSelectionUpdate = onSelectionUpdate;
     _onEstDeliveryPriceChange = onEstDeliveryPriceChange;
     mezDbgPrint("Distance $distance");

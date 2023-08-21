@@ -2953,6 +2953,12 @@
       }
     },
     "widgets": {
+      "MezPaymentMethodPicker": {
+        "paymentMethod": "Payment Method",
+        "card": "Card",
+        "cash": "Cash",
+        "bankTransfer": "Bank transfer"
+      },
       "OrderMapWidget": {
         "mapWebText": "Install Mezcalmos application to get live time order map tracking"
       },

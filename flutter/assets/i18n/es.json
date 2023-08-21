@@ -3016,6 +3016,12 @@
       }
     },
     "widgets": {
+      "MezPaymentMethodPicker": {
+        "paymentMethod": "Método de pago",
+        "card": "Tarjeta",
+        "cash": "Dinero",
+        "bankTransfer": "transferencia bancaria"
+      },
       "OrderMapWidget": {
         "mapWebText": "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
       },

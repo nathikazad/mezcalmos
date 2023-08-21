@@ -4,6 +4,8 @@ import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
+import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/CustomerApp/pages/Taxi/TextConfimOrderView/TaxiConfirmOrderView.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
@@ -31,6 +33,7 @@ class TaxiRequestOrderViewController {
   RxBool toLocLoading = RxBool(false);
   RxBool isSettingFromLocation = RxBool(false);
   RxBool isSettingToLocation = RxBool(false);
+  RxInt numbOfSeats = RxInt(1);
   //  getters //
   bool get isFromSetted => fromLoc.value != null;
   bool get isToSetted => toLoc.value != null;
@@ -56,6 +59,7 @@ class TaxiRequestOrderViewController {
       }
     });
     _getAndSetCurrentLocation();
+    startEditingFromLoc();
   }
 
   void startEditingFromLoc() {
@@ -245,5 +249,33 @@ class TaxiRequestOrderViewController {
         await _setToLoc(locationPickerController.location.value!);
       }
     }
+  }
+
+  void removeSeat() {
+    if (numbOfSeats > 1) {
+      numbOfSeats--;
+    }
+  }
+
+  void addSeat() {
+    if (numbOfSeats <= 4) {
+      numbOfSeats++;
+    }
+  }
+
+  Future<void> handleNext() async {
+    if (isSettingFromLocation.value || isSettingToLocation.value) {
+      await selectCurrentLocation();
+    } else {
+      await TaxiConfirmOrderView.navigate(taxiRequest: _constructRequest());
+    }
+  }
+
+  TaxiRequest _constructRequest() {
+    return TaxiRequest(
+        routeInformation: route,
+        from: fromLoc.value!,
+        to: toLoc.value!,
+        numbOfSeats: numbOfSeats.value);
   }
 }

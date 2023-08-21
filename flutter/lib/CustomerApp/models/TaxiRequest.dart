@@ -3,68 +3,60 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class TaxiRequest {
-  MezLocation? from;
-  MezLocation? to;
-  RouteInformation? routeInformation;
-  int estimatedPrice;
+  MezLocation from;
+  MezLocation to;
+  Route? routeInformation;
+  num estimatedPrice;
   PaymentType paymentType;
   DateTime? scheduledTime;
+  List<int>? selectedCompanies;
+  int numbOfSeats;
   TaxiRequest({
-    this.from,
-    this.to,
-    this.routeInformation,
-    this.estimatedPrice = 35,
+    required this.from,
+    required this.to,
+    required this.routeInformation,
+    this.numbOfSeats = 1,
+    this.selectedCompanies,
+    this.estimatedPrice = 40,
     this.paymentType = PaymentType.Cash,
   });
-
-  bool valid() {
-    return (from != null && to != null && routeInformation != null);
-  }
 
   void setEstimatedPrice(int price) {
     estimatedPrice = price;
   }
 
-  void incrementPrice() {
-    estimatedPrice += 5;
-  }
+  // void incrementPrice() {
+  //   estimatedPrice += 5;
+  // }
 
-  void decrementPrice() {
-    if (estimatedPrice > 35) {
-      estimatedPrice -= 5;
-    }
-  }
+  // void decrementPrice() {
+  //   if (estimatedPrice > 35) {
+  //     estimatedPrice -= 5;
+  //   }
+  // }
 
-  void setFromLocation(MezLocation? loc) {
+  void setFromLocation(MezLocation loc) {
     from = loc;
   }
 
-  void setToLocation(MezLocation? loc) {
+  void setToLocation(MezLocation loc) {
     to = loc;
   }
 
-  void setScheduledTime(DateTime? scheduledTime) {
+  void setScheduledTime(DateTime scheduledTime) {
     this.scheduledTime = scheduledTime;
   }
 
-  void setRouteInformation(RouteInformation routeInformation) {
+  void setRouteInformation(Route routeInformation) {
     this.routeInformation = routeInformation;
-  }
-
-  bool isFromToSet() {
-    return from?.address != null &&
-        from?.address != "" &&
-        to?.address != null &&
-        to?.address != "";
   }
 
   Map<String, dynamic> asCloudFunctionParam() {
     return <String, dynamic>{
-      "from": from?.toFirebaseFormattedJson(),
-      "to": to?.toFirebaseFormattedJson(),
+      "from": from.toFirebaseFormattedJson(),
+      "to": to.toFirebaseFormattedJson(),
       "estimatedPrice": estimatedPrice,
       "paymentType": paymentType.toFirebaseFormatString(),
-      "routeInformation": routeInformation?.toJson(),
       "scheduledTime": scheduledTime?.toUtc().toString()
     };
   }
