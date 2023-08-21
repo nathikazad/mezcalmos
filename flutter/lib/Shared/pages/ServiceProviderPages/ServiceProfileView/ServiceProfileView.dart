@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfluencersView/ServiceInfluencersView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/ServiceReviewsView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -163,6 +164,15 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   icon: Icons.discount_rounded,
                                   label: "${_i18n()['offers']}"),
+                              _navigationLink(
+                                  onClick: () async {
+                                    ServiceInfluencersView.navigate(
+                                        serviceId: _viewController.serviceId,
+                                        type: _viewController
+                                            .service.serviceProviderType!);
+                                  },
+                                  icon: Icons.tag,
+                                  label: "${_i18n()['influencers']}"),
                               if (!_viewController.isBusiness)
                                 _navigationLink(
                                     onClick: () async {

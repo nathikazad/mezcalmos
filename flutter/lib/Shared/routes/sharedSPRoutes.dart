@@ -4,9 +4,10 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferItemsSelectView/OfferItemsSelectView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfluencersView/ServiceInfluencersView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/ServiceOfferEditView.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOffersListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOffersListView/ServiceOffersListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
@@ -43,12 +44,18 @@ class SharedServiceProviderRoutes {
       "/offers/:serviceProviderId/:serviceLinkId";
   static const String kServiceEditOffersRoute = "/editOffers/:offerId";
   static const String kServiceOfferingListView = "/serviceOfferingListView";
+  static const String kServiceInfluencersView = "/influencers";
 
   static final List<QRoute> routes = [
     QRoute(
       path: kDeliveryCostSettingRoute,
       name: kDeliveryCostSettingRoute,
       builder: () => DeliveryCostSettingView(),
+    ),
+    QRoute(
+      path: kServiceInfluencersView,
+      name: kServiceInfluencersView,
+      builder: () => ServiceInfluencersView(),
     ),
     QRoute(
       path: kPickDriverRoute,

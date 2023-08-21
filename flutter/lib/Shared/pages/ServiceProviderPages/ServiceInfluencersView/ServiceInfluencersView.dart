@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfluencersView/controllers/ServiceInfluencersViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+
+class ServiceInfluencersView extends StatefulWidget {
+  const ServiceInfluencersView({super.key});
+
+  static void navigate(
+      {required int serviceId, required ServiceProviderType type}) {
+    MezRouter.toPath(SharedServiceProviderRoutes.kServiceInfluencersView,
+        arguments: {
+          "serviceId": serviceId,
+          "ServiceProviderType": type,
+        });
+  }
+
+  @override
+  State<ServiceInfluencersView> createState() => _ServiceInfluencersViewState();
+}
+
+class _ServiceInfluencersViewState extends State<ServiceInfluencersView>
+    with TickerProviderStateMixin {
+  ServiceInfluencersViewController viewController =
+      ServiceInfluencersViewController();
+  @override
+  void initState() {
+    int? serviceId = MezRouter.bodyArguments?["serviceId"] as int?;
+    ServiceProviderType? type =
+        MezRouter.bodyArguments?["ServiceProviderType"] as ServiceProviderType?;
+    if (serviceId != null && type != null) {
+      viewController.init(serviceId: serviceId, type: type, vsync: this);
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back,
+          title: "Influencers",
+          tabBar: TabBar(controller: viewController.tabController, tabs: [
+            Tab(
+              text: "Partners",
+            ),
+            Tab(
+              text: "Discover",
+            ),
+            Tab(
+              text: "Requests",
+            ),
+          ])),
+      body: TabBarView(
+        controller: viewController.tabController,
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [Text("Partners")],
+            ),
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: [Text("Discover")],
+            ),
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: [Text("Requests")],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
