@@ -76,13 +76,38 @@ class _ServiceInfluencersViewState extends State<ServiceInfluencersView>
             ),
           ),
           SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
             child: Column(
-              children: [Text("Discover")],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(
+                  () => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(
+                        viewController.discoverInfluencers.length,
+                        (int index) => ServiceInfluencerCard(
+                            influencer:
+                                viewController.discoverInfluencers[index])),
+                  ),
+                )
+              ],
             ),
           ),
           SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
             child: Column(
-              children: [Text("Requests")],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(
+                  () => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(
+                        viewController.requests.length,
+                        (int index) => ServiceInfluencerCard(
+                            influencer: viewController.requests[index])),
+                  ),
+                )
+              ],
             ),
           ),
         ],

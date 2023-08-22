@@ -111,6 +111,7 @@ class CreateServiceViewController {
       required bool fromMezAdmin}) {
     this.fromMezAdmin = fromMezAdmin;
     serviceType = serviceProviderType;
+    //  newLocation.value = aDefaultLocation;
   }
 
   Future<void> _setImage() async {

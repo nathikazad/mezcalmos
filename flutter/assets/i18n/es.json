@@ -2512,6 +2512,12 @@
       }
     },
     "pages": {
+      "SingleInfluencerView": {
+        "InstagramStory": "Historia de Instagram",
+        "InstagramPost": "Publicación de Instagram",
+        "TiktokVideo": "Video de TikTok",
+        "YoutubeVideo": "Video de YouTube"
+      },
       "ServiceProviderPages": {
         "ServiceScheduleViews": {
           "SingleDayScheduleView": {

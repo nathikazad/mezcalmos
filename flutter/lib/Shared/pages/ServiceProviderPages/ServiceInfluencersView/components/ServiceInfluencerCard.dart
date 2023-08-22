@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfluencersView/controllers/ServiceInfluencersViewController.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfluencersView/models/InfluenceFakeModel.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/SingleInfluencerView/SingleInfluencerView.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 
 class ServiceInfluencerCard extends StatelessWidget {
@@ -13,6 +14,9 @@ class ServiceInfluencerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MezCard(
+      onClick: () {
+        SingleInfluencerView.navigate(influencerId: influencer.id);
+      },
       firstAvatarBgImage: CachedNetworkImageProvider(influencer.image),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

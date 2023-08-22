@@ -1,4 +1,3 @@
-import 'package:mezcalmos/BusinessApp/BusinessWrapper.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpSchedulePickerView/BsOpSchedulePickerView.dart';
 import 'package:mezcalmos/BusinessApp/pages/BsOpTabsView.dart';
 import 'package:mezcalmos/BusinessApp/pages/Orders/HomeRentalOrderView/BsHomeRentalOrderView.dart';
@@ -43,7 +42,7 @@ class BusinessOpRoutes {
         QRoute(
           path: SharedRoutes.kHomeRoute,
           name: SharedRoutes.kHomeRoute,
-          builder: () => BusinessWrapper(),
+          builder: () => BsOpTabsView(),
         ),
         QRoute(
           path: kBusniessOpTabsView,

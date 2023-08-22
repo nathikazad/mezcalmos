@@ -2454,6 +2454,12 @@
       }
     },
     "pages": {
+      "SingleInfluencerView": {
+        "InstagramStory": "Instagram Story",
+        "InstagramPost": "Instagram Post",
+        "TiktokVideo": "Tiktok Video",
+        "YoutubeVideo": "YouTube Video"
+      },
       "ServiceProviderPages": {
         "ServiceScheduleViews": {
           "SingleDayScheduleView": {

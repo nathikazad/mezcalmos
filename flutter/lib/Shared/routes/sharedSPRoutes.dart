@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/S
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/ServiceReviewsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/ServiceScheduleView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/SingleDayScheduleView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/SingleInfluencerView/SingleInfluencerView.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SharedServiceProviderRoutes {
@@ -45,6 +46,7 @@ class SharedServiceProviderRoutes {
   static const String kServiceEditOffersRoute = "/editOffers/:offerId";
   static const String kServiceOfferingListView = "/serviceOfferingListView";
   static const String kServiceInfluencersView = "/influencers";
+  static const String kSinglefluencerView = "/influencer/:id";
 
   static final List<QRoute> routes = [
     QRoute(
@@ -56,6 +58,11 @@ class SharedServiceProviderRoutes {
       path: kServiceInfluencersView,
       name: kServiceInfluencersView,
       builder: () => ServiceInfluencersView(),
+    ),
+    QRoute(
+      path: kSinglefluencerView,
+      name: kSinglefluencerView,
+      builder: () => SingleInfluencerView(),
     ),
     QRoute(
       path: kPickDriverRoute,

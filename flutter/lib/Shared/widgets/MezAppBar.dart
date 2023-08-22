@@ -36,6 +36,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     bool showLoadingEffect = false,
     PreferredSizeWidget? tabBar,
     double tabbarHeight = kToolbarHeight,
+    double? height,
     List<Widget> actionIcons = const <Widget>[]}) {
   Widget? _getRightLeading() {
     switch (leftBtnType) {
@@ -156,6 +157,8 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
 
   return AppBar(
       elevation: 0,
+      toolbarHeight: height,
+      backgroundColor: bgColor,
       bottom: (showIntallAppBtn) ? _installAppButton() : tabBar,
       automaticallyImplyLeading: false,
       leading: (showLeftBtn) ? _getRightLeading() : null,
@@ -166,7 +169,7 @@ AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         ],
         if (leftBtnType == AppBarLeftButtonType.Lang) _langSwitcherBtn(),
         SizedBox(
-          width: 8,
+          width: 12,
         )
       ],
       title: (title != null)

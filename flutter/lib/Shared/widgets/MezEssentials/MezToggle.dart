@@ -6,8 +6,10 @@ import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 class MezToggle extends StatefulWidget {
   final String title;
   final Widget content;
+  final Widget? titleWidget;
 
-  const MezToggle({required this.title, required this.content});
+  const MezToggle(
+      {required this.title, required this.content, this.titleWidget});
 
   @override
   _MezToggleState createState() => _MezToggleState();
@@ -34,7 +36,8 @@ class _MezToggleState extends State<MezToggle> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Flexible(
-                  child: Text(widget.title, style: context.textTheme.bodyLarge),
+                  child: widget.titleWidget ??
+                      Text(widget.title, style: context.textTheme.bodyLarge),
                 ),
                 hSmallSepartor,
                 MezIconButton(
