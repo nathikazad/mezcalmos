@@ -10,6 +10,7 @@ class Post {
   String? image;
   List<int> likes;
   List<Comment> comments;
+  int numberOfComments;
   DateTime postedOn;
   String? link;
 
@@ -23,6 +24,7 @@ class Post {
     required this.likes,
     required this.comments,
     required this.postedOn,
+    required this.numberOfComments,
     this.image,
     this.link,
   });

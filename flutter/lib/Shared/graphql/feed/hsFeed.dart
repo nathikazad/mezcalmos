@@ -83,6 +83,7 @@ Future<List<Post>> fetch_subscribed_posts(
       comments: comments,
       postedOn: DateTime.parse(data.posted_on),
       link: data.link,
+      numberOfComments: data.comments_aggregate.aggregate?.count ?? 0,
     ));
   });
   return posts;
@@ -175,6 +176,7 @@ Future<List<Post>> fetch_service_provider_posts(
       comments: comments,
       postedOn: DateTime.parse(data.posted_on),
       link: data.link,
+      numberOfComments: data.comments_aggregate.aggregate?.count ?? 0,
     ));
   });
   return posts;
@@ -259,6 +261,7 @@ Future<List<Post>> fetch_posts_within_distance(
       comments: comments,
       postedOn: DateTime.parse(data.posted_on),
       link: data.link,
+      numberOfComments: data.comments_aggregate.aggregate?.count ?? 0,
     ));
   });
   return posts;
@@ -322,9 +325,40 @@ Future<Post> get_post({required int postId, bool withCache = true}) async {
       break;
   }
 
+  return Post(
+    id: postId,
+    serviceProviderId: data.service_provider_id,
+    serviceProviderType: serviceProviderType,
+    serviceProviderName: serviceProviderName,
+    serviceProviderImage: serviceProviderImage,
+    message: data.message,
+    image: data.image,
+    likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
+    numberOfComments: data.comments_aggregate.aggregate?.count ?? 0,
+    comments: <Comment>[],
+    postedOn: DateTime.parse(data.posted_on),
+    link: data.link,
+  );
+}
+
+Future<List<Comment>> get_post_comments(
+    {required int postId,
+    int? limit,
+    int? offset,
+    bool withCache = true}) async {
+  QueryResult<Query$getPostComments> res =
+      await _db.graphQLClient.query$getPostComments(
+    Options$Query$getPostComments(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$getPostComments(
+          post_id: postId, limit: limit, offset: offset),
+    ),
+  );
+
   List<Comment> comments = <Comment>[];
-  res.parsedData?.service_provider_post_by_pk?.comments
-      .forEach((Query$getPost$service_provider_post_by_pk$comments comment) {
+  res.parsedData?.service_provider_post_comment
+      .forEach((Query$getPostComments$service_provider_post_comment comment) {
     comments.add(
       Comment(
         id: comment.id,
@@ -340,19 +374,7 @@ Future<Post> get_post({required int postId, bool withCache = true}) async {
       ),
     );
   });
-  return Post(
-    id: postId,
-    serviceProviderId: data.service_provider_id,
-    serviceProviderType: serviceProviderType,
-    serviceProviderName: serviceProviderName,
-    serviceProviderImage: serviceProviderImage,
-    message: data.message,
-    image: data.image,
-    likes: data.likes.map<int>((e) => int.parse(e.toString())).toList(),
-    comments: comments,
-    postedOn: DateTime.parse(data.posted_on),
-    link: data.link,
-  );
+  return comments;
 }
 
 Future<int?> subscribe_service_provider(

@@ -1053,7 +1053,25 @@ const documentNodeQueryfetch_subscribed_posts = DocumentNode(definitions: [
           FieldNode(
             name: NameNode(value: 'comments'),
             alias: null,
-            arguments: [],
+            arguments: [
+              ArgumentNode(
+                name: NameNode(value: 'order_by'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'likes'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'commented_on'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  ),
+                ]),
+              ),
+              ArgumentNode(
+                name: NameNode(value: 'limit'),
+                value: IntValueNode(value: '3'),
+              ),
+            ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
@@ -1106,6 +1124,43 @@ const documentNodeQueryfetch_subscribed_posts = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'comments_aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'count'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -1491,6 +1546,7 @@ extension ClientExtension$Query$fetch_subscribed_posts
 class Query$fetch_subscribed_posts$service_provider_post {
   Query$fetch_subscribed_posts$service_provider_post({
     required this.comments,
+    required this.comments_aggregate,
     required this.id,
     this.image,
     required this.likes,
@@ -1509,6 +1565,7 @@ class Query$fetch_subscribed_posts$service_provider_post {
   factory Query$fetch_subscribed_posts$service_provider_post.fromJson(
       Map<String, dynamic> json) {
     final l$comments = json['comments'];
+    final l$comments_aggregate = json['comments_aggregate'];
     final l$id = json['id'];
     final l$image = json['image'];
     final l$likes = json['likes'];
@@ -1528,6 +1585,9 @@ class Query$fetch_subscribed_posts$service_provider_post {
               Query$fetch_subscribed_posts$service_provider_post$comments
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
+      comments_aggregate:
+          Query$fetch_subscribed_posts$service_provider_post$comments_aggregate
+              .fromJson((l$comments_aggregate as Map<String, dynamic>)),
       id: (l$id as int),
       image: (l$image as String?),
       likes: mapFromJson(l$likes),
@@ -1558,6 +1618,9 @@ class Query$fetch_subscribed_posts$service_provider_post {
 
   final List<Query$fetch_subscribed_posts$service_provider_post$comments>
       comments;
+
+  final Query$fetch_subscribed_posts$service_provider_post$comments_aggregate
+      comments_aggregate;
 
   final int id;
 
@@ -1591,6 +1654,8 @@ class Query$fetch_subscribed_posts$service_provider_post {
     final _resultData = <String, dynamic>{};
     final l$comments = comments;
     _resultData['comments'] = l$comments.map((e) => e.toJson()).toList();
+    final l$comments_aggregate = comments_aggregate;
+    _resultData['comments_aggregate'] = l$comments_aggregate.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -1623,6 +1688,7 @@ class Query$fetch_subscribed_posts$service_provider_post {
   @override
   int get hashCode {
     final l$comments = comments;
+    final l$comments_aggregate = comments_aggregate;
     final l$id = id;
     final l$image = image;
     final l$likes = likes;
@@ -1638,6 +1704,7 @@ class Query$fetch_subscribed_posts$service_provider_post {
     final l$$__typename = $__typename;
     return Object.hashAll([
       Object.hashAll(l$comments.map((v) => v)),
+      l$comments_aggregate,
       l$id,
       l$image,
       l$likes,
@@ -1674,6 +1741,11 @@ class Query$fetch_subscribed_posts$service_provider_post {
       if (l$comments$entry != lOther$comments$entry) {
         return false;
       }
+    }
+    final l$comments_aggregate = comments_aggregate;
+    final lOther$comments_aggregate = other.comments_aggregate;
+    if (l$comments_aggregate != lOther$comments_aggregate) {
+      return false;
     }
     final l$id = id;
     final lOther$id = other.id;
@@ -1768,6 +1840,8 @@ abstract class CopyWith$Query$fetch_subscribed_posts$service_provider_post<
 
   TRes call({
     List<Query$fetch_subscribed_posts$service_provider_post$comments>? comments,
+    Query$fetch_subscribed_posts$service_provider_post$comments_aggregate?
+        comments_aggregate,
     int? id,
     String? image,
     dynamic? likes,
@@ -1789,6 +1863,8 @@ abstract class CopyWith$Query$fetch_subscribed_posts$service_provider_post<
                   CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments<
                       Query$fetch_subscribed_posts$service_provider_post$comments>>)
           _fn);
+  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+      TRes> get comments_aggregate;
   CopyWith$Query$fetch_subscribed_posts$service_provider_post$restaurant<TRes>
       get restaurant;
   CopyWith$Query$fetch_subscribed_posts$service_provider_post$laundry<TRes>
@@ -1815,6 +1891,7 @@ class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
 
   TRes call({
     Object? comments = _undefined,
+    Object? comments_aggregate = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
     Object? likes = _undefined,
@@ -1834,6 +1911,11 @@ class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
             ? _instance.comments
             : (comments as List<
                 Query$fetch_subscribed_posts$service_provider_post$comments>),
+        comments_aggregate: comments_aggregate == _undefined ||
+                comments_aggregate == null
+            ? _instance.comments_aggregate
+            : (comments_aggregate
+                as Query$fetch_subscribed_posts$service_provider_post$comments_aggregate),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         likes: likes == _undefined || likes == null
@@ -1886,6 +1968,13 @@ class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
                 e,
                 (i) => i,
               ))).toList());
+  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+      TRes> get comments_aggregate {
+    final local$comments_aggregate = _instance.comments_aggregate;
+    return CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate(
+        local$comments_aggregate, (e) => call(comments_aggregate: e));
+  }
+
   CopyWith$Query$fetch_subscribed_posts$service_provider_post$restaurant<TRes>
       get restaurant {
     final local$restaurant = _instance.restaurant;
@@ -1937,6 +2026,8 @@ class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
 
   call({
     List<Query$fetch_subscribed_posts$service_provider_post$comments>? comments,
+    Query$fetch_subscribed_posts$service_provider_post$comments_aggregate?
+        comments_aggregate,
     int? id,
     String? image,
     dynamic? likes,
@@ -1954,6 +2045,11 @@ class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post<TRes>
   }) =>
       _res;
   comments(_fn) => _res;
+  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+          TRes>
+      get comments_aggregate =>
+          CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate
+              .stub(_res);
   CopyWith$Query$fetch_subscribed_posts$service_provider_post$restaurant<TRes>
       get restaurant =>
           CopyWith$Query$fetch_subscribed_posts$service_provider_post$restaurant
@@ -2377,6 +2473,319 @@ class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comme
     int? id,
     String? name,
     String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$fetch_subscribed_posts$service_provider_post$comments_aggregate {
+  Query$fetch_subscribed_posts$service_provider_post$comments_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_subscribed_posts$service_provider_post$comments_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_subscribed_posts$service_provider_post$comments_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$fetch_subscribed_posts$service_provider_post$comments_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate
+    on Query$fetch_subscribed_posts$service_provider_post$comments_aggregate {
+  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+          Query$fetch_subscribed_posts$service_provider_post$comments_aggregate>
+      get copyWith =>
+          CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+    TRes> {
+  factory CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate(
+    Query$fetch_subscribed_posts$service_provider_post$comments_aggregate
+        instance,
+    TRes Function(
+            Query$fetch_subscribed_posts$service_provider_post$comments_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate;
+
+  factory CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate;
+
+  TRes call({
+    Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_subscribed_posts$service_provider_post$comments_aggregate
+      _instance;
+
+  final TRes Function(
+          Query$fetch_subscribed_posts$service_provider_post$comments_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$fetch_subscribed_posts$service_provider_post$comments_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate {
+  Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate
+    on Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate {
+  CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+          Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate(
+    Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate;
+
+  factory CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_subscribed_posts$service_provider_post$comments_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
     String? $__typename,
   }) =>
       _res;
@@ -4185,7 +4594,25 @@ const documentNodeQueryfetch_service_provider_posts =
           FieldNode(
             name: NameNode(value: 'comments'),
             alias: null,
-            arguments: [],
+            arguments: [
+              ArgumentNode(
+                name: NameNode(value: 'order_by'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'likes'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'commented_on'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  ),
+                ]),
+              ),
+              ArgumentNode(
+                name: NameNode(value: 'limit'),
+                value: IntValueNode(value: '3'),
+              ),
+            ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
@@ -4238,6 +4665,43 @@ const documentNodeQueryfetch_service_provider_posts =
                   ),
                   FieldNode(
                     name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'comments_aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'count'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -4625,6 +5089,7 @@ extension ClientExtension$Query$fetch_service_provider_posts
 class Query$fetch_service_provider_posts$service_provider_post {
   Query$fetch_service_provider_posts$service_provider_post({
     required this.comments,
+    required this.comments_aggregate,
     required this.id,
     this.image,
     required this.likes,
@@ -4643,6 +5108,7 @@ class Query$fetch_service_provider_posts$service_provider_post {
   factory Query$fetch_service_provider_posts$service_provider_post.fromJson(
       Map<String, dynamic> json) {
     final l$comments = json['comments'];
+    final l$comments_aggregate = json['comments_aggregate'];
     final l$id = json['id'];
     final l$image = json['image'];
     final l$likes = json['likes'];
@@ -4662,6 +5128,9 @@ class Query$fetch_service_provider_posts$service_provider_post {
               Query$fetch_service_provider_posts$service_provider_post$comments
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
+      comments_aggregate:
+          Query$fetch_service_provider_posts$service_provider_post$comments_aggregate
+              .fromJson((l$comments_aggregate as Map<String, dynamic>)),
       id: (l$id as int),
       image: (l$image as String?),
       likes: mapFromJson(l$likes),
@@ -4692,6 +5161,9 @@ class Query$fetch_service_provider_posts$service_provider_post {
 
   final List<Query$fetch_service_provider_posts$service_provider_post$comments>
       comments;
+
+  final Query$fetch_service_provider_posts$service_provider_post$comments_aggregate
+      comments_aggregate;
 
   final int id;
 
@@ -4727,6 +5199,8 @@ class Query$fetch_service_provider_posts$service_provider_post {
     final _resultData = <String, dynamic>{};
     final l$comments = comments;
     _resultData['comments'] = l$comments.map((e) => e.toJson()).toList();
+    final l$comments_aggregate = comments_aggregate;
+    _resultData['comments_aggregate'] = l$comments_aggregate.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -4759,6 +5233,7 @@ class Query$fetch_service_provider_posts$service_provider_post {
   @override
   int get hashCode {
     final l$comments = comments;
+    final l$comments_aggregate = comments_aggregate;
     final l$id = id;
     final l$image = image;
     final l$likes = likes;
@@ -4774,6 +5249,7 @@ class Query$fetch_service_provider_posts$service_provider_post {
     final l$$__typename = $__typename;
     return Object.hashAll([
       Object.hashAll(l$comments.map((v) => v)),
+      l$comments_aggregate,
       l$id,
       l$image,
       l$likes,
@@ -4810,6 +5286,11 @@ class Query$fetch_service_provider_posts$service_provider_post {
       if (l$comments$entry != lOther$comments$entry) {
         return false;
       }
+    }
+    final l$comments_aggregate = comments_aggregate;
+    final lOther$comments_aggregate = other.comments_aggregate;
+    if (l$comments_aggregate != lOther$comments_aggregate) {
+      return false;
     }
     final l$id = id;
     final lOther$id = other.id;
@@ -4906,6 +5387,8 @@ abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post
   TRes call({
     List<Query$fetch_service_provider_posts$service_provider_post$comments>?
         comments,
+    Query$fetch_service_provider_posts$service_provider_post$comments_aggregate?
+        comments_aggregate,
     int? id,
     String? image,
     dynamic? likes,
@@ -4928,6 +5411,8 @@ abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post
                   CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments<
                       Query$fetch_service_provider_posts$service_provider_post$comments>>)
           _fn);
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+      TRes> get comments_aggregate;
   CopyWith$Query$fetch_service_provider_posts$service_provider_post$restaurant<
       TRes> get restaurant;
   CopyWith$Query$fetch_service_provider_posts$service_provider_post$laundry<
@@ -4957,6 +5442,7 @@ class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post<
 
   TRes call({
     Object? comments = _undefined,
+    Object? comments_aggregate = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
     Object? likes = _undefined,
@@ -4976,6 +5462,11 @@ class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post<
             ? _instance.comments
             : (comments as List<
                 Query$fetch_service_provider_posts$service_provider_post$comments>),
+        comments_aggregate: comments_aggregate == _undefined ||
+                comments_aggregate == null
+            ? _instance.comments_aggregate
+            : (comments_aggregate
+                as Query$fetch_service_provider_posts$service_provider_post$comments_aggregate),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         likes: likes == _undefined || likes == null
@@ -5028,6 +5519,13 @@ class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post<
                 e,
                 (i) => i,
               ))).toList());
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+      TRes> get comments_aggregate {
+    final local$comments_aggregate = _instance.comments_aggregate;
+    return CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate(
+        local$comments_aggregate, (e) => call(comments_aggregate: e));
+  }
+
   CopyWith$Query$fetch_service_provider_posts$service_provider_post$restaurant<
       TRes> get restaurant {
     final local$restaurant = _instance.restaurant;
@@ -5082,6 +5580,8 @@ class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post
   call({
     List<Query$fetch_service_provider_posts$service_provider_post$comments>?
         comments,
+    Query$fetch_service_provider_posts$service_provider_post$comments_aggregate?
+        comments_aggregate,
     int? id,
     String? image,
     dynamic? likes,
@@ -5100,6 +5600,11 @@ class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post
   }) =>
       _res;
   comments(_fn) => _res;
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+          TRes>
+      get comments_aggregate =>
+          CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate
+              .stub(_res);
   CopyWith$Query$fetch_service_provider_posts$service_provider_post$restaurant<
           TRes>
       get restaurant =>
@@ -5535,6 +6040,319 @@ class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post
     int? id,
     String? name,
     String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$fetch_service_provider_posts$service_provider_post$comments_aggregate {
+  Query$fetch_service_provider_posts$service_provider_post$comments_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_service_provider_posts$service_provider_post$comments_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_service_provider_posts$service_provider_post$comments_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$fetch_service_provider_posts$service_provider_post$comments_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate
+    on Query$fetch_service_provider_posts$service_provider_post$comments_aggregate {
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+          Query$fetch_service_provider_posts$service_provider_post$comments_aggregate>
+      get copyWith =>
+          CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+    TRes> {
+  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate(
+    Query$fetch_service_provider_posts$service_provider_post$comments_aggregate
+        instance,
+    TRes Function(
+            Query$fetch_service_provider_posts$service_provider_post$comments_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate;
+
+  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate;
+
+  TRes call({
+    Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_service_provider_posts$service_provider_post$comments_aggregate
+      _instance;
+
+  final TRes Function(
+          Query$fetch_service_provider_posts$service_provider_post$comments_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$fetch_service_provider_posts$service_provider_post$comments_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate {
+  Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate
+    on Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate {
+  CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+          Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate(
+    Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate;
+
+  factory CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_service_provider_posts$service_provider_post$comments_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
     String? $__typename,
   }) =>
       _res;
@@ -7434,7 +8252,25 @@ const documentNodeQueryfetch_posts_within_distance = DocumentNode(definitions: [
           FieldNode(
             name: NameNode(value: 'comments'),
             alias: null,
-            arguments: [],
+            arguments: [
+              ArgumentNode(
+                name: NameNode(value: 'order_by'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'likes'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  ),
+                  ObjectFieldNode(
+                    name: NameNode(value: 'commented_on'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  ),
+                ]),
+              ),
+              ArgumentNode(
+                name: NameNode(value: 'limit'),
+                value: IntValueNode(value: '3'),
+              ),
+            ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
@@ -7487,6 +8323,43 @@ const documentNodeQueryfetch_posts_within_distance = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'comments_aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'count'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -7872,6 +8745,7 @@ extension ClientExtension$Query$fetch_posts_within_distance
 class Query$fetch_posts_within_distance$service_provider_post {
   Query$fetch_posts_within_distance$service_provider_post({
     required this.comments,
+    required this.comments_aggregate,
     required this.id,
     this.image,
     required this.likes,
@@ -7890,6 +8764,7 @@ class Query$fetch_posts_within_distance$service_provider_post {
   factory Query$fetch_posts_within_distance$service_provider_post.fromJson(
       Map<String, dynamic> json) {
     final l$comments = json['comments'];
+    final l$comments_aggregate = json['comments_aggregate'];
     final l$id = json['id'];
     final l$image = json['image'];
     final l$likes = json['likes'];
@@ -7909,6 +8784,9 @@ class Query$fetch_posts_within_distance$service_provider_post {
               Query$fetch_posts_within_distance$service_provider_post$comments
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
+      comments_aggregate:
+          Query$fetch_posts_within_distance$service_provider_post$comments_aggregate
+              .fromJson((l$comments_aggregate as Map<String, dynamic>)),
       id: (l$id as int),
       image: (l$image as String?),
       likes: mapFromJson(l$likes),
@@ -7939,6 +8817,9 @@ class Query$fetch_posts_within_distance$service_provider_post {
 
   final List<Query$fetch_posts_within_distance$service_provider_post$comments>
       comments;
+
+  final Query$fetch_posts_within_distance$service_provider_post$comments_aggregate
+      comments_aggregate;
 
   final int id;
 
@@ -7974,6 +8855,8 @@ class Query$fetch_posts_within_distance$service_provider_post {
     final _resultData = <String, dynamic>{};
     final l$comments = comments;
     _resultData['comments'] = l$comments.map((e) => e.toJson()).toList();
+    final l$comments_aggregate = comments_aggregate;
+    _resultData['comments_aggregate'] = l$comments_aggregate.toJson();
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -8006,6 +8889,7 @@ class Query$fetch_posts_within_distance$service_provider_post {
   @override
   int get hashCode {
     final l$comments = comments;
+    final l$comments_aggregate = comments_aggregate;
     final l$id = id;
     final l$image = image;
     final l$likes = likes;
@@ -8021,6 +8905,7 @@ class Query$fetch_posts_within_distance$service_provider_post {
     final l$$__typename = $__typename;
     return Object.hashAll([
       Object.hashAll(l$comments.map((v) => v)),
+      l$comments_aggregate,
       l$id,
       l$image,
       l$likes,
@@ -8057,6 +8942,11 @@ class Query$fetch_posts_within_distance$service_provider_post {
       if (l$comments$entry != lOther$comments$entry) {
         return false;
       }
+    }
+    final l$comments_aggregate = comments_aggregate;
+    final lOther$comments_aggregate = other.comments_aggregate;
+    if (l$comments_aggregate != lOther$comments_aggregate) {
+      return false;
     }
     final l$id = id;
     final lOther$id = other.id;
@@ -8152,6 +9042,8 @@ abstract class CopyWith$Query$fetch_posts_within_distance$service_provider_post<
   TRes call({
     List<Query$fetch_posts_within_distance$service_provider_post$comments>?
         comments,
+    Query$fetch_posts_within_distance$service_provider_post$comments_aggregate?
+        comments_aggregate,
     int? id,
     String? image,
     dynamic? likes,
@@ -8174,6 +9066,8 @@ abstract class CopyWith$Query$fetch_posts_within_distance$service_provider_post<
                   CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments<
                       Query$fetch_posts_within_distance$service_provider_post$comments>>)
           _fn);
+  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+      TRes> get comments_aggregate;
   CopyWith$Query$fetch_posts_within_distance$service_provider_post$restaurant<
       TRes> get restaurant;
   CopyWith$Query$fetch_posts_within_distance$service_provider_post$laundry<TRes>
@@ -8202,6 +9096,7 @@ class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post<
 
   TRes call({
     Object? comments = _undefined,
+    Object? comments_aggregate = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
     Object? likes = _undefined,
@@ -8221,6 +9116,11 @@ class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post<
             ? _instance.comments
             : (comments as List<
                 Query$fetch_posts_within_distance$service_provider_post$comments>),
+        comments_aggregate: comments_aggregate == _undefined ||
+                comments_aggregate == null
+            ? _instance.comments_aggregate
+            : (comments_aggregate
+                as Query$fetch_posts_within_distance$service_provider_post$comments_aggregate),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         likes: likes == _undefined || likes == null
@@ -8273,6 +9173,13 @@ class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post<
                 e,
                 (i) => i,
               ))).toList());
+  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+      TRes> get comments_aggregate {
+    final local$comments_aggregate = _instance.comments_aggregate;
+    return CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate(
+        local$comments_aggregate, (e) => call(comments_aggregate: e));
+  }
+
   CopyWith$Query$fetch_posts_within_distance$service_provider_post$restaurant<
       TRes> get restaurant {
     final local$restaurant = _instance.restaurant;
@@ -8326,6 +9233,8 @@ class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post<
   call({
     List<Query$fetch_posts_within_distance$service_provider_post$comments>?
         comments,
+    Query$fetch_posts_within_distance$service_provider_post$comments_aggregate?
+        comments_aggregate,
     int? id,
     String? image,
     dynamic? likes,
@@ -8344,6 +9253,11 @@ class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post<
   }) =>
       _res;
   comments(_fn) => _res;
+  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+          TRes>
+      get comments_aggregate =>
+          CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate
+              .stub(_res);
   CopyWith$Query$fetch_posts_within_distance$service_provider_post$restaurant<
           TRes>
       get restaurant =>
@@ -8776,6 +9690,319 @@ class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$
     int? id,
     String? name,
     String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$fetch_posts_within_distance$service_provider_post$comments_aggregate {
+  Query$fetch_posts_within_distance$service_provider_post$comments_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_posts_within_distance$service_provider_post$comments_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_posts_within_distance$service_provider_post$comments_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$fetch_posts_within_distance$service_provider_post$comments_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate
+    on Query$fetch_posts_within_distance$service_provider_post$comments_aggregate {
+  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+          Query$fetch_posts_within_distance$service_provider_post$comments_aggregate>
+      get copyWith =>
+          CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+    TRes> {
+  factory CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate(
+    Query$fetch_posts_within_distance$service_provider_post$comments_aggregate
+        instance,
+    TRes Function(
+            Query$fetch_posts_within_distance$service_provider_post$comments_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate;
+
+  factory CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate;
+
+  TRes call({
+    Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_posts_within_distance$service_provider_post$comments_aggregate
+      _instance;
+
+  final TRes Function(
+          Query$fetch_posts_within_distance$service_provider_post$comments_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$fetch_posts_within_distance$service_provider_post$comments_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate {
+  Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate
+    on Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate {
+  CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+          Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate(
+    Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate;
+
+  factory CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$fetch_posts_within_distance$service_provider_post$comments_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
     String? $__typename,
   }) =>
       _res;
@@ -11258,61 +12485,19 @@ const documentNodeQuerygetPost = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'comments'),
+            name: NameNode(value: 'comments_aggregate'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                name: NameNode(value: 'commented_on'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'likes'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'message'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'user'),
+                name: NameNode(value: 'aggregate'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
+                    name: NameNode(value: 'count'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -11466,7 +12651,7 @@ class Query$getPost$service_provider_post_by_pk {
     this.laundry,
     this.delivery_company,
     this.business,
-    required this.comments,
+    required this.comments_aggregate,
     required this.$__typename,
   });
 
@@ -11483,7 +12668,7 @@ class Query$getPost$service_provider_post_by_pk {
     final l$laundry = json['laundry'];
     final l$delivery_company = json['delivery_company'];
     final l$business = json['business'];
-    final l$comments = json['comments'];
+    final l$comments_aggregate = json['comments_aggregate'];
     final l$$__typename = json['__typename'];
     return Query$getPost$service_provider_post_by_pk(
       image: (l$image as String?),
@@ -11509,11 +12694,9 @@ class Query$getPost$service_provider_post_by_pk {
           ? null
           : Query$getPost$service_provider_post_by_pk$business.fromJson(
               (l$business as Map<String, dynamic>)),
-      comments: (l$comments as List<dynamic>)
-          .map((e) =>
-              Query$getPost$service_provider_post_by_pk$comments.fromJson(
-                  (e as Map<String, dynamic>)))
-          .toList(),
+      comments_aggregate:
+          Query$getPost$service_provider_post_by_pk$comments_aggregate.fromJson(
+              (l$comments_aggregate as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -11541,7 +12724,8 @@ class Query$getPost$service_provider_post_by_pk {
 
   final Query$getPost$service_provider_post_by_pk$business? business;
 
-  final List<Query$getPost$service_provider_post_by_pk$comments> comments;
+  final Query$getPost$service_provider_post_by_pk$comments_aggregate
+      comments_aggregate;
 
   final String $__typename;
 
@@ -11569,8 +12753,8 @@ class Query$getPost$service_provider_post_by_pk {
     _resultData['delivery_company'] = l$delivery_company?.toJson();
     final l$business = business;
     _resultData['business'] = l$business?.toJson();
-    final l$comments = comments;
-    _resultData['comments'] = l$comments.map((e) => e.toJson()).toList();
+    final l$comments_aggregate = comments_aggregate;
+    _resultData['comments_aggregate'] = l$comments_aggregate.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -11589,7 +12773,7 @@ class Query$getPost$service_provider_post_by_pk {
     final l$laundry = laundry;
     final l$delivery_company = delivery_company;
     final l$business = business;
-    final l$comments = comments;
+    final l$comments_aggregate = comments_aggregate;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$image,
@@ -11603,7 +12787,7 @@ class Query$getPost$service_provider_post_by_pk {
       l$laundry,
       l$delivery_company,
       l$business,
-      Object.hashAll(l$comments.map((v) => v)),
+      l$comments_aggregate,
       l$$__typename,
     ]);
   }
@@ -11672,17 +12856,10 @@ class Query$getPost$service_provider_post_by_pk {
     if (l$business != lOther$business) {
       return false;
     }
-    final l$comments = comments;
-    final lOther$comments = other.comments;
-    if (l$comments.length != lOther$comments.length) {
+    final l$comments_aggregate = comments_aggregate;
+    final lOther$comments_aggregate = other.comments_aggregate;
+    if (l$comments_aggregate != lOther$comments_aggregate) {
       return false;
-    }
-    for (int i = 0; i < l$comments.length; i++) {
-      final l$comments$entry = l$comments[i];
-      final lOther$comments$entry = lOther$comments[i];
-      if (l$comments$entry != lOther$comments$entry) {
-        return false;
-      }
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
@@ -11725,7 +12902,8 @@ abstract class CopyWith$Query$getPost$service_provider_post_by_pk<TRes> {
     Query$getPost$service_provider_post_by_pk$delivery_company?
         delivery_company,
     Query$getPost$service_provider_post_by_pk$business? business,
-    List<Query$getPost$service_provider_post_by_pk$comments>? comments,
+    Query$getPost$service_provider_post_by_pk$comments_aggregate?
+        comments_aggregate,
     String? $__typename,
   });
   CopyWith$Query$getPost$service_provider_post_by_pk$restaurant<TRes>
@@ -11735,12 +12913,8 @@ abstract class CopyWith$Query$getPost$service_provider_post_by_pk<TRes> {
       get delivery_company;
   CopyWith$Query$getPost$service_provider_post_by_pk$business<TRes>
       get business;
-  TRes comments(
-      Iterable<Query$getPost$service_provider_post_by_pk$comments> Function(
-              Iterable<
-                  CopyWith$Query$getPost$service_provider_post_by_pk$comments<
-                      Query$getPost$service_provider_post_by_pk$comments>>)
-          _fn);
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate<TRes>
+      get comments_aggregate;
 }
 
 class _CopyWithImpl$Query$getPost$service_provider_post_by_pk<TRes>
@@ -11768,7 +12942,7 @@ class _CopyWithImpl$Query$getPost$service_provider_post_by_pk<TRes>
     Object? laundry = _undefined,
     Object? delivery_company = _undefined,
     Object? business = _undefined,
-    Object? comments = _undefined,
+    Object? comments_aggregate = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getPost$service_provider_post_by_pk(
@@ -11805,10 +12979,11 @@ class _CopyWithImpl$Query$getPost$service_provider_post_by_pk<TRes>
         business: business == _undefined
             ? _instance.business
             : (business as Query$getPost$service_provider_post_by_pk$business?),
-        comments: comments == _undefined || comments == null
-            ? _instance.comments
-            : (comments
-                as List<Query$getPost$service_provider_post_by_pk$comments>),
+        comments_aggregate: comments_aggregate == _undefined ||
+                comments_aggregate == null
+            ? _instance.comments_aggregate
+            : (comments_aggregate
+                as Query$getPost$service_provider_post_by_pk$comments_aggregate),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -11852,18 +13027,12 @@ class _CopyWithImpl$Query$getPost$service_provider_post_by_pk<TRes>
             local$business, (e) => call(business: e));
   }
 
-  TRes comments(
-          Iterable<Query$getPost$service_provider_post_by_pk$comments> Function(
-                  Iterable<
-                      CopyWith$Query$getPost$service_provider_post_by_pk$comments<
-                          Query$getPost$service_provider_post_by_pk$comments>>)
-              _fn) =>
-      call(
-          comments: _fn(_instance.comments.map((e) =>
-              CopyWith$Query$getPost$service_provider_post_by_pk$comments(
-                e,
-                (i) => i,
-              ))).toList());
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate<TRes>
+      get comments_aggregate {
+    final local$comments_aggregate = _instance.comments_aggregate;
+    return CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate(
+        local$comments_aggregate, (e) => call(comments_aggregate: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk<TRes>
@@ -11885,7 +13054,8 @@ class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk<TRes>
     Query$getPost$service_provider_post_by_pk$delivery_company?
         delivery_company,
     Query$getPost$service_provider_post_by_pk$business? business,
-    List<Query$getPost$service_provider_post_by_pk$comments>? comments,
+    Query$getPost$service_provider_post_by_pk$comments_aggregate?
+        comments_aggregate,
     String? $__typename,
   }) =>
       _res;
@@ -11904,7 +13074,10 @@ class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk<TRes>
       get business =>
           CopyWith$Query$getPost$service_provider_post_by_pk$business.stub(
               _res);
-  comments(_fn) => _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate<TRes>
+      get comments_aggregate =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate
+              .stub(_res);
 }
 
 class Query$getPost$service_provider_post_by_pk$restaurant {
@@ -13163,8 +14336,890 @@ class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$business$detai
       _res;
 }
 
-class Query$getPost$service_provider_post_by_pk$comments {
-  Query$getPost$service_provider_post_by_pk$comments({
+class Query$getPost$service_provider_post_by_pk$comments_aggregate {
+  Query$getPost$service_provider_post_by_pk$comments_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$comments_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$comments_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getPost$service_provider_post_by_pk$comments_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$comments_aggregate
+    on Query$getPost$service_provider_post_by_pk$comments_aggregate {
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate<
+          Query$getPost$service_provider_post_by_pk$comments_aggregate>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate(
+    Query$getPost$service_provider_post_by_pk$comments_aggregate instance,
+    TRes Function(Query$getPost$service_provider_post_by_pk$comments_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate;
+
+  TRes call({
+    Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$comments_aggregate _instance;
+
+  final TRes Function(
+      Query$getPost$service_provider_post_by_pk$comments_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPost$service_provider_post_by_pk$comments_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate {
+  Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate({
+    required this.count,
+    required this.$__typename,
+  });
+
+  factory Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$count = json['count'];
+    final l$$__typename = json['__typename'];
+    return Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate(
+      count: (l$count as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int count;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$count = count;
+    _resultData['count'] = l$count;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$count = count;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$count,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$count = count;
+    final lOther$count = other.count;
+    if (l$count != lOther$count) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate
+    on Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate {
+  CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+          Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate(
+    Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate;
+
+  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate;
+
+  TRes call({
+    int? count,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? count = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate(
+        count: count == _undefined || count == null
+            ? _instance.count
+            : (count as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? count,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getPostComments {
+  factory Variables$Query$getPostComments({
+    required int post_id,
+    int? limit,
+    int? offset,
+  }) =>
+      Variables$Query$getPostComments._({
+        r'post_id': post_id,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
+      });
+
+  Variables$Query$getPostComments._(this._$data);
+
+  factory Variables$Query$getPostComments.fromJson(Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$post_id = data['post_id'];
+    result$data['post_id'] = (l$post_id as int);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    return Variables$Query$getPostComments._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get post_id => (_$data['post_id'] as int);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$post_id = post_id;
+    result$data['post_id'] = l$post_id;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getPostComments<Variables$Query$getPostComments>
+      get copyWith => CopyWith$Variables$Query$getPostComments(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getPostComments) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$post_id = post_id;
+    final lOther$post_id = other.post_id;
+    if (l$post_id != lOther$post_id) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$post_id = post_id;
+    final l$limit = limit;
+    final l$offset = offset;
+    return Object.hashAll([
+      l$post_id,
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getPostComments<TRes> {
+  factory CopyWith$Variables$Query$getPostComments(
+    Variables$Query$getPostComments instance,
+    TRes Function(Variables$Query$getPostComments) then,
+  ) = _CopyWithImpl$Variables$Query$getPostComments;
+
+  factory CopyWith$Variables$Query$getPostComments.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getPostComments;
+
+  TRes call({
+    int? post_id,
+    int? limit,
+    int? offset,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$getPostComments<TRes>
+    implements CopyWith$Variables$Query$getPostComments<TRes> {
+  _CopyWithImpl$Variables$Query$getPostComments(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getPostComments _instance;
+
+  final TRes Function(Variables$Query$getPostComments) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? post_id = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
+      _then(Variables$Query$getPostComments._({
+        ..._instance._$data,
+        if (post_id != _undefined && post_id != null)
+          'post_id': (post_id as int),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getPostComments<TRes>
+    implements CopyWith$Variables$Query$getPostComments<TRes> {
+  _CopyWithStubImpl$Variables$Query$getPostComments(this._res);
+
+  TRes _res;
+
+  call({
+    int? post_id,
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
+}
+
+class Query$getPostComments {
+  Query$getPostComments({
+    required this.service_provider_post_comment,
+    required this.$__typename,
+  });
+
+  factory Query$getPostComments.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_post_comment =
+        json['service_provider_post_comment'];
+    final l$$__typename = json['__typename'];
+    return Query$getPostComments(
+      service_provider_post_comment:
+          (l$service_provider_post_comment as List<dynamic>)
+              .map((e) =>
+                  Query$getPostComments$service_provider_post_comment.fromJson(
+                      (e as Map<String, dynamic>)))
+              .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getPostComments$service_provider_post_comment>
+      service_provider_post_comment;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_post_comment = service_provider_post_comment;
+    _resultData['service_provider_post_comment'] =
+        l$service_provider_post_comment.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_post_comment = service_provider_post_comment;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_post_comment.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getPostComments) || runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_post_comment = service_provider_post_comment;
+    final lOther$service_provider_post_comment =
+        other.service_provider_post_comment;
+    if (l$service_provider_post_comment.length !=
+        lOther$service_provider_post_comment.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_post_comment.length; i++) {
+      final l$service_provider_post_comment$entry =
+          l$service_provider_post_comment[i];
+      final lOther$service_provider_post_comment$entry =
+          lOther$service_provider_post_comment[i];
+      if (l$service_provider_post_comment$entry !=
+          lOther$service_provider_post_comment$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getPostComments on Query$getPostComments {
+  CopyWith$Query$getPostComments<Query$getPostComments> get copyWith =>
+      CopyWith$Query$getPostComments(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getPostComments<TRes> {
+  factory CopyWith$Query$getPostComments(
+    Query$getPostComments instance,
+    TRes Function(Query$getPostComments) then,
+  ) = _CopyWithImpl$Query$getPostComments;
+
+  factory CopyWith$Query$getPostComments.stub(TRes res) =
+      _CopyWithStubImpl$Query$getPostComments;
+
+  TRes call({
+    List<Query$getPostComments$service_provider_post_comment>?
+        service_provider_post_comment,
+    String? $__typename,
+  });
+  TRes service_provider_post_comment(
+      Iterable<Query$getPostComments$service_provider_post_comment> Function(
+              Iterable<
+                  CopyWith$Query$getPostComments$service_provider_post_comment<
+                      Query$getPostComments$service_provider_post_comment>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getPostComments<TRes>
+    implements CopyWith$Query$getPostComments<TRes> {
+  _CopyWithImpl$Query$getPostComments(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getPostComments _instance;
+
+  final TRes Function(Query$getPostComments) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_post_comment = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getPostComments(
+        service_provider_post_comment: service_provider_post_comment ==
+                    _undefined ||
+                service_provider_post_comment == null
+            ? _instance.service_provider_post_comment
+            : (service_provider_post_comment
+                as List<Query$getPostComments$service_provider_post_comment>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_post_comment(
+          Iterable<Query$getPostComments$service_provider_post_comment> Function(
+                  Iterable<
+                      CopyWith$Query$getPostComments$service_provider_post_comment<
+                          Query$getPostComments$service_provider_post_comment>>)
+              _fn) =>
+      call(
+          service_provider_post_comment: _fn(
+              _instance.service_provider_post_comment.map((e) =>
+                  CopyWith$Query$getPostComments$service_provider_post_comment(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getPostComments<TRes>
+    implements CopyWith$Query$getPostComments<TRes> {
+  _CopyWithStubImpl$Query$getPostComments(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getPostComments$service_provider_post_comment>?
+        service_provider_post_comment,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_post_comment(_fn) => _res;
+}
+
+const documentNodeQuerygetPostComments = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getPostComments'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'post_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_post_comment'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'post_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'post_id')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'commented_on'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'likes'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'message'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'user'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getPostComments _parserFn$Query$getPostComments(
+        Map<String, dynamic> data) =>
+    Query$getPostComments.fromJson(data);
+
+class Options$Query$getPostComments
+    extends graphql.QueryOptions<Query$getPostComments> {
+  Options$Query$getPostComments({
+    String? operationName,
+    required Variables$Query$getPostComments variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetPostComments,
+          parserFn: _parserFn$Query$getPostComments,
+        );
+}
+
+class WatchOptions$Query$getPostComments
+    extends graphql.WatchQueryOptions<Query$getPostComments> {
+  WatchOptions$Query$getPostComments({
+    String? operationName,
+    required Variables$Query$getPostComments variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetPostComments,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getPostComments,
+        );
+}
+
+class FetchMoreOptions$Query$getPostComments extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getPostComments({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getPostComments variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetPostComments,
+        );
+}
+
+extension ClientExtension$Query$getPostComments on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getPostComments>> query$getPostComments(
+          Options$Query$getPostComments options) async =>
+      await this.query(options);
+  graphql.ObservableQuery<Query$getPostComments> watchQuery$getPostComments(
+          WatchOptions$Query$getPostComments options) =>
+      this.watchQuery(options);
+  void writeQuery$getPostComments({
+    required Query$getPostComments data,
+    required Variables$Query$getPostComments variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetPostComments),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getPostComments? readQuery$getPostComments({
+    required Variables$Query$getPostComments variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetPostComments),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getPostComments.fromJson(result);
+  }
+}
+
+class Query$getPostComments$service_provider_post_comment {
+  Query$getPostComments$service_provider_post_comment({
     required this.commented_on,
     required this.id,
     required this.likes,
@@ -13173,7 +15228,7 @@ class Query$getPost$service_provider_post_by_pk$comments {
     required this.$__typename,
   });
 
-  factory Query$getPost$service_provider_post_by_pk$comments.fromJson(
+  factory Query$getPostComments$service_provider_post_comment.fromJson(
       Map<String, dynamic> json) {
     final l$commented_on = json['commented_on'];
     final l$id = json['id'];
@@ -13181,12 +15236,12 @@ class Query$getPost$service_provider_post_by_pk$comments {
     final l$message = json['message'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
-    return Query$getPost$service_provider_post_by_pk$comments(
+    return Query$getPostComments$service_provider_post_comment(
       commented_on: (l$commented_on as String),
       id: (l$id as int),
       likes: mapFromJson(l$likes),
       message: (l$message as String),
-      user: Query$getPost$service_provider_post_by_pk$comments$user.fromJson(
+      user: Query$getPostComments$service_provider_post_comment$user.fromJson(
           (l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -13200,7 +15255,7 @@ class Query$getPost$service_provider_post_by_pk$comments {
 
   final String message;
 
-  final Query$getPost$service_provider_post_by_pk$comments$user user;
+  final Query$getPostComments$service_provider_post_comment$user user;
 
   final String $__typename;
 
@@ -13244,7 +15299,7 @@ class Query$getPost$service_provider_post_by_pk$comments {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getPost$service_provider_post_by_pk$comments) ||
+    if (!(other is Query$getPostComments$service_provider_post_comment) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -13282,51 +15337,52 @@ class Query$getPost$service_provider_post_by_pk$comments {
   }
 }
 
-extension UtilityExtension$Query$getPost$service_provider_post_by_pk$comments
-    on Query$getPost$service_provider_post_by_pk$comments {
-  CopyWith$Query$getPost$service_provider_post_by_pk$comments<
-          Query$getPost$service_provider_post_by_pk$comments>
+extension UtilityExtension$Query$getPostComments$service_provider_post_comment
+    on Query$getPostComments$service_provider_post_comment {
+  CopyWith$Query$getPostComments$service_provider_post_comment<
+          Query$getPostComments$service_provider_post_comment>
       get copyWith =>
-          CopyWith$Query$getPost$service_provider_post_by_pk$comments(
+          CopyWith$Query$getPostComments$service_provider_post_comment(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getPost$service_provider_post_by_pk$comments<
+abstract class CopyWith$Query$getPostComments$service_provider_post_comment<
     TRes> {
-  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments(
-    Query$getPost$service_provider_post_by_pk$comments instance,
-    TRes Function(Query$getPost$service_provider_post_by_pk$comments) then,
-  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments;
+  factory CopyWith$Query$getPostComments$service_provider_post_comment(
+    Query$getPostComments$service_provider_post_comment instance,
+    TRes Function(Query$getPostComments$service_provider_post_comment) then,
+  ) = _CopyWithImpl$Query$getPostComments$service_provider_post_comment;
 
-  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments.stub(
+  factory CopyWith$Query$getPostComments$service_provider_post_comment.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments;
+      _CopyWithStubImpl$Query$getPostComments$service_provider_post_comment;
 
   TRes call({
     String? commented_on,
     int? id,
     dynamic? likes,
     String? message,
-    Query$getPost$service_provider_post_by_pk$comments$user? user,
+    Query$getPostComments$service_provider_post_comment$user? user,
     String? $__typename,
   });
-  CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes>
+  CopyWith$Query$getPostComments$service_provider_post_comment$user<TRes>
       get user;
 }
 
-class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments<TRes>
+class _CopyWithImpl$Query$getPostComments$service_provider_post_comment<TRes>
     implements
-        CopyWith$Query$getPost$service_provider_post_by_pk$comments<TRes> {
-  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments(
+        CopyWith$Query$getPostComments$service_provider_post_comment<TRes> {
+  _CopyWithImpl$Query$getPostComments$service_provider_post_comment(
     this._instance,
     this._then,
   );
 
-  final Query$getPost$service_provider_post_by_pk$comments _instance;
+  final Query$getPostComments$service_provider_post_comment _instance;
 
-  final TRes Function(Query$getPost$service_provider_post_by_pk$comments) _then;
+  final TRes Function(Query$getPostComments$service_provider_post_comment)
+      _then;
 
   static const _undefined = {};
 
@@ -13338,7 +15394,7 @@ class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments<TRes>
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getPost$service_provider_post_by_pk$comments(
+      _then(Query$getPostComments$service_provider_post_comment(
         commented_on: commented_on == _undefined || commented_on == null
             ? _instance.commented_on
             : (commented_on as String),
@@ -13351,23 +15407,25 @@ class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments<TRes>
             : (message as String),
         user: user == _undefined || user == null
             ? _instance.user
-            : (user as Query$getPost$service_provider_post_by_pk$comments$user),
+            : (user
+                as Query$getPostComments$service_provider_post_comment$user),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes>
+  CopyWith$Query$getPostComments$service_provider_post_comment$user<TRes>
       get user {
     final local$user = _instance.user;
-    return CopyWith$Query$getPost$service_provider_post_by_pk$comments$user(
+    return CopyWith$Query$getPostComments$service_provider_post_comment$user(
         local$user, (e) => call(user: e));
   }
 }
 
-class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments<TRes>
+class _CopyWithStubImpl$Query$getPostComments$service_provider_post_comment<
+        TRes>
     implements
-        CopyWith$Query$getPost$service_provider_post_by_pk$comments<TRes> {
-  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments(
+        CopyWith$Query$getPostComments$service_provider_post_comment<TRes> {
+  _CopyWithStubImpl$Query$getPostComments$service_provider_post_comment(
       this._res);
 
   TRes _res;
@@ -13377,31 +15435,31 @@ class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments<TRes>
     int? id,
     dynamic? likes,
     String? message,
-    Query$getPost$service_provider_post_by_pk$comments$user? user,
+    Query$getPostComments$service_provider_post_comment$user? user,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes>
+  CopyWith$Query$getPostComments$service_provider_post_comment$user<TRes>
       get user =>
-          CopyWith$Query$getPost$service_provider_post_by_pk$comments$user.stub(
-              _res);
+          CopyWith$Query$getPostComments$service_provider_post_comment$user
+              .stub(_res);
 }
 
-class Query$getPost$service_provider_post_by_pk$comments$user {
-  Query$getPost$service_provider_post_by_pk$comments$user({
+class Query$getPostComments$service_provider_post_comment$user {
+  Query$getPostComments$service_provider_post_comment$user({
     required this.id,
     this.name,
     this.image,
     required this.$__typename,
   });
 
-  factory Query$getPost$service_provider_post_by_pk$comments$user.fromJson(
+  factory Query$getPostComments$service_provider_post_comment$user.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
-    return Query$getPost$service_provider_post_by_pk$comments$user(
+    return Query$getPostComments$service_provider_post_comment$user(
       id: (l$id as int),
       name: (l$name as String?),
       image: (l$image as String?),
@@ -13449,7 +15507,7 @@ class Query$getPost$service_provider_post_by_pk$comments$user {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getPost$service_provider_post_by_pk$comments$user) ||
+    if (!(other is Query$getPostComments$service_provider_post_comment$user) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -13477,27 +15535,28 @@ class Query$getPost$service_provider_post_by_pk$comments$user {
   }
 }
 
-extension UtilityExtension$Query$getPost$service_provider_post_by_pk$comments$user
-    on Query$getPost$service_provider_post_by_pk$comments$user {
-  CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<
-          Query$getPost$service_provider_post_by_pk$comments$user>
+extension UtilityExtension$Query$getPostComments$service_provider_post_comment$user
+    on Query$getPostComments$service_provider_post_comment$user {
+  CopyWith$Query$getPostComments$service_provider_post_comment$user<
+          Query$getPostComments$service_provider_post_comment$user>
       get copyWith =>
-          CopyWith$Query$getPost$service_provider_post_by_pk$comments$user(
+          CopyWith$Query$getPostComments$service_provider_post_comment$user(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<
+abstract class CopyWith$Query$getPostComments$service_provider_post_comment$user<
     TRes> {
-  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments$user(
-    Query$getPost$service_provider_post_by_pk$comments$user instance,
-    TRes Function(Query$getPost$service_provider_post_by_pk$comments$user) then,
-  ) = _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments$user;
+  factory CopyWith$Query$getPostComments$service_provider_post_comment$user(
+    Query$getPostComments$service_provider_post_comment$user instance,
+    TRes Function(Query$getPostComments$service_provider_post_comment$user)
+        then,
+  ) = _CopyWithImpl$Query$getPostComments$service_provider_post_comment$user;
 
-  factory CopyWith$Query$getPost$service_provider_post_by_pk$comments$user.stub(
+  factory CopyWith$Query$getPostComments$service_provider_post_comment$user.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments$user;
+      _CopyWithStubImpl$Query$getPostComments$service_provider_post_comment$user;
 
   TRes call({
     int? id,
@@ -13507,18 +15566,19 @@ abstract class CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<
   });
 }
 
-class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments$user<
+class _CopyWithImpl$Query$getPostComments$service_provider_post_comment$user<
         TRes>
     implements
-        CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes> {
-  _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments$user(
+        CopyWith$Query$getPostComments$service_provider_post_comment$user<
+            TRes> {
+  _CopyWithImpl$Query$getPostComments$service_provider_post_comment$user(
     this._instance,
     this._then,
   );
 
-  final Query$getPost$service_provider_post_by_pk$comments$user _instance;
+  final Query$getPostComments$service_provider_post_comment$user _instance;
 
-  final TRes Function(Query$getPost$service_provider_post_by_pk$comments$user)
+  final TRes Function(Query$getPostComments$service_provider_post_comment$user)
       _then;
 
   static const _undefined = {};
@@ -13529,7 +15589,7 @@ class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments$user<
     Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getPost$service_provider_post_by_pk$comments$user(
+      _then(Query$getPostComments$service_provider_post_comment$user(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined ? _instance.name : (name as String?),
         image: image == _undefined ? _instance.image : (image as String?),
@@ -13539,11 +15599,12 @@ class _CopyWithImpl$Query$getPost$service_provider_post_by_pk$comments$user<
       ));
 }
 
-class _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments$user<
+class _CopyWithStubImpl$Query$getPostComments$service_provider_post_comment$user<
         TRes>
     implements
-        CopyWith$Query$getPost$service_provider_post_by_pk$comments$user<TRes> {
-  _CopyWithStubImpl$Query$getPost$service_provider_post_by_pk$comments$user(
+        CopyWith$Query$getPostComments$service_provider_post_comment$user<
+            TRes> {
+  _CopyWithStubImpl$Query$getPostComments$service_provider_post_comment$user(
       this._res);
 
   TRes _res;

@@ -47,7 +47,7 @@ query fetch_subscribed_posts($customer_id: Int, $limit: Int, $offset: Int) {
       posted_on: desc
     }
   ) {
-    comments {
+    comments(order_by: {likes: desc, commented_on: desc}, limit: 3) {
       id
       message
       likes
@@ -56,6 +56,11 @@ query fetch_subscribed_posts($customer_id: Int, $limit: Int, $offset: Int) {
         id
         name
         image
+      }
+    }
+    comments_aggregate {
+      aggregate {
+        count
       }
     }
     id
@@ -95,7 +100,7 @@ query fetch_subscribed_posts($customer_id: Int, $limit: Int, $offset: Int) {
 
 query fetch_service_provider_posts($service_provider_id: Int, $service_provider_type: String, $limit: Int, $offset: Int, $image: String_comparison_exp = {}) {
   service_provider_post(where: {service_provider_id: {_eq: $service_provider_id}, service_provider_type: {_eq: $service_provider_type}, image: $image}, limit: $limit, offset: $offset) {
-    comments {
+    comments(order_by: {likes: desc, commented_on: desc}, limit: 3) {
       id
       message
       likes
@@ -104,6 +109,11 @@ query fetch_service_provider_posts($service_provider_id: Int, $service_provider_
         id
         name
         image
+      }
+    }
+    comments_aggregate {
+      aggregate {
+        count
       }
     }
     id
@@ -204,7 +214,7 @@ query fetch_posts_within_distance($limit: Int, $offset: Int, $from: geography!, 
       posted_on: desc
     }
   ) {
-    comments {
+    comments(order_by: {likes: desc, commented_on: desc}, limit: 3) {
       id
       message
       likes
@@ -213,6 +223,11 @@ query fetch_posts_within_distance($limit: Int, $offset: Int, $from: geography!, 
         id
         name
         image
+      }
+    }
+    comments_aggregate {
+      aggregate {
+        count
       }
     }
     id
@@ -290,16 +305,24 @@ query getPost($id: Int!) {
         image
       }
     }
-    comments {
-      commented_on
-      id
-      likes
-      message
-      user {
-        id
-        name
-        image
+    comments_aggregate {
+      aggregate {
+        count
       }
+    }
+  }
+}
+
+query getPostComments($post_id: Int!, $limit: Int, $offset: Int) {
+  service_provider_post_comment(where: {post_id: {_eq: $post_id}}, limit: $limit, offset: $offset) {
+    commented_on
+    id
+    likes
+    message
+    user {
+      id
+      name
+      image
     }
   }
 }
