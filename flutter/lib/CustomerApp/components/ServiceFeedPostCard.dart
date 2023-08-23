@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/Feed/SinglePostView/CustSinglePostView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -63,7 +64,9 @@ class _ServiceFeedPostCardState extends State<ServiceFeedPostCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    CustSinglePostView.navigate(postId: widget.post.id);
+                  },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -150,7 +153,7 @@ class _ServiceFeedPostCardState extends State<ServiceFeedPostCard> {
         hSmallSepartor,
         Icon(Icons.mode_comment_outlined),
         hSmallSepartor,
-        Text('${_comments.length} Comments'),
+        Text('${widget.post.numberOfComments} Comments'),
       ],
     );
   }

@@ -68,7 +68,6 @@ class CustFeedViewController {
   }
 
   Future<void> _fetchPosts() async {
-    mezDbgPrint("👋 Called fetch post with post switch =====>$postSwitch");
     if (_postFetchingData || _postReachedEndOfData) {
       return;
     }
@@ -93,8 +92,6 @@ class CustFeedViewController {
   }
 
   Future<void> _fetchAllPosts() async {
-    mezDbgPrint(
-        "👋 Called fetch post with post switch =====>$postSwitch === _postReachedEndOfData $_postReachedEndOfData");
     if (_postFetchingData || _postReachedEndOfData) {
       return;
     }

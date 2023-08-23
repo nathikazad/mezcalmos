@@ -1,13 +1,15 @@
+import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart'
+    deferred as customerReviewListView;
+import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart'
+    deferred as businessRoute;
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart'
     deferred as savedCard;
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart'
     deferred as customerOrders;
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart'
     deferred as savedLocation;
-import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart'
-    deferred as customerReviewListView;
-import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart'
-    deferred as businessRoute;
+import 'package:mezcalmos/CustomerApp/pages/Feed/SinglePostView/CustSinglePostView.dart'
+    deferred as custSinglePost;
 import 'package:mezcalmos/CustomerApp/pages/JoinUs/JoinUsView.dart'
     deferred as custJoinUs;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
@@ -20,6 +22,7 @@ class CustomerRoutes {
   static const String savedLocations = '/savedLocations';
   static const String custBusinessRoute = '/custBusiness/:businessId';
   static const String custJoinUsRoute = '/custJoinUs';
+  static String kSinglePostRoute = "/post/:id";
 
   final List<QRoute> routes = [
     QRoute(
@@ -30,6 +33,11 @@ class CustomerRoutes {
       ],
       builder: () => customerReviewListView.CustReviewsListView(),
     ),
+    QRoute(
+        name: kSinglePostRoute,
+        path: kSinglePostRoute,
+        builder: () => custSinglePost.CustSinglePostView(),
+        middleware: <QMiddleware>[DefferedLoader(custSinglePost.loadLibrary)]),
     QRoute(
         path: custBusinessRoute,
         name: custBusinessRoute,

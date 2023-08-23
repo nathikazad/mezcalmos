@@ -202,9 +202,9 @@ Future<List<Post>> fetch_posts_within_distance(
     ),
   );
   mezDbgPrint("👋 called fetch_posts_within_distance ===========>${res.data}");
-  // if (res.parsedData?.service_provider_offer == null) {
-  //   throwError(res.exception);
-  // }
+  if (res.hasException) {
+    throwError(res.exception);
+  }
   final List<Post> posts = [];
   res.parsedData?.service_provider_post
       .forEach((Query$fetch_posts_within_distance$service_provider_post data) {
