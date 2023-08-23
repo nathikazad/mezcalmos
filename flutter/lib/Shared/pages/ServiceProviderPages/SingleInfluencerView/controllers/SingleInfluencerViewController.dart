@@ -8,6 +8,13 @@ class SingleInfluencerViewController {
   RxBool showTitle = RxBool(false);
   Influencer? get influencer => _influencer.value;
   double previousOffset = 0;
+  bool get isPartner => influencer?.state == InfluencerState.Partner;
+  bool get isWaiting => influencer?.state == InfluencerState.Waiting;
+
+  /// means the state is none so the sp can send request to influencer
+  bool get isNone => influencer?.state == InfluencerState.None;
+  bool get isRequestReceived =>
+      influencer?.state == InfluencerState.RequestSentByInfluencer;
 
   void init({required int id}) {
     influencerId = id;
@@ -34,5 +41,15 @@ class SingleInfluencerViewController {
 
       previousOffset = currentOffset;
     }
+  }
+
+  Future<void> changeState({required InfluencerState state}) async {
+    await Future.delayed(Duration(seconds: 2));
+    _influencer.value?.state = state;
+    _influencer.refresh();
+    mockInfluencers
+        .where((Influencer element) => element.id == influencerId)
+        .first
+        .state = state;
   }
 }

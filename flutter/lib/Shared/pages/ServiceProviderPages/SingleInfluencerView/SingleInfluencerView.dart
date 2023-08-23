@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezToggle.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
@@ -123,34 +124,105 @@ class _SingleInfluencerViewState extends State<SingleInfluencerView> {
     return Obx(() => Container(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
         decoration: BoxDecoration(
-          color: secondaryLightBlueColor,
+          color: viewController.isWaiting || viewController.isPartner
+              ? secondaryLightBlueColor
+              : null,
         ),
-        child: viewController.influencer!.state == InfluencerState.Partner
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text.rich(TextSpan(children: [
-                    WidgetSpan(
-                        child: Icon(
-                      Icons.check_circle,
-                      color: primaryBlueColor,
-                    )),
-                    WidgetSpan(child: hTinySepartor),
-                    TextSpan(
-                        text: "You’re already partners",
-                        style: context.textTheme.bodyLarge
-                            ?.copyWith(color: primaryBlueColor)),
-                  ])),
-                  MezInkwell(
-                    label: "Cancel",
-                    textColor: redAccentColor,
-                    onClick: () async {},
-                    backgroundColor: Colors.white,
-                  ),
-                ],
-              )
-            : SizedBox()));
+        child: viewController.isPartner
+            ? _partnerFooter()
+            : viewController.isWaiting
+                ? _waitingFooter()
+                : viewController.isRequestReceived
+                    ? _requestedFooter()
+                    : viewController.isNone
+                        ? MezButton(
+                            label: "Send partner request",
+                            withGradient: true,
+                            onClick: () async {
+                              await viewController.changeState(
+                                  state: InfluencerState.Waiting);
+                            },
+                          )
+                        : SizedBox()));
+  }
+
+  Column _requestedFooter() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        MezInkwell(
+          label: "Accept partnership",
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+          width: double.infinity,
+          onClick: () async {
+            await viewController.changeState(state: InfluencerState.Partner);
+          },
+        ),
+        smallSepartor,
+        MezInkwell(
+          label: "Cancel request",
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
+          backgroundColor: offRedColor,
+          textColor: redAccentColor,
+          onClick: () async {
+            await viewController.changeState(state: InfluencerState.None);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _waitingFooter() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: Text.rich(
+        TextSpan(children: [
+          WidgetSpan(
+            child: Icon(
+              Icons.info_outline,
+              color: primaryBlueColor,
+            ),
+          ),
+          WidgetSpan(child: hTinySepartor),
+          TextSpan(
+              text:
+                  "You've sent a partnership request, this influencer will receive it and contact you.",
+              style: context.textTheme.bodyLarge
+                  ?.copyWith(color: primaryBlueColor)),
+        ]),
+      ),
+    );
+  }
+
+  Widget _partnerFooter() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text.rich(TextSpan(children: [
+          WidgetSpan(
+              child: Icon(
+            Icons.check_circle,
+            color: primaryBlueColor,
+          )),
+          WidgetSpan(child: hTinySepartor),
+          TextSpan(
+              text: "You’re already partners",
+              style: context.textTheme.bodyLarge
+                  ?.copyWith(color: primaryBlueColor)),
+        ])),
+        MezInkwell(
+          label: "Cancel",
+          height: 40,
+          textColor: redAccentColor,
+          onClick: () async {
+            await viewController.changeState(state: InfluencerState.None);
+          },
+          backgroundColor: Colors.white,
+        ),
+      ],
+    );
   }
 
   AppBar _appbar(BuildContext context) {
