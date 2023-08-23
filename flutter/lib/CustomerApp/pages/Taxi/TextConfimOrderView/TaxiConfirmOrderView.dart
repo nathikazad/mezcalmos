@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/CustOrderDeliverySelector.dart';
-import 'package:mezcalmos/Shared/widgets/OrderDeliverySelector/controllers/CustOrderDeliverySelectorController.dart';
 import 'package:mezcalmos/Shared/widgets/PaymentMethodPicker/MezPaymentMethodPicker.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings;
@@ -52,7 +51,7 @@ class _TaxiConfirmOrderViewState extends State<TaxiConfirmOrderView> {
         },
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             CustOrderDeliverySelector(

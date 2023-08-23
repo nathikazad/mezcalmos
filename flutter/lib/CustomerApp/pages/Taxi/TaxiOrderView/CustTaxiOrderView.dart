@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/TaxiOrderView/components/CustTaxiOfferCard.dart';
@@ -10,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
@@ -46,17 +46,58 @@ class _CustTaxiOrderViewState extends State<CustTaxiOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back, title: "Order", backButtonGradient: false),
+      // appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+      //     onClick: MezRouter.back, title: "Order", backButtonGradient: false),
       body: Stack(
         children: [
           MGoogleMap(
             mGoogleMapController: viewController.mGoogleMapController,
           ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            alignment: Alignment.topCenter,
-            child: _fromToCompoenent(context),
+          SafeArea(
+            child: Container(
+                alignment: Alignment.topCenter,
+                margin: const EdgeInsets.all(8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(child: _fromToCompoenent(context)),
+                    hSmallSepartor,
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // MezIconButton(
+                          //   onTap: () {
+                          //     MezRouter.back();
+                          //   },
+                          //   icon: Icons.close,
+                          //   padding: const EdgeInsets.all(12),
+                          //   borderRadius: BorderRadius.circular(10),
+                          //   backgroundColor: Colors.white,
+                          //   iconColor: Colors.grey.shade900,
+                          //   // elevation: 0,
+                          //   shape: BoxShape.rectangle,
+                          // ),
+                          smallSepartor,
+                          MezIconButton(
+                            onTap: () async {
+                              await viewController.mGoogleMapController
+                                  .locateMe();
+                            },
+                            icon: Icons.near_me_outlined,
+                            padding: const EdgeInsets.all(12),
+                            borderRadius: BorderRadius.circular(10),
+                            backgroundColor: Colors.white,
+                            iconColor: Colors.grey.shade900,
+                            //  elevation: 0,
+                            shape: BoxShape.rectangle,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
           ),
           Container(
             alignment: Alignment.bottomCenter,
@@ -157,37 +198,41 @@ class _CustTaxiOrderViewState extends State<CustTaxiOrderView> {
           ),
         ),
         builder: (BuildContext ctx) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  "Offers",
-                  style: context.textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
+          return Container(
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(12),
+                  child: Text(
+                    "Offers",
+                    style: context.textTheme.bodyLarge,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              Divider(),
-              Obx(
-                () => Column(
-                  children: List.generate(
-                      viewController.offers.length,
-                      (int index) => CustTaxiOfferCard(
-                            assignDriverCallBack: (int driverId) async {
-                              await viewController.assignDriver(
-                                  driverId: driverId, context: context);
-                            },
-                            deleteOfferCallback: (int driverId) async {
-                              await viewController.rejectOffer(
-                                  driverId: driverId);
-                            },
-                            taxiOffer: viewController.offers[index],
-                          )),
+                Divider(),
+                Obx(
+                  () => Column(
+                    children: List.generate(
+                        viewController.offers.length,
+                        (int index) => CustTaxiOfferCard(
+                              assignDriverCallBack: (int driverId) async {
+                                await viewController.assignDriver(
+                                    driverId: driverId, context: context);
+                              },
+                              deleteOfferCallback: (int driverId) async {
+                                await viewController.rejectOffer(
+                                    driverId: driverId);
+                              },
+                              taxiOffer: viewController.offers[index],
+                            )),
+                  ),
                 ),
-              ),
-            ],
+                bigSeperator,
+              ],
+            ),
           );
         });
   }
@@ -199,7 +244,7 @@ class _CustTaxiOrderViewState extends State<CustTaxiOrderView> {
         MezCard(
           elevation: 1,
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+              const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           margin: const EdgeInsets.only(bottom: 10),
           content: Text.rich(
             TextSpan(children: [
@@ -215,7 +260,7 @@ class _CustTaxiOrderViewState extends State<CustTaxiOrderView> {
         MezCard(
           elevation: 1,
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+              const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           content: Text.rich(
             TextSpan(children: [
               TextSpan(
@@ -310,21 +355,27 @@ class _CustTaxiOrderViewState extends State<CustTaxiOrderView> {
       } else {
         return Card(
           child: Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
+                  SpinKitRipple(
+                    duration: Duration(seconds: 3),
+                    color: primaryBlueColor,
+                    size: 40,
+                  ),
+                  hSmallSepartor,
                   Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        "Waiting for a taxi driver to accept your order.",
-                        style: context.textTheme.bodyMedium,
-                      )),
+                          "Waiting for a taxi driver to accept your order.",
+                          style: context.textTheme.bodyMedium)),
                   hSmallSepartor,
                   Tooltip(
                     message: "Cancel your order",
                     child: MezIconButton(
                       onTap: () async {},
                       icon: Icons.close,
+                      elevation: 0,
                       iconColor: redAccentColor,
                       backgroundColor: offRedColor,
                     ),

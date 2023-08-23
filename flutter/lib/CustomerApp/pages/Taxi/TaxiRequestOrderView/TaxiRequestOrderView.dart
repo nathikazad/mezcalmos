@@ -94,57 +94,104 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
           //   ),
           // ),
 
-          Container(
-              alignment: Alignment.topCenter,
-              margin: const EdgeInsets.only(top: 20, right: 12, left: 12),
-              // margin: EdgeInsets.only(left: 8, right: 8, bottom: 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Obx(
-                    () => _pickLocComponent(
-                      title: "From",
-                      onClear: viewController.clearFromLoc,
-                      controller: viewController.fromLocText,
-                      isFocused: viewController.isSettingFromLocation.value,
-                      onTap: viewController.startEditingFromLoc,
-                      focusNode: viewController.fromLocFocusNode,
-                      suggestions: viewController.fromSuggestions,
-                      isLoading: viewController.fromLocLoading.value,
-                      isFilled: viewController.isFromSetted,
-                      onSelect: viewController.selectFromLocation,
-                      onTyping: (String v) {
-                        if (v.length.isEven) {
-                          viewController.getSuggestions(
-                              search: v, isFromLocation: true);
-                        }
-                      },
+          SafeArea(
+            child: Container(
+                alignment: Alignment.topCenter,
+                margin: const EdgeInsets.only(right: 12, left: 12),
+                // margin: EdgeInsets.only(left: 8, right: 8, bottom: 0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Obx(
+                            () => _pickLocComponent(
+                              title: "From",
+                              onClear: viewController.clearFromLoc,
+                              controller: viewController.fromLocText,
+                              isFocused:
+                                  viewController.isSettingFromLocation.value,
+                              onTap: viewController.startEditingFromLoc,
+                              focusNode: viewController.fromLocFocusNode,
+                              suggestions: viewController.fromSuggestions,
+                              isLoading: viewController.fromLocLoading.value,
+                              isFilled: viewController.isFromSetted,
+                              onSelect: viewController.selectFromLocation,
+                              onTyping: (String v) {
+                                if (v.length.isEven) {
+                                  viewController.getSuggestions(
+                                      search: v, isFromLocation: true);
+                                }
+                              },
+                            ),
+                          ),
+                          smallSepartor,
+                          Obx(
+                            () => _pickLocComponent(
+                              title: "To",
+                              onClear: viewController.clearToLoc,
+                              isFocused:
+                                  viewController.isSettingToLocation.value,
+                              onTap: viewController.startEditingToLoc,
+                              controller: viewController.toLocText,
+                              focusNode: viewController.toLocFocusNode,
+                              suggestions: viewController.toSuggestions,
+                              isLoading: viewController.toLocLoading.value,
+                              isFilled: viewController.isToSetted,
+                              onSelect: viewController.selectToLocation,
+                              onTyping: (String v) {
+                                if (v.length.isEven) {
+                                  viewController.getSuggestions(
+                                      search: v, isFromLocation: false);
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  smallSepartor,
-                  Obx(
-                    () => _pickLocComponent(
-                      title: "To",
-                      onClear: viewController.clearToLoc,
-                      isFocused: viewController.isSettingToLocation.value,
-                      onTap: viewController.startEditingToLoc,
-                      controller: viewController.toLocText,
-                      focusNode: viewController.toLocFocusNode,
-                      suggestions: viewController.toSuggestions,
-                      isLoading: viewController.toLocLoading.value,
-                      isFilled: viewController.isToSetted,
-                      onSelect: viewController.selectToLocation,
-                      onTyping: (String v) {
-                        if (v.length.isEven) {
-                          viewController.getSuggestions(
-                              search: v, isFromLocation: false);
-                        }
-                      },
+                    hSmallSepartor,
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          MezIconButton(
+                            onTap: () {
+                              MezRouter.back();
+                            },
+                            icon: Icons.close,
+                            padding: const EdgeInsets.all(12),
+                            borderRadius: BorderRadius.circular(10),
+                            backgroundColor: Colors.white,
+                            iconColor: Colors.grey.shade900,
+                            // elevation: 0,
+                            shape: BoxShape.rectangle,
+                          ),
+                          smallSepartor,
+                          MezIconButton(
+                            onTap: () async {
+                              await viewController.locationPickerController
+                                  .locateMe();
+                            },
+                            icon: Icons.near_me_outlined,
+                            padding: const EdgeInsets.all(12),
+                            borderRadius: BorderRadius.circular(10),
+                            backgroundColor: Colors.white,
+                            iconColor: Colors.grey.shade900,
+                            //  elevation: 0,
+                            shape: BoxShape.rectangle,
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                )),
+          ),
           Container(
             alignment: Alignment.bottomCenter,
             child: Column(
@@ -158,6 +205,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                 }),
                 Obx(
                   () => MezButton(
+                    height: 80,
                     label: viewController.isSettingFromLocation.value ||
                             viewController.isSettingToLocation.value
                         ? "Pick"
@@ -303,6 +351,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
             children: [
               Row(
                 children: [
+                  hTinySepartor,
                   Text(
                     title,
                     style: context.textTheme.titleSmall,
@@ -337,11 +386,8 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                                 ),
                         ),
                         isDense: true,
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.grey.shade200)),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: primaryBlueColor)),
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
                       ),
                     ),
                   ),

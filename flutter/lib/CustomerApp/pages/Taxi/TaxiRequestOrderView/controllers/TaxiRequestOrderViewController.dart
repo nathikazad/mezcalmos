@@ -43,6 +43,8 @@ class TaxiRequestOrderViewController {
 
   void init() {
     locationPickerController.periodicRerendering.value = false;
+    locationPickerController.myLocationButtonEnabled.value = false;
+    locationPickerController.recenterButtonEnabled.value = false;
 
     // locationPickerController.minMaxZoomPrefs =
     //     MinMaxZoomPreference.unbounded; // LEZEM

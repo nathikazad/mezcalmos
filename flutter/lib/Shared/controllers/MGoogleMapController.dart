@@ -5,8 +5,10 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import "package:http/http.dart" as http;
+import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
@@ -501,5 +503,34 @@ class MGoogleMapController {
     assert(periodicRerendering == false);
     assert(minMaxZoomPrefs == MinMaxZoomPreference.unbounded);
     controller.value?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
+  }
+
+  Future<void> locateMe() async {
+    final GeoLoc.LocationData? _tmpCurrentLoc = await _currentLocation();
+    if (_tmpCurrentLoc != null) {
+      await controller.value?.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(
+              _tmpCurrentLoc.latitude!,
+              _tmpCurrentLoc.longitude!,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<GeoLoc.LocationData?> _currentLocation() async {
+    GeoLoc.LocationData? currentLocation;
+    try {
+      currentLocation =
+          await Get.find<LocationController>().getCurrentLocation();
+    } on Exception catch (e, stk) {
+      currentLocation = null;
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+    return currentLocation;
   }
 }
