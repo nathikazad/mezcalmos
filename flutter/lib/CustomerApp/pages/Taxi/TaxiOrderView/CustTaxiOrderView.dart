@@ -57,47 +57,7 @@ class _CustTaxiOrderViewState extends State<CustTaxiOrderView> {
             child: Container(
                 alignment: Alignment.topCenter,
                 margin: const EdgeInsets.all(8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(child: _fromToCompoenent(context)),
-                    hSmallSepartor,
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // MezIconButton(
-                          //   onTap: () {
-                          //     MezRouter.back();
-                          //   },
-                          //   icon: Icons.close,
-                          //   padding: const EdgeInsets.all(12),
-                          //   borderRadius: BorderRadius.circular(10),
-                          //   backgroundColor: Colors.white,
-                          //   iconColor: Colors.grey.shade900,
-                          //   // elevation: 0,
-                          //   shape: BoxShape.rectangle,
-                          // ),
-                          smallSepartor,
-                          MezIconButton(
-                            onTap: () async {
-                              await viewController.mGoogleMapController
-                                  .locateMe();
-                            },
-                            icon: Icons.near_me_outlined,
-                            padding: const EdgeInsets.all(12),
-                            borderRadius: BorderRadius.circular(10),
-                            backgroundColor: Colors.white,
-                            iconColor: Colors.grey.shade900,
-                            //  elevation: 0,
-                            shape: BoxShape.rectangle,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                )),
+                child: Flexible(child: _fromToCompoenent(context))),
           ),
           Container(
             alignment: Alignment.bottomCenter,
@@ -133,12 +93,18 @@ class _CustTaxiOrderViewState extends State<CustTaxiOrderView> {
               viewController.selectedOffer!.driverImage),
           content:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: viewController.selectedOffer!.driverName,
+                  style: context.textTheme.bodyLarge),
+              WidgetSpan(child: hSmallSepartor),
+              TextSpan(
+                  text: viewController.selectedOffer!.price.toPriceString(),
+                  style: context.textTheme.bodyLarge
+                      ?.copyWith(color: primaryBlueColor)),
+            ])),
             Text(
-              viewController.selectedOffer!.driverName,
-              style: context.textTheme.bodyLarge,
-            ),
-            Text(
-                "${viewController.selectedOffer!.driverName} is on the way to pick you up"),
+                "${viewController.selectedOffer!.driverName} is on the way to pick you up  "),
           ]),
         ),
       );

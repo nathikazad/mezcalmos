@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/TaxiOrderView/controllers/CustTaxiOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezEssentials/MezIconButton.dart';
 
@@ -23,38 +24,16 @@ class CustTaxiOfferCard extends StatefulWidget {
 }
 
 class _CustTaxiOfferCardState extends State<CustTaxiOfferCard> {
-  // double _progressValue = 0.0;
-  // late Timer _timer;
-
   @override
   void initState() {
     super.initState();
     _startTimer();
   }
 
-  void _startTimer() {
-    // _timer = Timer.periodic(Duration(seconds: 2), (Timer timer) {
-    //   setState(() {
-    //     final DateTime currentTime = DateTime.now().toLocal();
-    //     if (currentTime.isAfter(widget.taxiOffer.expiryTime.toLocal())) {
-    //       _timer.cancel();
-    //     } else {
-    //       _progressValue = currentTime
-    //               .difference(widget.taxiOffer.expiryTime.toLocal())
-    //               .inSeconds /
-    //           (widget.taxiOffer.expiryTime
-    //               .toLocal()
-    //               .difference(currentTime)
-    //               .inSeconds);
-    //       mezDbgPrint("✅ Setting prgress value to ====>$_progressValue");
-    //     }
-    //   });
-    // });
-  }
+  void _startTimer() {}
 
   @override
   void dispose() {
-    //  _timer.cancel();
     super.dispose();
   }
 
@@ -95,6 +74,12 @@ class _CustTaxiOfferCardState extends State<CustTaxiOfferCard> {
                       'Expires: ${widget.taxiOffer.expiryTime.getEstimatedTime()}'),
                 ],
               ),
+            ),
+            hSmallSepartor,
+            Text(
+              widget.taxiOffer.price.toPriceString(),
+              style: context.textTheme.bodyLarge
+                  ?.copyWith(color: primaryBlueColor),
             ),
             Flexible(
               child: Row(

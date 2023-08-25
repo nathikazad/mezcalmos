@@ -32,13 +32,15 @@ class TaxiOrderViewController {
   List<CustomerTaxiOffer> offersToAdd = [
     CustomerTaxiOffer(
       id: 0,
-      driverName: 'Robert Martinez',
+      price: 55,
+      driverName: 'Robert',
       driverImage:
           'https://media.gettyimages.com/id/85631567/photo/taxi-driver-in-cab.jpg?s=612x612&w=0&k=20&c=4YPAnIv0Gu7je4iPc3vR-u3iSgBP1WnR_5k216DqT3Y=',
       expiryTime: DateTime.now().toLocal().add(Duration(minutes: 5)),
     ),
     CustomerTaxiOffer(
       id: 1,
+      price: 60,
       driverName: 'James Wilson',
       driverImage:
           'https://img.freepik.com/premium-photo/young-happy-male-taxi-driver-sits-wheel-taxi-shows-like_170532-2742.jpg?size=626&ext=jpg',
@@ -46,6 +48,7 @@ class TaxiOrderViewController {
     ),
     CustomerTaxiOffer(
       id: 2,
+      price: 65,
       driverName: 'Diego Morales',
       driverImage:
           'https://media.istockphoto.com/id/91763265/photo/taxi-driver.jpg?s=612x612&w=0&k=20&c=WOychyR6tfe9flAMQ4hTuK0L859fYT5AYj-gs6NRRS8=',
@@ -187,12 +190,14 @@ class TaxiOrderViewController {
 
 class CustomerTaxiOffer {
   final int id;
+  final double price;
   final String driverName;
   final String driverImage;
   final DateTime expiryTime;
 
   CustomerTaxiOffer({
     required this.id,
+    required this.price,
     required this.driverName,
     required this.driverImage,
     required this.expiryTime,

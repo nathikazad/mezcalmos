@@ -34,8 +34,6 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-      //     onClick: MezRouter.back, title: "Taxi"),
       body: Stack(
         children: [
           Obx(
@@ -44,61 +42,26 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.grey.shade200),
-              child: viewController.locationPickerController.location.value !=
-                      null
-                  ? LocationPicker(
-                      showBottomButton: false,
-                      recenterBtnBottomPadding: 80,
-                      locationPickerMapController:
-                          viewController.locationPickerController,
-                      notifyParentOfConfirm: (_) {},
-                      notifyParentOfLocationFinalized: (MezLocation? location) {
-                        // if (location != null) {
-                        //   mezDbgPrint("Shouldnt be called =====");
-                        //   setState(() {
-                        //     viewController.locationPickerController
-                        //         .setLocation(location);
-                        //   });
-                        // }
-                      },
-                    )
-                  : Center(
-                      child: CircularProgressIndicator(),
-                    ),
+              child:
+                  viewController.locationPickerController.location.value != null
+                      ? LocationPicker(
+                          showBottomButton: false,
+                          recenterBtnBottomPadding: 80,
+                          locationPickerMapController:
+                              viewController.locationPickerController,
+                          notifyParentOfConfirm: (_) {},
+                          notifyParentOfLocationFinalized:
+                              (MezLocation? location) {},
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        ),
             ),
           ),
-          // Container(
-          //   alignment: Alignment.topCenter,
-          //   // margin: EdgeInsets.only(left: 8, right: 8, bottom: 0),
-          //   child: Obx(
-          //     () => Padding(
-          //       padding:
-          //           const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-          //       child: LocationSearchComponent(
-          //           showSearchIcon: true,
-          //           initialTextValue: viewController
-          //               .locationPickerController.location.value?.address,
-          //           onClear: () {},
-          //           notifyParent: (MezLocation? location) {
-          //             if (location != null) {
-          //               setState(() {
-          //                 viewController.locationPickerController
-          //                     .setLocation(location);
-          //                 viewController.locationPickerController
-          //                     .moveToNewLatLng(
-          //                         location.latitude, location.longitude);
-          //               });
-          //             }
-          //           }),
-          //     ),
-          //   ),
-          // ),
-
           SafeArea(
             child: Container(
                 alignment: Alignment.topCenter,
-                margin: const EdgeInsets.only(right: 12, left: 12),
-                // margin: EdgeInsets.only(left: 8, right: 8, bottom: 0),
+                margin: const EdgeInsets.only(right: 8, left: 8),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -106,6 +69,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                       fit: FlexFit.tight,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Obx(
@@ -155,40 +119,6 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                       ),
                     ),
                     hSmallSepartor,
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          MezIconButton(
-                            onTap: () {
-                              MezRouter.back();
-                            },
-                            icon: Icons.close,
-                            padding: const EdgeInsets.all(12),
-                            borderRadius: BorderRadius.circular(10),
-                            backgroundColor: Colors.white,
-                            iconColor: Colors.grey.shade900,
-                            // elevation: 0,
-                            shape: BoxShape.rectangle,
-                          ),
-                          smallSepartor,
-                          MezIconButton(
-                            onTap: () async {
-                              await viewController.locationPickerController
-                                  .locateMe();
-                            },
-                            icon: Icons.near_me_outlined,
-                            padding: const EdgeInsets.all(12),
-                            borderRadius: BorderRadius.circular(10),
-                            backgroundColor: Colors.white,
-                            iconColor: Colors.grey.shade900,
-                            //  elevation: 0,
-                            shape: BoxShape.rectangle,
-                          )
-                        ],
-                      ),
-                    ),
                   ],
                 )),
           ),
@@ -197,12 +127,67 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     crossAxisAlignment: CrossAxisAlignment.end,
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       MezIconButton(
+                //         onTap: () {
+                //           MezRouter.back();
+                //         },
+                //         icon: Icons.close,
+                //         padding: const EdgeInsets.all(10),
+                //         borderRadius: BorderRadius.circular(10),
+                //         backgroundColor: Colors.white,
+                //         iconColor: Colors.grey.shade900,
+                //         shape: BoxShape.rectangle,
+                //       ),
+                //       smallSepartor,
+                //       MezIconButton(
+                //         onTap: () async {
+                //           await viewController.locationPickerController
+                //               .locateMe();
+                //         },
+                //         icon: Icons.near_me_outlined,
+                //         padding: const EdgeInsets.all(10),
+                //         borderRadius: BorderRadius.circular(10),
+                //         backgroundColor: Colors.white,
+                //         iconColor: Colors.grey.shade900,
+                //         shape: BoxShape.rectangle,
+                //       )
+                //     ],
+                //   ),
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      child: MezIconButton(
+                        onTap: () async {
+                          await viewController.locationPickerController
+                              .locateMe();
+                        },
+                        icon: Icons.near_me_outlined,
+                        padding: const EdgeInsets.all(10),
+                        borderRadius: BorderRadius.circular(10),
+                        backgroundColor: Colors.white,
+                        iconColor: Colors.grey.shade900,
+                        shape: BoxShape.rectangle,
+                      ),
+                    ),
+                  ],
+                ),
                 Obx(() {
                   if (viewController.showRouteInfo)
                     return _routeInfoCard(context);
                   else
                     return SizedBox();
                 }),
+
                 Obx(
                   () => MezButton(
                     height: 80,
@@ -219,20 +204,6 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
               ],
             ),
           )
-          // Container(
-          //   alignment: Alignment.topRight,
-          //   margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 15),
-          //   child: MezIconButton(
-          //       onTap: () {
-          //         MezRouter.back();
-          //       },
-          //       iconSize: 27,
-          //       padding: const EdgeInsets.all(5),
-          //       elevation: 1.5,
-          //       iconColor: Colors.black,
-          //       backgroundColor: Colors.white,
-          //       icon: Icons.close),
-          // )
         ],
       ),
     );
@@ -339,11 +310,11 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
           borderRadius: BorderRadius.circular(12),
           side: BorderSide(
               color: isFocused ? primaryBlueColor : Colors.white,
-              width: isFocused ? 1.5 : 0.5)),
+              width: isFocused ? 1.5 : 0)),
       child: GestureDetector(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+          padding: const EdgeInsets.only(left: 5, right: 2),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,8 +357,12 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                                 ),
                         ),
                         isDense: true,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none),
                       ),
                     ),
                   ),
@@ -397,7 +372,10 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    color: isLoading ? Colors.grey.shade200 : null,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: isLoading ? Colors.grey.shade200 : null,
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: List.generate(suggestions.length, (int index) {
@@ -418,8 +396,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                       }),
                     ),
                   ),
-                  if (isLoading)
-                    CircularProgressIndicator(), // Show loading indicator if loading is true
+                  if (isLoading) CircularProgressIndicator(),
                 ],
               ),
             ],
