@@ -143,12 +143,7 @@ query getRestaurantSpecialItems($restaurantId: Int) {
     }
   }
 }
-query searchItems(
-  $servicesIds: [Int!]
-  $languageId: String
-  $keyword: String
-  $online_ordering: Boolean
-) {
+query searchItems($servicesIds: [Int!], $languageId: String, $keyword: String) {
   restaurant_item(
     where: {
       _or: [
@@ -202,7 +197,6 @@ query searchItems(
           }
         }
       ]
-      restaurant: { details: { online_ordering: { _eq: $online_ordering } } }
     }
   ) {
     image

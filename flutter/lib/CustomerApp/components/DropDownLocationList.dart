@@ -185,8 +185,6 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   }
 
   bool _lessTenTenKm(locModel.MezLocation loc) {
-    mezDbgPrint(
-        "Distance =======>${calculateDistance(widget.serviceProviderLocation!.toLocationData(), dropDownListValue!.location.toLocationData())}");
     return calculateDistance(widget.serviceProviderLocation!.toLocationData(),
             loc.toLocationData()) <=
         10;
@@ -202,8 +200,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       onSaveLocation: ({locModel.MezLocation? location}) async {
         SavedLocation? newSavedLoc;
 
-        newSavedLoc =
-            await savedLocationDailog(context: context, loc: location!, skippable: false);
+        newSavedLoc = await savedLocationDailog(
+            context: context, loc: location!, skippable: false);
 
         if (newSavedLoc != null) {
           setState(() {

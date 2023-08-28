@@ -1106,7 +1106,8 @@
             "scheduleOrder": "Schedule order",
             "errorText": "Sorry, we don't support your area yet",
             "delivery": "Delivery",
-            "pickup": "In-store Pickup"
+            "pickup": "In-store Pickup",
+            "dvHelper": "The delivery price will be determined by the restaurant once your order and location are reviewed."
           }
         },
         "ViewItemScreen": {
@@ -1808,7 +1809,7 @@
             "yoga": "Yoga",
             "fitness": "Fitness",
             "dance": "Dance",
-            "uncategorized" : "Uncategorized"
+            "uncategorized": "Uncategorized"
           }
         },
         "TherapyView": {

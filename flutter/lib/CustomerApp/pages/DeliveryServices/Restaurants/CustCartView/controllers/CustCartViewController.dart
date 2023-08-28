@@ -6,17 +6,16 @@ import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.d
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 // import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // controller class //
 class CustCartViewController {
@@ -234,32 +233,59 @@ class CustCartViewController {
   }
 
   Future<void> checkoutActionButton() async {
-    cart.notes = noteText.text.inCaps;
-    num? newOrderId;
-    try {
-      // if (cart.paymentType == PaymentType.Card) {
-      //   final String? stripePaymentId =
-      //       await acceptPaymentByCardChoice(getCardChoice);
-      //   if (stripePaymentId != null) {
-      //     newOrderId =
-      //         await cartController.checkout(stripePaymentId: stripePaymentId);
-      //   }
-      // } else {
-      newOrderId = await cartController.checkout(stripePaymentId: null);
-      // }
+    Map<String, dynamic> data = cart.toReadableJson();
+    final String seperator = "\n ================================= \n";
+    final String customerInfo =
+        "Customer Info \n Name : ${Get.find<AuthController>().user!.name} \n Address : ${cart.toLocation?.address} ";
+    final String orderInfo =
+        "Order Info \n Items cost: ${cart.itemsCost().toInt()} \n Quantity: ${cart.quantity()} \n Notes : ${cart.notes ?? ""},";
+    final String items =
+        "Items : \n ${cart.cartItems.map<String>((CartItem e) => "${e.toReadableString()}").toList()}"
+            .replaceAll("[", "")
+            .replaceAll("]", "");
 
-      if (newOrderId != null) {
-        // ignore: unawaited_futures
-        MezRouter.popEverythingTillBeforeHome().then((_) =>
-            ViewRestaurantOrderScreen.navigate(orderId: newOrderId!.toInt()));
+    final String message =
+        customerInfo + seperator + orderInfo + seperator + items;
+    mezDbgPrint("$message");
+    if (cart.restaurant?.info.phoneNumber != null) {
+      try {
+        await callWhatsappNumber(cart.restaurant!.info.phoneNumber!,
+            message: message);
+      } catch (e, stk) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
       }
-
-      mezDbgPrint("success funish checkout");
-    } catch (e, s) {
-      mezDbgPrint(
-        "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
-      );
+    } else {
+      showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
     }
+
+    // cart.notes = noteText.text.inCaps;
+    // num? newOrderId;
+    // try {
+    //   // if (cart.paymentType == PaymentType.Card) {
+    //   //   final String? stripePaymentId =
+    //   //       await acceptPaymentByCardChoice(getCardChoice);
+    //   //   if (stripePaymentId != null) {
+    //   //     newOrderId =
+    //   //         await cartController.checkout(stripePaymentId: stripePaymentId);
+    //   //   }
+    //   // } else {
+    //   newOrderId = await cartController.checkout(stripePaymentId: null);
+    //   // }
+
+    //   if (newOrderId != null) {
+    //     // ignore: unawaited_futures
+    //     MezRouter.popEverythingTillBeforeHome().then((_) =>
+    //         ViewRestaurantOrderScreen.navigate(orderId: newOrderId!.toInt()));
+    //   }
+
+    //   mezDbgPrint("success funish checkout");
+    // } catch (e, s) {
+    //   mezDbgPrint(
+    //     "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
+    //   );
+    // }
   }
 
   /// returns stripePaymentId

@@ -35,6 +35,14 @@ class Choice {
         "position": position,
         "available": available,
       };
+  Map<String, dynamic> toReadableJson() => {
+        "name": name
+            .toFirebaseFormat()
+            .toString()
+            .replaceAll("{", "")
+            .replaceAll("}", ""),
+        "cost": cost,
+      };
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

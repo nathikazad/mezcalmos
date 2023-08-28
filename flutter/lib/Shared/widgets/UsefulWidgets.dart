@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:sizer/sizer.dart';
@@ -83,7 +82,7 @@ class MezcalmosSharedWidgets {
           children: <Widget>[
             if (showLogo)
               logo(
-                  size: 9
+                  size: 8
                       .mezW), //getSizeRelativeToScreen(60, Get.width, Get.height)),
             Padding(
               padding: EdgeInsets.only(left: 10),

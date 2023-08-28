@@ -2100,7 +2100,7 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'delivery_details_of_deliverer'),
+                name: NameNode(value: 'delivery_details'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -2298,6 +2298,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -3225,7 +3232,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart<TRes>
 class Query$getCustomerCart$restaurant_cart$restaurant {
   Query$getCustomerCart$restaurant_cart$restaurant({
     required this.id,
-    this.delivery_details_of_deliverer,
+    required this.delivery_details,
     required this.delivery_details_id,
     required this.details_id,
     this.details,
@@ -3235,20 +3242,16 @@ class Query$getCustomerCart$restaurant_cart$restaurant {
   factory Query$getCustomerCart$restaurant_cart$restaurant.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$delivery_details_of_deliverer =
-        json['delivery_details_of_deliverer'];
+    final l$delivery_details = json['delivery_details'];
     final l$delivery_details_id = json['delivery_details_id'];
     final l$details_id = json['details_id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$restaurant_cart$restaurant(
       id: (l$id as int),
-      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
-              as List<dynamic>?)
-          ?.map((e) =>
-              Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      delivery_details:
+          Query$getCustomerCart$restaurant_cart$restaurant$delivery_details
+              .fromJson((l$delivery_details as Map<String, dynamic>)),
       delivery_details_id: (l$delivery_details_id as int),
       details_id: (l$details_id as int),
       details: l$details == null
@@ -3261,9 +3264,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant {
 
   final int id;
 
-  final List<
-          Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>?
-      delivery_details_of_deliverer;
+  final Query$getCustomerCart$restaurant_cart$restaurant$delivery_details
+      delivery_details;
 
   final int delivery_details_id;
 
@@ -3277,9 +3279,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    _resultData['delivery_details_of_deliverer'] =
-        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
+    final l$delivery_details = delivery_details;
+    _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$delivery_details_id = delivery_details_id;
     _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$details_id = details_id;
@@ -3294,16 +3295,14 @@ class Query$getCustomerCart$restaurant_cart$restaurant {
   @override
   int get hashCode {
     final l$id = id;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final l$delivery_details = delivery_details;
     final l$delivery_details_id = delivery_details_id;
     final l$details_id = details_id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$delivery_details_of_deliverer == null
-          ? null
-          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
+      l$delivery_details,
       l$delivery_details_id,
       l$details_id,
       l$details,
@@ -3325,27 +3324,9 @@ class Query$getCustomerCart$restaurant_cart$restaurant {
     if (l$id != lOther$id) {
       return false;
     }
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final lOther$delivery_details_of_deliverer =
-        other.delivery_details_of_deliverer;
-    if (l$delivery_details_of_deliverer != null &&
-        lOther$delivery_details_of_deliverer != null) {
-      if (l$delivery_details_of_deliverer.length !=
-          lOther$delivery_details_of_deliverer.length) {
-        return false;
-      }
-      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
-        final l$delivery_details_of_deliverer$entry =
-            l$delivery_details_of_deliverer[i];
-        final lOther$delivery_details_of_deliverer$entry =
-            lOther$delivery_details_of_deliverer[i];
-        if (l$delivery_details_of_deliverer$entry !=
-            lOther$delivery_details_of_deliverer$entry) {
-          return false;
-        }
-      }
-    } else if (l$delivery_details_of_deliverer !=
-        lOther$delivery_details_of_deliverer) {
+    final l$delivery_details = delivery_details;
+    final lOther$delivery_details = other.delivery_details;
+    if (l$delivery_details != lOther$delivery_details) {
       return false;
     }
     final l$delivery_details_id = delivery_details_id;
@@ -3394,19 +3375,15 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant<TRes> {
 
   TRes call({
     int? id,
-    List<Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getCustomerCart$restaurant_cart$restaurant$delivery_details?
+        delivery_details,
     int? delivery_details_id,
     int? details_id,
     Query$getCustomerCart$restaurant_cart$restaurant$details? details,
     String? $__typename,
   });
-  TRes delivery_details_of_deliverer(
-      Iterable<Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>? Function(
-              Iterable<
-                  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer<
-                      Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>>?)
-          _fn);
+  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
+      TRes> get delivery_details;
   CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details<TRes>
       get details;
 }
@@ -3426,7 +3403,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant<TRes>
 
   TRes call({
     Object? id = _undefined,
-    Object? delivery_details_of_deliverer = _undefined,
+    Object? delivery_details = _undefined,
     Object? delivery_details_id = _undefined,
     Object? details_id = _undefined,
     Object? details = _undefined,
@@ -3434,11 +3411,11 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant<TRes>
   }) =>
       _then(Query$getCustomerCart$restaurant_cart$restaurant(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        delivery_details_of_deliverer: delivery_details_of_deliverer ==
-                _undefined
-            ? _instance.delivery_details_of_deliverer
-            : (delivery_details_of_deliverer as List<
-                Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>?),
+        delivery_details: delivery_details == _undefined ||
+                delivery_details == null
+            ? _instance.delivery_details
+            : (delivery_details
+                as Query$getCustomerCart$restaurant_cart$restaurant$delivery_details),
         delivery_details_id:
             delivery_details_id == _undefined || delivery_details_id == null
                 ? _instance.delivery_details_id
@@ -3454,19 +3431,13 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes delivery_details_of_deliverer(
-          Iterable<Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>? Function(
-                  Iterable<
-                      CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer<
-                          Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>>?)
-              _fn) =>
-      call(
-          delivery_details_of_deliverer: _fn(
-              _instance.delivery_details_of_deliverer?.map((e) =>
-                  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer(
-                    e,
-                    (i) => i,
-                  )))?.toList());
+  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
+      TRes> get delivery_details {
+    final local$delivery_details = _instance.delivery_details;
+    return CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
+        local$delivery_details, (e) => call(delivery_details: e));
+  }
+
   CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details<TRes>
       get details {
     final local$details = _instance.details;
@@ -3486,23 +3457,27 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant<TRes>
 
   call({
     int? id,
-    List<Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getCustomerCart$restaurant_cart$restaurant$delivery_details?
+        delivery_details,
     int? delivery_details_id,
     int? details_id,
     Query$getCustomerCart$restaurant_cart$restaurant$details? details,
     String? $__typename,
   }) =>
       _res;
-  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
+          TRes>
+      get delivery_details =>
+          CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details
+              .stub(_res);
   CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details<TRes>
       get details =>
           CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details
               .stub(_res);
 }
 
-class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer {
-  Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer({
+class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
+  Query$getCustomerCart$restaurant_cart$restaurant$delivery_details({
     required this.cost_per_km,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
@@ -3514,7 +3489,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
     required this.$__typename,
   });
 
-  factory Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer.fromJson(
+  factory Query$getCustomerCart$restaurant_cart$restaurant$delivery_details.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
@@ -3525,7 +3500,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
     final l$self_delivery = json['self_delivery'];
     final l$radius = json['radius'];
     final l$$__typename = json['__typename'];
-    return Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+    return Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
@@ -3614,7 +3589,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
       return true;
     }
     if (!(other
-            is Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer) ||
+            is Query$getCustomerCart$restaurant_cart$restaurant$delivery_details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3667,30 +3642,29 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
   }
 }
 
-extension UtilityExtension$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer
-    on Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer {
-  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer<
-          Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer>
+extension UtilityExtension$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details
+    on Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
+  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
+          Query$getCustomerCart$restaurant_cart$restaurant$delivery_details>
       get copyWith =>
-          CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+          CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
     TRes> {
-  factory CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer(
-    Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer
-        instance,
+  factory CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
+    Query$getCustomerCart$restaurant_cart$restaurant$delivery_details instance,
     TRes Function(
-            Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer)
+            Query$getCustomerCart$restaurant_cart$restaurant$delivery_details)
         then,
-  ) = _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer;
+  ) = _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details;
 
-  factory CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer.stub(
+  factory CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer;
+      _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details;
 
   TRes call({
     double? cost_per_km,
@@ -3705,22 +3679,21 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$deliver
   });
 }
 
-class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
         TRes>
     implements
-        CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+        CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
             TRes> {
-  _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+  _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
     this._instance,
     this._then,
   );
 
-  final Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer
+  final Query$getCustomerCart$restaurant_cart$restaurant$delivery_details
       _instance;
 
   final TRes Function(
-          Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer)
-      _then;
+      Query$getCustomerCart$restaurant_cart$restaurant$delivery_details) _then;
 
   static const _undefined = {};
 
@@ -3735,8 +3708,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_de
     Object? radius = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+      _then(Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -3766,12 +3738,12 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_de
       ));
 }
 
-class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
         TRes>
     implements
-        CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+        CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details<
             TRes> {
-  _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+  _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
       this._res);
 
   TRes _res;
@@ -3798,6 +3770,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     this.firebase_id,
     this.is_open,
     required this.image,
+    this.phone_number,
     required this.language,
     this.description_id,
     required this.name,
@@ -3817,6 +3790,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$firebase_id = json['firebase_id'];
     final l$is_open = json['is_open'];
     final l$image = json['image'];
+    final l$phone_number = json['phone_number'];
     final l$language = json['language'];
     final l$description_id = json['description_id'];
     final l$name = json['name'];
@@ -3836,6 +3810,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
       firebase_id: (l$firebase_id as String?),
       is_open: (l$is_open as bool?),
       image: (l$image as String),
+      phone_number: (l$phone_number as String?),
       language: mapFromJson(l$language),
       description_id: (l$description_id as int?),
       name: (l$name as String),
@@ -3865,6 +3840,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
   final bool? is_open;
 
   final String image;
+
+  final String? phone_number;
 
   final dynamic language;
 
@@ -3900,6 +3877,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     _resultData['is_open'] = l$is_open;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
     final l$description_id = description_id;
@@ -3929,6 +3908,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$firebase_id = firebase_id;
     final l$is_open = is_open;
     final l$image = image;
+    final l$phone_number = phone_number;
     final l$language = language;
     final l$description_id = description_id;
     final l$name = name;
@@ -3945,6 +3925,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
       l$firebase_id,
       l$is_open,
       l$image,
+      l$phone_number,
       l$language,
       l$description_id,
       l$name,
@@ -3994,6 +3975,11 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$language = language;
@@ -4076,6 +4062,7 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details
     String? firebase_id,
     bool? is_open,
     String? image,
+    String? phone_number,
     dynamic? language,
     int? description_id,
     String? name,
@@ -4119,6 +4106,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details<
     Object? firebase_id = _undefined,
     Object? is_open = _undefined,
     Object? image = _undefined,
+    Object? phone_number = _undefined,
     Object? language = _undefined,
     Object? description_id = _undefined,
     Object? name = _undefined,
@@ -4149,6 +4137,9 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details<
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
@@ -4225,6 +4216,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details
     String? firebase_id,
     bool? is_open,
     String? image,
+    String? phone_number,
     dynamic? language,
     int? description_id,
     String? name,
@@ -9046,7 +9038,7 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'delivery_details_of_deliverer'),
+                name: NameNode(value: 'delivery_details'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -9152,6 +9144,13 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                   ),
                   FieldNode(
                     name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -10171,7 +10170,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant {
   Subscription$listen_on_customer_cart$restaurant_cart$restaurant({
     required this.id,
     required this.details_id,
-    this.delivery_details_of_deliverer,
+    required this.delivery_details,
     required this.delivery_details_id,
     this.details,
     required this.$__typename,
@@ -10181,20 +10180,16 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$details_id = json['details_id'];
-    final l$delivery_details_of_deliverer =
-        json['delivery_details_of_deliverer'];
+    final l$delivery_details = json['delivery_details'];
     final l$delivery_details_id = json['delivery_details_id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_cart$restaurant_cart$restaurant(
       id: (l$id as int),
       details_id: (l$details_id as int),
-      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
-              as List<dynamic>?)
-          ?.map((e) =>
-              Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      delivery_details:
+          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details
+              .fromJson((l$delivery_details as Map<String, dynamic>)),
       delivery_details_id: (l$delivery_details_id as int),
       details: l$details == null
           ? null
@@ -10208,9 +10203,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant {
 
   final int details_id;
 
-  final List<
-          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>?
-      delivery_details_of_deliverer;
+  final Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details
+      delivery_details;
 
   final int delivery_details_id;
 
@@ -10225,9 +10219,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant {
     _resultData['id'] = l$id;
     final l$details_id = details_id;
     _resultData['details_id'] = l$details_id;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    _resultData['delivery_details_of_deliverer'] =
-        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
+    final l$delivery_details = delivery_details;
+    _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$delivery_details_id = delivery_details_id;
     _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$details = details;
@@ -10241,16 +10234,14 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant {
   int get hashCode {
     final l$id = id;
     final l$details_id = details_id;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final l$delivery_details = delivery_details;
     final l$delivery_details_id = delivery_details_id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$details_id,
-      l$delivery_details_of_deliverer == null
-          ? null
-          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
+      l$delivery_details,
       l$delivery_details_id,
       l$details,
       l$$__typename,
@@ -10277,27 +10268,9 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant {
     if (l$details_id != lOther$details_id) {
       return false;
     }
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final lOther$delivery_details_of_deliverer =
-        other.delivery_details_of_deliverer;
-    if (l$delivery_details_of_deliverer != null &&
-        lOther$delivery_details_of_deliverer != null) {
-      if (l$delivery_details_of_deliverer.length !=
-          lOther$delivery_details_of_deliverer.length) {
-        return false;
-      }
-      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
-        final l$delivery_details_of_deliverer$entry =
-            l$delivery_details_of_deliverer[i];
-        final lOther$delivery_details_of_deliverer$entry =
-            lOther$delivery_details_of_deliverer[i];
-        if (l$delivery_details_of_deliverer$entry !=
-            lOther$delivery_details_of_deliverer$entry) {
-          return false;
-        }
-      }
-    } else if (l$delivery_details_of_deliverer !=
-        lOther$delivery_details_of_deliverer) {
+    final l$delivery_details = delivery_details;
+    final lOther$delivery_details = other.delivery_details;
+    if (l$delivery_details != lOther$delivery_details) {
       return false;
     }
     final l$delivery_details_id = delivery_details_id;
@@ -10346,19 +10319,15 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
   TRes call({
     int? id,
     int? details_id,
-    List<Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details?
+        delivery_details,
     int? delivery_details_id,
     Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details?
         details,
     String? $__typename,
   });
-  TRes delivery_details_of_deliverer(
-      Iterable<Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>? Function(
-              Iterable<
-                  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer<
-                      Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>>?)
-          _fn);
+  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
+      TRes> get delivery_details;
   CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details<
       TRes> get details;
 }
@@ -10384,7 +10353,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
   TRes call({
     Object? id = _undefined,
     Object? details_id = _undefined,
-    Object? delivery_details_of_deliverer = _undefined,
+    Object? delivery_details = _undefined,
     Object? delivery_details_id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
@@ -10394,11 +10363,11 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
         details_id: details_id == _undefined || details_id == null
             ? _instance.details_id
             : (details_id as int),
-        delivery_details_of_deliverer: delivery_details_of_deliverer ==
-                _undefined
-            ? _instance.delivery_details_of_deliverer
-            : (delivery_details_of_deliverer as List<
-                Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>?),
+        delivery_details: delivery_details == _undefined ||
+                delivery_details == null
+            ? _instance.delivery_details
+            : (delivery_details
+                as Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details),
         delivery_details_id:
             delivery_details_id == _undefined || delivery_details_id == null
                 ? _instance.delivery_details_id
@@ -10411,19 +10380,13 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes delivery_details_of_deliverer(
-          Iterable<Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>? Function(
-                  Iterable<
-                      CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer<
-                          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>>?)
-              _fn) =>
-      call(
-          delivery_details_of_deliverer: _fn(
-              _instance.delivery_details_of_deliverer?.map((e) =>
-                  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer(
-                    e,
-                    (i) => i,
-                  )))?.toList());
+  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
+      TRes> get delivery_details {
+    final local$delivery_details = _instance.delivery_details;
+    return CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details(
+        local$delivery_details, (e) => call(delivery_details: e));
+  }
+
   CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details<
       TRes> get details {
     final local$details = _instance.details;
@@ -10448,15 +10411,19 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
   call({
     int? id,
     int? details_id,
-    List<Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details?
+        delivery_details,
     int? delivery_details_id,
     Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details?
         details,
     String? $__typename,
   }) =>
       _res;
-  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
+          TRes>
+      get delivery_details =>
+          CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details
+              .stub(_res);
   CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details<
           TRes>
       get details =>
@@ -10464,8 +10431,8 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
               .stub(_res);
 }
 
-class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer {
-  Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer({
+class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details {
+  Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details({
     required this.cost_per_km,
     required this.cost_per_km_from_base,
     this.free_delivery_km_range,
@@ -10477,7 +10444,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     required this.$__typename,
   });
 
-  factory Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer.fromJson(
+  factory Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
     final l$cost_per_km_from_base = json['cost_per_km_from_base'];
@@ -10488,7 +10455,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     final l$minimum_cost = json['minimum_cost'];
     final l$radius = json['radius'];
     final l$$__typename = json['__typename'];
-    return Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+    return Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
@@ -10577,7 +10544,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
       return true;
     }
     if (!(other
-            is Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer) ||
+            is Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -10630,30 +10597,30 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
   }
 }
 
-extension UtilityExtension$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer
-    on Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer {
-  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer<
-          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer>
+extension UtilityExtension$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details
+    on Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details {
+  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
+          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details>
       get copyWith =>
-          CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+          CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
     TRes> {
-  factory CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer(
-    Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer
+  factory CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details(
+    Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details
         instance,
     TRes Function(
-            Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer)
+            Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details)
         then,
-  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer;
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details;
 
-  factory CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer.stub(
+  factory CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer;
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details;
 
   TRes call({
     double? cost_per_km,
@@ -10668,21 +10635,21 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
   });
 }
 
-class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+        CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
             TRes> {
-  _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+  _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details(
     this._instance,
     this._then,
   );
 
-  final Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer
+  final Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details
       _instance;
 
   final TRes Function(
-          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer)
+          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details)
       _then;
 
   static const _undefined = {};
@@ -10699,7 +10666,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details(
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -10729,12 +10696,12 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
       ));
 }
 
-class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer<
+        CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details<
             TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details_of_deliverer(
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details(
       this._res);
 
   TRes _res;
@@ -10759,6 +10726,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     this.is_open,
     this.firebase_id,
     required this.name,
+    this.phone_number,
     required this.online_ordering,
     this.stripe_info,
     required this.accepted_payments,
@@ -10779,6 +10747,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$is_open = json['is_open'];
     final l$firebase_id = json['firebase_id'];
     final l$name = json['name'];
+    final l$phone_number = json['phone_number'];
     final l$online_ordering = json['online_ordering'];
     final l$stripe_info = json['stripe_info'];
     final l$accepted_payments = json['accepted_payments'];
@@ -10796,6 +10765,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
       is_open: (l$is_open as bool?),
       firebase_id: (l$firebase_id as String?),
       name: (l$name as String),
+      phone_number: (l$phone_number as String?),
       online_ordering: (l$online_ordering as bool),
       stripe_info: l$stripe_info == null
           ? null
@@ -10826,6 +10796,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
   final String? firebase_id;
 
   final String name;
+
+  final String? phone_number;
 
   final bool online_ordering;
 
@@ -10864,6 +10836,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     _resultData['firebase_id'] = l$firebase_id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$online_ordering = online_ordering;
     _resultData['online_ordering'] = l$online_ordering;
     final l$stripe_info = stripe_info;
@@ -10897,6 +10871,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$is_open = is_open;
     final l$firebase_id = firebase_id;
     final l$name = name;
+    final l$phone_number = phone_number;
     final l$online_ordering = online_ordering;
     final l$stripe_info = stripe_info;
     final l$accepted_payments = accepted_payments;
@@ -10914,6 +10889,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
       l$is_open,
       l$firebase_id,
       l$name,
+      l$phone_number,
       l$online_ordering,
       l$stripe_info,
       l$accepted_payments,
@@ -10957,6 +10933,11 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$online_ordering = online_ordering;
@@ -11053,6 +11034,7 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
     bool? is_open,
     String? firebase_id,
     String? name,
+    String? phone_number,
     bool? online_ordering,
     Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?
         stripe_info,
@@ -11101,6 +11083,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
     Object? is_open = _undefined,
     Object? firebase_id = _undefined,
     Object? name = _undefined,
+    Object? phone_number = _undefined,
     Object? online_ordering = _undefined,
     Object? stripe_info = _undefined,
     Object? accepted_payments = _undefined,
@@ -11124,6 +11107,9 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         online_ordering:
             online_ordering == _undefined || online_ordering == null
                 ? _instance.online_ordering
@@ -11209,6 +11195,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
     bool? is_open,
     String? firebase_id,
     String? name,
+    String? phone_number,
     bool? online_ordering,
     Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?
         stripe_info,

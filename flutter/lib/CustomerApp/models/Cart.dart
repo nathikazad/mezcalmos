@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
-
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -96,6 +95,16 @@ class Cart {
       "paymentType": paymentType.toFirebaseFormatString(),
       "deliveryType": deliveryType?.toFirebaseFormatString() ?? null,
       "deliveryTime": deliveryTime?.toUtc().toString() ?? null,
+    };
+  }
+
+  Map<String, dynamic> toReadableJson() {
+    return {
+      "Name": Get.find<AuthController>().user!.name,
+      "To Adress": toLocation?.address,
+      "Quantity": quantity(),
+      "Items cost": itemsCost().toInt(),
+      "Notes": notes,
     };
   }
 
@@ -321,21 +330,32 @@ class CartItem {
       "notes": notes,
     };
 
-    // {"optionId" : [{choice1} , {choic2} , {} ,{} ] }
-
-    // chosenChoices.forEach((String optionId, List<Choice> choices) {
-    //   final List data = [];
-    //   choices.forEach((Choice choice) {
-    //     data.add(choice.toJson());
-    //   });
-
-    //   json["chosenChoices"][optionId] = <String, dynamic>{};
-    //   json["chosenChoices"][optionId]["optionName"] =
-    //       item.findOption(optionId)?.name.toFirebaseFormat();
-    //   json["chosenChoices"][optionId]["choices"] = data;
-    // });
-
     return json;
+  }
+
+  String toReadableString() {
+    final String choices =
+        "Choices :  ${chosenChoices.entries.map((MapEntry<String, List<Choice>> e) {
+      return {
+        "Option": item
+            .findOption(int.parse(e.key))
+            ?.name
+            .toFirebaseFormat()
+            .toString()
+            .replaceAll("{", "")
+            .replaceAll("}", ""),
+        "Choices": e.value
+            .map((Choice e) => e.toReadableJson())
+            .toList()
+            .toString()
+            .replaceAll("{", "")
+            .replaceAll("}", ""),
+      };
+    }).toList()}";
+    final String data =
+        "Name: ${item.name.toFirebaseFormat().toString().replaceAll("{", "").replaceAll("}", "")} \n Cost per one: ${costPerOne()} \n Quantity: $quantity \n Total cost: ${totalCost()} \n Item notes : $notes, \n $choices \n ----------------------";
+
+    return data;
   }
 
   factory CartItem.clone(CartItem cartItem) {

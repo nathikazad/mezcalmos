@@ -603,7 +603,7 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_details_of_deliverer'),
+            name: NameNode(value: 'delivery_details'),
             alias: null,
             arguments: [],
             directives: [],
@@ -976,7 +976,7 @@ class Query$getRestaurants$restaurant_restaurant {
   Query$getRestaurants$restaurant_restaurant({
     required this.id,
     required this.reviews_aggregate,
-    this.delivery_details_of_deliverer,
+    required this.delivery_details,
     this.details,
     required this.$__typename,
   });
@@ -985,8 +985,7 @@ class Query$getRestaurants$restaurant_restaurant {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$reviews_aggregate = json['reviews_aggregate'];
-    final l$delivery_details_of_deliverer =
-        json['delivery_details_of_deliverer'];
+    final l$delivery_details = json['delivery_details'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant_restaurant(
@@ -994,12 +993,9 @@ class Query$getRestaurants$restaurant_restaurant {
       reviews_aggregate:
           Query$getRestaurants$restaurant_restaurant$reviews_aggregate.fromJson(
               (l$reviews_aggregate as Map<String, dynamic>)),
-      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
-              as List<dynamic>?)
-          ?.map((e) =>
-              Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      delivery_details:
+          Query$getRestaurants$restaurant_restaurant$delivery_details.fromJson(
+              (l$delivery_details as Map<String, dynamic>)),
       details: l$details == null
           ? null
           : Query$getRestaurants$restaurant_restaurant$details.fromJson(
@@ -1013,9 +1009,8 @@ class Query$getRestaurants$restaurant_restaurant {
   final Query$getRestaurants$restaurant_restaurant$reviews_aggregate
       reviews_aggregate;
 
-  final List<
-          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
-      delivery_details_of_deliverer;
+  final Query$getRestaurants$restaurant_restaurant$delivery_details
+      delivery_details;
 
   final Query$getRestaurants$restaurant_restaurant$details? details;
 
@@ -1027,9 +1022,8 @@ class Query$getRestaurants$restaurant_restaurant {
     _resultData['id'] = l$id;
     final l$reviews_aggregate = reviews_aggregate;
     _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    _resultData['delivery_details_of_deliverer'] =
-        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
+    final l$delivery_details = delivery_details;
+    _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
     final l$$__typename = $__typename;
@@ -1041,15 +1035,13 @@ class Query$getRestaurants$restaurant_restaurant {
   int get hashCode {
     final l$id = id;
     final l$reviews_aggregate = reviews_aggregate;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final l$delivery_details = delivery_details;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$reviews_aggregate,
-      l$delivery_details_of_deliverer == null
-          ? null
-          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
+      l$delivery_details,
       l$details,
       l$$__typename,
     ]);
@@ -1074,27 +1066,9 @@ class Query$getRestaurants$restaurant_restaurant {
     if (l$reviews_aggregate != lOther$reviews_aggregate) {
       return false;
     }
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final lOther$delivery_details_of_deliverer =
-        other.delivery_details_of_deliverer;
-    if (l$delivery_details_of_deliverer != null &&
-        lOther$delivery_details_of_deliverer != null) {
-      if (l$delivery_details_of_deliverer.length !=
-          lOther$delivery_details_of_deliverer.length) {
-        return false;
-      }
-      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
-        final l$delivery_details_of_deliverer$entry =
-            l$delivery_details_of_deliverer[i];
-        final lOther$delivery_details_of_deliverer$entry =
-            lOther$delivery_details_of_deliverer[i];
-        if (l$delivery_details_of_deliverer$entry !=
-            lOther$delivery_details_of_deliverer$entry) {
-          return false;
-        }
-      }
-    } else if (l$delivery_details_of_deliverer !=
-        lOther$delivery_details_of_deliverer) {
+    final l$delivery_details = delivery_details;
+    final lOther$delivery_details = other.delivery_details;
+    if (l$delivery_details != lOther$delivery_details) {
       return false;
     }
     final l$details = details;
@@ -1134,19 +1108,15 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant<TRes> {
     int? id,
     Query$getRestaurants$restaurant_restaurant$reviews_aggregate?
         reviews_aggregate,
-    List<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getRestaurants$restaurant_restaurant$delivery_details?
+        delivery_details,
     Query$getRestaurants$restaurant_restaurant$details? details,
     String? $__typename,
   });
   CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<TRes>
       get reviews_aggregate;
-  TRes delivery_details_of_deliverer(
-      Iterable<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>? Function(
-              Iterable<
-                  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
-                      Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>>?)
-          _fn);
+  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details<TRes>
+      get delivery_details;
   CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes> get details;
 }
 
@@ -1166,7 +1136,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant<TRes>
   TRes call({
     Object? id = _undefined,
     Object? reviews_aggregate = _undefined,
-    Object? delivery_details_of_deliverer = _undefined,
+    Object? delivery_details = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -1177,11 +1147,11 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant<TRes>
             ? _instance.reviews_aggregate
             : (reviews_aggregate
                 as Query$getRestaurants$restaurant_restaurant$reviews_aggregate),
-        delivery_details_of_deliverer: delivery_details_of_deliverer ==
-                _undefined
-            ? _instance.delivery_details_of_deliverer
-            : (delivery_details_of_deliverer as List<
-                Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?),
+        delivery_details: delivery_details == _undefined ||
+                delivery_details == null
+            ? _instance.delivery_details
+            : (delivery_details
+                as Query$getRestaurants$restaurant_restaurant$delivery_details),
         details: details == _undefined
             ? _instance.details
             : (details as Query$getRestaurants$restaurant_restaurant$details?),
@@ -1196,19 +1166,13 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant<TRes>
         local$reviews_aggregate, (e) => call(reviews_aggregate: e));
   }
 
-  TRes delivery_details_of_deliverer(
-          Iterable<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>? Function(
-                  Iterable<
-                      CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
-                          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>>?)
-              _fn) =>
-      call(
-          delivery_details_of_deliverer: _fn(
-              _instance.delivery_details_of_deliverer?.map((e) =>
-                  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
-                    e,
-                    (i) => i,
-                  )))?.toList());
+  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details<TRes>
+      get delivery_details {
+    final local$delivery_details = _instance.delivery_details;
+    return CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details(
+        local$delivery_details, (e) => call(delivery_details: e));
+  }
+
   CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes>
       get details {
     final local$details = _instance.details;
@@ -1230,8 +1194,8 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant<TRes>
     int? id,
     Query$getRestaurants$restaurant_restaurant$reviews_aggregate?
         reviews_aggregate,
-    List<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getRestaurants$restaurant_restaurant$delivery_details?
+        delivery_details,
     Query$getRestaurants$restaurant_restaurant$details? details,
     String? $__typename,
   }) =>
@@ -1240,7 +1204,10 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant<TRes>
       get reviews_aggregate =>
           CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate
               .stub(_res);
-  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details<TRes>
+      get delivery_details =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details
+              .stub(_res);
   CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes>
       get details =>
           CopyWith$Query$getRestaurants$restaurant_restaurant$details.stub(
@@ -1721,8 +1688,8 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggre
       _res;
 }
 
-class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
-  Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer({
+class Query$getRestaurants$restaurant_restaurant$delivery_details {
+  Query$getRestaurants$restaurant_restaurant$delivery_details({
     required this.cost_per_km,
     required this.cost_per_km_from_base,
     this.free_delivery_km_range,
@@ -1734,7 +1701,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
     required this.$__typename,
   });
 
-  factory Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer.fromJson(
+  factory Query$getRestaurants$restaurant_restaurant$delivery_details.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
     final l$cost_per_km_from_base = json['cost_per_km_from_base'];
@@ -1745,7 +1712,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
     final l$radius = json['radius'];
     final l$self_delivery = json['self_delivery'];
     final l$$__typename = json['__typename'];
-    return Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
+    return Query$getRestaurants$restaurant_restaurant$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
@@ -1834,7 +1801,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
       return true;
     }
     if (!(other
-            is Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer) ||
+            is Query$getRestaurants$restaurant_restaurant$delivery_details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1887,30 +1854,28 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
   }
 }
 
-extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer
-    on Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {
-  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
-          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$delivery_details
+    on Query$getRestaurants$restaurant_restaurant$delivery_details {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details<
+          Query$getRestaurants$restaurant_restaurant$delivery_details>
       get copyWith =>
-          CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
+          CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details<
     TRes> {
-  factory CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
-    Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer
-        instance,
-    TRes Function(
-            Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer)
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details(
+    Query$getRestaurants$restaurant_restaurant$delivery_details instance,
+    TRes Function(Query$getRestaurants$restaurant_restaurant$delivery_details)
         then,
-  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer;
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details;
 
-  factory CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer.stub(
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer;
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details;
 
   TRes call({
     double? cost_per_km,
@@ -1925,22 +1890,20 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_deta
   });
 }
 
-class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details<
         TRes>
     implements
-        CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+        CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details<
             TRes> {
-  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details(
     this._instance,
     this._then,
   );
 
-  final Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer
-      _instance;
+  final Query$getRestaurants$restaurant_restaurant$delivery_details _instance;
 
   final TRes Function(
-          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer)
-      _then;
+      Query$getRestaurants$restaurant_restaurant$delivery_details) _then;
 
   static const _undefined = {};
 
@@ -1955,8 +1918,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_
     Object? self_delivery = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
+      _then(Query$getRestaurants$restaurant_restaurant$delivery_details(
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -1986,12 +1948,12 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_
       ));
 }
 
-class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details<
         TRes>
     implements
-        CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer<
+        CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_details<
             TRes> {
-  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer(
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_details(
       this._res);
 
   TRes _res;
@@ -4039,7 +4001,7 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_details_of_deliverer'),
+            name: NameNode(value: 'delivery_details'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4512,7 +4474,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
   Query$getOneRestaurant$restaurant_restaurant_by_pk({
     required this.id,
     required this.reviews_aggregate,
-    this.delivery_details_of_deliverer,
+    required this.delivery_details,
     required this.delivery_details_id,
     this.details,
     required this.$__typename,
@@ -4522,8 +4484,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$reviews_aggregate = json['reviews_aggregate'];
-    final l$delivery_details_of_deliverer =
-        json['delivery_details_of_deliverer'];
+    final l$delivery_details = json['delivery_details'];
     final l$delivery_details_id = json['delivery_details_id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
@@ -4532,12 +4493,9 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
       reviews_aggregate:
           Query$getOneRestaurant$restaurant_restaurant_by_pk$reviews_aggregate
               .fromJson((l$reviews_aggregate as Map<String, dynamic>)),
-      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
-              as List<dynamic>?)
-          ?.map((e) =>
-              Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      delivery_details:
+          Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details
+              .fromJson((l$delivery_details as Map<String, dynamic>)),
       delivery_details_id: (l$delivery_details_id as int),
       details: l$details == null
           ? null
@@ -4552,9 +4510,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
   final Query$getOneRestaurant$restaurant_restaurant_by_pk$reviews_aggregate
       reviews_aggregate;
 
-  final List<
-          Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
-      delivery_details_of_deliverer;
+  final Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details
+      delivery_details;
 
   final int delivery_details_id;
 
@@ -4568,9 +4525,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
     _resultData['id'] = l$id;
     final l$reviews_aggregate = reviews_aggregate;
     _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    _resultData['delivery_details_of_deliverer'] =
-        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
+    final l$delivery_details = delivery_details;
+    _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$delivery_details_id = delivery_details_id;
     _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$details = details;
@@ -4584,16 +4540,14 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
   int get hashCode {
     final l$id = id;
     final l$reviews_aggregate = reviews_aggregate;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final l$delivery_details = delivery_details;
     final l$delivery_details_id = delivery_details_id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$reviews_aggregate,
-      l$delivery_details_of_deliverer == null
-          ? null
-          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
+      l$delivery_details,
       l$delivery_details_id,
       l$details,
       l$$__typename,
@@ -4619,27 +4573,9 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
     if (l$reviews_aggregate != lOther$reviews_aggregate) {
       return false;
     }
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final lOther$delivery_details_of_deliverer =
-        other.delivery_details_of_deliverer;
-    if (l$delivery_details_of_deliverer != null &&
-        lOther$delivery_details_of_deliverer != null) {
-      if (l$delivery_details_of_deliverer.length !=
-          lOther$delivery_details_of_deliverer.length) {
-        return false;
-      }
-      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
-        final l$delivery_details_of_deliverer$entry =
-            l$delivery_details_of_deliverer[i];
-        final lOther$delivery_details_of_deliverer$entry =
-            lOther$delivery_details_of_deliverer[i];
-        if (l$delivery_details_of_deliverer$entry !=
-            lOther$delivery_details_of_deliverer$entry) {
-          return false;
-        }
-      }
-    } else if (l$delivery_details_of_deliverer !=
-        lOther$delivery_details_of_deliverer) {
+    final l$delivery_details = delivery_details;
+    final lOther$delivery_details = other.delivery_details;
+    if (l$delivery_details != lOther$delivery_details) {
       return false;
     }
     final l$delivery_details_id = delivery_details_id;
@@ -4687,20 +4623,16 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk<
     int? id,
     Query$getOneRestaurant$restaurant_restaurant_by_pk$reviews_aggregate?
         reviews_aggregate,
-    List<Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details?
+        delivery_details,
     int? delivery_details_id,
     Query$getOneRestaurant$restaurant_restaurant_by_pk$details? details,
     String? $__typename,
   });
   CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$reviews_aggregate<
       TRes> get reviews_aggregate;
-  TRes delivery_details_of_deliverer(
-      Iterable<Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>? Function(
-              Iterable<
-                  CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer<
-                      Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>>?)
-          _fn);
+  CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
+      TRes> get delivery_details;
   CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$details<TRes>
       get details;
 }
@@ -4722,7 +4654,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
   TRes call({
     Object? id = _undefined,
     Object? reviews_aggregate = _undefined,
-    Object? delivery_details_of_deliverer = _undefined,
+    Object? delivery_details = _undefined,
     Object? delivery_details_id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
@@ -4734,11 +4666,11 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
             ? _instance.reviews_aggregate
             : (reviews_aggregate
                 as Query$getOneRestaurant$restaurant_restaurant_by_pk$reviews_aggregate),
-        delivery_details_of_deliverer: delivery_details_of_deliverer ==
-                _undefined
-            ? _instance.delivery_details_of_deliverer
-            : (delivery_details_of_deliverer as List<
-                Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>?),
+        delivery_details: delivery_details == _undefined ||
+                delivery_details == null
+            ? _instance.delivery_details
+            : (delivery_details
+                as Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details),
         delivery_details_id:
             delivery_details_id == _undefined || delivery_details_id == null
                 ? _instance.delivery_details_id
@@ -4758,19 +4690,13 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
         local$reviews_aggregate, (e) => call(reviews_aggregate: e));
   }
 
-  TRes delivery_details_of_deliverer(
-          Iterable<Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>? Function(
-                  Iterable<
-                      CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer<
-                          Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>>?)
-              _fn) =>
-      call(
-          delivery_details_of_deliverer: _fn(
-              _instance.delivery_details_of_deliverer?.map((e) =>
-                  CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
-                    e,
-                    (i) => i,
-                  )))?.toList());
+  CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
+      TRes> get delivery_details {
+    final local$delivery_details = _instance.delivery_details;
+    return CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
+        local$delivery_details, (e) => call(delivery_details: e));
+  }
+
   CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$details<TRes>
       get details {
     final local$details = _instance.details;
@@ -4794,8 +4720,8 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
     int? id,
     Query$getOneRestaurant$restaurant_restaurant_by_pk$reviews_aggregate?
         reviews_aggregate,
-    List<Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details?
+        delivery_details,
     int? delivery_details_id,
     Query$getOneRestaurant$restaurant_restaurant_by_pk$details? details,
     String? $__typename,
@@ -4806,7 +4732,11 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
       get reviews_aggregate =>
           CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$reviews_aggregate
               .stub(_res);
-  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
+          TRes>
+      get delivery_details =>
+          CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details
+              .stub(_res);
   CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$details<TRes>
       get details =>
           CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$details
@@ -5312,8 +5242,8 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$revie
       _res;
 }
 
-class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer {
-  Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer({
+class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
+  Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details({
     required this.cost_per_km_from_base,
     required this.cost_per_km,
     this.free_delivery_km_range,
@@ -5325,7 +5255,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
     required this.$__typename,
   });
 
-  factory Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer.fromJson(
+  factory Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km_from_base = json['cost_per_km_from_base'];
     final l$cost_per_km = json['cost_per_km'];
@@ -5336,7 +5266,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
     final l$radius = json['radius'];
     final l$self_delivery = json['self_delivery'];
     final l$$__typename = json['__typename'];
-    return Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+    return Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
@@ -5425,7 +5355,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
       return true;
     }
     if (!(other
-            is Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer) ||
+            is Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -5478,30 +5408,30 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_del
   }
 }
 
-extension UtilityExtension$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer
-    on Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer {
-  CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer<
-          Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>
+extension UtilityExtension$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details
+    on Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
+  CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
+          Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details>
       get copyWith =>
-          CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+          CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
     TRes> {
-  factory CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
-    Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer
+  factory CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
+    Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details
         instance,
     TRes Function(
-            Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer)
+            Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details)
         then,
-  ) = _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer;
+  ) = _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details;
 
-  factory CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer.stub(
+  factory CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer;
+      _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details;
 
   TRes call({
     double? cost_per_km_from_base,
@@ -5516,21 +5446,21 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
   });
 }
 
-class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
         TRes>
     implements
-        CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+        CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
             TRes> {
-  _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+  _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
     this._instance,
     this._then,
   );
 
-  final Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer
+  final Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details
       _instance;
 
   final TRes Function(
-          Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer)
+          Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details)
       _then;
 
   static const _undefined = {};
@@ -5546,8 +5476,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_
     Object? self_delivery = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+      _then(Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
         cost_per_km_from_base:
             cost_per_km_from_base == _undefined || cost_per_km_from_base == null
                 ? _instance.cost_per_km_from_base
@@ -5577,12 +5506,12 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_
       ));
 }
 
-class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
         TRes>
     implements
-        CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+        CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details<
             TRes> {
-  _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+  _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
       this._res);
 
   TRes _res;
@@ -11358,7 +11287,7 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_details_of_deliverer'),
+            name: NameNode(value: 'delivery_details'),
             alias: null,
             arguments: [],
             directives: [],
@@ -11787,7 +11716,7 @@ extension ClientExtension$Mutation$updateRestaurantInfo
 class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
   Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk({
     required this.id,
-    this.delivery_details_of_deliverer,
+    required this.delivery_details,
     this.details,
     required this.$__typename,
   });
@@ -11795,18 +11724,14 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
   factory Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$delivery_details_of_deliverer =
-        json['delivery_details_of_deliverer'];
+    final l$delivery_details = json['delivery_details'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk(
       id: (l$id as int),
-      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
-              as List<dynamic>?)
-          ?.map((e) =>
-              Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+      delivery_details:
+          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details
+              .fromJson((l$delivery_details as Map<String, dynamic>)),
       details: l$details == null
           ? null
           : Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details
@@ -11817,9 +11742,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
 
   final int id;
 
-  final List<
-          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
-      delivery_details_of_deliverer;
+  final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details
+      delivery_details;
 
   final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details?
       details;
@@ -11830,9 +11754,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    _resultData['delivery_details_of_deliverer'] =
-        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
+    final l$delivery_details = delivery_details;
+    _resultData['delivery_details'] = l$delivery_details.toJson();
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
     final l$$__typename = $__typename;
@@ -11843,14 +11766,12 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
   @override
   int get hashCode {
     final l$id = id;
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final l$delivery_details = delivery_details;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$delivery_details_of_deliverer == null
-          ? null
-          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
+      l$delivery_details,
       l$details,
       l$$__typename,
     ]);
@@ -11871,27 +11792,9 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
     if (l$id != lOther$id) {
       return false;
     }
-    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final lOther$delivery_details_of_deliverer =
-        other.delivery_details_of_deliverer;
-    if (l$delivery_details_of_deliverer != null &&
-        lOther$delivery_details_of_deliverer != null) {
-      if (l$delivery_details_of_deliverer.length !=
-          lOther$delivery_details_of_deliverer.length) {
-        return false;
-      }
-      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
-        final l$delivery_details_of_deliverer$entry =
-            l$delivery_details_of_deliverer[i];
-        final lOther$delivery_details_of_deliverer$entry =
-            lOther$delivery_details_of_deliverer[i];
-        if (l$delivery_details_of_deliverer$entry !=
-            lOther$delivery_details_of_deliverer$entry) {
-          return false;
-        }
-      }
-    } else if (l$delivery_details_of_deliverer !=
-        lOther$delivery_details_of_deliverer) {
+    final l$delivery_details = delivery_details;
+    final lOther$delivery_details = other.delivery_details;
+    if (l$delivery_details != lOther$delivery_details) {
       return false;
     }
     final l$details = details;
@@ -11934,18 +11837,14 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaura
 
   TRes call({
     int? id,
-    List<Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details?
+        delivery_details,
     Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details?
         details,
     String? $__typename,
   });
-  TRes delivery_details_of_deliverer(
-      Iterable<Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>? Function(
-              Iterable<
-                  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer<
-                      Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>>?)
-          _fn);
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
+      TRes> get delivery_details;
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details<
       TRes> get details;
 }
@@ -11970,17 +11869,17 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
 
   TRes call({
     Object? id = _undefined,
-    Object? delivery_details_of_deliverer = _undefined,
+    Object? delivery_details = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        delivery_details_of_deliverer: delivery_details_of_deliverer ==
-                _undefined
-            ? _instance.delivery_details_of_deliverer
-            : (delivery_details_of_deliverer as List<
-                Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>?),
+        delivery_details: delivery_details == _undefined ||
+                delivery_details == null
+            ? _instance.delivery_details
+            : (delivery_details
+                as Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details),
         details: details == _undefined
             ? _instance.details
             : (details
@@ -11989,19 +11888,13 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes delivery_details_of_deliverer(
-          Iterable<Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>? Function(
-                  Iterable<
-                      CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer<
-                          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>>?)
-              _fn) =>
-      call(
-          delivery_details_of_deliverer: _fn(
-              _instance.delivery_details_of_deliverer?.map((e) =>
-                  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
-                    e,
-                    (i) => i,
-                  )))?.toList());
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
+      TRes> get delivery_details {
+    final local$delivery_details = _instance.delivery_details;
+    return CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
+        local$delivery_details, (e) => call(delivery_details: e));
+  }
+
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details<
       TRes> get details {
     final local$details = _instance.details;
@@ -12025,14 +11918,18 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
 
   call({
     int? id,
-    List<Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
-        delivery_details_of_deliverer,
+    Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details?
+        delivery_details,
     Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details?
         details,
     String? $__typename,
   }) =>
       _res;
-  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
+          TRes>
+      get delivery_details =>
+          CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details
+              .stub(_res);
   CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details<
           TRes>
       get details =>
@@ -12040,8 +11937,8 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
               .stub(_res);
 }
 
-class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer {
-  Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer({
+class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details {
+  Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details({
     required this.cost_per_km_from_base,
     required this.cost_per_km,
     this.free_delivery_km_range,
@@ -12052,7 +11949,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     required this.$__typename,
   });
 
-  factory Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer.fromJson(
+  factory Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km_from_base = json['cost_per_km_from_base'];
     final l$cost_per_km = json['cost_per_km'];
@@ -12062,7 +11959,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     final l$minimum_cost = json['minimum_cost'];
     final l$radius = json['radius'];
     final l$$__typename = json['__typename'];
-    return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+    return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
       cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
@@ -12144,7 +12041,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
       return true;
     }
     if (!(other
-            is Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer) ||
+            is Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -12192,30 +12089,30 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
   }
 }
 
-extension UtilityExtension$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer
-    on Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer {
-  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer<
-          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>
+extension UtilityExtension$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details
+    on Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details {
+  CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
+          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details>
       get copyWith =>
-          CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+          CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
     TRes> {
-  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
-    Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer
+  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
+    Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details
         instance,
     TRes Function(
-            Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer)
+            Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details)
         then,
-  ) = _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer;
+  ) = _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details;
 
-  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer.stub(
+  factory CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer;
+      _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details;
 
   TRes call({
     double? cost_per_km_from_base,
@@ -12229,21 +12126,21 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaura
   });
 }
 
-class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
         TRes>
     implements
-        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
             TRes> {
-  _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+  _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
     this._instance,
     this._then,
   );
 
-  final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer
+  final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details
       _instance;
 
   final TRes Function(
-          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer)
+          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details)
       _then;
 
   static const _undefined = {};
@@ -12259,7 +12156,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+          Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
         cost_per_km_from_base:
             cost_per_km_from_base == _undefined || cost_per_km_from_base == null
                 ? _instance.cost_per_km_from_base
@@ -12286,12 +12183,12 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
       ));
 }
 
-class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
         TRes>
     implements
-        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer<
+        CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details<
             TRes> {
-  _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer(
+  _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
       this._res);
 
   TRes _res;

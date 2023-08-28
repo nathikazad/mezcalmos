@@ -389,12 +389,19 @@ const String businessStoryEn =
 const String businessStoryEs =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-staging.appspot.com/o/business_story_es.png?alt=media&token=41a6bc91-e688-48cf-b975-830bea10fa95";
 
+Widget get tinySepartor => SizedBox(height: 5);
 Widget get smallSepartor => SizedBox(height: 8);
 Widget get meduimSeperator => SizedBox(height: 15);
 Widget get bigSeperator => SizedBox(height: 25);
 Widget get hSmallSepartor => SizedBox(width: 8);
 Widget get hMeduimSeperator => SizedBox(width: 15);
 Widget get hBigSeperator => SizedBox(width: 25);
+Widget get hTinySepartor => SizedBox(width: 5);
 
 //
 const double defaultDistance = 1000000000;
+Location puertoEscondidoLocation = Location(
+  lat: 15.8692,
+  lng: -97.0671,
+  address: "Puerto Escondido, Oaxaca, Mexico",
+);

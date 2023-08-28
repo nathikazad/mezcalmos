@@ -7,12 +7,9 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/item/__generated/item.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -274,7 +271,6 @@ Future<List<Item>> search_items(
           variables: Variables$Query$searchItems(
     keyword: "%$keyword%",
     languageId: lang.toFirebaseFormatString(),
-    online_ordering: onlineOrdering,
     servicesIds: servicesIds,
   )));
 

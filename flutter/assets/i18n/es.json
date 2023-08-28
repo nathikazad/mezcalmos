@@ -1092,7 +1092,8 @@
             "notes": "Escribe tus notas aquí",
             "deliveryLocation": "Lugar de entrega",
             "deliveryType": "Tipo de entrega",
-            "paymentMethod": "Método de pago"
+            "paymentMethod": "Método de pago",
+            "dvHelper": "El precio de entrega será establecido por el restaurante al revisar tu pedido y ubicación."
           }
         },
         "ViewItemScreen": {
@@ -1644,7 +1645,7 @@
             "party": "Fiesta",
             "social": "Social",
             "therapy": "Terapia",
-            "uncategorized" : "Sin categoría",
+            "uncategorized": "Sin categoría",
             "scheduled": "Programada",
             "oneTime": "Una vez",
             "onDemand": "On demand",
@@ -1804,7 +1805,7 @@
             "classes": "Clases",
             "events": "Eventos",
             "studio": "Estudio",
-            "languageSchool":"Idioma",
+            "languageSchool": "Idioma",
             "noBusinessesFound": "No se encontraron negocios",
             "noClassesFound": "No se encontraron clases",
             "noEventsFound": "No se encuentran eventos",
@@ -1824,7 +1825,7 @@
             "yoga": "yoga",
             "fitness": "Aptitud física",
             "dance": "Bailar",
-            "uncategorized" :"Sin categoría"
+            "uncategorized": "Sin categoría"
           }
         },
         "TherapyView": {
@@ -2491,7 +2492,6 @@
         "story": "Historia",
         "facebook": "Facebook",
         "save": "Ahorrar"
-  
       },
       "CreateServiceView": {
         "pages": {
@@ -2518,7 +2518,7 @@
             "imageError": "Se requiere una imagen",
             "description": "Descripción",
             "descriptionHintText": "Ingrese una descripción",
-            "phoneNumberHelper" : "Incluye el código de país: +52XXXXXXXX",
+            "phoneNumberHelper": "Incluye el código de país: +52XXXXXXXX",
             "phoneText": "Número de teléfono",
             "phoneTextDescription": "Ingrese su número telefónico",
             "phoneTextError": "Ingrese un número de teléfono válido",
@@ -2558,7 +2558,7 @@
             }
           }
         },
-        "formErrorText" : "Verifique que todos los campos requeridos estén ahí",
+        "formErrorText": "Verifique que todos los campos requeridos estén ahí",
         "createText": "Crear",
         "info": "Información",
         "schedule": "Calendario",
@@ -2661,7 +2661,7 @@
       "ServiceInfoEditView": {
         "name": "Nombre",
         "phoneNumber": "Número de teléfono",
-        "phoneNumberHelper" : "Incluye el código de país: +52XXXXXXXX",
+        "phoneNumberHelper": "Incluye el código de país: +52XXXXXXXX",
         "location": "Localización",
         "phoneErrorText": "Por favor ingrese un número de teléfono válido",
         "description": "Descripción",
@@ -2984,7 +2984,7 @@
       },
       "MezServiceOpenHours": {
         "openHours": "Horas Laborales",
-        "closed" : "Cerrada",
+        "closed": "Cerrada",
         "weekDays": {
           "monday": "Lunes",
           "tuesday": "Martes",
@@ -4309,11 +4309,11 @@
       "canceledOrderTitle": "Orden cancelada",
       "canceledOrderBody": "Su pedido ha sido cancelado",
       "newBusinessTitle": "Nuevo negocio",
-"newBusinessBody": "Se ha creado un nuevo negocio",
-"newRestaurantTitle": "Nuevo restaurante",
-"newRestaurantBody": "Se ha creado un nuevo restaurante",
-"newLaundryTitle": "Nueva lavandería",
-"newLaundryBody": "Se ha creado una nueva lavandería"
+      "newBusinessBody": "Se ha creado un nuevo negocio",
+      "newRestaurantTitle": "Nuevo restaurante",
+      "newRestaurantBody": "Se ha creado un nuevo restaurante",
+      "newLaundryTitle": "Nueva lavandería",
+      "newLaundryBody": "Se ha creado una nueva lavandería"
     },
     "pages": {
       "AdminTabsView": {

@@ -9,6 +9,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCar
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -16,6 +17,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:sizer/sizer.dart';
 
 class ViewCartScreen extends StatefulWidget {
@@ -119,6 +121,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 CardSummaryCard(
                   controller: viewController,
                 ),
+                smallSepartor,
+                MezCard(
+                    firstAvatarIcon: Icons.delivery_dining,
+                    firstAvatarIconColor: primaryBlueColor,
+                    firstAvatarBgColor: secondaryLightBlueColor,
+                    content: Text("${_i18n()['dvHelper']}")),
                 SizedBox(
                   height: 15.h,
                 ),
@@ -211,6 +219,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             onClick: () async {
               if (viewController.formKey.currentState?.validate() == true &&
                   viewController.canOrder) {
+                mezDbgPrint("Called");
                 await viewController.checkoutActionButton();
               }
             },

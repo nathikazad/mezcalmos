@@ -32,7 +32,7 @@ query getCustomerCart($customer_id: Int!) {
     restaurant {
       id
 
-      delivery_details_of_deliverer {
+      delivery_details {
         cost_per_km
         free_delivery_km_range
         free_delivery_minimum_cost
@@ -61,6 +61,7 @@ query getCustomerCart($customer_id: Int!) {
         firebase_id
         is_open
         image
+        phone_number
         language
         description_id
         name
@@ -167,7 +168,7 @@ subscription listen_on_customer_cart($customer_id: Int!) {
     restaurant {
       id
       details_id
-      delivery_details_of_deliverer {
+      delivery_details {
         cost_per_km
         cost_per_km_from_base
         free_delivery_km_range
@@ -183,6 +184,7 @@ subscription listen_on_customer_cart($customer_id: Int!) {
         is_open
         firebase_id
         name
+        phone_number
         online_ordering
         stripe_info {
           id
