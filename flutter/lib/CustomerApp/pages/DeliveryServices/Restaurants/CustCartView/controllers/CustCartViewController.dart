@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
@@ -31,8 +32,11 @@ class CustCartViewController {
 
   // Obs variables //
   //Rxn<CustStripeInfo> custStripeInfo = Rxn();
+  Rx<cModels.DeliveryType> dvType = Rx(cModels.DeliveryType.Delivery);
   Rxn<List<CreditCard>> _cards = Rxn();
   RxBool orderSentToRest = RxBool(false);
+
+  double pFees = 5;
   List<CreditCard>? get customerCards => _cards.value;
   RxList<PaymentOption> options = RxList<PaymentOption>();
   Rxn<loc.MezLocation> orderToLocation = Rxn();
@@ -60,6 +64,8 @@ class CustCartViewController {
   DeliveryCost? get deliveryCost {
     return cart.restaurant?.deliveryCost;
   }
+
+  bool get showDelivery => dvType.value == cModels.DeliveryType.Delivery;
 
   RxBool isShippingSet = RxBool(false);
   RxBool hasData = RxBool(false);
@@ -238,23 +244,23 @@ class CustCartViewController {
     cart.notes = noteText.text;
     final String message = await contructOrderMessage();
     mezDbgPrint(message);
-    // if (cart.restaurant?.info.phoneNumber != null) {
-    //   try {
-    //     final bool res = await callWhatsappNumber(
-    //         cart.restaurant!.info.phoneNumber!,
-    //         message: message);
-    //     orderSentToRest.value = res;
-    //     if (res) {
-    //       await cartController.clearCart();
-    //     }
-    //   } catch (e, stk) {
-    //     showErrorSnackBar();
-    //     mezDbgPrint(e);
-    //     mezDbgPrint(stk);
-    //   }
-    // } else {
-    //   showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
-    // }
+    if (cart.restaurant?.info.phoneNumber != null) {
+      try {
+        final bool res = await callWhatsappNumber(
+            cart.restaurant!.info.phoneNumber!,
+            message: message);
+        orderSentToRest.value = res;
+        if (res) {
+          await cartController.clearCart();
+        }
+      } catch (e, stk) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
+    } else {
+      showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
+    }
 
     // cart.notes = noteText.text.inCaps;
     // num? newOrderId;
@@ -357,6 +363,9 @@ class CustCartViewController {
   }
 
   bool get canOrder {
+    if (dvType == cModels.DeliveryType.Pickup) {
+      return true;
+    }
     return cart.toLocation != null && cart.shippingCost != null;
   }
 
@@ -469,23 +478,25 @@ class CustCartViewController {
 
   Future<String> contructOrderMessage() async {
     final UserInfo? user = Get.find<AuthController>().user;
-
-    final String mapsUrl = MapHelper.getGMapsDirectionLink(
-        cart.restaurant!.info.location.toLatLng()!,
-        cart.toLocation!.toLatLng()!);
-    final String shortUrl = await getShortLink(mapsUrl);
+    String? shortUrl;
+    if (showDelivery && cart.toLocation != null) {
+      final String mapsUrl = MapHelper.getGMapsDirectionLink(
+          cart.restaurant!.info.location.toLatLng()!,
+          cart.toLocation!.toLatLng()!);
+      shortUrl = await getShortLink(mapsUrl);
+    }
 
     final String separator = "\n" + "=" * 10 + "\n";
 
     final String? phoneNumber =
         Get.find<CustomerAuthController>().customer?.phoneNumber;
 
-    final String customerInfo =
-        "👤 Customer Info\nName: ${user!.name}\nAddress: ${cart.toLocation?.address}" +
-            (phoneNumber != null ? "\nPhone: $phoneNumber" : "") +
-            "\nRoute: $shortUrl";
+    final String customerInfo = "👤 Customer Info\nName: ${user!.name}" +
+        (showDelivery ? "\nAddress: ${cart.toLocation?.address}" : "") +
+        (phoneNumber != null ? "\nPhone: $phoneNumber" : "") +
+        (shortUrl != null ? "\nRoute: $shortUrl" : "");
     final String orderInfo =
-        "🛒 Order Info\nItems cost: \$${cart.itemsCost().toInt()}\nQuantity: ${cart.quantity()}" +
+        "🛒 Order Info\nDelivery Type: ${cart.isInStorePickup ? 'PICKUP' : 'DELIVERY'}\nItems cost: \$${cart.itemsCost().round()}\nPlatform fees : ${pFees.toPriceString()}\nTotal: ${(cart.itemsCost().round() + pFees).toPriceString()}\nQuantity: ${cart.quantity()}" +
             (cart.notes?.isNotEmpty == true ? "\nNotes: ${cart.notes}" : "") +
             (cart.deliveryTime != null
                 ? "\n⏰ Scheduled Time: ${DateFormat('yyyy-MM-dd HH:mm a').format(cart.deliveryTime!)}"
@@ -502,7 +513,10 @@ class CustCartViewController {
         DateFormat('yyyy-MM-dd HH:mm a').format(now);
     final String dateTimeInfo = "📅 $formattedDateTime";
 
-    String header = "\n----- 🛍️ NEW ORDER 🛍️ -----"; // Creative header
+    String header = "\n----- 🛍️ NEW ORDER 🛍️ -----" +
+        (cart.isInStorePickup
+            ? '\n----- 🚶‍♂️ PICKUP 🚶‍♂️ -----'
+            : '\n----- 🚚 DELIVERY 🚚 -----'); // Creative header
 
     if (cart.deliveryTime != null) {
       header = "\n----- 🕒 SCHEDULED ORDER 🕒 -----"; // Scheduled order header
@@ -517,6 +531,14 @@ class CustCartViewController {
     final String cleanedMessage = message.replaceAll(RegExp(r'[\[\]{},]'), '');
 
     return cleanedMessage;
+  }
+
+  void switchDeliveryType({required cModels.DeliveryType type}) {
+    dvType.value = type;
+    _cartRxn.value?.deliveryType = dvType.value;
+    if (_cartRxn.value?.deliveryType == cModels.DeliveryType.Pickup) {
+      _cartRxn.value?.shippingCost = null;
+    }
   }
 }
 

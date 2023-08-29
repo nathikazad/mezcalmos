@@ -1073,6 +1073,7 @@
             },
             "OrderSummaryCard": {
               "add": "Add",
+              "pFees": "Platform fees",
               "waitingForCustomer": "Waiting to accept",
               "orderSummary": "Summary",
               "orderCost": "Order cost",

@@ -115,6 +115,8 @@ class Cart {
         0, (int sum, CartItem cartItem) => sum + cartItem.quantity);
   }
 
+  bool get isInStorePickup => deliveryType == cModels.DeliveryType.Pickup;
+
   num itemsCost() {
     if (cartItems.length == 0) return 0;
     return cartItems.fold<num>(

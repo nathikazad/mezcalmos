@@ -68,32 +68,54 @@ class CardSummaryCard extends StatelessWidget {
                     )
                   ],
                 ),
-              ),
-              //=======================Delivery cost :===============
+              ), //==================Order cost :==================
               Container(
-                padding: EdgeInsets.only(
-                  bottom: 4,
-                ),
+                padding: const EdgeInsets.only(bottom: 4),
                 width: Get.width,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        child: Text("${_i18n()["deliveryCost"]}",
-                            style: txt.bodyMedium),
+                        child:
+                            Text("${_i18n()["pFees"]}", style: txt.bodyMedium),
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text('-',
-                            style: txt.bodyMedium
-                                ?.copyWith(fontStyle: FontStyle.italic)),
-                      ],
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(controller.pFees.toPriceString(),
+                            style: txt.bodyMedium),
+                      ),
                     )
                   ],
                 ),
               ),
+              //=======================Delivery cost :===============
+              if (controller.showDelivery)
+                Container(
+                  padding: EdgeInsets.only(
+                    bottom: 4,
+                  ),
+                  width: Get.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: Text("${_i18n()["deliveryCost"]}",
+                              style: txt.bodyMedium),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text('-',
+                              style: txt.bodyMedium
+                                  ?.copyWith(fontStyle: FontStyle.italic)),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               //=======================Stripe fees :=============== //
               if (controller.showFees)
                 Container(
@@ -138,7 +160,9 @@ class CardSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(controller.cart.itemsCost().toPriceString(),
+                        child: Text(
+                            (controller.cart.itemsCost() + controller.pFees)
+                                .toPriceString(),
                             style: txt.headlineSmall),
                       ),
                     ),

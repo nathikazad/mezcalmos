@@ -10,12 +10,14 @@ class MezStringDropDown extends StatefulWidget {
   final Map<String, dynamic> langPath;
   final bool withNoneItem;
   final TextStyle? elementsTextStyle;
+  final Color? fillColor;
 
   const MezStringDropDown({
     required this.labelText,
     required this.langPath,
     this.withNoneItem = false,
     this.value,
+    this.fillColor,
     this.elementsTextStyle,
     required this.items,
     required this.onChanged,
@@ -49,8 +51,9 @@ class _MezStringDropDownState extends State<MezStringDropDown> {
     return DropdownButtonFormField<String>(
       value: _selectedValue,
       decoration: InputDecoration(
-        labelText: widget.labelText,
+        hintText: widget.labelText,
         errorMaxLines: 2,
+        fillColor: widget.fillColor,
         alignLabelWithHint: false,
         floatingLabelBehavior: FloatingLabelBehavior.never,
         //  border: OutlineInputBorder(),

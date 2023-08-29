@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/CustDeliveryTypePicker.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/BuildItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/CartIsEmptyScreen.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCar
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/components/OrderSummaryCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -57,7 +59,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: () {
-          MezRouter.popEverythingTillBeforeHome();
+          if (viewController.orderSentToRest.value) {
+            MezRouter.popEverythingTillBeforeHome();
+          } else
+            MezRouter.back();
         },
         title: "${_i18n()["myCart"]}",
       ),
@@ -125,7 +130,13 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                         periodOfTime: viewController.cart.cartPeriod,
                         schedule: viewController.cart.restaurant!.schedule,
                       ),
-                      _deliveryLocation(),
+                      CustDeliveryTypeSelector(
+                        onDeliveryTypeChanged: (DeliveryType value) {
+                          viewController.switchDeliveryType(type: value);
+                          mezDbgPrint("Changed from parent callback ==>$value");
+                        },
+                      ),
+                      if (viewController.showDelivery) _deliveryLocation(),
                     ],
                   ),
                 ),
@@ -153,11 +164,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   controller: viewController,
                 ),
                 smallSepartor,
-                MezCard(
-                    firstAvatarIcon: Icons.delivery_dining,
-                    firstAvatarIconColor: primaryBlueColor,
-                    firstAvatarBgColor: secondaryLightBlueColor,
-                    content: Text("${_i18n()['dvHelper']}")),
+                if (viewController.showDelivery)
+                  MezCard(
+                      firstAvatarIcon: Icons.delivery_dining,
+                      firstAvatarIconColor: primaryBlueColor,
+                      firstAvatarBgColor: secondaryLightBlueColor,
+                      content: Text("${_i18n()['dvHelper']}")),
                 SizedBox(
                   height: 15.h,
                 ),

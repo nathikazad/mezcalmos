@@ -519,6 +519,11 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "CustDeliveryTypeSelector": {
+        "dvType": "Tipo de entrega",
+        "delivery": "Entrega",
+        "pickup": "Recogida en tienda"
+      },
       "CustOrderCostCard": {
         "orderCost": "Costo de la orden"
       },
@@ -1061,6 +1066,7 @@
             },
             "OrderSummaryCard": {
               "add": "Agregar",
+              "pFees": "Tarifas de plataforma",
               "waitingForCustomer": "Esperando aceptar",
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",

@@ -906,7 +906,6 @@ class DashedLineVerticalPainter extends CustomPainter {
 }
 
 Future<bool> callWhatsappNumber(String number, {String? message}) async {
-  mezDbgPrint("contact $number");
   final String encodedMessage =
       message != null ? Uri.encodeComponent(message) : "";
 

@@ -414,8 +414,10 @@ String getGMapsDirectionLink(LatLng origin, LatLng destination) {
       'markers=color:red|label:O|${origin.latitude},${origin.longitude}'
       '&markers=color:blue|label:D|${destination.latitude},${destination.longitude}';
 
+  final String modeParam = 'travelmode=driving'; // Add the mode parameter here
+
   final String url =
-      '$baseUrl&$originParam&$destinationParam&$waypoints&$polylinePoints&$markers';
+      '$baseUrl&$originParam&$destinationParam&$waypoints&$polylinePoints&$markers&$modeParam';
   return url;
 }
 
