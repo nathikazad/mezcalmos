@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
+import 'package:mezcalmos/Shared/models/User.dart';
 // import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
@@ -30,7 +32,7 @@ class CustCartViewController {
   // Obs variables //
   //Rxn<CustStripeInfo> custStripeInfo = Rxn();
   Rxn<List<CreditCard>> _cards = Rxn();
-
+  RxBool orderSentToRest = RxBool(false);
   List<CreditCard>? get customerCards => _cards.value;
   RxList<PaymentOption> options = RxList<PaymentOption>();
   Rxn<loc.MezLocation> orderToLocation = Rxn();
@@ -233,32 +235,26 @@ class CustCartViewController {
   }
 
   Future<void> checkoutActionButton() async {
-    Map<String, dynamic> data = cart.toReadableJson();
-    final String seperator = "\n ================================= \n";
-    final String customerInfo =
-        "Customer Info \n Name : ${Get.find<AuthController>().user!.name} \n Address : ${cart.toLocation?.address} ";
-    final String orderInfo =
-        "Order Info \n Items cost: ${cart.itemsCost().toInt()} \n Quantity: ${cart.quantity()} \n Notes : ${cart.notes ?? ""},";
-    final String items =
-        "Items : \n ${cart.cartItems.map<String>((CartItem e) => "${e.toReadableString()}").toList()}"
-            .replaceAll("[", "")
-            .replaceAll("]", "");
-
-    final String message =
-        customerInfo + seperator + orderInfo + seperator + items;
-    mezDbgPrint("$message");
-    if (cart.restaurant?.info.phoneNumber != null) {
-      try {
-        await callWhatsappNumber(cart.restaurant!.info.phoneNumber!,
-            message: message);
-      } catch (e, stk) {
-        showErrorSnackBar();
-        mezDbgPrint(e);
-        mezDbgPrint(stk);
-      }
-    } else {
-      showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
-    }
+    cart.notes = noteText.text;
+    final String message = await contructOrderMessage();
+    mezDbgPrint(message);
+    // if (cart.restaurant?.info.phoneNumber != null) {
+    //   try {
+    //     final bool res = await callWhatsappNumber(
+    //         cart.restaurant!.info.phoneNumber!,
+    //         message: message);
+    //     orderSentToRest.value = res;
+    //     if (res) {
+    //       await cartController.clearCart();
+    //     }
+    //   } catch (e, stk) {
+    //     showErrorSnackBar();
+    //     mezDbgPrint(e);
+    //     mezDbgPrint(stk);
+    //   }
+    // } else {
+    //   showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
+    // }
 
     // cart.notes = noteText.text.inCaps;
     // num? newOrderId;
@@ -469,6 +465,58 @@ class CustCartViewController {
   void setDeliveryTime(DateTime? dateTime) {
     _cartRxn.value?.deliveryTime = dateTime;
     _cartRxn.refresh();
+  }
+
+  Future<String> contructOrderMessage() async {
+    final UserInfo? user = Get.find<AuthController>().user;
+
+    final String mapsUrl = MapHelper.getGMapsDirectionLink(
+        cart.restaurant!.info.location.toLatLng()!,
+        cart.toLocation!.toLatLng()!);
+    final String shortUrl = await getShortLink(mapsUrl);
+
+    final String separator = "\n" + "=" * 10 + "\n";
+
+    final String? phoneNumber =
+        Get.find<CustomerAuthController>().customer?.phoneNumber;
+
+    final String customerInfo =
+        "👤 Customer Info\nName: ${user!.name}\nAddress: ${cart.toLocation?.address}" +
+            (phoneNumber != null ? "\nPhone: $phoneNumber" : "") +
+            "\nRoute: $shortUrl";
+    final String orderInfo =
+        "🛒 Order Info\nItems cost: \$${cart.itemsCost().toInt()}\nQuantity: ${cart.quantity()}" +
+            (cart.notes?.isNotEmpty == true ? "\nNotes: ${cart.notes}" : "") +
+            (cart.deliveryTime != null
+                ? "\n⏰ Scheduled Time: ${DateFormat('yyyy-MM-dd HH:mm a').format(cart.deliveryTime!)}"
+                : "");
+
+    final String items =
+        "🍔 Items:\n${cart.cartItems.map<String>((CartItem e) => "${e.toReadableString()}").join("\n")}";
+
+    final String restaurantName =
+        "🏠 Restaurant: ${cart.restaurant?.info.name}";
+
+    final DateTime now = DateTime.now();
+    final String formattedDateTime =
+        DateFormat('yyyy-MM-dd HH:mm a').format(now);
+    final String dateTimeInfo = "📅 $formattedDateTime";
+
+    String header = "\n----- 🛍️ NEW ORDER 🛍️ -----"; // Creative header
+
+    if (cart.deliveryTime != null) {
+      header = "\n----- 🕒 SCHEDULED ORDER 🕒 -----"; // Scheduled order header
+    }
+
+    final String footer =
+        "\n🙏 Thank you for using MezKala app!\n$restaurantName\n";
+
+    final String message =
+        "$header$separator$dateTimeInfo$separator$customerInfo$separator$orderInfo$separator$items$separator$footer";
+
+    final String cleanedMessage = message.replaceAll(RegExp(r'[\[\]{},]'), '');
+
+    return cleanedMessage;
   }
 }
 

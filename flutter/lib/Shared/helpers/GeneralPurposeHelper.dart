@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
@@ -677,6 +679,40 @@ Future<int?> addReviewDialog(
       });
 }
 
+void showMezSheet({
+  required BuildContext context,
+  required Widget content,
+  String? title,
+}) {
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+    ),
+    builder: (BuildContext context) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (title != null) ...[
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+              child: Text(
+                title,
+                style: context.textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Divider(),
+          ],
+          content,
+          smallSepartor
+        ],
+      );
+    },
+  );
+}
+
 Widget radioCircleButton(
     {bool value = false, required void Function(bool) onTap}) {
   return InkWell(
@@ -869,7 +905,7 @@ class DashedLineVerticalPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
-Future<void> callWhatsappNumber(String number, {String? message}) async {
+Future<bool> callWhatsappNumber(String number, {String? message}) async {
   mezDbgPrint("contact $number");
   final String encodedMessage =
       message != null ? Uri.encodeComponent(message) : "";
@@ -883,16 +919,34 @@ Future<void> callWhatsappNumber(String number, {String? message}) async {
         'text': encodedMessage,
       },
     );
-    await launchUrl(launchUri);
+    return await launchUrl(launchUri);
   } else {
     final String androidUrl =
         "whatsapp://send?phone=$number&text=$encodedMessage";
     final String iosUrl = "https://wa.me/$number?text=$encodedMessage";
 
     if (Platform.isIOS) {
-      await launchUrl(Uri.parse(iosUrl));
+      return await launchUrl(Uri.parse(iosUrl),
+          mode: LaunchMode.externalApplication);
     } else {
-      await launchUrl(Uri.parse(androidUrl));
+      return await launchUrl(Uri.parse(androidUrl),
+          mode: LaunchMode.externalApplication);
     }
+  }
+}
+
+Future<String> getShortLink(String longUrl) async {
+  final http.Response response = await http.post(
+    Uri.parse('https://cleanuri.com/api/v1/shorten'),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode({'url': longUrl}),
+  );
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    return responseData['result_url'] as String;
+  } else {
+    throw Exception('Failed to shorten URL');
   }
 }

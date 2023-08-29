@@ -397,3 +397,31 @@ class AutoCompleteResult {
     return other.placeId == placeId && other.description == description;
   }
 }
+
+String getGMapsDirectionLink(LatLng origin, LatLng destination) {
+  final String baseUrl = 'https://www.google.com/maps/dir/?api=1';
+  final String originParam = 'origin=${origin.latitude},${origin.longitude}';
+  final String destinationParam =
+      'destination=${destination.latitude},${destination.longitude}';
+  final String waypoints =
+      'waypoints=${origin.latitude},${origin.longitude}|${destination.latitude},${destination.longitude}';
+
+  // Encode the waypoints for polyline
+  final String polylinePoints =
+      'path=color:0x0000ff|enc:${_encodePolyline([origin, destination])}';
+
+  final String markers =
+      'markers=color:red|label:O|${origin.latitude},${origin.longitude}'
+      '&markers=color:blue|label:D|${destination.latitude},${destination.longitude}';
+
+  final String url =
+      '$baseUrl&$originParam&$destinationParam&$waypoints&$polylinePoints&$markers';
+  return url;
+}
+
+String _encodePolyline(List<LatLng> points) {
+  final List<String> encodedPoints = points.map((LatLng point) {
+    return '${point.latitude.toStringAsFixed(6)},${point.longitude.toStringAsFixed(6)}';
+  }).toList();
+  return Uri.encodeComponent(encodedPoints.join('|'));
+}

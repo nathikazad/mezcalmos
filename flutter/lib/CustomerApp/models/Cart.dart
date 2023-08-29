@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
@@ -334,26 +335,37 @@ class CartItem {
   }
 
   String toReadableString() {
-    final String choices =
-        "Choices :  ${chosenChoices.entries.map((MapEntry<String, List<Choice>> e) {
-      return {
-        "Option": item
-            .findOption(int.parse(e.key))
-            ?.name
-            .toFirebaseFormat()
-            .toString()
-            .replaceAll("{", "")
-            .replaceAll("}", ""),
-        "Choices": e.value
-            .map((Choice e) => e.toReadableJson())
-            .toList()
-            .toString()
-            .replaceAll("{", "")
-            .replaceAll("}", ""),
-      };
-    }).toList()}";
+    final String optionChoices =
+        chosenChoices.entries.map((MapEntry<String, List<Choice>> entry) {
+      final String? optionName = item
+          .findOption(int.parse(entry.key))
+          ?.name
+          .getTranslation(userLanguage)
+          .toString();
+
+      final String choiceList = entry.value.map((Choice choice) {
+        String choiceText = choice.name.getTranslation(userLanguage) ?? "";
+        if (choice.cost > 0) {
+          choiceText += " + \$${choice.cost.round()}";
+        }
+
+        return "     -$choiceText";
+      }).join("\n");
+
+      return "  -$optionName:\n$choiceList";
+    }).join("\n");
+
+    final String choicesSection =
+        optionChoices.isNotEmpty ? "$optionChoices" : '';
+
+    final String notesSection =
+        notes?.isNotEmpty == true ? "Item notes: $notes," : '';
+
     final String data =
-        "Name: ${item.name.toFirebaseFormat().toString().replaceAll("{", "").replaceAll("}", "")} \n Cost per one: ${costPerOne()} \n Quantity: $quantity \n Total cost: ${totalCost()} \n Item notes : $notes, \n $choices \n ----------------------";
+        "* ${item.name.getTranslation(userLanguage)}: \$${costPerOne().round()} x $quantity" +
+            (notesSection.isNotEmpty ? "\n  $notesSection" : '') +
+            (choicesSection.isNotEmpty ? "\n$choicesSection" : '') +
+            "\n";
 
     return data;
   }

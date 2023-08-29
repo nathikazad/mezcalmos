@@ -6,8 +6,13 @@ import 'package:mezcalmos/CustomerApp/pages/NewWrapper/components/CustRestaurant
 import 'package:mezcalmos/CustomerApp/pages/NewWrapper/controllers/CustHomeViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -33,8 +38,8 @@ class _CustHomeViewState extends State<CustHomeView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // key: Get.find<SideMenuDrawerController>().getNewKey(),
-      // drawer: MezSideMenu(),
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
       backgroundColor: Colors.white,
       // appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu),
       body: NestedScrollView(
@@ -46,6 +51,7 @@ class _CustHomeViewState extends State<CustHomeView>
                 pinned: true,
                 elevation: 0,
                 automaticallyImplyLeading: false,
+                leading: _menuBtn(),
                 // expandedHeight: 150,
                 title: FittedBox(
                   fit: BoxFit.fitWidth,
@@ -83,7 +89,7 @@ class _CustHomeViewState extends State<CustHomeView>
                               viewController.filter();
                             },
                             decoration: InputDecoration(
-                              hintText: 'Search...',
+                              hintText: "${_i18n()['search']}",
                               hintStyle: context.textTheme.bodyMedium?.copyWith(
                                 color: Colors.grey.shade600,
                               ),
@@ -103,7 +109,43 @@ class _CustHomeViewState extends State<CustHomeView>
                         ),
                         hSmallSepartor,
                         MezIconButton(
-                          onTap: () {},
+                          onTap: () async {
+                            showMezSheet(
+                                title: "${_i18n()['filters']}",
+                                content: Container(
+                                  margin: const EdgeInsets.all(8),
+                                  child: Column(
+                                    children: [
+                                      Obx(
+                                        () => SwitchListTile.adaptive(
+                                            title: Text(
+                                                "${_i18n()['showOnlyOpen']}"),
+                                            value: viewController
+                                                .showOnlyOpen.value,
+                                            onChanged: (bool v) {
+                                              viewController.switchOnlyOpen(
+                                                  value: v);
+                                              mezDbgPrint(viewController
+                                                  .showOnlyOpen.value);
+                                            }),
+                                      ),
+                                      smallSepartor,
+                                      MezInkwell(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 8, horizontal: 0),
+                                        label: "${_i18n()['filter']}",
+                                        onClick: () async {
+                                          await viewController.filter();
+
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                context: context);
+                          },
                           padding: const EdgeInsets.all(8),
                           iconSize: 25,
                           icon: Icons.filter_list,
@@ -125,7 +167,7 @@ class _CustHomeViewState extends State<CustHomeView>
                               children: [
                                 Icon(Icons.food_bank_rounded),
                                 hTinySepartor,
-                                Text("Restaurants"),
+                                Text("${_i18n()['restaurants']['title']}"),
                               ],
                             ),
                           ),
@@ -135,7 +177,7 @@ class _CustHomeViewState extends State<CustHomeView>
                               children: [
                                 Icon(Icons.fastfood_rounded),
                                 hTinySepartor,
-                                Text("Items"),
+                                Text("${_i18n()['items']}"),
                               ],
                             ),
                           ),
@@ -162,9 +204,10 @@ class _CustHomeViewState extends State<CustHomeView>
                     }
                     return Column(
                       children: List.generate(
-                          viewController.restaurants.length,
+                          viewController.filteredRestaurants.length,
                           (int index) => CustRestaurantCard(
-                              restaurant: viewController.restaurants[index])),
+                              restaurant:
+                                  viewController.filteredRestaurants[index])),
                     );
                   },
                 ),
@@ -227,6 +270,34 @@ class _CustHomeViewState extends State<CustHomeView>
       margin: EdgeInsets.all(5),
       child: Obx(
         () => Text("${_i18n()['appDescription']}", style: textStyle),
+      ),
+    );
+  }
+
+  Widget _menuBtn() {
+    return Transform.scale(
+      scale: 0.6,
+      child: InkWell(
+        onTap: () {
+          Get.find<SideMenuDrawerController>().openMenu();
+        },
+        child: Ink(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 216, 225, 249),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 7),
+                ),
+              ],
+              color: primaryBlueColor),
+          child: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }

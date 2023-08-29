@@ -37,6 +37,11 @@ class CustHomeViewController {
       isFetchingRestaurants.value && restaurants.isEmpty;
   bool get showIemsShimmer => isFetchingItems.value;
   Future<void> init({required TickerProvider vsync}) async {
+    _initTabController(vsync);
+    await fetchRestaurants().then((value) => filter());
+  }
+
+  void _initTabController(TickerProvider vsync) {
     tabController = TabController(length: 2, vsync: vsync);
     tabController.addListener(() {
       if (tabController.index == 0) {
@@ -46,7 +51,6 @@ class CustHomeViewController {
       }
       filter();
     });
-    await fetchRestaurants().then((value) => filter());
   }
 
   Future<void> fetchRestaurants() async {
@@ -65,7 +69,7 @@ class CustHomeViewController {
           fromLocation: puertoEscondidoLocation);
 
       _restaurants += newData;
-      _assignServiceIds();
+
       if (newData.length == 0) {
         _hasReachedEndData = true;
       }
@@ -89,6 +93,7 @@ class CustHomeViewController {
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
     if (searchType.value == SearchType.searchByRestaurantName) {
       newList = newList.searchByName(searchQuery.value) as List<Restaurant>;
+      newList = newList.showOnlyOpen(showOnlyOpen.value) as List<Restaurant>;
       newList.sortByOpen();
       filteredRestaurants.value = newList;
     } else {
@@ -117,12 +122,8 @@ class CustHomeViewController {
     }
   }
 
-  void _assignServiceIds() {
-    servicesIds.clear();
-    servicesIds = _restaurants
-        // .where((Restaurant element) => element.isOpen)
-        .map((Restaurant e) => e.info.hasuraId)
-        .toList();
+  void switchOnlyOpen({required bool value}) {
+    showOnlyOpen.value = value;
   }
 }
 

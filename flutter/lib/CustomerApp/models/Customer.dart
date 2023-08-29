@@ -12,6 +12,7 @@ class Customer {
   NotificationInfo? notificationInfo;
   SavedLocations savedLocations = <SavedLocation>[];
   CustStripeInfo? stripeInfo;
+  String? phoneNumber;
   dynamic data;
   SavedLocation? get defaultLocation => savedLocations.firstWhereOrNull(
       (SavedLocation savedLocation) => savedLocation.defaultLocation);
@@ -20,6 +21,7 @@ class Customer {
     this.appVersion,
     this.notificationInfo,
     this.stripeInfo,
+    this.phoneNumber,
   });
 
   void addSavedLocation(SavedLocation loc) {

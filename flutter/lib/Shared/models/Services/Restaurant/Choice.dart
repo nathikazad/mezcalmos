@@ -2,6 +2,7 @@
 // ignore_for_file: avoid_annotating_with_dynamic
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class Choice {
@@ -36,12 +37,8 @@ class Choice {
         "available": available,
       };
   Map<String, dynamic> toReadableJson() => {
-        "name": name
-            .toFirebaseFormat()
-            .toString()
-            .replaceAll("{", "")
-            .replaceAll("}", ""),
-        "cost": cost,
+        "": name.getTranslation(userLanguage).toString(),
+        "cost": "\$$cost",
       };
   @override
   bool operator ==(Object other) {

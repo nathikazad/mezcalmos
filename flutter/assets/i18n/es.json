@@ -1080,6 +1080,8 @@
             }
           },
           "ViewCartScreen": {
+            "sentTitle": "Pedido realizado",
+            "sentSubtitle": "Pedido realizado. Enviado al restaurante por WhatsApp. Verifica el estado del pedido con el restaurante. ¡Gracias!",
             "ops": "Oops",
             "restaurantClosed": "El restaurante está cerrado ahora",
             "distanceError": "La distancia entre usted y el restaurante es de más de 10 km!",
@@ -2063,6 +2065,11 @@
       },
 
       "CustomerWrapper": {
+        "filter": "Filtrar",
+        "filters": "Filtros",
+        "items": "Elementos",
+        "search": "Buscar...",
+        "showOnlyOpen": "Mostrar solo restaurantes abiertos",
         "orders": "Pedidos",
         "profile": "Perfil",
         "messages": "Mensajes",

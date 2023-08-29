@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -55,10 +56,40 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       resizeToAvoidBottomInset: false,
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        onClick: MezRouter.back,
+        onClick: () {
+          MezRouter.popEverythingTillBeforeHome();
+        },
         title: "${_i18n()["myCart"]}",
       ),
       body: Obx(() {
+        if (viewController.orderSentToRest.value) {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.check_circle_rounded,
+                  color: primaryBlueColor,
+                  size: 50.mezSp,
+                ),
+                meduimSeperator,
+                Text(
+                  "${_i18n()['sentTitle']}",
+                  style: context.textTheme.bodyLarge
+                      ?.copyWith(color: primaryBlueColor),
+                ),
+                smallSepartor,
+                Text(
+                  "${_i18n()['sentSubtitle']}",
+                  textAlign: TextAlign.center,
+                ),
+                bigSeperator
+              ],
+            ),
+          );
+        }
         if (viewController.hasData.isFalse) {
           return Container(
             alignment: Alignment.center,
@@ -207,7 +238,8 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
     return Obx(
       () {
         mezDbgPrint("Can order from view =========>${viewController.canOrder}");
-        if (viewController.cart.cartItems.length > 0) {
+        if (viewController.cart.cartItems.length > 0 &&
+            viewController.orderSentToRest.value == false) {
           return MezButton(
             label: (viewController.cart.restaurant?.isOpen == false)
                 ? '${_i18n()["scheduleOrder"]}'

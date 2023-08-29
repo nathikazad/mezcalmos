@@ -38,23 +38,57 @@ class CustRestaurantCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CachedNetworkImage(
-                imageUrl: restaurant!.info.image,
-                height: 30.mezW,
-                width: 30.mezW,
-                fit: BoxFit.cover,
-                imageBuilder: (BuildContext context,
-                    ImageProvider<Object> imageProvider) {
-                  return Container(
-                    margin: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: imageProvider, fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(15),
-                        border:
-                            Border.all(width: 2, color: Colors.grey.shade100)),
-                  );
-                },
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: restaurant!.info.image,
+                    height: 30.mezW,
+                    width: 30.mezW,
+                    fit: BoxFit.cover,
+                    imageBuilder: (BuildContext context,
+                        ImageProvider<Object> imageProvider) {
+                      return Container(
+                        margin: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                          border:
+                              Border.all(width: 2, color: Colors.grey.shade100),
+                        ),
+                      );
+                    },
+                  ),
+                  if (restaurant!.isOpen == false)
+                    Container(
+                      height: 30.mezW,
+                      width: 30.mezW,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.grey.shade900
+                            .withOpacity(0.5), // Adjust opacity as needed
+                      ),
+                      child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Text.rich(TextSpan(children: [
+                            WidgetSpan(
+                              child: Icon(
+                                Icons.lock_clock,
+                                size: 15.mezSp,
+                              ),
+                            ),
+                            WidgetSpan(child: hTinySepartor),
+                            TextSpan(text: "Closed"),
+                          ]))),
+                    ),
+                ],
               ),
               hTinySepartor,
               Flexible(

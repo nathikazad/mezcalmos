@@ -35,6 +35,7 @@ Future<Customer?> get_customer({required int user_id}) async {
 
     final Customer returnedCustomer = Customer(
         appVersion: _cus[0].app_version,
+        phoneNumber: _cus[0].user.phone,
         notificationInfo: _cus[0].notification_info != null
             ? NotificationInfo(
                 token: _cus[0].notification_info!.token,
