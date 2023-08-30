@@ -9,8 +9,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/DialogRequiredSignIn.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -59,7 +59,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                         helperText: "${_i18n()['rmItemHelper']}",
                         primaryButtonText: "${_i18n()['rmItemButton']}",
                         onYesClick: () async {
-                      bool res = await widget.viewController.removeItem();
+                      final bool res = await widget.viewController.removeItem();
                       if (res) {
                         Navigator.pop(context);
                         await MezRouter.popTillExclusive(
@@ -116,7 +116,8 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
 
   Future<void> _handleAddButton() async {
     if (auth.fireAuthUser == null) {
-      dialogRequiredSignIn();
+      // ignore: unawaited_futures
+      PhoneNumberScreen.navigateAtOrderTime();
     } else {
       if (widget.viewController.isAdding) {
         if (widget.viewController.checkAddSpecialItemConflict()) {

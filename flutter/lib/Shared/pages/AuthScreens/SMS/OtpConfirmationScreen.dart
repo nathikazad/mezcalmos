@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["SMS"]["OtpConfirmationScreen"];
@@ -241,6 +240,7 @@ class OtpConfirmationScreen extends GetView<AuthController> {
                       "${Get.arguments ?? _phonePassed} -------------- $otpCode ");
                   final AuthResponse? _resp = await signInUsingOTP(
                       Get.arguments ?? _phonePassed, otpCode);
+
                   switch (_resp?.success) {
                     case null:
                       clickedSignInOtp.value = false;

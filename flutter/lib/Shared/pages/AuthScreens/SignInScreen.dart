@@ -31,7 +31,7 @@ class SignInView extends StatefulWidget {
   }
 
   static Future<void> navigateAtOrderTime() {
-    return MezRouter.toPath(SharedRoutes.kSignInAtOrderTimeRoute,
+    return MezRouter.toPath(SharedRoutes.kSignInRoute,
         arguments: {"mode": SignInMode.OptionalSignIn});
   }
 

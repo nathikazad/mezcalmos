@@ -162,16 +162,16 @@ class LocationController extends GetxController {
     }
   }
 
-  Stream<LocationPermissionsStatus> locationPermissionChecker(
-      {Duration duration = const Duration(seconds: 10)}) {
-    // Execute immediately
-    final Stream<LocationPermissionsStatus> immediateStream =
-        Stream.fromFuture(updateLocationPermission());
-    // Execute periodically every 5 seconds
-    final Stream<LocationPermissionsStatus> periodicStream =
-        Stream.periodic(duration, (_) => updateLocationPermission())
-            .asyncMap((future) => future);
-    // Concatenate the two streams
-    return immediateStream.asyncExpand((_) => periodicStream);
-  }
+  // Stream<LocationPermissionsStatus> locationPermissionChecker(
+  //     {Duration duration = const Duration(seconds: 10)}) {
+  //   // Execute immediately
+  //   final Stream<LocationPermissionsStatus> immediateStream =
+  //       Stream.fromFuture(updateLocationPermission());
+  //   // Execute periodically every 5 seconds
+  //   final Stream<LocationPermissionsStatus> periodicStream =
+  //       Stream.periodic(duration, (_) => updateLocationPermission())
+  //           .asyncMap((future) => future);
+  //   // Concatenate the two streams
+  //   return immediateStream.asyncExpand((_) => periodicStream);
+  // }
 }

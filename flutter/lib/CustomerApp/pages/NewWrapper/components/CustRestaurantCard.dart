@@ -34,7 +34,7 @@ class CustRestaurantCard extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          height: 30.mezW,
+          // height: 30.mezW,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -66,11 +66,11 @@ class CustRestaurantCard extends StatelessWidget {
                     Container(
                       height: 30.mezW,
                       width: 30.mezW,
+                      margin: const EdgeInsets.all(5),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Colors.grey.shade900
-                            .withOpacity(0.5), // Adjust opacity as needed
+                        color: Colors.grey.shade900.withOpacity(0.5),
                       ),
                       child: Container(
                           padding: const EdgeInsets.all(5),
@@ -133,8 +133,12 @@ class CustRestaurantCard extends StatelessWidget {
                       if (restaurant!.info.description
                               ?.getTranslation(userLanguage) !=
                           null)
-                        Text(restaurant!.info.description!
-                            .getTranslation(userLanguage)!),
+                        Text(
+                          restaurant!.info.description!
+                              .getTranslation(userLanguage)!,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       smallSepartor,
                       Text.rich(
                         TextSpan(children: [

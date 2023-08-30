@@ -44,6 +44,7 @@ class SharedRoutes {
   static const String kLocationPermissionPage = '/location_permission';
   static const String kNoInternetConnectionPage = '/offline';
   static const String kOtpRoute = '/sign_in_otp';
+  static const String kOtpRouteAtOrderRoute = '/sign_in_otp_in_order_time';
   static const String kOtpConfirmRoute = '/sign_in_otp_confirm';
   static const String kMultiLanguagesRoute = '/multiLanguage/:id';
   static const String kUnauthorizedRoute = '/unauthorized';
@@ -95,6 +96,13 @@ class SharedRoutes {
     QRoute(
         path: kOtpRoute,
         name: kOtpRoute,
+        builder: () => phoneNumberScreen.PhoneNumberScreen(),
+        middleware: <QMiddleware>[
+          DefferedLoader(phoneNumberScreen.loadLibrary)
+        ]),
+    QRoute(
+        path: kOtpRouteAtOrderRoute,
+        name: kOtpRouteAtOrderRoute,
         builder: () => phoneNumberScreen.PhoneNumberScreen(),
         middleware: <QMiddleware>[
           DefferedLoader(phoneNumberScreen.loadLibrary)

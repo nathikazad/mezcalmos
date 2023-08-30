@@ -55,12 +55,13 @@ class _WrapperState extends State<Wrapper> {
         mezDbgPrint("Frpm stream auth state ======== ");
         handleAuthStateChange(user);
       });
-    }).then((_) {
-      // only when we use location permissions
-      if (_locationController.locationType != LocationPermissionType.None) {
-        startListeningOnLocationPermission();
-      }
     });
+    // .then((_) {
+    //   // only when we use location permissions
+    //   if (_locationController.locationType != LocationPermissionType.None) {
+    //     startListeningOnLocationPermission();
+    //   }
+    // });
     Future.microtask(() => checkConnectivity());
     super.initState();
     logEventToServer("Wrapper init finish");
@@ -86,22 +87,22 @@ class _WrapperState extends State<Wrapper> {
     });
   }
 
-  void startListeningOnLocationPermission() {
-    locationStatusListener = _locationController
-        .locationPermissionChecker()
-        .distinct()
-        .listen((LocationPermissionsStatus event) {
-      mezDbgPrint("Wrapper lvl => $event");
-      if (event != LocationPermissionsStatus.Ok) {
-        //  bool preventDuplicates = true (byDefault om GetX)
-        Future<void>.delayed(
-          Duration(milliseconds: 500),
-          () => MezRouter.toNamed(SharedRoutes.kLocationPermissionPage,
-              ignoreSamePath: true),
-        );
-      }
-    });
-  }
+  // void startListeningOnLocationPermission() {
+  //   locationStatusListener = _locationController
+  //       .locationPermissionChecker()
+  //       .distinct()
+  //       .listen((LocationPermissionsStatus event) {
+  //     mezDbgPrint("Wrapper lvl => $event");
+  //     if (event != LocationPermissionsStatus.Ok) {
+  //       //  bool preventDuplicates = true (byDefault om GetX)
+  //       Future<void>.delayed(
+  //         Duration(milliseconds: 500),
+  //         () => MezRouter.toNamed(SharedRoutes.kLocationPermissionPage,
+  //             ignoreSamePath: true),
+  //       );
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -201,7 +202,10 @@ class _WrapperState extends State<Wrapper> {
   }
 
   void checkIfSignInRouteOrRedirectToHome() {
-    if (MezRouter.isRouteInStack(SharedRoutes.kSignInAtOrderTimeRoute)) {
+    if (MezRouter.isRouteInStack(SharedRoutes.kOtpRouteAtOrderRoute)) {
+      mezDbgPrint("Trying to go back toooo");
+      MezRouter.popTillInclusive(SharedRoutes.kOtpRouteAtOrderRoute);
+    } else if (MezRouter.isRouteInStack(SharedRoutes.kSignInAtOrderTimeRoute)) {
       mezDbgPrint("Trying to go back toooo");
       MezRouter.popTillInclusive(SharedRoutes.kSignInAtOrderTimeRoute);
     } else {

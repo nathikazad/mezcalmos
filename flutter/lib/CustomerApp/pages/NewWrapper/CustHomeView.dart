@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -59,18 +58,6 @@ class _CustHomeViewState extends State<CustHomeView>
                       actionLength: 2,
                       showLogo: (context.width > 320) ? true : false),
                 )),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    mezWelcomeContainer(context.textTheme.bodyLarge!),
-                    mezDescription(context.textTheme.bodyMedium!),
-                  ],
-                ),
-              ),
-            ),
             SliverPersistentHeader(
               pinned: true,
               delegate: MezDelegate(
@@ -125,8 +112,6 @@ class _CustHomeViewState extends State<CustHomeView>
                                             onChanged: (bool v) {
                                               viewController.switchOnlyOpen(
                                                   value: v);
-                                              mezDbgPrint(viewController
-                                                  .showOnlyOpen.value);
                                             }),
                                       ),
                                       smallSepartor,

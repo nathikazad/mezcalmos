@@ -35,6 +35,7 @@ class CustCartViewController {
   Rx<cModels.DeliveryType> dvType = Rx(cModels.DeliveryType.Delivery);
   Rxn<List<CreditCard>> _cards = Rxn();
   RxBool orderSentToRest = RxBool(false);
+  RxBool showRedirectText = RxBool(false);
 
   double pFees = 5;
   List<CreditCard>? get customerCards => _cards.value;
@@ -242,6 +243,8 @@ class CustCartViewController {
 
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
+    showRedirectText.value = true;
+
     final String message = await contructOrderMessage();
     mezDbgPrint(message);
     if (cart.restaurant?.info.phoneNumber != null) {
@@ -249,6 +252,7 @@ class CustCartViewController {
         final bool res = await callWhatsappNumber(
             cart.restaurant!.info.phoneNumber!,
             message: message);
+        showRedirectText.value = false;
         orderSentToRest.value = res;
         if (res) {
           await cartController.clearCart();
@@ -261,6 +265,7 @@ class CustCartViewController {
     } else {
       showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
     }
+    showRedirectText.value = false;
 
     // cart.notes = noteText.text.inCaps;
     // num? newOrderId;

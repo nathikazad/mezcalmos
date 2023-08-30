@@ -52,8 +52,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint(
-        "🇲🇽 View cart screen is building=======>${viewController.cart.restaurant?.isOpen}");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: MezcalmosAppBar(
@@ -67,6 +65,24 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         title: "${_i18n()["myCart"]}",
       ),
       body: Obx(() {
+        if (viewController.showRedirectText.value) {
+          return Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(color: Colors.white.withOpacity(0.4)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                bigSeperator,
+                Text(
+                  "You will now be redirected to WhatsApp with your order and number of restaurant filled in. You can send message to restaurant and they will reply to you.",
+                  style: context.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+          );
+        }
         if (viewController.orderSentToRest.value) {
           return Container(
             alignment: Alignment.center,

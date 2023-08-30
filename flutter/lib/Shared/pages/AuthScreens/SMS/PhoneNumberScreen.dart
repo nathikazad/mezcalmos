@@ -16,6 +16,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["SMS"]["PhoneNumberScreen"];
 
 class PhoneNumberScreen extends StatefulWidget {
+  static Future<void> navigateAtOrderTime() {
+    return MezRouter.toPath(
+      SharedRoutes.kOtpRouteAtOrderRoute,
+    );
+  }
+
   @override
   State<PhoneNumberScreen> createState() {
     return _PhoneNumberScreenState();
@@ -51,12 +57,14 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
+
       appBar: AppBar(
         title: Text(
           'Sign in',
           style: Theme.of(context).textTheme.displayMedium,
         ),
       ),
+
       bottomSheet: BottomSheet(
           enableDrag: false,
           backgroundColor: Colors.transparent,
