@@ -19,7 +19,7 @@ export enum NotificationType {
   ServiceProviderDeleted = "serviceProviderDeleted",
   NewBusiness = "newBusiness",
   PriceChange = "priceChange",
- 
+  JobApplication = "jobApplication",
   DriverRemoved = "driverRemoved",
 }
 
@@ -80,6 +80,10 @@ export interface EndCallBackgroundNotification {
 export interface OrderNotification extends ForegroundNotification {
   orderType: OrderType,
   orderId: number,
+}
+
+export interface JobApplicationNotification extends ForegroundNotification {
+  jobId: number
 }
 
 export interface NotificationForQueue {

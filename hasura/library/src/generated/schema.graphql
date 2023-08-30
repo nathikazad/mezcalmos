@@ -7372,6 +7372,7 @@ type customer_customer {
 
   """An object relationship"""
   notification_info: notification_info
+  resume: String
 
   """An array relationship"""
   saved_locations(
@@ -7531,6 +7532,7 @@ input customer_customer_bool_exp {
   deliveries: delivery_order_bool_exp
   deliveries_aggregate: delivery_order_aggregate_bool_exp
   notification_info: notification_info_bool_exp
+  resume: String_comparison_exp
   saved_locations: customer_saved_location_bool_exp
   saved_locations_aggregate: customer_saved_location_aggregate_bool_exp
   service_provider_type: String_comparison_exp
@@ -7574,6 +7576,7 @@ input customer_customer_insert_input {
   cart: restaurant_cart_obj_rel_insert_input
   deliveries: delivery_order_arr_rel_insert_input
   notification_info: notification_info_obj_rel_insert_input
+  resume: String
   saved_locations: customer_saved_location_arr_rel_insert_input
   service_provider_type: String
   stripe_cards: customer_stripe_cards_arr_rel_insert_input
@@ -7587,6 +7590,7 @@ input customer_customer_insert_input {
 type customer_customer_max_fields {
   app_type_id: String
   app_version: String
+  resume: String
   service_provider_type: String
   stripe_id: String
   user_id: Int
@@ -7596,6 +7600,7 @@ type customer_customer_max_fields {
 type customer_customer_min_fields {
   app_type_id: String
   app_version: String
+  resume: String
   service_provider_type: String
   stripe_id: String
   user_id: Int
@@ -7638,6 +7643,7 @@ input customer_customer_order_by {
   cart: restaurant_cart_order_by
   deliveries_aggregate: delivery_order_aggregate_order_by
   notification_info: notification_info_order_by
+  resume: order_by
   saved_locations_aggregate: customer_saved_location_aggregate_order_by
   service_provider_type: order_by
   stripe_cards_aggregate: customer_stripe_cards_aggregate_order_by
@@ -7663,6 +7669,9 @@ enum customer_customer_select_column {
   app_version
 
   """column name"""
+  resume
+
+  """column name"""
   service_provider_type
 
   """column name"""
@@ -7678,6 +7687,7 @@ input type for updating data in table "customer.customer"
 input customer_customer_set_input {
   app_type_id: String
   app_version: String
+  resume: String
   service_provider_type: String
   stripe_id: String
   user_id: Int
@@ -7713,6 +7723,7 @@ input customer_customer_stream_cursor_input {
 input customer_customer_stream_cursor_value_input {
   app_type_id: String
   app_version: String
+  resume: String
   service_provider_type: String
   stripe_id: String
   user_id: Int
@@ -7732,6 +7743,9 @@ enum customer_customer_update_column {
 
   """column name"""
   app_version
+
+  """column name"""
+  resume
 
   """column name"""
   service_provider_type
@@ -15604,6 +15618,826 @@ type direct_chat_variance_fields {
 }
 
 """
+columns and relationships of "finance.job"
+"""
+type finance_job {
+  """An array relationship"""
+  applicants(
+    """distinct select on columns"""
+    distinct_on: [finance_job_applicant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_applicant_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_applicant_bool_exp
+  ): [finance_job_applicant!]!
+
+  """An aggregate relationship"""
+  applicants_aggregate(
+    """distinct select on columns"""
+    distinct_on: [finance_job_applicant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_applicant_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_applicant_bool_exp
+  ): finance_job_applicant_aggregate!
+  availability: Boolean!
+
+  """An object relationship"""
+  business: business_business!
+  business_id: Int!
+
+  """An object relationship"""
+  description: translation
+  description_id: Int
+  id: Int!
+  job_type: String!
+  minimum_experience: float8!
+
+  """An object relationship"""
+  name: translation!
+  name_id: Int!
+  salary_from: money!
+  salary_to: money!
+}
+
+"""
+aggregated selection of "finance.job"
+"""
+type finance_job_aggregate {
+  aggregate: finance_job_aggregate_fields
+  nodes: [finance_job!]!
+}
+
+"""
+aggregate fields of "finance.job"
+"""
+type finance_job_aggregate_fields {
+  avg: finance_job_avg_fields
+  count(columns: [finance_job_select_column!], distinct: Boolean): Int!
+  max: finance_job_max_fields
+  min: finance_job_min_fields
+  stddev: finance_job_stddev_fields
+  stddev_pop: finance_job_stddev_pop_fields
+  stddev_samp: finance_job_stddev_samp_fields
+  sum: finance_job_sum_fields
+  var_pop: finance_job_var_pop_fields
+  var_samp: finance_job_var_samp_fields
+  variance: finance_job_variance_fields
+}
+
+"""
+columns and relationships of "finance.job_applicant"
+"""
+type finance_job_applicant {
+  """An object relationship"""
+  customer: customer_customer!
+  customer_id: Int!
+  id: Int!
+
+  """An object relationship"""
+  job: finance_job!
+  job_id: Int!
+  status: String!
+}
+
+"""
+aggregated selection of "finance.job_applicant"
+"""
+type finance_job_applicant_aggregate {
+  aggregate: finance_job_applicant_aggregate_fields
+  nodes: [finance_job_applicant!]!
+}
+
+input finance_job_applicant_aggregate_bool_exp {
+  count: finance_job_applicant_aggregate_bool_exp_count
+}
+
+input finance_job_applicant_aggregate_bool_exp_count {
+  arguments: [finance_job_applicant_select_column!]
+  distinct: Boolean
+  filter: finance_job_applicant_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "finance.job_applicant"
+"""
+type finance_job_applicant_aggregate_fields {
+  avg: finance_job_applicant_avg_fields
+  count(columns: [finance_job_applicant_select_column!], distinct: Boolean): Int!
+  max: finance_job_applicant_max_fields
+  min: finance_job_applicant_min_fields
+  stddev: finance_job_applicant_stddev_fields
+  stddev_pop: finance_job_applicant_stddev_pop_fields
+  stddev_samp: finance_job_applicant_stddev_samp_fields
+  sum: finance_job_applicant_sum_fields
+  var_pop: finance_job_applicant_var_pop_fields
+  var_samp: finance_job_applicant_var_samp_fields
+  variance: finance_job_applicant_variance_fields
+}
+
+"""
+order by aggregate values of table "finance.job_applicant"
+"""
+input finance_job_applicant_aggregate_order_by {
+  avg: finance_job_applicant_avg_order_by
+  count: order_by
+  max: finance_job_applicant_max_order_by
+  min: finance_job_applicant_min_order_by
+  stddev: finance_job_applicant_stddev_order_by
+  stddev_pop: finance_job_applicant_stddev_pop_order_by
+  stddev_samp: finance_job_applicant_stddev_samp_order_by
+  sum: finance_job_applicant_sum_order_by
+  var_pop: finance_job_applicant_var_pop_order_by
+  var_samp: finance_job_applicant_var_samp_order_by
+  variance: finance_job_applicant_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "finance.job_applicant"
+"""
+input finance_job_applicant_arr_rel_insert_input {
+  data: [finance_job_applicant_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: finance_job_applicant_on_conflict
+}
+
+"""aggregate avg on columns"""
+type finance_job_applicant_avg_fields {
+  customer_id: Float
+  id: Float
+  job_id: Float
+}
+
+"""
+order by avg() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_avg_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "finance.job_applicant". All fields are combined with a logical 'AND'.
+"""
+input finance_job_applicant_bool_exp {
+  _and: [finance_job_applicant_bool_exp!]
+  _not: finance_job_applicant_bool_exp
+  _or: [finance_job_applicant_bool_exp!]
+  customer: customer_customer_bool_exp
+  customer_id: Int_comparison_exp
+  id: Int_comparison_exp
+  job: finance_job_bool_exp
+  job_id: Int_comparison_exp
+  status: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "finance.job_applicant"
+"""
+enum finance_job_applicant_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  job_applicant_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "finance.job_applicant"
+"""
+input finance_job_applicant_inc_input {
+  customer_id: Int
+  id: Int
+  job_id: Int
+}
+
+"""
+input type for inserting data into table "finance.job_applicant"
+"""
+input finance_job_applicant_insert_input {
+  customer: customer_customer_obj_rel_insert_input
+  customer_id: Int
+  id: Int
+  job: finance_job_obj_rel_insert_input
+  job_id: Int
+  status: String
+}
+
+"""aggregate max on columns"""
+type finance_job_applicant_max_fields {
+  customer_id: Int
+  id: Int
+  job_id: Int
+  status: String
+}
+
+"""
+order by max() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_max_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+  status: order_by
+}
+
+"""aggregate min on columns"""
+type finance_job_applicant_min_fields {
+  customer_id: Int
+  id: Int
+  job_id: Int
+  status: String
+}
+
+"""
+order by min() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_min_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+  status: order_by
+}
+
+"""
+response of any mutation on the table "finance.job_applicant"
+"""
+type finance_job_applicant_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [finance_job_applicant!]!
+}
+
+"""
+on_conflict condition type for table "finance.job_applicant"
+"""
+input finance_job_applicant_on_conflict {
+  constraint: finance_job_applicant_constraint!
+  update_columns: [finance_job_applicant_update_column!]! = []
+  where: finance_job_applicant_bool_exp
+}
+
+"""Ordering options when selecting data from "finance.job_applicant"."""
+input finance_job_applicant_order_by {
+  customer: customer_customer_order_by
+  customer_id: order_by
+  id: order_by
+  job: finance_job_order_by
+  job_id: order_by
+  status: order_by
+}
+
+"""primary key columns input for table: finance.job_applicant"""
+input finance_job_applicant_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "finance.job_applicant"
+"""
+enum finance_job_applicant_select_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  id
+
+  """column name"""
+  job_id
+
+  """column name"""
+  status
+}
+
+"""
+input type for updating data in table "finance.job_applicant"
+"""
+input finance_job_applicant_set_input {
+  customer_id: Int
+  id: Int
+  job_id: Int
+  status: String
+}
+
+"""aggregate stddev on columns"""
+type finance_job_applicant_stddev_fields {
+  customer_id: Float
+  id: Float
+  job_id: Float
+}
+
+"""
+order by stddev() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_stddev_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type finance_job_applicant_stddev_pop_fields {
+  customer_id: Float
+  id: Float
+  job_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_stddev_pop_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type finance_job_applicant_stddev_samp_fields {
+  customer_id: Float
+  id: Float
+  job_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_stddev_samp_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+}
+
+"""
+Streaming cursor of the table "finance_job_applicant"
+"""
+input finance_job_applicant_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: finance_job_applicant_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input finance_job_applicant_stream_cursor_value_input {
+  customer_id: Int
+  id: Int
+  job_id: Int
+  status: String
+}
+
+"""aggregate sum on columns"""
+type finance_job_applicant_sum_fields {
+  customer_id: Int
+  id: Int
+  job_id: Int
+}
+
+"""
+order by sum() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_sum_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+}
+
+"""
+update columns of table "finance.job_applicant"
+"""
+enum finance_job_applicant_update_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  id
+
+  """column name"""
+  job_id
+
+  """column name"""
+  status
+}
+
+input finance_job_applicant_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: finance_job_applicant_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: finance_job_applicant_set_input
+  where: finance_job_applicant_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type finance_job_applicant_var_pop_fields {
+  customer_id: Float
+  id: Float
+  job_id: Float
+}
+
+"""
+order by var_pop() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_var_pop_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type finance_job_applicant_var_samp_fields {
+  customer_id: Float
+  id: Float
+  job_id: Float
+}
+
+"""
+order by var_samp() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_var_samp_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+}
+
+"""aggregate variance on columns"""
+type finance_job_applicant_variance_fields {
+  customer_id: Float
+  id: Float
+  job_id: Float
+}
+
+"""
+order by variance() on columns of table "finance.job_applicant"
+"""
+input finance_job_applicant_variance_order_by {
+  customer_id: order_by
+  id: order_by
+  job_id: order_by
+}
+
+"""aggregate avg on columns"""
+type finance_job_avg_fields {
+  business_id: Float
+  description_id: Float
+  id: Float
+  minimum_experience: Float
+  name_id: Float
+  salary_from: Float
+  salary_to: Float
+}
+
+"""
+Boolean expression to filter rows from the table "finance.job". All fields are combined with a logical 'AND'.
+"""
+input finance_job_bool_exp {
+  _and: [finance_job_bool_exp!]
+  _not: finance_job_bool_exp
+  _or: [finance_job_bool_exp!]
+  applicants: finance_job_applicant_bool_exp
+  applicants_aggregate: finance_job_applicant_aggregate_bool_exp
+  availability: Boolean_comparison_exp
+  business: business_business_bool_exp
+  business_id: Int_comparison_exp
+  description: translation_bool_exp
+  description_id: Int_comparison_exp
+  id: Int_comparison_exp
+  job_type: String_comparison_exp
+  minimum_experience: float8_comparison_exp
+  name: translation_bool_exp
+  name_id: Int_comparison_exp
+  salary_from: money_comparison_exp
+  salary_to: money_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "finance.job"
+"""
+enum finance_job_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  job_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "finance.job"
+"""
+input finance_job_inc_input {
+  business_id: Int
+  description_id: Int
+  id: Int
+  minimum_experience: float8
+  name_id: Int
+  salary_from: money
+  salary_to: money
+}
+
+"""
+input type for inserting data into table "finance.job"
+"""
+input finance_job_insert_input {
+  applicants: finance_job_applicant_arr_rel_insert_input
+  availability: Boolean
+  business: business_business_obj_rel_insert_input
+  business_id: Int
+  description: translation_obj_rel_insert_input
+  description_id: Int
+  id: Int
+  job_type: String
+  minimum_experience: float8
+  name: translation_obj_rel_insert_input
+  name_id: Int
+  salary_from: money
+  salary_to: money
+}
+
+"""aggregate max on columns"""
+type finance_job_max_fields {
+  business_id: Int
+  description_id: Int
+  id: Int
+  job_type: String
+  minimum_experience: float8
+  name_id: Int
+  salary_from: money
+  salary_to: money
+}
+
+"""aggregate min on columns"""
+type finance_job_min_fields {
+  business_id: Int
+  description_id: Int
+  id: Int
+  job_type: String
+  minimum_experience: float8
+  name_id: Int
+  salary_from: money
+  salary_to: money
+}
+
+"""
+response of any mutation on the table "finance.job"
+"""
+type finance_job_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [finance_job!]!
+}
+
+"""
+input type for inserting object relation for remote table "finance.job"
+"""
+input finance_job_obj_rel_insert_input {
+  data: finance_job_insert_input!
+
+  """upsert condition"""
+  on_conflict: finance_job_on_conflict
+}
+
+"""
+on_conflict condition type for table "finance.job"
+"""
+input finance_job_on_conflict {
+  constraint: finance_job_constraint!
+  update_columns: [finance_job_update_column!]! = []
+  where: finance_job_bool_exp
+}
+
+"""Ordering options when selecting data from "finance.job"."""
+input finance_job_order_by {
+  applicants_aggregate: finance_job_applicant_aggregate_order_by
+  availability: order_by
+  business: business_business_order_by
+  business_id: order_by
+  description: translation_order_by
+  description_id: order_by
+  id: order_by
+  job_type: order_by
+  minimum_experience: order_by
+  name: translation_order_by
+  name_id: order_by
+  salary_from: order_by
+  salary_to: order_by
+}
+
+"""primary key columns input for table: finance.job"""
+input finance_job_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "finance.job"
+"""
+enum finance_job_select_column {
+  """column name"""
+  availability
+
+  """column name"""
+  business_id
+
+  """column name"""
+  description_id
+
+  """column name"""
+  id
+
+  """column name"""
+  job_type
+
+  """column name"""
+  minimum_experience
+
+  """column name"""
+  name_id
+
+  """column name"""
+  salary_from
+
+  """column name"""
+  salary_to
+}
+
+"""
+input type for updating data in table "finance.job"
+"""
+input finance_job_set_input {
+  availability: Boolean
+  business_id: Int
+  description_id: Int
+  id: Int
+  job_type: String
+  minimum_experience: float8
+  name_id: Int
+  salary_from: money
+  salary_to: money
+}
+
+"""aggregate stddev on columns"""
+type finance_job_stddev_fields {
+  business_id: Float
+  description_id: Float
+  id: Float
+  minimum_experience: Float
+  name_id: Float
+  salary_from: Float
+  salary_to: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type finance_job_stddev_pop_fields {
+  business_id: Float
+  description_id: Float
+  id: Float
+  minimum_experience: Float
+  name_id: Float
+  salary_from: Float
+  salary_to: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type finance_job_stddev_samp_fields {
+  business_id: Float
+  description_id: Float
+  id: Float
+  minimum_experience: Float
+  name_id: Float
+  salary_from: Float
+  salary_to: Float
+}
+
+"""
+Streaming cursor of the table "finance_job"
+"""
+input finance_job_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: finance_job_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input finance_job_stream_cursor_value_input {
+  availability: Boolean
+  business_id: Int
+  description_id: Int
+  id: Int
+  job_type: String
+  minimum_experience: float8
+  name_id: Int
+  salary_from: money
+  salary_to: money
+}
+
+"""aggregate sum on columns"""
+type finance_job_sum_fields {
+  business_id: Int
+  description_id: Int
+  id: Int
+  minimum_experience: float8
+  name_id: Int
+  salary_from: money
+  salary_to: money
+}
+
+"""
+update columns of table "finance.job"
+"""
+enum finance_job_update_column {
+  """column name"""
+  availability
+
+  """column name"""
+  business_id
+
+  """column name"""
+  description_id
+
+  """column name"""
+  id
+
+  """column name"""
+  job_type
+
+  """column name"""
+  minimum_experience
+
+  """column name"""
+  name_id
+
+  """column name"""
+  salary_from
+
+  """column name"""
+  salary_to
+}
+
+input finance_job_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: finance_job_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: finance_job_set_input
+  where: finance_job_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type finance_job_var_pop_fields {
+  business_id: Float
+  description_id: Float
+  id: Float
+  minimum_experience: Float
+  name_id: Float
+  salary_from: Float
+  salary_to: Float
+}
+
+"""aggregate var_samp on columns"""
+type finance_job_var_samp_fields {
+  business_id: Float
+  description_id: Float
+  id: Float
+  minimum_experience: Float
+  name_id: Float
+  salary_from: Float
+  salary_to: Float
+}
+
+"""aggregate variance on columns"""
+type finance_job_variance_fields {
+  business_id: Float
+  description_id: Float
+  id: Float
+  minimum_experience: Float
+  name_id: Float
+  salary_from: Float
+  salary_to: Float
+}
+
+"""
 Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'.
 """
 input Float_comparison_exp {
@@ -19875,6 +20709,32 @@ type mutation_root {
   delete_direct_chat_by_pk(chat_id: Int!): direct_chat
 
   """
+  delete data from the table: "finance.job"
+  """
+  delete_finance_job(
+    """filter the rows which have to be deleted"""
+    where: finance_job_bool_exp!
+  ): finance_job_mutation_response
+
+  """
+  delete data from the table: "finance.job_applicant"
+  """
+  delete_finance_job_applicant(
+    """filter the rows which have to be deleted"""
+    where: finance_job_applicant_bool_exp!
+  ): finance_job_applicant_mutation_response
+
+  """
+  delete single row from the table: "finance.job_applicant"
+  """
+  delete_finance_job_applicant_by_pk(id: Int!): finance_job_applicant
+
+  """
+  delete single row from the table: "finance.job"
+  """
+  delete_finance_job_by_pk(id: Int!): finance_job
+
+  """
   delete data from the table: "language"
   """
   delete_language(
@@ -21128,6 +21988,50 @@ type mutation_root {
     """upsert condition"""
     on_conflict: direct_chat_on_conflict
   ): direct_chat
+
+  """
+  insert data into the table: "finance.job"
+  """
+  insert_finance_job(
+    """the rows to be inserted"""
+    objects: [finance_job_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: finance_job_on_conflict
+  ): finance_job_mutation_response
+
+  """
+  insert data into the table: "finance.job_applicant"
+  """
+  insert_finance_job_applicant(
+    """the rows to be inserted"""
+    objects: [finance_job_applicant_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: finance_job_applicant_on_conflict
+  ): finance_job_applicant_mutation_response
+
+  """
+  insert a single row into the table: "finance.job_applicant"
+  """
+  insert_finance_job_applicant_one(
+    """the row to be inserted"""
+    object: finance_job_applicant_insert_input!
+
+    """upsert condition"""
+    on_conflict: finance_job_applicant_on_conflict
+  ): finance_job_applicant
+
+  """
+  insert a single row into the table: "finance.job"
+  """
+  insert_finance_job_one(
+    """the row to be inserted"""
+    object: finance_job_insert_input!
+
+    """upsert condition"""
+    on_conflict: finance_job_on_conflict
+  ): finance_job
 
   """
   insert data into the table: "language"
@@ -23584,6 +24488,74 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [direct_chat_updates!]!
   ): [direct_chat_mutation_response]
+
+  """
+  update data of the table: "finance.job"
+  """
+  update_finance_job(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: finance_job_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: finance_job_set_input
+
+    """filter the rows which have to be updated"""
+    where: finance_job_bool_exp!
+  ): finance_job_mutation_response
+
+  """
+  update data of the table: "finance.job_applicant"
+  """
+  update_finance_job_applicant(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: finance_job_applicant_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: finance_job_applicant_set_input
+
+    """filter the rows which have to be updated"""
+    where: finance_job_applicant_bool_exp!
+  ): finance_job_applicant_mutation_response
+
+  """
+  update single row of the table: "finance.job_applicant"
+  """
+  update_finance_job_applicant_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: finance_job_applicant_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: finance_job_applicant_set_input
+    pk_columns: finance_job_applicant_pk_columns_input!
+  ): finance_job_applicant
+
+  """
+  update multiples rows of table: "finance.job_applicant"
+  """
+  update_finance_job_applicant_many(
+    """updates to execute, in order"""
+    updates: [finance_job_applicant_updates!]!
+  ): [finance_job_applicant_mutation_response]
+
+  """
+  update single row of the table: "finance.job"
+  """
+  update_finance_job_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: finance_job_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: finance_job_set_input
+    pk_columns: finance_job_pk_columns_input!
+  ): finance_job
+
+  """
+  update multiples rows of table: "finance.job"
+  """
+  update_finance_job_many(
+    """updates to execute, in order"""
+    updates: [finance_job_updates!]!
+  ): [finance_job_mutation_response]
 
   """
   update data of the table: "language"
@@ -27264,6 +28236,94 @@ type query_root {
 
   """fetch data from the table: "direct_chat" using primary key columns"""
   direct_chat_by_pk(chat_id: Int!): direct_chat
+
+  """
+  fetch data from the table: "finance.job"
+  """
+  finance_job(
+    """distinct select on columns"""
+    distinct_on: [finance_job_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_bool_exp
+  ): [finance_job!]!
+
+  """
+  fetch aggregated fields from the table: "finance.job"
+  """
+  finance_job_aggregate(
+    """distinct select on columns"""
+    distinct_on: [finance_job_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_bool_exp
+  ): finance_job_aggregate!
+
+  """
+  fetch data from the table: "finance.job_applicant"
+  """
+  finance_job_applicant(
+    """distinct select on columns"""
+    distinct_on: [finance_job_applicant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_applicant_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_applicant_bool_exp
+  ): [finance_job_applicant!]!
+
+  """
+  fetch aggregated fields from the table: "finance.job_applicant"
+  """
+  finance_job_applicant_aggregate(
+    """distinct select on columns"""
+    distinct_on: [finance_job_applicant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_applicant_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_applicant_bool_exp
+  ): finance_job_applicant_aggregate!
+
+  """
+  fetch data from the table: "finance.job_applicant" using primary key columns
+  """
+  finance_job_applicant_by_pk(id: Int!): finance_job_applicant
+
+  """fetch data from the table: "finance.job" using primary key columns"""
+  finance_job_by_pk(id: Int!): finance_job
 
   """
   fetch data from the table: "language"
@@ -44170,6 +45230,122 @@ type subscription_root {
     """filter the rows returned"""
     where: direct_chat_bool_exp
   ): [direct_chat!]!
+
+  """
+  fetch data from the table: "finance.job"
+  """
+  finance_job(
+    """distinct select on columns"""
+    distinct_on: [finance_job_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_bool_exp
+  ): [finance_job!]!
+
+  """
+  fetch aggregated fields from the table: "finance.job"
+  """
+  finance_job_aggregate(
+    """distinct select on columns"""
+    distinct_on: [finance_job_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_bool_exp
+  ): finance_job_aggregate!
+
+  """
+  fetch data from the table: "finance.job_applicant"
+  """
+  finance_job_applicant(
+    """distinct select on columns"""
+    distinct_on: [finance_job_applicant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_applicant_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_applicant_bool_exp
+  ): [finance_job_applicant!]!
+
+  """
+  fetch aggregated fields from the table: "finance.job_applicant"
+  """
+  finance_job_applicant_aggregate(
+    """distinct select on columns"""
+    distinct_on: [finance_job_applicant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [finance_job_applicant_order_by!]
+
+    """filter the rows returned"""
+    where: finance_job_applicant_bool_exp
+  ): finance_job_applicant_aggregate!
+
+  """
+  fetch data from the table: "finance.job_applicant" using primary key columns
+  """
+  finance_job_applicant_by_pk(id: Int!): finance_job_applicant
+
+  """
+  fetch data from the table in a streaming manner: "finance.job_applicant"
+  """
+  finance_job_applicant_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [finance_job_applicant_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: finance_job_applicant_bool_exp
+  ): [finance_job_applicant!]!
+
+  """fetch data from the table: "finance.job" using primary key columns"""
+  finance_job_by_pk(id: Int!): finance_job
+
+  """
+  fetch data from the table in a streaming manner: "finance.job"
+  """
+  finance_job_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [finance_job_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: finance_job_bool_exp
+  ): [finance_job!]!
 
   """
   fetch data from the table: "language"

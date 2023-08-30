@@ -10,6 +10,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             user_id: customerId
         }, {
             app_version: true,
+            resume: true,
             notification_info: {
                 token: true,
                 turn_off_notifications: true
@@ -74,6 +75,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             cards
         }: undefined,
         // (response.customer_customer_by_pk.stripe_info),
-        phoneNumber: response.customer_customer_by_pk.user.phone
+        phoneNumber: response.customer_customer_by_pk.user.phone,
+        resume: response.customer_customer_by_pk.resume
     }
 }

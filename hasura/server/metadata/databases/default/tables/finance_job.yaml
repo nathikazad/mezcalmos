@@ -1,0 +1,21 @@
+table:
+  name: job
+  schema: finance
+object_relationships:
+  - name: business
+    using:
+      foreign_key_constraint_on: business_id
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
+  - name: name
+    using:
+      foreign_key_constraint_on: name_id
+array_relationships:
+  - name: applicants
+    using:
+      foreign_key_constraint_on:
+        column: job_id
+        table:
+          name: job_applicant
+          schema: finance

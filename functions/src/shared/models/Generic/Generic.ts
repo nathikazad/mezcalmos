@@ -78,3 +78,8 @@ export enum AuthorizationStatus {
   Unauthorized = "unauthorized",
   AwaitingApproval = "awaitingApproval"
 }
+
+export enum JobApplicarionStatus {
+  Pending = "pending",
+  Rejected = "rejected",
+}

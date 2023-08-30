@@ -1,0 +1,10 @@
+table:
+  name: job_applicant
+  schema: finance
+object_relationships:
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
+  - name: job
+    using:
+      foreign_key_constraint_on: job_id

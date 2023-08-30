@@ -11,6 +11,7 @@ export interface UserInfo {
   phoneNumber?: string;
   deleted?: boolean;
   creationTime?: string;
+  resume?: string;
 }
 
 export interface CustomerInfo extends UserInfo {
