@@ -35,6 +35,7 @@ import { requestOrder } from "./business/orderRequest";
 import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
 import { RuntimeOptions } from "firebase-functions";
+import { handleWhatsapp, markMessagesAsResolved } from "./utilities/senders/whatsapp";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -44,6 +45,10 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp()
 }
 
+export const whatsapp = {
+  newMessage: handleWhatsapp,
+  messageResolved: markMessagesAsResolved
+}
 
 export const user2 = {
   processSignUp: userChanges.processSignUp,
