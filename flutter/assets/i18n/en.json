@@ -1093,6 +1093,7 @@
             }
           },
           "ViewCartScreen": {
+            "redirectText": "You will now be redirected to WhatsApp with your order and number of restaurant filled in. You can send message to restaurant and they will reply to you.",
             "sentTitle": "Order placed",
             "sentSubtitle": "Order placed. Sent to restaurant via WhatsApp. Check order status with restaurant. Thank you!",
             "notesTitle": "Notes",

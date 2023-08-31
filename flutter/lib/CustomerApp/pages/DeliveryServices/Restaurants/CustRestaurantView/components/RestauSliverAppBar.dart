@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:shimmer/shimmer.dart';
@@ -390,11 +390,11 @@ class RestaurantSliverAppBar extends StatelessWidget {
 
   Widget _noUserButton() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 16),
+      padding: const EdgeInsets.only(left: 3, right: 5),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          SignInView.navigateAtOrderTime();
+          PhoneNumberScreen.navigateAtOrderTime();
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -452,8 +452,8 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return Row(
       children: [
         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-        if (Get.find<AuthController>().isUserSignedIn)
-          _notificationAppBarIcon(),
+        // if (Get.find<AuthController>().isUserSignedIn)
+        //   _notificationAppBarIcon(),
         // if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
         FloatingCartComponent(
           backgroundColor: Colors.white,
@@ -463,7 +463,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           badgePosition: badge.BadgePosition.topEnd(),
         ),
         SizedBox(
-          width: 15,
+          width: 5,
         )
       ],
     );

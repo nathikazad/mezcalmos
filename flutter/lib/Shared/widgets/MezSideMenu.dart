@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:mezcalmos/env.dart';
@@ -52,21 +51,20 @@ class MezSideMenu extends GetWidget<AuthController> {
                     _basicSideMenuItems(context),
                     _buildSideMenuItem(),
                     Obx(
-                      () => SideMenuItem(
-                        icon: controller.isUserSignedIn
-                            ? Icons.logout
-                            : Icons.person,
-                        title: (controller.isUserSignedIn)
-                            ? "${_i18n()["logout"]}"
-                            : "${_i18n()["login"]}",
-                        onClick: () {
-                          _drawerController.closeMenu();
-                          if (controller.isUserSignedIn) {
-                            logOut();
-                          } else
-                            SignInView.navigateAtOrderTime();
-                        },
-                      ),
+                      () {
+                        if (controller.user != null) {
+                          return SideMenuItem(
+                            icon: Icons.logout,
+                            title: "${_i18n()["logout"]}",
+                            onClick: () {
+                              _drawerController.closeMenu();
+
+                              logOut();
+                            },
+                          );
+                        }
+                        return SizedBox();
+                      },
                     ),
                   ],
                 ),
