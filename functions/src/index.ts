@@ -35,6 +35,7 @@ import { requestOrder } from "./business/orderRequest";
 import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
 import { RuntimeOptions } from "firebase-functions";
+import { handleWhatsapp } from "./utilities/senders/whatsapp";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -43,6 +44,8 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 } else {
   firebase.initializeApp()
 }
+
+exports.webhooks = functions.https.onRequest((req, res) => handleWhatsapp(req, res));
 
 
 export const user2 = {
