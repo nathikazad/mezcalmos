@@ -5,6 +5,14 @@ export enum ItemType {
   Special = "special"
 }
 
+export enum ItemTag {
+  Vegan = "vegan",
+  VeganPossible = "veganPossible",
+  Vegetarian = "vegetarian",
+  GlutenFree = "glutenFree",
+  GlutenFreePossible = "glutenFreePossible"
+}
+
 export interface Item {
   itemId: number;
   name: Record<Language, string>;

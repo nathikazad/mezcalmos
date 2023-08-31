@@ -8,6 +8,14 @@ import { ForegroundNotification, NotificationForQueue } from "../../Notification
 //   restaurantId: number;
 // }
 
+export enum RestaurantType {
+  Restaurant = "restaurant",
+  Cafe = "cafe",
+  Juicery = "juicery",
+  Mealkit = "mealkit",
+  Bakery = "bakery"
+}
+
 export interface NewRestaurantNotificationForQueue extends NotificationForQueue {
   name: string,
   image: string,

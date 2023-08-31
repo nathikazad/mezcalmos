@@ -58,6 +58,7 @@ export interface SelectedOption {
 }
 
 export enum RestaurantOrderStatus {
+  InProcess = "inProcess",
   OrderReceived = "orderReceived",
   Preparing = "preparing",
   Ready = "ready",
@@ -66,6 +67,7 @@ export enum RestaurantOrderStatus {
   CancelledByAdmin = "cancelledByAdmin",
   CancelledByCustomer = "cancelledByCustomer"
 }
+
 // export enum DeliveryMode {
 //   ForwardedToMezCalmos = "forwardedToMezCalmos",
 //   SelfDeliveryByRestaurant = "selfDeliveryByRestaurant",

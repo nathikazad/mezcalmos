@@ -1,5 +1,6 @@
 import { $ } from "../../../../../../hasura/library/src/generated/graphql-zeus";
 import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
+import { NewCheckoutRequest } from "../../../../restaurant/newCheckout";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 import { AppType, MezError } from "../../../models/Generic/Generic";
@@ -236,6 +237,103 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
     }
   }
   return {restaurantOrder, deliveryOrder}
+
+  function parseSelectedOptions(selectedOptions: object | string) {
+    if (typeof selectedOptions === 'string') {
+      try {
+        return JSON.parse(selectedOptions);
+      } catch (e) {
+        // Handle JSON parsing error if needed
+        return null; // or any other default value
+      }
+    }
+    return selectedOptions;
+  }
+}
+
+
+export async function createRestaurantOrder2(restaurant: ServiceProvider, checkoutReq : NewCheckoutRequest, customerCart: Cart)
+  : Promise<RestaurantOrder> {
+
+  let chain = getHasura();
+
+  let response = await chain.mutation({
+    insert_restaurant_order_one: [{
+      object: {
+       scheduled_time: checkoutReq.scheduledTime,
+        customer_id: customerCart.customerId,
+        restaurant_id: checkoutReq.restaurantId,
+        customer_app_type: checkoutReq.customerAppType,
+        delivery_type: checkoutReq.deliveryType,
+        payment_type: checkoutReq.paymentType,
+        to_location_gps: $`dropoff_gps`,
+        to_location_address: checkoutReq.customerLocation.address,
+        notes: checkoutReq.notes,
+        status: RestaurantOrderStatus.InProcess,
+        discount_value: checkoutReq.discountValue ?? undefined,
+        tax: checkoutReq.tax ?? undefined,
+        items: {
+          data: $`data` 
+        },
+      }
+    }, {
+      id: true,
+      order_time: true,
+    }],
+  }, {
+    "dropoff_gps": {
+      "type": "Point",
+      "coordinates": [checkoutReq.customerLocation.lng, checkoutReq.customerLocation.lat ],
+    },
+    "data": customerCart.items!.map((i:any) => {
+      console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
+      console.log("+ ItemName ", i.name);
+      return {
+        cost_per_one: i.costPerOne,
+        notes: i.notes,
+        quantity: i.quantity,
+        restaurant_item_id: i.itemId,
+        in_json: {
+          name: i.name,
+          image : i.image,
+          selected_options: parseSelectedOptions(i.selectedOptions)
+        },
+      };
+    })
+  });
+
+  if(response.insert_restaurant_order_one == null) {
+    throw new MezError("orderCreationError");
+  }
+  let orderItems: OrderItem[] = customerCart.items.map((i:any) => {
+    return {
+      itemId: i.itemId,
+      name: i.name,
+      image: i.image,
+      selectedOptions: i.selectedOptions,
+      notes: i.notes,
+      quantity: i.quantity,
+      costPerOne: i.costPerOne
+    }
+  })
+  let restaurantOrder: RestaurantOrder = {
+    orderId: response.insert_restaurant_order_one.id,
+    spDetailsId: restaurant.serviceProviderDetailsId,
+    customerId: customerCart.customerId,
+    restaurantId: checkoutReq.restaurantId,
+    paymentType: checkoutReq.paymentType,
+    toLocation: checkoutReq.customerLocation,
+    status: RestaurantOrderStatus.OrderReceived,
+    deliveryType: checkoutReq.deliveryType ?? DeliveryType.Delivery,
+    customerAppType: checkoutReq.customerAppType,
+    items: orderItems,
+    itemsCost: customerCart.cost,
+    notes: checkoutReq.notes,
+    deliveryCost: 0,
+    scheduledTime: checkoutReq.scheduledTime,
+    
+  }
+  return restaurantOrder
 
   function parseSelectedOptions(selectedOptions: object | string) {
     if (typeof selectedOptions === 'string') {
