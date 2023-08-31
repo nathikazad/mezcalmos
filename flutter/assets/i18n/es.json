@@ -1086,6 +1086,7 @@
             }
           },
           "ViewCartScreen": {
+            "redirectText": "Ahora será redirigido a WhatsApp con su pedido y número de restaurantes completados. Puede enviar un mensaje al restaurante y le responderán.",
             "sentTitle": "Pedido realizado",
             "sentSubtitle": "Pedido realizado. Enviado al restaurante por WhatsApp. Verifica el estado del pedido con el restaurante. ¡Gracias!",
             "ops": "Oops",

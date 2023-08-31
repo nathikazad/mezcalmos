@@ -5,10 +5,12 @@ import 'package:mezcalmos/CustomerApp/pages/NewWrapper/components/CustRestaurant
 import 'package:mezcalmos/CustomerApp/pages/NewWrapper/components/CustRestaurantItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/NewWrapper/controllers/CustHomeViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -46,131 +48,8 @@ class _CustHomeViewState extends State<CustHomeView>
         dragStartBehavior: DragStartBehavior.down,
         headerSliverBuilder: (BuildContext context, _) {
           return [
-            SliverAppBar(
-                pinned: true,
-                elevation: 0,
-                automaticallyImplyLeading: false,
-                leading: _menuBtn(),
-                // expandedHeight: 150,
-                title: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: MezcalmosSharedWidgets.fillTitle(
-                      actionLength: 2,
-                      showLogo: (context.width > 320) ? true : false),
-                )),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: MezDelegate(
-                max: kToolbarHeight * 2,
-                min: kToolbarHeight * 2,
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        hSmallSepartor,
-                        Expanded(
-                          child: TextField(
-                            onChanged: (String value) {
-                              viewController.searchQuery.value = value;
-                              viewController.filter();
-                            },
-                            decoration: InputDecoration(
-                              hintText: "${_i18n()['search']}",
-                              hintStyle: context.textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey.shade600,
-                              ),
-                              prefixIcon: Icon(Icons.search),
-                              prefixIconColor: Colors.grey.shade600,
-                              isDense: true,
-                              border: InputBorder.none,
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide.none),
-                              focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide(
-                                      color: primaryBlueColor, width: 1.5)),
-                            ),
-                          ),
-                        ),
-                        hSmallSepartor,
-                        MezIconButton(
-                          onTap: () async {
-                            showMezSheet(
-                                title: "${_i18n()['filters']}",
-                                content: Container(
-                                  margin: const EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      Obx(
-                                        () => SwitchListTile.adaptive(
-                                            title: Text(
-                                                "${_i18n()['showOnlyOpen']}"),
-                                            value: viewController
-                                                .showOnlyOpen.value,
-                                            onChanged: (bool v) {
-                                              viewController.switchOnlyOpen(
-                                                  value: v);
-                                            }),
-                                      ),
-                                      smallSepartor,
-                                      MezInkwell(
-                                        width: double.infinity,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8, horizontal: 0),
-                                        label: "${_i18n()['filter']}",
-                                        onClick: () async {
-                                          await viewController.filter();
-
-                                          Navigator.pop(context);
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                context: context);
-                          },
-                          padding: const EdgeInsets.all(8),
-                          iconSize: 25,
-                          icon: Icons.filter_list,
-                          backgroundColor: Colors.white,
-                        ),
-                        hSmallSepartor,
-                      ],
-                    ),
-                    TabBar(
-                        controller: viewController.tabController,
-                        labelColor: primaryBlueColor,
-                        unselectedLabelColor: Colors.grey.shade400,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        automaticIndicatorColorAdjustment: true,
-                        tabs: [
-                          Tab(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.food_bank_rounded),
-                                hTinySepartor,
-                                Text("${_i18n()['restaurants']['title']}"),
-                              ],
-                            ),
-                          ),
-                          Tab(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.fastfood_rounded),
-                                hTinySepartor,
-                                Text("${_i18n()['items']}"),
-                              ],
-                            ),
-                          ),
-                        ])
-                  ],
-                ),
-              ),
-            ),
+            _appBar(context),
+            _searchAndFilter(context),
           ];
         },
 
@@ -232,6 +111,148 @@ class _CustHomeViewState extends State<CustHomeView>
         //     childCount: 50,
         //   ),
         // ),
+      ),
+    );
+  }
+
+  SliverAppBar _appBar(BuildContext context) {
+    return SliverAppBar(
+        pinned: true,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        leading: _menuBtn(),
+        actions: [
+          Obx(() {
+            if (Get.find<AuthController>().user == null) {
+              return MezIconButton(
+                  onTap: () {
+                    PhoneNumberScreen.navigateAtOrderTime();
+                  },
+                  icon: Icons.person);
+            }
+            return SizedBox();
+          }),
+          SizedBox(
+            width: 8,
+          ),
+        ],
+        // expandedHeight: 150,
+        title: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: MezcalmosSharedWidgets.fillTitle(
+              actionLength: 2, showLogo: (context.width > 320) ? true : false),
+        ));
+  }
+
+  SliverPersistentHeader _searchAndFilter(BuildContext context) {
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: MezDelegate(
+        max: kToolbarHeight * 2,
+        min: kToolbarHeight * 2,
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                hSmallSepartor,
+                Expanded(
+                  child: TextField(
+                    onChanged: (String value) {
+                      viewController.searchQuery.value = value;
+                      viewController.filter();
+                    },
+                    decoration: InputDecoration(
+                      hintText: "${_i18n()['search']}",
+                      hintStyle: context.textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
+                      prefixIcon: Icon(Icons.search),
+                      prefixIconColor: Colors.grey.shade600,
+                      isDense: true,
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              BorderSide(color: primaryBlueColor, width: 1.5)),
+                    ),
+                  ),
+                ),
+                hSmallSepartor,
+                MezIconButton(
+                  onTap: () async {
+                    showMezSheet(
+                        title: "${_i18n()['filters']}",
+                        content: Container(
+                          margin: const EdgeInsets.all(8),
+                          child: Column(
+                            children: [
+                              Obx(
+                                () => SwitchListTile.adaptive(
+                                    title: Text("${_i18n()['showOnlyOpen']}"),
+                                    value: viewController.showOnlyOpen.value,
+                                    onChanged: (bool v) {
+                                      viewController.switchOnlyOpen(value: v);
+                                    }),
+                              ),
+                              smallSepartor,
+                              MezInkwell(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 0),
+                                label: "${_i18n()['filter']}",
+                                onClick: () async {
+                                  await viewController.filter();
+
+                                  Navigator.pop(context);
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                        context: context);
+                  },
+                  padding: const EdgeInsets.all(8),
+                  iconSize: 25,
+                  icon: Icons.filter_list,
+                  backgroundColor: Colors.white,
+                ),
+                hSmallSepartor,
+              ],
+            ),
+            TabBar(
+                controller: viewController.tabController,
+                labelColor: primaryBlueColor,
+                unselectedLabelColor: Colors.grey.shade400,
+                indicatorSize: TabBarIndicatorSize.label,
+                automaticIndicatorColorAdjustment: true,
+                tabs: [
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.food_bank_rounded),
+                        hTinySepartor,
+                        Text("${_i18n()['restaurants']['title']}"),
+                      ],
+                    ),
+                  ),
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.fastfood_rounded),
+                        hTinySepartor,
+                        Text("${_i18n()['items']}"),
+                      ],
+                    ),
+                  ),
+                ])
+          ],
+        ),
       ),
     );
   }

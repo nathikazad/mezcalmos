@@ -918,7 +918,7 @@ Future<bool> callWhatsappNumber(String number, {String? message}) async {
         'text': encodedMessage,
       },
     );
-    return await launchUrl(launchUri);
+    return launchUrl(launchUri);
   } else {
     final String androidUrl =
         "whatsapp://send?phone=$number&text=$encodedMessage";

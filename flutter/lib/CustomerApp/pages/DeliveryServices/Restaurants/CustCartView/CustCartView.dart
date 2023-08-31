@@ -18,10 +18,14 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/LoadingWidgets/MezLoadingOverlay.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:sizer/sizer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
 
 class ViewCartScreen extends StatefulWidget {
   static Future<void> navigate() {
@@ -31,9 +35,6 @@ class ViewCartScreen extends StatefulWidget {
   @override
   _ViewCartScreenState createState() => _ViewCartScreenState();
 }
-
-dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
-    ["pages"]["Restaurants"]["ViewCartScreen"]["ViewCartScreen"];
 
 class _ViewCartScreenState extends State<ViewCartScreen> {
   CustCartViewController viewController = CustCartViewController();
@@ -52,151 +53,142 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        onClick: () {
-          if (viewController.orderSentToRest.value) {
-            MezRouter.popEverythingTillBeforeHome();
-          } else
-            MezRouter.back();
-        },
-        title: "${_i18n()["myCart"]}",
+    return Obx(
+      () => MezLoadingOverlay(
+        isLoading: viewController.showRedirectText.value,
+        label: "${_i18n()['redirectText']}",
+        labelStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: MezcalmosAppBar(
+            AppBarLeftButtonType.Back,
+            onClick: () {
+              if (viewController.orderSentToRest.value) {
+                MezRouter.popEverythingTillBeforeHome();
+              } else
+                MezRouter.back();
+            },
+            title: "${_i18n()["myCart"]}",
+          ),
+          body: Obx(() {
+            if (viewController.orderSentToRest.value) {
+              return Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.check_circle_rounded,
+                      color: primaryBlueColor,
+                      size: 50.mezSp,
+                    ),
+                    meduimSeperator,
+                    Text(
+                      "${_i18n()['sentTitle']}",
+                      style: context.textTheme.bodyLarge
+                          ?.copyWith(color: primaryBlueColor),
+                    ),
+                    smallSepartor,
+                    Text(
+                      "${_i18n()['sentSubtitle']}",
+                      textAlign: TextAlign.center,
+                    ),
+                    bigSeperator
+                  ],
+                ),
+              );
+            }
+            if (viewController.hasData.isFalse) {
+              return Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              );
+            } else if (viewController.cart.cartItems.length > 0) {
+              return SingleChildScrollView(
+                reverse: false,
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    if (viewController.cart.quantity() >= 1)
+                      CartItemsBuilder(
+                        viewController: viewController,
+                      ),
+                    Form(
+                      key: viewController.formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DeliveryTimePicker(
+                            deliveryTime: viewController.cart.deliveryTime,
+                            fixed7days: !viewController.cart.isSpecial,
+                            isServiceOpen:
+                                viewController.cart.restaurant!.isOpen,
+                            numberOfDays: viewController.cart.isSpecial ? 1 : 7,
+                            onValue: (DateTime? value) {
+                              viewController.setDeliveryTime(value);
+                            },
+                            onClear: () {
+                              viewController.setDeliveryTime(null);
+                            },
+                            periodOfTime: viewController.cart.cartPeriod,
+                            schedule: viewController.cart.restaurant!.schedule,
+                          ),
+                          CustDeliveryTypeSelector(
+                            onDeliveryTypeChanged: (DeliveryType value) {
+                              viewController.switchDeliveryType(type: value);
+                              mezDbgPrint(
+                                  "Changed from parent callback ==>$value");
+                            },
+                          ),
+                          if (viewController.showDelivery) _deliveryLocation(),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    // Container(
+                    //   child: PaymentMethodPicker(
+                    //     viewCartController: viewController,
+                    //   ),
+                    // ),
+                    Container(
+                      //alignment: Alignment.centerLeft,
+                      child: Text("${_i18n()['notesTitle']}",
+                          style: context.txt.bodyLarge),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    _notesComponent(context),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CardSummaryCard(
+                      controller: viewController,
+                    ),
+                    smallSepartor,
+                    if (viewController.showDelivery)
+                      MezCard(
+                          firstAvatarIcon: Icons.delivery_dining,
+                          firstAvatarIconColor: primaryBlueColor,
+                          firstAvatarBgColor: secondaryLightBlueColor,
+                          content: Text("${_i18n()['dvHelper']}")),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return CartIsEmptyScreen();
+            }
+          }),
+          bottomSheet: _footerButton(),
+        ),
       ),
-      body: Obx(() {
-        if (viewController.showRedirectText.value) {
-          return Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(color: Colors.white.withOpacity(0.4)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                bigSeperator,
-                Text(
-                  "You will now be redirected to WhatsApp with your order and number of restaurant filled in. You can send message to restaurant and they will reply to you.",
-                  style: context.textTheme.bodyMedium,
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ),
-          );
-        }
-        if (viewController.orderSentToRest.value) {
-          return Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.check_circle_rounded,
-                  color: primaryBlueColor,
-                  size: 50.mezSp,
-                ),
-                meduimSeperator,
-                Text(
-                  "${_i18n()['sentTitle']}",
-                  style: context.textTheme.bodyLarge
-                      ?.copyWith(color: primaryBlueColor),
-                ),
-                smallSepartor,
-                Text(
-                  "${_i18n()['sentSubtitle']}",
-                  textAlign: TextAlign.center,
-                ),
-                bigSeperator
-              ],
-            ),
-          );
-        }
-        if (viewController.hasData.isFalse) {
-          return Container(
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(),
-          );
-        } else if (viewController.cart.cartItems.length > 0) {
-          return SingleChildScrollView(
-            reverse: false,
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                if (viewController.cart.quantity() >= 1)
-                  CartItemsBuilder(
-                    viewController: viewController,
-                  ),
-                Form(
-                  key: viewController.formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DeliveryTimePicker(
-                        deliveryTime: viewController.cart.deliveryTime,
-                        fixed7days: !viewController.cart.isSpecial,
-                        isServiceOpen: viewController.cart.restaurant!.isOpen,
-                        numberOfDays: viewController.cart.isSpecial ? 1 : 7,
-                        onValue: (DateTime? value) {
-                          viewController.setDeliveryTime(value);
-                        },
-                        onClear: () {
-                          viewController.setDeliveryTime(null);
-                        },
-                        periodOfTime: viewController.cart.cartPeriod,
-                        schedule: viewController.cart.restaurant!.schedule,
-                      ),
-                      CustDeliveryTypeSelector(
-                        onDeliveryTypeChanged: (DeliveryType value) {
-                          viewController.switchDeliveryType(type: value);
-                          mezDbgPrint("Changed from parent callback ==>$value");
-                        },
-                      ),
-                      if (viewController.showDelivery) _deliveryLocation(),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                // Container(
-                //   child: PaymentMethodPicker(
-                //     viewCartController: viewController,
-                //   ),
-                // ),
-                Container(
-                  //alignment: Alignment.centerLeft,
-                  child: Text("${_i18n()['notesTitle']}",
-                      style: context.txt.bodyLarge),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                _notesComponent(context),
-                SizedBox(
-                  height: 20,
-                ),
-                CardSummaryCard(
-                  controller: viewController,
-                ),
-                smallSepartor,
-                if (viewController.showDelivery)
-                  MezCard(
-                      firstAvatarIcon: Icons.delivery_dining,
-                      firstAvatarIconColor: primaryBlueColor,
-                      firstAvatarBgColor: secondaryLightBlueColor,
-                      content: Text("${_i18n()['dvHelper']}")),
-                SizedBox(
-                  height: 15.h,
-                ),
-              ],
-            ),
-          );
-        } else {
-          return CartIsEmptyScreen();
-        }
-      }),
-      bottomSheet: _footerButton(),
     );
   }
 

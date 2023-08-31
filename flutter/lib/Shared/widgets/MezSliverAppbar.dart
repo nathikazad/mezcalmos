@@ -2,14 +2,14 @@ import 'package:badges/badges.dart' as badge;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:shimmer/shimmer.dart';
@@ -165,11 +165,11 @@ class MezSliverAppBar extends StatelessWidget {
 
   Widget _noUserButton() {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 16),
+      padding: const EdgeInsets.only(left: 3, right: 3),
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          SignInView.navigateAtOrderTime();
+          PhoneNumberScreen.navigateAtOrderTime();
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -227,9 +227,19 @@ class MezSliverAppBar extends StatelessWidget {
     return Row(
       children: [
         if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-        if (Get.find<AuthController>().isUserSignedIn)
-          _notificationAppBarIcon(),
-        if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        FloatingCartComponent(
+          backgroundColor: Colors.white,
+          iconColor: primaryBlueColor,
+          cartType: CartType.restaurant,
+          withGradient: false,
+          badgePosition: badge.BadgePosition.topEnd(),
+        ),
+        // if (Get.find<AuthController>().isUserSignedIn)
+        //   _notificationAppBarIcon(),
+        // if (Get.find<AuthController>().isUserSignedIn) _ordersAppBarIcon(),
+        SizedBox(
+          width: 8,
+        ),
       ],
     );
   }
