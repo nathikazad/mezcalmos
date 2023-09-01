@@ -34,7 +34,7 @@ class CustRestaurantCard extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          // height: 30.mezW,
+          height: 30.mezW,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -43,8 +43,8 @@ class CustRestaurantCard extends StatelessWidget {
                 children: [
                   CachedNetworkImage(
                     imageUrl: restaurant!.info.image,
-                    height: 30.mezW,
-                    width: 30.mezW,
+                    height: double.infinity,
+                    width: 35.mezW,
                     fit: BoxFit.cover,
                     imageBuilder: (BuildContext context,
                         ImageProvider<Object> imageProvider) {
@@ -64,7 +64,7 @@ class CustRestaurantCard extends StatelessWidget {
                   ),
                   if (restaurant!.isOpen == false)
                     Container(
-                      height: 30.mezW,
+                      height: double.infinity,
                       width: 30.mezW,
                       margin: const EdgeInsets.all(5),
                       alignment: Alignment.center,
@@ -97,7 +97,7 @@ class CustRestaurantCard extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,7 +139,7 @@ class CustRestaurantCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                      smallSepartor,
+                      Spacer(),
                       Text.rich(
                         TextSpan(children: [
                           WidgetSpan(
@@ -182,8 +182,8 @@ Widget _shimmerCard() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 30.mezW,
-              width: 30.mezW,
+              height: double.infinity,
+              width: 35.mezW,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(8)),
             ),

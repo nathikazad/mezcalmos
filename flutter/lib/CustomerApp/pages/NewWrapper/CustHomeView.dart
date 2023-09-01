@@ -45,10 +45,16 @@ class _CustHomeViewState extends State<CustHomeView>
       // appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu),
       body: NestedScrollView(
         floatHeaderSlivers: true,
+        controller: viewController.restaurantsScrollController,
         dragStartBehavior: DragStartBehavior.down,
         headerSliverBuilder: (BuildContext context, _) {
           return [
             _appBar(context),
+            Obx(() => SliverToBoxAdapter(
+                  child: viewController.isFetchingRestaurants.isTrue
+                      ? LinearProgressIndicator()
+                      : SizedBox(),
+                )),
             _searchAndFilter(context),
           ];
         },

@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -14,6 +15,7 @@ class CustHomeViewController {
   late TabController tabController;
   RxList<Restaurant> _restaurants = RxList.empty();
   Rx<SearchType> searchType = SearchType.searchByRestaurantName.obs;
+  ScrollController restaurantsScrollController = ScrollController();
   RxList<Restaurant> filteredRestaurants = RxList<Restaurant>.empty();
   RxList<Item> filteredItems = RxList<Item>.empty();
   List<int> servicesIds = [];
@@ -38,6 +40,7 @@ class CustHomeViewController {
   bool get showIemsShimmer => isFetchingItems.value;
   Future<void> init({required TickerProvider vsync}) async {
     _initTabController(vsync);
+    restaurantsScrollController.onBottomReach(fetchRestaurants);
     await fetchRestaurants().then((value) => filter());
   }
 
@@ -74,6 +77,8 @@ class CustHomeViewController {
         _hasReachedEndData = true;
       }
       offset += fetchSize;
+
+      await filter();
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -91,10 +96,10 @@ class CustHomeViewController {
     //   _fetchRestaurantsOnFilter();
 
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
+    newList = newList.searchByName(searchQuery.value) as List<Restaurant>;
+    newList = newList.showOnlyOpen(showOnlyOpen.value) as List<Restaurant>;
+    newList.sortByOpen();
     if (searchType.value == SearchType.searchByRestaurantName) {
-      newList = newList.searchByName(searchQuery.value) as List<Restaurant>;
-      newList = newList.showOnlyOpen(showOnlyOpen.value) as List<Restaurant>;
-      newList.sortByOpen();
       filteredRestaurants.value = newList;
     } else {
       servicesIds = newList
@@ -124,6 +129,13 @@ class CustHomeViewController {
 
   void switchOnlyOpen({required bool value}) {
     showOnlyOpen.value = value;
+  }
+
+  void _assignServiceIds() {
+    servicesIds = _restaurants
+        // .where((Restaurant element) => element.isOpen)
+        .map((Restaurant e) => e.info.hasuraId)
+        .toList();
   }
 }
 
