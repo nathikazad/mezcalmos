@@ -26,31 +26,45 @@ class DriverCurrentOrdersController {
   StreamSubscription? currentOrdersListener;
   StreamSubscription? openOrdersListener;
   String? subscriptionId;
-  List<WhMessage> messages = [
+
+  List<WhMessage> get resolvedMessages =>
+      _messages.where((WhMessage element) => element.resolved).toList();
+  List<WhMessage> get unResolvedMessages =>
+      _messages.where((WhMessage element) => !element.resolved).toList();
+
+  List<WhMessage> _messages = [
     WhMessage(
-        subtitle:
-            "Pedido realizado. Enviado al restaurante por WhatsApp. Verifica el estado del pedido con el restaurante. ¡Gracias!",
-        date: DateTime(2023, 8, 31, 10, 15),
-        phoneNumber: "+1234567890",
-        isResolved: true),
+      from: "12098628445",
+      id: "wamid.HBgLMTIwOTg2Mjg0NDUVAgASGBQzQTBBOEQ2Q0E2Mjk2QjEwRDlGNAA=",
+      resolved: false,
+      text: TextMessage(body: "Hey"),
+      timestamp: DateTime.now(),
+      type: "text",
+    ),
     WhMessage(
-        subtitle:
-            "Order placed. Sent to restaurant via WhatsApp. Check order status with restaurant. Thank you!",
-        date: DateTime(2023, 8, 31, 11, 30),
-        phoneNumber: "+9876543210",
-        isResolved: false),
+      from: "123456789",
+      id: "wamid.XYZ123456789",
+      resolved: true,
+      text: TextMessage(body: "Hello there!"),
+      timestamp: DateTime.now().subtract(Duration(days: 1)),
+      type: "text",
+    ),
     WhMessage(
-        subtitle:
-            "Tu pedido ha sido enviado al restaurante. Por favor, verifica el estado del pedido. ¡Gracias!",
-        date: DateTime(2023, 8, 31, 12, 45),
-        phoneNumber: "+1112223333",
-        isResolved: false),
+      from: "987654321",
+      id: "wamid.ABC987654321",
+      resolved: false,
+      text: TextMessage(body: "Hi, how are you?"),
+      timestamp: DateTime.now().subtract(Duration(days: 2)),
+      type: "text",
+    ),
     WhMessage(
-        subtitle:
-            "Orden confirmada. Enviamos tu solicitud al restaurante. Por favor, mantente atento a las actualizaciones. ¡Gracias!",
-        date: DateTime(2023, 8, 31, 14, 0),
-        phoneNumber: "+4445556666",
-        isResolved: false)
+      from: "555555555",
+      id: "wamid.PQR555555555",
+      resolved: true,
+      text: TextMessage(body: "Goodbye"),
+      timestamp: DateTime.now().subtract(Duration(days: 3)),
+      type: "text",
+    ),
   ];
 
 // getters
@@ -125,18 +139,54 @@ class DriverCurrentOrdersController {
 }
 
 class WhMessage {
-  String subtitle;
-  DateTime date;
-  String phoneNumber;
-  bool isResolved;
+  String from;
+  String id;
+  bool resolved;
+  TextMessage text;
+  DateTime timestamp;
+  String type;
 
   WhMessage({
-    required this.subtitle,
-    required this.date,
-    required this.isResolved,
-    required this.phoneNumber,
+    required this.from,
+    required this.id,
+    required this.resolved,
+    required this.text,
+    required this.timestamp,
+    required this.type,
   });
   IconData get icon {
-    return isResolved ? Icons.check : Icons.watch_later_rounded;
+    return resolved ? Icons.check : Icons.watch_later_rounded;
   }
+
+  factory WhMessage.fromJson(Map<String, dynamic> json) {
+    return WhMessage(
+      from: json['from'],
+      id: json['id'],
+      resolved: json['resolved'],
+      text: TextMessage.fromJson(json['text']),
+      timestamp: DateTime.parse(json['timestamp']),
+      type: json['type'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'from': from,
+        'id': id,
+        'resolved': resolved,
+        'text': text.toJson(),
+        'timestamp': timestamp.toUtc(),
+        'type': type,
+      };
+}
+
+class TextMessage {
+  String body;
+
+  TextMessage({required this.body});
+
+  factory TextMessage.fromJson(Map<String, dynamic> json) {
+    return TextMessage(body: json['body']);
+  }
+
+  Map<String, dynamic> toJson() => {'body': body};
 }

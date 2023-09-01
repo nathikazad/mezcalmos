@@ -1,4 +1,5 @@
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart';
@@ -14,6 +15,7 @@ class DeliveryAppRoutes {
   static const String kOrderDetailsViewRoute = "/orderDetails/:orderId";
   static const String kPastOrdersViewRoute = "/pastOrders";
   static const String kDriverUnAuthRoute = "/driverUnauth";
+  static const String kDriverConvoRoute = "/convo/:id";
 
   static String getDvOrderRoute(int orderId) {
     return kDvOrderView.replaceFirst(":orderId", "$orderId");
@@ -24,6 +26,11 @@ class DeliveryAppRoutes {
           path: kCurrentOrdersListRoute,
           name: kCurrentOrdersListRoute,
           builder: () => CurrentOrdersListScreen(),
+        ),
+        QRoute(
+          path: kDriverConvoRoute,
+          name: kDriverConvoRoute,
+          builder: () => DvConvoView(),
         ),
         QRoute(
           path: SharedRoutes.kHomeRoute,

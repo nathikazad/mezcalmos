@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryApp/components/DvConvoCard.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart' as assets;
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
-import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -101,64 +97,59 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                       secondLine: "${_i18n()["offlineBody"]}",
                     ),
                   )
-                else if (viewController.currentOrders.isNotEmpty ||
-                    viewController.openOrders.isNotEmpty)
+                else if (viewController.resolvedMessages.isNotEmpty ||
+                    viewController.unResolvedMessages.isNotEmpty)
                   Container(
-                    margin: EdgeInsets.all(12),
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: MezInkwell(
-                            label: "Past Orders",
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 12),
-                            onClick: () async {},
-                          ),
+                        meduimSeperator,
+                        Text(
+                          "Resolved orders",
+                          style: context.textTheme.bodyLarge,
                         ),
-                        smallSepartor,
+                        meduimSeperator,
                         Column(
                           children: List.generate(
-                              viewController.messages.length, (int index) {
+                              viewController.resolvedMessages.length,
+                              (int index) {
                             final WhMessage message =
-                                viewController.messages[index];
-                            return MezCard(
-                                onClick: () {},
-                                firstAvatarIcon: message.icon,
-                                firstAvatarIconColor: message.isResolved
-                                    ? primaryBlueColor
-                                    : Colors.grey,
-                                firstAvatarBgColor: message.isResolved
-                                    ? secondaryLightBlueColor
-                                    : Colors.grey.shade300,
-                                margin: const EdgeInsets.only(bottom: 8),
-                                content: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      message.phoneNumber,
-                                      style: context.textTheme.bodyLarge,
-                                    ),
-                                    Text(
-                                      message.subtitle,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: context.textTheme.bodyMedium,
-                                    ),
-                                    Text.rich(TextSpan(children: [
-                                      WidgetSpan(
-                                        child: Icon(
-                                          Icons.watch_later_outlined,
-                                          size: 15.mezSp,
-                                        ),
-                                      ),
-                                      WidgetSpan(child: hTinySepartor),
-                                      TextSpan(
-                                          text:
-                                              message.date.getEstimatedTime()),
-                                    ]))
-                                  ],
-                                ));
+                                viewController.resolvedMessages[index];
+                            return DvConvoCard(
+                              message: message,
+                              onClick: () {},
+                            );
+                          }),
+                        ),
+                        meduimSeperator,
+                        Row(
+                          children: [
+                            Text(
+                              "Unresolved",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            hTinySepartor,
+                            Expanded(
+                                child: Divider(
+                              thickness: 0.2,
+                            )),
+                          ],
+                        ),
+                        meduimSeperator,
+                        Column(
+                          children: List.generate(
+                              viewController.unResolvedMessages.length,
+                              (int index) {
+                            final WhMessage message =
+                                viewController.unResolvedMessages[index];
+                            return DvConvoCard(
+                              message: message,
+                              onClick: () {
+                                DvConvoView.navigate(
+                                    convo: viewController.resolvedMessages);
+                              },
+                            );
                           }),
                         )
                         // if (viewController.currentOrders.isNotEmpty)
@@ -216,49 +207,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _incomingOrdersList() {
-    return Container(
-      color: secondaryLightBlueColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding:
-                const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-            child: Row(
-              children: [
-                Icon(Icons.route, color: primaryBlueColor),
-                Text(
-                  "${_i18n()["currentOrders"]}(${viewController.currentOrders.length})",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(color: primaryBlueColor),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 5),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              children: List.generate(
-                  viewController.currentOrders.length,
-                  (int index) => MinimalOrderCard(
-                        borderRadius: BorderRadius.zero,
-                        order: viewController.currentOrders[index],
-                        onTap: () {
-                          DvOrderView.navigate(
-                              orderId: viewController.currentOrders[index].id);
-                        },
-                      )).reversed.toList(),
-            ),
-          ),
-        ],
       ),
     );
   }
