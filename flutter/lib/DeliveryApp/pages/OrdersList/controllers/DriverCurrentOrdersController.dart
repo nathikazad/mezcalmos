@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -25,6 +26,32 @@ class DriverCurrentOrdersController {
   StreamSubscription? currentOrdersListener;
   StreamSubscription? openOrdersListener;
   String? subscriptionId;
+  List<WhMessage> messages = [
+    WhMessage(
+        subtitle:
+            "Pedido realizado. Enviado al restaurante por WhatsApp. Verifica el estado del pedido con el restaurante. ¡Gracias!",
+        date: DateTime(2023, 8, 31, 10, 15),
+        phoneNumber: "+1234567890",
+        isResolved: true),
+    WhMessage(
+        subtitle:
+            "Order placed. Sent to restaurant via WhatsApp. Check order status with restaurant. Thank you!",
+        date: DateTime(2023, 8, 31, 11, 30),
+        phoneNumber: "+9876543210",
+        isResolved: false),
+    WhMessage(
+        subtitle:
+            "Tu pedido ha sido enviado al restaurante. Por favor, verifica el estado del pedido. ¡Gracias!",
+        date: DateTime(2023, 8, 31, 12, 45),
+        phoneNumber: "+1112223333",
+        isResolved: false),
+    WhMessage(
+        subtitle:
+            "Orden confirmada. Enviamos tu solicitud al restaurante. Por favor, mantente atento a las actualizaciones. ¡Gracias!",
+        date: DateTime(2023, 8, 31, 14, 0),
+        phoneNumber: "+4445556666",
+        isResolved: false)
+  ];
 
 // getters
 
@@ -94,5 +121,22 @@ class DriverCurrentOrdersController {
   void dispose() {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     currentOrders.close();
+  }
+}
+
+class WhMessage {
+  String subtitle;
+  DateTime date;
+  String phoneNumber;
+  bool isResolved;
+
+  WhMessage({
+    required this.subtitle,
+    required this.date,
+    required this.isResolved,
+    required this.phoneNumber,
+  });
+  IconData get icon {
+    return isResolved ? Icons.check : Icons.watch_later_rounded;
   }
 }
