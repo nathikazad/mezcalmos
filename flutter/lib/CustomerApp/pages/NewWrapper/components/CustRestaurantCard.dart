@@ -49,7 +49,8 @@ class CustRestaurantCard extends StatelessWidget {
                     imageBuilder: (BuildContext context,
                         ImageProvider<Object> imageProvider) {
                       return Container(
-                        margin: const EdgeInsets.all(8),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 5),
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: imageProvider,
