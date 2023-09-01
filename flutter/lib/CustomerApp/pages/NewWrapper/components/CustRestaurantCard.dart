@@ -34,7 +34,7 @@ class CustRestaurantCard extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          height: 30.mezW,
+          height: 33.mezW,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -94,7 +94,7 @@ class CustRestaurantCard extends StatelessWidget {
               Flexible(
                 fit: FlexFit.tight,
                 child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 16),
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -40,7 +40,11 @@ class CustHomeViewController {
   bool get showIemsShimmer => isFetchingItems.value;
   Future<void> init({required TickerProvider vsync}) async {
     _initTabController(vsync);
-    restaurantsScrollController.onBottomReach(fetchRestaurants);
+    restaurantsScrollController.onBottomReach(() {
+      if (searchType.value == SearchType.searchByRestaurantName) {
+        fetchRestaurants();
+      }
+    });
     await fetchRestaurants().then((value) => filter());
   }
 

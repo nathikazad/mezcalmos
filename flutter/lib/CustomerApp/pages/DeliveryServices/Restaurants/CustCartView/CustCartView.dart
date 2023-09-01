@@ -1,5 +1,6 @@
 // ignore_for_file: unawaited_futures
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/CustDeliveryTypePicker.dart';
@@ -115,6 +116,26 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       CartItemsBuilder(
                         viewController: viewController,
                       ),
+                    smallSepartor,
+                    Text(
+                      "${_i18n()['restaurant']}",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    smallSepartor,
+                    MezCard(
+                      radius: 20,
+                      onClick: viewController.routeToRestaurant,
+                      firstAvatarBgImage: CachedNetworkImageProvider(
+                          viewController.cart.restaurant!.info.image),
+                      content: Text(
+                        viewController.cart.restaurant!.info.name,
+                        style: context.textTheme.bodyLarge,
+                      ),
+                      action: Icon(
+                        Icons.open_in_new,
+                        color: primaryBlueColor,
+                      ),
+                    ),
                     Form(
                       key: viewController.formKey,
                       child: Column(
@@ -221,7 +242,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 viewController.switchLocation(location);
               },
               bgColor: Colors.white,
-              checkDistance: true,
+              checkDistance: false,
               ensureVisible: false,
               serviceProviderLocation:
                   viewController.cart.restaurant?.info.location,
@@ -261,10 +282,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         if (viewController.cart.cartItems.length > 0 &&
             viewController.orderSentToRest.value == false) {
           return MezButton(
-            label: (viewController.cart.restaurant?.isOpen == false)
-                ? '${_i18n()["scheduleOrder"]}'
-                : '${_i18n()["orderNow"]}',
-            //  enabled: viewController.canOrder,
+            label: '${_i18n()["orderNow"]}',
             withGradient: true,
             borderRadius: 0,
             height: 50,

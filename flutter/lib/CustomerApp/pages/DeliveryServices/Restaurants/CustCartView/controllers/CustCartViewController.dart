@@ -7,6 +7,8 @@ import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.d
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
@@ -19,6 +21,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 // import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // controller class //
 class CustCartViewController {
@@ -371,7 +374,7 @@ class CustCartViewController {
     if (dvType == cModels.DeliveryType.Pickup) {
       return true;
     }
-    return cart.toLocation != null && cart.shippingCost != null;
+    return cart.toLocation != null;
   }
 
   void checkCartPeriod() {
@@ -543,6 +546,18 @@ class CustCartViewController {
     _cartRxn.value?.deliveryType = dvType.value;
     if (_cartRxn.value?.deliveryType == cModels.DeliveryType.Pickup) {
       _cartRxn.value?.shippingCost = null;
+    }
+  }
+
+  void routeToRestaurant() {
+    final String route = RestaurantRoutes.restaurantViewRoute
+        .replaceAll(":restaurantId", cart.restaurant!.info.hasuraId.toString());
+    if (MezRouter.isRouteInStack(route)) {
+      mezDbgPrint("Trying to go back toooo");
+      MezRouter.popTillExclusive(route);
+    } else {
+      CustomerRestaurantView.navigate(
+          restaurantId: cart.restaurant!.info.hasuraId);
     }
   }
 }
