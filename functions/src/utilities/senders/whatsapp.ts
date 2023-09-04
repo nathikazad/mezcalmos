@@ -75,16 +75,22 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
       },
       linkUrl: `/`
     }
-    drivers.forEach((d) => {
-      if(!d.user)
-        return;
-      pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
-    })
+    notifyDrivers(drivers, notification);
+    setTimeout( () => notifyDrivers(drivers, notification), 10000);
+    setTimeout( () => notifyDrivers(drivers, notification), 20000);
   }
   if (req.query['hub.challenge'])
     res.send(req.query['hub.challenge']);
   else
     res.send("puuta madre");
+
+  function notifyDrivers(drivers: DeliveryDriver[], notification: Notification) {
+    drivers.forEach((d) => {
+      if (!d.user)
+        return;
+      pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
+    });
+  }
 });
 
 export const markMessagesAsResolved = functions.https.onCall(async (data, context) => {
