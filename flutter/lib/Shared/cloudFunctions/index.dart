@@ -1,8 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(
@@ -367,6 +365,46 @@ class CloudFunctions {
     return CancelRestaurantOrderResponse.fromFirebaseFormattedJson(
         await callCloudFunction(
             functionName: "restaurant3-cancelOrderFromCustomer",
+            parameters: <String, dynamic>{
+          "orderId": orderId,
+        }));
+  }
+
+  static Future<NewCheckoutResponse> restaurant3_newCheckout(
+      {required CustomerAppType customerAppType,
+      required Location customerLocation,
+      required PaymentType paymentType,
+      String? notes,
+      required num restaurantId,
+      DeliveryType? deliveryType,
+      String? scheduledTime,
+      String? stripePaymentId,
+      num? stripeFees,
+      num? tax,
+      num? discountValue}) async {
+    return NewCheckoutResponse.fromFirebaseFormattedJson(
+        await callCloudFunction(
+            functionName: "restaurant3-newCheckout",
+            parameters: <String, dynamic>{
+          "customerAppType": customerAppType.toFirebaseFormatString(),
+          "customerLocation": customerLocation.toFirebaseFormattedJson(),
+          "paymentType": paymentType.toFirebaseFormatString(),
+          "notes": notes,
+          "restaurantId": restaurantId,
+          "deliveryType": deliveryType?.toFirebaseFormatString(),
+          "scheduledTime": scheduledTime,
+          "stripePaymentId": stripePaymentId,
+          "stripeFees": stripeFees,
+          "tax": tax,
+          "discountValue": discountValue,
+        }));
+  }
+
+  static Future<CompleteRestaurantOrderResponse> restaurant3_completeOrder(
+      {required num orderId}) async {
+    return CompleteRestaurantOrderResponse.fromFirebaseFormattedJson(
+        await callCloudFunction(
+            functionName: "restaurant3-completeOrder",
             parameters: <String, dynamic>{
           "orderId": orderId,
         }));
