@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
@@ -16,8 +15,8 @@ Notification customerNotificationHandler(
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
-    case NotificationType.NewMessage:
-      return newMessageNotification(key, value);
+    // case NotificationType.NewMessage:
+    //   return newMessageNotification(key, value);
 
     case NotificationType.OrderStatusChange:
       final OrderType orderType = value['orderType'].toString().toOrderType();
@@ -334,18 +333,18 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
   return null;
 }
 
-Notification newMessageNotification(String key, value) {
-  return Notification(
-      id: key,
-      linkUrl: value["linkUrl"] ??
-          SharedRoutes.getMessagesRoute(chatId: int.parse(value["chatId"])),
-      body: value['message'],
-      imgUrl: value['sender']['image'],
-      title: value['sender']['name'],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewMessage,
-      notificationAction:
-          value["notificationAction"]?.toString().toNotificationAction() ??
-              NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-      variableParams: value);
-}
+// Notification newMessageNotification(String key, value) {
+//   return Notification(
+//       id: key,
+//       linkUrl: value["linkUrl"] ??
+//           SharedRoutes.getMessagesRoute(chatId: int.parse(value["chatId"])),
+//       body: value['message'],
+//       imgUrl: value['sender']['image'],
+//       title: value['sender']['name'],
+//       timestamp: DateTime.parse(value['time']),
+//       notificationType: NotificationType.NewMessage,
+//       notificationAction:
+//           value["notificationAction"]?.toString().toNotificationAction() ??
+//               NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+//       variableParams: value);
+// }

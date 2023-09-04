@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["notificationHandler"];
@@ -27,8 +26,8 @@ Notification businessOperatorNotificationHandler(String key, value) {
           notificationAction:
               (value["notificationAction"] as String).toNotificationAction(),
           variableParams: value);
-    case NotificationType.NewMessage:
-      return newMessageNotification(key, value);
+    // case NotificationType.NewMessage:
+    //   return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
       return deliveryOpOrderChangesNotifier(key, value);
     default:
@@ -37,7 +36,7 @@ Notification businessOperatorNotificationHandler(String key, value) {
 }
 
 Notification deliveryOpOrderChangesNotifier(String key, value) {
-  DeliveryOrderStatus newOrdersStatus =
+  final DeliveryOrderStatus newOrdersStatus =
       value['status'].toString().toDeliveryOrderStatus();
   final Map<String, dynamic> dynamicFields =
       _getDeliveryOrderStatusFields(newOrdersStatus);
@@ -105,18 +104,18 @@ Map<String, dynamic> _getDeliveryOrderStatusFields(
   }
 }
 
-Notification newMessageNotification(String key, value) {
-  mezDbgPrint("notification Data =================================> $value");
-  return Notification(
-      id: key,
-      linkUrl:
-          SharedRoutes.getMessagesRoute(chatId: int.parse(value['chatId'])),
-      body: value['message'],
-      imgUrl: value['sender']['image'],
-      title: value['sender']['name'],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewMessage,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
-      variableParams: value);
-}
+// Notification newMessageNotification(String key, value) {
+//   mezDbgPrint("notification Data =================================> $value");
+//   return Notification(
+//       id: key,
+//       linkUrl:
+//           SharedRoutes.getMessagesRoute(chatId: int.parse(value['chatId'])),
+//       body: value['message'],
+//       imgUrl: value['sender']['image'],
+//       title: value['sender']['name'],
+//       timestamp: DateTime.parse(value['time']),
+//       notificationType: NotificationType.NewMessage,
+//       notificationAction:
+//           (value["notificationAction"] as String).toNotificationAction(),
+//       variableParams: value);
+// }
