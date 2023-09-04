@@ -2,6 +2,7 @@ query getRestaurants(
   $limit: Int
   $offset: Int
   $distance: Float!
+  $keyword: String
   $from: geography!
   $is_open: Boolean_comparison_exp = {}
   $online_ordering: Boolean_comparison_exp = {}
@@ -9,6 +10,7 @@ query getRestaurants(
   restaurant_restaurant(
     where: {
       details: {
+        name: { _ilike: $keyword }
         is_open: $is_open
         open_status: { _eq: "open" }
         location: {

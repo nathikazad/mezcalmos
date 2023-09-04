@@ -9,6 +9,7 @@ class Variables$Query$getRestaurants {
     int? limit,
     int? offset,
     required double distance,
+    String? keyword,
     required Geography from,
     Input$Boolean_comparison_exp? is_open,
     Input$Boolean_comparison_exp? online_ordering,
@@ -17,6 +18,7 @@ class Variables$Query$getRestaurants {
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
         r'distance': distance,
+        if (keyword != null) r'keyword': keyword,
         r'from': from,
         if (is_open != null) r'is_open': is_open,
         if (online_ordering != null) r'online_ordering': online_ordering,
@@ -36,6 +38,10 @@ class Variables$Query$getRestaurants {
     }
     final l$distance = data['distance'];
     result$data['distance'] = (l$distance as num).toDouble();
+    if (data.containsKey('keyword')) {
+      final l$keyword = data['keyword'];
+      result$data['keyword'] = (l$keyword as String?);
+    }
     final l$from = data['from'];
     result$data['from'] = geographyFromJson(l$from);
     if (data.containsKey('is_open')) {
@@ -60,6 +66,7 @@ class Variables$Query$getRestaurants {
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
   double get distance => (_$data['distance'] as double);
+  String? get keyword => (_$data['keyword'] as String?);
   Geography get from => (_$data['from'] as Geography);
   Input$Boolean_comparison_exp? get is_open =>
       (_$data['is_open'] as Input$Boolean_comparison_exp?);
@@ -77,6 +84,10 @@ class Variables$Query$getRestaurants {
     }
     final l$distance = distance;
     result$data['distance'] = l$distance;
+    if (_$data.containsKey('keyword')) {
+      final l$keyword = keyword;
+      result$data['keyword'] = l$keyword;
+    }
     final l$from = from;
     result$data['from'] = geographyToJson(l$from);
     if (_$data.containsKey('is_open')) {
@@ -125,6 +136,14 @@ class Variables$Query$getRestaurants {
     if (l$distance != lOther$distance) {
       return false;
     }
+    final l$keyword = keyword;
+    final lOther$keyword = other.keyword;
+    if (_$data.containsKey('keyword') != other._$data.containsKey('keyword')) {
+      return false;
+    }
+    if (l$keyword != lOther$keyword) {
+      return false;
+    }
     final l$from = from;
     final lOther$from = other.from;
     if (l$from != lOther$from) {
@@ -155,6 +174,7 @@ class Variables$Query$getRestaurants {
     final l$limit = limit;
     final l$offset = offset;
     final l$distance = distance;
+    final l$keyword = keyword;
     final l$from = from;
     final l$is_open = is_open;
     final l$online_ordering = online_ordering;
@@ -162,6 +182,7 @@ class Variables$Query$getRestaurants {
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
       l$distance,
+      _$data.containsKey('keyword') ? l$keyword : const {},
       l$from,
       _$data.containsKey('is_open') ? l$is_open : const {},
       _$data.containsKey('online_ordering') ? l$online_ordering : const {},
@@ -182,6 +203,7 @@ abstract class CopyWith$Variables$Query$getRestaurants<TRes> {
     int? limit,
     int? offset,
     double? distance,
+    String? keyword,
     Geography? from,
     Input$Boolean_comparison_exp? is_open,
     Input$Boolean_comparison_exp? online_ordering,
@@ -205,6 +227,7 @@ class _CopyWithImpl$Variables$Query$getRestaurants<TRes>
     Object? limit = _undefined,
     Object? offset = _undefined,
     Object? distance = _undefined,
+    Object? keyword = _undefined,
     Object? from = _undefined,
     Object? is_open = _undefined,
     Object? online_ordering = _undefined,
@@ -215,6 +238,7 @@ class _CopyWithImpl$Variables$Query$getRestaurants<TRes>
         if (offset != _undefined) 'offset': (offset as int?),
         if (distance != _undefined && distance != null)
           'distance': (distance as double),
+        if (keyword != _undefined) 'keyword': (keyword as String?),
         if (from != _undefined && from != null) 'from': (from as Geography),
         if (is_open != _undefined)
           'is_open': (is_open as Input$Boolean_comparison_exp?),
@@ -233,6 +257,7 @@ class _CopyWithStubImpl$Variables$Query$getRestaurants<TRes>
     int? limit,
     int? offset,
     double? distance,
+    String? keyword,
     Geography? from,
     Input$Boolean_comparison_exp? is_open,
     Input$Boolean_comparison_exp? online_ordering,
@@ -429,6 +454,15 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
         directives: [],
       ),
       VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'keyword')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'from')),
         type: NamedTypeNode(
           name: NameNode(value: 'geography'),
@@ -468,6 +502,15 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
               ObjectFieldNode(
                 name: NameNode(value: 'details'),
                 value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'name'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_ilike'),
+                        value: VariableNode(name: NameNode(value: 'keyword')),
+                      )
+                    ]),
+                  ),
                   ObjectFieldNode(
                     name: NameNode(value: 'is_open'),
                     value: VariableNode(name: NameNode(value: 'is_open')),

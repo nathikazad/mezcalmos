@@ -2075,6 +2075,8 @@
       "CustomerWrapper": {
         "filter": "Filtrar",
         "filters": "Filtros",
+        "noRest": "Sorry, no restaurants found",
+        "noItems": "Sorry, no items found",
         "items": "Elementos",
         "search": "Buscar...",
         "showOnlyOpen": "Mostrar solo restaurantes abiertos",

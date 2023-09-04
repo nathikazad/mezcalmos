@@ -2,9 +2,8 @@ import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/custBusinessCartController.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustCartView/CustCartView.dart';
+// import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -41,13 +40,10 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
     if (Get.find<AuthController>().isUserSignedIn) {
       return Obx(
         () {
-          items = widget.cartType == CartType.restaurant
-              ? Get.find<CustRestaurantCartController>()
-                      .cart
-                      .value
-                      ?.cartItems ??
-                  []
-              : Get.find<CustBusinessCartController>().cart.value?.items ?? [];
+          // items = widget.cartType == CartType.restaurant
+          //     ?
+          Get.find<CustRestaurantCartController>().cart.value?.cartItems ?? [];
+          // : Get.find<CustBusinessCartController>().cart.value?.items ?? [];
           return items.length > 0
               ? badge.Badge(
                   elevation: 0,
@@ -73,7 +69,7 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
                       if (widget.cartType == CartType.restaurant) {
                         ViewCartScreen.navigate();
                       } else {
-                        CustCartView.navigate();
+                        // CustCartView.navigate();
                       }
                     },
                     child: Container(

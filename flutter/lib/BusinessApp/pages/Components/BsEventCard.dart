@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServicesListView/controllers/BsServicesListViewController.dart';
 import 'package:mezcalmos/BusinessApp/pages/components/BsToggleButton.dart';
-import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+//import 'package:mezcalmos/CustomerApp/pages/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -87,13 +87,13 @@ class BsEventCard extends StatelessWidget {
               Column(
                 children: [
                   Divider(),
-                  CustBusinessScheduleBuilder(
-                    period: event.period,
-                    schedule: event.schedule,
-                    scheduleType: event.scheduleType,
-                    showIcons: false,
-                    showTitle: false,
-                  )
+                  // CustBusinessScheduleBuilder(
+                  //   period: event.period,
+                  //   schedule: event.schedule,
+                  //   scheduleType: event.scheduleType,
+                  //   showIcons: false,
+                  //   showTitle: false,
+                  // )
                 ],
               ),
             if (event.scheduleType == ScheduleType.OneTime &&

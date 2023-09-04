@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/SingleLaundry/SingleLaundryScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+// import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
+// import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/SingleLaundry/SingleLaundryScreen.dart';
+// import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -17,16 +17,16 @@ class CustomerLinkHandler {
     if (servicProviderInfo != null) {
       switch (servicProviderInfo.serviceProviderType) {
         case ServiceProviderType.Restaurant:
-          unawaited(CustomerRestaurantView.navigate(
-              restaurantId: servicProviderInfo.serviceProviderId));
+          // unawaited(CustomerRestaurantView.navigate(
+          //     restaurantId: servicProviderInfo.serviceProviderId));
           break;
         case ServiceProviderType.Laundry:
-          unawaited(SingleLaundryScreen.navigate(
-              laundryId: servicProviderInfo.serviceProviderId));
+          // unawaited(SingleLaundryScreen.navigate(
+          //     laundryId: servicProviderInfo.serviceProviderId));
           break;
         case ServiceProviderType.Business:
-          unawaited(CustBusinessView.navigate(
-              businessId: servicProviderInfo.serviceProviderId));
+          // unawaited(CustBusinessView.navigate(
+          //     businessId: servicProviderInfo.serviceProviderId));
           // @chirag: TODO fix this
           break;
         default:

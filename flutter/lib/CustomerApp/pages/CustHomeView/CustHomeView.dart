@@ -1,0 +1,331 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantItemCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustHomeView/controllers/CustHomeViewController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustomerWrapper'];
+
+class CustHomeView extends StatefulWidget {
+  const CustHomeView({super.key});
+
+  @override
+  State<CustHomeView> createState() => _CustHomeViewState();
+}
+
+class _CustHomeViewState extends State<CustHomeView>
+    with TickerProviderStateMixin {
+  CustHomeViewController viewController = CustHomeViewController();
+
+  @override
+  void initState() {
+    viewController.init(vsync: this);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
+      backgroundColor: Colors.white,
+      // appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu),
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        controller: viewController.restaurantsScrollController,
+        dragStartBehavior: DragStartBehavior.down,
+        headerSliverBuilder: (BuildContext context, _) {
+          return [
+            _appBar(context),
+            _searchAndFilter(context),
+          ];
+        },
+
+        body: TabBarView(
+          controller: viewController.tabController,
+          children: [
+            Scrollbar(
+              child: SingleChildScrollView(
+                child: Obx(
+                  () {
+                    if (viewController.showRestaurantShimmer) {
+                      return Column(
+                        children: List.generate(
+                            10, (int index) => CustRestaurantCard.shimmer()),
+                      );
+                    } else if (viewController.restaurants.isNotEmpty) {
+                      return Column(
+                        children: List.generate(
+                            viewController.restaurants.length,
+                            (int index) => CustRestaurantCard(
+                                restaurant: viewController.restaurants[index])),
+                      );
+                    } else {
+                      return Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.all(15),
+                        child: Text("${_i18n()['noRest']}"),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+            Scrollbar(
+              child: SingleChildScrollView(
+                child: Obx(
+                  () {
+                    if (viewController.showIemsShimmer) {
+                      return Column(
+                        children: List.generate(10,
+                            (int index) => CustRestaurantItemCard.shimmer()),
+                      );
+                    } else if (viewController.filteredItems.isNotEmpty)
+                      return Column(
+                        children: List.generate(
+                            viewController.items.length,
+                            (int index) => CustRestaurantItemCard(
+                                  item: viewController.items[index],
+                                )),
+                      );
+                    else
+                      return Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.all(15),
+                        child: Text("${_i18n()['noItems']}"),
+                      );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        // SliverList(
+        //   delegate: SliverChildBuilderDelegate(
+        //     (BuildContext context, int index) {
+        //       return ListTile(
+        //         title: Text('List Item $index'),
+        //       );
+        //     },
+        //     childCount: 50,
+        //   ),
+        // ),
+      ),
+    );
+  }
+
+  SliverAppBar _appBar(BuildContext context) {
+    return SliverAppBar(
+        pinned: true,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        leading: _menuBtn(),
+        actions: [
+          Obx(() {
+            if (Get.find<AuthController>().user == null) {
+              return MezIconButton(
+                  onTap: () {
+                    PhoneNumberScreen.navigateAtOrderTime();
+                  },
+                  icon: Icons.person);
+            }
+            return SizedBox();
+          }),
+          SizedBox(
+            width: 8,
+          ),
+        ],
+        // expandedHeight: 150,
+        title: FittedBox(
+          fit: BoxFit.fitWidth,
+          child: MezcalmosSharedWidgets.fillTitle(
+              actionLength: 2, showLogo: (context.width > 320) ? true : false),
+        ));
+  }
+
+  SliverPersistentHeader _searchAndFilter(BuildContext context) {
+    return SliverPersistentHeader(
+      pinned: true,
+      delegate: MezDelegate(
+        max: kToolbarHeight * 2,
+        min: kToolbarHeight * 2,
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                hSmallSepartor,
+                Expanded(
+                  child: TextField(
+                    onChanged: (String value) {
+                      viewController.search(value);
+                    },
+                    decoration: InputDecoration(
+                      hintText: "${_i18n()['search']}",
+                      hintStyle: context.textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
+                      prefixIcon: Icon(Icons.search),
+                      prefixIconColor: Colors.grey.shade600,
+                      isDense: true,
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide:
+                              BorderSide(color: primaryBlueColor, width: 1.5)),
+                    ),
+                  ),
+                ),
+                hSmallSepartor,
+                Obx(
+                  () => Badge(
+                    label: Text("1"),
+                    backgroundColor: primaryBlueColor,
+                    isLabelVisible: viewController.showOnlyOpen.value,
+                    child: MezIconButton(
+                      onTap: () async {
+                        showMezSheet(
+                            title: "${_i18n()['filters']}",
+                            content: Container(
+                              margin: const EdgeInsets.all(8),
+                              child: Column(
+                                children: [
+                                  Obx(
+                                    () => SwitchListTile.adaptive(
+                                        title:
+                                            Text("${_i18n()['showOnlyOpen']}"),
+                                        value:
+                                            viewController.showOnlyOpen.value,
+                                        onChanged: (bool v) {
+                                          viewController.switchOnlyOpen(
+                                              value: v);
+                                        }),
+                                  ),
+                                  smallSepartor,
+                                  MezButton(
+                                    width: double.infinity,
+                                    label: "${_i18n()['filter']}",
+                                    onClick: () async {
+                                      await viewController.filter();
+
+                                      Navigator.pop(context);
+                                    },
+                                  )
+                                ],
+                              ),
+                            ),
+                            context: context);
+                      },
+                      padding: const EdgeInsets.all(8),
+                      iconSize: 25,
+                      icon: Icons.filter_list,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                ),
+                hSmallSepartor,
+              ],
+            ),
+            TabBar(
+                controller: viewController.tabController,
+                labelColor: primaryBlueColor,
+                unselectedLabelColor: Colors.grey.shade400,
+                indicatorSize: TabBarIndicatorSize.label,
+                automaticIndicatorColorAdjustment: true,
+                padding: EdgeInsets.zero,
+                tabs: [
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.food_bank_rounded),
+                        hTinySepartor,
+                        Text("${_i18n()['restaurants']['title']}"),
+                      ],
+                    ),
+                  ),
+                  Tab(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.fastfood_rounded),
+                        hTinySepartor,
+                        Text("${_i18n()['items']}"),
+                      ],
+                    ),
+                  ),
+                ])
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget mezWelcomeContainer(TextStyle textStyle) {
+    return Container(
+      margin: const EdgeInsets.all(5),
+      alignment: Alignment.centerLeft,
+      child: Obx(
+        () => Text(
+          "${_i18n()['welcomeText']}",
+          style: textStyle,
+          textAlign: TextAlign.left,
+        ),
+      ),
+    );
+  }
+
+  Widget mezDescription(TextStyle textStyle) {
+    return Container(
+      margin: EdgeInsets.all(5),
+      child: Obx(
+        () => Text("${_i18n()['appDescription']}", style: textStyle),
+      ),
+    );
+  }
+
+  Widget _menuBtn() {
+    return Transform.scale(
+      scale: 0.6,
+      child: InkWell(
+        onTap: () {
+          Get.find<SideMenuDrawerController>().openMenu();
+        },
+        child: Ink(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 216, 225, 249),
+                  spreadRadius: 0,
+                  blurRadius: 7,
+                  offset: Offset(0, 7),
+                ),
+              ],
+              color: primaryBlueColor),
+          child: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+}

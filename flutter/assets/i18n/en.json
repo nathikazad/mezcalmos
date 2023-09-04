@@ -2014,6 +2014,9 @@
       },
       "CustomerWrapper": {
         "filter": "Filter",
+        "noRest": "Sorry, no restaurants found",
+        "noItems": "Sorry, no items found",
+
         "filters": "Filters",
         "items": "Items",
         "search": "Search...",

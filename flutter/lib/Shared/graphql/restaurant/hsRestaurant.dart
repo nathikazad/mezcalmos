@@ -24,6 +24,7 @@ Future<List<Restaurant>> fetch_restaurants(
     required double distance,
     bool? is_open,
     bool? online_ordering,
+    String? keyword,
     int? limit,
     int? offset}) async {
   final List<Restaurant> _restaurants = <Restaurant>[];
@@ -44,6 +45,7 @@ Future<List<Restaurant>> fetch_restaurants(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               distance: distance,
               is_open: isOpenExp,
+              keyword: keyword == null ? "%%" : "%$keyword%",
               online_ordering: onlineOrderingExp,
               limit: limit,
               offset: offset),

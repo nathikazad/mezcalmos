@@ -949,3 +949,10 @@ Future<String> getShortLink(String longUrl) async {
     throw Exception('Failed to shorten URL');
   }
 }
+
+int calculateDateDifference(DateTime date) {
+  final DateTime now = DateTime.now();
+  return DateTime(date.year, date.month, date.day)
+      .difference(DateTime(now.year, now.month, now.day))
+      .inDays;
+}

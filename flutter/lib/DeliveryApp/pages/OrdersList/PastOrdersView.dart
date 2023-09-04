@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/components/CustomerPastOrdersList.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/PastOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
@@ -63,9 +62,9 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
-                    (calculateDifference(element.orderTime) == 0)
+                    (calculateDateDifference(element.orderTime) == 0)
                         ? _i18n()["today"]
-                        : (calculateDifference(element.orderTime) == -1)
+                        : (calculateDateDifference(element.orderTime) == -1)
                             ? _i18n()["yesterday"]
                             : DateFormat('dd MMM yyyy')
                                 .format(element.orderTime),
