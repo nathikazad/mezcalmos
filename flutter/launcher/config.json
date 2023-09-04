@@ -440,7 +440,6 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0",
           "uni_links": "0.5.1",
           "uni_links_platform_interface": "1.0.0",
           "uni_links_web": "0.1.0"
