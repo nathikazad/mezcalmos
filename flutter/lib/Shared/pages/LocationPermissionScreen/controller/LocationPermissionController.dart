@@ -78,6 +78,7 @@ class LocationPermissionController {
 
   Future<void> onGivePermissionsClick() async {
     final Location _loc = Location();
+    await locationController.updateLocationPermission();
     mezDbgPrint(
         "locationController.statusSnapshot.value ==> ${locationController.statusSnapshot.value}");
     // cehcking service first

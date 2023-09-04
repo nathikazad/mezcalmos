@@ -476,9 +476,9 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
                     name: NameNode(value: 'open_status'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(
-                        name: NameNode(value: '_neq'),
+                        name: NameNode(value: '_eq'),
                         value: StringValueNode(
-                          value: 'closedIndefinitely',
+                          value: 'open',
                           isBlock: false,
                         ),
                       )
