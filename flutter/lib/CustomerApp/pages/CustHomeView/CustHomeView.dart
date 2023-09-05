@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
+import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
+import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/controllers/CustHomeViewController.dart';
@@ -10,7 +13,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -32,7 +37,7 @@ class _CustHomeViewState extends State<CustHomeView>
 
   @override
   void initState() {
-    viewController.init(vsync: this);
+    viewController.init(vsync: this, context: context);
     super.initState();
   }
 
@@ -42,89 +47,110 @@ class _CustHomeViewState extends State<CustHomeView>
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,
-      // appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu),
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        controller: viewController.restaurantsScrollController,
-        dragStartBehavior: DragStartBehavior.down,
-        headerSliverBuilder: (BuildContext context, _) {
-          return [
-            _appBar(context),
-            _searchAndFilter(context),
-          ];
-        },
-
-        body: TabBarView(
-          controller: viewController.tabController,
-          children: [
-            Scrollbar(
-              child: SingleChildScrollView(
-                child: Obx(
-                  () {
-                    if (viewController.showRestaurantShimmer) {
-                      return Column(
-                        children: List.generate(
-                            10, (int index) => CustRestaurantCard.shimmer()),
-                      );
-                    } else if (viewController.restaurants.isNotEmpty) {
-                      return Column(
-                        children: List.generate(
-                            viewController.restaurants.length,
-                            (int index) => CustRestaurantCard(
-                                restaurant: viewController.restaurants[index])),
-                      );
-                    } else {
-                      return Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.all(15),
-                        child: Text("${_i18n()['noRest']}"),
-                      );
-                    }
-                  },
-                ),
-              ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 30),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Obx(
+            () => MezButton(
+              width: 52.5.mezW,
+              height: 42.5,
+              onClick: () async {
+                viewController.switchView();
+              },
+              icon: viewController.isMapView ? Icons.list : Icons.room,
+              label: viewController.isMapView
+                  ? '${_i18n()['viewAsList']}'
+                  : '${_i18n()['viewOnMap']}',
+              borderRadius: 50,
             ),
-            Scrollbar(
-              child: SingleChildScrollView(
-                child: Obx(
-                  () {
-                    if (viewController.showIemsShimmer) {
-                      return Column(
-                        children: List.generate(10,
-                            (int index) => CustRestaurantItemCard.shimmer()),
-                      );
-                    } else if (viewController.filteredItems.isNotEmpty)
-                      return Column(
-                        children: List.generate(
-                            viewController.items.length,
-                            (int index) => CustRestaurantItemCard(
-                                  item: viewController.items[index],
-                                )),
-                      );
-                    else
-                      return Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.all(15),
-                        child: Text("${_i18n()['noItems']}"),
-                      );
-                  },
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-
-        // SliverList(
-        //   delegate: SliverChildBuilderDelegate(
-        //     (BuildContext context, int index) {
-        //       return ListTile(
-        //         title: Text('List Item $index'),
-        //       );
-        //     },
-        //     childCount: 50,
-        //   ),
-        // ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: Obx(() {
+        if (viewController.isMapView)
+          return _mapView();
+        else
+          return listScrollView();
+      }),
+    );
+  }
+
+  NestedScrollView listScrollView() {
+    return NestedScrollView(
+      floatHeaderSlivers: true,
+      controller: viewController.restaurantsScrollController,
+      dragStartBehavior: DragStartBehavior.down,
+      headerSliverBuilder: (BuildContext context, _) {
+        return [
+          _appBar(context),
+          _searchAndFilter(context),
+        ];
+      },
+      body: tabsView(),
+    );
+  }
+
+  TabBarView tabsView() {
+    return TabBarView(
+      controller: viewController.tabController,
+      children: [
+        Scrollbar(
+          child: SingleChildScrollView(
+            child: Obx(
+              () {
+                if (viewController.showRestaurantShimmer) {
+                  return Column(
+                    children: List.generate(
+                        10, (int index) => CustRestaurantCard.shimmer()),
+                  );
+                } else if (viewController.restaurants.isNotEmpty) {
+                  return Column(
+                    children: List.generate(
+                        viewController.restaurants.length,
+                        (int index) => CustRestaurantCard(
+                            restaurant: viewController.restaurants[index])),
+                  );
+                } else {
+                  return Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.all(15),
+                    child: Text("${_i18n()['noRest']}"),
+                  );
+                }
+              },
+            ),
+          ),
+        ),
+        Scrollbar(
+          child: SingleChildScrollView(
+            child: Obx(
+              () {
+                if (viewController.showIemsShimmer) {
+                  return Column(
+                    children: List.generate(
+                        10, (int index) => CustRestaurantItemCard.shimmer()),
+                  );
+                } else if (viewController.filteredItems.isNotEmpty)
+                  return Column(
+                    children: List.generate(
+                        viewController.items.length,
+                        (int index) => CustRestaurantItemCard(
+                              item: viewController.items[index],
+                            )),
+                  );
+                else
+                  return Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.all(15),
+                    child: Text("${_i18n()['noItems']}"),
+                  );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -327,5 +353,31 @@ class _CustHomeViewState extends State<CustHomeView>
         ),
       ),
     );
+  }
+
+  Widget _mapView() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      MezcalmosAppBar(AppBarLeftButtonType.Menu),
+      Obx(() => CustSwitchOpenService(
+            label: '${_i18n()["showOnlyOpen"]}',
+            showOnlyOpen: viewController.showOnlyOpen.value,
+            onChange: (bool value) {
+              viewController.switchOnlyOpen(value: value);
+            },
+          )),
+      Obx(
+        () => Expanded(
+          child: MezServicesMapView(
+            mGoogleMapController: viewController.mapController,
+            fetchNewData: (LatLng? mapCenter, double? distance) async {
+              await viewController.fetchMapViewRentals(
+                  fromLoc: mapCenter, distance: distance);
+              return viewController.restaurantsMarkers.toList();
+            },
+            markers: viewController.restaurantsMarkers.value,
+          ),
+        ),
+      ),
+    ]);
   }
 }

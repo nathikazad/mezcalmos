@@ -2080,6 +2080,8 @@
         "items": "Elementos",
         "search": "Buscar...",
         "showOnlyOpen": "Mostrar solo restaurantes abiertos",
+        "viewOnMap": "View on map",
+        "viewAsList": "View as list",
         "orders": "Pedidos",
         "profile": "Perfil",
         "messages": "Mensajes",

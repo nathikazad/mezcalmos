@@ -2021,6 +2021,8 @@
         "items": "Items",
         "search": "Search...",
         "showOnlyOpen": "Show only open restaurants",
+        "viewOnMap": "View on map",
+        "viewAsList": "View as list",
         "orders": "Orders",
         "profile": "Profile",
         "messages": "Messages",

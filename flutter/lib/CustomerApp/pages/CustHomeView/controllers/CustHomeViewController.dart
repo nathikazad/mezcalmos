@@ -1,26 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
+import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 
 class CustHomeViewController {
   late TabController tabController;
+  late BuildContext context;
+  MGoogleMapController mapController = MGoogleMapController(
+    enableMezSmartPointer: true,
+  );
   RxList<Restaurant> _restaurants = RxList.empty();
   RxList<Restaurant> _filtredRestaurants = RxList.empty();
   Rx<SearchType> searchType = SearchType.searchByRestaurantName.obs;
   ScrollController restaurantsScrollController = ScrollController();
   RxList<Item> filteredItems = RxList<Item>.empty();
+  RxSet<Marker> _restaurantsMarkers = <Marker>{}.obs;
+  RxSet<Marker> get restaurantsMarkers => _restaurantsMarkers;
   List<int> servicesIds = [];
 
-  int fetchSize = 10;
+  int fetchSize = 25;
   int offset = 0;
   bool _hasReachedEndData = false;
   RxBool isFetchingRestaurants = RxBool(false);
@@ -30,15 +41,29 @@ class CustHomeViewController {
   RxBool showOnlyOpen = RxBool(false);
 
   RxString searchQuery = RxString("");
+  // MAP //
+  RxBool _isMapView = false.obs;
+  bool get isMapView => _isMapView.value;
+  LatLng _currentLocation = LatLng(19.4326, -99.1332);
+  LatLng get currentLocation => _currentLocation;
+  RxList<Restaurant> _mapViewRestaurants = <Restaurant>[].obs;
+  List<Restaurant> get mapViewRestaurants => _mapViewRestaurants;
+  int mapMarkersOffset = 0;
+  int mapMarkersFetchSize = 25;
+  bool _hasReachedEndOfMarkers = false;
+  // MAP //
 
-  LocationData? customerLocation;
+  BuildContext? ctx;
 
   List<Restaurant> get restaurants => _filtredRestaurants.value;
   List<Item> get items => filteredItems.value;
   bool get showRestaurantShimmer =>
       isFetchingRestaurants.value && _filtredRestaurants.isEmpty;
   bool get showIemsShimmer => isFetchingItems.value;
-  Future<void> init({required TickerProvider vsync}) async {
+
+  Future<void> init(
+      {required TickerProvider vsync, required BuildContext context}) async {
+    this.context = context;
     _initTabController(vsync);
     restaurantsScrollController.onBottomReach(() {
       if (searchType.value == SearchType.searchByRestaurantName &&
@@ -46,9 +71,11 @@ class CustHomeViewController {
         _fetchRestaurants();
       }
     });
-    await _fetchRestaurants();
-    _assignServiceIds();
-    await _searchItem();
+    await Future.wait([
+      _fetchRestaurants().then((value) => _assignServiceIds()),
+      _searchItem(),
+      filter()
+    ]);
   }
 
   void _initTabController(TickerProvider vsync) {
@@ -162,6 +189,112 @@ class CustHomeViewController {
       }
     } else {
       await _searchItem();
+    }
+  }
+
+  Future<void> fetchMapViewRentals(
+      {required LatLng? fromLoc, required double? distance}) async {
+    // if (_hasReachedEndOfMarkers) {
+    //   return;
+    // }
+    try {
+      List<Restaurant> newList = await fetch_restaurants(
+          fromLocation: cm.Location(
+              lat: fromLoc?.latitude ?? _currentLocation.latitude,
+              lng: fromLoc?.longitude ?? _currentLocation.longitude,
+              address: ''),
+          is_open: showOnlyOpen.value,
+          withCache: false,
+          limit: mapMarkersFetchSize,
+          offset: mapMarkersOffset,
+          online_ordering: true,
+          distance: distance ?? getFetchDistance);
+      _mapViewRestaurants += newList;
+      mezDbgPrint(
+          "NEW MARKERS LENGTH 👋============>${newList.length} \n offset : $mapMarkersOffset , \n limit : $mapMarkersFetchSize");
+      if (newList.length == 0) {
+        _hasReachedEndOfMarkers = true;
+      }
+      mapMarkersOffset += mapMarkersFetchSize;
+      await _fillMapsMarkers(newData: newList);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } finally {
+      mezDbgPrint("MapView restaurants ====>${_mapViewRestaurants.length}");
+
+      mezDbgPrint(
+          "Restaurant markers =======>${restaurantsMarkers.value.length}");
+    }
+  }
+
+  Future<void> _fillMapsMarkers({required List<Restaurant> newData}) async {
+    mezDbgPrint("🔥🔥🔥 FILL IN NEW ${newData.length} MARKERS 🔥🔥🔥");
+    for (Restaurant restaurant in newData) {
+      await _restaurantsMarkers.addLabelMarker(LabelMarker(
+        flat: false,
+        label: null,
+        anchor: Offset(0.5, 0.5),
+        altIconPath: mezRestaurantMarker,
+        markerId: MarkerId(restaurant.info.hasuraId.toString()),
+        onTap: () => _onSelectRentalTag(restaurant),
+        position: LatLng(restaurant.info.location.latitude.toDouble(),
+            restaurant.info.location.longitude.toDouble()),
+      ));
+      // _restaurantsMarkers.add(MezMarker(
+      //   flat: true,
+      //   fitWithinBounds: false,
+      //   markerId: MarkerId(restaurant.info.hasuraId.toString()),
+      //   icon: await bitmapDescriptorLoader(
+      //       (await cropRonded((await rootBundle.load(mezRestaurantMarker))
+      //           .buffer
+      //           .asUint8List())),
+      //       70,
+      //       70,
+      //       isBytes: true),
+      //   onTap: () => _onSelectRentalTag(restaurant),
+      //   position: LatLng(restaurant.info.location.position.latitude!,
+      //       restaurant.info.location.position.longitude!),
+      // ));
+    }
+  }
+
+  void _onSelectRentalTag(Restaurant restaurant) {
+    showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.transparent,
+        context: context,
+        isDismissible: true,
+        builder: (BuildContext context) {
+          return Container(
+            margin: const EdgeInsets.all(8.0),
+            child: CustRestaurantCard(restaurant: restaurant),
+          );
+        });
+  }
+
+  Future<void> _fetchCurrentMapMarkers() async {
+    LatLng? mapCenter = await mapController.getMapCenter();
+    double? distance = calculateDistanceFromBounds(
+        await mapController.controller.value!.getVisibleRegion());
+    await fetchMapViewRentals(
+      fromLoc: mapCenter,
+      distance: distance,
+    );
+    // mapController.markers.clear();
+    // mapController.markers
+    //     .addAll(_restaurantsMarkers.map((Marker element) => MezMarker(
+    //           markerId: element.markerId,
+    //           icon: element.icon,
+    //           onTap: element.onTap,
+    //           consumeTapEvents: true,
+    //         )));
+  }
+
+  void switchView() {
+    _isMapView.value = !_isMapView.value;
+    if (_isMapView.isTrue && mapController.isMapReady) {
+      _fetchCurrentMapMarkers();
     }
   }
 }
