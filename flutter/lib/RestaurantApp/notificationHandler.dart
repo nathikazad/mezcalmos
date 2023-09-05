@@ -48,8 +48,8 @@ Notification restaurantNotificationHandler(String key, value) {
           variableParams: value);
     case NotificationType.NewDriver:
       return newDriverNotification(key, value);
-    case NotificationType.NewMessage:
-      return newMessageNotification(key, value);
+    // case NotificationType.NewMessage:
+    //   return newMessageNotification(key, value);
     case NotificationType.OrderStatusChange:
       return restaurantOpOrderChangesNotifier(key, value);
     default:
@@ -131,20 +131,20 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
   return null;
 }
 
-Notification newMessageNotification(String key, value) {
-  return Notification(
-      id: key,
-      linkUrl:
-          SharedRoutes.getMessagesRoute(chatId: int.parse(value['chatId'])),
-      body: value['message'],
-      imgUrl: value['sender']['image'],
-      title: value['sender']['name'],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewMessage,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
-      variableParams: value);
-}
+// Notification newMessageNotification(String key, value) {
+//   return Notification(
+//       id: key,
+//       linkUrl:
+//           SharedRoutes.getMessagesRoute(chatId: int.parse(value['chatId'])),
+//       body: value['message'],
+//       imgUrl: value['sender']['image'],
+//       title: value['sender']['name'],
+//       timestamp: DateTime.parse(value['time']),
+//       notificationType: NotificationType.NewMessage,
+//       notificationAction:
+//           (value["notificationAction"] as String).toNotificationAction(),
+//       variableParams: value);
+// }
 
 Notification newDriverNotification(String key, value) {
   return Notification(

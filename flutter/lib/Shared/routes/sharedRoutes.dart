@@ -40,7 +40,7 @@ class SharedRoutes {
   static const String kSplashRoute = '/splash';
   static const String kSignInRoute = '/sign_in';
   static const String kSignInAtOrderTimeRoute = '/sign_in_order_time';
-  static const String kMessagesRoute = '/messages/:chatId';
+  // static const String kMessagesRoute = '/messages/:chatId';
   static const String kLocationPermissionPage = '/location_permission';
   static const String kNoInternetConnectionPage = '/offline';
   static const String kOtpRoute = '/sign_in_otp';
@@ -57,11 +57,11 @@ class SharedRoutes {
   static const String kNoInternetRoute = '/noInternet';
   static const String kAppNeedsUpdateRoute = '/needs_update';
 
-  static String getMessagesRoute({required int chatId}) {
-    final String mainUrl =
-        kMessagesRoute.replaceFirst(":chatId", chatId.toString());
-    return mainUrl;
-  }
+  // static String getMessagesRoute({required int chatId}) {
+  //   final String mainUrl =
+  //       kMessagesRoute.replaceFirst(":chatId", chatId.toString());
+  //   return mainUrl;
+  // }
 
 // shared navigation methods //
   static List<QRoute> qRoutes = <QRoute>[

@@ -802,6 +802,53 @@ class CancelRestaurantOrderResponse {
   }
 }
 
+class NewCheckoutResponse {
+  bool success;
+  NewCheckoutResponseError? error;
+  String? unhandledError;
+  num? orderId;
+  NewCheckoutResponse(
+      this.success, this.error, this.unhandledError, this.orderId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+      "orderId": orderId,
+    };
+  }
+
+  factory NewCheckoutResponse.fromFirebaseFormattedJson(json) {
+    return NewCheckoutResponse(
+        json["success"],
+        json["error"]?.toString().toNewCheckoutResponseError(),
+        json["unhandledError"],
+        json["orderId"]);
+  }
+}
+
+class CompleteRestaurantOrderResponse {
+  bool success;
+  CompleteOrderError? error;
+  String? unhandledError;
+  CompleteRestaurantOrderResponse(
+      this.success, this.error, this.unhandledError);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+
+  factory CompleteRestaurantOrderResponse.fromFirebaseFormattedJson(json) {
+    return CompleteRestaurantOrderResponse(
+        json["success"],
+        json["error"]?.toString().toCompleteOrderError(),
+        json["unhandledError"]);
+  }
+}
+
 enum BusinessProfile {
   SurfShop,
   VehicleRental,
@@ -1427,6 +1474,164 @@ class ServiceProviderStripeInfo {
       "detailsSubmitted": detailsSubmitted,
       "requirements": requirements,
       "email": email,
+    };
+  }
+}
+
+class TextMessage {
+  String body;
+  TextMessage({required this.body});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "body": body,
+    };
+  }
+}
+
+class LocationMessage {
+  num latitude;
+  num longitude;
+  LocationMessage({required this.latitude, required this.longitude});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "latitude": latitude,
+      "longitude": longitude,
+    };
+  }
+}
+
+class ImageMessage {
+  String id;
+  String url;
+  String mime_type;
+  String sha256;
+  String? caption;
+  ImageMessage(
+      {required this.id,
+      required this.url,
+      required this.mime_type,
+      required this.sha256,
+      this.caption});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "url": url,
+      "mime_type": mime_type,
+      "sha256": sha256,
+      "caption": caption,
+    };
+  }
+}
+
+class Message {
+  String from;
+  String id;
+  String type;
+  String timestamp;
+  TextMessage? text;
+  LocationMessage? location;
+  ImageMessage? image;
+  bool? resolved;
+  num? driverId;
+  Message(
+      {required this.from,
+      required this.id,
+      required this.type,
+      required this.timestamp,
+      this.text,
+      this.location,
+      this.image,
+      this.resolved,
+      this.driverId});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "from": from,
+      "id": id,
+      "type": type,
+      "timestamp": timestamp,
+      "text": text,
+      "location": location,
+      "image": image,
+      "resolved": resolved,
+      "driverId": driverId,
+    };
+  }
+}
+
+class Profile {
+  String name;
+  Profile({required this.name});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "name": name,
+    };
+  }
+}
+
+class Contact {
+  Profile profile;
+  String wa_id;
+  Contact({required this.profile, required this.wa_id});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "profile": profile,
+      "wa_id": wa_id,
+    };
+  }
+}
+
+class ChangeValue {
+  List<Contact> contacts;
+  List<Message> messages;
+  String messaging_product;
+  Metadata metadata;
+  ChangeValue(
+      {required this.contacts,
+      required this.messages,
+      required this.messaging_product,
+      required this.metadata});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "contacts": contacts,
+      "messages": messages,
+      "messaging_product": messaging_product,
+      "metadata": metadata,
+    };
+  }
+}
+
+class Metadata {
+  String display_phone_number;
+  String phone_number_id;
+  Metadata({required this.display_phone_number, required this.phone_number_id});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "display_phone_number": display_phone_number,
+      "phone_number_id": phone_number_id,
+    };
+  }
+}
+
+class Change {
+  String field;
+  ChangeValue value;
+  Change({required this.field, required this.value});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "field": field,
+      "value": value,
+    };
+  }
+}
+
+class Entry {
+  List<Change> changes;
+  String id;
+  Entry({required this.changes, required this.id});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "changes": changes,
+      "id": id,
     };
   }
 }
@@ -2987,6 +3192,28 @@ extension ParseStringToItemType on String {
   }
 }
 
+enum ItemTag {
+  Vegan,
+  VeganPossible,
+  Vegetarian,
+  GlutenFree,
+  GlutenFreePossible
+}
+
+extension ParseItemTagToString on ItemTag {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToItemTag on String {
+  ItemTag toItemTag() {
+    return ItemTag.values.firstWhere((ItemTag itemTag) =>
+        itemTag.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
 class Item {
   num itemId;
   Map<Language, String> name;
@@ -3086,6 +3313,22 @@ class Choice {
       "available": available,
       "cost": cost,
     };
+  }
+}
+
+enum RestaurantType { Restaurant, Cafe, Juicery, Mealkit, Bakery }
+
+extension ParseRestaurantTypeToString on RestaurantType {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToRestaurantType on String {
+  RestaurantType toRestaurantType() {
+    return RestaurantType.values.firstWhere((RestaurantType restaurantType) =>
+        restaurantType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -3243,6 +3486,7 @@ class SelectedOption {
 }
 
 enum RestaurantOrderStatus {
+  InProcess,
   OrderReceived,
   Preparing,
   Ready,
@@ -3850,6 +4094,65 @@ extension ParseStringToCancelOrderError on String {
     return CancelOrderError.values.firstWhere(
         (CancelOrderError cancelOrderError) =>
             cancelOrderError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum NewCheckoutResponseError {
+  UnhandledError,
+  RestaurantClosed,
+  CartEmpty,
+  RestaurantNotApproved,
+  NotAcceptingDeliveryOrders,
+  RestaurantNotFound,
+  CartNotFound,
+  CustomerNotFound,
+  RestaurantIdMismatch,
+  OrderCreationError,
+  DeliveryCompanyOperatorsNotFound,
+  ServiceProviderDetailsNotFound,
+  NoStripeAccountOfServiceProvider,
+  UpdateOrderStripeError
+}
+
+extension ParseNewCheckoutResponseErrorToString on NewCheckoutResponseError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToNewCheckoutResponseError on String {
+  NewCheckoutResponseError toNewCheckoutResponseError() {
+    return NewCheckoutResponseError.values.firstWhere(
+        (NewCheckoutResponseError newCheckoutResponseError) =>
+            newCheckoutResponseError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum CompleteOrderError {
+  UnhandledError,
+  OrderNotFound,
+  RestaurantNotfound,
+  IncorrectOrderId,
+  OrderNotInProcess,
+  ServiceProviderDetailsNotFound,
+  UnauthorizedAccess
+}
+
+extension ParseCompleteOrderErrorToString on CompleteOrderError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToCompleteOrderError on String {
+  CompleteOrderError toCompleteOrderError() {
+    return CompleteOrderError.values.firstWhere(
+        (CompleteOrderError completeOrderError) =>
+            completeOrderError.toFirebaseFormatString().toLowerCase() ==
             toLowerCase());
   }
 }

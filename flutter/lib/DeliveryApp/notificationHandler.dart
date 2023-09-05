@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 // import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 // import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["notificationHandler"];
@@ -21,8 +20,8 @@ Notification deliveryDriverNotificationHandler(String key, value) {
       return _newOrderNotification(key, value);
     case NotificationType.DriverApproved:
       return _driverAprrovedNotification(key, value);
-    case NotificationType.NewMessage:
-      return newMessageNotification(key, value);
+    // case NotificationType.NewMessage:
+    //   return newMessageNotification(key, value);
     case NotificationType.PriceChange:
       return newPriceChangeNotification(key, value);
     case NotificationType.OrderStatusChange:
@@ -263,23 +262,23 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
   }
 }
 
-Notification newMessageNotification(String key, value) {
-  return Notification(
-      id: key,
-      linkUrl: value["linkUrl"] ??
-          SharedRoutes.getMessagesRoute(chatId: value["chatId"]),
-      body: value['message'],
-      imgUrl: value['sender']['image'],
-      title: value['sender']['name'],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewMessage,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
-      variableParams: value);
-}
+// Notification newMessageNotification(String key, value) {
+//   return Notification(
+//       id: key,
+//       linkUrl: value["linkUrl"] ??
+//           SharedRoutes.getMessagesRoute(chatId: value["chatId"]),
+//       body: value['message'],
+//       imgUrl: value['sender']['image'],
+//       title: value['sender']['name'],
+//       timestamp: DateTime.parse(value['time']),
+//       notificationType: NotificationType.NewMessage,
+//       notificationAction:
+//           (value["notificationAction"] as String).toNotificationAction(),
+//       variableParams: value);
+// }
 
 Notification newPriceChangeNotification(String key, value) {
-  bool accepted = value["accepted"];
+  final bool accepted = value["accepted"];
   return Notification(
       id: key,
       linkUrl: value["linkUrl"],

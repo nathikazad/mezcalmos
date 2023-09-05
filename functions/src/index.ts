@@ -36,6 +36,8 @@ import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
 import { RuntimeOptions } from "firebase-functions";
 import { handleWhatsapp, markMessagesAsResolved } from "./utilities/senders/whatsapp";
+import { newCheckout } from "./restaurant/newCheckout";
+import { completeOrder } from "./restaurant/completeOrder";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -99,6 +101,8 @@ export const restaurant3 = {
   orderPickedUpByCustomer: authenticatedCall((userId, data) => restaurantStatusChange.orderPickedUpByCustomer(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
+  newCheckout: authenticatedCall((userId, data) => newCheckout(userId, data)),
+  completeOrder: authenticatedCall((userId, data) => completeOrder(userId, data)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 export const business = {
