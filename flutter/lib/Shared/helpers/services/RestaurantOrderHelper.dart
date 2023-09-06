@@ -36,7 +36,6 @@ extension RestaurantOrderHelper on RestaurantOrderStatus {
   Widget get widget {
     switch (this) {
       case RestaurantOrderStatus.CancelledByAdmin:
-
       case RestaurantOrderStatus.CancelledByCustomer:
         return Container(
           padding: const EdgeInsets.all(5),
@@ -59,6 +58,7 @@ extension RestaurantOrderHelper on RestaurantOrderStatus {
           ),
         );
       case RestaurantOrderStatus.Preparing:
+      case RestaurantOrderStatus.InProcess:
         return Container(
           height: 50,
           width: 50,
