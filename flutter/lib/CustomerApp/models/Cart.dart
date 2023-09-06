@@ -116,6 +116,7 @@ class Cart {
   }
 
   bool get isInStorePickup => deliveryType == cModels.DeliveryType.Pickup;
+  bool get isSitIn => deliveryType == cModels.DeliveryType.SitIn;
 
   num itemsCost() {
     if (cartItems.length == 0) return 0;

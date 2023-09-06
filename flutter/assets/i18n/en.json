@@ -526,7 +526,8 @@
       "CustDeliveryTypeSelector": {
         "dvType": "Delivery type",
         "delivery": "Delivery",
-        "pickup": "In-store Pickup"
+        "pickup": "In-store Pickup",
+        "sitIn": "Sit-in"
       },
       "CustOrderCostCard": {
         "orderCost": "Order cost"

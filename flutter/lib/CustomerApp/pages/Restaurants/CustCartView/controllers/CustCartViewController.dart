@@ -255,9 +255,10 @@ class CustCartViewController {
         final bool res = await callWhatsappNumber(
             cart.restaurant!.info.phoneNumber!,
             message: message);
+
         showRedirectText.value = false;
-        orderSentToRest.value = res;
         if (res) {
+          orderSentToRest.value = true;
           await cartController.clearCart();
         }
       } catch (e, stk) {
@@ -371,7 +372,7 @@ class CustCartViewController {
   }
 
   bool get canOrder {
-    if (dvType == cModels.DeliveryType.Pickup) {
+    if (dvType != cModels.DeliveryType.Delivery) {
       return true;
     }
     return cart.toLocation != null;
@@ -504,7 +505,7 @@ class CustCartViewController {
         (phoneNumber != null ? "\nPhone: $phoneNumber" : "") +
         (shortUrl != null ? "\nRoute: $shortUrl" : "");
     final String orderInfo =
-        "🛒 Order Info\nDelivery Type: ${cart.isInStorePickup ? 'PICKUP' : 'DELIVERY'}\nItems cost: \$${cart.itemsCost().round()}\nPlatform fees : ${pFees.toPriceString()}\nTotal: ${(cart.itemsCost().round() + pFees).toPriceString()}\nQuantity: ${cart.quantity()}" +
+        "🛒 Order Info\nDelivery Type: ${cart.isInStorePickup ? 'PICKUP' : cart.isSitIn ? 'SIT-IN' : 'DELIVERY'}\nItems cost: \$${cart.itemsCost().round()}\nPlatform fees : ${pFees.toPriceString()}\nTotal: ${(cart.itemsCost().round() + pFees).toPriceString()}\nQuantity: ${cart.quantity()}" +
             (cart.notes?.isNotEmpty == true ? "\nNotes: ${cart.notes}" : "") +
             (cart.deliveryTime != null
                 ? "\n⏰ Scheduled Time: ${DateFormat('yyyy-MM-dd HH:mm a').format(cart.deliveryTime!)}"
@@ -524,7 +525,9 @@ class CustCartViewController {
     String header = "\n----- 🛍️ NEW ORDER 🛍️ -----" +
         (cart.isInStorePickup
             ? '\n----- 🚶‍♂️ PICKUP 🚶‍♂️ -----'
-            : '\n----- 🚚 DELIVERY 🚚 -----'); // Creative header
+            : cart.isSitIn
+                ? '\n----- 🪑 SIT-IN 🪑 -----'
+                : '\n----- 🚚 DELIVERY 🚚 -----'); // Creative header
 
     if (cart.deliveryTime != null) {
       header = "\n----- 🕒 SCHEDULED ORDER 🕒 -----"; // Scheduled order header

@@ -522,7 +522,8 @@
       "CustDeliveryTypeSelector": {
         "dvType": "Tipo de entrega",
         "delivery": "Entrega",
-        "pickup": "Recogida en tienda"
+        "pickup": "Recogida en tienda",
+        "sitIn": "Sentarse en"
       },
       "CustOrderCostCard": {
         "orderCost": "Costo de la orden"

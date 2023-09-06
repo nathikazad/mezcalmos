@@ -42,7 +42,9 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
         () {
           // items = widget.cartType == CartType.restaurant
           //     ?
-          Get.find<CustRestaurantCartController>().cart.value?.cartItems ?? [];
+          items =
+              Get.find<CustRestaurantCartController>().cart.value?.cartItems ??
+                  [];
           // : Get.find<CustBusinessCartController>().cart.value?.items ?? [];
           return items.length > 0
               ? badge.Badge(

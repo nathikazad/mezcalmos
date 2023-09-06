@@ -23,7 +23,7 @@ class _CustDeliveryTypeSelectorState extends State<CustDeliveryTypeSelector> {
   Rx<DeliveryType> selectedValue = Rx(DeliveryType.Delivery);
 
   RxList<DeliveryType> types =
-      RxList([DeliveryType.Delivery, DeliveryType.Pickup]);
+      RxList([DeliveryType.Delivery, DeliveryType.Pickup, DeliveryType.SitIn]);
   @override
   void initState() {
     //  _checkOpenCompanies();

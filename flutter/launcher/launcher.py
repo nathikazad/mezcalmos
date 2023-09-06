@@ -147,7 +147,7 @@ class Launcher:
                         fmd = OUTPUT_FILTERS.HIDE
             global run_cmd
             if user_args['app'] == "WebApp":
-                run_cmd = ["run", "-d" ,"chrome" ,"--no-sound-null-safety" ,"--web-renderer=html"]
+                run_cmd = ["run", "-d" ,"chrome"  ,"--web-renderer=html"]
             else:
                 run_cmd = ["run"]
 

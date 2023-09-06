@@ -28,6 +28,7 @@ export interface Order {
 export enum DeliveryType {
   Pickup = "pickup",
   Delivery = "delivery",
+  SitIn = "sitIn",
 }
 
 // export enum DeliveryAction {
@@ -57,12 +58,12 @@ export const pluralizeOrderType = function (orderType: OrderType): string {
     case OrderType.Business:
       return "businesses";
   }
-}
+};
 
 export enum PaymentType {
   Cash = "cash",
   Card = "card",
-  BankTransfer = "bankTransfer"
+  BankTransfer = "bankTransfer",
 }
 
 // export enum SecondaryChat {
@@ -82,5 +83,4 @@ export interface TwoWayDeliverableOrder extends DeliverableOrder {
   pickupShippingCost?: number;
 }
 
-export interface DeliveryDriverInfo extends UserInfo {
-}
+export interface DeliveryDriverInfo extends UserInfo {}
