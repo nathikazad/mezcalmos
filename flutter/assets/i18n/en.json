@@ -2024,6 +2024,7 @@
         "showOnlyOpen": "Show only open restaurants",
         "viewOnMap": "View on map",
         "viewAsList": "View as list",
+        "fetchMore": "Load more",
         "orders": "Orders",
         "profile": "Profile",
         "messages": "Messages",

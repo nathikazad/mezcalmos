@@ -33,7 +33,7 @@ class CustHomeViewController {
   RxSet<Marker> get restaurantsMarkers => _restaurantsMarkers;
   List<int> servicesIds = [];
 
-  int fetchSize = 10;
+  int fetchSize = 25;
   int offset = 0;
   RxBool hasReachedEndData = RxBool(false);
   RxBool isFetchingRestaurants = RxBool(false);
@@ -199,6 +199,7 @@ class CustHomeViewController {
             // limit: fetchSize,
             // offset: offset,
             fromLocation: puertoEscondidoLocation);
+        _filtredRestaurants.sortByOpen();
       } finally {
         isFetchingRestaurants.value = false;
       }

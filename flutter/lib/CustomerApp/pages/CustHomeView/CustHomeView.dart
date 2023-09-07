@@ -135,7 +135,7 @@ class _CustHomeViewState extends State<CustHomeView>
                           textColor: primaryBlueColor,
                           borderRadius: 20,
                           height: 45,
-                          label: "Fetch more ...",
+                          label: "${_i18n()['fetchMore']}...",
                           onClick: () async {
                             await viewController.fetchMore();
                           },
