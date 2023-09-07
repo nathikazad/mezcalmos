@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -107,25 +108,25 @@ class _CustHomeViewState extends State<CustHomeView>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AnimatedList(
-                      key: viewController.animatedListKey,
+                    ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      initialItemCount: viewController.restaurants.length,
-                      itemBuilder: (BuildContext context, int index,
-                          Animation<double> animation) {
-                        return SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(1, 0),
-                            end: Offset.zero,
-                          ).animate(animation),
+                      itemCount: viewController.restaurants.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final Restaurant restaurant =
+                            viewController.restaurants[index];
+                        return AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
                           child: CustRestaurantCard(
-                            restaurant: viewController.restaurants[index],
+                            key: ValueKey<int>(restaurant.info
+                                .hasuraId), // Use a unique key for each item
+                            restaurant: restaurant,
                           ),
                         );
                       },
                     ),
-                    if (viewController.hasReachedEndData.isFalse) ...[
+                    if (viewController.hasReachedEndData.isFalse &&
+                        viewController.searchQuery.isEmpty) ...[
                       smallSepartor,
                       Container(
                         margin: const EdgeInsets.all(15),

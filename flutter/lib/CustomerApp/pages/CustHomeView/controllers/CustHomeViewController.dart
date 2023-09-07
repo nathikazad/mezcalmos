@@ -126,7 +126,7 @@ class CustHomeViewController {
       }
       offset += fetchSize;
 
-      _filtredRestaurants.value = _restaurants;
+      _filtredRestaurants.value = _restaurants.value;
       _filtredRestaurants.sortByOpen();
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -191,15 +191,18 @@ class CustHomeViewController {
       isFetchingRestaurants.value = false;
       try {
         isFetchingRestaurants.value = true;
-        _filtredRestaurants.value = await fetch_restaurants(
+        List<Restaurant> newData = await fetch_restaurants(
             is_open: showOnlyOpen.value,
             withCache: false,
             keyword: searchQuery.value,
             distance: 10000000000000000000,
-            // limit: fetchSize,
-            // offset: offset,
+            limit: fetchSize,
+            offset: offset,
             fromLocation: puertoEscondidoLocation);
-        _filtredRestaurants.sortByOpen();
+        _filtredRestaurants.value = newData;
+      } catch (e, stk) {
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
       } finally {
         isFetchingRestaurants.value = false;
       }

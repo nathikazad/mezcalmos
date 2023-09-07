@@ -86,6 +86,7 @@ void mezcalmosLogger(String text, {bool isError = false}) =>
 
 void logCrashes(Object error, StackTrace? stacktrace) {
   mezDbgPrint("Logging crash $error");
+  mezDbgPrint(stacktrace);
   Sentry.captureException(
     error,
     stackTrace: stacktrace,
