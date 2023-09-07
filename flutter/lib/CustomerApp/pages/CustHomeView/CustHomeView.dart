@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
@@ -79,9 +78,8 @@ class _CustHomeViewState extends State<CustHomeView>
 
   NestedScrollView listScrollView() {
     return NestedScrollView(
-      floatHeaderSlivers: true,
       controller: viewController.restaurantsScrollController,
-      dragStartBehavior: DragStartBehavior.down,
+      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       headerSliverBuilder: (BuildContext context, _) {
         return [
           _appBar(context),
@@ -96,32 +94,42 @@ class _CustHomeViewState extends State<CustHomeView>
     return TabBarView(
       controller: viewController.tabController,
       children: [
-        Scrollbar(
-          child: SingleChildScrollView(
-            child: Obx(
-              () {
-                if (viewController.showRestaurantShimmer) {
-                  return Column(
-                    children: List.generate(
-                        10, (int index) => CustRestaurantCard.shimmer()),
+        Obx(
+          () {
+            if (viewController.showRestaurantShimmer) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: List.generate(
+                      10, (int index) => CustRestaurantCard.shimmer()),
+                ),
+              );
+            } else if (viewController.restaurants.isNotEmpty) {
+              return AnimatedList(
+                key: viewController.animatedListKey,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                initialItemCount: viewController.restaurants.length,
+                itemBuilder: (BuildContext context, int index,
+                    Animation<double> animation) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(1, 0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: CustRestaurantCard(
+                      restaurant: viewController.restaurants[index],
+                    ),
                   );
-                } else if (viewController.restaurants.isNotEmpty) {
-                  return Column(
-                    children: List.generate(
-                        viewController.restaurants.length,
-                        (int index) => CustRestaurantCard(
-                            restaurant: viewController.restaurants[index])),
-                  );
-                } else {
-                  return Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.all(15),
-                    child: Text("${_i18n()['noRest']}"),
-                  );
-                }
-              },
-            ),
-          ),
+                },
+              );
+            } else {
+              return Container(
+                alignment: Alignment.center,
+                margin: const EdgeInsets.all(15),
+                child: Text("${_i18n()['noRest']}"),
+              );
+            }
+          },
         ),
         Scrollbar(
           child: SingleChildScrollView(

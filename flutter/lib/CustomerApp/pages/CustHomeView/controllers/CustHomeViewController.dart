@@ -19,6 +19,9 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 class CustHomeViewController {
   late TabController tabController;
   late BuildContext context;
+  final GlobalKey<AnimatedListState> animatedListKey =
+      GlobalKey<AnimatedListState>();
+
   MGoogleMapController mapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
@@ -31,7 +34,7 @@ class CustHomeViewController {
   RxSet<Marker> get restaurantsMarkers => _restaurantsMarkers;
   List<int> servicesIds = [];
 
-  int fetchSize = 25;
+  int fetchSize = 10;
   int offset = 0;
   bool _hasReachedEndData = false;
   RxBool isFetchingRestaurants = RxBool(false);
@@ -68,6 +71,7 @@ class CustHomeViewController {
     restaurantsScrollController.onBottomReach(() {
       if (searchType.value == SearchType.searchByRestaurantName &&
           searchQuery.value.isEmpty) {
+        mezDbgPrint("Scroll down call back 🤯🤯🤯🤯🤯🤯");
         _fetchRestaurants();
       }
     });
@@ -91,21 +95,30 @@ class CustHomeViewController {
   }
 
   Future<void> _fetchRestaurants() async {
-    if (_hasReachedEndData || isFetchingRestaurants.isTrue) {
+    if (isFetchingRestaurants.value || _hasReachedEndData) {
       return;
     }
     try {
       isFetchingRestaurants.value = true;
       mezDbgPrint("Fetching new restaurants ...");
-      List<Restaurant> newData = await fetch_restaurants(
-          is_open: showOnlyOpen.value,
-          withCache: false,
-          distance: 10000000000000000000,
-          limit: fetchSize,
-          offset: offset,
-          fromLocation: puertoEscondidoLocation);
 
-      _restaurants += newData;
+      List<Restaurant> newData = await fetch_restaurants(
+        is_open: showOnlyOpen.value,
+        withCache: false,
+        distance: 10000000000000000000,
+        limit: fetchSize,
+        offset: offset,
+        fromLocation: puertoEscondidoLocation,
+      );
+
+      if (newData.isNotEmpty) {
+        // Use the addItemToAnimatedList function to smoothly add new items
+        newData.forEach((Restaurant restaurant) {
+          addItemToAnimatedList(restaurant);
+        });
+        restaurantsScrollController
+            .jumpTo(restaurantsScrollController.offset - 5);
+      }
 
       if (newData.length == 0) {
         _hasReachedEndData = true;
@@ -113,6 +126,7 @@ class CustHomeViewController {
       offset += fetchSize;
 
       _filtredRestaurants.value = _restaurants;
+      _filtredRestaurants.sortByOpen();
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -181,8 +195,8 @@ class CustHomeViewController {
             withCache: false,
             keyword: searchQuery.value,
             distance: 10000000000000000000,
-            limit: fetchSize,
-            offset: offset,
+            // limit: fetchSize,
+            // offset: offset,
             fromLocation: puertoEscondidoLocation);
       } finally {
         isFetchingRestaurants.value = false;
@@ -296,6 +310,14 @@ class CustHomeViewController {
     if (_isMapView.isTrue && mapController.isMapReady) {
       _fetchCurrentMapMarkers();
     }
+  }
+
+  void addItemToAnimatedList(Restaurant newItem) {
+    mezDbgPrint("Adding new Restaurant to Animated List  👋  ");
+    final int newIndex = _restaurants.length;
+    _restaurants.add(newItem);
+    animatedListKey.currentState
+        ?.insertItem(newIndex, duration: Duration(milliseconds: 500));
   }
 }
 
