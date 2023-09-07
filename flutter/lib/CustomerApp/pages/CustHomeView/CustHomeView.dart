@@ -12,8 +12,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
+import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -47,17 +47,16 @@ class _CustHomeViewState extends State<CustHomeView>
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 30),
+        padding: const EdgeInsets.only(bottom: 65),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Obx(
-            () => MezButton(
-              width: 52.5.mezW,
-              height: 42.5,
+            () => MezInkwell(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               onClick: () async {
                 viewController.switchView();
               },
-              icon: viewController.isMapView ? Icons.list : Icons.room,
+              icon: viewController.isMapView ? Icons.list : Icons.map_rounded,
               label: viewController.isMapView
                   ? '${_i18n()['viewAsList']}'
                   : '${_i18n()['viewOnMap']}',
@@ -104,23 +103,47 @@ class _CustHomeViewState extends State<CustHomeView>
                 ),
               );
             } else if (viewController.restaurants.isNotEmpty) {
-              return AnimatedList(
-                key: viewController.animatedListKey,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                initialItemCount: viewController.restaurants.length,
-                itemBuilder: (BuildContext context, int index,
-                    Animation<double> animation) {
-                  return SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(1, 0),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: CustRestaurantCard(
-                      restaurant: viewController.restaurants[index],
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AnimatedList(
+                      key: viewController.animatedListKey,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      initialItemCount: viewController.restaurants.length,
+                      itemBuilder: (BuildContext context, int index,
+                          Animation<double> animation) {
+                        return SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(1, 0),
+                            end: Offset.zero,
+                          ).animate(animation),
+                          child: CustRestaurantCard(
+                            restaurant: viewController.restaurants[index],
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+                    if (viewController.hasReachedEndData.isFalse) ...[
+                      smallSepartor,
+                      Container(
+                        margin: const EdgeInsets.all(15),
+                        child: MezButton(
+                          width: double.infinity,
+                          backgroundColor: secondaryLightBlueColor,
+                          textColor: primaryBlueColor,
+                          borderRadius: 20,
+                          height: 45,
+                          label: "Fetch more ...",
+                          onClick: () async {
+                            await viewController.fetchMore();
+                          },
+                        ),
+                      )
+                    ]
+                  ],
+                ),
               );
             } else {
               return Container(

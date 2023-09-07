@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -36,7 +35,7 @@ class CustHomeViewController {
 
   int fetchSize = 10;
   int offset = 0;
-  bool _hasReachedEndData = false;
+  RxBool hasReachedEndData = RxBool(false);
   RxBool isFetchingRestaurants = RxBool(false);
   RxBool isFetchingItems = RxBool(false);
 
@@ -68,13 +67,13 @@ class CustHomeViewController {
       {required TickerProvider vsync, required BuildContext context}) async {
     this.context = context;
     _initTabController(vsync);
-    restaurantsScrollController.onBottomReach(() {
-      if (searchType.value == SearchType.searchByRestaurantName &&
-          searchQuery.value.isEmpty) {
-        mezDbgPrint("Scroll down call back 🤯🤯🤯🤯🤯🤯");
-        _fetchRestaurants();
-      }
-    });
+    // restaurantsScrollController.onBottomReach(() {
+    //   if (searchType.value == SearchType.searchByRestaurantName &&
+    //       searchQuery.value.isEmpty) {
+    //     mezDbgPrint("Scroll down call back 🤯🤯🤯🤯🤯🤯");
+    //     _fetchRestaurants();
+    //   }
+    // });
     await Future.wait([
       _fetchRestaurants().then((value) => _assignServiceIds()),
       _searchItem(),
@@ -94,8 +93,12 @@ class CustHomeViewController {
     });
   }
 
+  Future<void> fetchMore() async {
+    await _fetchRestaurants();
+  }
+
   Future<void> _fetchRestaurants() async {
-    if (isFetchingRestaurants.value || _hasReachedEndData) {
+    if (isFetchingRestaurants.value || hasReachedEndData.value) {
       return;
     }
     try {
@@ -116,12 +119,10 @@ class CustHomeViewController {
         newData.forEach((Restaurant restaurant) {
           addItemToAnimatedList(restaurant);
         });
-        restaurantsScrollController
-            .jumpTo(restaurantsScrollController.offset - 5);
       }
 
       if (newData.length == 0) {
-        _hasReachedEndData = true;
+        hasReachedEndData.value = true;
       }
       offset += fetchSize;
 
@@ -186,7 +187,7 @@ class CustHomeViewController {
     searchQuery.value = value;
     if (searchType.value == SearchType.searchByRestaurantName) {
       offset = 0;
-      _hasReachedEndData = false;
+      hasReachedEndData.value = false;
       isFetchingRestaurants.value = false;
       try {
         isFetchingRestaurants.value = true;
