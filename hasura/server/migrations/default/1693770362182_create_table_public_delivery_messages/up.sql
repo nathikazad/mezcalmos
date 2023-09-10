@@ -1,1 +1,0 @@
-CREATE TABLE "public"."delivery_messages" ("id" serial NOT NULL, "entry" jsonb NOT NULL, "phone_number" text NOT NULL, "driver_id" integer, PRIMARY KEY ("id") , FOREIGN KEY ("driver_id") REFERENCES "delivery"."driver"("id") ON UPDATE restrict ON DELETE restrict);

@@ -12918,6 +12918,8 @@ type delivery_messages {
   ): jsonb!
   id: Int!
   phone_number: String!
+  received_time: timestamptz!
+  resolved_time: timestamptz
 }
 
 """
@@ -12967,6 +12969,8 @@ input delivery_messages_bool_exp {
   entry: jsonb_comparison_exp
   id: Int_comparison_exp
   phone_number: String_comparison_exp
+  received_time: timestamptz_comparison_exp
+  resolved_time: timestamptz_comparison_exp
 }
 
 """
@@ -13017,6 +13021,8 @@ input delivery_messages_insert_input {
   entry: jsonb
   id: Int
   phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
 }
 
 """aggregate max on columns"""
@@ -13024,6 +13030,8 @@ type delivery_messages_max_fields {
   driver_id: Int
   id: Int
   phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
 }
 
 """aggregate min on columns"""
@@ -13031,6 +13039,8 @@ type delivery_messages_min_fields {
   driver_id: Int
   id: Int
   phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
 }
 
 """
@@ -13059,6 +13069,8 @@ input delivery_messages_order_by {
   entry: order_by
   id: order_by
   phone_number: order_by
+  received_time: order_by
+  resolved_time: order_by
 }
 
 """primary key columns input for table: delivery_messages"""
@@ -13086,6 +13098,12 @@ enum delivery_messages_select_column {
 
   """column name"""
   phone_number
+
+  """column name"""
+  received_time
+
+  """column name"""
+  resolved_time
 }
 
 """
@@ -13096,6 +13114,8 @@ input delivery_messages_set_input {
   entry: jsonb
   id: Int
   phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
 }
 
 """aggregate stddev on columns"""
@@ -13133,6 +13153,8 @@ input delivery_messages_stream_cursor_value_input {
   entry: jsonb
   id: Int
   phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
 }
 
 """aggregate sum on columns"""
@@ -13156,6 +13178,12 @@ enum delivery_messages_update_column {
 
   """column name"""
   phone_number
+
+  """column name"""
+  received_time
+
+  """column name"""
+  resolved_time
 }
 
 input delivery_messages_updates {

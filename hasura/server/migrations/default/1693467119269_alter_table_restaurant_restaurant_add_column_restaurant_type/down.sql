@@ -1,4 +1,0 @@
--- Could not auto-generate a down migration.
--- Please write an appropriate down migration for the SQL below:
--- alter table "restaurant"."restaurant" add column "restaurant_type" text
---  not null default 'restaurant';

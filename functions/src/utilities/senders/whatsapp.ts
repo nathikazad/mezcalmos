@@ -120,7 +120,7 @@ export const markMessagesAsResolved = functions.https.onCall(async (data, contex
   })
 
   if(response.delivery_messages.length > 0) {
-    let entries: Message[] = [];
+    // let entries: Message[] = [];
     let updates: any = [];
     response.delivery_messages.forEach((e) => {
       let entry: Message = e.entry;
@@ -131,10 +131,11 @@ export const markMessagesAsResolved = functions.https.onCall(async (data, contex
         },
         _set: {
           entry: entry,
-          driver_id: driverId
+          driver_id: driverId,
+          resolved_time: new Date() // .toISOString()
         }
       })
-      entries.push(e.entry)
+      // entries.push(e.entry)
     })
     chain.mutation({
       update_delivery_messages_many: [{
