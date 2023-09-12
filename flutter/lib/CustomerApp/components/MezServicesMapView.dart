@@ -22,10 +22,12 @@ class MezServicesMapView extends StatefulWidget {
   final Set<Marker> markers;
   final MezServicesMapViewCallBack fetchNewData;
   final MGoogleMapController mGoogleMapController;
+  final List<Widget> children;
 
   const MezServicesMapView(
       {required this.markers,
       required this.fetchNewData,
+      this.children = const [],
       required this.mGoogleMapController});
 
   @override
@@ -80,7 +82,10 @@ class _MezServicesMapViewState extends State<MezServicesMapView> {
                 },
                 label: 'Fetch in this area',
               ),
-            )
+            ),
+          if (widget.children.isNotEmpty &&
+              _controller.mGoogleMapController.isMapReady)
+            ...widget.children
         ],
       ),
     );

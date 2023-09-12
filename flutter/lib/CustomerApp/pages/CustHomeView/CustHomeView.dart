@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
-import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
 import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantItemCard.dart';
@@ -252,52 +251,7 @@ class _CustHomeViewState extends State<CustHomeView>
                   ),
                 ),
                 hSmallSepartor,
-                Obx(
-                  () => Badge(
-                    label: Text("1"),
-                    backgroundColor: primaryBlueColor,
-                    isLabelVisible: viewController.showOnlyOpen.value,
-                    child: MezIconButton(
-                      onTap: () async {
-                        showMezSheet(
-                            title: "${_i18n()['filters']}",
-                            content: Container(
-                              margin: const EdgeInsets.all(8),
-                              child: Column(
-                                children: [
-                                  Obx(
-                                    () => SwitchListTile.adaptive(
-                                        title:
-                                            Text("${_i18n()['showOnlyOpen']}"),
-                                        value:
-                                            viewController.showOnlyOpen.value,
-                                        onChanged: (bool v) {
-                                          viewController.switchOnlyOpen(
-                                              value: v);
-                                        }),
-                                  ),
-                                  smallSepartor,
-                                  MezButton(
-                                    width: double.infinity,
-                                    label: "${_i18n()['filter']}",
-                                    onClick: () async {
-                                      await viewController.filter();
-
-                                      Navigator.pop(context);
-                                    },
-                                  )
-                                ],
-                              ),
-                            ),
-                            context: context);
-                      },
-                      padding: const EdgeInsets.all(8),
-                      iconSize: 25,
-                      icon: Icons.filter_list,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                ),
+                _filterButton(context),
                 hSmallSepartor,
               ],
             ),
@@ -336,25 +290,58 @@ class _CustHomeViewState extends State<CustHomeView>
     );
   }
 
-  Widget mezWelcomeContainer(TextStyle textStyle) {
-    return Container(
-      margin: const EdgeInsets.all(5),
-      alignment: Alignment.centerLeft,
-      child: Obx(
-        () => Text(
-          "${_i18n()['welcomeText']}",
-          style: textStyle,
-          textAlign: TextAlign.left,
-        ),
-      ),
-    );
-  }
+  Widget _filterButton(BuildContext context) {
+    return Obx(
+      () => Badge(
+        label: Text("1"),
+        backgroundColor: primaryBlueColor,
+        isLabelVisible: viewController.showOnlyOpen.value,
+        child: MezIconButton(
+          onTap: () async {
+            showMezSheet(
+                title: "${_i18n()['filters']}",
+                content: Container(
+                  margin: const EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Obx(
+                        () => SwitchListTile.adaptive(
+                            activeColor: primaryBlueColor,
+                            title: Text("${_i18n()['showOnlyOpen']}"),
+                            value: viewController.showOnlyOpen.value,
+                            onChanged: (bool v) {
+                              viewController.switchOnlyOpen(value: v);
+                            }),
+                      ),
+                      Obx(
+                        () => SwitchListTile.adaptive(
+                            activeColor: primaryBlueColor,
+                            title: Text("${_i18n()['showOnlyDv']}"),
+                            value: viewController.showOnlyDelivery.value,
+                            onChanged: (bool v) {
+                              viewController.switchOnlyDelivery(value: v);
+                            }),
+                      ),
+                      smallSepartor,
+                      MezButton(
+                        width: double.infinity,
+                        label: "${_i18n()['filter']}",
+                        onClick: () async {
+                          await viewController.filter();
 
-  Widget mezDescription(TextStyle textStyle) {
-    return Container(
-      margin: EdgeInsets.all(5),
-      child: Obx(
-        () => Text("${_i18n()['appDescription']}", style: textStyle),
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                context: context);
+          },
+          padding: const EdgeInsets.all(8),
+          iconSize: 25,
+          icon: Icons.filter_list,
+          backgroundColor: Colors.white,
+        ),
       ),
     );
   }
@@ -390,13 +377,6 @@ class _CustHomeViewState extends State<CustHomeView>
   Widget _mapView() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       MezcalmosAppBar(AppBarLeftButtonType.Menu),
-      Obx(() => CustSwitchOpenService(
-            label: '${_i18n()["showOnlyOpen"]}',
-            showOnlyOpen: viewController.showOnlyOpen.value,
-            onChange: (bool value) {
-              viewController.switchOnlyOpen(value: value);
-            },
-          )),
       Obx(
         () => Expanded(
           child: MezServicesMapView(
@@ -407,6 +387,13 @@ class _CustHomeViewState extends State<CustHomeView>
               return viewController.restaurantsMarkers.toList();
             },
             markers: viewController.restaurantsMarkers.value,
+            children: [
+              Container(
+                alignment: Alignment.topRight,
+                margin: const EdgeInsets.all(7),
+                child: _filterButton(context),
+              )
+            ],
           ),
         ),
       ),

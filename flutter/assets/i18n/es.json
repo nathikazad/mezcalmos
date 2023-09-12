@@ -2081,6 +2081,7 @@
         "items": "Elementos",
         "search": "Buscar...",
         "showOnlyOpen": "Mostrar solo restaurantes abiertos",
+        "showOnlyDv": "Mostrar solo restaurantes que entregan",
         "viewOnMap": "View on map",
         "fetchMore": "Carga más",
         "viewAsList": "View as list",

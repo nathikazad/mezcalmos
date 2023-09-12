@@ -8,6 +8,7 @@ class Variables$Query$getRestaurants {
   factory Variables$Query$getRestaurants({
     int? limit,
     int? offset,
+    Input$Boolean_comparison_exp? delivery_available,
     required double distance,
     String? keyword,
     required Geography from,
@@ -17,6 +18,8 @@ class Variables$Query$getRestaurants {
       Variables$Query$getRestaurants._({
         if (limit != null) r'limit': limit,
         if (offset != null) r'offset': offset,
+        if (delivery_available != null)
+          r'delivery_available': delivery_available,
         r'distance': distance,
         if (keyword != null) r'keyword': keyword,
         r'from': from,
@@ -35,6 +38,13 @@ class Variables$Query$getRestaurants {
     if (data.containsKey('offset')) {
       final l$offset = data['offset'];
       result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('delivery_available')) {
+      final l$delivery_available = data['delivery_available'];
+      result$data['delivery_available'] = l$delivery_available == null
+          ? null
+          : Input$Boolean_comparison_exp.fromJson(
+              (l$delivery_available as Map<String, dynamic>));
     }
     final l$distance = data['distance'];
     result$data['distance'] = (l$distance as num).toDouble();
@@ -65,6 +75,8 @@ class Variables$Query$getRestaurants {
 
   int? get limit => (_$data['limit'] as int?);
   int? get offset => (_$data['offset'] as int?);
+  Input$Boolean_comparison_exp? get delivery_available =>
+      (_$data['delivery_available'] as Input$Boolean_comparison_exp?);
   double get distance => (_$data['distance'] as double);
   String? get keyword => (_$data['keyword'] as String?);
   Geography get from => (_$data['from'] as Geography);
@@ -81,6 +93,10 @@ class Variables$Query$getRestaurants {
     if (_$data.containsKey('offset')) {
       final l$offset = offset;
       result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('delivery_available')) {
+      final l$delivery_available = delivery_available;
+      result$data['delivery_available'] = l$delivery_available?.toJson();
     }
     final l$distance = distance;
     result$data['distance'] = l$distance;
@@ -131,6 +147,15 @@ class Variables$Query$getRestaurants {
     if (l$offset != lOther$offset) {
       return false;
     }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (_$data.containsKey('delivery_available') !=
+        other._$data.containsKey('delivery_available')) {
+      return false;
+    }
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
     final l$distance = distance;
     final lOther$distance = other.distance;
     if (l$distance != lOther$distance) {
@@ -173,6 +198,7 @@ class Variables$Query$getRestaurants {
   int get hashCode {
     final l$limit = limit;
     final l$offset = offset;
+    final l$delivery_available = delivery_available;
     final l$distance = distance;
     final l$keyword = keyword;
     final l$from = from;
@@ -181,6 +207,9 @@ class Variables$Query$getRestaurants {
     return Object.hashAll([
       _$data.containsKey('limit') ? l$limit : const {},
       _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('delivery_available')
+          ? l$delivery_available
+          : const {},
       l$distance,
       _$data.containsKey('keyword') ? l$keyword : const {},
       l$from,
@@ -202,6 +231,7 @@ abstract class CopyWith$Variables$Query$getRestaurants<TRes> {
   TRes call({
     int? limit,
     int? offset,
+    Input$Boolean_comparison_exp? delivery_available,
     double? distance,
     String? keyword,
     Geography? from,
@@ -226,6 +256,7 @@ class _CopyWithImpl$Variables$Query$getRestaurants<TRes>
   TRes call({
     Object? limit = _undefined,
     Object? offset = _undefined,
+    Object? delivery_available = _undefined,
     Object? distance = _undefined,
     Object? keyword = _undefined,
     Object? from = _undefined,
@@ -236,6 +267,9 @@ class _CopyWithImpl$Variables$Query$getRestaurants<TRes>
         ..._instance._$data,
         if (limit != _undefined) 'limit': (limit as int?),
         if (offset != _undefined) 'offset': (offset as int?),
+        if (delivery_available != _undefined)
+          'delivery_available':
+              (delivery_available as Input$Boolean_comparison_exp?),
         if (distance != _undefined && distance != null)
           'distance': (distance as double),
         if (keyword != _undefined) 'keyword': (keyword as String?),
@@ -256,6 +290,7 @@ class _CopyWithStubImpl$Variables$Query$getRestaurants<TRes>
   call({
     int? limit,
     int? offset,
+    Input$Boolean_comparison_exp? delivery_available,
     double? distance,
     String? keyword,
     Geography? from,
@@ -445,6 +480,15 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
         directives: [],
       ),
       VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'delivery_available')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean_comparison_exp'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: ObjectValueNode(fields: [])),
+        directives: [],
+      ),
+      VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'distance')),
         type: NamedTypeNode(
           name: NameNode(value: 'Float'),
@@ -558,7 +602,17 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
                         VariableNode(name: NameNode(value: 'online_ordering')),
                   ),
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'delivery_details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'delivery_available'),
+                    value: VariableNode(
+                        name: NameNode(value: 'delivery_available')),
+                  )
+                ]),
+              ),
             ]),
           ),
           ArgumentNode(
@@ -702,6 +756,20 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'self_delivery'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'customer_pickup'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_available'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1741,6 +1809,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     required this.minimum_cost,
     required this.radius,
     required this.self_delivery,
+    required this.customer_pickup,
+    required this.delivery_available,
     required this.$__typename,
   });
 
@@ -1754,6 +1824,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     final l$minimum_cost = json['minimum_cost'];
     final l$radius = json['radius'];
     final l$self_delivery = json['self_delivery'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant_restaurant$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -1766,6 +1838,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
       minimum_cost: moneyFromJson(l$minimum_cost),
       radius: (l$radius as int),
       self_delivery: (l$self_delivery as bool),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1785,6 +1859,10 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
   final int radius;
 
   final bool self_delivery;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
 
   final String $__typename;
 
@@ -1809,6 +1887,10 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     _resultData['radius'] = l$radius;
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1824,6 +1906,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     final l$minimum_cost = minimum_cost;
     final l$radius = radius;
     final l$self_delivery = self_delivery;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -1834,6 +1918,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
       l$minimum_cost,
       l$radius,
       l$self_delivery,
+      l$customer_pickup,
+      l$delivery_available,
       l$$__typename,
     ]);
   }
@@ -1888,6 +1974,16 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     if (l$self_delivery != lOther$self_delivery) {
       return false;
     }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -1929,6 +2025,8 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_deta
     double? minimum_cost,
     int? radius,
     bool? self_delivery,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   });
 }
@@ -1959,6 +2057,8 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details<
     Object? minimum_cost = _undefined,
     Object? radius = _undefined,
     Object? self_delivery = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getRestaurants$restaurant_restaurant$delivery_details(
@@ -1985,6 +2085,14 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details<
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2010,6 +2118,8 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_deta
     double? minimum_cost,
     int? radius,
     bool? self_delivery,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   }) =>
       _res;
@@ -4106,6 +4216,20 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'customer_pickup'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -5295,6 +5419,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     required this.minimum_cost,
     required this.radius,
     required this.self_delivery,
+    required this.customer_pickup,
+    required this.delivery_available,
     required this.$__typename,
   });
 
@@ -5308,6 +5434,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     final l$minimum_cost = json['minimum_cost'];
     final l$radius = json['radius'];
     final l$self_delivery = json['self_delivery'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
     final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
@@ -5320,6 +5448,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
       minimum_cost: moneyFromJson(l$minimum_cost),
       radius: (l$radius as int),
       self_delivery: (l$self_delivery as bool),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -5339,6 +5469,10 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
   final int radius;
 
   final bool self_delivery;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
 
   final String $__typename;
 
@@ -5363,6 +5497,10 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     _resultData['radius'] = l$radius;
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -5378,6 +5516,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     final l$minimum_cost = minimum_cost;
     final l$radius = radius;
     final l$self_delivery = self_delivery;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km_from_base,
@@ -5388,6 +5528,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
       l$minimum_cost,
       l$radius,
       l$self_delivery,
+      l$customer_pickup,
+      l$delivery_available,
       l$$__typename,
     ]);
   }
@@ -5442,6 +5584,16 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     if (l$self_delivery != lOther$self_delivery) {
       return false;
     }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -5485,6 +5637,8 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
     double? minimum_cost,
     int? radius,
     bool? self_delivery,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   });
 }
@@ -5517,6 +5671,8 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_
     Object? minimum_cost = _undefined,
     Object? radius = _undefined,
     Object? self_delivery = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
@@ -5543,6 +5699,14 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -5568,6 +5732,8 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
     double? minimum_cost,
     int? radius,
     bool? self_delivery,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   }) =>
       _res;
@@ -11385,6 +11551,20 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'customer_pickup'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -11989,6 +12169,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     required this.id,
     required this.minimum_cost,
     required this.radius,
+    required this.customer_pickup,
+    required this.delivery_available,
     required this.$__typename,
   });
 
@@ -12001,6 +12183,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
     final l$radius = json['radius'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
     final l$$__typename = json['__typename'];
     return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
@@ -12012,6 +12196,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
       radius: (l$radius as int),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -12029,6 +12215,10 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
   final double minimum_cost;
 
   final int radius;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
 
   final String $__typename;
 
@@ -12051,6 +12241,10 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
     final l$radius = radius;
     _resultData['radius'] = l$radius;
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -12065,6 +12259,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     final l$id = id;
     final l$minimum_cost = minimum_cost;
     final l$radius = radius;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km_from_base,
@@ -12074,6 +12270,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
       l$id,
       l$minimum_cost,
       l$radius,
+      l$customer_pickup,
+      l$delivery_available,
       l$$__typename,
     ]);
   }
@@ -12123,6 +12321,16 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     if (l$radius != lOther$radius) {
       return false;
     }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -12165,6 +12373,8 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaura
     int? id,
     double? minimum_cost,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   });
 }
@@ -12196,6 +12406,8 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
     Object? radius = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -12220,6 +12432,14 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -12244,6 +12464,8 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
     int? id,
     double? minimum_cost,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   }) =>
       _res;

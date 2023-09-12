@@ -41,6 +41,9 @@ query getCustomerCart($customer_id: Int!) {
         minimum_cost
         self_delivery
         radius
+        customer_pickup
+        delivery_available
+        # sitin_available
       }
       delivery_details_id
       details_id
@@ -177,6 +180,9 @@ subscription listen_on_customer_cart($customer_id: Int!) {
         id
         minimum_cost
         radius
+        customer_pickup
+        delivery_available
+        # sitin_available
       }
       delivery_details_id
       details {

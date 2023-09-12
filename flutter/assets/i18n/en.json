@@ -2022,6 +2022,7 @@
         "items": "Items",
         "search": "Search...",
         "showOnlyOpen": "Show only open restaurants",
+        "showOnlyDv": "Show only restaurants that deliver",
         "viewOnMap": "View on map",
         "viewAsList": "View as list",
         "fetchMore": "Load more",

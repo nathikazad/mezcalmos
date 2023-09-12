@@ -708,6 +708,20 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'customer_pickup'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'radius'),
                 alias: null,
                 arguments: [],
@@ -2473,6 +2487,8 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     this.free_delivery_minimum_cost,
     required this.id,
     required this.minimum_cost,
+    required this.customer_pickup,
+    required this.delivery_available,
     required this.radius,
     required this.$__typename,
   });
@@ -2486,6 +2502,8 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
     final l$radius = json['radius'];
     final l$$__typename = json['__typename'];
     return Query$getLaundries$laundry_store$delivery_details_of_deliverer(
@@ -2498,6 +2516,8 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
           : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
       radius: (l$radius as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -2516,6 +2536,10 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
   final int id;
 
   final double minimum_cost;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
 
   final int radius;
 
@@ -2540,6 +2564,10 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
     final l$radius = radius;
     _resultData['radius'] = l$radius;
     final l$$__typename = $__typename;
@@ -2556,6 +2584,8 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
     final l$minimum_cost = minimum_cost;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
     final l$radius = radius;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -2566,6 +2596,8 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
       l$free_delivery_minimum_cost,
       l$id,
       l$minimum_cost,
+      l$customer_pickup,
+      l$delivery_available,
       l$radius,
       l$$__typename,
     ]);
@@ -2616,6 +2648,16 @@ class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
     if (l$minimum_cost != lOther$minimum_cost) {
       return false;
     }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
     final l$radius = radius;
     final lOther$radius = other.radius;
     if (l$radius != lOther$radius) {
@@ -2662,6 +2704,8 @@ abstract class CopyWith$Query$getLaundries$laundry_store$delivery_details_of_del
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    bool? customer_pickup,
+    bool? delivery_available,
     int? radius,
     String? $__typename,
   });
@@ -2693,6 +2737,8 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliver
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
     Object? radius = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -2717,6 +2763,14 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliver
         minimum_cost: minimum_cost == _undefined || minimum_cost == null
             ? _instance.minimum_cost
             : (minimum_cost as double),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
@@ -2744,6 +2798,8 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details_of_del
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    bool? customer_pickup,
+    bool? delivery_available,
     int? radius,
     String? $__typename,
   }) =>
@@ -4485,6 +4541,20 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'radius'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'customer_pickup'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_available'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -6357,6 +6427,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     required this.minimum_cost,
     required this.self_delivery,
     required this.radius,
+    required this.customer_pickup,
+    required this.delivery_available,
     required this.$__typename,
   });
 
@@ -6370,6 +6442,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     final l$minimum_cost = json['minimum_cost'];
     final l$self_delivery = json['self_delivery'];
     final l$radius = json['radius'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
     final l$$__typename = json['__typename'];
     return Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -6382,6 +6456,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
       minimum_cost: moneyFromJson(l$minimum_cost),
       self_delivery: (l$self_delivery as bool),
       radius: (l$radius as int),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -6401,6 +6477,10 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
   final bool self_delivery;
 
   final int radius;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
 
   final String $__typename;
 
@@ -6425,6 +6505,10 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     _resultData['self_delivery'] = l$self_delivery;
     final l$radius = radius;
     _resultData['radius'] = l$radius;
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -6440,6 +6524,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     final l$minimum_cost = minimum_cost;
     final l$self_delivery = self_delivery;
     final l$radius = radius;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -6450,6 +6536,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
       l$minimum_cost,
       l$self_delivery,
       l$radius,
+      l$customer_pickup,
+      l$delivery_available,
       l$$__typename,
     ]);
   }
@@ -6504,6 +6592,16 @@ class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_delivere
     if (l$radius != lOther$radius) {
       return false;
     }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -6547,6 +6645,8 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_d
     double? minimum_cost,
     bool? self_delivery,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   });
 }
@@ -6579,6 +6679,8 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_detai
     Object? minimum_cost = _undefined,
     Object? self_delivery = _undefined,
     Object? radius = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -6606,6 +6708,14 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_detai
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -6631,6 +6741,8 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_d
     double? minimum_cost,
     bool? self_delivery,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   }) =>
       _res;
@@ -10410,6 +10522,20 @@ const documentNodeMutationupdateLaundryInfo = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'customer_pickup'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -11096,6 +11222,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     required this.minimum_cost,
     required this.self_delivery,
     required this.radius,
+    required this.customer_pickup,
+    required this.delivery_available,
     required this.$__typename,
   });
 
@@ -11109,6 +11237,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     final l$minimum_cost = json['minimum_cost'];
     final l$self_delivery = json['self_delivery'];
     final l$radius = json['radius'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
     final l$$__typename = json['__typename'];
     return Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -11121,6 +11251,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
       minimum_cost: moneyFromJson(l$minimum_cost),
       self_delivery: (l$self_delivery as bool),
       radius: (l$radius as int),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -11140,6 +11272,10 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
   final bool self_delivery;
 
   final int radius;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
 
   final String $__typename;
 
@@ -11164,6 +11300,10 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     _resultData['self_delivery'] = l$self_delivery;
     final l$radius = radius;
     _resultData['radius'] = l$radius;
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -11179,6 +11319,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     final l$minimum_cost = minimum_cost;
     final l$self_delivery = self_delivery;
     final l$radius = radius;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -11189,6 +11331,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
       l$minimum_cost,
       l$self_delivery,
       l$radius,
+      l$customer_pickup,
+      l$delivery_available,
       l$$__typename,
     ]);
   }
@@ -11243,6 +11387,16 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_
     if (l$radius != lOther$radius) {
       return false;
     }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -11286,6 +11440,8 @@ abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
     double? minimum_cost,
     bool? self_delivery,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   });
 }
@@ -11318,6 +11474,8 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delive
     Object? minimum_cost = _undefined,
     Object? self_delivery = _undefined,
     Object? radius = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -11345,6 +11503,14 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delive
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -11370,6 +11536,8 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
     double? minimum_cost,
     bool? self_delivery,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
     String? $__typename,
   }) =>
       _res;

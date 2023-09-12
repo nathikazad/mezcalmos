@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/DeliverySettingCostComponent.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/DeliverySettingsCompaniesList.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/components/ServiceDeliveryTypePicker.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/controllers/DeliverySettingsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -106,21 +102,56 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("${_i18n()['title']}"),
-                SizedBox(
-                  height: 10,
-                ),
-                if (serviceProviderType != ServiceProviderType.DeliveryCompany)
-                  ServiceDeliveryTypePicker(
-                    viewController: viewController,
-                  ),
-                (viewController.isSelfDelivery ||
-                        serviceProviderType ==
-                            ServiceProviderType.DeliveryCompany)
-                    ? DeliverySettingCostComponent(
-                        viewController: viewController)
-                    : DeliverySettingsCompaniesList(
-                        viewController: viewController,
-                      )
+                smallSepartor,
+                SwitchListTile.adaptive(
+                    title: Text(
+                      "Delivery available",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    contentPadding: EdgeInsets.all(5),
+                    activeColor: primaryBlueColor,
+                    value: viewController.deliveryAvailable.value,
+                    onChanged: (bool v) {
+                      viewController.switchDelivery(v);
+                    }),
+                SwitchListTile.adaptive(
+                    title: Text(
+                      "Customer-Pickup available",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    contentPadding: EdgeInsets.all(5),
+                    activeColor: primaryBlueColor,
+                    value: viewController.customerPickupAvailable.value,
+                    onChanged: (bool v) {
+                      viewController.switchPickup(v);
+                    }),
+                SwitchListTile.adaptive(
+                    contentPadding: EdgeInsets.all(5),
+                    title: Text(
+                      "Sit-In available",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    activeColor: primaryBlueColor,
+                    value: viewController.sitInAvailable.value,
+                    onChanged: (bool v) {
+                      viewController.switchSitin(v);
+                    }),
+
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // if (serviceProviderType != ServiceProviderType.DeliveryCompany)
+                //   ServiceDeliveryTypePicker(
+                //     viewController: viewController,
+                //   ),
+                // (viewController.isSelfDelivery ||
+                //         serviceProviderType ==
+                //             ServiceProviderType.DeliveryCompany)
+                //     ? DeliverySettingCostComponent(
+                //         viewController: viewController)
+                //     : DeliverySettingsCompaniesList(
+                //         viewController: viewController,
+                //       )
               ],
             ),
           );

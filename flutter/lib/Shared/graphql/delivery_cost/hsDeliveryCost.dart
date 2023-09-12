@@ -30,6 +30,11 @@ Future<DeliveryCost?> get_delivery_cost(
       response.parsedData!.delivery_details_by_pk!;
   return DeliveryCost(
       id: data.id,
+      deliveryAvailable: data.delivery_available,
+      pickupAvailable: data.customer_pickup,
+      //  sitInAvailable: data.sitin_available,
+      //  this should be deleted
+      sitInAvailable: true,
       selfDelivery: data.self_delivery,
       radius: data.radius.toDouble(),
       costPerKmFromBase: data.cost_per_km_from_base.toDouble(),
@@ -51,6 +56,9 @@ Future<bool?> update_delivery_cost(
                   cost_per_km: deliveryCost.costPerKm,
                   self_delivery: deliveryCost.selfDelivery,
                   minimum_cost: deliveryCost.minimumCost,
+                  delivery_available: deliveryCost.deliveryAvailable,
+                  customer_pickup: deliveryCost.pickupAvailable,
+                  // add sit In @m66are
                   radius: deliveryCost.radius?.round(),
                   cost_per_km_from_base: deliveryCost.costPerKmFromBase,
                   free_delivery_km_range: deliveryCost.freeDeliveryKmRange,
@@ -74,6 +82,9 @@ Future<int?> add_delivery_cost({required DeliveryCost deliveryCost}) async {
                   free_delivery_minimum_cost:
                       deliveryCost.freeDeliveryMinimumCost,
                   minimum_cost: deliveryCost.minimumCost,
+                  delivery_available: deliveryCost.deliveryAvailable,
+                  customer_pickup: deliveryCost.pickupAvailable,
+                  // add sit In @m66are
                   cost_per_km: deliveryCost.costPerKm,
                   radius: deliveryCost.radius?.round(),
                   cost_per_km_from_base: deliveryCost.costPerKmFromBase))));

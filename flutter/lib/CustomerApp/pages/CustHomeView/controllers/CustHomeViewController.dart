@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
@@ -41,6 +43,7 @@ class CustHomeViewController {
 
   RxBool isLoading = RxBool(false);
   RxBool showOnlyOpen = RxBool(false);
+  RxBool showOnlyDelivery = RxBool(false);
 
   RxString searchQuery = RxString("");
   // MAP //
@@ -94,7 +97,7 @@ class CustHomeViewController {
   }
 
   Future<void> fetchMore() async {
-    await _fetchRestaurants();
+    await _fetchRestaurants().then((value) => filter());
   }
 
   Future<void> _fetchRestaurants() async {
@@ -107,6 +110,7 @@ class CustHomeViewController {
 
       List<Restaurant> newData = await fetch_restaurants(
         is_open: showOnlyOpen.value,
+        delivery_available: showOnlyDelivery.value,
         withCache: false,
         distance: 10000000000000000000,
         limit: fetchSize,
@@ -147,7 +151,14 @@ class CustHomeViewController {
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
 
     newList = newList.showOnlyOpen(showOnlyOpen.value) as List<Restaurant>;
+    newList =
+        newList.showOnlyDelivery(showOnlyDelivery.value) as List<Restaurant>;
     newList.sortByOpen();
+    if (isMapView) {
+      mapController.markers.clear();
+      _restaurantsMarkers.clear();
+      await _fetchCurrentMapMarkers();
+    }
     if (searchType.value == SearchType.searchByRestaurantName) {
       _filtredRestaurants.value = newList;
     } else {
@@ -193,6 +204,7 @@ class CustHomeViewController {
         isFetchingRestaurants.value = true;
         List<Restaurant> newData = await fetch_restaurants(
             is_open: showOnlyOpen.value,
+            delivery_available: showOnlyDelivery.value,
             withCache: false,
             keyword: searchQuery.value,
             distance: 10000000000000000000,
@@ -224,17 +236,19 @@ class CustHomeViewController {
               address: ''),
           is_open: showOnlyOpen.value,
           withCache: false,
-          limit: mapMarkersFetchSize,
-          offset: mapMarkersOffset,
+          delivery_available: showOnlyDelivery.value,
+          // limit: mapMarkersFetchSize,
+          // offset: mapMarkersOffset,
           online_ordering: true,
           distance: distance ?? getFetchDistance);
       _mapViewRestaurants += newList;
-      mezDbgPrint(
-          "NEW MARKERS LENGTH 👋============>${newList.length} \n offset : $mapMarkersOffset , \n limit : $mapMarkersFetchSize");
       if (newList.length == 0) {
         _hasReachedEndOfMarkers = true;
       }
-      mapMarkersOffset += mapMarkersFetchSize;
+      //mapMarkersOffset += mapMarkersFetchSize;
+      newList = newList.showOnlyOpen(showOnlyOpen.value) as List<Restaurant>;
+      newList =
+          newList.showOnlyDelivery(showOnlyDelivery.value) as List<Restaurant>;
       await _fillMapsMarkers(newData: newList);
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -318,11 +332,14 @@ class CustHomeViewController {
   }
 
   void addItemToAnimatedList(Restaurant newItem) {
-    mezDbgPrint("Adding new Restaurant to Animated List  👋  ");
     final int newIndex = _restaurants.length;
     _restaurants.add(newItem);
     animatedListKey.currentState
         ?.insertItem(newIndex, duration: Duration(milliseconds: 500));
+  }
+
+  void switchOnlyDelivery({required bool value}) {
+    showOnlyDelivery.value = value;
   }
 }
 

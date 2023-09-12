@@ -36,6 +36,10 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
       isOpen: data.details!.is_open ?? false,
       deliveryCost: DeliveryCost(
         id: data.delivery_details.id,
+        deliveryAvailable: data.delivery_details.delivery_available,
+        pickupAvailable: data.delivery_details.customer_pickup,
+        // sitInAvailable: data.sitin_available,
+        sitInAvailable: true,
         selfDelivery: data.delivery_details.self_delivery,
         freeDeliveryMinimumCost:
             data.delivery_details.free_delivery_minimum_cost,
@@ -133,6 +137,10 @@ Future<List<DeliveryCompany>> get_nearby_companies(
       isOpen: data.details!.is_open ?? false,
       deliveryCost: DeliveryCost(
         id: data.delivery_details.id,
+        deliveryAvailable: data.delivery_details.delivery_available,
+        pickupAvailable: data.delivery_details.customer_pickup,
+        // sitInAvailable: data.sitin_available,
+        sitInAvailable: true,
         selfDelivery: data.delivery_details.self_delivery,
         freeDeliveryMinimumCost:
             data.delivery_details.free_delivery_minimum_cost,
@@ -191,6 +199,10 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
       numberOfReviews: data.reviews_aggregate.aggregate?.count,
       deliveryCost: DeliveryCost(
         id: data.delivery_details.id,
+        deliveryAvailable: data.delivery_details.delivery_available,
+        pickupAvailable: data.delivery_details.customer_pickup,
+        // sitInAvailable: data.sitin_available,
+        sitInAvailable: true,
         selfDelivery: data.delivery_details.self_delivery,
         freeDeliveryMinimumCost:
             data.delivery_details.free_delivery_minimum_cost,
