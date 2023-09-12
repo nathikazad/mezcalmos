@@ -66,6 +66,13 @@ class CustHomeViewController {
       isFetchingRestaurants.value && _filtredRestaurants.isEmpty;
   bool get showIemsShimmer => isFetchingItems.value;
 
+  int get activeFiltersCount {
+    int result = 0;
+    if (showOnlyDelivery.value) result++;
+    if (showOnlyOpen.value) result++;
+    return result;
+  }
+
   Future<void> init(
       {required TickerProvider vsync, required BuildContext context}) async {
     this.context = context;
@@ -155,9 +162,12 @@ class CustHomeViewController {
         newList.showOnlyDelivery(showOnlyDelivery.value) as List<Restaurant>;
     newList.sortByOpen();
     if (isMapView) {
-      mapController.markers.clear();
+      // mapController.markers.clear();
+      // _mapViewRestaurants.clear();
       _restaurantsMarkers.clear();
+
       await _fetchCurrentMapMarkers();
+      // _restaurantsMarkers.refresh();
     }
     if (searchType.value == SearchType.searchByRestaurantName) {
       _filtredRestaurants.value = newList;
@@ -241,7 +251,7 @@ class CustHomeViewController {
           // offset: mapMarkersOffset,
           online_ordering: true,
           distance: distance ?? getFetchDistance);
-      _mapViewRestaurants += newList;
+      //  _mapViewRestaurants += newList;
       if (newList.length == 0) {
         _hasReachedEndOfMarkers = true;
       }
@@ -253,11 +263,6 @@ class CustHomeViewController {
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
-    } finally {
-      mezDbgPrint("MapView restaurants ====>${_mapViewRestaurants.length}");
-
-      mezDbgPrint(
-          "Restaurant markers =======>${restaurantsMarkers.value.length}");
     }
   }
 
@@ -310,8 +315,11 @@ class CustHomeViewController {
     LatLng? mapCenter = await mapController.getMapCenter();
     double? distance = calculateDistanceFromBounds(
         await mapController.controller.value!.getVisibleRegion());
+    mezDbgPrint("✅DATA");
+    mezDbgPrint(mapCenter);
+    mezDbgPrint(distance);
     await fetchMapViewRentals(
-      fromLoc: mapCenter,
+      fromLoc: mapCenter!,
       distance: distance,
     );
     // mapController.markers.clear();

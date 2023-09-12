@@ -519,6 +519,9 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "MezServicesMapView": {
+        "fetch": "Buscar en esta área"
+      },
       "CustDeliveryTypeSelector": {
         "dvType": "Tipo de entrega",
         "delivery": "Entrega",

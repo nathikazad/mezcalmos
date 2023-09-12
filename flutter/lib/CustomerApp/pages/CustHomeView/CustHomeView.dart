@@ -293,7 +293,7 @@ class _CustHomeViewState extends State<CustHomeView>
   Widget _filterButton(BuildContext context) {
     return Obx(
       () => Badge(
-        label: Text("1"),
+        label: Text(viewController.activeFiltersCount.toString()),
         backgroundColor: primaryBlueColor,
         isLabelVisible: viewController.showOnlyOpen.value,
         child: MezIconButton(
