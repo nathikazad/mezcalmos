@@ -12,7 +12,7 @@ query getDeliveryCostById($deliveryDetailsId: Int!) {
     self_delivery
     delivery_available
     customer_pickup
-    # sitin_available,
+    sitin_available
   }
 }
 mutation addDeliveryCost($deliveryCost: delivery_details_insert_input!) {

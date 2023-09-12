@@ -776,6 +776,13 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'sitin_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -1811,6 +1818,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     required this.self_delivery,
     required this.customer_pickup,
     required this.delivery_available,
+    required this.sitin_available,
     required this.$__typename,
   });
 
@@ -1826,6 +1834,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     final l$self_delivery = json['self_delivery'];
     final l$customer_pickup = json['customer_pickup'];
     final l$delivery_available = json['delivery_available'];
+    final l$sitin_available = json['sitin_available'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant_restaurant$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -1840,6 +1849,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
       self_delivery: (l$self_delivery as bool),
       customer_pickup: (l$customer_pickup as bool),
       delivery_available: (l$delivery_available as bool),
+      sitin_available: (l$sitin_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1863,6 +1873,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
   final bool customer_pickup;
 
   final bool delivery_available;
+
+  final bool sitin_available;
 
   final String $__typename;
 
@@ -1891,6 +1903,8 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     _resultData['customer_pickup'] = l$customer_pickup;
     final l$delivery_available = delivery_available;
     _resultData['delivery_available'] = l$delivery_available;
+    final l$sitin_available = sitin_available;
+    _resultData['sitin_available'] = l$sitin_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1908,6 +1922,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     final l$self_delivery = self_delivery;
     final l$customer_pickup = customer_pickup;
     final l$delivery_available = delivery_available;
+    final l$sitin_available = sitin_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -1920,6 +1935,7 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
       l$self_delivery,
       l$customer_pickup,
       l$delivery_available,
+      l$sitin_available,
       l$$__typename,
     ]);
   }
@@ -1984,6 +2000,11 @@ class Query$getRestaurants$restaurant_restaurant$delivery_details {
     if (l$delivery_available != lOther$delivery_available) {
       return false;
     }
+    final l$sitin_available = sitin_available;
+    final lOther$sitin_available = other.sitin_available;
+    if (l$sitin_available != lOther$sitin_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -2027,6 +2048,7 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$delivery_deta
     bool? self_delivery,
     bool? customer_pickup,
     bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   });
 }
@@ -2059,6 +2081,7 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details<
     Object? self_delivery = _undefined,
     Object? customer_pickup = _undefined,
     Object? delivery_available = _undefined,
+    Object? sitin_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getRestaurants$restaurant_restaurant$delivery_details(
@@ -2093,6 +2116,10 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$delivery_details<
             delivery_available == _undefined || delivery_available == null
                 ? _instance.delivery_available
                 : (delivery_available as bool),
+        sitin_available:
+            sitin_available == _undefined || sitin_available == null
+                ? _instance.sitin_available
+                : (sitin_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2120,6 +2147,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$delivery_deta
     bool? self_delivery,
     bool? customer_pickup,
     bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   }) =>
       _res;
@@ -4230,6 +4258,13 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'sitin_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -5421,6 +5456,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     required this.self_delivery,
     required this.customer_pickup,
     required this.delivery_available,
+    required this.sitin_available,
     required this.$__typename,
   });
 
@@ -5436,6 +5472,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     final l$self_delivery = json['self_delivery'];
     final l$customer_pickup = json['customer_pickup'];
     final l$delivery_available = json['delivery_available'];
+    final l$sitin_available = json['sitin_available'];
     final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
@@ -5450,6 +5487,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
       self_delivery: (l$self_delivery as bool),
       customer_pickup: (l$customer_pickup as bool),
       delivery_available: (l$delivery_available as bool),
+      sitin_available: (l$sitin_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -5473,6 +5511,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
   final bool customer_pickup;
 
   final bool delivery_available;
+
+  final bool sitin_available;
 
   final String $__typename;
 
@@ -5501,6 +5541,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     _resultData['customer_pickup'] = l$customer_pickup;
     final l$delivery_available = delivery_available;
     _resultData['delivery_available'] = l$delivery_available;
+    final l$sitin_available = sitin_available;
+    _resultData['sitin_available'] = l$sitin_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -5518,6 +5560,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     final l$self_delivery = self_delivery;
     final l$customer_pickup = customer_pickup;
     final l$delivery_available = delivery_available;
+    final l$sitin_available = sitin_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km_from_base,
@@ -5530,6 +5573,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
       l$self_delivery,
       l$customer_pickup,
       l$delivery_available,
+      l$sitin_available,
       l$$__typename,
     ]);
   }
@@ -5594,6 +5638,11 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details {
     if (l$delivery_available != lOther$delivery_available) {
       return false;
     }
+    final l$sitin_available = sitin_available;
+    final lOther$sitin_available = other.sitin_available;
+    if (l$sitin_available != lOther$sitin_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -5639,6 +5688,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
     bool? self_delivery,
     bool? customer_pickup,
     bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   });
 }
@@ -5673,6 +5723,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_
     Object? self_delivery = _undefined,
     Object? customer_pickup = _undefined,
     Object? delivery_available = _undefined,
+    Object? sitin_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details(
@@ -5707,6 +5758,10 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_
             delivery_available == _undefined || delivery_available == null
                 ? _instance.delivery_available
                 : (delivery_available as bool),
+        sitin_available:
+            sitin_available == _undefined || sitin_available == null
+                ? _instance.sitin_available
+                : (sitin_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -5734,6 +5789,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
     bool? self_delivery,
     bool? customer_pickup,
     bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   }) =>
       _res;
@@ -11565,6 +11621,13 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'sitin_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -12171,6 +12234,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     required this.radius,
     required this.customer_pickup,
     required this.delivery_available,
+    required this.sitin_available,
     required this.$__typename,
   });
 
@@ -12185,6 +12249,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     final l$radius = json['radius'];
     final l$customer_pickup = json['customer_pickup'];
     final l$delivery_available = json['delivery_available'];
+    final l$sitin_available = json['sitin_available'];
     final l$$__typename = json['__typename'];
     return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details(
       cost_per_km_from_base: moneyFromJson(l$cost_per_km_from_base),
@@ -12198,6 +12263,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
       radius: (l$radius as int),
       customer_pickup: (l$customer_pickup as bool),
       delivery_available: (l$delivery_available as bool),
+      sitin_available: (l$sitin_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -12219,6 +12285,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
   final bool customer_pickup;
 
   final bool delivery_available;
+
+  final bool sitin_available;
 
   final String $__typename;
 
@@ -12245,6 +12313,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     _resultData['customer_pickup'] = l$customer_pickup;
     final l$delivery_available = delivery_available;
     _resultData['delivery_available'] = l$delivery_available;
+    final l$sitin_available = sitin_available;
+    _resultData['sitin_available'] = l$sitin_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -12261,6 +12331,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     final l$radius = radius;
     final l$customer_pickup = customer_pickup;
     final l$delivery_available = delivery_available;
+    final l$sitin_available = sitin_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km_from_base,
@@ -12272,6 +12343,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
       l$radius,
       l$customer_pickup,
       l$delivery_available,
+      l$sitin_available,
       l$$__typename,
     ]);
   }
@@ -12331,6 +12403,11 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_
     if (l$delivery_available != lOther$delivery_available) {
       return false;
     }
+    final l$sitin_available = sitin_available;
+    final lOther$sitin_available = other.sitin_available;
+    if (l$sitin_available != lOther$sitin_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -12375,6 +12452,7 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaura
     int? radius,
     bool? customer_pickup,
     bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   });
 }
@@ -12408,6 +12486,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
     Object? radius = _undefined,
     Object? customer_pickup = _undefined,
     Object? delivery_available = _undefined,
+    Object? sitin_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -12440,6 +12519,10 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
             delivery_available == _undefined || delivery_available == null
                 ? _instance.delivery_available
                 : (delivery_available as bool),
+        sitin_available:
+            sitin_available == _undefined || sitin_available == null
+                ? _instance.sitin_available
+                : (sitin_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -12466,6 +12549,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
     int? radius,
     bool? customer_pickup,
     bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   }) =>
       _res;

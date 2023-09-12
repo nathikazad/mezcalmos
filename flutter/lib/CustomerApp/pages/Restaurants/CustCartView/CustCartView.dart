@@ -157,6 +157,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                             schedule: viewController.cart.restaurant!.schedule,
                           ),
                           CustDeliveryTypeSelector(
+                            types: viewController.dvTypes,
                             onDeliveryTypeChanged: (DeliveryType value) {
                               viewController.switchDeliveryType(type: value);
                               mezDbgPrint(

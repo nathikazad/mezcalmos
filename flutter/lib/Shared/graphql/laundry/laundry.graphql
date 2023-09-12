@@ -51,7 +51,7 @@ query getLaundries(
       minimum_cost
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
       radius
     }
     details {
@@ -131,7 +131,7 @@ query getLaundryStoreById($id: Int!) {
       radius
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
     }
     details {
       id
@@ -217,7 +217,7 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
       radius
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
     }
     details {
       id

@@ -11,8 +11,9 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 
 class CustDeliveryTypeSelector extends StatefulWidget {
   const CustDeliveryTypeSelector(
-      {super.key, required this.onDeliveryTypeChanged});
+      {super.key, required this.onDeliveryTypeChanged, required this.types});
   final ValueChanged<DeliveryType> onDeliveryTypeChanged;
+  final List<DeliveryType> types;
 
   @override
   State<CustDeliveryTypeSelector> createState() =>
@@ -22,12 +23,17 @@ class CustDeliveryTypeSelector extends StatefulWidget {
 class _CustDeliveryTypeSelectorState extends State<CustDeliveryTypeSelector> {
   Rx<DeliveryType> selectedValue = Rx(DeliveryType.Delivery);
 
-  RxList<DeliveryType> types =
-      RxList([DeliveryType.Delivery, DeliveryType.Pickup, DeliveryType.SitIn]);
   @override
   void initState() {
+    selectedValue.value = widget.types.first;
     //  _checkOpenCompanies();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant CustDeliveryTypeSelector oldWidget) {
+    selectedValue.value = widget.types.first;
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -45,7 +51,7 @@ class _CustDeliveryTypeSelectorState extends State<CustDeliveryTypeSelector> {
           value: selectedValue.value.toFirebaseFormatString(),
           fillColor: Colors.white,
           elementsTextStyle: context.textTheme.bodyLarge,
-          items: types
+          items: widget.types
               .map((DeliveryType element) => element.toFirebaseFormatString())
               .toList(),
           onChanged: (String? v) {

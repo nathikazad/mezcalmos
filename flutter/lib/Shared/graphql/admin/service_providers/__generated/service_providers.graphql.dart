@@ -411,6 +411,13 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'sitin_available'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'free_delivery_km_range'),
                 alias: null,
                 arguments: [],
@@ -954,6 +961,7 @@ class Query$admin_get_dv_companies$delivery_company$delivery_details {
     required this.cost_per_km,
     required this.customer_pickup,
     required this.delivery_available,
+    required this.sitin_available,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
     required this.id,
@@ -968,6 +976,7 @@ class Query$admin_get_dv_companies$delivery_company$delivery_details {
     final l$cost_per_km = json['cost_per_km'];
     final l$customer_pickup = json['customer_pickup'];
     final l$delivery_available = json['delivery_available'];
+    final l$sitin_available = json['sitin_available'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
@@ -979,6 +988,7 @@ class Query$admin_get_dv_companies$delivery_company$delivery_details {
       cost_per_km: moneyFromJson(l$cost_per_km),
       customer_pickup: (l$customer_pickup as bool),
       delivery_available: (l$delivery_available as bool),
+      sitin_available: (l$sitin_available as bool),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
           ? null
@@ -996,6 +1006,8 @@ class Query$admin_get_dv_companies$delivery_company$delivery_details {
   final bool customer_pickup;
 
   final bool delivery_available;
+
+  final bool sitin_available;
 
   final double? free_delivery_km_range;
 
@@ -1019,6 +1031,8 @@ class Query$admin_get_dv_companies$delivery_company$delivery_details {
     _resultData['customer_pickup'] = l$customer_pickup;
     final l$delivery_available = delivery_available;
     _resultData['delivery_available'] = l$delivery_available;
+    final l$sitin_available = sitin_available;
+    _resultData['sitin_available'] = l$sitin_available;
     final l$free_delivery_km_range = free_delivery_km_range;
     _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
@@ -1044,6 +1058,7 @@ class Query$admin_get_dv_companies$delivery_company$delivery_details {
     final l$cost_per_km = cost_per_km;
     final l$customer_pickup = customer_pickup;
     final l$delivery_available = delivery_available;
+    final l$sitin_available = sitin_available;
     final l$free_delivery_km_range = free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
@@ -1055,6 +1070,7 @@ class Query$admin_get_dv_companies$delivery_company$delivery_details {
       l$cost_per_km,
       l$customer_pickup,
       l$delivery_available,
+      l$sitin_available,
       l$free_delivery_km_range,
       l$free_delivery_minimum_cost,
       l$id,
@@ -1088,6 +1104,11 @@ class Query$admin_get_dv_companies$delivery_company$delivery_details {
     final l$delivery_available = delivery_available;
     final lOther$delivery_available = other.delivery_available;
     if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
+    final l$sitin_available = sitin_available;
+    final lOther$sitin_available = other.sitin_available;
+    if (l$sitin_available != lOther$sitin_available) {
       return false;
     }
     final l$free_delivery_km_range = free_delivery_km_range;
@@ -1157,6 +1178,7 @@ abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$delivery_d
     double? cost_per_km,
     bool? customer_pickup,
     bool? delivery_available,
+    bool? sitin_available,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
     int? id,
@@ -1189,6 +1211,7 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$delivery_detai
     Object? cost_per_km = _undefined,
     Object? customer_pickup = _undefined,
     Object? delivery_available = _undefined,
+    Object? sitin_available = _undefined,
     Object? free_delivery_km_range = _undefined,
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
@@ -1209,6 +1232,10 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$delivery_detai
             delivery_available == _undefined || delivery_available == null
                 ? _instance.delivery_available
                 : (delivery_available as bool),
+        sitin_available:
+            sitin_available == _undefined || sitin_available == null
+                ? _instance.sitin_available
+                : (sitin_available as bool),
         free_delivery_km_range: free_delivery_km_range == _undefined
             ? _instance.free_delivery_km_range
             : (free_delivery_km_range as double?),
@@ -1245,6 +1272,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$delivery_d
     double? cost_per_km,
     bool? customer_pickup,
     bool? delivery_available,
+    bool? sitin_available,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
     int? id,

@@ -1758,13 +1758,6 @@ const documentNodeQuerygetFeed = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'comments'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'likes'),
             alias: null,
             arguments: [],
@@ -1950,8 +1943,7 @@ class Query$getFeed$service_provider_post {
   Query$getFeed$service_provider_post({
     required this.id,
     this.image,
-    this.comments,
-    this.likes,
+    required this.likes,
     required this.message,
     required this.posted_on,
     this.restaurant,
@@ -1962,7 +1954,6 @@ class Query$getFeed$service_provider_post {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$image = json['image'];
-    final l$comments = json['comments'];
     final l$likes = json['likes'];
     final l$message = json['message'];
     final l$posted_on = json['posted_on'];
@@ -1971,8 +1962,7 @@ class Query$getFeed$service_provider_post {
     return Query$getFeed$service_provider_post(
       id: (l$id as int),
       image: (l$image as String?),
-      comments: l$comments == null ? null : mapFromJson(l$comments),
-      likes: l$likes == null ? null : mapFromJson(l$likes),
+      likes: mapFromJson(l$likes),
       message: (l$message as String),
       posted_on: (l$posted_on as String),
       restaurant: l$restaurant == null
@@ -1987,9 +1977,7 @@ class Query$getFeed$service_provider_post {
 
   final String? image;
 
-  final dynamic? comments;
-
-  final dynamic? likes;
+  final dynamic likes;
 
   final String message;
 
@@ -2005,10 +1993,8 @@ class Query$getFeed$service_provider_post {
     _resultData['id'] = l$id;
     final l$image = image;
     _resultData['image'] = l$image;
-    final l$comments = comments;
-    _resultData['comments'] = l$comments == null ? null : mapToJson(l$comments);
     final l$likes = likes;
-    _resultData['likes'] = l$likes == null ? null : mapToJson(l$likes);
+    _resultData['likes'] = mapToJson(l$likes);
     final l$message = message;
     _resultData['message'] = l$message;
     final l$posted_on = posted_on;
@@ -2024,7 +2010,6 @@ class Query$getFeed$service_provider_post {
   int get hashCode {
     final l$id = id;
     final l$image = image;
-    final l$comments = comments;
     final l$likes = likes;
     final l$message = message;
     final l$posted_on = posted_on;
@@ -2033,7 +2018,6 @@ class Query$getFeed$service_provider_post {
     return Object.hashAll([
       l$id,
       l$image,
-      l$comments,
       l$likes,
       l$message,
       l$posted_on,
@@ -2059,11 +2043,6 @@ class Query$getFeed$service_provider_post {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
-      return false;
-    }
-    final l$comments = comments;
-    final lOther$comments = other.comments;
-    if (l$comments != lOther$comments) {
       return false;
     }
     final l$likes = likes;
@@ -2117,7 +2096,6 @@ abstract class CopyWith$Query$getFeed$service_provider_post<TRes> {
   TRes call({
     int? id,
     String? image,
-    dynamic? comments,
     dynamic? likes,
     String? message,
     String? posted_on,
@@ -2143,7 +2121,6 @@ class _CopyWithImpl$Query$getFeed$service_provider_post<TRes>
   TRes call({
     Object? id = _undefined,
     Object? image = _undefined,
-    Object? comments = _undefined,
     Object? likes = _undefined,
     Object? message = _undefined,
     Object? posted_on = _undefined,
@@ -2153,10 +2130,9 @@ class _CopyWithImpl$Query$getFeed$service_provider_post<TRes>
       _then(Query$getFeed$service_provider_post(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
-        comments: comments == _undefined
-            ? _instance.comments
-            : (comments as dynamic?),
-        likes: likes == _undefined ? _instance.likes : (likes as dynamic?),
+        likes: likes == _undefined || likes == null
+            ? _instance.likes
+            : (likes as dynamic),
         message: message == _undefined || message == null
             ? _instance.message
             : (message as String),
@@ -2189,7 +2165,6 @@ class _CopyWithStubImpl$Query$getFeed$service_provider_post<TRes>
   call({
     int? id,
     String? image,
-    dynamic? comments,
     dynamic? likes,
     String? message,
     String? posted_on,

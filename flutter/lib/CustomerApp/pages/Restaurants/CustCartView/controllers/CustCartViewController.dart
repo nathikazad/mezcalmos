@@ -36,6 +36,8 @@ class CustCartViewController {
   // Obs variables //
   //Rxn<CustStripeInfo> custStripeInfo = Rxn();
   Rx<cModels.DeliveryType> dvType = Rx(cModels.DeliveryType.Delivery);
+  List<cModels.DeliveryType> get dvTypes => deliveryCost!.dvTypes;
+
   Rxn<List<CreditCard>> _cards = Rxn();
   RxBool orderSentToRest = RxBool(false);
   RxBool showRedirectText = RxBool(false);

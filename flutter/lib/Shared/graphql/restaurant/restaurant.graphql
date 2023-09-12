@@ -44,7 +44,7 @@ query getRestaurants(
       self_delivery
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
     }
     details {
       id
@@ -108,7 +108,7 @@ query getOneRestaurant($id: Int!) {
       self_delivery
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
     }
     delivery_details_id
     details {
@@ -233,7 +233,7 @@ mutation updateRestaurantInfo(
       radius
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
     }
     details {
       is_open

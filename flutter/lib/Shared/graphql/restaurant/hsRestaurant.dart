@@ -84,8 +84,7 @@ Future<List<Restaurant>> fetch_restaurants(
                 id: data.delivery_details.id,
                 deliveryAvailable: data.delivery_details.delivery_available,
                 pickupAvailable: data.delivery_details.customer_pickup,
-                // sitInAvailable: data.delivery_details.sitin_available,
-                sitInAvailable: true,
+                sitInAvailable: data.delivery_details.sitin_available,
                 selfDelivery: data.delivery_details.self_delivery,
                 freeDeliveryMinimumCost:
                     data.delivery_details.free_delivery_minimum_cost,

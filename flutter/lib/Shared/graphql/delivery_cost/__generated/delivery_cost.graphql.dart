@@ -347,6 +347,13 @@ const documentNodeQuerygetDeliveryCostById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'sitin_available'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -482,6 +489,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     required this.self_delivery,
     required this.delivery_available,
     required this.customer_pickup,
+    required this.sitin_available,
     required this.$__typename,
   });
 
@@ -497,6 +505,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     final l$self_delivery = json['self_delivery'];
     final l$delivery_available = json['delivery_available'];
     final l$customer_pickup = json['customer_pickup'];
+    final l$sitin_available = json['sitin_available'];
     final l$$__typename = json['__typename'];
     return Query$getDeliveryCostById$delivery_details_by_pk(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -511,6 +520,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
       self_delivery: (l$self_delivery as bool),
       delivery_available: (l$delivery_available as bool),
       customer_pickup: (l$customer_pickup as bool),
+      sitin_available: (l$sitin_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -534,6 +544,8 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
   final bool delivery_available;
 
   final bool customer_pickup;
+
+  final bool sitin_available;
 
   final String $__typename;
 
@@ -562,6 +574,8 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     _resultData['delivery_available'] = l$delivery_available;
     final l$customer_pickup = customer_pickup;
     _resultData['customer_pickup'] = l$customer_pickup;
+    final l$sitin_available = sitin_available;
+    _resultData['sitin_available'] = l$sitin_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -579,6 +593,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     final l$self_delivery = self_delivery;
     final l$delivery_available = delivery_available;
     final l$customer_pickup = customer_pickup;
+    final l$sitin_available = sitin_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -591,6 +606,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
       l$self_delivery,
       l$delivery_available,
       l$customer_pickup,
+      l$sitin_available,
       l$$__typename,
     ]);
   }
@@ -654,6 +670,11 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     if (l$customer_pickup != lOther$customer_pickup) {
       return false;
     }
+    final l$sitin_available = sitin_available;
+    final lOther$sitin_available = other.sitin_available;
+    if (l$sitin_available != lOther$sitin_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -694,6 +715,7 @@ abstract class CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes> {
     bool? self_delivery,
     bool? delivery_available,
     bool? customer_pickup,
+    bool? sitin_available,
     String? $__typename,
   });
 }
@@ -722,6 +744,7 @@ class _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
     Object? self_delivery = _undefined,
     Object? delivery_available = _undefined,
     Object? customer_pickup = _undefined,
+    Object? sitin_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getDeliveryCostById$delivery_details_by_pk(
@@ -756,6 +779,10 @@ class _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
             customer_pickup == _undefined || customer_pickup == null
                 ? _instance.customer_pickup
                 : (customer_pickup as bool),
+        sitin_available:
+            sitin_available == _undefined || sitin_available == null
+                ? _instance.sitin_available
+                : (sitin_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -779,6 +806,7 @@ class _CopyWithStubImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
     bool? self_delivery,
     bool? delivery_available,
     bool? customer_pickup,
+    bool? sitin_available,
     String? $__typename,
   }) =>
       _res;

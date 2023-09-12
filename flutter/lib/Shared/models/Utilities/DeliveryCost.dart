@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class DeliveryCost {
@@ -119,4 +121,11 @@ class DeliveryCost {
 
   factory DeliveryCost.fromJson(String source) =>
       DeliveryCost.fromMap(json.decode(source) as Map<String, dynamic>);
+  List<DeliveryType> get dvTypes {
+    return [
+      if (pickupAvailable) DeliveryType.Pickup,
+      if (deliveryAvailable) DeliveryType.Delivery,
+      if (sitInAvailable) DeliveryType.SitIn,
+    ];
+  }
 }

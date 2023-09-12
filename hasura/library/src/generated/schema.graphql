@@ -576,6 +576,8 @@ input business_business_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_business_set_input
+
+  """filter the rows which have to be updated"""
   where: business_business_bool_exp!
 }
 
@@ -684,6 +686,11 @@ input business_cart_append_input {
 """aggregate avg on columns"""
 type business_cart_avg_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1231,6 +1238,8 @@ input business_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_item_set_input
+
+  """filter the rows which have to be updated"""
   where: business_cart_item_bool_exp!
 }
 
@@ -1291,6 +1300,11 @@ input business_cart_item_variance_order_by {
 """aggregate max on columns"""
 type business_cart_max_fields {
   business_id: Int
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
 }
@@ -1298,6 +1312,11 @@ type business_cart_max_fields {
 """aggregate min on columns"""
 type business_cart_min_fields {
   business_id: Int
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
 }
@@ -1372,6 +1391,11 @@ input business_cart_set_input {
 """aggregate stddev on columns"""
 type business_cart_stddev_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1379,6 +1403,11 @@ type business_cart_stddev_fields {
 """aggregate stddev_pop on columns"""
 type business_cart_stddev_pop_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1386,6 +1415,11 @@ type business_cart_stddev_pop_fields {
 """aggregate stddev_samp on columns"""
 type business_cart_stddev_samp_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1412,6 +1446,11 @@ input business_cart_stream_cursor_value_input {
 """aggregate sum on columns"""
 type business_cart_sum_fields {
   business_id: Int
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
 }
@@ -1461,12 +1500,19 @@ input business_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_set_input
+
+  """filter the rows which have to be updated"""
   where: business_cart_bool_exp!
 }
 
 """aggregate var_pop on columns"""
 type business_cart_var_pop_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1474,6 +1520,11 @@ type business_cart_var_pop_fields {
 """aggregate var_samp on columns"""
 type business_cart_var_samp_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -1481,6 +1532,11 @@ type business_cart_var_samp_fields {
 """aggregate variance on columns"""
 type business_cart_variance_fields {
   business_id: Float
+
+  """
+  A computed field, executes function "business.cartcost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
 }
@@ -2006,6 +2062,8 @@ input business_event_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_event_set_input
+
+  """filter the rows which have to be updated"""
   where: business_event_bool_exp!
 }
 
@@ -2482,6 +2540,8 @@ input business_home_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_home_location_set_input
+
+  """filter the rows which have to be updated"""
   where: business_home_location_bool_exp!
 }
 
@@ -2877,6 +2937,8 @@ input business_home_rental_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_home_rental_set_input
+
+  """filter the rows which have to be updated"""
   where: business_home_rental_bool_exp!
 }
 
@@ -3090,6 +3152,8 @@ input business_home_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_home_set_input
+
+  """filter the rows which have to be updated"""
   where: business_home_bool_exp!
 }
 
@@ -3612,6 +3676,8 @@ input business_item_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_item_details_set_input
+
+  """filter the rows which have to be updated"""
   where: business_item_details_bool_exp!
 }
 
@@ -4023,6 +4089,8 @@ input business_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: business_operator_bool_exp!
 }
 
@@ -4181,6 +4249,11 @@ type business_order_request_aggregate_fields {
 type business_order_request_avg_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   id: Float
@@ -4789,6 +4862,8 @@ input business_order_request_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_order_request_item_set_input
+
+  """filter the rows which have to be updated"""
   where: business_order_request_item_bool_exp!
 }
 
@@ -4851,6 +4926,11 @@ type business_order_request_max_fields {
   business_id: Int
   cancellation_time: timestamptz
   chat_id: Int
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_app_type: String
   customer_id: Int
   discount_value: money
@@ -4867,6 +4947,11 @@ type business_order_request_min_fields {
   business_id: Int
   cancellation_time: timestamptz
   chat_id: Int
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_app_type: String
   customer_id: Int
   discount_value: money
@@ -4998,6 +5083,11 @@ input business_order_request_set_input {
 type business_order_request_stddev_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   id: Float
@@ -5008,6 +5098,11 @@ type business_order_request_stddev_fields {
 type business_order_request_stddev_pop_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   id: Float
@@ -5018,6 +5113,11 @@ type business_order_request_stddev_pop_fields {
 type business_order_request_stddev_samp_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   id: Float
@@ -5055,6 +5155,11 @@ input business_order_request_stream_cursor_value_input {
 type business_order_request_sum_fields {
   business_id: Int
   chat_id: Int
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
   id: Int
@@ -5108,6 +5213,8 @@ input business_order_request_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_order_request_set_input
+
+  """filter the rows which have to be updated"""
   where: business_order_request_bool_exp!
 }
 
@@ -5115,6 +5222,11 @@ input business_order_request_updates {
 type business_order_request_var_pop_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   id: Float
@@ -5125,6 +5237,11 @@ type business_order_request_var_pop_fields {
 type business_order_request_var_samp_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   id: Float
@@ -5135,6 +5252,11 @@ type business_order_request_var_samp_fields {
 type business_order_request_variance_fields {
   business_id: Float
   chat_id: Float
+
+  """
+  A computed field, executes function "business.ordercost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   id: Float
@@ -5500,6 +5622,8 @@ input business_product_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_product_set_input
+
+  """filter the rows which have to be updated"""
   where: business_product_bool_exp!
 }
 
@@ -5932,6 +6056,8 @@ input business_rental_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_rental_set_input
+
+  """filter the rows which have to be updated"""
   where: business_rental_bool_exp!
 }
 
@@ -6411,6 +6537,8 @@ input business_service_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_service_set_input
+
+  """filter the rows which have to be updated"""
   where: business_service_bool_exp!
 }
 
@@ -7055,6 +7183,8 @@ input chat_participant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_participant_set_input
+
+  """filter the rows which have to be updated"""
   where: chat_participant_bool_exp!
 }
 
@@ -7257,6 +7387,8 @@ input chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_set_input
+
+  """filter the rows which have to be updated"""
   where: chat_bool_exp!
 }
 
@@ -7332,7 +7464,6 @@ type customer_customer {
 
   """An object relationship"""
   notification_info: notification_info
-  resume: String
 
   """An array relationship"""
   saved_locations(
@@ -7407,6 +7538,10 @@ type customer_customer {
     where: customer_stripe_cards_bool_exp
   ): customer_stripe_cards_aggregate!
   stripe_id: String
+  stripe_info(
+    """JSON select path"""
+    path: String
+  ): jsonb
 
   """An array relationship"""
   stripe_sp_ids(
@@ -7474,6 +7609,11 @@ type customer_customer_aggregate_fields {
   variance: customer_customer_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input customer_customer_append_input {
+  stripe_info: jsonb
+}
+
 """aggregate avg on columns"""
 type customer_customer_avg_fields {
   user_id: Float
@@ -7492,13 +7632,13 @@ input customer_customer_bool_exp {
   deliveries: delivery_order_bool_exp
   deliveries_aggregate: delivery_order_aggregate_bool_exp
   notification_info: notification_info_bool_exp
-  resume: String_comparison_exp
   saved_locations: customer_saved_location_bool_exp
   saved_locations_aggregate: customer_saved_location_aggregate_bool_exp
   service_provider_type: String_comparison_exp
   stripe_cards: customer_stripe_cards_bool_exp
   stripe_cards_aggregate: customer_stripe_cards_aggregate_bool_exp
   stripe_id: String_comparison_exp
+  stripe_info: jsonb_comparison_exp
   stripe_sp_ids: customer_stripe_sp_id_bool_exp
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_bool_exp
   user: user_bool_exp
@@ -7521,6 +7661,28 @@ enum customer_customer_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input customer_customer_delete_at_path_input {
+  stripe_info: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input customer_customer_delete_elem_input {
+  stripe_info: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input customer_customer_delete_key_input {
+  stripe_info: String
+}
+
+"""
 input type for incrementing numeric columns in table "customer.customer"
 """
 input customer_customer_inc_input {
@@ -7536,11 +7698,11 @@ input customer_customer_insert_input {
   cart: restaurant_cart_obj_rel_insert_input
   deliveries: delivery_order_arr_rel_insert_input
   notification_info: notification_info_obj_rel_insert_input
-  resume: String
   saved_locations: customer_saved_location_arr_rel_insert_input
   service_provider_type: String
   stripe_cards: customer_stripe_cards_arr_rel_insert_input
   stripe_id: String
+  stripe_info: jsonb
   stripe_sp_ids: customer_stripe_sp_id_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
@@ -7550,7 +7712,6 @@ input customer_customer_insert_input {
 type customer_customer_max_fields {
   app_type_id: String
   app_version: String
-  resume: String
   service_provider_type: String
   stripe_id: String
   user_id: Int
@@ -7560,7 +7721,6 @@ type customer_customer_max_fields {
 type customer_customer_min_fields {
   app_type_id: String
   app_version: String
-  resume: String
   service_provider_type: String
   stripe_id: String
   user_id: Int
@@ -7603,11 +7763,11 @@ input customer_customer_order_by {
   cart: restaurant_cart_order_by
   deliveries_aggregate: delivery_order_aggregate_order_by
   notification_info: notification_info_order_by
-  resume: order_by
   saved_locations_aggregate: customer_saved_location_aggregate_order_by
   service_provider_type: order_by
   stripe_cards_aggregate: customer_stripe_cards_aggregate_order_by
   stripe_id: order_by
+  stripe_info: order_by
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_order_by
   user: user_order_by
   user_id: order_by
@@ -7616,6 +7776,11 @@ input customer_customer_order_by {
 """primary key columns input for table: customer.customer"""
 input customer_customer_pk_columns_input {
   user_id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input customer_customer_prepend_input {
+  stripe_info: jsonb
 }
 
 """
@@ -7629,13 +7794,13 @@ enum customer_customer_select_column {
   app_version
 
   """column name"""
-  resume
-
-  """column name"""
   service_provider_type
 
   """column name"""
   stripe_id
+
+  """column name"""
+  stripe_info
 
   """column name"""
   user_id
@@ -7647,9 +7812,9 @@ input type for updating data in table "customer.customer"
 input customer_customer_set_input {
   app_type_id: String
   app_version: String
-  resume: String
   service_provider_type: String
   stripe_id: String
+  stripe_info: jsonb
   user_id: Int
 }
 
@@ -7683,9 +7848,9 @@ input customer_customer_stream_cursor_input {
 input customer_customer_stream_cursor_value_input {
   app_type_id: String
   app_version: String
-  resume: String
   service_provider_type: String
   stripe_id: String
+  stripe_info: jsonb
   user_id: Int
 }
 
@@ -7705,24 +7870,48 @@ enum customer_customer_update_column {
   app_version
 
   """column name"""
-  resume
-
-  """column name"""
   service_provider_type
 
   """column name"""
   stripe_id
 
   """column name"""
+  stripe_info
+
+  """column name"""
   user_id
 }
 
 input customer_customer_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: customer_customer_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: customer_customer_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: customer_customer_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: customer_customer_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: customer_customer_inc_input
 
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: customer_customer_prepend_input
+
   """sets the columns of the filtered rows to the given values"""
   _set: customer_customer_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_customer_bool_exp!
 }
 
@@ -7977,6 +8166,8 @@ input customer_favourited_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_favourited_item_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_favourited_item_bool_exp!
 }
 
@@ -8091,7 +8282,7 @@ unique or primary key constraints on table "customer.minimal_order"
 """
 enum customer_minimal_order_constraint {
   """
-  unique or primary key constraint on columns "order_type", "id"
+  unique or primary key constraint on columns "id", "order_type"
   """
   minimal_order_pkey
 }
@@ -8419,6 +8610,8 @@ input customer_minimal_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_minimal_order_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_minimal_order_bool_exp!
 }
 
@@ -8832,6 +9025,8 @@ input customer_saved_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_saved_location_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_saved_location_bool_exp!
 }
 
@@ -9362,6 +9557,8 @@ input customer_stripe_cards_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_cards_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_stripe_cards_bool_exp!
 }
 
@@ -9529,7 +9726,7 @@ unique or primary key constraints on table "customer.stripe_sp_id"
 """
 enum customer_stripe_sp_id_constraint {
   """
-  unique or primary key constraint on columns "sp_id", "customer_id"
+  unique or primary key constraint on columns "customer_id", "sp_id"
   """
   stripe_info_customer_id_sp_id_key
 
@@ -9762,6 +9959,8 @@ input customer_stripe_sp_id_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_sp_id_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_stripe_sp_id_bool_exp!
 }
 
@@ -9817,7 +10016,6 @@ input customer_stripe_sp_id_variance_order_by {
 columns and relationships of "data_consumption"
 """
 type data_consumption {
-  app_type_id: String!
   date: date!
   id: Int!
   name_of_subscription: String!
@@ -9866,7 +10064,6 @@ input data_consumption_bool_exp {
   _and: [data_consumption_bool_exp!]
   _not: data_consumption_bool_exp
   _or: [data_consumption_bool_exp!]
-  app_type_id: String_comparison_exp
   date: date_comparison_exp
   id: Int_comparison_exp
   name_of_subscription: String_comparison_exp
@@ -9899,7 +10096,6 @@ input data_consumption_inc_input {
 input type for inserting data into table "data_consumption"
 """
 input data_consumption_insert_input {
-  app_type_id: String
   date: date
   id: Int
   name_of_subscription: String
@@ -9910,7 +10106,6 @@ input data_consumption_insert_input {
 
 """aggregate max on columns"""
 type data_consumption_max_fields {
-  app_type_id: String
   date: date
   id: Int
   name_of_subscription: String
@@ -9921,7 +10116,6 @@ type data_consumption_max_fields {
 
 """aggregate min on columns"""
 type data_consumption_min_fields {
-  app_type_id: String
   date: date
   id: Int
   name_of_subscription: String
@@ -9952,7 +10146,6 @@ input data_consumption_on_conflict {
 
 """Ordering options when selecting data from "data_consumption"."""
 input data_consumption_order_by {
-  app_type_id: order_by
   date: order_by
   id: order_by
   name_of_subscription: order_by
@@ -9970,9 +10163,6 @@ input data_consumption_pk_columns_input {
 select columns of table "data_consumption"
 """
 enum data_consumption_select_column {
-  """column name"""
-  app_type_id
-
   """column name"""
   date
 
@@ -9996,7 +10186,6 @@ enum data_consumption_select_column {
 input type for updating data in table "data_consumption"
 """
 input data_consumption_set_input {
-  app_type_id: String
   date: date
   id: Int
   name_of_subscription: String
@@ -10042,7 +10231,6 @@ input data_consumption_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input data_consumption_stream_cursor_value_input {
-  app_type_id: String
   date: date
   id: Int
   name_of_subscription: String
@@ -10063,9 +10251,6 @@ type data_consumption_sum_fields {
 update columns of table "data_consumption"
 """
 enum data_consumption_update_column {
-  """column name"""
-  app_type_id
-
   """column name"""
   date
 
@@ -10091,6 +10276,8 @@ input data_consumption_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: data_consumption_set_input
+
+  """filter the rows which have to be updated"""
   where: data_consumption_bool_exp!
 }
 
@@ -10516,6 +10703,8 @@ input delivery_company_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_company_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_company_bool_exp!
 }
 
@@ -10659,6 +10848,10 @@ input delivery_courier_order_append_input {
 
 """aggregate avg on columns"""
 type delivery_courier_order_avg_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -10666,6 +10859,11 @@ type delivery_courier_order_avg_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -11246,6 +11444,8 @@ input delivery_courier_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_courier_order_item_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_courier_order_item_bool_exp!
 }
 
@@ -11305,6 +11505,10 @@ input delivery_courier_order_item_variance_order_by {
 
 """aggregate max on columns"""
 type delivery_courier_order_max_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
@@ -11319,10 +11523,19 @@ type delivery_courier_order_max_fields {
   stripe_fees: money
   tax: money
   to_location_address: String
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate min on columns"""
 type delivery_courier_order_min_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   bill_image: String
   cancellation_time: timestamptz
   customer_app_type: String
@@ -11337,6 +11550,11 @@ type delivery_courier_order_min_fields {
   stripe_fees: money
   tax: money
   to_location_address: String
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -11498,6 +11716,10 @@ input delivery_courier_order_set_input {
 
 """aggregate stddev on columns"""
 type delivery_courier_order_stddev_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11505,10 +11727,19 @@ type delivery_courier_order_stddev_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate stddev_pop on columns"""
 type delivery_courier_order_stddev_pop_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11516,10 +11747,19 @@ type delivery_courier_order_stddev_pop_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate stddev_samp on columns"""
 type delivery_courier_order_stddev_samp_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11527,6 +11767,11 @@ type delivery_courier_order_stddev_samp_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -11570,6 +11815,10 @@ input delivery_courier_order_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type delivery_courier_order_sum_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Int
   delivery_order_id: Int
   discount_value: money
@@ -11577,6 +11826,11 @@ type delivery_courier_order_sum_fields {
   refund_amount: money
   stripe_fees: money
   tax: money
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -11663,11 +11917,17 @@ input delivery_courier_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_courier_order_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_courier_order_bool_exp!
 }
 
 """aggregate var_pop on columns"""
 type delivery_courier_order_var_pop_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11675,10 +11935,19 @@ type delivery_courier_order_var_pop_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate var_samp on columns"""
 type delivery_courier_order_var_samp_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11686,10 +11955,19 @@ type delivery_courier_order_var_samp_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate variance on columns"""
 type delivery_courier_order_variance_fields {
+  """
+  A computed field, executes function "delivery.actualitemscost"
+  """
+  actual_items_cost: money
   customer_id: Float
   delivery_order_id: Float
   discount_value: Float
@@ -11697,6 +11975,11 @@ type delivery_courier_order_variance_fields {
   refund_amount: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "delivery.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -11728,6 +12011,7 @@ type delivery_details {
   """An object relationship"""
   restaurant: restaurant_restaurant
   self_delivery: Boolean!
+  sitin_available: Boolean!
 }
 
 """
@@ -11821,6 +12105,7 @@ input delivery_details_bool_exp {
   radius: Int_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
   self_delivery: Boolean_comparison_exp
+  sitin_available: Boolean_comparison_exp
 }
 
 """
@@ -11867,6 +12152,7 @@ input delivery_details_insert_input {
   radius: Int
   restaurant: restaurant_restaurant_obj_rel_insert_input
   self_delivery: Boolean
+  sitin_available: Boolean
 }
 
 """aggregate max on columns"""
@@ -11971,6 +12257,7 @@ input delivery_details_order_by {
   radius: order_by
   restaurant: restaurant_restaurant_order_by
   self_delivery: order_by
+  sitin_available: order_by
 }
 
 """primary key columns input for table: delivery.details"""
@@ -12011,6 +12298,9 @@ enum delivery_details_select_column {
 
   """column name"""
   self_delivery
+
+  """column name"""
+  sitin_available
 }
 
 """
@@ -12029,6 +12319,7 @@ input delivery_details_set_input {
   """in metres"""
   radius: Int
   self_delivery: Boolean
+  sitin_available: Boolean
 }
 
 """aggregate stddev on columns"""
@@ -12140,6 +12431,7 @@ input delivery_details_stream_cursor_value_input {
   """in metres"""
   radius: Int
   self_delivery: Boolean
+  sitin_available: Boolean
 }
 
 """aggregate sum on columns"""
@@ -12203,6 +12495,9 @@ enum delivery_details_update_column {
 
   """column name"""
   self_delivery
+
+  """column name"""
+  sitin_available
 }
 
 input delivery_details_updates {
@@ -12211,6 +12506,8 @@ input delivery_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_details_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_details_bool_exp!
 }
 
@@ -12852,6 +13149,8 @@ input delivery_driver_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_driver_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_driver_bool_exp!
 }
 
@@ -12920,6 +13219,7 @@ type delivery_messages {
   phone_number: String!
   received_time: timestamptz!
   resolved_time: timestamptz
+  user_id: Int
 }
 
 """
@@ -12956,6 +13256,7 @@ input delivery_messages_append_input {
 type delivery_messages_avg_fields {
   driver_id: Float
   id: Float
+  user_id: Float
 }
 
 """
@@ -12971,6 +13272,7 @@ input delivery_messages_bool_exp {
   phone_number: String_comparison_exp
   received_time: timestamptz_comparison_exp
   resolved_time: timestamptz_comparison_exp
+  user_id: Int_comparison_exp
 }
 
 """
@@ -13011,6 +13313,7 @@ input type for incrementing numeric columns in table "delivery_messages"
 input delivery_messages_inc_input {
   driver_id: Int
   id: Int
+  user_id: Int
 }
 
 """
@@ -13023,6 +13326,7 @@ input delivery_messages_insert_input {
   phone_number: String
   received_time: timestamptz
   resolved_time: timestamptz
+  user_id: Int
 }
 
 """aggregate max on columns"""
@@ -13032,6 +13336,7 @@ type delivery_messages_max_fields {
   phone_number: String
   received_time: timestamptz
   resolved_time: timestamptz
+  user_id: Int
 }
 
 """aggregate min on columns"""
@@ -13041,6 +13346,7 @@ type delivery_messages_min_fields {
   phone_number: String
   received_time: timestamptz
   resolved_time: timestamptz
+  user_id: Int
 }
 
 """
@@ -13071,6 +13377,7 @@ input delivery_messages_order_by {
   phone_number: order_by
   received_time: order_by
   resolved_time: order_by
+  user_id: order_by
 }
 
 """primary key columns input for table: delivery_messages"""
@@ -13104,6 +13411,9 @@ enum delivery_messages_select_column {
 
   """column name"""
   resolved_time
+
+  """column name"""
+  user_id
 }
 
 """
@@ -13116,24 +13426,28 @@ input delivery_messages_set_input {
   phone_number: String
   received_time: timestamptz
   resolved_time: timestamptz
+  user_id: Int
 }
 
 """aggregate stddev on columns"""
 type delivery_messages_stddev_fields {
   driver_id: Float
   id: Float
+  user_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type delivery_messages_stddev_pop_fields {
   driver_id: Float
   id: Float
+  user_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type delivery_messages_stddev_samp_fields {
   driver_id: Float
   id: Float
+  user_id: Float
 }
 
 """
@@ -13155,12 +13469,14 @@ input delivery_messages_stream_cursor_value_input {
   phone_number: String
   received_time: timestamptz
   resolved_time: timestamptz
+  user_id: Int
 }
 
 """aggregate sum on columns"""
 type delivery_messages_sum_fields {
   driver_id: Int
   id: Int
+  user_id: Int
 }
 
 """
@@ -13184,6 +13500,9 @@ enum delivery_messages_update_column {
 
   """column name"""
   resolved_time
+
+  """column name"""
+  user_id
 }
 
 input delivery_messages_updates {
@@ -13214,6 +13533,8 @@ input delivery_messages_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_messages_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_messages_bool_exp!
 }
 
@@ -13221,18 +13542,21 @@ input delivery_messages_updates {
 type delivery_messages_var_pop_fields {
   driver_id: Float
   id: Float
+  user_id: Float
 }
 
 """aggregate var_samp on columns"""
 type delivery_messages_var_samp_fields {
   driver_id: Float
   id: Float
+  user_id: Float
 }
 
 """aggregate variance on columns"""
 type delivery_messages_variance_fields {
   driver_id: Float
   id: Float
+  user_id: Float
 }
 
 """
@@ -13616,6 +13940,8 @@ input delivery_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_operator_bool_exp!
 }
 
@@ -13930,8 +14256,23 @@ type delivery_order_avg_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -14239,9 +14580,19 @@ type delivery_order_max_fields {
   estimated_package_ready_time: timestamptz
   id: Int
   lock_time: timestamp
+
+  """
+  A computed field, executes function "delivery_notification_token"
+  """
+  notification_token: String
   order_time: timestamptz
   order_type: String
   package_cost: money
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   payment_type: String
   pickup_address: String
   schedule_time: String
@@ -14257,6 +14608,16 @@ type delivery_order_max_fields {
   cancelledByServiceProvider
   """
   status: String
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Int
@@ -14347,9 +14708,19 @@ type delivery_order_min_fields {
   estimated_package_ready_time: timestamptz
   id: Int
   lock_time: timestamp
+
+  """
+  A computed field, executes function "delivery_notification_token"
+  """
+  notification_token: String
   order_time: timestamptz
   order_type: String
   package_cost: money
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   payment_type: String
   pickup_address: String
   schedule_time: String
@@ -14365,6 +14736,16 @@ type delivery_order_min_fields {
   cancelledByServiceProvider
   """
   status: String
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Int
@@ -14767,6 +15148,8 @@ input delivery_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_public_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_order_public_bool_exp!
 }
 
@@ -15024,8 +15407,23 @@ type delivery_order_stddev_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -15074,8 +15472,23 @@ type delivery_order_stddev_pop_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -15124,8 +15537,23 @@ type delivery_order_stddev_samp_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -15255,8 +15683,23 @@ type delivery_order_sum_fields {
   driver_review_by_service_provider_id: Int
   id: Int
   package_cost: money
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Int
@@ -15450,6 +15893,8 @@ input delivery_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_order_bool_exp!
 }
 
@@ -15467,8 +15912,23 @@ type delivery_order_var_pop_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -15517,8 +15977,23 @@ type delivery_order_var_samp_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -15567,8 +16042,23 @@ type delivery_order_variance_fields {
   driver_review_by_service_provider_id: Float
   id: Float
   package_cost: Float
+
+  """
+  A computed field, executes function "delivery.packagecost"
+  """
+  package_cost_comp: money
   service_provider_id: Float
   service_provider_review_by_driver_id: Float
+
+  """
+  A computed field, executes function "delivery.tax"
+  """
+  tax: money
+
+  """
+  A computed field, executes function "delivery.deliverytotalcost"
+  """
+  total_cost: money
 
   """in meters"""
   trip_distance: Float
@@ -15677,7 +16167,7 @@ enum direct_chat_constraint {
   direct_chat_pkey
 
   """
-  unique or primary key constraint on columns "user_id1", "user_id2"
+  unique or primary key constraint on columns "user_id2", "user_id1"
   """
   direct_chat_user_id_1_user_id_2_key
 }
@@ -15841,6 +16331,8 @@ input direct_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: direct_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: direct_chat_bool_exp!
 }
 
@@ -16195,6 +16687,8 @@ enum language_update_column {
 input language_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: language_set_input
+
+  """filter the rows which have to be updated"""
   where: language_bool_exp!
 }
 
@@ -16591,6 +17085,8 @@ input laundry_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_category_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_category_bool_exp!
 }
 
@@ -17036,6 +17532,8 @@ input laundry_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_operator_bool_exp!
 }
 
@@ -17236,12 +17734,22 @@ type laundry_order_avg_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -17784,6 +18292,8 @@ input laundry_order_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_category_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_order_category_bool_exp!
 }
 
@@ -17951,6 +18461,11 @@ type laundry_order_max_fields {
   firebase_id: String
   from_customer_delivery_id: Int
   id: Int
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz
   order_type: String
@@ -17963,6 +18478,11 @@ type laundry_order_max_fields {
   stripe_fees: money
   tax: money
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate min on columns"""
@@ -17980,6 +18500,11 @@ type laundry_order_min_fields {
   firebase_id: String
   from_customer_delivery_id: Int
   id: Int
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz
   order_type: String
@@ -17992,6 +18517,11 @@ type laundry_order_min_fields {
   stripe_fees: money
   tax: money
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -18202,12 +18732,22 @@ type laundry_order_stddev_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate stddev_pop on columns"""
@@ -18218,12 +18758,22 @@ type laundry_order_stddev_pop_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate stddev_samp on columns"""
@@ -18234,12 +18784,22 @@ type laundry_order_stddev_samp_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -18292,12 +18852,22 @@ type laundry_order_sum_fields {
   discount_value: money
   from_customer_delivery_id: Int
   id: Int
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: money
   review_id: Int
   store_id: Int
   stripe_fees: money
   tax: money
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -18414,6 +18984,8 @@ input laundry_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_order_bool_exp!
 }
 
@@ -18425,12 +18997,22 @@ type laundry_order_var_pop_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate var_samp on columns"""
@@ -18441,12 +19023,22 @@ type laundry_order_var_samp_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """aggregate variance on columns"""
@@ -18457,12 +19049,22 @@ type laundry_order_variance_fields {
   discount_value: Float
   from_customer_delivery_id: Float
   id: Float
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   review_id: Float
   store_id: Float
   stripe_fees: Float
   tax: Float
   to_customer_delivery_id: Float
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -18972,6 +19574,8 @@ input laundry_store_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_store_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_store_bool_exp!
 }
 
@@ -19329,6 +19933,8 @@ input mez_admin_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_admin_chat_bool_exp!
 }
 
@@ -19507,6 +20113,8 @@ input mez_admin_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_admin_bool_exp!
 }
 
@@ -19703,6 +20311,8 @@ input mez_json_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_json_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_json_bool_exp!
 }
 
@@ -23082,8 +23692,30 @@ type mutation_root {
   update data of the table: "customer.customer"
   """
   update_customer_customer(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: customer_customer_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: customer_customer_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: customer_customer_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: customer_customer_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -23096,8 +23728,30 @@ type mutation_root {
   update single row of the table: "customer.customer"
   """
   update_customer_customer_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: customer_customer_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: customer_customer_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: customer_customer_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: customer_customer_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -25568,7 +26222,7 @@ unique or primary key constraints on table "notification_info"
 """
 enum notification_info_constraint {
   """
-  unique or primary key constraint on columns "app_type_id", "user_id"
+  unique or primary key constraint on columns "user_id", "app_type_id"
   """
   notification_info_app_type_id_user_id_key
 
@@ -25758,6 +26412,8 @@ input notification_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: notification_info_set_input
+
+  """filter the rows which have to be updated"""
   where: notification_info_bool_exp!
 }
 
@@ -28391,7 +29047,7 @@ type query_root {
     """
     input parameters for function "restaurant_orders_by_date"
     """
-    args: restaurant_orders_by_date_args!
+    args: restaurant_orders_by_date_args
 
     """distinct select on columns"""
     distinct_on: [mez_json_select_column!]
@@ -28416,7 +29072,7 @@ type query_root {
     """
     input parameters for function "restaurant_orders_by_date_aggregate"
     """
-    args: restaurant_orders_by_date_args!
+    args: restaurant_orders_by_date_args
 
     """distinct select on columns"""
     distinct_on: [mez_json_select_column!]
@@ -28441,7 +29097,7 @@ type query_root {
     """
     input parameters for function "restaurant_orders_by_month"
     """
-    args: restaurant_orders_by_month_args!
+    args: restaurant_orders_by_month_args
 
     """distinct select on columns"""
     distinct_on: [mez_json_select_column!]
@@ -28466,7 +29122,7 @@ type query_root {
     """
     input parameters for function "restaurant_orders_by_month_aggregate"
     """
-    args: restaurant_orders_by_month_args!
+    args: restaurant_orders_by_month_args
 
     """distinct select on columns"""
     distinct_on: [mez_json_select_column!]
@@ -29339,6 +29995,10 @@ input restaurant_cart_append_input {
 
 """aggregate avg on columns"""
 type restaurant_cart_avg_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   restaurant_id: Float
@@ -29838,6 +30498,8 @@ input restaurant_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_cart_item_bool_exp!
 }
 
@@ -29903,6 +30565,10 @@ input restaurant_cart_item_variance_order_by {
 
 """aggregate max on columns"""
 type restaurant_cart_max_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
   restaurant_id: Int
@@ -29910,6 +30576,10 @@ type restaurant_cart_max_fields {
 
 """aggregate min on columns"""
 type restaurant_cart_min_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
   restaurant_id: Int
@@ -29996,6 +30666,10 @@ input restaurant_cart_set_input {
 
 """aggregate stddev on columns"""
 type restaurant_cart_stddev_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   restaurant_id: Float
@@ -30003,6 +30677,10 @@ type restaurant_cart_stddev_fields {
 
 """aggregate stddev_pop on columns"""
 type restaurant_cart_stddev_pop_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   restaurant_id: Float
@@ -30010,6 +30688,10 @@ type restaurant_cart_stddev_pop_fields {
 
 """aggregate stddev_samp on columns"""
 type restaurant_cart_stddev_samp_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   restaurant_id: Float
@@ -30036,6 +30718,10 @@ input restaurant_cart_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type restaurant_cart_sum_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Int
   discount_value: money
   restaurant_id: Int
@@ -30086,11 +30772,17 @@ input restaurant_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_cart_bool_exp!
 }
 
 """aggregate var_pop on columns"""
 type restaurant_cart_var_pop_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   restaurant_id: Float
@@ -30098,6 +30790,10 @@ type restaurant_cart_var_pop_fields {
 
 """aggregate var_samp on columns"""
 type restaurant_cart_var_samp_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   restaurant_id: Float
@@ -30105,6 +30801,10 @@ type restaurant_cart_var_samp_fields {
 
 """aggregate variance on columns"""
 type restaurant_cart_variance_fields {
+  """
+  A computed field, executes function "cost"
+  """
+  cost: money
   customer_id: Float
   discount_value: Float
   restaurant_id: Float
@@ -30575,6 +31275,8 @@ input restaurant_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_category_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_category_bool_exp!
 }
 
@@ -31084,6 +31786,8 @@ input restaurant_choice_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_choice_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_choice_bool_exp!
 }
 
@@ -31680,7 +32384,7 @@ unique or primary key constraints on table "restaurant.item_option_map"
 """
 enum restaurant_item_option_map_constraint {
   """
-  unique or primary key constraint on columns "option_id", "item_id"
+  unique or primary key constraint on columns "item_id", "option_id"
   """
   restaurant_item_option_map_item_id_option_id_key
 
@@ -31926,6 +32630,8 @@ input restaurant_item_option_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_option_map_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_item_option_map_bool_exp!
 }
 
@@ -32309,6 +33015,8 @@ input restaurant_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_item_bool_exp!
 }
 
@@ -32510,14 +33218,14 @@ enum restaurant_operator_constraint {
   operator_details_id_key
 
   """
-  unique or primary key constraint on columns "user_id"
-  """
-  operator_user_id_key
-
-  """
   unique or primary key constraint on columns "id"
   """
   restaurant_operator_pkey
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  restaurant_operator_user_id_key
 }
 
 """
@@ -32766,6 +33474,8 @@ input restaurant_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_operator_bool_exp!
 }
 
@@ -33426,6 +34136,8 @@ input restaurant_option_choice_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_choice_map_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_option_choice_map_bool_exp!
 }
 
@@ -33837,6 +34549,8 @@ input restaurant_option_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_option_bool_exp!
 }
 
@@ -34112,11 +34826,21 @@ type restaurant_order_avg_fields {
   delivery_id: Float
   discount_value: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34790,6 +35514,8 @@ input restaurant_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_item_bool_exp!
 }
 
@@ -34873,6 +35599,11 @@ type restaurant_order_max_fields {
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz
   order_type: String
@@ -34889,6 +35620,11 @@ type restaurant_order_max_fields {
   stripe_fees: money
   tax: money
   to_location_address: String
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -34939,6 +35675,11 @@ type restaurant_order_min_fields {
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz
   order_type: String
@@ -34955,6 +35696,11 @@ type restaurant_order_min_fields {
   stripe_fees: money
   tax: money
   to_location_address: String
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -35338,6 +36084,8 @@ input restaurant_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_public_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_public_bool_exp!
 }
 
@@ -35496,11 +36244,21 @@ type restaurant_order_stddev_fields {
   delivery_id: Float
   discount_value: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -35528,11 +36286,21 @@ type restaurant_order_stddev_pop_fields {
   delivery_id: Float
   discount_value: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -35560,11 +36328,21 @@ type restaurant_order_stddev_samp_fields {
   delivery_id: Float
   discount_value: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -35644,11 +36422,21 @@ type restaurant_order_sum_fields {
   delivery_id: Int
   discount_value: money
   id: Int
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: money
   restaurant_id: Int
   review_id: Int
   stripe_fees: money
   tax: money
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -35779,6 +36567,8 @@ input restaurant_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_bool_exp!
 }
 
@@ -35790,11 +36580,21 @@ type restaurant_order_var_pop_fields {
   delivery_id: Float
   discount_value: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -35822,11 +36622,21 @@ type restaurant_order_var_samp_fields {
   delivery_id: Float
   discount_value: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -35854,11 +36664,21 @@ type restaurant_order_variance_fields {
   delivery_id: Float
   discount_value: Float
   id: Float
+
+  """
+  A computed field, executes function "itemscost"
+  """
+  items_cost: money
   refund_amount: Float
   restaurant_id: Float
   review_id: Float
   stripe_fees: Float
   tax: Float
+
+  """
+  A computed field, executes function "totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -36442,6 +37262,8 @@ input restaurant_restaurant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_restaurant_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_restaurant_bool_exp!
 }
 
@@ -36646,11 +37468,31 @@ type review_max_fields {
   created_at: timestamptz
   from_entity_id: Int
   from_entity_type: String
+
+  """
+  A computed field, executes function "fromimage"
+  """
+  from_image: String
+
+  """
+  A computed field, executes function "fromname"
+  """
+  from_name: String
   id: Int
   note: String
   rating: Int
   to_entity_id: Int
   to_entity_type: String
+
+  """
+  A computed field, executes function "toimage"
+  """
+  to_image: String
+
+  """
+  A computed field, executes function "toname"
+  """
+  to_name: String
 }
 
 """
@@ -36672,11 +37514,31 @@ type review_min_fields {
   created_at: timestamptz
   from_entity_id: Int
   from_entity_type: String
+
+  """
+  A computed field, executes function "fromimage"
+  """
+  from_image: String
+
+  """
+  A computed field, executes function "fromname"
+  """
+  from_name: String
   id: Int
   note: String
   rating: Int
   to_entity_id: Int
   to_entity_type: String
+
+  """
+  A computed field, executes function "toimage"
+  """
+  to_image: String
+
+  """
+  A computed field, executes function "toname"
+  """
+  to_name: String
 }
 
 """
@@ -36918,6 +37780,8 @@ input review_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: review_set_input
+
+  """filter the rows which have to be updated"""
   where: review_bool_exp!
 }
 
@@ -37047,7 +37911,7 @@ unique or primary key constraints on table "service_provider_customer_chat"
 """
 enum service_provider_customer_chat_constraint {
   """
-  unique or primary key constraint on columns "service_provider_type", "service_provider_id", "customer_id"
+  unique or primary key constraint on columns "customer_id", "service_provider_type", "service_provider_id"
   """
   service_provider_customer_cha_customer_id_service_provider__key
 
@@ -37240,6 +38104,8 @@ input service_provider_customer_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_customer_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_customer_chat_bool_exp!
 }
 
@@ -37617,6 +38483,8 @@ input service_provider_delivery_partner_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_delivery_partner_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_delivery_partner_bool_exp!
 }
 
@@ -38339,6 +39207,8 @@ input service_provider_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_details_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_details_bool_exp!
 }
 
@@ -38584,6 +39454,8 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_location_bool_exp!
 }
 
@@ -38693,7 +39565,7 @@ enum service_provider_operator_details_constraint {
   operator_details_pkey
 
   """
-  unique or primary key constraint on columns "app_type_id", "user_id"
+  unique or primary key constraint on columns "user_id", "app_type_id"
   """
   operator_details_user_id_app_type_id_key
 }
@@ -38912,6 +39784,8 @@ input service_provider_operator_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_operator_details_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_operator_details_bool_exp!
 }
 
@@ -39287,6 +40161,8 @@ input service_provider_post_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_post_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_post_bool_exp!
 }
 
@@ -39518,6 +40394,8 @@ input service_provider_referral_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_referral_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_referral_bool_exp!
 }
 
@@ -39887,6 +40765,8 @@ input service_provider_service_link_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_service_link_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_service_link_bool_exp!
 }
 
@@ -40264,6 +41144,8 @@ input service_provider_stripe_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_stripe_info_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_stripe_info_bool_exp!
 }
 
@@ -40354,7 +41236,7 @@ unique or primary key constraints on table "service_provider.subscriber"
 """
 enum service_provider_subscriber_constraint {
   """
-  unique or primary key constraint on columns "service_provider_type", "service_provider_id", "customer_id"
+  unique or primary key constraint on columns "customer_id", "service_provider_type", "service_provider_id"
   """
   subscriber_customer_id_service_provider_type_service_provid_key
 
@@ -40537,6 +41419,8 @@ input service_provider_subscriber_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_subscriber_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_subscriber_bool_exp!
 }
 
@@ -43986,7 +44870,7 @@ type subscription_root {
     """
     input parameters for function "restaurant_orders_by_date"
     """
-    args: restaurant_orders_by_date_args!
+    args: restaurant_orders_by_date_args
 
     """distinct select on columns"""
     distinct_on: [mez_json_select_column!]
@@ -44011,7 +44895,7 @@ type subscription_root {
     """
     input parameters for function "restaurant_orders_by_date_aggregate"
     """
-    args: restaurant_orders_by_date_args!
+    args: restaurant_orders_by_date_args
 
     """distinct select on columns"""
     distinct_on: [mez_json_select_column!]
@@ -44036,7 +44920,7 @@ type subscription_root {
     """
     input parameters for function "restaurant_orders_by_month"
     """
-    args: restaurant_orders_by_month_args!
+    args: restaurant_orders_by_month_args
 
     """distinct select on columns"""
     distinct_on: [mez_json_select_column!]
@@ -44061,7 +44945,7 @@ type subscription_root {
     """
     input parameters for function "restaurant_orders_by_month_aggregate"
     """
-    args: restaurant_orders_by_month_args!
+    args: restaurant_orders_by_month_args
 
     """distinct select on columns"""
     distinct_on: [mez_json_select_column!]
@@ -45397,6 +46281,8 @@ input translation_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_set_input
+
+  """filter the rows which have to be updated"""
   where: translation_bool_exp!
 }
 
@@ -45707,6 +46593,8 @@ input translation_value_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_value_set_input
+
+  """filter the rows which have to be updated"""
   where: translation_value_bool_exp!
 }
 
@@ -46080,6 +46968,8 @@ input user_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: user_set_input
+
+  """filter the rows which have to be updated"""
   where: user_bool_exp!
 }
 
@@ -46238,6 +47128,8 @@ enum valid_types_app_type_update_column {
 input valid_types_app_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_app_type_set_input
+
+  """filter the rows which have to be updated"""
   where: valid_types_app_type_bool_exp!
 }
 
@@ -46377,5 +47269,7 @@ enum valid_types_service_provider_type_update_column {
 input valid_types_service_provider_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_service_provider_type_set_input
+
+  """filter the rows which have to be updated"""
   where: valid_types_service_provider_type_bool_exp!
 }

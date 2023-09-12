@@ -13,7 +13,7 @@ query getDeliveryCompanyById($id: Int!) {
       cost_per_km
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
       free_delivery_km_range
       free_delivery_minimum_cost
       id
@@ -69,7 +69,7 @@ query getDeliveryCompanies($online_ordering: Boolean) {
       cost_per_km
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
       free_delivery_km_range
       free_delivery_minimum_cost
       id
@@ -113,7 +113,7 @@ query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
       cost_per_km
       customer_pickup
       delivery_available
-      # sitin_available
+      sitin_available
       free_delivery_km_range
       free_delivery_minimum_cost
       id
