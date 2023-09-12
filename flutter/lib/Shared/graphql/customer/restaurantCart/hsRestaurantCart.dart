@@ -280,8 +280,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
                   id: _res.delivery_details.id,
                   deliveryAvailable: _res.delivery_details.delivery_available,
                   pickupAvailable: _res.delivery_details.customer_pickup,
-                  // sitInAvailable: _res.delivery_details.sitin_available,
-                  sitInAvailable: true,
+                  sitInAvailable: _res.delivery_details.sitin_available,
                   costPerKmFromBase:
                       _res.delivery_details.cost_per_km_from_base,
                   selfDelivery: _res.delivery_details.self_delivery,
