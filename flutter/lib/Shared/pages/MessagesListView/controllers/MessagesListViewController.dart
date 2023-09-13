@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
@@ -91,7 +91,7 @@ class CustMessagesListViewController extends MessagesListViewController {
       {required int businessId,
       String? phoneNumber,
       required String offeringImage,
-      required Map<Language, String>? offeringName}) async {
+      required Map<cm.Language, String>? offeringName}) async {
     final IncomingViewLink? viewLink = offeringName == null
         ? null
         : IncomingViewLink(
@@ -103,22 +103,21 @@ class CustMessagesListViewController extends MessagesListViewController {
     final HasuraChat? chatData = await get_service_provider_customer_chat(
       customerId: _authController.user!.hasuraId,
       serviceProviderId: businessId,
-      serviceProviderType: ServiceProviderType.Business,
+      serviceProviderType: cm.ServiceProviderType.Business,
     );
 
     if (chatData == null) {
       // initiate new chat
-      final ServiceProviderChatResponse newChatData =
+      final cm.ServiceProviderChatResponse newChatData =
           await CloudFunctions.serviceProvider_createServiceProviderChat(
         serviceProviderId: businessId,
-        serviceProviderType: ServiceProviderType.Business,
+        serviceProviderType: cm.ServiceProviderType.Business,
       );
       if (newChatData.success) {
         mezDbgPrint(
             "initiateChat: HasuraChat is null ${newChatData.toFirebaseFormattedJson()}");
         await BaseMessagingScreen.navigate(
-            chatId: newChatData.chatId!.toInt(),
-            incomingViewLink: viewLink);
+            chatId: newChatData.chatId!.toInt(), incomingViewLink: viewLink);
       } else {
         mezDbgPrint(
             "initiateChat: HasuraChat is with error ${newChatData.toFirebaseFormattedJson()}");
@@ -178,8 +177,8 @@ class CustDeliveryListViewController extends MessagesListViewController {
       {required int businessId,
       String? phoneNumber,
       required String offeringImage,
-      required ServiceProviderType serviceProviderType,
-      required Map<Language, String>? offeringName}) async {
+      required cm.ServiceProviderType serviceProviderType,
+      required Map<cm.Language, String>? offeringName}) async {
     final IncomingViewLink? viewLink = offeringName == null
         ? null
         : IncomingViewLink(
@@ -196,7 +195,7 @@ class CustDeliveryListViewController extends MessagesListViewController {
 
     if (chatData == null) {
       // initiate new chat
-      final ServiceProviderChatResponse newChatData =
+      final cm.ServiceProviderChatResponse newChatData =
           await CloudFunctions.serviceProvider_createServiceProviderChat(
         serviceProviderId: businessId,
         serviceProviderType: serviceProviderType,
@@ -205,8 +204,7 @@ class CustDeliveryListViewController extends MessagesListViewController {
         mezDbgPrint(
             "initiateChat: HasuraChat is null ${newChatData.toFirebaseFormattedJson()}");
         await BaseMessagingScreen.navigate(
-            chatId: newChatData.chatId!.toInt(),
-            incomingViewLink: viewLink);
+            chatId: newChatData.chatId!.toInt(), incomingViewLink: viewLink);
       } else {
         mezDbgPrint(
             "initiateChat: HasuraChat is with error ${newChatData.toFirebaseFormattedJson()}");
@@ -231,7 +229,7 @@ class CustDeliveryListViewController extends MessagesListViewController {
 
 class ServiceProviderMessagesListViewController
     extends MessagesListViewController {
-  final ServiceProviderType type;
+  final cm.ServiceProviderType type;
   final int serviceId;
 
   ServiceProviderMessagesListViewController(
@@ -295,5 +293,3 @@ class ServiceProviderMessagesListViewController
     });
   }
 }
-
-

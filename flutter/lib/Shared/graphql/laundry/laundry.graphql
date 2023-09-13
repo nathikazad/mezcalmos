@@ -1,5 +1,23 @@
-query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: Int, $online_ordering: Boolean_comparison_exp = {}) {
-  laundry_store(where: {details: {location: {gps: {_st_d_within: {distance: $distance, from: $from}}}, online_ordering: $online_ordering}}, limit: $limit, offset: $offset, order_by: {details: {referral_points: desc}}) {
+query getLaundries(
+  $from: geography!
+  $distance: Float!
+  $limit: Int
+  $offset: Int
+  $online_ordering: Boolean_comparison_exp = {}
+) {
+  laundry_store(
+    where: {
+      details: {
+        location: {
+          gps: { _st_d_within: { distance: $distance, from: $from } }
+        }
+        online_ordering: $online_ordering
+      }
+    }
+    limit: $limit
+    offset: $offset
+    order_by: { details: { referral_points: desc } }
+  ) {
     id
     reviews_aggregate {
       aggregate {
@@ -31,6 +49,9 @@ query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: I
       free_delivery_minimum_cost
       id
       minimum_cost
+      customer_pickup
+      delivery_available
+      sitin_available
       radius
     }
     details {
@@ -72,7 +93,6 @@ query getLaundries($from: geography!, $distance: Float!, $limit: Int, $offset: I
   }
 }
 
-
 query getLaundryStoreById($id: Int!) {
   laundry_store_by_pk(id: $id) {
     id
@@ -109,6 +129,9 @@ query getLaundryStoreById($id: Int!) {
       minimum_cost
       self_delivery
       radius
+      customer_pickup
+      delivery_available
+      sitin_available
     }
     details {
       id
@@ -192,6 +215,9 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
       minimum_cost
       self_delivery
       radius
+      customer_pickup
+      delivery_available
+      sitin_available
     }
     details {
       id
@@ -238,7 +264,7 @@ query getLaundryOperators($laundryStoreID: Int!) {
     store_id
     operator_details {
       owner
-      
+
       status
     }
     user {

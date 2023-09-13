@@ -50,6 +50,24 @@ class MezSideMenu extends GetWidget<AuthController> {
 
                     _basicSideMenuItems(context),
                     _buildSideMenuItem(),
+                    SideMenuItem(
+                      onClick: () async {
+                        await callWhatsappNumber(
+                          "+12098628445",
+                        );
+                      },
+                      icon: Icons.contact_support_sharp,
+                      titleWidget: Obx(() => Expanded(
+                            child: Text('${_i18n()['contactAdmin']}',
+                                maxLines: 2,
+                                style: TextStyle(
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13.mezSp,
+                                  color: Colors.black,
+                                )),
+                          )),
+                    ),
                     Obx(
                       () {
                         if (controller.user != null) {

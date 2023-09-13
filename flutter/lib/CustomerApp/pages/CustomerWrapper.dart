@@ -11,9 +11,6 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
-import 'package:mezcalmos/CustomerApp/pages/AllServices/AllServiceView/AllServiceView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -22,10 +19,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/pages/MessagesListView/MessagesListView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:uni_links/uni_links.dart';
@@ -99,40 +94,40 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _navBar(),
-      body: Obx(() {
-        if (authController.user != null) {
-          return _getBody();
-        } else {
-          return AllServiceView();
-        }
-      }),
+      // body: Obx(() {
+      //   if (authController.user != null) {
+      //     return _getBody();
+      //   } else {
+      //     return AllServiceView();
+      //   }
+      // }),
     );
   }
 
-  Widget _getBody() {
-    switch (_index.value) {
-      case 0:
-        return AllServiceView();
-      case 1:
-        return CustomerOrdersListView(
-          asTab: true,
-        );
-      case 2:
-        return MessagesListView(
-          entityType: EntityType.Customer,
-        );
-      case 3:
-        return CustProfileView();
+  // Widget _getBody() {
+  //   switch (_index.value) {
+  //     case 0:
+  //       return AllServiceView();
+  //     case 1:
+  //       return CustomerOrdersListView(
+  //         asTab: true,
+  //       );
+  //     case 2:
+  //       return MessagesListView(
+  //         entityType: EntityType.Customer,
+  //       );
+  //     case 3:
+  //       return CustProfileView();
 
-      default:
-        return Scaffold(
-          body: Container(
-            alignment: Alignment.center,
-            child: Text("Error"),
-          ),
-        );
-    }
-  }
+  //     default:
+  //       return Scaffold(
+  //         body: Container(
+  //           alignment: Alignment.center,
+  //           child: Text("Error"),
+  //         ),
+  //       );
+  //   }
+  // }
 
   Widget _navBar() {
     return Obx(

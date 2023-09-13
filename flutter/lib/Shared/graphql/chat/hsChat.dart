@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/chat/__generated/hsChat.graphql.dart';
@@ -88,7 +88,7 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
 Future<HasuraChat?> get_service_provider_customer_chat(
     {required int customerId,
     required int serviceProviderId,
-    required ServiceProviderType serviceProviderType}) async {
+    required cm.ServiceProviderType serviceProviderType}) async {
   final QueryResult<Query$get_service_provider_customer_chat> _chat =
       await _hasuraDb.graphQLClient.query$get_service_provider_customer_chat(
     Options$Query$get_service_provider_customer_chat(
@@ -136,7 +136,7 @@ Future<HasuraChat?> get_service_provider_customer_chat(
 }
 
 Future<int?> get_admin_chat_id(
-    {required int recepientId, required RecipientType type}) async {
+    {required int recepientId, required cm.RecipientType type}) async {
   final QueryResult<Query$getMezAdminChat> _chat =
       await _hasuraDb.graphQLClient.query$getMezAdminChat(
     Options$Query$getMezAdminChat(
@@ -213,7 +213,7 @@ Future<List<HasuraChat>> get_customer_chats(
 
 Future<List<HasuraChat>> get_service_provider_chats({
   required int serviceId,
-  required ServiceProviderType serviceType,
+  required cm.ServiceProviderType serviceType,
   bool withCache = true,
   int limit = 10,
   int offset = 0,
@@ -278,7 +278,7 @@ Future<List<HasuraChat>> get_service_provider_chats({
 
 Stream<List<Message>?> listen_on_service_provider_chats({
   required int serviceId,
-  required ServiceProviderType serviceType,
+  required cm.ServiceProviderType serviceType,
   bool withCache = true,
   int limit = 10,
   int offset = 0,
@@ -453,18 +453,18 @@ Future<List<HasuraChat>> get_admin_customers_chats(
             data) async {
       _chats.add(HasuraChat(
           chatInfo: HasuraChatInfo(
-            chatTite:
-                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
-                    ['chatTitle'],
-            phoneNumber:
-                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
-                    ['phoneNumber'],
-            chatImg:
-                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
-                    ['chatImage'],
-            parentlink:
-                data.chat.chat_info!['${AppType.Customer.toChatInfoString()}']
-                    ['parentLink'],
+            chatTite: data.chat
+                    .chat_info!['${cm.AppType.Customer.toChatInfoString()}']
+                ['chatTitle'],
+            phoneNumber: data.chat
+                    .chat_info!['${cm.AppType.Customer.toChatInfoString()}']
+                ['phoneNumber'],
+            chatImg: data.chat
+                    .chat_info!['${cm.AppType.Customer.toChatInfoString()}']
+                ['chatImage'],
+            parentlink: data.chat
+                    .chat_info!['${cm.AppType.Customer.toChatInfoString()}']
+                ['parentLink'],
           ),
           creationTime: DateTime.parse(data.chat.creation_time).toLocal(),
           id: data.chat.id,

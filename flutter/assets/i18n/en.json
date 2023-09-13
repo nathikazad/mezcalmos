@@ -523,10 +523,14 @@
       "savedCards": "My cards"
     },
     "components": {
+      "MezServicesMapView": {
+        "fetch": "Fetch in this area"
+      },
       "CustDeliveryTypeSelector": {
         "dvType": "Delivery type",
         "delivery": "Delivery",
-        "pickup": "In-store Pickup"
+        "pickup": "In-store Pickup",
+        "sitIn": "Sit-in"
       },
       "CustOrderCostCard": {
         "orderCost": "Order cost"
@@ -1093,6 +1097,7 @@
             }
           },
           "ViewCartScreen": {
+            "restaurant": "Restaurant",
             "redirectText": "You will now be redirected to WhatsApp with your order and number of restaurant filled in. You can send message to restaurant and they will reply to you.",
             "sentTitle": "Order placed",
             "sentSubtitle": "Order placed. Sent to restaurant via WhatsApp. Check order status with restaurant. Thank you!",
@@ -2013,10 +2018,17 @@
       },
       "CustomerWrapper": {
         "filter": "Filter",
+        "noRest": "Sorry, no restaurants found",
+        "noItems": "Sorry, no items found",
+
         "filters": "Filters",
         "items": "Items",
         "search": "Search...",
         "showOnlyOpen": "Show only open restaurants",
+        "showOnlyDv": "Show only restaurants that deliver",
+        "viewOnMap": "View on map",
+        "viewAsList": "View as list",
+        "fetchMore": "Load more",
         "orders": "Orders",
         "profile": "Profile",
         "messages": "Messages",

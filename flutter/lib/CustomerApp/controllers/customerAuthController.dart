@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
@@ -34,11 +33,11 @@ class CustomerAuthController extends GetxController {
           await get_customer(user_id: authController.hasuraUserId!);
 
       await _setCustomerInfos(value);
-      if (value != null) {
-        Get.find<SideMenuDrawerController>().addContactAdminItem(
-            id: Get.find<AuthController>().hasuraUserId!,
-            type: RecipientType.Customer);
-      }
+      // if (value != null) {
+      //   Get.find<SideMenuDrawerController>().addContactAdminItem(
+      //       id: Get.find<AuthController>().hasuraUserId!,
+      //       type: RecipientType.Customer);
+      // }
 
       _initialized = true;
       _cusAuthControllerInitializedStreamController.add(true);

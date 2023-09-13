@@ -502,4 +502,8 @@ class MGoogleMapController {
     assert(minMaxZoomPrefs == MinMaxZoomPreference.unbounded);
     controller.value?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
   }
+
+  void clearMarkers() {
+    markers.clear();
+  }
 }

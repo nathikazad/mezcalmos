@@ -2162,6 +2162,27 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'customer_pickup'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'delivery_available'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'sitin_available'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: '__typename'),
                     alias: null,
                     arguments: [],
@@ -3486,6 +3507,9 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
     required this.minimum_cost,
     required this.self_delivery,
     required this.radius,
+    required this.customer_pickup,
+    required this.delivery_available,
+    required this.sitin_available,
     required this.$__typename,
   });
 
@@ -3499,6 +3523,9 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
     final l$minimum_cost = json['minimum_cost'];
     final l$self_delivery = json['self_delivery'];
     final l$radius = json['radius'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
+    final l$sitin_available = json['sitin_available'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -3511,6 +3538,9 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
       minimum_cost: moneyFromJson(l$minimum_cost),
       self_delivery: (l$self_delivery as bool),
       radius: (l$radius as int),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
+      sitin_available: (l$sitin_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -3530,6 +3560,12 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
   final bool self_delivery;
 
   final int radius;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
+
+  final bool sitin_available;
 
   final String $__typename;
 
@@ -3554,6 +3590,12 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
     _resultData['self_delivery'] = l$self_delivery;
     final l$radius = radius;
     _resultData['radius'] = l$radius;
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
+    final l$sitin_available = sitin_available;
+    _resultData['sitin_available'] = l$sitin_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3569,6 +3611,9 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
     final l$minimum_cost = minimum_cost;
     final l$self_delivery = self_delivery;
     final l$radius = radius;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
+    final l$sitin_available = sitin_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -3579,6 +3624,9 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
       l$minimum_cost,
       l$self_delivery,
       l$radius,
+      l$customer_pickup,
+      l$delivery_available,
+      l$sitin_available,
       l$$__typename,
     ]);
   }
@@ -3633,6 +3681,21 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details {
     if (l$radius != lOther$radius) {
       return false;
     }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
+    final l$sitin_available = sitin_available;
+    final lOther$sitin_available = other.sitin_available;
+    if (l$sitin_available != lOther$sitin_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -3675,6 +3738,9 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$deliver
     double? minimum_cost,
     bool? self_delivery,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   });
 }
@@ -3706,6 +3772,9 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_de
     Object? minimum_cost = _undefined,
     Object? self_delivery = _undefined,
     Object? radius = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
+    Object? sitin_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCustomerCart$restaurant_cart$restaurant$delivery_details(
@@ -3732,6 +3801,18 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_de
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
+        sitin_available:
+            sitin_available == _undefined || sitin_available == null
+                ? _instance.sitin_available
+                : (sitin_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3757,6 +3838,9 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$deliver
     double? minimum_cost,
     bool? self_delivery,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   }) =>
       _res;
@@ -9100,6 +9184,27 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'customer_pickup'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'delivery_available'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'sitin_available'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: '__typename'),
                     alias: null,
                     arguments: [],
@@ -10441,6 +10546,9 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     required this.id,
     required this.minimum_cost,
     required this.radius,
+    required this.customer_pickup,
+    required this.delivery_available,
+    required this.sitin_available,
     required this.$__typename,
   });
 
@@ -10454,6 +10562,9 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
     final l$radius = json['radius'];
+    final l$customer_pickup = json['customer_pickup'];
+    final l$delivery_available = json['delivery_available'];
+    final l$sitin_available = json['sitin_available'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_details(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -10466,6 +10577,9 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
       radius: (l$radius as int),
+      customer_pickup: (l$customer_pickup as bool),
+      delivery_available: (l$delivery_available as bool),
+      sitin_available: (l$sitin_available as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -10485,6 +10599,12 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
   final double minimum_cost;
 
   final int radius;
+
+  final bool customer_pickup;
+
+  final bool delivery_available;
+
+  final bool sitin_available;
 
   final String $__typename;
 
@@ -10509,6 +10629,12 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
     final l$radius = radius;
     _resultData['radius'] = l$radius;
+    final l$customer_pickup = customer_pickup;
+    _resultData['customer_pickup'] = l$customer_pickup;
+    final l$delivery_available = delivery_available;
+    _resultData['delivery_available'] = l$delivery_available;
+    final l$sitin_available = sitin_available;
+    _resultData['sitin_available'] = l$sitin_available;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -10524,6 +10650,9 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     final l$id = id;
     final l$minimum_cost = minimum_cost;
     final l$radius = radius;
+    final l$customer_pickup = customer_pickup;
+    final l$delivery_available = delivery_available;
+    final l$sitin_available = sitin_available;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -10534,6 +10663,9 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
       l$id,
       l$minimum_cost,
       l$radius,
+      l$customer_pickup,
+      l$delivery_available,
+      l$sitin_available,
       l$$__typename,
     ]);
   }
@@ -10588,6 +10720,21 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     if (l$radius != lOther$radius) {
       return false;
     }
+    final l$customer_pickup = customer_pickup;
+    final lOther$customer_pickup = other.customer_pickup;
+    if (l$customer_pickup != lOther$customer_pickup) {
+      return false;
+    }
+    final l$delivery_available = delivery_available;
+    final lOther$delivery_available = other.delivery_available;
+    if (l$delivery_available != lOther$delivery_available) {
+      return false;
+    }
+    final l$sitin_available = sitin_available;
+    final lOther$sitin_available = other.sitin_available;
+    if (l$sitin_available != lOther$sitin_available) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -10631,6 +10778,9 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
     int? id,
     double? minimum_cost,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   });
 }
@@ -10663,6 +10813,9 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
     Object? radius = _undefined,
+    Object? customer_pickup = _undefined,
+    Object? delivery_available = _undefined,
+    Object? sitin_available = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -10690,6 +10843,18 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
+        customer_pickup:
+            customer_pickup == _undefined || customer_pickup == null
+                ? _instance.customer_pickup
+                : (customer_pickup as bool),
+        delivery_available:
+            delivery_available == _undefined || delivery_available == null
+                ? _instance.delivery_available
+                : (delivery_available as bool),
+        sitin_available:
+            sitin_available == _undefined || sitin_available == null
+                ? _instance.sitin_available
+                : (sitin_available as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -10715,6 +10880,9 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
     int? id,
     double? minimum_cost,
     int? radius,
+    bool? customer_pickup,
+    bool? delivery_available,
+    bool? sitin_available,
     String? $__typename,
   }) =>
       _res;

@@ -61,6 +61,9 @@ class CreateServiceViewController {
   RxInt currentPage = RxInt(0);
   RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
   Rx<ServiceInput> serviceInput = Rx(ServiceInput());
+  RxBool deliveryAvailable = RxBool(true);
+  RxBool sitInAvailable = RxBool(true);
+  RxBool customerPickupAvailable = RxBool(true);
 
   // info inputs //
 
@@ -225,6 +228,9 @@ class CreateServiceViewController {
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
         id: null,
+        sitInAvailable: sitInAvailable.value,
+        deliveryAvailable: deliveryAvailable.value,
+        pickupAvailable: customerPickupAvailable.value,
         selfDelivery: serviceInput.value.isSelfDelivery,
         minimumCost: double.parse(minCost.text),
         freeDeliveryKmRange: num.tryParse(freeKmRange.text)?.toDouble(),

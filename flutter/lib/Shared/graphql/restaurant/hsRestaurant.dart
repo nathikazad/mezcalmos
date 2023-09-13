@@ -24,6 +24,8 @@ Future<List<Restaurant>> fetch_restaurants(
     required double distance,
     bool? is_open,
     bool? online_ordering,
+    bool? delivery_available,
+    String? keyword,
     int? limit,
     int? offset}) async {
   final List<Restaurant> _restaurants = <Restaurant>[];
@@ -34,8 +36,12 @@ Future<List<Restaurant>> fetch_restaurants(
     isOpenExp = Input$Boolean_comparison_exp($_eq: true);
   }
   Input$Boolean_comparison_exp? onlineOrderingExp;
+  Input$Boolean_comparison_exp? deliveryAvailableExp;
   if (online_ordering != null) {
     onlineOrderingExp = Input$Boolean_comparison_exp($_eq: online_ordering);
+  }
+  if (delivery_available != null) {
+    deliveryAvailableExp = Input$Boolean_comparison_exp($_eq: online_ordering);
   }
   final QueryResult<Query$getRestaurants> response = await _db.graphQLClient
       .query$getRestaurants(Options$Query$getRestaurants(
@@ -44,7 +50,9 @@ Future<List<Restaurant>> fetch_restaurants(
                   fromLocation.lat.toDouble(), fromLocation.lng.toDouble()),
               distance: distance,
               is_open: isOpenExp,
+              keyword: keyword == null ? "%%" : "%$keyword%",
               online_ordering: onlineOrderingExp,
+              delivery_available: deliveryAvailableExp,
               limit: limit,
               offset: offset),
           fetchPolicy: withCache
@@ -74,6 +82,9 @@ Future<List<Restaurant>> fetch_restaurants(
             ? null
             : DeliveryCost(
                 id: data.delivery_details.id,
+                deliveryAvailable: data.delivery_details.delivery_available,
+                pickupAvailable: data.delivery_details.customer_pickup,
+                sitInAvailable: data.delivery_details.sitin_available,
                 selfDelivery: data.delivery_details.self_delivery,
                 freeDeliveryMinimumCost:
                     data.delivery_details.free_delivery_minimum_cost,
@@ -174,6 +185,10 @@ Future<Restaurant?> get_restaurant_by_id(
             ? null
             : DeliveryCost(
                 id: data.delivery_details.id,
+                deliveryAvailable: data.delivery_details.delivery_available,
+                pickupAvailable: data.delivery_details.customer_pickup,
+                //sitInAvailable: data.delivery_details.sitin_available,
+                sitInAvailable: true,
                 selfDelivery: data.delivery_details.self_delivery,
                 freeDeliveryMinimumCost:
                     data.delivery_details.free_delivery_minimum_cost,

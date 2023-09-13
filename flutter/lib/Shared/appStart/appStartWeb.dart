@@ -1,14 +1,14 @@
 // WARNING : ===================
 
+import 'dart:html' as html;
+import 'dart:js' as js;
+
 // DO NOT TOUCH OR IMPORT ANYTHING IN THIS MAIN PLEASE.
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/appStart/appStartBase.dart';
-import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'dart:html' as html;
-import 'dart:js' as js;
+import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/env.dart';
 
 final ThemeData _defaultAppTheme = ThemeData(

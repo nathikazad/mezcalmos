@@ -4,6 +4,16 @@ import { RestaurantOrderStatus } from "../shared/models/Services/Restaurant/Rest
 
 export const restaurantOrderStatusChangeMessages:
   { [id in RestaurantOrderStatus]: BackgroundNotification } = {
+    [RestaurantOrderStatus.InProcess]: {
+      [Language.EN]: {
+        title: "Your order is being prepared",
+        body: "Restaurant has recieved your order and has begun preparation."
+      },
+      [Language.ES]: {
+        title: "Se está preparando tu pedido",
+        body: "El restaurante ha recibido su pedido y ha comenzado a prepararlo."
+      }
+    },
   [RestaurantOrderStatus.OrderReceived]: {
     [Language.EN]: {
       title: "Your order is being prepared",

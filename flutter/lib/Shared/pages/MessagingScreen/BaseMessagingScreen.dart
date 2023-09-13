@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -20,7 +20,6 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -39,19 +38,19 @@ class BaseMessagingScreen extends StatefulWidget {
   BaseMessagingScreenState createState() => BaseMessagingScreenState();
 
   static Future<void> navigate(
-      {required int chatId, IncomingViewLink? incomingViewLink}) {
-    return MezRouter.toPath(
-        SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()),
-        arguments: {
-          "incomingViewLink": incomingViewLink,
-        });
+      {required int chatId, IncomingViewLink? incomingViewLink}) async {
+    // return MezRouter.toPath(
+    //     SharedRoutes.kMessagesRoute.replaceAll(":chatId", chatId.toString()),
+    //     arguments: {
+    //       "incomingViewLink": incomingViewLink,
+    //     });
   }
 }
 
 class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   late final int chatId;
 
-  ParticipantType recipientType = ParticipantType.Customer;
+  cm.ParticipantType recipientType = cm.ParticipantType.Customer;
   String? recipientId;
   MessageController controller =
       Get.put<MessageController>(MessageController());
@@ -121,11 +120,11 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
         firstAvatarBgImage: NetworkImage(link.image),
         action: InkWell(
           onTap: () {
-            if (MezEnv.appType == AppType.Customer) {
+            if (MezEnv.appType == cm.AppType.Customer) {
               MezRouter.toPath(link.url);
             }
           },
-          child: MezEnv.appType == AppType.Customer
+          child: MezEnv.appType == cm.AppType.Customer
               ? Obx(
                   () => Text(
                     _i18n()["view"],

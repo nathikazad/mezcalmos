@@ -16,6 +16,15 @@ extension RestaurantFilters<T extends Service> on List<Service> {
     }
   }
 
+  List<Service> showOnlyDelivery(bool value) {
+    if (value == true) {
+      return where((Service service) =>
+          service.deliveryCost?.deliveryAvailable == true).toList();
+    } else {
+      return this;
+    }
+  }
+
   void sortByOpen() {
     sort((Service a, Service b) {
       if (a.isOpen && !b.isOpen) {

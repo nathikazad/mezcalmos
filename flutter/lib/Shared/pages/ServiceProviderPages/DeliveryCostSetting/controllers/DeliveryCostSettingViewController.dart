@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -19,6 +18,9 @@ class DeliveryCostSettingViewController {
   RxBool isEditing = RxBool(false);
   RxnNum previewCost = RxnNum();
   late int deliveryDetailsId;
+  RxBool deliveryAvailable = RxBool(true);
+  RxBool sitInAvailable = RxBool(true);
+  RxBool customerPickupAvailable = RxBool(true);
 
   // inti //
   Future<void> init({
@@ -62,6 +64,9 @@ class DeliveryCostSettingViewController {
     mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
     return DeliveryCost(
         id: null,
+        sitInAvailable: sitInAvailable.value,
+        deliveryAvailable: deliveryAvailable.value,
+        pickupAvailable: customerPickupAvailable.value,
         selfDelivery: false,
         costPerKmFromBase: double.parse(costPerKmFromBase.text),
         radius: (double.parse(radius.text) * 1000),

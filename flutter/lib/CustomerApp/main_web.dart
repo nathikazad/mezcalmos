@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksWeb.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart';
-import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/appStart/appStartWeb.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart'
-    deferred as baseMessagingScreen;
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:qlevar_router/qlevar_router.dart';
@@ -18,17 +15,17 @@ import 'package:sizer/sizer.dart';
 
 Function signInCallback = CustomerAuthHooksWeb.onSignInHook;
 Function signOutCallback = CustomerAuthHooksWeb.onSignOutHook;
-List<QRoute> routes = XRouter.mainRoutes +
-    SharedRoutes.qRoutes +
-    [
-      QRoute(
-          path: SharedRoutes.kMessagesRoute,
-          name: SharedRoutes.kMessagesRoute,
-          builder: () => baseMessagingScreen.BaseMessagingScreen(),
-          middleware: <QMiddleware>[
-            DefferedLoader(baseMessagingScreen.loadLibrary)
-          ])
-    ];
+List<QRoute> routes = XRouter.mainRoutes + SharedRoutes.qRoutes;
+// +
+// [
+//   QRoute(
+//       path: SharedRoutes.kMessagesRoute,
+//       name: SharedRoutes.kMessagesRoute,
+//       builder: () => baseMessagingScreen.BaseMessagingScreen(),
+//       middleware: <QMiddleware>[
+//         DefferedLoader(baseMessagingScreen.loadLibrary)
+//       ])
+// ];
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
   SideMenuItem(
     onClick: () {

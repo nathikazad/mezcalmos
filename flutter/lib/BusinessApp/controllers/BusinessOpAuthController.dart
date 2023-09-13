@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/graphql/business_operator/hsBusinessOperator.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -79,8 +78,8 @@ class BusinessOpAuthController extends GetxController {
                 false;
 
         mezDbgPrint("_businessProfile $_businessProfile");
-        Get.find<SideMenuDrawerController>()
-            .addContactAdminItem(id: companyId!, type: RecipientType.Business);
+        // Get.find<SideMenuDrawerController>()
+        //     .addContactAdminItem(id: companyId!, type: RecipientType.Business);
 
         /// TODO: Just for testing
         // _businessProfile = BusinessProfile.SurfShop;

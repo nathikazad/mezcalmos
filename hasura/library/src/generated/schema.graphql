@@ -603,6 +603,10 @@ type business_business_variance_fields {
 columns and relationships of "business.cart"
 """
 type business_cart {
+  applied_offers(
+    """JSON select path"""
+    path: String
+  ): jsonb!
   business_id: Int
 
   """
@@ -674,6 +678,11 @@ type business_cart_aggregate_fields {
   variance: business_cart_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input business_cart_append_input {
+  applied_offers: jsonb
+}
+
 """aggregate avg on columns"""
 type business_cart_avg_fields {
   business_id: Float
@@ -693,6 +702,7 @@ input business_cart_bool_exp {
   _and: [business_cart_bool_exp!]
   _not: business_cart_bool_exp
   _or: [business_cart_bool_exp!]
+  applied_offers: jsonb_comparison_exp
   business_id: Int_comparison_exp
   cost: money_comparison_exp
   customer_id: Int_comparison_exp
@@ -712,6 +722,28 @@ enum business_cart_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input business_cart_delete_at_path_input {
+  applied_offers: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input business_cart_delete_elem_input {
+  applied_offers: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input business_cart_delete_key_input {
+  applied_offers: String
+}
+
+"""
 input type for incrementing numeric columns in table "business.cart"
 """
 input business_cart_inc_input {
@@ -724,6 +756,7 @@ input business_cart_inc_input {
 input type for inserting data into table "business.cart"
 """
 input business_cart_insert_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1310,6 +1343,7 @@ input business_cart_on_conflict {
 
 """Ordering options when selecting data from "business.cart"."""
 input business_cart_order_by {
+  applied_offers: order_by
   business_id: order_by
   cost: order_by
   customer_id: order_by
@@ -1322,10 +1356,18 @@ input business_cart_pk_columns_input {
   customer_id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input business_cart_prepend_input {
+  applied_offers: jsonb
+}
+
 """
 select columns of table "business.cart"
 """
 enum business_cart_select_column {
+  """column name"""
+  applied_offers
+
   """column name"""
   business_id
 
@@ -1340,6 +1382,7 @@ enum business_cart_select_column {
 input type for updating data in table "business.cart"
 """
 input business_cart_set_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1394,6 +1437,7 @@ input business_cart_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input business_cart_stream_cursor_value_input {
+  applied_offers: jsonb
   business_id: Int
   customer_id: Int
   discount_value: money
@@ -1416,6 +1460,9 @@ update columns of table "business.cart"
 """
 enum business_cart_update_column {
   """column name"""
+  applied_offers
+
+  """column name"""
   business_id
 
   """column name"""
@@ -1426,8 +1473,30 @@ enum business_cart_update_column {
 }
 
 input business_cart_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: business_cart_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: business_cart_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: business_cart_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: business_cart_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: business_cart_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: business_cart_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: business_cart_set_input
@@ -4101,6 +4170,7 @@ type business_order_request {
   customer: customer_customer!
   customer_app_type: String!
   customer_id: Int!
+  discount_value: money!
   id: Int!
 
   """
@@ -4145,6 +4215,7 @@ type business_order_request {
   ): business_order_request_item_aggregate!
   notes: String
   order_time: timestamptz!
+  order_type: String!
   review_id: Int
   status: String!
 }
@@ -4184,6 +4255,7 @@ type business_order_request_avg_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   id: Float
   review_id: Float
 }
@@ -4204,12 +4276,14 @@ input business_order_request_bool_exp {
   customer: customer_customer_bool_exp
   customer_app_type: String_comparison_exp
   customer_id: Int_comparison_exp
+  discount_value: money_comparison_exp
   id: Int_comparison_exp
   in_progress: Boolean_comparison_exp
   items: business_order_request_item_bool_exp
   items_aggregate: business_order_request_item_aggregate_bool_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
+  order_type: String_comparison_exp
   review_id: Int_comparison_exp
   status: String_comparison_exp
 }
@@ -4231,6 +4305,7 @@ input business_order_request_inc_input {
   business_id: Int
   chat_id: Int
   customer_id: Int
+  discount_value: money
   id: Int
   review_id: Int
 }
@@ -4247,10 +4322,12 @@ input business_order_request_insert_input {
   customer: customer_customer_obj_rel_insert_input
   customer_app_type: String
   customer_id: Int
+  discount_value: money
   id: Int
   items: business_order_request_item_arr_rel_insert_input
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4856,9 +4933,11 @@ type business_order_request_max_fields {
   cost: money
   customer_app_type: String
   customer_id: Int
+  discount_value: money
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4875,9 +4954,11 @@ type business_order_request_min_fields {
   cost: money
   customer_app_type: String
   customer_id: Int
+  discount_value: money
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4923,11 +5004,13 @@ input business_order_request_order_by {
   customer: customer_customer_order_by
   customer_app_type: order_by
   customer_id: order_by
+  discount_value: order_by
   id: order_by
   in_progress: order_by
   items_aggregate: business_order_request_item_aggregate_order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   review_id: order_by
   status: order_by
 }
@@ -4957,6 +5040,9 @@ enum business_order_request_select_column {
   customer_id
 
   """column name"""
+  discount_value
+
+  """column name"""
   id
 
   """column name"""
@@ -4964,6 +5050,9 @@ enum business_order_request_select_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   review_id
@@ -4981,9 +5070,11 @@ input business_order_request_set_input {
   chat_id: Int
   customer_app_type: String
   customer_id: Int
+  discount_value: money
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -4998,6 +5089,7 @@ type business_order_request_stddev_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   id: Float
   review_id: Float
 }
@@ -5012,6 +5104,7 @@ type business_order_request_stddev_pop_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   id: Float
   review_id: Float
 }
@@ -5026,6 +5119,7 @@ type business_order_request_stddev_samp_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   id: Float
   review_id: Float
 }
@@ -5048,9 +5142,11 @@ input business_order_request_stream_cursor_value_input {
   chat_id: Int
   customer_app_type: String
   customer_id: Int
+  discount_value: money
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   review_id: Int
   status: String
 }
@@ -5065,6 +5161,7 @@ type business_order_request_sum_fields {
   """
   cost: money
   customer_id: Int
+  discount_value: money
   id: Int
   review_id: Int
 }
@@ -5089,6 +5186,9 @@ enum business_order_request_update_column {
   customer_id
 
   """column name"""
+  discount_value
+
+  """column name"""
   id
 
   """column name"""
@@ -5096,6 +5196,9 @@ enum business_order_request_update_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   review_id
@@ -5125,6 +5228,7 @@ type business_order_request_var_pop_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   id: Float
   review_id: Float
 }
@@ -5139,6 +5243,7 @@ type business_order_request_var_samp_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   id: Float
   review_id: Float
 }
@@ -5153,6 +5258,7 @@ type business_order_request_variance_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   id: Float
   review_id: Float
 }
@@ -7432,6 +7538,10 @@ type customer_customer {
     where: customer_stripe_cards_bool_exp
   ): customer_stripe_cards_aggregate!
   stripe_id: String
+  stripe_info(
+    """JSON select path"""
+    path: String
+  ): jsonb
 
   """An array relationship"""
   stripe_sp_ids(
@@ -7499,6 +7609,11 @@ type customer_customer_aggregate_fields {
   variance: customer_customer_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input customer_customer_append_input {
+  stripe_info: jsonb
+}
+
 """aggregate avg on columns"""
 type customer_customer_avg_fields {
   user_id: Float
@@ -7523,6 +7638,7 @@ input customer_customer_bool_exp {
   stripe_cards: customer_stripe_cards_bool_exp
   stripe_cards_aggregate: customer_stripe_cards_aggregate_bool_exp
   stripe_id: String_comparison_exp
+  stripe_info: jsonb_comparison_exp
   stripe_sp_ids: customer_stripe_sp_id_bool_exp
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_bool_exp
   user: user_bool_exp
@@ -7545,6 +7661,28 @@ enum customer_customer_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input customer_customer_delete_at_path_input {
+  stripe_info: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input customer_customer_delete_elem_input {
+  stripe_info: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input customer_customer_delete_key_input {
+  stripe_info: String
+}
+
+"""
 input type for incrementing numeric columns in table "customer.customer"
 """
 input customer_customer_inc_input {
@@ -7564,6 +7702,7 @@ input customer_customer_insert_input {
   service_provider_type: String
   stripe_cards: customer_stripe_cards_arr_rel_insert_input
   stripe_id: String
+  stripe_info: jsonb
   stripe_sp_ids: customer_stripe_sp_id_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
@@ -7628,6 +7767,7 @@ input customer_customer_order_by {
   service_provider_type: order_by
   stripe_cards_aggregate: customer_stripe_cards_aggregate_order_by
   stripe_id: order_by
+  stripe_info: order_by
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_order_by
   user: user_order_by
   user_id: order_by
@@ -7636,6 +7776,11 @@ input customer_customer_order_by {
 """primary key columns input for table: customer.customer"""
 input customer_customer_pk_columns_input {
   user_id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input customer_customer_prepend_input {
+  stripe_info: jsonb
 }
 
 """
@@ -7655,6 +7800,9 @@ enum customer_customer_select_column {
   stripe_id
 
   """column name"""
+  stripe_info
+
+  """column name"""
   user_id
 }
 
@@ -7666,6 +7814,7 @@ input customer_customer_set_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
+  stripe_info: jsonb
   user_id: Int
 }
 
@@ -7701,6 +7850,7 @@ input customer_customer_stream_cursor_value_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
+  stripe_info: jsonb
   user_id: Int
 }
 
@@ -7726,12 +7876,37 @@ enum customer_customer_update_column {
   stripe_id
 
   """column name"""
+  stripe_info
+
+  """column name"""
   user_id
 }
 
 input customer_customer_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: customer_customer_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: customer_customer_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: customer_customer_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: customer_customer_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: customer_customer_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: customer_customer_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_customer_set_input
@@ -11836,6 +12011,7 @@ type delivery_details {
   """An object relationship"""
   restaurant: restaurant_restaurant
   self_delivery: Boolean!
+  sitin_available: Boolean!
 }
 
 """
@@ -11929,6 +12105,7 @@ input delivery_details_bool_exp {
   radius: Int_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
   self_delivery: Boolean_comparison_exp
+  sitin_available: Boolean_comparison_exp
 }
 
 """
@@ -11975,6 +12152,7 @@ input delivery_details_insert_input {
   radius: Int
   restaurant: restaurant_restaurant_obj_rel_insert_input
   self_delivery: Boolean
+  sitin_available: Boolean
 }
 
 """aggregate max on columns"""
@@ -12079,6 +12257,7 @@ input delivery_details_order_by {
   radius: order_by
   restaurant: restaurant_restaurant_order_by
   self_delivery: order_by
+  sitin_available: order_by
 }
 
 """primary key columns input for table: delivery.details"""
@@ -12119,6 +12298,9 @@ enum delivery_details_select_column {
 
   """column name"""
   self_delivery
+
+  """column name"""
+  sitin_available
 }
 
 """
@@ -12137,6 +12319,7 @@ input delivery_details_set_input {
   """in metres"""
   radius: Int
   self_delivery: Boolean
+  sitin_available: Boolean
 }
 
 """aggregate stddev on columns"""
@@ -12248,6 +12431,7 @@ input delivery_details_stream_cursor_value_input {
   """in metres"""
   radius: Int
   self_delivery: Boolean
+  sitin_available: Boolean
 }
 
 """aggregate sum on columns"""
@@ -12311,6 +12495,9 @@ enum delivery_details_update_column {
 
   """column name"""
   self_delivery
+
+  """column name"""
+  sitin_available
 }
 
 input delivery_details_updates {
@@ -13020,6 +13207,359 @@ input delivery_get_delivery_companies_args {
 }
 
 """
+columns and relationships of "delivery_messages"
+"""
+type delivery_messages {
+  driver_id: Int
+  entry(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+  id: Int!
+  phone_number: String!
+  received_time: timestamptz!
+  resolved_time: timestamptz
+  user_id: Int
+}
+
+"""
+aggregated selection of "delivery_messages"
+"""
+type delivery_messages_aggregate {
+  aggregate: delivery_messages_aggregate_fields
+  nodes: [delivery_messages!]!
+}
+
+"""
+aggregate fields of "delivery_messages"
+"""
+type delivery_messages_aggregate_fields {
+  avg: delivery_messages_avg_fields
+  count(columns: [delivery_messages_select_column!], distinct: Boolean): Int!
+  max: delivery_messages_max_fields
+  min: delivery_messages_min_fields
+  stddev: delivery_messages_stddev_fields
+  stddev_pop: delivery_messages_stddev_pop_fields
+  stddev_samp: delivery_messages_stddev_samp_fields
+  sum: delivery_messages_sum_fields
+  var_pop: delivery_messages_var_pop_fields
+  var_samp: delivery_messages_var_samp_fields
+  variance: delivery_messages_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input delivery_messages_append_input {
+  entry: jsonb
+}
+
+"""aggregate avg on columns"""
+type delivery_messages_avg_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "delivery_messages". All fields are combined with a logical 'AND'.
+"""
+input delivery_messages_bool_exp {
+  _and: [delivery_messages_bool_exp!]
+  _not: delivery_messages_bool_exp
+  _or: [delivery_messages_bool_exp!]
+  driver_id: Int_comparison_exp
+  entry: jsonb_comparison_exp
+  id: Int_comparison_exp
+  phone_number: String_comparison_exp
+  received_time: timestamptz_comparison_exp
+  resolved_time: timestamptz_comparison_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "delivery_messages"
+"""
+enum delivery_messages_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  delivery_messages_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input delivery_messages_delete_at_path_input {
+  entry: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input delivery_messages_delete_elem_input {
+  entry: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input delivery_messages_delete_key_input {
+  entry: String
+}
+
+"""
+input type for incrementing numeric columns in table "delivery_messages"
+"""
+input delivery_messages_inc_input {
+  driver_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "delivery_messages"
+"""
+input delivery_messages_insert_input {
+  driver_id: Int
+  entry: jsonb
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type delivery_messages_max_fields {
+  driver_id: Int
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
+  user_id: Int
+}
+
+"""aggregate min on columns"""
+type delivery_messages_min_fields {
+  driver_id: Int
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
+  user_id: Int
+}
+
+"""
+response of any mutation on the table "delivery_messages"
+"""
+type delivery_messages_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [delivery_messages!]!
+}
+
+"""
+on_conflict condition type for table "delivery_messages"
+"""
+input delivery_messages_on_conflict {
+  constraint: delivery_messages_constraint!
+  update_columns: [delivery_messages_update_column!]! = []
+  where: delivery_messages_bool_exp
+}
+
+"""Ordering options when selecting data from "delivery_messages"."""
+input delivery_messages_order_by {
+  driver_id: order_by
+  entry: order_by
+  id: order_by
+  phone_number: order_by
+  received_time: order_by
+  resolved_time: order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: delivery_messages"""
+input delivery_messages_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input delivery_messages_prepend_input {
+  entry: jsonb
+}
+
+"""
+select columns of table "delivery_messages"
+"""
+enum delivery_messages_select_column {
+  """column name"""
+  driver_id
+
+  """column name"""
+  entry
+
+  """column name"""
+  id
+
+  """column name"""
+  phone_number
+
+  """column name"""
+  received_time
+
+  """column name"""
+  resolved_time
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "delivery_messages"
+"""
+input delivery_messages_set_input {
+  driver_id: Int
+  entry: jsonb
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type delivery_messages_stddev_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type delivery_messages_stddev_pop_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type delivery_messages_stddev_samp_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "delivery_messages"
+"""
+input delivery_messages_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: delivery_messages_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input delivery_messages_stream_cursor_value_input {
+  driver_id: Int
+  entry: jsonb
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  resolved_time: timestamptz
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type delivery_messages_sum_fields {
+  driver_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""
+update columns of table "delivery_messages"
+"""
+enum delivery_messages_update_column {
+  """column name"""
+  driver_id
+
+  """column name"""
+  entry
+
+  """column name"""
+  id
+
+  """column name"""
+  phone_number
+
+  """column name"""
+  received_time
+
+  """column name"""
+  resolved_time
+
+  """column name"""
+  user_id
+}
+
+input delivery_messages_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: delivery_messages_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: delivery_messages_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: delivery_messages_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: delivery_messages_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: delivery_messages_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: delivery_messages_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: delivery_messages_set_input
+
+  """filter the rows which have to be updated"""
+  where: delivery_messages_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type delivery_messages_var_pop_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type delivery_messages_var_samp_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type delivery_messages_variance_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
 columns and relationships of "delivery.operator"
 """
 type delivery_operator {
@@ -13469,14 +14009,6 @@ type delivery_order {
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
 
-  """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
-  """
-  change_price_request(
-    """JSON select path"""
-    path: String
-  ): jsonb
-
   """An object relationship"""
   chat_with_customer: chat!
   chat_with_customer_id: Int!
@@ -13484,11 +14016,26 @@ type delivery_order {
   """An object relationship"""
   chat_with_service_provider: chat
   chat_with_service_provider_id: Int
+
+  """Array of delivery company ids"""
+  chosen_companies(
+    """JSON select path"""
+    path: String
+  ): jsonb
+
+  """
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
+  """
+  counter_offers(
+    """JSON select path"""
+    path: String
+  ): jsonb
   current_gps: geography
 
   """An object relationship"""
   customer: customer_customer!
   customer_id: Int!
+  customer_offer: money
 
   """An object relationship"""
   customer_review_by_driver: review
@@ -13539,6 +14086,14 @@ type delivery_order {
   A computed field, executes function "delivery_notification_token"
   """
   notification_token: String
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers(
+    """JSON select path"""
+    path: String
+  ): jsonb
   order_time: timestamptz!
   order_type: String!
   package_cost: money!
@@ -13558,7 +14113,7 @@ type delivery_order {
   """An object relationship"""
   restaurant_order: restaurant_order
   schedule_time: String
-  service_provider_id: Int!
+  service_provider_id: Int
 
   """An object relationship"""
   service_provider_review_by_driver: review
@@ -13663,10 +14218,18 @@ input delivery_order_aggregate_order_by {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input delivery_order_append_input {
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: jsonb
+  counter_offers: jsonb
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
 }
 
 """
@@ -13684,6 +14247,7 @@ type delivery_order_avg_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -13724,6 +14288,7 @@ input delivery_order_avg_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -13754,14 +14319,16 @@ input delivery_order_bool_exp {
   actual_delivered_time: timestamptz_comparison_exp
   actual_package_ready_time: timestamptz_comparison_exp
   cancellation_time: timestamptz_comparison_exp
-  change_price_request: jsonb_comparison_exp
   chat_with_customer: chat_bool_exp
   chat_with_customer_id: Int_comparison_exp
   chat_with_service_provider: chat_bool_exp
   chat_with_service_provider_id: Int_comparison_exp
+  chosen_companies: jsonb_comparison_exp
+  counter_offers: jsonb_comparison_exp
   current_gps: geography_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  customer_offer: money_comparison_exp
   customer_review_by_driver: review_bool_exp
   customer_review_by_driver_id: Int_comparison_exp
   delivery_company: delivery_company_bool_exp
@@ -13786,6 +14353,7 @@ input delivery_order_bool_exp {
   laundry_pickup_order: laundry_order_bool_exp
   lock_time: timestamp_comparison_exp
   notification_token: String_comparison_exp
+  notified_drivers: jsonb_comparison_exp
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
   package_cost: money_comparison_exp
@@ -13823,10 +14391,18 @@ enum delivery_order_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input delivery_order_delete_at_path_input {
+  """Array of delivery company ids"""
+  chosen_companies: [String!]
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: [String!]
+  counter_offers: [String!]
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: [String!]
 }
 
 """
@@ -13834,20 +14410,36 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input delivery_order_delete_elem_input {
+  """Array of delivery company ids"""
+  chosen_companies: Int
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: Int
+  counter_offers: Int
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: Int
 }
 
 """
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input delivery_order_delete_key_input {
+  """Array of delivery company ids"""
+  chosen_companies: String
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: String
+  counter_offers: String
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: String
 }
 
 """
@@ -13857,6 +14449,7 @@ input delivery_order_inc_input {
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -13884,18 +14477,22 @@ input delivery_order_insert_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
-
-  """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
-  """
-  change_price_request: jsonb
   chat_with_customer: chat_obj_rel_insert_input
   chat_with_customer_id: Int
   chat_with_service_provider: chat_obj_rel_insert_input
   chat_with_service_provider_id: Int
+
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
+  """
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
+  """
+  counter_offers: jsonb
   current_gps: geography
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver: review_obj_rel_insert_input
   customer_review_by_driver_id: Int
   delivery_company: delivery_company_obj_rel_insert_input
@@ -13920,6 +14517,11 @@ input delivery_order_insert_input {
   laundry_delivery_order: laundry_order_obj_rel_insert_input
   laundry_pickup_order: laundry_order_obj_rel_insert_input
   lock_time: timestamp
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -13962,6 +14564,7 @@ type delivery_order_max_fields {
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -14036,6 +14639,7 @@ input delivery_order_max_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14088,6 +14692,7 @@ type delivery_order_min_fields {
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -14162,6 +14767,7 @@ input delivery_order_min_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14241,14 +14847,16 @@ input delivery_order_order_by {
   actual_delivered_time: order_by
   actual_package_ready_time: order_by
   cancellation_time: order_by
-  change_price_request: order_by
   chat_with_customer: chat_order_by
   chat_with_customer_id: order_by
   chat_with_service_provider: chat_order_by
   chat_with_service_provider_id: order_by
+  chosen_companies: order_by
+  counter_offers: order_by
   current_gps: order_by
   customer: customer_customer_order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver: review_order_by
   customer_review_by_driver_id: order_by
   delivery_company: delivery_company_order_by
@@ -14273,6 +14881,7 @@ input delivery_order_order_by {
   laundry_pickup_order: laundry_order_order_by
   lock_time: order_by
   notification_token: order_by
+  notified_drivers: order_by
   order_time: order_by
   order_type: order_by
   package_cost: order_by
@@ -14303,10 +14912,18 @@ input delivery_order_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input delivery_order_prepend_input {
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
   """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
   """
-  change_price_request: jsonb
+  counter_offers: jsonb
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
 }
 
 """
@@ -14577,19 +15194,25 @@ enum delivery_order_select_column {
   cancellation_time
 
   """column name"""
-  change_price_request
-
-  """column name"""
   chat_with_customer_id
 
   """column name"""
   chat_with_service_provider_id
 
   """column name"""
+  chosen_companies
+
+  """column name"""
+  counter_offers
+
+  """column name"""
   current_gps
 
   """column name"""
   customer_id
+
+  """column name"""
+  customer_offer
 
   """column name"""
   customer_review_by_driver_id
@@ -14632,6 +15255,9 @@ enum delivery_order_select_column {
 
   """column name"""
   lock_time
+
+  """column name"""
+  notified_drivers
 
   """column name"""
   order_time
@@ -14704,15 +15330,19 @@ input delivery_order_set_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
-
-  """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
-  """
-  change_price_request: jsonb
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
+
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
+  """
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
+  """
+  counter_offers: jsonb
   current_gps: geography
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -14729,6 +15359,11 @@ input delivery_order_set_input {
   estimated_package_ready_time: timestamptz
   id: Int
   lock_time: timestamp
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -14763,6 +15398,7 @@ type delivery_order_stddev_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -14803,6 +15439,7 @@ input delivery_order_stddev_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14826,6 +15463,7 @@ type delivery_order_stddev_pop_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -14866,6 +15504,7 @@ input delivery_order_stddev_pop_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14889,6 +15528,7 @@ type delivery_order_stddev_samp_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -14929,6 +15569,7 @@ input delivery_order_stddev_samp_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -14965,15 +15606,19 @@ input delivery_order_stream_cursor_value_input {
   actual_delivered_time: timestamptz
   actual_package_ready_time: timestamptz
   cancellation_time: timestamptz
-
-  """
-  { status: {requested, accepted, rejected}, newPrice: number, oldPrice: number, reason: string}
-  """
-  change_price_request: jsonb
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
+
+  """Array of delivery company ids"""
+  chosen_companies: jsonb
+
+  """
+  Map<driverId, {price: number;   time: string;   status: CounterOfferStatus;   expiryTime: string;}>
+  """
+  counter_offers: jsonb
   current_gps: geography
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -14990,6 +15635,11 @@ input delivery_order_stream_cursor_value_input {
   estimated_package_ready_time: timestamptz
   id: Int
   lock_time: timestamp
+
+  """
+  Map<driverId, boolean>, false if driver has not read the notification, true otherwise
+  """
+  notified_drivers: jsonb
   order_time: timestamptz
   order_type: String
   package_cost: money
@@ -15024,6 +15674,7 @@ type delivery_order_sum_fields {
   chat_with_customer_id: Int
   chat_with_service_provider_id: Int
   customer_id: Int
+  customer_offer: money
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
@@ -15064,6 +15715,7 @@ input delivery_order_sum_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -15102,19 +15754,25 @@ enum delivery_order_update_column {
   cancellation_time
 
   """column name"""
-  change_price_request
-
-  """column name"""
   chat_with_customer_id
 
   """column name"""
   chat_with_service_provider_id
 
   """column name"""
+  chosen_companies
+
+  """column name"""
+  counter_offers
+
+  """column name"""
   current_gps
 
   """column name"""
   customer_id
+
+  """column name"""
+  customer_offer
 
   """column name"""
   customer_review_by_driver_id
@@ -15157,6 +15815,9 @@ enum delivery_order_update_column {
 
   """column name"""
   lock_time
+
+  """column name"""
+  notified_drivers
 
   """column name"""
   order_time
@@ -15242,6 +15903,7 @@ type delivery_order_var_pop_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -15282,6 +15944,7 @@ input delivery_order_var_pop_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -15305,6 +15968,7 @@ type delivery_order_var_samp_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -15345,6 +16009,7 @@ input delivery_order_var_samp_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -15368,6 +16033,7 @@ type delivery_order_variance_fields {
   chat_with_customer_id: Float
   chat_with_service_provider_id: Float
   customer_id: Float
+  customer_offer: Float
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
@@ -15408,6 +16074,7 @@ input delivery_order_variance_order_by {
   chat_with_customer_id: order_by
   chat_with_service_provider_id: order_by
   customer_id: order_by
+  customer_offer: order_by
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
@@ -16999,6 +17666,7 @@ type laundry_order {
   items_cost: money
   notes: String
   order_time: timestamptz!
+  order_type: String!
   payment_type: String!
   refund_amount: money!
 
@@ -17114,6 +17782,7 @@ input laundry_order_bool_exp {
   items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
+  order_type: String_comparison_exp
   payment_type: String_comparison_exp
   refund_amount: money_comparison_exp
   review: review_bool_exp
@@ -17761,6 +18430,7 @@ input laundry_order_insert_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review: review_obj_rel_insert_input
@@ -17798,6 +18468,7 @@ type laundry_order_max_fields {
   items_cost: money
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review_id: Int
@@ -17836,6 +18507,7 @@ type laundry_order_min_fields {
   items_cost: money
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review_id: Int
@@ -17906,6 +18578,7 @@ input laundry_order_order_by {
   items_cost: order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   payment_type: order_by
   refund_amount: order_by
   review: review_order_by
@@ -17985,6 +18658,9 @@ enum laundry_order_select_column {
   order_time
 
   """column name"""
+  order_type
+
+  """column name"""
   payment_type
 
   """column name"""
@@ -18035,6 +18711,7 @@ input laundry_order_set_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review_id: Int
@@ -18154,6 +18831,7 @@ input laundry_order_stream_cursor_value_input {
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   review_id: Int
@@ -18243,6 +18921,9 @@ enum laundry_order_update_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   payment_type
@@ -20019,6 +20700,19 @@ type mutation_root {
   delete_delivery_driver_by_pk(id: Int!): delivery_driver
 
   """
+  delete data from the table: "delivery_messages"
+  """
+  delete_delivery_messages(
+    """filter the rows which have to be deleted"""
+    where: delivery_messages_bool_exp!
+  ): delivery_messages_mutation_response
+
+  """
+  delete single row from the table: "delivery_messages"
+  """
+  delete_delivery_messages_by_pk(id: Int!): delivery_messages
+
+  """
   delete data from the table: "delivery.operator"
   """
   delete_delivery_operator(
@@ -21187,6 +21881,28 @@ type mutation_root {
   ): delivery_driver
 
   """
+  insert data into the table: "delivery_messages"
+  """
+  insert_delivery_messages(
+    """the rows to be inserted"""
+    objects: [delivery_messages_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: delivery_messages_on_conflict
+  ): delivery_messages_mutation_response
+
+  """
+  insert a single row into the table: "delivery_messages"
+  """
+  insert_delivery_messages_one(
+    """the row to be inserted"""
+    object: delivery_messages_insert_input!
+
+    """upsert condition"""
+    on_conflict: delivery_messages_on_conflict
+  ): delivery_messages
+
+  """
   insert data into the table: "delivery.operator"
   """
   insert_delivery_operator(
@@ -22158,8 +22874,30 @@ type mutation_root {
   update data of the table: "business.cart"
   """
   update_business_cart(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_cart_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_cart_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_cart_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_cart_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: business_cart_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_cart_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: business_cart_set_input
@@ -22172,8 +22910,30 @@ type mutation_root {
   update single row of the table: "business.cart"
   """
   update_business_cart_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_cart_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_cart_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_cart_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_cart_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: business_cart_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_cart_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: business_cart_set_input
@@ -22932,8 +23692,30 @@ type mutation_root {
   update data of the table: "customer.customer"
   """
   update_customer_customer(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: customer_customer_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: customer_customer_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: customer_customer_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: customer_customer_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -22946,8 +23728,30 @@ type mutation_root {
   update single row of the table: "customer.customer"
   """
   update_customer_customer_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: customer_customer_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: customer_customer_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: customer_customer_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: customer_customer_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -23423,6 +24227,84 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [delivery_driver_updates!]!
   ): [delivery_driver_mutation_response]
+
+  """
+  update data of the table: "delivery_messages"
+  """
+  update_delivery_messages(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: delivery_messages_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: delivery_messages_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: delivery_messages_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: delivery_messages_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: delivery_messages_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: delivery_messages_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: delivery_messages_set_input
+
+    """filter the rows which have to be updated"""
+    where: delivery_messages_bool_exp!
+  ): delivery_messages_mutation_response
+
+  """
+  update single row of the table: "delivery_messages"
+  """
+  update_delivery_messages_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: delivery_messages_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: delivery_messages_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: delivery_messages_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: delivery_messages_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: delivery_messages_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: delivery_messages_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: delivery_messages_set_input
+    pk_columns: delivery_messages_pk_columns_input!
+  ): delivery_messages
+
+  """
+  update multiples rows of table: "delivery_messages"
+  """
+  update_delivery_messages_many(
+    """updates to execute, in order"""
+    updates: [delivery_messages_updates!]!
+  ): [delivery_messages_mutation_response]
 
   """
   update data of the table: "delivery.operator"
@@ -24012,8 +24894,30 @@ type mutation_root {
   update data of the table: "restaurant.cart"
   """
   update_restaurant_cart(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_cart_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_cart_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_cart_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_cart_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_cart_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_cart_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_cart_set_input
@@ -24026,8 +24930,30 @@ type mutation_root {
   update single row of the table: "restaurant.cart"
   """
   update_restaurant_cart_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_cart_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_cart_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_cart_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_cart_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_cart_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_cart_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_cart_set_input
@@ -24148,8 +25074,30 @@ type mutation_root {
   update data of the table: "restaurant.item"
   """
   update_restaurant_item(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_item_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_item_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_item_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_item_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_item_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_item_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_item_set_input
@@ -24162,8 +25110,30 @@ type mutation_root {
   update single row of the table: "restaurant.item"
   """
   update_restaurant_item_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: restaurant_item_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: restaurant_item_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: restaurant_item_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: restaurant_item_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: restaurant_item_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: restaurant_item_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: restaurant_item_set_input
@@ -26836,6 +27806,51 @@ type query_root {
   ): delivery_company_aggregate!
 
   """
+  fetch data from the table: "delivery_messages"
+  """
+  delivery_messages(
+    """distinct select on columns"""
+    distinct_on: [delivery_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_messages_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_messages_bool_exp
+  ): [delivery_messages!]!
+
+  """
+  fetch aggregated fields from the table: "delivery_messages"
+  """
+  delivery_messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_messages_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_messages_bool_exp
+  ): delivery_messages_aggregate!
+
+  """
+  fetch data from the table: "delivery_messages" using primary key columns
+  """
+  delivery_messages_by_pk(id: Int!): delivery_messages
+
+  """
   fetch data from the table: "delivery.operator"
   """
   delivery_operator(
@@ -28892,6 +29907,11 @@ type query_root {
 columns and relationships of "restaurant.cart"
 """
 type restaurant_cart {
+  applied_offers(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+
   """
   A computed field, executes function "cost"
   """
@@ -28900,6 +29920,7 @@ type restaurant_cart {
   """An object relationship"""
   customer: customer_customer!
   customer_id: Int!
+  discount_value: money!
 
   """An array relationship"""
   items(
@@ -28967,6 +29988,11 @@ type restaurant_cart_aggregate_fields {
   variance: restaurant_cart_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_cart_append_input {
+  applied_offers: jsonb
+}
+
 """aggregate avg on columns"""
 type restaurant_cart_avg_fields {
   """
@@ -28974,6 +30000,7 @@ type restaurant_cart_avg_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -28984,9 +30011,11 @@ input restaurant_cart_bool_exp {
   _and: [restaurant_cart_bool_exp!]
   _not: restaurant_cart_bool_exp
   _or: [restaurant_cart_bool_exp!]
+  applied_offers: jsonb_comparison_exp
   cost: money_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  discount_value: money_comparison_exp
   items: restaurant_cart_item_bool_exp
   items_aggregate: restaurant_cart_item_aggregate_bool_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -29004,10 +30033,33 @@ enum restaurant_cart_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input restaurant_cart_delete_at_path_input {
+  applied_offers: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input restaurant_cart_delete_elem_input {
+  applied_offers: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input restaurant_cart_delete_key_input {
+  applied_offers: String
+}
+
+"""
 input type for incrementing numeric columns in table "restaurant.cart"
 """
 input restaurant_cart_inc_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -29015,8 +30067,10 @@ input restaurant_cart_inc_input {
 input type for inserting data into table "restaurant.cart"
 """
 input restaurant_cart_insert_input {
+  applied_offers: jsonb
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  discount_value: money
   items: restaurant_cart_item_arr_rel_insert_input
   restaurant: restaurant_restaurant_obj_rel_insert_input
   restaurant_id: Int
@@ -29516,6 +30570,7 @@ type restaurant_cart_max_fields {
   """
   cost: money
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -29526,6 +30581,7 @@ type restaurant_cart_min_fields {
   """
   cost: money
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -29561,9 +30617,11 @@ input restaurant_cart_on_conflict {
 
 """Ordering options when selecting data from "restaurant.cart"."""
 input restaurant_cart_order_by {
+  applied_offers: order_by
   cost: order_by
   customer: customer_customer_order_by
   customer_id: order_by
+  discount_value: order_by
   items_aggregate: restaurant_cart_item_aggregate_order_by
   restaurant: restaurant_restaurant_order_by
   restaurant_id: order_by
@@ -29574,12 +30632,23 @@ input restaurant_cart_pk_columns_input {
   customer_id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_cart_prepend_input {
+  applied_offers: jsonb
+}
+
 """
 select columns of table "restaurant.cart"
 """
 enum restaurant_cart_select_column {
   """column name"""
+  applied_offers
+
+  """column name"""
   customer_id
+
+  """column name"""
+  discount_value
 
   """column name"""
   restaurant_id
@@ -29589,7 +30658,9 @@ enum restaurant_cart_select_column {
 input type for updating data in table "restaurant.cart"
 """
 input restaurant_cart_set_input {
+  applied_offers: jsonb
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -29600,6 +30671,7 @@ type restaurant_cart_stddev_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -29610,6 +30682,7 @@ type restaurant_cart_stddev_pop_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -29620,6 +30693,7 @@ type restaurant_cart_stddev_samp_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -29636,7 +30710,9 @@ input restaurant_cart_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input restaurant_cart_stream_cursor_value_input {
+  applied_offers: jsonb
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -29647,6 +30723,7 @@ type restaurant_cart_sum_fields {
   """
   cost: money
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -29655,15 +30732,43 @@ update columns of table "restaurant.cart"
 """
 enum restaurant_cart_update_column {
   """column name"""
+  applied_offers
+
+  """column name"""
   customer_id
+
+  """column name"""
+  discount_value
 
   """column name"""
   restaurant_id
 }
 
 input restaurant_cart_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: restaurant_cart_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: restaurant_cart_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: restaurant_cart_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: restaurant_cart_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: restaurant_cart_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: restaurant_cart_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_set_input
@@ -29679,6 +30784,7 @@ type restaurant_cart_var_pop_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -29689,6 +30795,7 @@ type restaurant_cart_var_samp_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -29699,6 +30806,7 @@ type restaurant_cart_variance_fields {
   """
   cost: money
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -30808,6 +31916,10 @@ type restaurant_item {
   restaurant_id: Int!
   special_period_end: timestamptz
   special_period_start: timestamptz
+  tags(
+    """JSON select path"""
+    path: String
+  ): jsonb
 }
 
 """
@@ -30879,6 +31991,11 @@ input restaurant_item_aggregate_order_by {
   variance: restaurant_item_variance_order_by
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_item_append_input {
+  tags: jsonb
+}
+
 """
 input type for inserting array relation for remote table "restaurant.item"
 """
@@ -30939,6 +32056,7 @@ input restaurant_item_bool_exp {
   restaurant_id: Int_comparison_exp
   special_period_end: timestamptz_comparison_exp
   special_period_start: timestamptz_comparison_exp
+  tags: jsonb_comparison_exp
 }
 
 """
@@ -30949,6 +32067,28 @@ enum restaurant_item_constraint {
   unique or primary key constraint on columns "id"
   """
   restaurant_item_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input restaurant_item_delete_at_path_input {
+  tags: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input restaurant_item_delete_elem_input {
+  tags: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input restaurant_item_delete_key_input {
+  tags: String
 }
 
 """
@@ -30988,6 +32128,7 @@ input restaurant_item_insert_input {
   restaurant_id: Int
   special_period_end: timestamptz
   special_period_start: timestamptz
+  tags: jsonb
 }
 
 """aggregate max on columns"""
@@ -31568,11 +32709,17 @@ input restaurant_item_order_by {
   restaurant_id: order_by
   special_period_end: order_by
   special_period_start: order_by
+  tags: order_by
 }
 
 """primary key columns input for table: restaurant.item"""
 input restaurant_item_pk_columns_input {
   id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input restaurant_item_prepend_input {
+  tags: jsonb
 }
 
 """
@@ -31617,6 +32764,9 @@ enum restaurant_item_select_column {
 
   """column name"""
   special_period_start
+
+  """column name"""
+  tags
 }
 
 """
@@ -31660,6 +32810,7 @@ input restaurant_item_set_input {
   restaurant_id: Int
   special_period_end: timestamptz
   special_period_start: timestamptz
+  tags: jsonb
 }
 
 """aggregate stddev on columns"""
@@ -31762,6 +32913,7 @@ input restaurant_item_stream_cursor_value_input {
   restaurant_id: Int
   special_period_end: timestamptz
   special_period_start: timestamptz
+  tags: jsonb
 }
 
 """aggregate sum on columns"""
@@ -31830,11 +32982,36 @@ enum restaurant_item_update_column {
 
   """column name"""
   special_period_start
+
+  """column name"""
+  tags
 }
 
 input restaurant_item_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: restaurant_item_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: restaurant_item_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: restaurant_item_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: restaurant_item_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: restaurant_item_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: restaurant_item_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_set_input
@@ -33476,6 +34653,7 @@ type restaurant_order {
   delivery_cost: money!
   delivery_id: Int
   delivery_type: String!
+  discount_value: money!
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int!
@@ -33527,6 +34705,7 @@ type restaurant_order {
   items_cost: money
   notes: String
   order_time: timestamptz!
+  order_type: String!
   payment_type: String!
   refund_amount: money!
 
@@ -33645,6 +34824,7 @@ type restaurant_order_avg_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
 
   """
@@ -33671,6 +34851,7 @@ input restaurant_order_avg_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -33697,6 +34878,7 @@ input restaurant_order_bool_exp {
   delivery_cost: money_comparison_exp
   delivery_id: Int_comparison_exp
   delivery_type: String_comparison_exp
+  discount_value: money_comparison_exp
   estimated_food_ready_time: timestamptz_comparison_exp
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
@@ -33706,6 +34888,7 @@ input restaurant_order_bool_exp {
   items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
+  order_type: String_comparison_exp
   payment_type: String_comparison_exp
   refund_amount: money_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -33790,6 +34973,7 @@ input restaurant_order_inc_input {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -33813,12 +34997,14 @@ input restaurant_order_insert_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
   items: restaurant_order_item_arr_rel_insert_input
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant: restaurant_restaurant_obj_rel_insert_input
@@ -34409,6 +35595,7 @@ type restaurant_order_max_fields {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -34419,6 +35606,7 @@ type restaurant_order_max_fields {
   items_cost: money
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant_id: Int
@@ -34451,11 +35639,13 @@ input restaurant_order_max_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   payment_type: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -34481,6 +35671,7 @@ type restaurant_order_min_fields {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -34491,6 +35682,7 @@ type restaurant_order_min_fields {
   items_cost: money
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant_id: Int
@@ -34523,11 +35715,13 @@ input restaurant_order_min_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   payment_type: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -34586,6 +35780,7 @@ input restaurant_order_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -34594,6 +35789,7 @@ input restaurant_order_order_by {
   items_cost: order_by
   notes: order_by
   order_time: order_by
+  order_type: order_by
   payment_type: order_by
   refund_amount: order_by
   restaurant: restaurant_restaurant_order_by
@@ -34943,6 +36139,9 @@ enum restaurant_order_select_column {
   delivery_type
 
   """column name"""
+  discount_value
+
+  """column name"""
   estimated_food_ready_time
 
   """column name"""
@@ -34956,6 +36155,9 @@ enum restaurant_order_select_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   payment_type
@@ -35003,11 +36205,13 @@ input restaurant_order_set_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant_id: Int
@@ -35038,6 +36242,7 @@ type restaurant_order_stddev_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
 
   """
@@ -35064,6 +36269,7 @@ input restaurant_order_stddev_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -35078,6 +36284,7 @@ type restaurant_order_stddev_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
 
   """
@@ -35104,6 +36311,7 @@ input restaurant_order_stddev_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -35118,6 +36326,7 @@ type restaurant_order_stddev_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
 
   """
@@ -35144,6 +36353,7 @@ input restaurant_order_stddev_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -35173,11 +36383,13 @@ input restaurant_order_stream_cursor_value_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
   notes: String
   order_time: timestamptz
+  order_type: String
   payment_type: String
   refund_amount: money
   restaurant_id: Int
@@ -35208,6 +36420,7 @@ type restaurant_order_sum_fields {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   id: Int
 
   """
@@ -35234,6 +36447,7 @@ input restaurant_order_sum_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -35271,6 +36485,9 @@ enum restaurant_order_update_column {
   delivery_type
 
   """column name"""
+  discount_value
+
+  """column name"""
   estimated_food_ready_time
 
   """column name"""
@@ -35284,6 +36501,9 @@ enum restaurant_order_update_column {
 
   """column name"""
   order_time
+
+  """column name"""
+  order_type
 
   """column name"""
   payment_type
@@ -35358,6 +36578,7 @@ type restaurant_order_var_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
 
   """
@@ -35384,6 +36605,7 @@ input restaurant_order_var_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -35398,6 +36620,7 @@ type restaurant_order_var_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
 
   """
@@ -35424,6 +36647,7 @@ input restaurant_order_var_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -35438,6 +36662,7 @@ type restaurant_order_variance_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
 
   """
@@ -35464,6 +36689,7 @@ input restaurant_order_variance_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -35692,6 +36918,7 @@ type restaurant_restaurant {
     """filter the rows returned"""
     where: restaurant_operator_bool_exp
   ): restaurant_operator_aggregate!
+  restaurant_type: String!
 
   """An array relationship"""
   reviews(
@@ -35803,6 +37030,7 @@ input restaurant_restaurant_bool_exp {
   orders_aggregate: restaurant_order_aggregate_bool_exp
   restaurant_operators: restaurant_operator_bool_exp
   restaurant_operators_aggregate: restaurant_operator_aggregate_bool_exp
+  restaurant_type: String_comparison_exp
   reviews: review_bool_exp
   reviews_aggregate: review_aggregate_bool_exp
   service_provider_type: String_comparison_exp
@@ -35852,6 +37080,7 @@ input restaurant_restaurant_insert_input {
   items: restaurant_item_arr_rel_insert_input
   orders: restaurant_order_arr_rel_insert_input
   restaurant_operators: restaurant_operator_arr_rel_insert_input
+  restaurant_type: String
   reviews: review_arr_rel_insert_input
   service_provider_type: String
 }
@@ -35861,6 +37090,7 @@ type restaurant_restaurant_max_fields {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  restaurant_type: String
   service_provider_type: String
 }
 
@@ -35869,6 +37099,7 @@ type restaurant_restaurant_min_fields {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  restaurant_type: String
   service_provider_type: String
 }
 
@@ -35915,6 +37146,7 @@ input restaurant_restaurant_order_by {
   items_aggregate: restaurant_item_aggregate_order_by
   orders_aggregate: restaurant_order_aggregate_order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
+  restaurant_type: order_by
   reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
   specials_aggregate: restaurant_item_aggregate_order_by
@@ -35939,6 +37171,9 @@ enum restaurant_restaurant_select_column {
   id
 
   """column name"""
+  restaurant_type
+
+  """column name"""
   service_provider_type
 }
 
@@ -35949,6 +37184,7 @@ input restaurant_restaurant_set_input {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  restaurant_type: String
   service_provider_type: String
 }
 
@@ -35989,6 +37225,7 @@ input restaurant_restaurant_stream_cursor_value_input {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  restaurant_type: String
   service_provider_type: String
 }
 
@@ -36011,6 +37248,9 @@ enum restaurant_restaurant_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  restaurant_type
 
   """column name"""
   service_provider_type
@@ -38571,11 +39811,6 @@ type service_provider_operator_details_variance_fields {
 columns and relationships of "service_provider.post"
 """
 type service_provider_post {
-  """Array of { message, date, Array of customerIds }"""
-  comments(
-    """JSON select path"""
-    path: String
-  ): jsonb
   id: Int!
   image: String
 
@@ -38583,7 +39818,8 @@ type service_provider_post {
   likes(
     """JSON select path"""
     path: String
-  ): jsonb
+  ): jsonb!
+  link: String
   message: String!
   posted_on: timestamptz!
 
@@ -38620,9 +39856,6 @@ type service_provider_post_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_append_input {
-  """Array of { message, date, Array of customerIds }"""
-  comments: jsonb
-
   """Array of customerIds"""
   likes: jsonb
 }
@@ -38640,10 +39873,10 @@ input service_provider_post_bool_exp {
   _and: [service_provider_post_bool_exp!]
   _not: service_provider_post_bool_exp
   _or: [service_provider_post_bool_exp!]
-  comments: jsonb_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
   likes: jsonb_comparison_exp
+  link: String_comparison_exp
   message: String_comparison_exp
   posted_on: timestamptz_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -38665,9 +39898,6 @@ enum service_provider_post_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input service_provider_post_delete_at_path_input {
-  """Array of { message, date, Array of customerIds }"""
-  comments: [String!]
-
   """Array of customerIds"""
   likes: [String!]
 }
@@ -38677,9 +39907,6 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input service_provider_post_delete_elem_input {
-  """Array of { message, date, Array of customerIds }"""
-  comments: Int
-
   """Array of customerIds"""
   likes: Int
 }
@@ -38688,9 +39915,6 @@ input service_provider_post_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input service_provider_post_delete_key_input {
-  """Array of { message, date, Array of customerIds }"""
-  comments: String
-
   """Array of customerIds"""
   likes: String
 }
@@ -38707,13 +39931,12 @@ input service_provider_post_inc_input {
 input type for inserting data into table "service_provider.post"
 """
 input service_provider_post_insert_input {
-  """Array of { message, date, Array of customerIds }"""
-  comments: jsonb
   id: Int
   image: String
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   restaurant: restaurant_restaurant_obj_rel_insert_input
@@ -38725,6 +39948,7 @@ input service_provider_post_insert_input {
 type service_provider_post_max_fields {
   id: Int
   image: String
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -38735,6 +39959,7 @@ type service_provider_post_max_fields {
 type service_provider_post_min_fields {
   id: Int
   image: String
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -38763,10 +39988,10 @@ input service_provider_post_on_conflict {
 
 """Ordering options when selecting data from "service_provider.post"."""
 input service_provider_post_order_by {
-  comments: order_by
   id: order_by
   image: order_by
   likes: order_by
+  link: order_by
   message: order_by
   posted_on: order_by
   restaurant: restaurant_restaurant_order_by
@@ -38781,9 +40006,6 @@ input service_provider_post_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_prepend_input {
-  """Array of { message, date, Array of customerIds }"""
-  comments: jsonb
-
   """Array of customerIds"""
   likes: jsonb
 }
@@ -38793,9 +40015,6 @@ select columns of table "service_provider.post"
 """
 enum service_provider_post_select_column {
   """column name"""
-  comments
-
-  """column name"""
   id
 
   """column name"""
@@ -38803,6 +40022,9 @@ enum service_provider_post_select_column {
 
   """column name"""
   likes
+
+  """column name"""
+  link
 
   """column name"""
   message
@@ -38821,13 +40043,12 @@ enum service_provider_post_select_column {
 input type for updating data in table "service_provider.post"
 """
 input service_provider_post_set_input {
-  """Array of { message, date, Array of customerIds }"""
-  comments: jsonb
   id: Int
   image: String
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -38865,13 +40086,12 @@ input service_provider_post_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_provider_post_stream_cursor_value_input {
-  """Array of { message, date, Array of customerIds }"""
-  comments: jsonb
   id: Int
   image: String
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -38889,9 +40109,6 @@ update columns of table "service_provider.post"
 """
 enum service_provider_post_update_column {
   """column name"""
-  comments
-
-  """column name"""
   id
 
   """column name"""
@@ -38899,6 +40116,9 @@ enum service_provider_post_update_column {
 
   """column name"""
   likes
+
+  """column name"""
+  link
 
   """column name"""
   message
@@ -42029,6 +43249,65 @@ type subscription_root {
     """filter the rows returned"""
     where: delivery_company_bool_exp
   ): delivery_company_aggregate!
+
+  """
+  fetch data from the table: "delivery_messages"
+  """
+  delivery_messages(
+    """distinct select on columns"""
+    distinct_on: [delivery_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_messages_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_messages_bool_exp
+  ): [delivery_messages!]!
+
+  """
+  fetch aggregated fields from the table: "delivery_messages"
+  """
+  delivery_messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_messages_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_messages_bool_exp
+  ): delivery_messages_aggregate!
+
+  """
+  fetch data from the table: "delivery_messages" using primary key columns
+  """
+  delivery_messages_by_pk(id: Int!): delivery_messages
+
+  """
+  fetch data from the table in a streaming manner: "delivery_messages"
+  """
+  delivery_messages_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [delivery_messages_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: delivery_messages_bool_exp
+  ): [delivery_messages!]!
 
   """
   fetch data from the table: "delivery.operator"

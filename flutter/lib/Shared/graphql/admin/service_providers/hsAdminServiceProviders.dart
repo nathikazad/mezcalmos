@@ -17,13 +17,19 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
-Future<List<Restaurant>> admin_get_restaurants(
-    {bool withCache = true, required int limit, required int offset,  String? keyword,}) async {
+Future<List<Restaurant>> admin_get_restaurants({
+  bool withCache = true,
+  required int limit,
+  required int offset,
+  String? keyword,
+}) async {
   final QueryResult<Query$admin_get_restaurants> result = await _hasuraDb
       .graphQLClient
       .query$admin_get_restaurants(Options$Query$admin_get_restaurants(
           variables: Variables$Query$admin_get_restaurants(
-              limit: limit, offset: offset,  keyword: keyword != null ? "%$keyword%" : null),
+              limit: limit,
+              offset: offset,
+              keyword: keyword != null ? "%$keyword%" : null),
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
   if (result.parsedData?.restaurant_restaurant == null) {
@@ -56,13 +62,19 @@ Future<List<Restaurant>> admin_get_restaurants(
   return returnedList;
 }
 
-Future<List<DeliveryCompany>> admin_get_dv_companies(
-    {required int limit, required int offset, bool withCache = true,  String? keyword,}) async {
+Future<List<DeliveryCompany>> admin_get_dv_companies({
+  required int limit,
+  required int offset,
+  bool withCache = true,
+  String? keyword,
+}) async {
   final QueryResult<Query$admin_get_dv_companies> result = await _hasuraDb
       .graphQLClient
       .query$admin_get_dv_companies(Options$Query$admin_get_dv_companies(
           variables: Variables$Query$admin_get_dv_companies(
-              limit: limit, offset: offset,  keyword: keyword != null ? "%$keyword%" : null),
+              limit: limit,
+              offset: offset,
+              keyword: keyword != null ? "%$keyword%" : null),
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
   if (result.parsedData?.delivery_company == null) {
@@ -149,12 +161,17 @@ Future<List<cm.Business>> admin_get_businesses(
 }
 
 Future<List<Laundry>> admin_get_laundries(
-    {required int limit, required int offset,   String? keyword,bool withCache = true}) async {
+    {required int limit,
+    required int offset,
+    String? keyword,
+    bool withCache = true}) async {
   final QueryResult<Query$admin_get_laundries> result = await _hasuraDb
       .graphQLClient
       .query$admin_get_laundries(Options$Query$admin_get_laundries(
-          variables:
-              Variables$Query$admin_get_laundries(limit: limit, offset: offset,  keyword: keyword != null ? "%$keyword%" : null),
+          variables: Variables$Query$admin_get_laundries(
+              limit: limit,
+              offset: offset,
+              keyword: keyword != null ? "%$keyword%" : null),
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
   if (result.parsedData?.laundry_store == null) {
@@ -180,7 +197,13 @@ Future<List<Laundry>> admin_get_laundries(
               data.details!.approved),
           selfDelivery: false,
           deliveryCost: DeliveryCost(
-              costPerKm: 0, id: 0, minimumCost: 0, selfDelivery: false),
+              deliveryAvailable: true,
+              sitInAvailable: true,
+              pickupAvailable: true,
+              costPerKm: 0,
+              id: 0,
+              minimumCost: 0,
+              selfDelivery: false),
           laundryCosts: LaundryCosts(),
           paymentInfo: PaymentInfo(),
           schedule: null))

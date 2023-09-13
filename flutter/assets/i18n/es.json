@@ -519,10 +519,14 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "MezServicesMapView": {
+        "fetch": "Buscar en esta área"
+      },
       "CustDeliveryTypeSelector": {
         "dvType": "Tipo de entrega",
         "delivery": "Entrega",
-        "pickup": "Recogida en tienda"
+        "pickup": "Recogida en tienda",
+        "sitIn": "Sentarse en"
       },
       "CustOrderCostCard": {
         "orderCost": "Costo de la orden"
@@ -1086,6 +1090,7 @@
             }
           },
           "ViewCartScreen": {
+            "restaurant": "Restaurante",
             "redirectText": "Ahora será redirigido a WhatsApp con su pedido y número de restaurantes completados. Puede enviar un mensaje al restaurante y le responderán.",
             "sentTitle": "Pedido realizado",
             "sentSubtitle": "Pedido realizado. Enviado al restaurante por WhatsApp. Verifica el estado del pedido con el restaurante. ¡Gracias!",
@@ -2074,9 +2079,15 @@
       "CustomerWrapper": {
         "filter": "Filtrar",
         "filters": "Filtros",
+        "noRest": "Sorry, no restaurants found",
+        "noItems": "Sorry, no items found",
         "items": "Elementos",
         "search": "Buscar...",
         "showOnlyOpen": "Mostrar solo restaurantes abiertos",
+        "showOnlyDv": "Mostrar solo restaurantes que entregan",
+        "viewOnMap": "View on map",
+        "fetchMore": "Carga más",
+        "viewAsList": "View as list",
         "orders": "Pedidos",
         "profile": "Perfil",
         "messages": "Mensajes",

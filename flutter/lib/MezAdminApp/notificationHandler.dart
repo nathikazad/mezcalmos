@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["MezAdmin"]["notificationHandler"];
@@ -19,8 +18,8 @@ Notification mezAdminNotificationHandler(String key, value) {
       value['notificationType'].toString().toNotificationType();
 
   switch (notificationType) {
-    case NotificationType.NewMessage:
-      return newMessageNotification(key, value);
+    // case NotificationType.NewMessage:
+    //   return newMessageNotification(key, value);
     case NotificationType.NewOrder:
       return Notification(
           id: key,
@@ -97,17 +96,17 @@ Notification _orderStatusChangesHandler(key, value) {
   }
 }
 
-Notification newMessageNotification(String key, value) {
-  return Notification(
-      id: key,
-      linkUrl: value["linkUrl"] ??
-          SharedRoutes.getMessagesRoute(chatId: value["chatId"]),
-      body: value['message'],
-      imgUrl: value['sender']['image'],
-      title: value['sender']['name'],
-      timestamp: DateTime.parse(value['time']),
-      notificationType: NotificationType.NewMessage,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
-      variableParams: value);
-}
+// Notification newMessageNotification(String key, value) {
+//   return Notification(
+//       id: key,
+//       linkUrl: value["linkUrl"] ??
+//           SharedRoutes.getMessagesRoute(chatId: value["chatId"]),
+//       body: value['message'],
+//       imgUrl: value['sender']['image'],
+//       title: value['sender']['name'],
+//       timestamp: DateTime.parse(value['time']),
+//       notificationType: NotificationType.NewMessage,
+//       notificationAction:
+//           (value["notificationAction"] as String).toNotificationAction(),
+//       variableParams: value);
+// }

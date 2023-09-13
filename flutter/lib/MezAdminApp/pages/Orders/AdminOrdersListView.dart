@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderView/CustOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
@@ -8,7 +7,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/Orders/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -109,10 +107,10 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                         DvCompanyOrderView.navigate(
                             orderId: viewController.pastOrders[index].id);
                         break;
-                      case ServiceProviderType.Business:
-                        CustOrderView.navigate(
-                            orderId: viewController.pastOrders[index].id);
-                        break;
+                      // case ServiceProviderType.Business:
+                      //   CustOrderView.navigate(
+                      //       orderId: viewController.pastOrders[index].id);
+                      //   break;
                       default:
                     }
                   }),
@@ -199,10 +197,10 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                   (int index) => MinimalOrderCard(
                       order: viewController.businessOrders.value![index],
                       onTap: () {
-                        CustOrderView.navigate(
-                            entityType: EntityType.Admin,
-                            orderId:
-                                viewController.businessOrders.value![index].id);
+                        // CustOrderView.navigate(
+                        //     entityType: EntityType.Admin,
+                        //     orderId:
+                        //         viewController.businessOrders.value![index].id);
                       })),
             )
           : (viewController.businessPastOrders.value.isEmpty == true)
