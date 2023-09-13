@@ -264,11 +264,15 @@ Future<List<Item>> search_items(
     {required List<int> servicesIds,
     required String keyword,
     required cModels.Language lang,
+    required int limit,
+    required int offset,
     bool? onlineOrdering,
     bool withCache = true}) async {
   final QueryResult<Query$searchItems> response =
       await _db.graphQLClient.query$searchItems(Options$Query$searchItems(
           variables: Variables$Query$searchItems(
+    limit: limit,
+    offset: offset,
     keyword: "%$keyword%",
     languageId: lang.toFirebaseFormatString(),
     servicesIds: servicesIds,
