@@ -65,6 +65,22 @@ class DriverCurrentOrdersController {
       timestamp: DateTime.now().subtract(Duration(days: 3)),
       type: "text",
     ),
+    WhMessage(
+      from: "555555555",
+      id: "wamid.PQR555555555",
+      resolved: true,
+      text: TextMessage(body: "Goodbye"),
+      timestamp: DateTime.now().subtract(Duration(days: 3)),
+      type: "text",
+    ),
+    WhMessage(
+      from: "555555555",
+      id: "wamid.PQR555555555",
+      resolved: true,
+      text: TextMessage(body: "Goodbye"),
+      timestamp: DateTime.now().subtract(Duration(days: 3)),
+      type: "text",
+    ),
   ];
 
 // getters

@@ -190,6 +190,8 @@ Future showConfirmationDialog(
   bool autoClose = false,
   String? primaryButtonText,
   String? secondaryButtonText,
+  IconData? icon,
+  Color? primaryColor,
 }) async {
   final RxBool _clickedYes = false.obs;
   return showDialog(
@@ -212,12 +214,13 @@ Future showConfirmationDialog(
                   height: 55,
                   width: 55,
                   child: Icon(
-                    Icons.close,
-                    color: Color.fromRGBO(252, 89, 99, 1),
+                    icon ?? Icons.close,
+                    color: primaryColor ?? Color.fromRGBO(252, 89, 99, 1),
                     size: 33,
                   ),
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(252, 89, 99, 0.12),
+                    color: primaryColor?.withOpacity(0.2) ??
+                        Color.fromRGBO(252, 89, 99, 0.12),
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -268,7 +271,7 @@ Future showConfirmationDialog(
                     height: 44,
                     width: 65.w,
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(252, 89, 99, 1),
+                      color: primaryColor ?? Color.fromRGBO(252, 89, 99, 1),
                       borderRadius: BorderRadius.circular(9),
                     ),
                     child: Center(

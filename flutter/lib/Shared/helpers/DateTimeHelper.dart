@@ -117,13 +117,15 @@ extension parseDateTime on DateTime {
     }
   }
 
-  String toDayAmPm() {
+  String toDayAmPm({bool showDate = true}) {
     final String userLangCode =
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
     final DateFormat formatTime = DateFormat.jm(userLangCode);
     final DateFormat formatDay = DateFormat.E(userLangCode);
 
-    return "${formatDay.format(toLocal()).replaceFirst(".", "").inCaps}, ${DateFormat("hh:mm a").format(toLocal())}";
+    return (showDate)
+        ? "${formatDay.format(toLocal()).replaceFirst(".", "").inCaps}, "
+        : "" + "${DateFormat("hh:mm a").format(toLocal())}";
   }
 
   String timeAgo({bool numericDates = true}) {

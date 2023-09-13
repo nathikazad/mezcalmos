@@ -27,12 +27,12 @@ class DvConvoCard extends StatelessWidget {
             message.from,
             style: context.textTheme.bodyLarge,
           ),
-          Text(
-            message.text.body,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: context.textTheme.bodyMedium,
-          ),
+          // Text(
+          //   message.text.body,
+          //   maxLines: 1,
+          //   overflow: TextOverflow.ellipsis,
+          //   style: context.textTheme.bodyMedium,
+          // ),
           Text.rich(
             TextSpan(
               children: [
