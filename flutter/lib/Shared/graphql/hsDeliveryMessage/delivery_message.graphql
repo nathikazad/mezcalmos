@@ -1,0 +1,19 @@
+query GetDeliveryMessages {
+  delivery_messages(
+    distinct_on: phone_number
+    where: { responded_time: { _is_null: true } }
+  ) {
+    id
+    entry
+    phone_number
+    driver_id
+    received_time
+    finished_time
+    user_id
+    responded_time
+    customer {
+      name
+      image
+    }
+  }
+}

@@ -57,18 +57,20 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
             showNotifications: true,
             ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
-        body: SingleChildScrollView(
-          child: (viewController.resolvedMessages.isNotEmpty ||
-                  viewController.unResolvedMessages.isNotEmpty)
-              ? Column(
-                  children: [
-                    _currentOrders(context),
-                    _openOrders(context),
-                  ],
-                )
-              : Padding(
-                  padding: EdgeInsets.only(top: 17.5.h),
-                  child: NoOrdersComponent()),
+        body: Obx(
+          () => SingleChildScrollView(
+            child: (viewController.resolvedMessages.isNotEmpty ||
+                    viewController.unResolvedMessages.isNotEmpty)
+                ? Column(
+                    children: [
+                      _currentOrders(context),
+                      _openOrders(context),
+                    ],
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(top: 17.5.h),
+                    child: NoOrdersComponent()),
+          ),
         ),
       ),
     );
@@ -101,11 +103,12 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Column(
             children: List.generate(viewController.resolvedMessages.length,
                 (int index) {
-              final WhMessage message = viewController.resolvedMessages[index];
+              final DeliveryMessage message =
+                  viewController.resolvedMessages[index];
               return DvConvoCard(
                 message: message,
                 onClick: () {
-                  DvConvoView.navigate(convo: viewController.resolvedMessages);
+                  DvConvoView.navigate(phoneNumber: message.phoneNumber);
                 },
               );
             }),
@@ -158,12 +161,12 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Column(
             children: List.generate(viewController.unResolvedMessages.length,
                 (int index) {
-              final WhMessage message =
+              final DeliveryMessage message =
                   viewController.unResolvedMessages[index];
               return DvConvoCard(
                 message: message,
                 onClick: () {
-                  DvConvoView.navigate(convo: viewController.resolvedMessages);
+                  DvConvoView.navigate(phoneNumber: message.phoneNumber);
                 },
               );
             }),

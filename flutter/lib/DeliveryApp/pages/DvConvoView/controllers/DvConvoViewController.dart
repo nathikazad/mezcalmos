@@ -1,11 +1,9 @@
+import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 
 class DvConvoViewController {
-  late List<WhMessage> convo;
-
   bool get showAcceptBtn => true;
+  RxList<DeliveryMessage> dvMessage = RxList.empty();
 
-  void init({required List<WhMessage> messages}) {
-    convo = messages;
-  }
+  void init({required String phoneNumber}) {}
 }

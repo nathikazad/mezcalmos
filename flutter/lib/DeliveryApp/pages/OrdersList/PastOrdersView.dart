@@ -1,19 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/components/DvConvoCard.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/PastOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
@@ -49,74 +39,74 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
       body: SingleChildScrollView(
         controller: _viewController.scrollController,
         padding: const EdgeInsets.all(12),
-        child: Obx(() {
-          if (_viewController.unResolvedMessages.isEmpty) {
-            return const SizedBox.shrink();
-          } else {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${_i18n()["pastOrders"]}",
-                      style: context.textTheme.bodyLarge,
-                    ),
-                    MezInkwell(
-                      label: "Open orders",
-                      backgroundColor: secondaryLightBlueColor,
-                      textColor: primaryBlueColor,
-                      onClick: () async {
-                        unawaited(MezRouter.toPath(
-                            DeliveryAppRoutes.kCurrentOrdersListRoute));
-                      },
-                      icon: Icons.timelapse,
-                    )
-                  ],
-                ),
-                GroupedListView<WhMessage, DateTime>(
-                  shrinkWrap: true,
-                  elements: _viewController.unResolvedMessages,
-                  groupBy: (WhMessage element) => DateTime(
-                      element.timestamp.year,
-                      element.timestamp.month,
-                      element.timestamp.day),
-                  groupComparator: (DateTime value1, DateTime value2) =>
-                      value2.compareTo(value1),
-                  itemComparator: (WhMessage element1, WhMessage element2) =>
-                      element2.timestamp.compareTo(element1.timestamp),
-                  physics: NeverScrollableScrollPhysics(),
-                  groupHeaderBuilder: (WhMessage element) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        (calculateDateDifference(element.timestamp) == 0)
-                            ? _i18n()["today"]
-                            : (calculateDateDifference(element.timestamp) == -1)
-                                ? _i18n()["yesterday"]
-                                : DateFormat('dd MMM yyyy')
-                                    .format(element.timestamp),
-                        style: context.textTheme.bodyMedium,
-                      ),
-                    );
-                  },
-                  separator: SizedBox(
-                    height: 5,
-                  ),
-                  itemBuilder: (BuildContext context, WhMessage message) {
-                    return DvConvoCard(
-                      message: message,
-                      onClick: () {
-                        //   DvOrderView.navigate(orderId: order.id);
-                      },
-                    );
-                  },
-                ),
-              ],
-            );
-          }
-        }),
+        // child: Obx(() {
+        //   if (_viewController.unResolvedMessages.isEmpty) {
+        //     return const SizedBox.shrink();
+        //   } else {
+        //     return Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Row(
+        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //           children: [
+        //             Text(
+        //               "${_i18n()["pastOrders"]}",
+        //               style: context.textTheme.bodyLarge,
+        //             ),
+        //             MezInkwell(
+        //               label: "Open orders",
+        //               backgroundColor: secondaryLightBlueColor,
+        //               textColor: primaryBlueColor,
+        //               onClick: () async {
+        //                 unawaited(MezRouter.toPath(
+        //                     DeliveryAppRoutes.kCurrentOrdersListRoute));
+        //               },
+        //               icon: Icons.timelapse,
+        //             )
+        //           ],
+        //         ),
+        //         GroupedListView<WhMessage, DateTime>(
+        //           shrinkWrap: true,
+        //           elements: _viewController.unResolvedMessages,
+        //           groupBy: (WhMessage element) => DateTime(
+        //               element.timestamp.year,
+        //               element.timestamp.month,
+        //               element.timestamp.day),
+        //           groupComparator: (DateTime value1, DateTime value2) =>
+        //               value2.compareTo(value1),
+        //           itemComparator: (WhMessage element1, WhMessage element2) =>
+        //               element2.timestamp.compareTo(element1.timestamp),
+        //           physics: NeverScrollableScrollPhysics(),
+        //           groupHeaderBuilder: (WhMessage element) {
+        //             return Container(
+        //               margin: const EdgeInsets.symmetric(vertical: 8),
+        //               child: Text(
+        //                 (calculateDateDifference(element.timestamp) == 0)
+        //                     ? _i18n()["today"]
+        //                     : (calculateDateDifference(element.timestamp) == -1)
+        //                         ? _i18n()["yesterday"]
+        //                         : DateFormat('dd MMM yyyy')
+        //                             .format(element.timestamp),
+        //                 style: context.textTheme.bodyMedium,
+        //               ),
+        //             );
+        //           },
+        //           separator: SizedBox(
+        //             height: 5,
+        //           ),
+        //           itemBuilder: (BuildContext context, WhMessage message) {
+        //             return DvConvoCard(
+        //               message: message,
+        //               onClick: () {
+        //                 //   DvOrderView.navigate(orderId: order.id);
+        //               },
+        //             );
+        //           },
+        //         ),
+        //       ],
+        //     );
+        //   }
+        // }),
       ),
     );
   }

@@ -15,7 +15,7 @@ class DeliveryAppRoutes {
   static const String kOrderDetailsViewRoute = "/orderDetails/:orderId";
   static const String kPastOrdersViewRoute = "/pastOrders";
   static const String kDriverUnAuthRoute = "/driverUnauth";
-  static const String kDriverConvoRoute = "/convo/:id";
+  static const String kDriverConvoRoute = "/convo/:phoneNumber";
 
   static String getDvOrderRoute(int orderId) {
     return kDvOrderView.replaceFirst(":orderId", "$orderId");

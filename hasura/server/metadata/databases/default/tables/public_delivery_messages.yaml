@@ -1,3 +1,48 @@
 table:
   name: delivery_messages
   schema: public
+object_relationships:
+  - name: customer
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+select_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+        - entry
+        - phone_number
+        - driver_id
+        - received_time
+        - finished_time
+        - user_id
+        - responded_time
+      filter:
+        _or:
+          - driver_id:
+              _eq: X-Hasura-User-Id
+          - driver_id:
+              _is_null: true
+update_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - finished_time
+      filter:
+        _or:
+          - driver_id:
+              _eq: X-Hasura-User-Id
+          - driver_id:
+              _is_null: true
+      check:
+        _or:
+          - driver_id:
+              _eq: X-Hasura-User-Id
+          - driver_id:
+              _is_null: true
