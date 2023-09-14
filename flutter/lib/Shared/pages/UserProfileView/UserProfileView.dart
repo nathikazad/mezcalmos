@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -145,32 +149,27 @@ class _UserProfileViewState extends State<UserProfileView> {
         SizedBox(
           height: 25,
         ),
-        // MezButton(
-        //   label: "${_i18n()["deleteAccount"]}",
-        //   onClick: () async {
-        //     await showConfirmationDialog(
-        //       context,
-        //       title: '${_i18n()["deleteTitle"]}',
-        //       primaryButtonText: "${_i18n()["deletePrBtn"]}",
-        //       secondaryButtonText: "${_i18n()["deleteScBtn"]}",
-        //       helperText: "${_i18n()["deleteHelper"]}",
-        //       onYesClick: () async {
-        //         final ServerResponse res = await viewController.deleteAccount();
-        //         if (!res.success) {
-        //           MezSnackbar(
-        //             "Oops",
-        //             res.errorMessage ?? "Server problem!",
-        //           );
-        //         }
-        //       },
-        //     );
-        //   },
-        //   backgroundColor: offRedColor,
-        //   textColor: Colors.red,
-        // ),
-        // SizedBox(
-        //   height: 35,
-        // ),
+        MezButton(
+          label: "${_i18n()["deleteAccount"]}",
+          onClick: () async {
+            await showConfirmationDialog(
+              context,
+              title: '${_i18n()["deleteTitle"]}',
+              primaryButtonText: "${_i18n()["deletePrBtn"]}",
+              secondaryButtonText: "${_i18n()["deleteScBtn"]}",
+              helperText: "${_i18n()["deleteHelper"]}",
+              onYesClick: () async {
+                unawaited(CloudFunctions.user2_deleteUserAccount());
+                unawaited(Get.find<AuthController>().signOut());
+              },
+            );
+          },
+          backgroundColor: offRedColor,
+          textColor: Colors.red,
+        ),
+        SizedBox(
+          height: 35,
+        ),
       ],
     );
   }
