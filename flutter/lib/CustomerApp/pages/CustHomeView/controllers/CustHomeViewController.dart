@@ -37,7 +37,10 @@ class CustHomeViewController {
 
   int fetchSize = 25;
   int offset = 0;
+  int itemsFetchSize = 25;
+  int itemsOffset = 0;
   RxBool hasReachedEndData = RxBool(false);
+  RxBool itemsHasReachedEndData = RxBool(false);
   RxBool isFetchingRestaurants = RxBool(false);
   RxBool isFetchingItems = RxBool(false);
 
@@ -54,7 +57,7 @@ class CustHomeViewController {
   RxList<Restaurant> _mapViewRestaurants = <Restaurant>[].obs;
   List<Restaurant> get mapViewRestaurants => _mapViewRestaurants;
   int mapMarkersOffset = 0;
-  int mapMarkersFetchSize = 25;
+  int mapMarkersFetchSize = 10;
   bool _hasReachedEndOfMarkers = false;
   // MAP //
 
@@ -64,7 +67,7 @@ class CustHomeViewController {
   List<Item> get items => filteredItems.value;
   bool get showRestaurantShimmer =>
       isFetchingRestaurants.value && _filtredRestaurants.isEmpty;
-  bool get showIemsShimmer => isFetchingItems.value;
+  bool get showIemsShimmer => isFetchingItems.value && filteredItems.isEmpty;
 
   int get activeFiltersCount {
     int result = 0;
@@ -84,11 +87,9 @@ class CustHomeViewController {
     //     _fetchRestaurants();
     //   }
     // });
-    await Future.wait([
-      _fetchRestaurants().then((value) => _assignServiceIds()),
-      _searchItem(),
-      filter()
-    ]);
+    await _fetchRestaurants();
+    await _searchItem();
+    unawaited(filter());
   }
 
   void _initTabController(TickerProvider vsync) {
@@ -104,7 +105,11 @@ class CustHomeViewController {
   }
 
   Future<void> fetchMore() async {
-    await _fetchRestaurants().then((value) => filter());
+    if (searchType.value == SearchType.searchByRestaurantName) {
+      await _fetchRestaurants().then((value) => filter());
+    } else {
+      await _searchItem();
+    }
   }
 
   Future<void> _fetchRestaurants() async {
@@ -138,6 +143,7 @@ class CustHomeViewController {
       offset += fetchSize;
 
       _filtredRestaurants.value = _restaurants.value;
+      _assignServiceIds();
       _filtredRestaurants.sortByOpen();
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -148,13 +154,6 @@ class CustHomeViewController {
   }
 
   Future<void> filter() async {
-    // _filterInput.clear();
-
-    // changeAlwaysOpenSwitch(
-    //     newData['restaurantOpened']?.contains('true') ?? false);
-    // mezDbgPrint("_filterInput $_filterInput $newData");
-    //   _fetchRestaurantsOnFilter();
-
     List<Restaurant> newList = new List<Restaurant>.from(_restaurants);
 
     newList = newList.showOnlyOpen(showOnlyOpen.value) as List<Restaurant>;
@@ -174,18 +173,37 @@ class CustHomeViewController {
     } else {
       servicesIds =
           newList.map<int>((Restaurant v) => v.info.hasuraId).toList();
-      await _searchItem();
+      List<Item> newItems = filteredItems.filterByServiceIds(servicesIds);
+
+      filteredItems.value = newItems;
     }
   }
 
   Future<void> _searchItem() async {
+    if ((itemsHasReachedEndData.value && searchQuery.isEmpty) ||
+        isFetchingItems.value) {
+      return;
+    }
     try {
       isFetchingItems.value = true;
-      filteredItems.value = await search_items(
+      mezDbgPrint("Fetching items ===========>>>$itemsOffset");
+      List<Item> newItems = await search_items(
           servicesIds: servicesIds,
           keyword: searchQuery.value,
+          limit: itemsFetchSize,
+          offset: searchQuery.isEmpty ? itemsOffset : 0,
           lang: userLanguage,
           withCache: false);
+      mezDbgPrint("NEW ITEMS =========>>> ${newItems.length}");
+      if (newItems.isEmpty && searchQuery.isEmpty) {
+        itemsHasReachedEndData.value = true;
+      }
+      if (searchQuery.isEmpty) {
+        filteredItems.value += newItems;
+        itemsOffset += itemsFetchSize;
+      } else {
+        filteredItems.value = newItems;
+      }
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);

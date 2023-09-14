@@ -1,3 +1,4 @@
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
 extension RestaurantFilters<T extends Service> on List<Service> {
@@ -34,5 +35,11 @@ extension RestaurantFilters<T extends Service> on List<Service> {
       } else
         return 0;
     });
+  }
+}
+
+extension ItemFilters on List<Item> {
+  List<Item> filterByServiceIds(List<int> ids) {
+    return where((Item item) => ids.contains(item.restaurantId)).toList();
   }
 }

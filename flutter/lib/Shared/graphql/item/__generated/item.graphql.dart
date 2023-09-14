@@ -8485,11 +8485,15 @@ class Variables$Query$searchItems {
     List<int>? servicesIds,
     String? languageId,
     String? keyword,
+    required int limit,
+    required int offset,
   }) =>
       Variables$Query$searchItems._({
         if (servicesIds != null) r'servicesIds': servicesIds,
         if (languageId != null) r'languageId': languageId,
         if (keyword != null) r'keyword': keyword,
+        r'limit': limit,
+        r'offset': offset,
       });
 
   Variables$Query$searchItems._(this._$data);
@@ -8509,6 +8513,10 @@ class Variables$Query$searchItems {
       final l$keyword = data['keyword'];
       result$data['keyword'] = (l$keyword as String?);
     }
+    final l$limit = data['limit'];
+    result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
     return Variables$Query$searchItems._(result$data);
   }
 
@@ -8517,6 +8525,8 @@ class Variables$Query$searchItems {
   List<int>? get servicesIds => (_$data['servicesIds'] as List<int>?);
   String? get languageId => (_$data['languageId'] as String?);
   String? get keyword => (_$data['keyword'] as String?);
+  int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('servicesIds')) {
@@ -8531,6 +8541,10 @@ class Variables$Query$searchItems {
       final l$keyword = keyword;
       result$data['keyword'] = l$keyword;
     }
+    final l$limit = limit;
+    result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
     return result$data;
   }
 
@@ -8585,6 +8599,16 @@ class Variables$Query$searchItems {
     if (l$keyword != lOther$keyword) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
@@ -8593,6 +8617,8 @@ class Variables$Query$searchItems {
     final l$servicesIds = servicesIds;
     final l$languageId = languageId;
     final l$keyword = keyword;
+    final l$limit = limit;
+    final l$offset = offset;
     return Object.hashAll([
       _$data.containsKey('servicesIds')
           ? l$servicesIds == null
@@ -8601,6 +8627,8 @@ class Variables$Query$searchItems {
           : const {},
       _$data.containsKey('languageId') ? l$languageId : const {},
       _$data.containsKey('keyword') ? l$keyword : const {},
+      l$limit,
+      l$offset,
     ]);
   }
 }
@@ -8618,6 +8646,8 @@ abstract class CopyWith$Variables$Query$searchItems<TRes> {
     List<int>? servicesIds,
     String? languageId,
     String? keyword,
+    int? limit,
+    int? offset,
   });
 }
 
@@ -8638,6 +8668,8 @@ class _CopyWithImpl$Variables$Query$searchItems<TRes>
     Object? servicesIds = _undefined,
     Object? languageId = _undefined,
     Object? keyword = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
   }) =>
       _then(Variables$Query$searchItems._({
         ..._instance._$data,
@@ -8645,6 +8677,8 @@ class _CopyWithImpl$Variables$Query$searchItems<TRes>
           'servicesIds': (servicesIds as List<int>?),
         if (languageId != _undefined) 'languageId': (languageId as String?),
         if (keyword != _undefined) 'keyword': (keyword as String?),
+        if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
       }));
 }
 
@@ -8658,6 +8692,8 @@ class _CopyWithStubImpl$Variables$Query$searchItems<TRes>
     List<int>? servicesIds,
     String? languageId,
     String? keyword,
+    int? limit,
+    int? offset,
   }) =>
       _res;
 }
@@ -8851,6 +8887,24 @@ const documentNodeQuerysearchItems = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -8858,6 +8912,14 @@ const documentNodeQuerysearchItems = DocumentNode(definitions: [
         name: NameNode(value: 'restaurant_item'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
@@ -9065,7 +9127,7 @@ const documentNodeQuerysearchItems = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -9249,7 +9311,7 @@ class Options$Query$searchItems
     extends graphql.QueryOptions<Query$searchItems> {
   Options$Query$searchItems({
     String? operationName,
-    Variables$Query$searchItems? variables,
+    required Variables$Query$searchItems variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -9257,7 +9319,7 @@ class Options$Query$searchItems
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -9274,7 +9336,7 @@ class WatchOptions$Query$searchItems
     extends graphql.WatchQueryOptions<Query$searchItems> {
   WatchOptions$Query$searchItems({
     String? operationName,
-    Variables$Query$searchItems? variables,
+    required Variables$Query$searchItems variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -9285,7 +9347,7 @@ class WatchOptions$Query$searchItems
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -9304,42 +9366,42 @@ class WatchOptions$Query$searchItems
 class FetchMoreOptions$Query$searchItems extends graphql.FetchMoreOptions {
   FetchMoreOptions$Query$searchItems({
     required graphql.UpdateQuery updateQuery,
-    Variables$Query$searchItems? variables,
+    required Variables$Query$searchItems variables,
   }) : super(
           updateQuery: updateQuery,
-          variables: variables?.toJson() ?? {},
+          variables: variables.toJson(),
           document: documentNodeQuerysearchItems,
         );
 }
 
 extension ClientExtension$Query$searchItems on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$searchItems>> query$searchItems(
-          [Options$Query$searchItems? options]) async =>
-      await this.query(options ?? Options$Query$searchItems());
+          Options$Query$searchItems options) async =>
+      await this.query(options);
   graphql.ObservableQuery<Query$searchItems> watchQuery$searchItems(
-          [WatchOptions$Query$searchItems? options]) =>
-      this.watchQuery(options ?? WatchOptions$Query$searchItems());
+          WatchOptions$Query$searchItems options) =>
+      this.watchQuery(options);
   void writeQuery$searchItems({
     required Query$searchItems data,
-    Variables$Query$searchItems? variables,
+    required Variables$Query$searchItems variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
           operation: graphql.Operation(document: documentNodeQuerysearchItems),
-          variables: variables?.toJson() ?? const {},
+          variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
   Query$searchItems? readQuery$searchItems({
-    Variables$Query$searchItems? variables,
+    required Variables$Query$searchItems variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
         operation: graphql.Operation(document: documentNodeQuerysearchItems),
-        variables: variables?.toJson() ?? const {},
+        variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );

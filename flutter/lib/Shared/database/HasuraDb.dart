@@ -193,7 +193,7 @@ class HasuraDb {
   }
 
   Future<String> _getAuthorizationToken(User user, bool testMode) async {
-    final String token = await user.getIdToken(true);
+    final String token = (await user.getIdToken(true))!;
     if (testMode) {
       final Map<String, dynamic> decoded = JwtDecoder.decode(token);
       // mezDbgPrint(decoded);
