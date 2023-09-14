@@ -143,8 +143,16 @@ query getRestaurantSpecialItems($restaurantId: Int) {
     }
   }
 }
-query searchItems($servicesIds: [Int!], $languageId: String, $keyword: String) {
+query searchItems(
+  $servicesIds: [Int!]
+  $languageId: String
+  $keyword: String
+  $limit: Int!
+  $offset: Int!
+) {
   restaurant_item(
+    offset: $offset
+    limit: $limit
     where: {
       _or: [
         {

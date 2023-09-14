@@ -165,11 +165,34 @@ class _CustHomeViewState extends State<CustHomeView>
                   );
                 } else if (viewController.filteredItems.isNotEmpty)
                   return Column(
-                    children: List.generate(
-                        viewController.items.length,
-                        (int index) => CustRestaurantItemCard(
-                              item: viewController.items[index],
-                            )),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: List.generate(
+                            viewController.items.length,
+                            (int index) => CustRestaurantItemCard(
+                                  item: viewController.items[index],
+                                )),
+                      ),
+                      if (viewController.itemsHasReachedEndData.isFalse &&
+                          viewController.searchQuery.isEmpty) ...[
+                        smallSepartor,
+                        Container(
+                          margin: const EdgeInsets.all(15),
+                          child: MezButton(
+                            width: double.infinity,
+                            backgroundColor: secondaryLightBlueColor,
+                            textColor: primaryBlueColor,
+                            borderRadius: 20,
+                            height: 45,
+                            label: "${_i18n()['fetchMore']}...",
+                            onClick: () async {
+                              await viewController.fetchMore();
+                            },
+                          ),
+                        )
+                      ]
+                    ],
                   );
                 else
                   return Container(
