@@ -17,3 +17,19 @@ query GetDeliveryMessages {
     }
   }
 }
+query GetCustomerDeliveryMessages($phone_number: String!) {
+  delivery_messages(where: { phone_number: { _eq: $phone_number } }) {
+    id
+    entry
+    phone_number
+    driver_id
+    received_time
+    finished_time
+    user_id
+    responded_time
+    customer {
+      name
+      image
+    }
+  }
+}

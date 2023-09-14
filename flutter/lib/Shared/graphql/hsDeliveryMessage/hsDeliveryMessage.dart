@@ -18,11 +18,38 @@ Future<List<DeliveryMessage>> getDvMessages({bool withCache = true}) async {
         .map<DeliveryMessage>((Query$GetDeliveryMessages$delivery_messages e) =>
             DeliveryMessage(
                 id: e.id,
-                entry: e.entry,
+                entry: DvMessageEntry.fromJson(e.entry),
                 userImage: e.customer?.image,
                 userName: e.customer?.name,
                 phoneNumber: e.phone_number,
                 receivedTime: DateTime.parse(e.received_time),
                 userId: e.user_id!))
+        .toList();
+}
+
+Future<List<DeliveryMessage>> getCustomerDvMessages(
+    {required String phoneNumber, bool withCache = true}) async {
+  final QueryResult<Query$GetCustomerDeliveryMessages> res =
+      await _db.graphQLClient.query$GetCustomerDeliveryMessages(
+          Options$Query$GetCustomerDeliveryMessages(
+              fetchPolicy: withCache
+                  ? FetchPolicy.cacheAndNetwork
+                  : FetchPolicy.networkOnly,
+              variables: Variables$Query$GetCustomerDeliveryMessages(
+                  phone_number: phoneNumber)));
+  if (res.hasException) {
+    throw res.exception!;
+  } else
+    return res.parsedData!.delivery_messages
+        .map<DeliveryMessage>(
+            (Query$GetCustomerDeliveryMessages$delivery_messages e) =>
+                DeliveryMessage(
+                    id: e.id,
+                    entry: DvMessageEntry.fromJson(e.entry),
+                    userImage: e.customer?.image,
+                    userName: e.customer?.name,
+                    phoneNumber: e.phone_number,
+                    receivedTime: DateTime.parse(e.received_time),
+                    userId: e.user_id!))
         .toList();
 }

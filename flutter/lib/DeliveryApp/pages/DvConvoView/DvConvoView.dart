@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/controllers/DvConvoViewController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/Chat/MezChatBubble.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -38,7 +40,7 @@ class _DvConvoViewState extends State<DvConvoView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
-          title: viewController.dvMessage.first.phoneNumber),
+          titleWidget: Obx(() => Text(viewController.title ?? ""))),
       bottomNavigationBar: MezButton(
         label: viewController.showAcceptBtn ? "Accept Order" : "Finish order",
         borderRadius: 0,
@@ -48,48 +50,54 @@ class _DvConvoViewState extends State<DvConvoView> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            // ListView.builder(
-            //     itemCount: viewController.convo.length,
-            //     shrinkWrap: true,
-            //     physics: NeverScrollableScrollPhysics(),
-            //     itemBuilder: (BuildContext context, int index) {
-            //       final WhMessage message = viewController.convo[index];
+        child: Obx(
+          () => Column(
+            children: [
+              ListView.builder(
+                  itemCount: viewController.dvMessages.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    final DeliveryMessage message =
+                        viewController.dvMessages[index];
 
-            //       // Check if this is the first message or the date has changed
-            //       if (index == 0 ||
-            //           !isSameDay(viewController.convo[index - 1].timestamp,
-            //               message.timestamp)) {
-            //         // Display the date as a title
-            //         return Column(
-            //           children: [
-            //             _buildDateTitle(message.timestamp),
-            //             MezChatBubble(
-            //               message: message.text.body,
-            //               timestamp: message.timestamp,
-            //             ),
-            //           ],
-            //         );
-            //       } else {
-            //         // Just display the message
-            //         return MezChatBubble(
-            //           message: message.text.body,
-            //           timestamp: message.timestamp,
-            //         );
-            //       }
-            //     }),
-            // if (!viewController.showAcceptBtn)
-            //   Container(
-            //     margin: const EdgeInsets.all(12),
-            //     child: MezButton(
-            //       label: "Cancel order",
-            //       onClick: () async {},
-            //       backgroundColor: offRedColor,
-            //       textColor: redAccentColor,
-            //     ),
-            //   )
-          ],
+                    // Check if this is the first message or the date has changed
+                    if (index == 0 ||
+                        !isSameDay(
+                            viewController.dvMessages[index - 1].receivedTime,
+                            message.receivedTime)) {
+                      // Display the date as a title
+                      return Column(
+                        children: [
+                          _buildDateTitle(message.receivedTime),
+                          MezChatBubble(
+                            message: message.entry.text.body,
+                            timestamp: message.receivedTime,
+                            imageUrl: message.userImage,
+                          ),
+                        ],
+                      );
+                    } else {
+                      // Just display the message
+                      return MezChatBubble(
+                        message: message.entry.text.body,
+                        timestamp: message.receivedTime,
+                        imageUrl: message.userImage,
+                      );
+                    }
+                  }),
+              if (!viewController.showAcceptBtn)
+                Container(
+                  margin: const EdgeInsets.all(12),
+                  child: MezButton(
+                    label: "Cancel order",
+                    onClick: () async {},
+                    backgroundColor: offRedColor,
+                    textColor: redAccentColor,
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );

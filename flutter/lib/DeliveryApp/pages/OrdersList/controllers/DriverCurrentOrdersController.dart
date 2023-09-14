@@ -95,7 +95,7 @@ class DriverCurrentOrdersController {
 
 class DeliveryMessage {
   final int id;
-  final Map<String, dynamic> entry;
+  final DvMessageEntry entry;
   final String phoneNumber;
   final String? userName;
   final String? userImage;
@@ -117,4 +117,49 @@ class DeliveryMessage {
     this.userImage,
     this.userName,
   });
+}
+
+class DvMessageEntry {
+  final String id;
+  final String from;
+  final DvTextMessage text;
+  final String type;
+  final bool resolved;
+  final DateTime timestamp; // Change the type to DateTime
+
+  DvMessageEntry({
+    required this.id,
+    required this.from,
+    required this.text,
+    required this.type,
+    required this.resolved,
+    required this.timestamp,
+  });
+
+  factory DvMessageEntry.fromJson(Map<String, dynamic> json) {
+    return DvMessageEntry(
+      id: json['id'] ?? '',
+      from: json['from'] ?? '',
+      text: DvTextMessage.fromJson(json['text']),
+      type: json['type'] ?? '',
+      resolved: json['resolved'] ?? false,
+      timestamp: DateTime.fromMillisecondsSinceEpoch(
+          int.parse(json['timestamp'] ?? '0') *
+              1000), // Convert timestamp to DateTime
+    );
+  }
+}
+
+class DvTextMessage {
+  final String body;
+
+  DvTextMessage({
+    required this.body,
+  });
+
+  factory DvTextMessage.fromJson(Map<String, dynamic> json) {
+    return DvTextMessage(
+      body: json['body'] ?? '',
+    );
+  }
 }
