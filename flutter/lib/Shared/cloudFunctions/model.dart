@@ -1,3 +1,20 @@
+class MarkMessagesResponse {
+  bool success;
+  MarkMessagesError? error;
+  String? unhandledError;
+  MarkMessagesResponse(this.success, this.error, this.unhandledError);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+factory MarkMessagesResponse.fromFirebaseFormattedJson(json) { 
+   return MarkMessagesResponse(json["success"], json["error"]?.toString().toMarkMessagesError(), json["unhandledError"]);
+  }
+}
+
 class DeleteAccountResponse {
   bool success;
   DeleteAccountError? error;
@@ -1220,10 +1237,9 @@ class Message {
   TextMessage? text;
   LocationMessage? location;
   ImageMessage? image;
-  bool? resolved;
   num? driverId;
   Message({
-    required this.from, required this.id, required this.type, required this.timestamp, this.text, this.location, this.image, this.resolved, this.driverId});
+    required this.from, required this.id, required this.type, required this.timestamp, this.text, this.location, this.image, this.driverId});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "from": from,
@@ -1233,7 +1249,6 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "text": text,
       "location": location,
       "image": image,
-      "resolved": resolved,
       "driverId": driverId,
     };
   }
@@ -2829,6 +2844,22 @@ Map<String, dynamic> toFirebaseFormattedJson() {
   }
 
 }
+
+enum MarkMessagesError { UnhandledError, InvalidParams, UnauthorizedDriver, NoMessagesFound }
+extension ParseMarkMessagesErrorToString on MarkMessagesError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+extension ParseStringToMarkMessagesError on String {
+  MarkMessagesError toMarkMessagesError() {
+    return MarkMessagesError.values.firstWhere(
+        (MarkMessagesError markMessagesError) =>
+            markMessagesError.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
 
 enum DeleteAccountError { UnhandledError }
 extension ParseDeleteAccountErrorToString on DeleteAccountError {

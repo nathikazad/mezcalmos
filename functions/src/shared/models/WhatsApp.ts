@@ -24,7 +24,6 @@ export interface Message {
     text?: TextMessage;
     location?: LocationMessage;
     image?: ImageMessage;
-    resolved?: boolean;
     driverId?:number
 }
   
