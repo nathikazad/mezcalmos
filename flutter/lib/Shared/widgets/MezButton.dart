@@ -20,6 +20,7 @@ class MezButton extends StatefulWidget {
     this.height = 55,
     this.border,
     this.width,
+    this.elevation = 0,
     this.icon,
     required this.label,
     this.onClick,
@@ -31,6 +32,7 @@ class MezButton extends StatefulWidget {
   final bool withGradient;
   final String label;
   final double height;
+  final double? elevation;
   final Color? backgroundColor;
   final Color? borderColor;
   final Color? textColor;
@@ -51,7 +53,7 @@ class _MezButtonState extends State<MezButton> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Card(
-        elevation: 0,
+        elevation: widget.elevation,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),

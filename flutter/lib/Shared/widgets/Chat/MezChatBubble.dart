@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:sizer/sizer.dart';
 
 class MezChatBubble extends StatelessWidget {
   final String? imageUrl;
@@ -31,10 +32,11 @@ class MezChatBubble extends StatelessWidget {
         ),
 
         hTinySepartor,
-        Expanded(
+        Flexible(
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 4.0),
             padding: const EdgeInsets.all(8.0),
+            constraints: BoxConstraints(maxWidth: 60.w),
             decoration: BoxDecoration(
                 color: primaryBlueColor,
                 borderRadius: BorderRadius.only(
@@ -44,6 +46,7 @@ class MezChatBubble extends StatelessWidget {
                 )),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   message,

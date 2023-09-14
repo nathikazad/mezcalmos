@@ -44,6 +44,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void dispose() {
+    viewController.dispose();
     super.dispose();
   }
 
@@ -59,12 +60,14 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
         body: Obx(
           () => SingleChildScrollView(
-            child: (viewController.resolvedMessages.isNotEmpty ||
-                    viewController.unResolvedMessages.isNotEmpty)
+            child: (viewController.currentOrders.isNotEmpty ||
+                    viewController.openOrders.isNotEmpty)
                 ? Column(
                     children: [
-                      _currentOrders(context),
-                      _openOrders(context),
+                      if (viewController.currentOrders.isNotEmpty)
+                        _currentOrders(context),
+                      if (viewController.openOrders.isNotEmpty)
+                        _openOrders(context),
                     ],
                   )
                 : Padding(
@@ -76,7 +79,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
     );
   }
 
-  Container _currentOrders(BuildContext context) {
+  Widget _currentOrders(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
       decoration: BoxDecoration(color: secondaryLightBlueColor),
@@ -95,16 +98,16 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 WidgetSpan(child: hTinySepartor),
                 TextSpan(
                     text:
-                        "Current Orders (${viewController.resolvedMessages.length})"),
+                        "Current Orders (${viewController.currentOrders.length})"),
               ],
               style: context.textTheme.bodyLarge
                   ?.copyWith(color: primaryBlueColor))),
           meduimSeperator,
           Column(
-            children: List.generate(viewController.resolvedMessages.length,
-                (int index) {
+            children:
+                List.generate(viewController.currentOrders.length, (int index) {
               final DeliveryMessage message =
-                  viewController.resolvedMessages[index];
+                  viewController.currentOrders[index];
               return DvConvoCard(
                 message: message,
                 onClick: () {
@@ -152,17 +155,15 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 ),
                 WidgetSpan(child: hTinySepartor),
                 TextSpan(
-                    text:
-                        "Open Orders (${viewController.unResolvedMessages.length})"),
+                    text: "Open Orders (${viewController.openOrders.length})"),
               ],
               style:
                   context.textTheme.bodyLarge?.copyWith(color: Colors.purple))),
           meduimSeperator,
           Column(
-            children: List.generate(viewController.unResolvedMessages.length,
-                (int index) {
-              final DeliveryMessage message =
-                  viewController.unResolvedMessages[index];
+            children:
+                List.generate(viewController.openOrders.length, (int index) {
+              final DeliveryMessage message = viewController.openOrders[index];
               return DvConvoCard(
                 message: message,
                 onClick: () {

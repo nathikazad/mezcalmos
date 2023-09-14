@@ -8,14 +8,9 @@
     "strict": true,
     "target": "es2017",
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-   
+    "esModuleInterop": true
   },
   "compileOnSave": true,
- 
-  "include": [
-    
-    "src",
-    "../service_account_staging.json"
-  ]
+
+  "include": ["src", "../service_account_staging.json"]
 }

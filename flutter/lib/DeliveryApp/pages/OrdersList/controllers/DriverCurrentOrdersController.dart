@@ -12,19 +12,16 @@ class DriverCurrentOrdersController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
 
   // vars
-  RxList<DeliveryMessage> _orders = <DeliveryMessage>[].obs;
+  RxList<DeliveryMessage> currentOrders = <DeliveryMessage>[].obs;
   RxList<DeliveryMessage> openOrders = <DeliveryMessage>[].obs;
-  List<DeliveryMessage> get resolvedMessages =>
-      _orders.where((DeliveryMessage p0) => p0.driverId != null).toList();
-  List<DeliveryMessage> get unResolvedMessages =>
-      _orders.where((DeliveryMessage p0) => p0.driverId == null).toList();
+
   RxBool initalized = RxBool(false);
-  late int driverId;
+  int get driverId => opAuthController.driver!.deliveryDriverId;
   RxBool _isOnline = RxBool(true);
   RxBool onlineClicked = RxBool(false);
 // streams
-  StreamSubscription? currentOrdersListener;
-  StreamSubscription? openOrdersListener;
+  StreamSubscription<List<DeliveryMessage>?>? currentOrdersListener;
+  StreamSubscription<List<DeliveryMessage>?>? openOrdersListener;
   String? subscriptionId;
 
 // getters
@@ -32,43 +29,44 @@ class DriverCurrentOrdersController {
   bool get isOnline => _isOnline.value;
 
   Future<void> init() async {
-    mezDbgPrint("INIT 🥹🥹🥹🥹🥹🥹🥹🥹🥹");
     await _initOrders();
+    _listenOnOrders();
   }
 
   Future<void> _initOrders() async {
     try {
-      _orders.value = await getDvMessages(withCache: false);
-      mezDbgPrint("Orders length ======>${_orders.length}");
+      openOrders.value = await getDvOpenMessages(withCache: false);
+
+      currentOrders.value =
+          await getDvCurrentMessages(driverId: driverId, withCache: false);
+      mezDbgPrint("Orders length ======>${openOrders.length}");
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
       // TODO
     }
+  }
 
-    // currentOrders.value =
-    //     await get_current_driver_orders(driverId: driverId) ?? [];
-    // openOrders.value = await get_open_driver_orders(driverId: driverId) ?? [];
-    // subscriptionId = hasuraDb.createSubscription(start: () {
-    //   currentOrdersListener =
-    //       listen_on_current_driver_orders(driverId: driverId)
-    //           .listen((List<MinimalOrder>? event) {
-    //     if (event != null) {
-    //       currentOrders.value = event;
-    //     }
-    //   });
-    //   openOrdersListener = listen_on_open_driver_orders(driverId: driverId)
-    //       .listen((List<MinimalOrder>? event) {
-    //     if (event != null) {
-    //       openOrders.value = event;
-    //     }
-    //   });
-    // }, cancel: () {
-    //   currentOrdersListener?.cancel();
-    //   currentOrdersListener = null;
-    //   openOrdersListener?.cancel();
-    //   openOrdersListener = null;
-    // });
+  void _listenOnOrders() {
+    subscriptionId = hasuraDb.createSubscription(start: () {
+      currentOrdersListener = listenDvCurrentMessages(driverId: driverId)
+          .listen((List<DeliveryMessage>? event) {
+        if (event != null) {
+          currentOrders.value = event;
+        }
+      });
+      openOrdersListener =
+          listenDvOpenMessages().listen((List<DeliveryMessage>? event) {
+        if (event != null) {
+          openOrders.value = event;
+        }
+      });
+    }, cancel: () {
+      currentOrdersListener?.cancel();
+      currentOrdersListener = null;
+      openOrdersListener?.cancel();
+      openOrdersListener = null;
+    });
   }
 
   Future<void> switchOnlineStatus(bool value) async {
@@ -102,7 +100,7 @@ class DeliveryMessage {
   final int? driverId;
   final DateTime receivedTime;
   final DateTime? finishedTime;
-  final int userId;
+  final int? userId;
   final DateTime? respondedTime;
 
   DeliveryMessage({
@@ -117,6 +115,7 @@ class DeliveryMessage {
     this.userImage,
     this.userName,
   });
+  bool get isResponded => respondedTime != null && driverId != null;
 }
 
 class DvMessageEntry {

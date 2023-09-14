@@ -11,6 +11,9 @@ object_relationships:
         remote_table:
           name: user
           schema: public
+  - name: driver
+    using:
+      foreign_key_constraint_on: driver_id
 select_permissions:
   - role: delivery_driver
     permission:
@@ -25,8 +28,9 @@ select_permissions:
         - responded_time
       filter:
         _or:
-          - driver_id:
-              _eq: X-Hasura-User-Id
+          - driver:
+              user_id:
+                _eq: X-Hasura-User-Id
           - driver_id:
               _is_null: true
 update_permissions:
@@ -36,13 +40,15 @@ update_permissions:
         - finished_time
       filter:
         _or:
-          - driver_id:
-              _eq: X-Hasura-User-Id
+          - driver:
+              user_id:
+                _eq: X-Hasura-User-Id
           - driver_id:
               _is_null: true
       check:
         _or:
-          - driver_id:
-              _eq: X-Hasura-User-Id
+          - driver:
+              user_id:
+                _eq: X-Hasura-User-Id
           - driver_id:
               _is_null: true

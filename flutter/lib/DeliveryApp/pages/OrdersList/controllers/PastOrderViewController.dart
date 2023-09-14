@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
+import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/hsDeliveryMessage.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 
 class DriverPastOrdersController {
   DriverPastOrdersController();
-  RxList<MinimalOrder> pastOrders = RxList.empty();
+  RxList<DeliveryMessage> pastOrders = RxList.empty();
 
   /* SCROLL CONTROLLER */
   ScrollController get scrollController => _scrollController;
@@ -74,7 +74,7 @@ class DriverPastOrdersController {
 
     try {
       _fetchingData = true;
-      final List<MinimalOrder> newData = await get_past_driver_orders(
+      List<DeliveryMessage> newData = await getDvPastMessages(
               offset: _currentOffset,
               limit: fetchSize,
               driverId: Get.find<DeliveryAuthController>()

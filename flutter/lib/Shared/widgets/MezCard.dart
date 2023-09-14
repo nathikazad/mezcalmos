@@ -5,6 +5,7 @@ class MezCard extends StatelessWidget {
       {super.key,
       this.margin,
       this.onClick,
+      this.bgColor,
       this.radius = 25,
       this.contentPadding = const EdgeInsets.all(8),
       required this.content,
@@ -24,6 +25,7 @@ class MezCard extends StatelessWidget {
   final EdgeInsets? contentPadding;
   final Function()? onClick;
   final Color? firstAvatarBgColor;
+  final Color? bgColor;
   final Color? firstAvatarIconColor;
   final ImageProvider? firstAvatarBgImage;
   final IconData? firstAvatarIcon;
@@ -44,6 +46,7 @@ class MezCard extends StatelessWidget {
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.circular(radius),
       // ),
+      color: bgColor,
       elevation: elevation,
       margin: margin,
       shape: RoundedRectangleBorder(
