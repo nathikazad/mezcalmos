@@ -35,7 +35,7 @@ import { requestOrder } from "./business/orderRequest";
 import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
 import { RuntimeOptions } from "firebase-functions";
-import { handleWhatsapp, markMessagesAsResolved } from "./utilities/senders/whatsapp";
+import { handleWhatsapp, markMessagesAsResponded, markMessagesAsFinished } from "./utilities/senders/whatsapp";
 import { newCheckout } from "./restaurant/newCheckout";
 import { completeOrder } from "./restaurant/completeOrder";
 
@@ -49,7 +49,9 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 
 export const whatsapp = {
   newMessage: handleWhatsapp,
-  messageResolved: markMessagesAsResolved
+  markMessagesAsResponded: authenticatedCall((userId, data) => markMessagesAsResponded(userId, data)),
+  markMessagesAsFinished: authenticatedCall((userId, data) => markMessagesAsFinished(userId, data)),
+  
 }
 
 export const user2 = {
