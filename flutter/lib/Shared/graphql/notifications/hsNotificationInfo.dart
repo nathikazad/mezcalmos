@@ -5,7 +5,6 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/__generated/notification_info.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -40,6 +39,28 @@ Future<void> update_notif_info(
     throw Exception(
         "🚨 update notif token ${notificationInfo.id} failed =>${res.parsedData?.toJson()}");
   }
+}
+
+Future<bool?> switch_notifications_status(
+    {required bool turnOffNotif,
+    required int userId,
+    required AppType appType}) async {
+  QueryResult<Mutation$updateNotificationStatus> res = await _db.graphQLClient
+      .mutate$updateNotificationStatus(
+          Options$Mutation$updateNotificationStatus(
+              fetchPolicy: FetchPolicy.networkOnly,
+              variables: Variables$Mutation$updateNotificationStatus(
+                  app_type_id: appType.toFirebaseFormatString(),
+                  turn_off_notifications: turnOffNotif,
+                  user_id: userId)));
+  if (res.parsedData?.update_notification_info == null) {
+    throw Exception("🚨 update notif failed =>${res.exception}");
+  }
+  if (res.parsedData!.update_notification_info?.returning.isNotEmpty == true) {
+    return res.parsedData!.update_notification_info!.returning.first
+        .turn_off_notifications;
+  }
+  return null;
 }
 
 Future<NotificationInfo?> get_notif_info(

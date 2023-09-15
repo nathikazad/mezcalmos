@@ -58,22 +58,39 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
             showNotifications: true,
             ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
-        body: Obx(
-          () => SingleChildScrollView(
-            child: (viewController.currentOrders.isNotEmpty ||
-                    viewController.openOrders.isNotEmpty)
-                ? Column(
-                    children: [
-                      if (viewController.currentOrders.isNotEmpty)
-                        _currentOrders(context),
-                      if (viewController.openOrders.isNotEmpty)
-                        _openOrders(context),
-                    ],
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(top: 17.5.h),
-                    child: NoOrdersComponent()),
-          ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Obx(
+              () => SwitchListTile.adaptive(
+                  title: Text(
+                    "Incoming Orders",
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  activeColor: primaryBlueColor,
+                  value: viewController.isOnline,
+                  onChanged: (bool v) {
+                    viewController.switchOnlineStatus(v);
+                  }),
+            ),
+            Obx(
+              () => SingleChildScrollView(
+                child: (viewController.currentOrders.isNotEmpty ||
+                        viewController.openOrders.isNotEmpty)
+                    ? Column(
+                        children: [
+                          if (viewController.currentOrders.isNotEmpty)
+                            _currentOrders(context),
+                          if (viewController.openOrders.isNotEmpty)
+                            _openOrders(context),
+                        ],
+                      )
+                    : Padding(
+                        padding: EdgeInsets.only(top: 17.5.h),
+                        child: NoOrdersComponent()),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -129,8 +146,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                   primaryButtonText: "Yes, finish orders",
                   secondaryButtonText: "Cancel",
                   primaryColor: primaryBlueColor,
-                  icon: Icons.done_all_rounded,
-                  onYesClick: () async {});
+                  icon: Icons.done_all_rounded, onYesClick: () async {
+                await viewController.finishAllOrders();
+              });
             },
           )
         ],

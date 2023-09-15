@@ -179,6 +179,8 @@ Future<List<DeliveryMessage>> getCustomerDvMessages(
                     userName: e.customer?.name,
                     phoneNumber: e.phone_number,
                     driverId: e.driver_id,
+                    driverName: e.driver?.user.name,
+                    driverPhone: e.driver?.user.phone,
                     respondedTime:
                         DateTime.tryParse(e.responded_time.toString()),
                     finishedTime: DateTime.tryParse(e.finished_time.toString()),
@@ -187,35 +189,35 @@ Future<List<DeliveryMessage>> getCustomerDvMessages(
         .toList();
 }
 
-Stream<List<DeliveryMessage>?> listenCustomerNewDvMessages(
-    {required String phoneNumber}) {
-  return _db.graphQLClient
-      .subscribe$listenOnNewCustomerDeliveryMessages(
-          Options$Subscription$listenOnNewCustomerDeliveryMessages(
-              fetchPolicy: FetchPolicy.noCache,
-              variables:
-                  Variables$Subscription$listenOnNewCustomerDeliveryMessages(
-                      phone_number: phoneNumber)))
-      .map<List<DeliveryMessage>?>(
-          (QueryResult<Subscription$listenOnNewCustomerDeliveryMessages>
-              event) {
-    if (event.hasException) {
-      throwError(event.exception);
-    }
-    return event.parsedData?.delivery_messages
-        .map((Subscription$listenOnNewCustomerDeliveryMessages$delivery_messages
-                e) =>
-            DeliveryMessage(
-                id: e.id,
-                entry: DvMessageEntry.fromJson(e.entry),
-                userImage: e.customer?.image,
-                userName: e.customer?.name,
-                phoneNumber: e.phone_number,
-                driverId: e.driver_id,
-                respondedTime: DateTime.tryParse(e.responded_time.toString()),
-                finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                receivedTime: DateTime.parse(e.received_time),
-                userId: e.user_id))
-        .toList();
-  });
-}
+// Stream<List<DeliveryMessage>?> listenCustomerNewDvMessages(
+//     {required String phoneNumber}) {
+//   return _db.graphQLClient
+//       .subscribe$listenOnNewCustomerDeliveryMessages(
+//           Options$Subscription$listenOnNewCustomerDeliveryMessages(
+//               fetchPolicy: FetchPolicy.noCache,
+//               variables:
+//                   Variables$Subscription$listenOnNewCustomerDeliveryMessages(
+//                       phone_number: phoneNumber)))
+//       .map<List<DeliveryMessage>?>(
+//           (QueryResult<Subscription$listenOnNewCustomerDeliveryMessages>
+//               event) {
+//     if (event.hasException) {
+//       throwError(event.exception);
+//     }
+//     return event.parsedData?.delivery_messages
+//         .map((Subscription$listenOnNewCustomerDeliveryMessages$delivery_messages
+//                 e) =>
+//             DeliveryMessage(
+//                 id: e.id,
+//                 entry: DvMessageEntry.fromJson(e.entry),
+//                 userImage: e.customer?.image,
+//                 userName: e.customer?.name,
+//                 phoneNumber: e.phone_number,
+//                 driverId: e.driver_id,
+//                 respondedTime: DateTime.tryParse(e.responded_time.toString()),
+//                 finishedTime: DateTime.tryParse(e.finished_time.toString()),
+//                 receivedTime: DateTime.parse(e.received_time),
+//                 userId: e.user_id))
+//         .toList();
+//   });
+// }

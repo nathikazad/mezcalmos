@@ -40,7 +40,7 @@ class MezButton extends StatefulWidget {
   final double? borderRadius;
   final TextStyle? textStyle;
   final IconData? icon;
-  final BoxBorder? border;
+  final BorderSide? border;
   final double? fontSize;
 
   @override
@@ -57,9 +57,10 @@ class _MezButtonState extends State<MezButton> {
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
-          side: BorderSide(
-            color: widget.borderColor ?? Colors.transparent,
-          ),
+          side: widget.border ??
+              BorderSide(
+                color: widget.borderColor ?? Colors.transparent,
+              ),
         ),
         child: InkWell(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
@@ -110,7 +111,7 @@ class _MezButtonState extends State<MezButton> {
                         children: [
                           if (widget.icon != null)
                             Padding(
-                              padding: const EdgeInsets.only(right: 12),
+                              padding: const EdgeInsets.only(right: 7),
                               child: Icon(
                                 widget.icon,
                                 color: widget.textColor ?? Colors.white,

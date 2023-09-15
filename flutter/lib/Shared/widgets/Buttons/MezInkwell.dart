@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
@@ -101,22 +100,11 @@ class _MezInkwellState extends State<MezInkwell> {
                 // alignment: Alignment.center,
                 padding: widget.padding,
                 child: (isLoading.value)
-                    ? LayoutBuilder(
-                        builder:
-                            (BuildContext context, BoxConstraints constraints) {
-                          final double width = constraints.maxWidth;
-                          final double height = constraints.maxHeight;
-                          return SizedBox(
-                              height: height,
-                              width: width,
-                              child: Center(
-                                  child: CircularProgressIndicator(
-                                color: widget.textColor ?? Colors.white,
-
-                                //   strokeWidth: 1.5,
-                              )));
-                        },
-                      )
+                    ? Transform.scale(
+                        scale: 0.5,
+                        child: CircularProgressIndicator(
+                          color: widget.textColor ?? primaryBlueColor,
+                        ))
                     : Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +126,7 @@ class _MezInkwellState extends State<MezInkwell> {
                               child: Text(
                                 widget.label!,
                                 style: widget.textStyle ??
-                                    context.txt.bodyLarge?.copyWith(
+                                    context.textTheme.bodyLarge?.copyWith(
                                         fontSize: widget.fontSize,
                                         color:
                                             widget.textColor ?? Colors.white),

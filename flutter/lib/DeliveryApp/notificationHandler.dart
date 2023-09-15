@@ -4,6 +4,7 @@ import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 // import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 // import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
@@ -18,6 +19,8 @@ Notification deliveryDriverNotificationHandler(String key, value) {
   switch (notificationType) {
     case NotificationType.NewOrder:
       return _newOrderNotification(key, value);
+    case NotificationType.NewMessage:
+      return _newMessageNotification(key, value);
     case NotificationType.DriverApproved:
       return _driverAprrovedNotification(key, value);
     // case NotificationType.NewMessage:
@@ -36,7 +39,8 @@ Notification deliveryDriverNotificationHandler(String key, value) {
           throw Exception("Unexpected Order Type $value['orderType']");
       }
     default:
-      throw StateError("Invalid Notification Type");
+      throw StateError(
+          "Invalid Notification Type==========>${value['notificationType']}");
   }
 }
 
@@ -77,6 +81,25 @@ Notification _newOrderNotification(String key, value) {
       notificationAction:
           (value["notificationAction"] as String).toNotificationAction(),
       variableParams: value);
+}
+
+Notification _newMessageNotification(String key, value) {
+  mezDbgPrint(value);
+  return Notification(
+      id: key,
+      icon: mat.Icons.message,
+      linkUrl: value["linkUrl"],
+
+      // needs to be changed, need to add laundry
+      body: '${_i18n()['messageNotifBody']}', // needs to be changed
+
+      title: '${_i18n()['messageNotifTitle']}',
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.NewMessage,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value,
+      imgUrl: null);
 }
 
 Notification restaurantOrderStatusChangeNotificationHandler(String key, value) {

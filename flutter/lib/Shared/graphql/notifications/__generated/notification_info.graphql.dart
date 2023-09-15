@@ -884,6 +884,13 @@ const documentNodeMutationupdateNotifInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'turn_off_notifications'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -995,20 +1002,25 @@ extension ClientExtension$Mutation$updateNotifInfo on graphql.GraphQLClient {
 class Mutation$updateNotifInfo$update_notification_info_by_pk {
   Mutation$updateNotifInfo$update_notification_info_by_pk({
     required this.id,
+    required this.turn_off_notifications,
     required this.$__typename,
   });
 
   factory Mutation$updateNotifInfo$update_notification_info_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$turn_off_notifications = json['turn_off_notifications'];
     final l$$__typename = json['__typename'];
     return Mutation$updateNotifInfo$update_notification_info_by_pk(
       id: (l$id as int),
+      turn_off_notifications: (l$turn_off_notifications as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
+
+  final bool turn_off_notifications;
 
   final String $__typename;
 
@@ -1016,6 +1028,8 @@ class Mutation$updateNotifInfo$update_notification_info_by_pk {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$turn_off_notifications = turn_off_notifications;
+    _resultData['turn_off_notifications'] = l$turn_off_notifications;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1024,9 +1038,11 @@ class Mutation$updateNotifInfo$update_notification_info_by_pk {
   @override
   int get hashCode {
     final l$id = id;
+    final l$turn_off_notifications = turn_off_notifications;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$turn_off_notifications,
       l$$__typename,
     ]);
   }
@@ -1043,6 +1059,11 @@ class Mutation$updateNotifInfo$update_notification_info_by_pk {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$turn_off_notifications = turn_off_notifications;
+    final lOther$turn_off_notifications = other.turn_off_notifications;
+    if (l$turn_off_notifications != lOther$turn_off_notifications) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1078,6 +1099,7 @@ abstract class CopyWith$Mutation$updateNotifInfo$update_notification_info_by_pk<
 
   TRes call({
     int? id,
+    bool? turn_off_notifications,
     String? $__typename,
   });
 }
@@ -1100,10 +1122,15 @@ class _CopyWithImpl$Mutation$updateNotifInfo$update_notification_info_by_pk<
 
   TRes call({
     Object? id = _undefined,
+    Object? turn_off_notifications = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateNotifInfo$update_notification_info_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        turn_off_notifications: turn_off_notifications == _undefined ||
+                turn_off_notifications == null
+            ? _instance.turn_off_notifications
+            : (turn_off_notifications as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1121,6 +1148,836 @@ class _CopyWithStubImpl$Mutation$updateNotifInfo$update_notification_info_by_pk<
 
   call({
     int? id,
+    bool? turn_off_notifications,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateNotificationStatus {
+  factory Variables$Mutation$updateNotificationStatus({
+    required String app_type_id,
+    required int user_id,
+    required bool turn_off_notifications,
+  }) =>
+      Variables$Mutation$updateNotificationStatus._({
+        r'app_type_id': app_type_id,
+        r'user_id': user_id,
+        r'turn_off_notifications': turn_off_notifications,
+      });
+
+  Variables$Mutation$updateNotificationStatus._(this._$data);
+
+  factory Variables$Mutation$updateNotificationStatus.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$app_type_id = data['app_type_id'];
+    result$data['app_type_id'] = (l$app_type_id as String);
+    final l$user_id = data['user_id'];
+    result$data['user_id'] = (l$user_id as int);
+    final l$turn_off_notifications = data['turn_off_notifications'];
+    result$data['turn_off_notifications'] = (l$turn_off_notifications as bool);
+    return Variables$Mutation$updateNotificationStatus._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String get app_type_id => (_$data['app_type_id'] as String);
+  int get user_id => (_$data['user_id'] as int);
+  bool get turn_off_notifications => (_$data['turn_off_notifications'] as bool);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$app_type_id = app_type_id;
+    result$data['app_type_id'] = l$app_type_id;
+    final l$user_id = user_id;
+    result$data['user_id'] = l$user_id;
+    final l$turn_off_notifications = turn_off_notifications;
+    result$data['turn_off_notifications'] = l$turn_off_notifications;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateNotificationStatus<
+          Variables$Mutation$updateNotificationStatus>
+      get copyWith => CopyWith$Variables$Mutation$updateNotificationStatus(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateNotificationStatus) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$app_type_id = app_type_id;
+    final lOther$app_type_id = other.app_type_id;
+    if (l$app_type_id != lOther$app_type_id) {
+      return false;
+    }
+    final l$user_id = user_id;
+    final lOther$user_id = other.user_id;
+    if (l$user_id != lOther$user_id) {
+      return false;
+    }
+    final l$turn_off_notifications = turn_off_notifications;
+    final lOther$turn_off_notifications = other.turn_off_notifications;
+    if (l$turn_off_notifications != lOther$turn_off_notifications) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$app_type_id = app_type_id;
+    final l$user_id = user_id;
+    final l$turn_off_notifications = turn_off_notifications;
+    return Object.hashAll([
+      l$app_type_id,
+      l$user_id,
+      l$turn_off_notifications,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateNotificationStatus<TRes> {
+  factory CopyWith$Variables$Mutation$updateNotificationStatus(
+    Variables$Mutation$updateNotificationStatus instance,
+    TRes Function(Variables$Mutation$updateNotificationStatus) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateNotificationStatus;
+
+  factory CopyWith$Variables$Mutation$updateNotificationStatus.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateNotificationStatus;
+
+  TRes call({
+    String? app_type_id,
+    int? user_id,
+    bool? turn_off_notifications,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateNotificationStatus<TRes>
+    implements CopyWith$Variables$Mutation$updateNotificationStatus<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateNotificationStatus(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateNotificationStatus _instance;
+
+  final TRes Function(Variables$Mutation$updateNotificationStatus) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? app_type_id = _undefined,
+    Object? user_id = _undefined,
+    Object? turn_off_notifications = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateNotificationStatus._({
+        ..._instance._$data,
+        if (app_type_id != _undefined && app_type_id != null)
+          'app_type_id': (app_type_id as String),
+        if (user_id != _undefined && user_id != null)
+          'user_id': (user_id as int),
+        if (turn_off_notifications != _undefined &&
+            turn_off_notifications != null)
+          'turn_off_notifications': (turn_off_notifications as bool),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateNotificationStatus<TRes>
+    implements CopyWith$Variables$Mutation$updateNotificationStatus<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateNotificationStatus(this._res);
+
+  TRes _res;
+
+  call({
+    String? app_type_id,
+    int? user_id,
+    bool? turn_off_notifications,
+  }) =>
+      _res;
+}
+
+class Mutation$updateNotificationStatus {
+  Mutation$updateNotificationStatus({
+    this.update_notification_info,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateNotificationStatus.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_notification_info = json['update_notification_info'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateNotificationStatus(
+      update_notification_info: l$update_notification_info == null
+          ? null
+          : Mutation$updateNotificationStatus$update_notification_info.fromJson(
+              (l$update_notification_info as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateNotificationStatus$update_notification_info?
+      update_notification_info;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_notification_info = update_notification_info;
+    _resultData['update_notification_info'] =
+        l$update_notification_info?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_notification_info = update_notification_info;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_notification_info,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateNotificationStatus) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_notification_info = update_notification_info;
+    final lOther$update_notification_info = other.update_notification_info;
+    if (l$update_notification_info != lOther$update_notification_info) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateNotificationStatus
+    on Mutation$updateNotificationStatus {
+  CopyWith$Mutation$updateNotificationStatus<Mutation$updateNotificationStatus>
+      get copyWith => CopyWith$Mutation$updateNotificationStatus(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateNotificationStatus<TRes> {
+  factory CopyWith$Mutation$updateNotificationStatus(
+    Mutation$updateNotificationStatus instance,
+    TRes Function(Mutation$updateNotificationStatus) then,
+  ) = _CopyWithImpl$Mutation$updateNotificationStatus;
+
+  factory CopyWith$Mutation$updateNotificationStatus.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateNotificationStatus;
+
+  TRes call({
+    Mutation$updateNotificationStatus$update_notification_info?
+        update_notification_info,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateNotificationStatus$update_notification_info<TRes>
+      get update_notification_info;
+}
+
+class _CopyWithImpl$Mutation$updateNotificationStatus<TRes>
+    implements CopyWith$Mutation$updateNotificationStatus<TRes> {
+  _CopyWithImpl$Mutation$updateNotificationStatus(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateNotificationStatus _instance;
+
+  final TRes Function(Mutation$updateNotificationStatus) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_notification_info = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateNotificationStatus(
+        update_notification_info: update_notification_info == _undefined
+            ? _instance.update_notification_info
+            : (update_notification_info
+                as Mutation$updateNotificationStatus$update_notification_info?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateNotificationStatus$update_notification_info<TRes>
+      get update_notification_info {
+    final local$update_notification_info = _instance.update_notification_info;
+    return local$update_notification_info == null
+        ? CopyWith$Mutation$updateNotificationStatus$update_notification_info
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateNotificationStatus$update_notification_info(
+            local$update_notification_info,
+            (e) => call(update_notification_info: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateNotificationStatus<TRes>
+    implements CopyWith$Mutation$updateNotificationStatus<TRes> {
+  _CopyWithStubImpl$Mutation$updateNotificationStatus(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateNotificationStatus$update_notification_info?
+        update_notification_info,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateNotificationStatus$update_notification_info<TRes>
+      get update_notification_info =>
+          CopyWith$Mutation$updateNotificationStatus$update_notification_info
+              .stub(_res);
+}
+
+const documentNodeMutationupdateNotificationStatus = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateNotificationStatus'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'app_type_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'user_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'turn_off_notifications')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Boolean'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_notification_info'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'app_type_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'app_type_id')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'user_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'user_id')),
+                  )
+                ]),
+              ),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'turn_off_notifications'),
+                value: VariableNode(
+                    name: NameNode(value: 'turn_off_notifications')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'returning'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'turn_off_notifications'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateNotificationStatus _parserFn$Mutation$updateNotificationStatus(
+        Map<String, dynamic> data) =>
+    Mutation$updateNotificationStatus.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateNotificationStatus = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateNotificationStatus?,
+);
+
+class Options$Mutation$updateNotificationStatus
+    extends graphql.MutationOptions<Mutation$updateNotificationStatus> {
+  Options$Mutation$updateNotificationStatus({
+    String? operationName,
+    required Variables$Mutation$updateNotificationStatus variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateNotificationStatus? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateNotificationStatus>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateNotificationStatus(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateNotificationStatus,
+          parserFn: _parserFn$Mutation$updateNotificationStatus,
+        );
+
+  final OnMutationCompleted$Mutation$updateNotificationStatus?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateNotificationStatus
+    extends graphql.WatchQueryOptions<Mutation$updateNotificationStatus> {
+  WatchOptions$Mutation$updateNotificationStatus({
+    String? operationName,
+    required Variables$Mutation$updateNotificationStatus variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateNotificationStatus,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateNotificationStatus,
+        );
+}
+
+extension ClientExtension$Mutation$updateNotificationStatus
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateNotificationStatus>>
+      mutate$updateNotificationStatus(
+              Options$Mutation$updateNotificationStatus options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateNotificationStatus>
+      watchMutation$updateNotificationStatus(
+              WatchOptions$Mutation$updateNotificationStatus options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateNotificationStatus$update_notification_info {
+  Mutation$updateNotificationStatus$update_notification_info({
+    required this.returning,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateNotificationStatus$update_notification_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$returning = json['returning'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateNotificationStatus$update_notification_info(
+      returning: (l$returning as List<dynamic>)
+          .map((e) =>
+              Mutation$updateNotificationStatus$update_notification_info$returning
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Mutation$updateNotificationStatus$update_notification_info$returning>
+      returning;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$returning = returning;
+    _resultData['returning'] = l$returning.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$returning = returning;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$returning.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateNotificationStatus$update_notification_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$returning = returning;
+    final lOther$returning = other.returning;
+    if (l$returning.length != lOther$returning.length) {
+      return false;
+    }
+    for (int i = 0; i < l$returning.length; i++) {
+      final l$returning$entry = l$returning[i];
+      final lOther$returning$entry = lOther$returning[i];
+      if (l$returning$entry != lOther$returning$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateNotificationStatus$update_notification_info
+    on Mutation$updateNotificationStatus$update_notification_info {
+  CopyWith$Mutation$updateNotificationStatus$update_notification_info<
+          Mutation$updateNotificationStatus$update_notification_info>
+      get copyWith =>
+          CopyWith$Mutation$updateNotificationStatus$update_notification_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateNotificationStatus$update_notification_info<
+    TRes> {
+  factory CopyWith$Mutation$updateNotificationStatus$update_notification_info(
+    Mutation$updateNotificationStatus$update_notification_info instance,
+    TRes Function(Mutation$updateNotificationStatus$update_notification_info)
+        then,
+  ) = _CopyWithImpl$Mutation$updateNotificationStatus$update_notification_info;
+
+  factory CopyWith$Mutation$updateNotificationStatus$update_notification_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateNotificationStatus$update_notification_info;
+
+  TRes call({
+    List<Mutation$updateNotificationStatus$update_notification_info$returning>?
+        returning,
+    String? $__typename,
+  });
+  TRes returning(
+      Iterable<Mutation$updateNotificationStatus$update_notification_info$returning> Function(
+              Iterable<
+                  CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning<
+                      Mutation$updateNotificationStatus$update_notification_info$returning>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$updateNotificationStatus$update_notification_info<
+        TRes>
+    implements
+        CopyWith$Mutation$updateNotificationStatus$update_notification_info<
+            TRes> {
+  _CopyWithImpl$Mutation$updateNotificationStatus$update_notification_info(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateNotificationStatus$update_notification_info _instance;
+
+  final TRes Function(
+      Mutation$updateNotificationStatus$update_notification_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? returning = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateNotificationStatus$update_notification_info(
+        returning: returning == _undefined || returning == null
+            ? _instance.returning
+            : (returning as List<
+                Mutation$updateNotificationStatus$update_notification_info$returning>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes returning(
+          Iterable<Mutation$updateNotificationStatus$update_notification_info$returning> Function(
+                  Iterable<
+                      CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning<
+                          Mutation$updateNotificationStatus$update_notification_info$returning>>)
+              _fn) =>
+      call(
+          returning: _fn(_instance.returning.map((e) =>
+              CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$updateNotificationStatus$update_notification_info<
+        TRes>
+    implements
+        CopyWith$Mutation$updateNotificationStatus$update_notification_info<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateNotificationStatus$update_notification_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$updateNotificationStatus$update_notification_info$returning>?
+        returning,
+    String? $__typename,
+  }) =>
+      _res;
+  returning(_fn) => _res;
+}
+
+class Mutation$updateNotificationStatus$update_notification_info$returning {
+  Mutation$updateNotificationStatus$update_notification_info$returning({
+    required this.turn_off_notifications,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateNotificationStatus$update_notification_info$returning.fromJson(
+      Map<String, dynamic> json) {
+    final l$turn_off_notifications = json['turn_off_notifications'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateNotificationStatus$update_notification_info$returning(
+      turn_off_notifications: (l$turn_off_notifications as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool turn_off_notifications;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$turn_off_notifications = turn_off_notifications;
+    _resultData['turn_off_notifications'] = l$turn_off_notifications;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$turn_off_notifications = turn_off_notifications;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$turn_off_notifications,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateNotificationStatus$update_notification_info$returning) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$turn_off_notifications = turn_off_notifications;
+    final lOther$turn_off_notifications = other.turn_off_notifications;
+    if (l$turn_off_notifications != lOther$turn_off_notifications) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateNotificationStatus$update_notification_info$returning
+    on Mutation$updateNotificationStatus$update_notification_info$returning {
+  CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning<
+          Mutation$updateNotificationStatus$update_notification_info$returning>
+      get copyWith =>
+          CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning<
+    TRes> {
+  factory CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning(
+    Mutation$updateNotificationStatus$update_notification_info$returning
+        instance,
+    TRes Function(
+            Mutation$updateNotificationStatus$update_notification_info$returning)
+        then,
+  ) = _CopyWithImpl$Mutation$updateNotificationStatus$update_notification_info$returning;
+
+  factory CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateNotificationStatus$update_notification_info$returning;
+
+  TRes call({
+    bool? turn_off_notifications,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateNotificationStatus$update_notification_info$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning<
+            TRes> {
+  _CopyWithImpl$Mutation$updateNotificationStatus$update_notification_info$returning(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateNotificationStatus$update_notification_info$returning
+      _instance;
+
+  final TRes Function(
+          Mutation$updateNotificationStatus$update_notification_info$returning)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? turn_off_notifications = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateNotificationStatus$update_notification_info$returning(
+        turn_off_notifications: turn_off_notifications == _undefined ||
+                turn_off_notifications == null
+            ? _instance.turn_off_notifications
+            : (turn_off_notifications as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateNotificationStatus$update_notification_info$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$updateNotificationStatus$update_notification_info$returning<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateNotificationStatus$update_notification_info$returning(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? turn_off_notifications,
     String? $__typename,
   }) =>
       _res;

@@ -3,6 +3,7 @@ query GetPastDeliveryMessages($driver_id: Int!, $limit: Int!, $offset: Int!) {
     distinct_on: phone_number
     limit: $limit
     offset: $offset
+    order_by: { received_time: desc }
     where: {
       driver_id: { _eq: $driver_id }
       finished_time: { _is_null: false }
@@ -58,6 +59,11 @@ subscription listenCurrentDeliveryMessages($driver_id: Int!) {
       name
       image
     }
+    driver {
+      user {
+        name
+      }
+    }
   }
 }
 query GetOpenDeliveryMessages {
@@ -99,7 +105,10 @@ subscription ListenOpenDeliveryMessages {
   }
 }
 query GetCustomerDeliveryMessages($phone_number: String!) {
-  delivery_messages(where: { phone_number: { _eq: $phone_number } }) {
+  delivery_messages(
+    where: { phone_number: { _eq: $phone_number } }
+    order_by: { received_time: asc }
+  ) {
     id
     entry
     phone_number
@@ -108,22 +117,12 @@ query GetCustomerDeliveryMessages($phone_number: String!) {
     finished_time
     user_id
     responded_time
-    customer {
-      name
-      image
+    driver {
+      user {
+        name
+        phone
+      }
     }
-  }
-}
-subscription listenOnNewCustomerDeliveryMessages($phone_number: String!) {
-  delivery_messages(where: { phone_number: { _eq: $phone_number } }) {
-    id
-    entry
-    phone_number
-    driver_id
-    received_time
-    finished_time
-    user_id
-    responded_time
     customer {
       name
       image

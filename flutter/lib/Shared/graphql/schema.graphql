@@ -13212,6 +13212,9 @@ columns and relationships of "delivery_messages"
 type delivery_messages {
   """An object relationship"""
   customer: user
+
+  """An object relationship"""
+  driver: delivery_driver
   driver_id: Int
   entry(
     """JSON select path"""
@@ -13270,6 +13273,7 @@ input delivery_messages_bool_exp {
   _not: delivery_messages_bool_exp
   _or: [delivery_messages_bool_exp!]
   customer: user_bool_exp
+  driver: delivery_driver_bool_exp
   driver_id: Int_comparison_exp
   entry: jsonb_comparison_exp
   finished_time: timestamptz_comparison_exp
@@ -13326,6 +13330,7 @@ input type for inserting data into table "delivery_messages"
 """
 input delivery_messages_insert_input {
   customer: user_obj_rel_insert_input
+  driver: delivery_driver_obj_rel_insert_input
   driver_id: Int
   entry: jsonb
   finished_time: timestamptz
@@ -13381,6 +13386,7 @@ input delivery_messages_on_conflict {
 """Ordering options when selecting data from "delivery_messages"."""
 input delivery_messages_order_by {
   customer: user_order_by
+  driver: delivery_driver_order_by
   driver_id: order_by
   entry: order_by
   finished_time: order_by

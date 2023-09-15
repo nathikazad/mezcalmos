@@ -1,17 +1,35 @@
 mutation insertNotifInfo($notifData: notification_info_insert_input!) {
   insert_notification_info_one(
-    object: $notifData, 
+    object: $notifData
     on_conflict: {
-      constraint: notification_info_app_type_id_user_id_key, 
-      update_columns: token}) {
+      constraint: notification_info_app_type_id_user_id_key
+      update_columns: token
+    }
+  ) {
     id
   }
 }
 mutation updateNotifInfo($id: Int!, $notifData: notification_info_set_input!) {
   update_notification_info_by_pk(pk_columns: { id: $id }, _set: $notifData) {
     id
+    turn_off_notifications
   }
 }
+mutation updateNotificationStatus(
+  $app_type_id: String!
+  $user_id: Int!
+  $turn_off_notifications: Boolean!
+) {
+  update_notification_info(
+    where: { app_type_id: { _eq: $app_type_id }, user_id: { _eq: $user_id } }
+    _set: { turn_off_notifications: $turn_off_notifications }
+  ) {
+    returning {
+      turn_off_notifications
+    }
+  }
+}
+
 query getNotifInfoByUserId($userId: Int!, $app_type_id: String!) {
   notification_info(
     where: { user_id: { _eq: $userId }, app_type_id: { _eq: $app_type_id } }

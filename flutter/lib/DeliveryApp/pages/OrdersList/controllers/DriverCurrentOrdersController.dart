@@ -2,8 +2,12 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/hsDeliveryMessage.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class DriverCurrentOrdersController {
@@ -70,20 +74,42 @@ class DriverCurrentOrdersController {
   }
 
   Future<void> switchOnlineStatus(bool value) async {
-    // onlineClicked.value = true;
-    // _isOnline.value = await switch_driver_online_status_by_id(
-    //         driverId: driverId, online: value) ??
-    //     opAuthController.driverState!.isOnline;
-    // _isOnline.refresh();
-    // if (value) {
-    //   unawaited(opAuthController
-    //       .setupDeliveryDriver()
-    //       .then((value) => opAuthController.startLocationListener()));
-    // } else {
-    //   opAuthController.cancelLocationListener();
-    // }
+    onlineClicked.value = true;
+    _isOnline.value = await switch_notifications_status(
+            turnOffNotif: value,
+            appType: AppType.Delivery,
+            userId: opAuthController.driver!.driverInfo.hasuraId) ??
+        _isOnline.value;
 
-    // onlineClicked.value = false;
+    _isOnline.refresh();
+    if (value) {
+      unawaited(opAuthController
+          .setupDeliveryDriver()
+          .then((value) => opAuthController.startLocationListener()));
+    } else {
+      opAuthController.cancelLocationListener();
+    }
+
+    onlineClicked.value = false;
+  }
+
+  Future<void> finishAllOrders() async {
+    List<String> numbers = currentOrders
+        .map((DeliveryMessage element) => element.phoneNumber)
+        .toList();
+    try {
+      final MarkMessagesResponse res =
+          await CloudFunctions.whatsapp_markMessagesAsFinished(
+              phoneNumbers: numbers);
+      if (res.success) {
+        showSavedSnackBar(
+            title: "Finished", subtitle: "All messgaes are finished");
+      }
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   void dispose() {
@@ -97,6 +123,8 @@ class DeliveryMessage {
   final String phoneNumber;
   final String? userName;
   final String? userImage;
+  final String? driverName;
+  final String? driverPhone;
   final int? driverId;
   final DateTime receivedTime;
   final DateTime? finishedTime;
@@ -114,6 +142,8 @@ class DeliveryMessage {
     this.respondedTime,
     this.userImage,
     this.userName,
+    this.driverName,
+    this.driverPhone,
   });
   bool get isResponded => respondedTime != null && driverId != null;
 }

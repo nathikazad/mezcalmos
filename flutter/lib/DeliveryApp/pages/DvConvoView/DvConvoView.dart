@@ -1,18 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/controllers/DvConvoViewController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/Chat/MezChatBubble.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class DvConvoView extends StatefulWidget {
   const DvConvoView({super.key});
@@ -54,9 +52,8 @@ class _DvConvoViewState extends State<DvConvoView> {
       bottomNavigationBar: Obx(
         () => !viewController.isFinished
             ? MezButton(
-                label: viewController.showAcceptBtn
-                    ? "Accept Order"
-                    : "Finish order",
+                label:
+                    viewController.showAcceptBtn ? "Respond" : "Finish order",
                 borderRadius: 0,
                 backgroundColor: viewController.showAcceptBtn
                     ? Colors.green
@@ -72,6 +69,7 @@ class _DvConvoViewState extends State<DvConvoView> {
           children: [
             Expanded(
               child: ListView.builder(
+                  controller: viewController.scrollController,
                   itemCount: viewController.dvMessages.length,
                   padding: const EdgeInsets.all(16),
                   itemBuilder: (BuildContext context, int index) {
@@ -91,13 +89,7 @@ class _DvConvoViewState extends State<DvConvoView> {
                             imageUrl: message.userImage,
                           ),
                           if (message.isResponded)
-                            MezCard(
-                                margin: const EdgeInsets.only(top: 15),
-                                firstAvatarBgImage: CachedNetworkImageProvider(
-                                    viewController.driverImage),
-                                content: Text(
-                                    "${viewController.driverName} responded at ${message.respondedTime!.getOrderTime()}",
-                                    style: context.textTheme.bodyLarge))
+                            _driverResponded(context, message)
                         ],
                       );
                     } else {
@@ -109,52 +101,86 @@ class _DvConvoViewState extends State<DvConvoView> {
                             imageUrl: message.userImage,
                           ),
                           if (message.isResponded)
-                            MezCard(
-                                margin: const EdgeInsets.only(top: 15),
-                                firstAvatarBgImage: CachedNetworkImageProvider(
-                                    viewController.driverImage),
-                                content: Text(
-                                    "${viewController.driverName} responded at ${message.respondedTime!.getOrderTime()}",
-                                    style: context.textTheme.bodyLarge))
+                            _driverResponded(context, message)
                         ],
                       );
                     }
                   }),
             ),
             smallSepartor,
-            if (viewController.isResponded)
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                child: MezButton(
-                  width: double.infinity,
-                  borderRadius: 20,
-                  elevation: 0.7,
-                  height: 50,
-                  label: "Open Whatsapp",
-                  icon: Ionicons.logo_whatsapp,
-                  onClick: () async {
-                    await callWhatsappNumber(viewController.phoneNumber);
-                  },
-                  backgroundColor: Colors.white,
-                  textColor: Colors.green,
-                ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+              child: Row(
+                children: [
+                  if (viewController.isResponded)
+                    Flexible(
+                      child: MezButton(
+                        width: double.infinity,
+                        borderRadius: 15,
+                        elevation: 0.7,
+                        height: 40,
+                        label: "Open Whatsapp",
+                        icon: Ionicons.logo_whatsapp,
+                        onClick: () async {
+                          await callWhatsappNumber(viewController.phoneNumber);
+                        },
+                        textColor: Colors.white,
+                        backgroundColor: Colors.green,
+                      ),
+                    ),
+                  if (viewController.isResponded &&
+                      !viewController.isFinished &&
+                      !viewController.showAcceptBtn)
+                    hSmallSepartor,
+                  if (!viewController.isFinished &&
+                      !viewController.showAcceptBtn)
+                    Flexible(
+                      child: MezButton(
+                        label: "Cancel order",
+                        borderRadius: 15,
+                        height: 40,
+                        onClick: () async {},
+                        border: BorderSide(width: 1, color: redAccentColor),
+                        backgroundColor: Colors.white,
+                        textColor: redAccentColor,
+                      ),
+                    ),
+                ],
               ),
-            if (!viewController.isFinished)
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                child: MezButton(
-                  label: "Cancel order",
-                  borderRadius: 20,
-                  height: 50,
-                  onClick: () async {},
-                  backgroundColor: offRedColor,
-                  textColor: redAccentColor,
-                ),
-              ),
+            ),
             smallSepartor,
           ],
         ),
       ),
+    );
+  }
+
+  Widget _driverResponded(BuildContext context, DeliveryMessage message) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Text.rich(TextSpan(children: [
+        WidgetSpan(
+          child: InkWell(
+            onTap: () {
+              if (message.driverPhone != null) {
+                callWhatsappNumber(message.driverPhone!);
+              }
+            },
+            child: Ink(
+              child: Text(
+                "${message.driverName}",
+                style: context.textTheme.bodyMedium?.copyWith(
+                    color: primaryBlueColor,
+                    decoration: TextDecoration.underline),
+              ),
+            ),
+          ),
+        ),
+        WidgetSpan(child: hTinySepartor),
+        TextSpan(
+            text:
+                "Responded at ${DateFormat("hh:mm a").format(message.respondedTime!)}"),
+      ])),
     );
   }
 
@@ -167,7 +193,7 @@ class _DvConvoViewState extends State<DvConvoView> {
   Widget _buildDateTitle(DateTime dateTime) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(dateTime.getOrderTime(),
+      child: Text(DateFormat("dd-MM-yyyy").format(dateTime),
           style: context.textTheme.bodyMedium
               ?.copyWith(color: Colors.grey.shade700)),
     );

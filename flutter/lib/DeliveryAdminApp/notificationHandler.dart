@@ -31,7 +31,8 @@ Notification deliveryAdminNotificationHandler(String key, value) {
     case NotificationType.OrderStatusChange:
       return deliveryOpOrderChangesNotifier(key, value);
     default:
-      throw StateError("Invalid Notification Type");
+      throw StateError(
+          "Invalid Notification Type=======>${value['notificationType']}");
   }
 }
 

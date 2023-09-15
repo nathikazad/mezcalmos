@@ -3710,7 +3710,9 @@
       "deliveredTitle": "Delivered",
       "deliveredBody": "Order has been delivered",
       "driverNotifTitle": "New order",
-      "driverNotifBody": "You got a new order"
+      "driverNotifBody": "You got a new order",
+      "messageNotifTitle": "New Message",
+      "messageNotifBody": "You got a new message"
     }
   },
   "LaundryApp": {

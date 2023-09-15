@@ -43,7 +43,7 @@ class DvConvoCard extends StatelessWidget {
                   ),
                 ),
                 WidgetSpan(child: hTinySepartor),
-                TextSpan(text: message.receivedTime.getEstimatedTime()),
+                TextSpan(text: message.receivedTime.getOrderTime()),
               ],
             ),
           ),

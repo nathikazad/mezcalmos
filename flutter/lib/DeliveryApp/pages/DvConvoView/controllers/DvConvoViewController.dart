@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
@@ -14,6 +15,7 @@ class DvConvoViewController {
   // instances
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
   DeliveryAuthController _authController = Get.find<DeliveryAuthController>();
+  ScrollController scrollController = ScrollController();
 
   // vars
   late String phoneNumber;
@@ -43,19 +45,29 @@ class DvConvoViewController {
 
   Future<void> init({required String phoneNumber}) async {
     this.phoneNumber = phoneNumber;
+    await _fetchMessages();
+
+    WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+      if (dvMessages.isNotEmpty && scrollController.hasClients) {
+        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      }
+    });
+    // subscriptionId = _hasuraDb.createSubscription(start: () {
+    //   newMessagesStream = listenCustomerNewDvMessages(phoneNumber: phoneNumber)
+    //       .listen((List<DeliveryMessage>? event) {
+    //     if (event != null) {
+    //       dvMessages.value = event;
+    //     }
+    //   });
+    // }, cancel: () {
+    //   newMessagesStream?.cancel();
+    //   newMessagesStream = null;
+    // });
+  }
+
+  Future<void> _fetchMessages() async {
     dvMessages.value =
         await getCustomerDvMessages(phoneNumber: phoneNumber, withCache: false);
-    subscriptionId = _hasuraDb.createSubscription(start: () {
-      newMessagesStream = listenCustomerNewDvMessages(phoneNumber: phoneNumber)
-          .listen((List<DeliveryMessage>? event) {
-        if (event != null) {
-          dvMessages.value = event;
-        }
-      });
-    }, cancel: () {
-      newMessagesStream?.cancel();
-      newMessagesStream = null;
-    });
   }
 
   Future<void> handleClick() async {
@@ -66,6 +78,7 @@ class DvConvoViewController {
                 phoneNumber: phoneNumber);
         if (res.success) {
           await callWhatsappNumber(phoneNumber);
+          await _fetchMessages();
         } else
           showErrorSnackBar(errorText: res.unhandledError.toString());
       } on Exception catch (e) {
@@ -80,6 +93,7 @@ class DvConvoViewController {
                 phoneNumbers: [phoneNumber]);
         if (res.success) {
           showSavedSnackBar(title: "Finished", subtitle: "Marked as finished");
+          await _fetchMessages();
         } else
           showErrorSnackBar(errorText: res.unhandledError.toString());
       } on Exception catch (e) {

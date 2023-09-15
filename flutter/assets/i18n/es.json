@@ -3744,7 +3744,9 @@
       "laundryDeliveredTitle": "Entregada",
       "LaundryDeliveredBody": "Pedido ha sido entregado",
       "driverNotifTitle": "Nuevo orden",
-      "driverNotifBody": "Tienes un nuevo pedido"
+      "driverNotifBody": "Tienes un nuevo pedido",
+      "messageNotifTitle": "Nuevo mensaje",
+      "messageNotifBody": "Tienes un nuevo mensaje"
     }
   },
   "LaundryApp": {
