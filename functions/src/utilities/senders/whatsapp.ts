@@ -40,7 +40,7 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
                 insert_delivery_messages_one: [{
                   object: {
                     entry: $`entry`,
-                    phone_number: from
+                    phone_number: '+'+from
                   }
                 }, {
                   id: true
@@ -86,7 +86,7 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
 
   function notifyDrivers(drivers: DeliveryDriver[], notification: Notification) {
     drivers.forEach((d) => {
-      if (!d.user)
+      if (!d.user || d.notificationInfo?.turnOffNotifications == true)
         return;
       pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
     });

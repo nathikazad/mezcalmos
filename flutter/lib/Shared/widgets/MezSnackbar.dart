@@ -1,7 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:sizer/sizer.dart';
 
 void MezSnackbar(String title, String? msg,
     {Alignment position = Alignment.topCenter,
@@ -13,7 +12,7 @@ void MezSnackbar(String title, String? msg,
     align: position,
     duration: duration,
     contentPadding: padding,
-    borderRadius: 0,
+    borderRadius: 0.toDouble(),
     title: (cancelFunc) => Text(
       title,
       style: TextStyle(
@@ -56,7 +55,7 @@ void customSnackBar(
     align: position,
     duration: duration,
     contentPadding: padding,
-    borderRadius: 0,
+    borderRadius: 0.toDouble(),
     title: (cancelFunc) => Text(
       title,
       style: TextStyle(
