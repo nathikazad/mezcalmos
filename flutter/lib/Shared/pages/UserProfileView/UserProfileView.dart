@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -158,6 +159,7 @@ class _UserProfileViewState extends State<UserProfileView> {
               secondaryButtonText: "${_i18n()["deleteScBtn"]}",
               helperText: "${_i18n()["deleteHelper"]}",
               onYesClick: () async {
+                unawaited(CloudFunctions.user2_deleteUserAccount());
                 unawaited(Get.find<AuthController>().signOut());
               },
             );
