@@ -47,21 +47,33 @@ class _CustDeliveryTypeSelectorState extends State<CustDeliveryTypeSelector> {
           style: context.textTheme.bodyLarge,
         ),
         smallSepartor,
-        MezStringDropDown(
-          value: selectedValue.value.toFirebaseFormatString(),
-          fillColor: Colors.white,
-          elementsTextStyle: context.textTheme.bodyLarge,
-          items: widget.types
-              .map((DeliveryType element) => element.toFirebaseFormatString())
-              .toList(),
-          onChanged: (String? v) {
-            mezDbgPrint("Changed value =>$v");
-            final DeliveryType dvType = v.toString().toDeliveryType();
-            widget.onDeliveryTypeChanged.call(dvType);
-          },
-          labelText: "${_i18n()['dvType']}",
-          langPath: _i18n(),
-        ),
+        (widget.types.length > 1)
+            ? MezStringDropDown(
+                value: selectedValue.value.toFirebaseFormatString(),
+                fillColor: Colors.white,
+                elementsTextStyle: context.textTheme.bodyLarge,
+                items: widget.types
+                    .map((DeliveryType element) =>
+                        element.toFirebaseFormatString())
+                    .toList(),
+                onChanged: (String? v) {
+                  mezDbgPrint("Changed value =>$v");
+                  final DeliveryType dvType = v.toString().toDeliveryType();
+                  widget.onDeliveryTypeChanged.call(dvType);
+                },
+                labelText: "${_i18n()['dvType']}",
+                langPath: _i18n(),
+              )
+            : Card(
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  width: double.infinity,
+                  child: Text(
+                    "${_i18n()[selectedValue.value.toFirebaseFormatString()]}",
+                    style: context.textTheme.bodyLarge,
+                  ),
+                ),
+              ),
         meduimSeperator
       ],
     );

@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:shimmer/shimmer.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["components"]["CustRestaurantCard"];
 
 class CustRestaurantCard extends StatelessWidget {
   final Restaurant? restaurant;
@@ -86,7 +90,7 @@ class CustRestaurantCard extends StatelessWidget {
                               ),
                             ),
                             WidgetSpan(child: hTinySepartor),
-                            TextSpan(text: "Closed"),
+                            TextSpan(text: "${_i18n()['closed']}"),
                           ]))),
                     ),
                 ],
@@ -143,22 +147,13 @@ class CustRestaurantCard extends StatelessWidget {
                           maxLines: 1,
                         ),
                       Spacer(),
-                      Text.rich(
-                        TextSpan(children: [
-                          WidgetSpan(
-                            child: Icon(
-                              Icons.place_rounded,
-                              color: Colors.grey,
-                              size: 15.mezSp,
-                            ),
-                          ),
-                          WidgetSpan(child: hTinySepartor),
-                          TextSpan(
-                              text: restaurant!.info.location.address,
-                              style: context.textTheme.bodyMedium)
-                        ]),
-                        maxLines: 1,
-                      )
+                      (restaurant!.hasDelivery && restaurant!.hasPickup)
+                          ? Text("${_i18n()['dvOrPick']}")
+                          : (restaurant!.hasDelivery)
+                              ? Text("${_i18n()['onlyDv']}")
+                              : (restaurant!.hasDelivery)
+                                  ? Text("${_i18n()['onlyPick']}")
+                                  : SizedBox()
                     ],
                   ),
                 ),

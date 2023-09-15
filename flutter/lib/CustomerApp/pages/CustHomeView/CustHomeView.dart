@@ -43,35 +43,62 @@ class _CustHomeViewState extends State<CustHomeView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 65),
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: Obx(
-            () => MezInkwell(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              onClick: () async {
-                viewController.switchView();
-              },
-              icon: viewController.isMapView ? Icons.list : Icons.map_rounded,
-              label: viewController.isMapView
-                  ? '${_i18n()['viewAsList']}'
-                  : '${_i18n()['viewOnMap']}',
-              borderRadius: 50,
+
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 65),
+      //   child: Align(
+      //     alignment: Alignment.bottomCenter,
+      //     child: Obx(
+      //       () => MezInkwell(
+      //         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      //         onClick: () async {
+      //           viewController.switchView();
+      //         },
+      //         icon: viewController.isMapView ? Icons.list : Icons.map_rounded,
+      //         label: viewController.isMapView
+      //             ? '${_i18n()['viewAsList']}'
+      //             : '${_i18n()['viewOnMap']}',
+      //         borderRadius: 50,
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      // floatingActionButtonLocation: viewController.dockedFabLocation(context),
+      body: Stack(
+        children: [
+          Obx(() {
+            if (viewController.isMapView)
+              return _mapView();
+            else
+              return listScrollView();
+          }),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Obx(
+              () => Padding(
+                padding: EdgeInsets.only(bottom: 60),
+                child: MezInkwell(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  onClick: () async {
+                    viewController.switchView();
+                  },
+                  icon:
+                      viewController.isMapView ? Icons.list : Icons.map_rounded,
+                  label: viewController.isMapView
+                      ? '${_i18n()['viewAsList']}'
+                      : '${_i18n()['viewOnMap']}',
+                  borderRadius: 50,
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: Obx(() {
-        if (viewController.isMapView)
-          return _mapView();
-        else
-          return listScrollView();
-      }),
     );
   }
 
@@ -140,7 +167,7 @@ class _CustHomeViewState extends State<CustHomeView>
                             await viewController.fetchMore();
                           },
                         ),
-                      )
+                      ),
                     ]
                   ],
                 ),
@@ -190,7 +217,7 @@ class _CustHomeViewState extends State<CustHomeView>
                               await viewController.fetchMore();
                             },
                           ),
-                        )
+                        ),
                       ]
                     ],
                   );
@@ -397,9 +424,39 @@ class _CustHomeViewState extends State<CustHomeView>
     );
   }
 
+  // Widget _switchViewBtn() {
+  //   return Transform.scale(
+  //     scale: 0.8,
+  //     child: InkWell(
+  //       onTap: () {
+  //         viewController.switchView();
+  //       },
+  //       child: Ink(
+  //         padding: const EdgeInsets.all(8),
+  //         height: 20,
+  //         decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(16),
+  //             boxShadow: [
+  //               BoxShadow(
+  //                 color: Color.fromARGB(255, 216, 225, 249),
+  //                 spreadRadius: 0,
+  //                 blurRadius: 7,
+  //                 offset: Offset(0, 7),
+  //               ),
+  //             ],
+  //             color: primaryBlueColor),
+  //         child: Icon(
+  //           viewController.isMapView ? Icons.list : Icons.map_rounded,
+  //           color: Colors.white,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   Widget _mapView() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      MezcalmosAppBar(AppBarLeftButtonType.Menu),
+      MezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: []),
       Obx(
         () => Expanded(
           child: MezServicesMapView(
@@ -422,4 +479,21 @@ class _CustHomeViewState extends State<CustHomeView>
       ),
     ]);
   }
+
+  // Obx _switchMapBtn() {
+  //   return Obx(
+  //     () => MezIconButton(
+  //       //  shape: BoxShape.rectangle,
+  //       // margin: const EdgeInsets.all(3),
+  //       padding: const EdgeInsets.all(8),
+
+  //       onTap: () {
+  //         viewController.switchView();
+  //       },
+  //       icon: viewController.isMapView ? Icons.list : Icons.map_rounded,
+  //       backgroundColor: primaryBlueColor,
+  //       iconColor: Colors.white,
+  //     ),
+  //   );
+  // }
 }

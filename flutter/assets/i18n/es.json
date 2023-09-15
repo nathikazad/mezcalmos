@@ -519,6 +519,12 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "CustRestaurantCard": {
+        "closed": "Cerrado",
+        "onlyDv": "🚚 Solo Entrega",
+        "onlyPick": "🛍️ Solo Recogida",
+        "dvOrPick": "🚚 Entrega o 🛍️ Recogida"
+      },
       "MezServicesMapView": {
         "fetch": "Buscar en esta área"
       },
