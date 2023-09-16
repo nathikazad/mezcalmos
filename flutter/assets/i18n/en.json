@@ -533,7 +533,7 @@
         "fetch": "Fetch in this area"
       },
       "CustDeliveryTypeSelector": {
-        "dvType": "Delivery type",
+        "dvType": "Order type",
         "delivery": "Delivery",
         "pickup": "In-store Pickup",
         "sitIn": "Sit-in"
@@ -1110,7 +1110,7 @@
             "notesTitle": "Notes",
             "notes": "Write your notes here",
             "deliveryLocation": "Delivery location",
-            "deliveryType": "Delivery type",
+            "deliveryType": "Order type",
             "paymentMethod": "Payment method",
             "ops": "Oops",
             "restaurantClosed": "Restuarnt is closed now",
@@ -2931,7 +2931,7 @@
         "deliveryDetails": "Delivery details"
       },
       "OrderDeliveryType": {
-        "title": "Delivery type",
+        "title": "Order type",
         "delivery": "Delivery",
         "pickup": "In-store Pickup"
       },
