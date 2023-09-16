@@ -2,7 +2,7 @@
 import * as firebase from "firebase-admin";
 import * as functions from 'firebase-functions';
 import axios from "axios";
-import { getHasura } from "../hasura";
+import { getHasura, getStagingHasura } from "../hasura";
 import { $ } from "../../../../hasura/library/src/generated/graphql-zeus";
 import { DeliveryDriver } from "../../shared/models/Generic/Delivery";
 import { getAllDeliveryDrivers } from "../../shared/graphql/delivery/driver/getDeliveryDriver";
@@ -13,25 +13,28 @@ import { Entry, ImageMessage } from "../../shared/models/WhatsApp";
 import { MezError } from "../../shared/models/Generic/Generic";
 
 export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
-  if (
-    req.query['hub.verify_token'] !== "jkdawg"
-  )
-    throw new functions.https.HttpsError('invalid-argument', 'The function must be called with correct token.');
-
+  // if (
+  //   req.query['hub.verify_token'] !== "jkdawg"
+  // )
+  //   throw new functions.https.HttpsError('invalid-argument', 'The function must be called with correct token.');
+  
   if (req.query['hub.challenge']) {
     res.send(req.query['hub.challenge']);
     return;
   }
-
+  
   if (req.body && req.body.entry) {
-    addMessageToDatabase(req.body.entry);
-    let drivers: DeliveryDriver[] = await getAllDeliveryDrivers();
-    notifyDrivers(drivers);
-    setTimeout(() => notifyDrivers(drivers), 10000);
-    setTimeout(() => notifyDrivers(drivers), 20000);
+    let phoneNumber = await addMessageToDatabase(req.body.entry);
+    if(phoneNumber) {
+      let drivers: DeliveryDriver[] = await getAllDeliveryDrivers();
+      notifyDrivers(drivers, phoneNumber);
+      setTimeout(() => notifyDrivers(drivers, phoneNumber), 10000);
+    }
+    // setTimeout(() => notifyDrivers(drivers), 20000);
   }
+  res.status(200).send(`Success`);
 
-  function notifyDrivers(drivers: DeliveryDriver[]) {
+  function notifyDrivers(drivers: DeliveryDriver[], phoneNumber: string | null) {
     let notification: Notification = {
       foreground: <ForegroundNotification>{
         time: (new Date()).toISOString(),
@@ -48,7 +51,7 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
           body: ""
         }
       },
-      linkUrl: `/`
+      linkUrl: `/convo/${phoneNumber}`
     }
     drivers.forEach((d) => {
       if (!d.user || d.notificationInfo?.turnOffNotifications == true)
@@ -58,8 +61,10 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
   }
 });
 
-export async function addMessageToDatabase(entries: Entry[]) {
+export async function addMessageToDatabase(entries: Entry[]): Promise<string | null> {
   const chain = getHasura();
+  const stagingDb = getStagingHasura();
+  let phoneNumber = null;
   for (const entry of entries) {
     if (entry.changes) {
       for (const change of entry.changes) {
@@ -69,7 +74,20 @@ export async function addMessageToDatabase(entries: Entry[]) {
             if (message.type === 'image' && message.image) {
               message.image.url = await downloadImage(message.image);
             }
+            phoneNumber = '+' + from;
             chain.mutation({
+              insert_delivery_messages_one: [{
+                object: {
+                  entry: $`entry`,
+                  phone_number: '+' + from
+                }
+              }, {
+                id: true
+              }]
+            }, {
+              "entry": message
+            })
+            stagingDb.mutation({
               insert_delivery_messages_one: [{
                 object: {
                   entry: $`entry`,
@@ -86,6 +104,7 @@ export async function addMessageToDatabase(entries: Entry[]) {
       }
     }
   }
+  return phoneNumber;
 }
 
 
