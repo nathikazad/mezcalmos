@@ -11,6 +11,7 @@ query getRestaurants(
   restaurant_restaurant(
     where: {
       details: {
+        phone_number: { _is_null: false}
         name: { _ilike: $keyword }
         is_open: $is_open
         open_status: { _eq: "open" }
