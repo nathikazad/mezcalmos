@@ -22,17 +22,26 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
     res.send(req.query['hub.challenge']);
     return;
   }
+  console.log("here1");
   
   if (req.body && req.body.entry) {
-    let phoneNumber = await addMessageToDatabase(req.body.entry);
-    if(phoneNumber) {
-      let drivers: DeliveryDriver[] = await getAllDeliveryDrivers();
-      notifyDrivers(drivers, phoneNumber);
-      setTimeout(() => notifyDrivers(drivers, phoneNumber), 10000);
-    }
+    await addAndNotify(req.body.entry);
     // setTimeout(() => notifyDrivers(drivers), 20000);
   }
   res.status(200).send(`Success`);
+
+
+
+
+});
+
+export async function addAndNotify(entry:any) {
+  let phoneNumber = await addMessageToDatabase(entry);
+  if (phoneNumber) {
+    let drivers: DeliveryDriver[] = await getAllDeliveryDrivers();
+    notifyDrivers(drivers, phoneNumber);
+    setTimeout(() => notifyDrivers(drivers, phoneNumber), 10000);
+  }
 
   function notifyDrivers(drivers: DeliveryDriver[], phoneNumber: string | null) {
     let notification: Notification = {
@@ -44,11 +53,11 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
       background: {
         en: {
           title: `New messages`,
-          body: ""
+          body: `Order from ${phoneNumber}`
         },
         es: {
           title: `Nueva mensaje`,
-          body: ""
+          body: `Pedido de ${phoneNumber}`
         }
       },
       linkUrl: `/convo/${phoneNumber}`
@@ -59,7 +68,7 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
       pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
     });
   }
-});
+}
 
 export async function addMessageToDatabase(entries: Entry[]): Promise<string | null> {
   const chain = getHasura();

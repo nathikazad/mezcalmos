@@ -346,7 +346,10 @@ const documentNodeQueryGetPastDeliveryMessages = DocumentNode(definitions: [
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'distinct_on'),
-            value: EnumValueNode(name: NameNode(value: 'phone_number')),
+            value: ListValueNode(values: [
+              EnumValueNode(name: NameNode(value: 'phone_number')),
+              EnumValueNode(name: NameNode(value: 'received_time')),
+            ]),
           ),
           ArgumentNode(
             name: NameNode(value: 'limit'),
@@ -362,7 +365,11 @@ const documentNodeQueryGetPastDeliveryMessages = DocumentNode(definitions: [
               ObjectFieldNode(
                 name: NameNode(value: 'received_time'),
                 value: EnumValueNode(name: NameNode(value: 'desc')),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'phone_number'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              ),
             ]),
           ),
           ArgumentNode(
