@@ -68,7 +68,7 @@ class ContactUsPopUp extends StatelessWidget {
           InkWell(
             borderRadius: BorderRadius.circular(10),
             onTap: () async {
-              final String recieverNumber = "+529541184711";
+              final String recieverNumber = "+12098628445";
               final String text =
                   "${_i18n()["hello"]}%20MezCalmos%20${_i18n()["team"]}";
               final String whatsappUrl =
