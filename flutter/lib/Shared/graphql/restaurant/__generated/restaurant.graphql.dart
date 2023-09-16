@@ -547,6 +547,15 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
                 name: NameNode(value: 'details'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_is_null'),
+                        value: BooleanValueNode(value: false),
+                      )
+                    ]),
+                  ),
+                  ObjectFieldNode(
                     name: NameNode(value: 'name'),
                     value: ObjectValueNode(fields: [
                       ObjectFieldNode(

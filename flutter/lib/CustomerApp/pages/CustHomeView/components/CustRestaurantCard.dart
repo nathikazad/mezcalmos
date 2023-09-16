@@ -151,9 +151,7 @@ class CustRestaurantCard extends StatelessWidget {
                           ? Text("${_i18n()['dvOrPick']}")
                           : (restaurant!.hasDelivery)
                               ? Text("${_i18n()['onlyDv']}")
-                              : (restaurant!.hasDelivery)
-                                  ? Text("${_i18n()['onlyPick']}")
-                                  : SizedBox()
+                              : Text("${_i18n()['onlyPick']}")
                     ],
                   ),
                 ),
