@@ -67,7 +67,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                 ),
                 Text(
                   '${_i18n()['unauthorized']}',
-                  style: context.txt.headline3,
+                  style: context.txt.displaySmall,
                 ),
                 SizedBox(
                   height: 10,
@@ -76,7 +76,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                     onTap: () async {
                       final Uri launchUri = Uri(
                         scheme: 'tel',
-                        path: "+529541184711",
+                        path: "+12098628445",
                       );
                       await launchUrlString(launchUri.toString());
                     },
@@ -90,7 +90,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                                 text: '${_i18n()['subTitle1']} ',
                                 style: context.txt.bodyMedium),
                             TextSpan(
-                                text: '+52 954 118 4711',
+                                text: '+12098628445',
                                 style: context.txt.bodyLarge
                                     ?.copyWith(color: primaryBlueColor)),
                             TextSpan(

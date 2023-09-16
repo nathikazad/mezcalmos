@@ -507,7 +507,7 @@ class CustCartViewController {
         (phoneNumber != null ? "\nPhone: $phoneNumber" : "") +
         (shortUrl != null ? "\nRoute: $shortUrl" : "");
     final String orderInfo =
-        "🛒 Order Info\nDelivery Type: ${cart.isInStorePickup ? 'PICKUP' : cart.isSitIn ? 'SIT-IN' : 'DELIVERY'}\nItems cost: \$${cart.itemsCost().round()}\nPlatform fees : ${pFees.toPriceString()}\nTotal: ${(cart.itemsCost().round() + pFees).toPriceString()}\nQuantity: ${cart.quantity()}" +
+        "🛒 Order Info\nDelivery Type: ${cart.isInStorePickup ? 'PICKUP' : cart.isSitIn ? 'SIT-IN' : 'DELIVERY'}\nItems cost: \$${cart.itemsCost().round()}\nTotal: ${(cart.itemsCost().round()).toPriceString()}\nQuantity: ${cart.quantity()}" +
             (cart.notes?.isNotEmpty == true ? "\nNotes: ${cart.notes}" : "") +
             (cart.deliveryTime != null
                 ? "\n⏰ Scheduled Time: ${DateFormat('yyyy-MM-dd HH:mm a').format(cart.deliveryTime!)}"

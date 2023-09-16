@@ -519,11 +519,17 @@
       "savedCards": "Mi tarjeta"
     },
     "components": {
+      "CustRestaurantCard": {
+        "closed": "Cerrado",
+        "onlyDv": "🚚 Solo Entrega",
+        "onlyPick": "🛍️ Solo Recogida",
+        "dvOrPick": "🚚 Entrega o 🛍️ Recogida"
+      },
       "MezServicesMapView": {
         "fetch": "Buscar en esta área"
       },
       "CustDeliveryTypeSelector": {
-        "dvType": "Tipo de entrega",
+        "dvType": "Tipo de pedido",
         "delivery": "Entrega",
         "pickup": "Recogida en tienda",
         "sitIn": "Sentarse en"
@@ -1105,7 +1111,7 @@
             "notesTitle": "Notas",
             "notes": "Escribe tus notas aquí",
             "deliveryLocation": "Lugar de entrega",
-            "deliveryType": "Tipo de entrega",
+            "deliveryType": "Tipo de pedido",
             "paymentMethod": "Método de pago",
             "dvHelper": "El precio de entrega será establecido por el restaurante al revisar tu pedido y ubicación."
           }

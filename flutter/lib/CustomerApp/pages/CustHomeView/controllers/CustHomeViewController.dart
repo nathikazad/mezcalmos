@@ -8,14 +8,20 @@ import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaura
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MarkerHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['CustomerWrapper'];
 
 class CustHomeViewController {
   late TabController tabController;
@@ -323,8 +329,29 @@ class CustHomeViewController {
         isDismissible: true,
         builder: (BuildContext context) {
           return Container(
-            margin: const EdgeInsets.all(8.0),
-            child: CustRestaurantCard(restaurant: restaurant),
+            margin: const EdgeInsets.only(left: 8.0, right: 8, bottom: 8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Obx(
+                  () => Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: MezInkwell(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
+                      onClick: () async {
+                        Navigator.pop(context);
+                        switchView();
+                      },
+                      icon: Icons.list,
+                      label: '${_i18n()['viewAsList']}',
+                      borderRadius: 50,
+                    ),
+                  ),
+                ),
+                CustRestaurantCard(restaurant: restaurant),
+              ],
+            ),
           );
         });
   }
@@ -366,6 +393,16 @@ class CustHomeViewController {
 
   void switchOnlyDelivery({required bool value}) {
     showOnlyDelivery.value = value;
+  }
+
+  FloatingActionButtonLocation dockedFabLocation(context) {
+    if (MediaQuery.of(context).viewInsets.bottom != 0) {
+      return FixedCenterDockedFabLocation(
+        context: context,
+      );
+    } else {
+      return FloatingActionButtonLocation.centerDocked;
+    }
   }
 }
 

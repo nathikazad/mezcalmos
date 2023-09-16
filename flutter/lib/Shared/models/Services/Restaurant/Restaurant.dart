@@ -159,7 +159,8 @@ class Restaurant extends Service {
   //       .sort((Review a, Review b) => b.reviewTime.compareTo(a.reviewTime));
   //   return restaurant;
   // }
-
+  bool get hasDelivery => deliveryCost?.deliveryAvailable == true;
+  bool get hasPickup => deliveryCost?.pickupAvailable == true;
   void setCategories(List<Category> cats) {
     _categories = cats;
     _categories

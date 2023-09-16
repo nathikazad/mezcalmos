@@ -84,7 +84,8 @@ class CardSummaryCard extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.centerRight,
                         child: Text(controller.pFees.toPriceString(),
-                            style: txt.bodyMedium),
+                            style: txt.bodyMedium?.copyWith(
+                                decoration: TextDecoration.lineThrough)),
                       ),
                     )
                   ],
@@ -161,8 +162,7 @@ class CardSummaryCard extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.centerRight,
                         child: Text(
-                            (controller.cart.itemsCost() + controller.pFees)
-                                .toPriceString(),
+                            (controller.cart.itemsCost()).toPriceString(),
                             style: txt.headlineSmall),
                       ),
                     ),

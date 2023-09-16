@@ -125,7 +125,8 @@ class DeliveryCost {
     return [
       if (pickupAvailable) DeliveryType.Pickup,
       if (deliveryAvailable) DeliveryType.Delivery,
-      if (sitInAvailable) DeliveryType.SitIn,
+      if (sitInAvailable && (!pickupAvailable && !deliveryAvailable))
+        DeliveryType.SitIn,
     ];
   }
 }

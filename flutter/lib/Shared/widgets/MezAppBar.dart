@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
-import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -271,20 +270,21 @@ Widget _menuButton() {
       },
       child: Ink(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromARGB(255, 216, 225, 249),
-              spreadRadius: 0,
-              blurRadius: 7,
-              offset: Offset(0, 7),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(255, 216, 225, 249),
+                spreadRadius: 0,
+                blurRadius: 7,
+                offset: Offset(0, 7),
+              ),
+            ],
+            color: primaryBlueColor
+            // gradient: LinearGradient(colors: [
+            //   Color.fromARGB(255, 97, 127, 255),
+            //   Color.fromARGB(255, 198, 90, 252),
+            // ], begin: Alignment.topLeft, end: Alignment.bottomRight),
             ),
-          ],
-          gradient: LinearGradient(colors: [
-            Color.fromARGB(255, 97, 127, 255),
-            Color.fromARGB(255, 198, 90, 252),
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-        ),
         child: Icon(
           Icons.menu,
           color: Colors.white,
