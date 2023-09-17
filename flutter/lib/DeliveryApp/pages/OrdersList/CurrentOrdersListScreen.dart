@@ -68,9 +68,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                     style: context.textTheme.bodyLarge,
                   ),
                   activeColor: primaryBlueColor,
-                  value: !viewController.isOnline,
+                  value: viewController.isOnline,
                   onChanged: (bool v) {
-                    viewController.switchOnlineStatus(!v);
+                    viewController.switchOnlineStatus(v);
                   }),
             ),
             Obx(

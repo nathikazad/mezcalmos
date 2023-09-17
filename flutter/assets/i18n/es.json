@@ -2741,7 +2741,7 @@
           "OtpConfirmationScreen": {
             "confirmation": "Confirmación",
             "OtpConfirmation": "Confirmación del \ncódigo OTP",
-            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
+            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por WhatsApp. Se pueden aplicar tarifas por mensajes y datos.",
             "enterOtpCode": "Ingrese el código OTP enviado a",
             "otpDidnReceiveTxt": "No has recibido el mensaje de texto?",
             "resend": "Reenviar",
@@ -2757,7 +2757,7 @@
           },
           "PhoneNumberScreen": {
             "otpCode": "OTP código",
-            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
+            "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por WhatsApp. Se pueden aplicar tarifas por mensajes y datos.",
             "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
             "submit": "ENVIAR"
           }
@@ -2765,7 +2765,7 @@
         "SignInScreen": {
           "title": "Inicie sesión con su proveedor preferido!",
           "loginWithApple": "INICIAR CON APPLE",
-          "loginWithSms": "INICIAR CON SMS",
+          "loginWithSms": "INICIAR CON WhatsApp",
           "fbBtn": "INICIAR CON FACEBOOK",
           "loginAs": "INICIAR SESIÓN COMO",
           "customer": "CLIENTE",

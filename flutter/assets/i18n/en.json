@@ -2694,7 +2694,7 @@
           "OtpConfirmationScreen": {
             "confirmation": "Confirmation",
             "OtpConfirmation": "OTP Code Confirmation",
-            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
+            "twilioNote": "By continuing you will receive a verification code to your phone number by WhatsApp. Message and data rates may apply.",
             "enterOtpCode": "Enter OTP code sent to",
             "otpDidnReceiveTxt": "You haven't receive the text ?",
             "resend": "Resend",
@@ -2710,7 +2710,7 @@
           },
           "PhoneNumberScreen": {
             "otpCode": "OTP Code",
-            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
+            "twilioNote": "By continuing you will receive a verification code to your phone number by WhatsApp. Message and data rates may apply.",
             "enterPhoneNumber": "Enter phone number to recieve OTP code",
             "submit": "SUBMIT"
           }
@@ -2718,7 +2718,7 @@
         "SignInScreen": {
           "title": "Sign in using your preferred provider!",
           "loginWithApple": "SIGN IN WITH APPLE",
-          "loginWithSms": "LOGIN WITH SMS",
+          "loginWithSms": "LOGIN WITH WhatsApp",
           "fbBtn": "LOGIN WITH FACEBOOK",
           "loginAs": "LOGIN AS",
           "customer": "CUSTOMER",

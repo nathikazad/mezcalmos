@@ -5,8 +5,8 @@ import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/hsDeliveryMessage.dart';
-import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -33,6 +33,7 @@ class DriverCurrentOrdersController {
   bool get isOnline => _isOnline.value;
 
   Future<void> init() async {
+    _isOnline.value = opAuthController.driver!.deliveryDriverState.online;
     await _initOrders();
     _listenOnOrders();
   }
@@ -75,10 +76,11 @@ class DriverCurrentOrdersController {
 
   Future<void> switchOnlineStatus(bool value) async {
     onlineClicked.value = true;
-    _isOnline.value = await switch_notifications_status(
-            turnOffNotif: value,
-            appType: AppType.Delivery,
-            userId: opAuthController.driver!.driverInfo.hasuraId) ??
+    _isOnline.value = value;
+    _isOnline.refresh();
+    _isOnline.value = await switch_driver_online_status_by_id(
+            driverId: opAuthController.driver!.deliveryDriverId,
+            online: value) ??
         _isOnline.value;
 
     _isOnline.refresh();

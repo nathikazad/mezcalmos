@@ -63,7 +63,7 @@ export async function addAndNotify(entry:any) {
       linkUrl: `/convo/${phoneNumber}`
     }
     drivers.forEach((d) => {
-      if (!d.user || d.notificationInfo?.turnOffNotifications == true)
+      if (!d.user)
         return;
       pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
     });
