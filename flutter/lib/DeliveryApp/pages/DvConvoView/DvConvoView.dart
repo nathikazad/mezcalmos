@@ -139,7 +139,9 @@ class _DvConvoViewState extends State<DvConvoView> {
                         label: "Cancel order",
                         borderRadius: 15,
                         height: 40,
-                        onClick: () async {},
+                        onClick: () async {
+                          viewController.cancelOrder();
+                        },
                         border: BorderSide(width: 1, color: redAccentColor),
                         backgroundColor: Colors.white,
                         textColor: redAccentColor,

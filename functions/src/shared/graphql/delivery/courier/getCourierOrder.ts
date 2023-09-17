@@ -137,9 +137,9 @@ export async function getCourierOrder(orderId: number): Promise<CourierOrder> {
             tripDistance: response.delivery_courier_order_by_pk.delivery_order.trip_distance,
             tripDuration: response.delivery_courier_order_by_pk.delivery_order.trip_duration,
             tripPolyline: response.delivery_courier_order_by_pk.delivery_order.trip_polyline,
-            changePriceRequest: (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
-                ? (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
-                : undefined,
+            // changePriceRequest: (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+            //     ? (response.delivery_courier_order_by_pk.delivery_order.change_price_request)
+            //     : undefined,
             deliveryDriver: (response.delivery_courier_order_by_pk.delivery_order.delivery_driver) ? {
                 id: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.id,
                 deliveryCompanyType: response.delivery_courier_order_by_pk.delivery_order.delivery_driver.delivery_company_type as DeliveryServiceProviderType,

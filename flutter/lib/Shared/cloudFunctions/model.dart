@@ -15,6 +15,23 @@ factory MarkMessagesResponse.fromFirebaseFormattedJson(json) {
   }
 }
 
+class MarkMessagesAsCancelledResponse {
+  bool success;
+  MarkMessagesError? error;
+  String? unhandledError;
+  MarkMessagesAsCancelledResponse(this.success, this.error, this.unhandledError);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+factory MarkMessagesAsCancelledResponse.fromFirebaseFormattedJson(json) { 
+   return MarkMessagesAsCancelledResponse(json["success"], json["error"]?.toString().toMarkMessagesError(), json["unhandledError"]);
+  }
+}
+
 class DeleteAccountResponse {
   bool success;
   DeleteAccountError? error;

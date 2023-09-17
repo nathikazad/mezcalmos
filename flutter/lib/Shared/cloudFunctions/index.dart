@@ -1,6 +1,8 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'dart:convert';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 class CloudFunctions {
   static Future<dynamic> callCloudFunction(
       {required String functionName, Map<String, dynamic>? parameters}) async {
@@ -29,6 +31,15 @@ class CloudFunctions {
       functionName: "whatsapp-markMessagesAsFinished",
       parameters: <String, dynamic>{
         "phoneNumbers": phoneNumbers,
+      }));
+  }
+
+  static Future<MarkMessagesAsCancelledResponse> whatsapp_markMessageAsCancelled(
+      {required String phoneNumber}  ) async {
+    return MarkMessagesAsCancelledResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "whatsapp-markMessageAsCancelled",
+      parameters: <String, dynamic>{
+        "phoneNumber": phoneNumber,
       }));
   }
 

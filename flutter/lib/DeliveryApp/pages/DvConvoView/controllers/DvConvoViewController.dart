@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/hsDeliveryMessage.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class DvConvoViewController {
   // instances
@@ -68,6 +69,12 @@ class DvConvoViewController {
   Future<void> _fetchMessages() async {
     dvMessages.value =
         await getCustomerDvMessages(phoneNumber: phoneNumber, withCache: false);
+  }
+
+  Future<void> cancelOrder() async {
+    await CloudFunctions.whatsapp_markMessageAsCancelled(
+        phoneNumber: phoneNumber);
+    await MezRouter.back();
   }
 
   Future<void> handleClick() async {

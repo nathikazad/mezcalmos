@@ -35,9 +35,12 @@ import { requestOrder } from "./business/orderRequest";
 import { incrementReferralCount, saveIpReferral } from "./utilities/referrals";
 import { changeUniqueId } from "./serviceProvider/changeUniqueId";
 import { RuntimeOptions } from "firebase-functions";
-import { handleWhatsapp, markMessagesAsResponded, markMessagesAsFinished } from "./utilities/senders/whatsapp";
+import { handleWhatsapp } from "./utilities/senders/whatsapp/handleWhatsapp";
 import { newCheckout } from "./restaurant/newCheckout";
 import { completeOrder } from "./restaurant/completeOrder";
+import { markMessagesAsResponded } from "./utilities/senders/whatsapp/markMessagesAsResponded";
+import { markMessagesAsFinished } from "./utilities/senders/whatsapp/markMessagesAsFinished";
+import { markMessagesAsCancelled } from "./utilities/senders/whatsapp/markMessagesAsCancelled";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -51,7 +54,7 @@ export const whatsapp = {
   newMessage: handleWhatsapp,
   markMessagesAsResponded: authenticatedCall((userId, data) => markMessagesAsResponded(userId, data)),
   markMessagesAsFinished: authenticatedCall((userId, data) => markMessagesAsFinished(userId, data)),
-  
+  markMessageAsCancelled: authenticatedCall((userId, data) => markMessagesAsCancelled(userId, data)),
 }
 
 export const user2 = {

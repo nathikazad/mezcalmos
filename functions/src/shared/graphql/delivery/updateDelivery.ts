@@ -54,7 +54,7 @@ export async function updateDeliveryChangePriceRequest(deliveryOrder: DeliveryOr
           },
           _set: {
             
-           change_price_request: $`change_price_request`
+          //  change_price_request: $`change_price_request`
           }
         }, {
           delivery_cost: true
