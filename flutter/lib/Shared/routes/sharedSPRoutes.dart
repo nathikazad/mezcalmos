@@ -1,9 +1,12 @@
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/CreateServiceView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferItemsSelectView/OfferItemsSelectView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/ServiceOfferEditView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOffersListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/ServiceProfileView.dart';
@@ -35,8 +38,26 @@ class SharedServiceProviderRoutes {
       '/serviceProfile/:serviceId/:serviceDetailsId/:deliveryDetailsId';
   static const String kSingleDayServiceScheduleRoute =
       '/singleDayServiceSchedule';
-
+  static const String kServiceOffersRoute =
+      "/offers/:serviceProviderId/:serviceLinkId";
+  static const String kServiceEditOffersRoute = "/editOffers/:offerId";
+  static const String kServiceOfferingListView = "/serviceOfferingListView";
   static final List<QRoute> routes = [
+    QRoute(
+      path: kServiceOffersRoute,
+      name: kServiceOffersRoute,
+      builder: () => ServiceOffersListView(),
+    ),
+    QRoute(
+      path: kServiceEditOffersRoute,
+      name: kServiceEditOffersRoute,
+      builder: () => ServiceOfferEditView(),
+    ),
+    QRoute(
+      path: kServiceOfferingListView,
+      name: kServiceOfferingListView,
+      builder: () => OfferItemsSelectView(),
+    ),
     QRoute(
       path: kDeliveryCostSettingRoute,
       name: kDeliveryCostSettingRoute,

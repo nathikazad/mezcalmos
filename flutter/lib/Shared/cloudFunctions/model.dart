@@ -2141,14 +2141,18 @@ class Cart {
   num? restaurantId;
   num cost;
   List<CartItem> items;
+  num discountValue;
+  List<num> appliedOffers;
   Cart({
-    required this.customerId, this.restaurantId, required this.cost, required this.items});
+    required this.customerId, this.restaurantId, required this.cost, required this.items, required this.discountValue, required this.appliedOffers});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "customerId": customerId,
       "restaurantId": restaurantId,
       "cost": cost,
       "items": items,
+      "discountValue": discountValue,
+      "appliedOffers": appliedOffers,
     };
   }
 

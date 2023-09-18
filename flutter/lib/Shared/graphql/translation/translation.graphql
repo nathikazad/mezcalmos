@@ -1,12 +1,26 @@
-mutation upsertTranslationValue($translation_value: translation_value_insert_input!, $on_conflict: translation_value_on_conflict!) {
-  insert_translation_value_one(object: $translation_value, on_conflict: $on_conflict) {
+mutation upsertTranslationValue(
+  $translation_value: translation_value_insert_input!
+  $on_conflict: translation_value_on_conflict!
+) {
+  insert_translation_value_one(
+    object: $translation_value
+    on_conflict: $on_conflict
+  ) {
     language_id
     translation_id
     value
   }
 }
-mutation insertTranslationValue($data :  translation_insert_input!){
-  insert_translation_one(object:$data) {
+mutation insertTranslationValue($data: translation_insert_input!) {
+  insert_translation_one(object: $data) {
     id
+  }
+}
+query fetch_translations($ids: [Int!]) {
+  translation(where: { id: { _in: $ids } }) {
+    translations {
+      language_id
+      value
+    }
   }
 }

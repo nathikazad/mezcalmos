@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
@@ -60,6 +61,8 @@ class CustCartViewController {
   final RxBool clickedCheckout = false.obs;
 
   // texts
+  TextEditingController couponTextController = TextEditingController();
+
   TextEditingController noteText = TextEditingController();
 
   // getters //
@@ -563,6 +566,36 @@ class CustCartViewController {
     } else {
       CustomerRestaurantView.navigate(
           restaurantId: cart.restaurant!.info.hasuraId);
+    }
+  }
+
+  num getTotalCost() {
+    final num totalCost = (cart.totalCost) - cart.discountValue;
+    return totalCost;
+  }
+
+  Future<void> applyCoupon() async {
+    if (couponTextController.text.isNotEmpty) {
+      try {
+        CouponError? response = await applyRestaurantCoupon(
+          cart: cart,
+          customerId: Get.find<AuthController>().hasuraUserId!,
+          couponCode: couponTextController.text.trim(),
+        );
+
+        if (response != null) {
+          showErrorSnackBar(errorText: response.name);
+        } else {
+          couponTextController.clear();
+          showSavedSnackBar(
+              title: "Applied",
+              subtitle: "Your coupon have been successfully applied");
+        }
+      } catch (e, stk) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
     }
   }
 }

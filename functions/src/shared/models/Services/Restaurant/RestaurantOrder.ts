@@ -1,9 +1,9 @@
-import { DeliveryType, PaymentType } from '../../Generic/Order';
-import { OrderNotification } from '../../Notification';
-import { CustomerAppType, Language, Location } from '../../Generic/Generic';
-import { DeliveryOrderStatus } from '../../Generic/Delivery';
-import { ServiceProvider } from '../Service';
-import { OrderStripeInfo } from '../../stripe';
+import { DeliveryType, PaymentType } from "../../Generic/Order";
+import { OrderNotification } from "../../Notification";
+import { CustomerAppType, Language, Location } from "../../Generic/Generic";
+import { DeliveryOrderStatus } from "../../Generic/Delivery";
+import { ServiceProvider } from "../Service";
+import { OrderStripeInfo } from "../../stripe";
 
 export interface RestaurantOrder {
   restaurantId: number;
@@ -40,7 +40,7 @@ export interface OrderItem {
   orderItemId?: number;
   itemId: number;
   name: any;
-  image?:string;
+  image?: string;
   selectedOptions?: Array<SelectedOption>;
   reviewId?: number;
   notes?: string;
@@ -65,7 +65,7 @@ export enum RestaurantOrderStatus {
   OnTheWay = "onTheWay",
   Delivered = "delivered",
   CancelledByAdmin = "cancelledByAdmin",
-  CancelledByCustomer = "cancelledByCustomer"
+  CancelledByCustomer = "cancelledByCustomer",
 }
 
 // export enum DeliveryMode {
@@ -76,20 +76,23 @@ export enum RestaurantOrderStatus {
 // }
 
 export function orderInProcess(status: RestaurantOrderStatus): boolean {
-  return !(status == RestaurantOrderStatus.CancelledByAdmin ||
+  return !(
+    status == RestaurantOrderStatus.CancelledByAdmin ||
     status == RestaurantOrderStatus.CancelledByCustomer ||
-    status == RestaurantOrderStatus.Delivered)
+    status == RestaurantOrderStatus.Delivered
+  );
 }
 
 export interface NewRestaurantOrderNotification extends OrderNotification {
   restaurant?: {
-    name: string,
-    image: string,
-    id: number
-  }
+    name: string;
+    image: string;
+    id: number;
+  };
 }
 
-export interface RestaurantOrderStatusChangeNotification extends OrderNotification {
-  status: RestaurantOrderStatus
-  deliveryOrderStatus: DeliveryOrderStatus
+export interface RestaurantOrderStatusChangeNotification
+  extends OrderNotification {
+  status: RestaurantOrderStatus;
+  deliveryOrderStatus: DeliveryOrderStatus;
 }

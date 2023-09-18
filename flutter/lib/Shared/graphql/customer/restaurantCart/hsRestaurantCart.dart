@@ -159,6 +159,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
         cart.addItem(data);
       }
     });
+    cart.discountValue = cartData.discount_value;
     return cart;
   }
   return null;
@@ -268,6 +269,10 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             stripeInfo: _res?.details?.stripe_info!,
             acceptedPayments: _res?.details?.accepted_payments!);
       }
+      _cartEvent.offersApplied = parsedCart.applied_offers
+              ?.map<int>((value) => int.parse(value.toString()))
+              .toList() ??
+          [];
       if (cart.parsedData?.restaurant_cart.first.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
           onlineOrdering: _res!.details!.online_ordering ?? false,
@@ -372,6 +377,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         });
         _cartEvent.addItem(data);
       });
+      _cartEvent.discountValue = parsedCart.discount_value;
       return _cartEvent;
     } else {
       return null;
@@ -502,4 +508,26 @@ List<Option> _convertOptionFromQuerry(
     return newOption;
   }).toList();
   return options;
+}
+
+Future<void> update_cart_discount(
+    {required int customerId,
+    required List<int> appliedOffers,
+    required num discountValue}) async {
+  final QueryResult<Mutation$update_cart_discount> response =
+      await _hasuraDb.graphQLClient.mutate$update_cart_discount(
+    Options$Mutation$update_cart_discount(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$update_cart_discount(
+          customer_id: customerId,
+          applied_offers: appliedOffers,
+          discount_value: discountValue.toDouble()),
+    ),
+  );
+  if (response.parsedData?.update_restaurant_cart_by_pk == null) {
+    throw Exception(
+        " 🛑🛑 update cart discount exceptions 🛑🛑 \n ${response.exception}");
+  } //else {
+  //   return response.parsedData?.update_restaurant_cart_by_pk
+  // }
 }

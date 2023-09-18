@@ -6,6 +6,8 @@ export interface Cart {
   restaurantId?: number;
   cost: number;
   items: Array<CartItem>;
+  discountValue: number;
+  appliedOffers: Array<number>;
 }
 
 export interface CartItem {
@@ -17,5 +19,5 @@ export interface CartItem {
   costPerOne: number;
   notes?: string;
   name: Record<Language, string>;
-  image?:string;
+  image?: string;
 }

@@ -26,10 +26,11 @@ class Cart {
   cModels.PaymentType paymentType = cModels.PaymentType.Cash;
 
   num? shippingCost;
+  num discountValue = 0;
   RouteInformation? _routeInformation;
 
   Cart({this.restaurant});
-
+  List<int> offersApplied = <int>[];
   set setRouteInformation(RouteInformation? info) => _routeInformation = info;
   RouteInformation? get getRouteInfo => _routeInformation;
 

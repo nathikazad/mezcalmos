@@ -3,6 +3,7 @@ import 'package:graphql/src/core/query_result.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/translation/__generated/translation.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -82,4 +83,23 @@ List<Input$translation_value_insert_input> _convertTranslation(LanguageMap tr) {
         language_id: key.toFirebaseFormatString(), value: value));
   });
   return data;
+}
+
+Future<List<Map<Language, String>>> fetch_translations(
+    {required List<int> nameIds}) async {
+  mezDbgPrint(" 📚📚📚 fetch translations  📚📚📚");
+  final QueryResult<Query$fetch_translations> response = await _db.graphQLClient
+      .query$fetch_translations(Options$Query$fetch_translations(
+    variables: Variables$Query$fetch_translations(ids: nameIds),
+  ));
+  if (response.parsedData?.translation == null) {
+    throw Exception(
+        "🚨🚨🚨 Hasura fetch translations exception =>${response.exception}");
+  } else {
+    List<Map<Language, String>> translations = [];
+    response.parsedData!.translation.forEach(
+        (Query$fetch_translations$translation e) =>
+            translations.add(toLanguageMap(translations: e.translations)));
+    return translations;
+  }
 }

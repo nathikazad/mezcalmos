@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -15,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -329,4 +331,38 @@ Future<int> get_restaurant_details_id({required int restaurantId}) async {
     throwError(res.exception);
   }
   return res.parsedData!.restaurant_restaurant_by_pk!.details_id;
+}
+
+Future<List<OfferItemData>> get_restaurant_offer_items(
+    {required int restuarntId,
+    required int offset,
+    required int limit,
+    bool withCache = true,
+    String? keyword}) async {
+  QueryResult<Query$getAndSearchSingleRestaurantItems> res =
+      await _db.graphQLClient.query$getAndSearchSingleRestaurantItems(
+          Options$Query$getAndSearchSingleRestaurantItems(
+              fetchPolicy:
+                  withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+              variables: Variables$Query$getAndSearchSingleRestaurantItems(
+                  restaurant_id: restuarntId,
+                  limit: limit,
+                  offset: offset,
+                  keyword: keyword != null ? "%$keyword%" : null)));
+  mezDbgPrint("👋 res =======%$keyword%====>$res");
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+
+  return res.parsedData?.restaurant_item
+          .map<OfferItemData>(
+              (Query$getAndSearchSingleRestaurantItems$restaurant_item e) =>
+                  OfferItemData(
+                      id: e.id,
+                      name: toLanguageMap(translations: e.name.translations),
+                      image: e.image ?? defaultUserImgUrl,
+                      nameId: e.name.id,
+                      type: cModels.OfferingType.Event))
+          .toList() ??
+      [];
 }
