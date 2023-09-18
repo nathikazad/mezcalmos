@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -91,6 +92,32 @@ class CardSummaryCard extends StatelessWidget {
                   ],
                 ),
               ),
+              if (controller.cart.discountValue > 0)
+                Container(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  width: Get.width,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: Text("${_i18n()["discount"]}",
+                              style: txt.bodyMedium
+                                  ?.copyWith(color: primaryBlueColor)),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                              controller.cart.discountValue.toPriceString(),
+                              style: txt.bodyMedium?.copyWith(
+                                  color: primaryBlueColor,
+                                  decoration: TextDecoration.lineThrough)),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               //=======================Delivery cost :===============
               if (controller.showDelivery)
                 Container(
@@ -161,8 +188,7 @@ class CardSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(
-                            (controller.cart.itemsCost()).toPriceString(),
+                        child: Text((controller.getTotalCost()).toPriceString(),
                             style: txt.headlineSmall),
                       ),
                     ),

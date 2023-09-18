@@ -89,6 +89,7 @@ class CustCartViewController {
   // init //
   Future<void> init() async {
     mezDbgPrint("SUPER INIT");
+    dvType.value = dvTypes.first;
     final loc.MezLocation? baseLoc =
         await get_service_location(serviceDetailsId: 63);
     mezDbgPrint("base looooooooc ====>${baseLoc?.toFirebaseFormattedJson()}");

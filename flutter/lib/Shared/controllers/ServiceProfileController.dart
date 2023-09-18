@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
@@ -16,13 +18,11 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceInfoEditView/ServiceInfoEditView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/ServiceOffersListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOperatorsList/OperatorsListView.dart';
-
-import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
-import 'package:permission_handler/permission_handler.dart' as pHandler;
 import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart' as pHandler;
 
 class ServiceProfileController extends GetxController {
   // constants //
@@ -119,7 +119,7 @@ class ServiceProfileController extends GetxController {
 
   Future<void> switchOpen(bool value) async {
     mezDbgPrint(value);
-    bool res = await update_service_state(
+    final bool res = await update_service_state(
         status: value ? ServiceStatus.Open : ServiceStatus.ClosedIndefinitely,
         approved: null,
         detailsId: detailsId);
@@ -183,10 +183,11 @@ class ServiceProfileController extends GetxController {
           pHandler.Permission.accessMediaLocation,
         ].request();
 
-        var storage = statuses[pHandler.Permission.storage];
-        var manageExternalStorage =
+        pHandler.PermissionStatus? storage =
+            statuses[pHandler.Permission.storage];
+        pHandler.PermissionStatus? manageExternalStorage =
             statuses[pHandler.Permission.manageExternalStorage];
-        var accessMediaLocation =
+        pHandler.PermissionStatus? accessMediaLocation =
             statuses[pHandler.Permission.accessMediaLocation];
         if (storage!.isGranted ||
             manageExternalStorage!.isGranted ||
@@ -224,7 +225,8 @@ class ServiceProfileController extends GetxController {
         pHandler.Permission.storage,
       ].request();
 
-      final storage = statuses[pHandler.Permission.storage];
+      final pHandler.PermissionStatus? storage =
+          statuses[pHandler.Permission.storage];
       if (storage!.isGranted) {
         // final String downloadsFolderPath = ;
         final Directory? dir = await getExternalStorageDirectory();
@@ -246,5 +248,13 @@ class ServiceProfileController extends GetxController {
       print('Failed to download Story Image: $e');
     }
     return file;
+  }
+
+  Future<void> navigateToOffers() async {
+    // ignore: unawaited_futures
+    ServiceOffersListView.navigate(
+        serviceProviderId: serviceId,
+        serviceLinkId: service.serviceLinkId,
+        serviceProviderType: service.serviceProviderType!);
   }
 }

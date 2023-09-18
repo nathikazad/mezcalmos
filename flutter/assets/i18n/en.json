@@ -1083,6 +1083,7 @@
             },
             "OrderSummaryCard": {
               "add": "Add",
+              "discount": "Discount",
               "pFees": "Platform fees",
               "waitingForCustomer": "Waiting to accept",
               "orderSummary": "Summary",
@@ -2432,6 +2433,20 @@
       }
     },
     "pages": {
+      "ServiceOfferView": {
+        "offers": "Offers",
+        "addOffer": "Add offer",
+        "coupon": "Coupon",
+        "promotion": "Promotion",
+        "monthlySubscription": "Monthly Subscription",
+        "anyOrder": "Any Order",
+        "firstOrderOnly": "First Order Only",
+        "particularService": "Particular Service",
+        "particularCategory": "Particular Category",
+        "flatAmount": "Flat",
+        "percentage": "Percentage",
+        "anotherSameFlat": "Another Same"
+      },
       "ServiceProviderPages": {
         "ServiceScheduleViews": {
           "SingleDayScheduleView": {

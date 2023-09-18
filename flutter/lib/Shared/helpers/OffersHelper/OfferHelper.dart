@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCar
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum CouponError {
   UnavailableOrExpired,
@@ -174,6 +175,8 @@ Future<void> applyOffersToRestaurantCart(
     discount += calculateRestaurantCartDiscount(cart, promo);
   }
   cart.discountValue = discount;
+  mezDbgPrint(
+      " 👋👋👋👋👋👋👋👋 Okay we are here and the discount calculated is ===========>$discount");
   await update_cart_discount(
       customerId: customerId,
       appliedOffers: cart.offersApplied,
@@ -192,11 +195,12 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
     case cModels.DiscountType.StoreCredit:
       break;
     case cModels.DiscountType.FlatAmount:
-      if (offer.details.offerForItems == null) {
+      if (offer.details.offerForItems == "particularitems" &&
+          offer.details.items?.isEmpty == true) {
         discount += offer.details.discountValue;
       } else {
         cart.cartItems.forEach((CartItem cartItem) {
-          if (offer.details.offerForItems == "particularItems") {
+          if (offer.details.offerForItems == "particularitems") {
             offer.details.items!.forEach((num c) => {
                   if (c == cartItem.item.id)
                     {
@@ -408,6 +412,23 @@ Future<String> generateOfferDescription(
 }
 
 extension OfferDetailsExtensions on cModels.OfferDetails {
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      "offerForOrder": offerForOrder,
+      "offerForItems": offerForItems,
+      "discountType": discountType.toFirebaseFormatString(),
+      "discountValue": discountValue,
+      "minimumOrderAmount": minimumOrderAmount,
+      "items": items,
+      "categories": categories,
+      "nameIds": nameIds,
+      "offeringTypes": offeringTypes,
+      "validityRangeStart": validityRangeStart,
+      "validityRangeEnd": validityRangeEnd,
+      "weeklyRepeat": weeklyRepeat,
+    };
+  }
+
   String getDescription() {
     final StringBuffer sb = StringBuffer();
 

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/__generated/service_provider.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -673,7 +674,7 @@ Future<int?> add_service_offer({
         service_provider_type:
             offer.serviceProviderType.toFirebaseFormatString(),
         offer_type: offer.offerType.toFirebaseFormatString(),
-        details: offer.details.toFirebaseFormattedJson(),
+        details: offer.details.toJson(),
         status: offer.status.toFirebaseFormatString(),
         coupon_code: offer.couponCode,
       ),

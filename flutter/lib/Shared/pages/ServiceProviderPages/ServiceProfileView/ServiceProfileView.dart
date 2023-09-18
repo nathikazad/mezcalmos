@@ -115,6 +115,12 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   icon: Icons.person,
                                   label: "${_i18n()['info']}"),
+                              _navigationLink(
+                                  onClick: () async {
+                                    await _viewController.navigateToOffers();
+                                  },
+                                  icon: Icons.discount_rounded,
+                                  label: "${_i18n()['offers']}"),
                               // if (_viewController.serviceLink != null)
                               _navigationLink(
                                   onClick: () async {
@@ -168,6 +174,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     },
                                     icon: Icons.credit_card,
                                     label: "${_i18n()['payments']}"),
+
                               _navigationLink(
                                   icon: Icons.star_rate_rounded,
                                   onClick: () async {

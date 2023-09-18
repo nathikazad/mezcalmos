@@ -1080,6 +1080,7 @@
               "waitingForCustomer": "Esperando aceptar",
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
+              "discount": "Descuento",
               "deliveryCost": "Costo de envío",
               "stripeFees": "Tarifas de tarjeta",
               "totalCost": "Costo Total",
