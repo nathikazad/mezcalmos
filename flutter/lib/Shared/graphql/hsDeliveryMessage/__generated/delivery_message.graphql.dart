@@ -1348,7 +1348,23 @@ const documentNodeQueryGetCurrentDeliveryMessages = DocumentNode(definitions: [
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'distinct_on'),
-            value: EnumValueNode(name: NameNode(value: 'phone_number')),
+            value: ListValueNode(values: [
+              EnumValueNode(name: NameNode(value: 'phone_number')),
+              EnumValueNode(name: NameNode(value: 'received_time')),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'received_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'phone_number'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              ),
+            ]),
           ),
           ArgumentNode(
             name: NameNode(value: 'where'),

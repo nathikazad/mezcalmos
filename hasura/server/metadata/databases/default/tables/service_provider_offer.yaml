@@ -1,0 +1,186 @@
+table:
+  name: offer
+  schema: service_provider
+object_relationships:
+  - name: business
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: business
+          schema: business
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: company
+          schema: delivery
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
+  - name: name
+    using:
+      foreign_key_constraint_on: name_id
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
+insert_permissions:
+  - role: business_operator
+    permission:
+      check: {}
+      columns:
+        - id
+        - offer_type
+        - coupon_code
+        - name_id
+        - details
+        - service_provider_type
+        - service_provider_id
+        - status
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - coupon_code
+        - details
+        - name_id
+        - offer_type
+        - service_provider_id
+        - service_provider_type
+        - status
+  - role: restaurant_operator
+    permission:
+      check: {}
+      columns:
+        - coupon_code
+        - details
+        - offer_type
+        - status
+select_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - id
+        - name_id
+        - service_provider_id
+        - coupon_code
+        - offer_type
+        - service_provider_type
+        - status
+        - details
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - id
+        - name_id
+        - service_provider_id
+        - coupon_code
+        - offer_type
+        - service_provider_type
+        - status
+        - details
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - name_id
+        - service_provider_id
+        - coupon_code
+        - offer_type
+        - service_provider_type
+        - status
+        - details
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - name_id
+        - service_provider_id
+        - coupon_code
+        - offer_type
+        - service_provider_type
+        - status
+        - details
+      filter: {}
+update_permissions:
+  - role: business_operator
+    permission:
+      columns:
+        - coupon_code
+        - details
+        - name_id
+        - offer_type
+        - status
+      filter: {}
+      check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - coupon_code
+        - details
+        - name_id
+        - offer_type
+        - status
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - coupon_code
+        - details
+        - offer_type
+        - status
+      filter: {}
+      check: {}

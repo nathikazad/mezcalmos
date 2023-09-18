@@ -55,8 +55,14 @@ query getServiceDetails($id: Int!) {
     }
   }
 }
-mutation updateServiceDetails($detailsId: Int!, $data: service_provider_details_set_input) {
-  update_service_provider_details_by_pk(pk_columns: {id: $detailsId}, _set: $data) {
+mutation updateServiceDetails(
+  $detailsId: Int!
+  $data: service_provider_details_set_input
+) {
+  update_service_provider_details_by_pk(
+    pk_columns: { id: $detailsId }
+    _set: $data
+  ) {
     accepted_payments
     approved
     creation_time
@@ -147,7 +153,7 @@ query getServicePaymentInfo($serviceDetailsId: Int!) {
 }
 
 query getServiceProviderType($unique_id: String!) {
-  service_provider_details(where: {unique_id: {_eq: $unique_id}}) {
+  service_provider_details(where: { unique_id: { _eq: $unique_id } }) {
     id
     service_provider_type
     laundry_store {
@@ -163,7 +169,7 @@ query getServiceProviderType($unique_id: String!) {
 }
 
 query getServiceProviderId($uniqueId: String) {
-  service_provider_details(where: {unique_id: {_eq: $uniqueId}}) {
+  service_provider_details(where: { unique_id: { _eq: $uniqueId } }) {
     service_provider_type
     business {
       id
@@ -180,7 +186,6 @@ query getServiceProviderId($uniqueId: String) {
   }
 }
 
-
 query getServiceLanguage($serviceDetailsId: Int!) {
   service_provider_details_by_pk(id: $serviceDetailsId) {
     language
@@ -193,7 +198,10 @@ query getServiceIsOpen($serviceDetailsId: Int!) {
 }
 
 mutation setLastActiveTime($id: Int!) {
-  update_service_provider_details_by_pk(pk_columns: {id: $id}, _set: {last_active_time: "now()"}) {
+  update_service_provider_details_by_pk(
+    pk_columns: { id: $id }
+    _set: { last_active_time: "now()" }
+  ) {
     last_active_time
   }
 }
@@ -207,5 +215,103 @@ mutation update_business_online_ordering(
     _set: { online_ordering: $online_ordering }
   ) {
     online_ordering
+  }
+}
+
+mutation add_new_offer($object: service_provider_offer_insert_input!) {
+  insert_service_provider_offer_one(object: $object) {
+    id
+  }
+}
+
+query get_offer_by_id($id: Int!) {
+  service_provider_offer_by_pk(id: $id) {
+    status
+    service_provider_type
+    service_provider_id
+    offer_type
+    id
+    details
+    coupon_code
+    name_id
+    name {
+      translations {
+        value
+        language_id
+      }
+    }
+  }
+}
+
+mutation update_offer(
+  $id: Int!
+  $service_provider_id: Int!
+  $offer: service_provider_offer_set_input
+) {
+  update_service_provider_offer(
+    where: {
+      id: { _eq: $id }
+      service_provider_id: { _eq: $service_provider_id }
+    }
+    _set: $offer
+  ) {
+    returning {
+      id
+    }
+  }
+}
+
+query check_coupon(
+  $coupon_code: String
+  $service_provider_id: Int
+  $service_provider_type: String
+) {
+  service_provider_offer(
+    where: {
+      coupon_code: { _eq: $coupon_code }
+      service_provider_id: { _eq: $service_provider_id }
+      service_provider_type: { _eq: $service_provider_type }
+      status: { _eq: "active" }
+      offer_type: { _eq: "coupon" }
+    }
+  ) {
+    id
+    details
+  }
+}
+
+query check_offer_applied($offer_id: Int, $customer_id: Int) {
+  service_provider_offer_applied(
+    where: {
+      offer_id: { _eq: $offer_id }
+      order_type: { _eq: "restaurant" }
+      restaurant_order: { customer_id: { _eq: $customer_id } }
+    }
+  ) {
+    order_id
+  }
+}
+
+query get_service_provider_offers(
+  $service_provider_id: Int
+  $service_provider_type: String
+) {
+  service_provider_offer(
+    where: {
+      service_provider_id: { _eq: $service_provider_id }
+      service_provider_type: { _eq: $service_provider_type }
+    }
+  ) {
+    id
+    details
+    name {
+      translations {
+        language_id
+        value
+      }
+    }
+    status
+    coupon_code
+    offer_type
   }
 }
