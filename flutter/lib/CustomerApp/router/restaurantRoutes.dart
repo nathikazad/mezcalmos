@@ -4,7 +4,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemVie
     deferred as restoItemView;
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart'
     deferred as restaurantOrder;
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart'
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustRestaurantView.dart'
     deferred as restoView;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 // import 'package:mezcalmos/CustomerOldStuff/CustRestaurantsListView/CustRestaurantListView.dart'
@@ -28,7 +28,7 @@ class RestaurantRoutes {
     QRoute(
         path: restaurantViewRoute,
         name: restaurantViewRoute,
-        builder: () => restoView.CustomerRestaurantView(),
+        builder: () => restoView.CustRestaurantView(),
         middleware: <QMiddleware>[DefferedLoader(restoView.loadLibrary)]),
     QRoute(
       path: restaurantItemViewRoute,

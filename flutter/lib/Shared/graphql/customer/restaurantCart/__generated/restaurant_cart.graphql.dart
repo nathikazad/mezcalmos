@@ -2094,6 +2094,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'applied_offers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'restaurant'),
             alias: null,
             arguments: [],
@@ -3066,6 +3073,7 @@ extension ClientExtension$Query$getCustomerCart on graphql.GraphQLClient {
 class Query$getCustomerCart$restaurant_cart {
   Query$getCustomerCart$restaurant_cart({
     required this.discount_value,
+    required this.applied_offers,
     this.restaurant,
     required this.items,
     required this.$__typename,
@@ -3074,11 +3082,13 @@ class Query$getCustomerCart$restaurant_cart {
   factory Query$getCustomerCart$restaurant_cart.fromJson(
       Map<String, dynamic> json) {
     final l$discount_value = json['discount_value'];
+    final l$applied_offers = json['applied_offers'];
     final l$restaurant = json['restaurant'];
     final l$items = json['items'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$restaurant_cart(
       discount_value: moneyFromJson(l$discount_value),
+      applied_offers: mapFromJson(l$applied_offers),
       restaurant: l$restaurant == null
           ? null
           : Query$getCustomerCart$restaurant_cart$restaurant.fromJson(
@@ -3093,6 +3103,8 @@ class Query$getCustomerCart$restaurant_cart {
 
   final double discount_value;
 
+  final dynamic applied_offers;
+
   final Query$getCustomerCart$restaurant_cart$restaurant? restaurant;
 
   final List<Query$getCustomerCart$restaurant_cart$items> items;
@@ -3103,6 +3115,8 @@ class Query$getCustomerCart$restaurant_cart {
     final _resultData = <String, dynamic>{};
     final l$discount_value = discount_value;
     _resultData['discount_value'] = moneyToJson(l$discount_value);
+    final l$applied_offers = applied_offers;
+    _resultData['applied_offers'] = mapToJson(l$applied_offers);
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant?.toJson();
     final l$items = items;
@@ -3115,11 +3129,13 @@ class Query$getCustomerCart$restaurant_cart {
   @override
   int get hashCode {
     final l$discount_value = discount_value;
+    final l$applied_offers = applied_offers;
     final l$restaurant = restaurant;
     final l$items = items;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$discount_value,
+      l$applied_offers,
       l$restaurant,
       Object.hashAll(l$items.map((v) => v)),
       l$$__typename,
@@ -3138,6 +3154,11 @@ class Query$getCustomerCart$restaurant_cart {
     final l$discount_value = discount_value;
     final lOther$discount_value = other.discount_value;
     if (l$discount_value != lOther$discount_value) {
+      return false;
+    }
+    final l$applied_offers = applied_offers;
+    final lOther$applied_offers = other.applied_offers;
+    if (l$applied_offers != lOther$applied_offers) {
       return false;
     }
     final l$restaurant = restaurant;
@@ -3187,6 +3208,7 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart<TRes> {
 
   TRes call({
     double? discount_value,
+    dynamic? applied_offers,
     Query$getCustomerCart$restaurant_cart$restaurant? restaurant,
     List<Query$getCustomerCart$restaurant_cart$items>? items,
     String? $__typename,
@@ -3216,6 +3238,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart<TRes>
 
   TRes call({
     Object? discount_value = _undefined,
+    Object? applied_offers = _undefined,
     Object? restaurant = _undefined,
     Object? items = _undefined,
     Object? $__typename = _undefined,
@@ -3224,6 +3247,9 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart<TRes>
         discount_value: discount_value == _undefined || discount_value == null
             ? _instance.discount_value
             : (discount_value as double),
+        applied_offers: applied_offers == _undefined || applied_offers == null
+            ? _instance.applied_offers
+            : (applied_offers as dynamic),
         restaurant: restaurant == _undefined
             ? _instance.restaurant
             : (restaurant as Query$getCustomerCart$restaurant_cart$restaurant?),
@@ -3266,6 +3292,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart<TRes>
 
   call({
     double? discount_value,
+    dynamic? applied_offers,
     Query$getCustomerCart$restaurant_cart$restaurant? restaurant,
     List<Query$getCustomerCart$restaurant_cart$items>? items,
     String? $__typename,

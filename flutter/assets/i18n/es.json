@@ -2085,6 +2085,7 @@
 
       "CustomerWrapper": {
         "filter": "Filtrar",
+        "deals": "Ofertas",
         "filters": "Filtros",
         "noRest": "Sorry, no restaurants found",
         "noItems": "Sorry, no items found",
@@ -2500,6 +2501,7 @@
         "profile": "Perfil",
         "info": "Información",
         "operators": "Operadoras",
+        "offers": "Ofertas",
         "drivers": "Conductoras",
         "schedule": "Horarios",
         "payments": "Pagos",

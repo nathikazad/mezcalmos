@@ -6,6 +6,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/ServiceOfferEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/controllers/ServiceOffersListViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -158,7 +160,9 @@ class _ServiceOffersListViewState extends State<ServiceOffersListView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "${offer.couponCode}",
+            offer.couponCode != null
+                ? "${offer.couponCode}"
+                : "${offer.name?.getTranslation(userLanguage)}",
             style: context.textTheme.bodyLarge,
           ),
           if (offer.startDate != null && offer.endDate != null)

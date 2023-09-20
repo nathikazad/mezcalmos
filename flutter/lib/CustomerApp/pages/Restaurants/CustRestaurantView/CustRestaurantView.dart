@@ -12,29 +12,32 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewRestaurantScreen"]["CustomerRestaurantView"];
 
-class CustomerRestaurantView extends StatefulWidget {
+class CustRestaurantView extends StatefulWidget {
   @override
-  _CustomerRestaurantViewState createState() => _CustomerRestaurantViewState();
+  _CustRestaurantViewState createState() => _CustRestaurantViewState();
   static Future<void> navigate({required int restaurantId}) {
     return MezRouter.toPath(RestaurantRoutes.restaurantViewRoute
         .replaceAll(":restaurantId", restaurantId.toString()));
   }
 }
 
-class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
+class _CustRestaurantViewState extends State<CustRestaurantView>
     with TickerProviderStateMixin {
   CustomerRestaurantController _viewController = CustomerRestaurantController();
 
@@ -89,6 +92,10 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
       controller: _viewController.scrollController,
       slivers: [
         RestaurantSliverAppBar(controller: _viewController),
+        if (_viewController.showOffers)
+          SliverToBoxAdapter(
+            child: _promoCard(),
+          ),
         Obx(() {
           if (_viewController.showInfo.value)
             return SliverPadding(
@@ -287,5 +294,55 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         ],
       ),
     );
+  }
+
+  Widget _promoCard() {
+    if (_viewController.offers.isNotEmpty)
+      return Container(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Promotions",
+              style: context.textTheme.bodyLarge,
+            ),
+            smallSepartor,
+            Column(
+              children:
+                  List.generate(_viewController.offers.length, (int index) {
+                final cModels.Offer offer = _viewController.offers[index];
+                return MezCard(
+                  margin: const EdgeInsets.only(bottom: 7),
+                  footer: Text.rich(TextSpan(children: [
+                    WidgetSpan(
+                      child: Icon(
+                        Icons.watch_later_outlined,
+                        size: 15.mezSp,
+                        color: primaryBlueColor,
+                      ),
+                    ),
+                    WidgetSpan(child: hTinySepartor),
+                    TextSpan(text: offer.details.offerTimeString),
+                  ])),
+                  bgColor: secondaryLightBlueColor,
+                  firstAvatarIcon: Icons.percent,
+                  radius: 20,
+                  firstAvatarBgColor: primaryBlueColor,
+                  firstAvatarIconColor: Colors.white,
+                  content: Container(
+                    child: Text(
+                        _viewController.offers[index].details.getDescription(),
+                        style: context.textTheme.bodyLarge
+                            ?.copyWith(color: primaryBlueColor)),
+                  ),
+                );
+              }),
+            ),
+          ],
+        ),
+      );
+    else
+      return SizedBox();
   }
 }

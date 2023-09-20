@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCar
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum CouponError {
@@ -429,7 +430,45 @@ extension OfferDetailsExtensions on cModels.OfferDetails {
     };
   }
 
-  String getDescription() {
+  String get discountTitle {
+    final StringBuffer sb = StringBuffer();
+
+    switch (discountType) {
+      case cModels.DiscountType.FlatAmount:
+        sb.write(" Flat \$$discountValue off ");
+        break;
+      case cModels.DiscountType.Percentage:
+        sb.write(" $discountValue% off ");
+        break;
+      case cModels.DiscountType.AnotherSameFlat:
+        sb.write(" Buy 1 and Get Flat \$$discountValue off on another one ");
+        break;
+      case cModels.DiscountType.AnotherSamePercentage:
+        sb.write(" Buy 1 and Get $discountValue% off on another one ");
+        break;
+      default:
+        throw StateError("Unhanded ===========>$discountType");
+    }
+    if (offerForOrder == "firstOrder") {
+      sb.write(" on your first order");
+    }
+    if (minimumOrderAmount != null) {
+      sb.write(
+          " with minimum order amount ${minimumOrderAmount?.toPriceString()}");
+    }
+    return sb.toString();
+  }
+
+  String get offerTimeString {
+    final StringBuffer sb = StringBuffer();
+    if (validityRangeStart != null && validityRangeEnd != null) {
+      sb.write(
+          "From ${DateTime.parse(validityRangeStart!).getOrderTime()} to ${DateTime.parse(validityRangeEnd!).getOrderTime()}");
+    }
+    return sb.toString();
+  }
+
+  String getDescription({bool withTime = false}) {
     final StringBuffer sb = StringBuffer();
 
     switch (discountType) {
@@ -454,18 +493,19 @@ extension OfferDetailsExtensions on cModels.OfferDetails {
           ? "from "
           : "on ");
 
-      sb.write(offerForItems == "particularItems"
+      sb.write(offerForItems == "particularitems" && items?.isNotEmpty == true
           ? "the following items"
-          : "the following categories");
+          : "");
     }
 
     if (offerForOrder == "firstOrder") {
       sb.write("on your first order");
     }
     if (minimumOrderAmount != null) {
-      sb.write("with minimum order amount $minimumOrderAmount");
+      sb.write(
+          "with minimum order amount ${minimumOrderAmount?.toPriceString()}");
     }
-    if (validityRangeStart != null && validityRangeEnd != null) {
+    if (validityRangeStart != null && validityRangeEnd != null && withTime) {
       sb.write(
           " from ${DateTime.parse(validityRangeStart!).getOrderTime()} to ${DateTime.parse(validityRangeEnd!).getOrderTime()}");
     }

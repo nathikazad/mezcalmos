@@ -30,6 +30,7 @@ mutation set_cart_restaurant_id($restaurant_id: Int!, $customer_id: Int!) {
 query getCustomerCart($customer_id: Int!) {
   restaurant_cart(where: { customer_id: { _eq: $customer_id } }) {
     discount_value
+    applied_offers
     restaurant {
       id
 

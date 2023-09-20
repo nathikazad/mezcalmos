@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/components/CustShowOnlyOpenService.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Businesses/Components/CustBusinessFilterSheet.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -351,7 +351,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
               customerLocation: viewController.customerLocation,
-              onClick: () => CustomerRestaurantView.navigate(
+              onClick: () => CustRestaurantView.navigate(
                 restaurantId:
                     viewController.filteredRestaurants[index].info.hasuraId,
               ),

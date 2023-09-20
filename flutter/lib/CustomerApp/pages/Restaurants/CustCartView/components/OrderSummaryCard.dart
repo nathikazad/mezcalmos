@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -195,6 +196,34 @@ class CardSummaryCard extends StatelessWidget {
                   ],
                 ),
               ),
+              //=======================Coupon==================
+              if (controller.showApplyCoupon)
+                Container(
+                  padding: EdgeInsets.only(bottom: 12, top: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      Flexible(
+                          flex: 3,
+                          fit: FlexFit.tight,
+                          child: TextFormField(
+                            controller: controller.couponTextController,
+                            decoration:
+                                InputDecoration(hintText: "Coupon code"),
+                          )),
+                      Flexible(
+                          child: MezInkwell(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 12),
+                        label: "Apply",
+                        onClick: () async {
+                          await controller.applyCoupon();
+                        },
+                      ))
+                    ],
+                  ),
+                ),
               // SizedBox(
               //   height: 8,
               // ),

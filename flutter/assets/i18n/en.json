@@ -2027,7 +2027,7 @@
         "filter": "Filter",
         "noRest": "Sorry, no restaurants found",
         "noItems": "Sorry, no items found",
-
+        "deals": "Deals",
         "filters": "Filters",
         "items": "Items",
         "search": "Search...",
@@ -2468,6 +2468,7 @@
         "operators": "Operators",
         "drivers": "Drivers",
         "schedule": "Schedule",
+        "offers": "Offers",
         "payments": "Payments",
         "delivery": "Delivery",
         "reviews": "Reviews",

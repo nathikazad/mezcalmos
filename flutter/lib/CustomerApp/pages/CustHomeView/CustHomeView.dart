@@ -47,27 +47,6 @@ class _CustHomeViewState extends State<CustHomeView>
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,
-
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(bottom: 65),
-      //   child: Align(
-      //     alignment: Alignment.bottomCenter,
-      //     child: Obx(
-      //       () => MezInkwell(
-      //         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-      //         onClick: () async {
-      //           viewController.switchView();
-      //         },
-      //         icon: viewController.isMapView ? Icons.list : Icons.map_rounded,
-      //         label: viewController.isMapView
-      //             ? '${_i18n()['viewAsList']}'
-      //             : '${_i18n()['viewOnMap']}',
-      //         borderRadius: 50,
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      // floatingActionButtonLocation: viewController.dockedFabLocation(context),
       body: Stack(
         children: [
           Obx(() {

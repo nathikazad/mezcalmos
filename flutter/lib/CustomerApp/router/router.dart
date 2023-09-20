@@ -1,7 +1,7 @@
 // import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/DeliveryServiceView.dart'
 //     deferred as deliveryServices;
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/CustHomeView.dart'
-    deferred as customerHome;
+import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart'
+    deferred as customerWrapper;
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
@@ -16,9 +16,9 @@ class XRouter {
         QRoute(
             name: SharedRoutes.kHomeRoute,
             path: SharedRoutes.kHomeRoute,
-            builder: () => customerHome.CustHomeView(),
+            builder: () => customerWrapper.CustomerWrapper(),
             middleware: <QMiddleware>[
-              DefferedLoader(customerHome.loadLibrary)
+              DefferedLoader(customerWrapper.loadLibrary)
             ]),
         // QRoute(
         //     name: deliveryServicesRoute,

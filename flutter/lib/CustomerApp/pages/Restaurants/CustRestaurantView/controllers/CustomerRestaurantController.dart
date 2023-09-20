@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -37,10 +38,14 @@ class CustomerRestaurantController {
   RxBool pauseRectGetterIndex = RxBool(false);
   RxList<Item> specials = RxList.empty();
   RxBool _initialized = RxBool(false);
+  RxList<cModels.Offer> _offers = RxList<cModels.Offer>.empty();
+  List<cModels.Offer> get offers => _offers.value;
 
   bool get isInitialzed {
     return _initialized.value;
   }
+
+  bool get showOffers => _offers.isNotEmpty && !showInfo.value;
 
   Future<void> init(
       {required int restaurantId, required TickerProvider vsync}) async {
@@ -64,6 +69,7 @@ class CustomerRestaurantController {
       }
     }));
     await _getShippingPrice();
+    unawaited(_getOffers());
 
     final List<Category>? _cats =
         await get_restaurant_categories_by_id(restaurantId);
@@ -139,6 +145,15 @@ class CustomerRestaurantController {
     }
 
     return false;
+  }
+
+  Future<void> _getOffers() async {
+    _offers.value = await get_service_provider_offers(
+        serviceProviderId: restaurant.value!.restaurantId,
+        serviceProviderType: cModels.ServiceProviderType.Restaurant,
+        withCache: false);
+    mezDbgPrint(
+        "👋 👋 👋 offers +++++++++++++++++++++++++++> ${_offers.length}");
   }
 
   void animateAndScrollTo(int index) {

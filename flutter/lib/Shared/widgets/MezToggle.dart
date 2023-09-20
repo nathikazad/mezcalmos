@@ -46,7 +46,11 @@ class _MezToggleState extends State<MezToggle> {
                   elevation: 0,
                   icon:
                       _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                  onTap: null,
+                  onTap: () {
+                    setState(() {
+                      _isExpanded = !_isExpanded;
+                    });
+                  },
                 ),
               ],
             ),

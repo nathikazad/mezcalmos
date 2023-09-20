@@ -160,6 +160,10 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
       }
     });
     cart.discountValue = cartData.discount_value;
+    cart.offersApplied = cartData.applied_offers
+            ?.map<int>((value) => int.parse(value.toString()))
+            .toList() ??
+        [];
     return cart;
   }
   return null;
