@@ -16,6 +16,8 @@ extension ParseAgentStatusToString on AgentStatus {
         return AuthorizationStatus.Authorized;
       case AgentStatus.Banned:
         return AuthorizationStatus.Unauthorized;
+      default:
+        return AuthorizationStatus.Unauthorized;
     }
   }
 }

@@ -48,6 +48,7 @@ class DeliveryAuthController extends GetxController {
 
   Future<void> setupDeliveryDriver() async {
     mezDbgPrint("DeliveryAuthController: handle state change user value");
+    _driver.value = null;
     _driver.value = await get_driver_by_user_id(
         userId: _authController.hasuraUserId!, withCache: false);
     // if (_driver.value != null) {

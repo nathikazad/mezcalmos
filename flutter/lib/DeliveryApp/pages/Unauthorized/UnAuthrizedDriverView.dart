@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/deliveryDeepLinkHandler.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/controllers/UnauthDriverViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -26,7 +25,6 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
   @override
   void initState() {
     viewController.init();
-    DeliveryDeepLinkHandler.showDialogAndAddDriver('serviamigos');
     super.initState();
   }
 

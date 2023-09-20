@@ -39,9 +39,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
       // await DeepLinkHandler.startDynamicLinkCheckRoutine(
       //     DeliveryDeepLinkHandler.handleDeeplink);
       // // ignore: unawaited_futures
-      await _deliveryAuthController
-          .setupDeliveryDriver()
-          .then((_) => handleState());
+      unawaited(handleState());
     });
 
     MezRouter.registerReturnToViewCallback(SharedRoutes.kHomeRoute, () {
@@ -57,14 +55,15 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
     super.initState();
   }
 
-  void handleState() {
+  Future<void> handleState() async {
+    await _deliveryAuthController.setupDeliveryDriver();
     if (_deliveryAuthController.driver != null &&
         _deliveryAuthController.driver!.deliveryDriverState.isAuthorized) {
       mezDbgPrint("DeliveryWrapper::handleState going to incoming orders");
 
-      MezRouter.toNamed(DeliveryAppRoutes.kCurrentOrdersListRoute);
+      unawaited(MezRouter.toNamed(DeliveryAppRoutes.kCurrentOrdersListRoute));
     } else {
-      MezRouter.toNamed(DeliveryAppRoutes.kDriverUnAuthRoute);
+      unawaited(MezRouter.toNamed(DeliveryAppRoutes.kDriverUnAuthRoute));
       mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
     }
   }
