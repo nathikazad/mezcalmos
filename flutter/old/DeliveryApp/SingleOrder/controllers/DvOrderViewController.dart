@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -16,6 +15,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+
+import '../../../../../old/DeliveryApp/SingleOrder/DvOrderView.dart';
 
 class DvOrderViewcontroller {
   // instances //
@@ -149,7 +150,7 @@ class DvOrderViewcontroller {
       cModels.DeliveryOrderStatus status) async {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
-      cModels.ChangeDeliveryStatusResponse res =
+      final cModels.ChangeDeliveryStatusResponse res =
           await CloudFunctions.delivery3_changeStatus(
         deliveryId: order.orderId,
         newStatus: status,
@@ -203,7 +204,7 @@ class DvOrderViewcontroller {
 
   Future<void> acceptOpenOrder() async {
     try {
-      cModels.AssignDriverResponse res =
+      final cModels.AssignDriverResponse res =
           await CloudFunctions.delivery3_assignDriver(
               deliveryOrderId: order.orderId,
               deliveryDriverId:

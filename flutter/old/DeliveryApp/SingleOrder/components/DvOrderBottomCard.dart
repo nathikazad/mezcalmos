@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen/BaseMessagingScreen.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+
+import '../../../../../old/DeliveryApp/SingleOrder/components/AnimatedOrderInfoCard.dart';
+import '../../../../../old/DeliveryApp/SingleOrder/controllers/DvOrderViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
         ['pages']['CurrentOrders']['CurrentOrderViewScreen']['Components']
@@ -147,8 +147,6 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                 DeliveryOrderStatus.OrderReceived ||
             widget.viewcontroller.order.packageReady == true);
   }
-
-
 
   Widget _pickUpTimeSetter() {
     return (widget.viewcontroller.pickuSetted)

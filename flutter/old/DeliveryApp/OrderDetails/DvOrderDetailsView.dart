@@ -4,8 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/components/DvOrderItems.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -27,6 +25,9 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../old/DeliveryApp/OrderDetails/components/DvOrderItems.dart';
+import '../../../../old/DeliveryApp/OrderDetails/controllers/DvOrderDetailsViewController.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]

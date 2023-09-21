@@ -52,21 +52,21 @@ class CustRestaurantOrderViewController {
     if (order.value == null) {
       mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
     } else {
-      subscriptionId = hasuraDb.createSubscription(start: () {
-        orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
-            .listen((RestaurantOrder? event) {
-          if (event != null) {
-            mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+      // subscriptionId = hasuraDb.createSubscription(start: () {
+      //   orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
+      //       .listen((RestaurantOrder? event) {
+      //     if (event != null) {
+      //       mezDbgPrint(
+      //           "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
 
-            order.value = null;
-            order.value = event;
-          }
-        });
-      }, cancel: () {
-        orderStream?.cancel();
-        orderStream = null;
-      });
+      //       order.value = null;
+      //       order.value = event;
+      //     }
+      //   });
+      // }, cancel: () {
+      //   orderStream?.cancel();
+      //   orderStream = null;
+      // });
     }
   }
 
