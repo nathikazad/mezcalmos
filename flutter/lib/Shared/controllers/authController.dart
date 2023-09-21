@@ -36,6 +36,8 @@ class AuthController extends GetxController {
   StreamController<fireAuth.User?> _authStateStreamController =
       StreamController<fireAuth.User?>.broadcast();
 
+  StreamController<String> authInitState = StreamController<String>.broadcast();
+
   Stream<fireAuth.User?> get authStateStream =>
       _authStateStreamController.stream;
 
@@ -54,6 +56,7 @@ class AuthController extends GetxController {
 
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       logEventToServer("Auth state change user: ${user?.uid}");
+      authInitState.add("1");
       await authChangeCallback(user);
     });
 
@@ -69,40 +72,48 @@ class AuthController extends GetxController {
       return;
     }
     _previousUserValue = user?.toString();
+    authInitState.add("2");
 
     mezDbgPrint('Authcontroller:: Auth state change!');
     mezDbgPrint(user?.hashCode);
     mezDbgPrint(user ?? "empty");
 
     if (user == null) {
+      authInitState.add("3a.1");
       _hasuraUserId.value = null;
       await hasuraDb.initializeHasura();
+      authInitState.add("3a.2");
       await _onSignOutCallback();
+      authInitState.add("3a.3");
       mezDbgPrint('AuthController: User is currently signed out!');
     } else {
       mezDbgPrint('AuthController: User is currently signed in!');
-
+      authInitState.add("3b.1");
       fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
       mezDbgPrint(tokenResult.claims);
-
+      authInitState.add("3b.2");
       if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null ||
           roleMissing(tokenResult.claims!['https://hasura.io/jwt/claims']
               ['x-hasura-allowed-roles'])) {
         mezDbgPrint("No token, calling addHasuraClaims");
-
+        authInitState.add("3b.3a.1");
         await CloudFunctions.user2_addHasuraClaim();
-
+        authInitState.add("3b.3a.2");
         tokenResult = await user.getIdTokenResult(true);
       }
+      authInitState.add("3b.4");
       _hasuraUserId.value = int.parse(tokenResult
           .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
 
       mezDbgPrint(_hasuraUserId.value);
 
       await hasuraDb.initializeHasura();
+      authInitState.add("3b.5");
       await fetchUserInfoFromHasura();
+      authInitState.add("3b.6");
       _setLAppLanguage();
       await _onSignInCallback();
+      authInitState.add("3b.7");
       // todo @sanchit
       // we check if user just signed up using _userInfo.value.created time < 120 seconds
       //    if yes we check if uniqueId is set in local storage
@@ -112,7 +123,7 @@ class AuthController extends GetxController {
                 (DateTime.parse(_userInfo.value!.creationTime!)
                     .millisecondsSinceEpoch) <
             120 * 1000) {
-          if (GetStorage().read('uniqueId') != null) {
+          if (GetStorage().read<String>('uniqueId') != null) {
             // try {
             //   final cModels.AddReferralResponse res =
             //       await CloudFunctions.serviceProvider_addReferral(
@@ -130,7 +141,7 @@ class AuthController extends GetxController {
         }
       }
     }
-
+    authInitState.add("4");
     _authStateStreamController.add(user);
   }
 
@@ -180,7 +191,7 @@ class AuthController extends GetxController {
         FirebaseFunctions.instance.httpsCallable('user-deleteUserAccount');
     try {
       final HttpsCallableResult<Map<String, dynamic>> response =
-          await deleteUserFunction.call({});
+          await deleteUserFunction.call(<Map<String, dynamic>>{});
       mezDbgPrint("Responso ===> $response");
       final ServerResponse _resp = ServerResponse.fromJson(response.data);
 

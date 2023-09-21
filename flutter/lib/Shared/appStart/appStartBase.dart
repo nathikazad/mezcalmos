@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -81,7 +80,9 @@ abstract class StartingPointBase extends StatefulWidget {
 
 class StartingPointBaseState extends State<StartingPointBase> {
   /// _initialized
-  bool _initialized = false;
+  num _initializedState = 0;
+  String _initializedStateAuth = "0";
+  StreamSubscription<String>? authInitStateStream;
 
   /// _error
   bool _error = false;
@@ -143,11 +144,12 @@ class StartingPointBaseState extends State<StartingPointBase> {
         ),
       );
     }
-    if (!_initialized) {
+    if (_initializedState < 7) {
       return Sizer.Sizer(
         builder: (BuildContext context, Orientation orientation,
                 Sizer.DeviceType deviceType) =>
-            SplashScreen(),
+            SplashScreen(_initializedState, _initializedStateAuth,
+                key: Key('$_initializedState-$_initializedStateAuth')),
       );
     } else {
       mezDbgPrint(
@@ -169,24 +171,32 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
   Future<void> initializeSetup() async {
     try {
+      setState(() => _initializedState = 1);
+
       await setupFirebase();
       mezDbgPrint("Done : setupFirebase");
+      setState(() => _initializedState = 2);
+
       await setGlobalsAndLocalStorage();
       mezDbgPrint("Done : setGlobalVariables");
+      setState(() => _initializedState = 3);
 
       await putControllers();
       mezDbgPrint("Done : putControllers");
+      setState(() => _initializedState = 4);
 
       await waitForInitialization();
       mezDbgPrint("Done : waitForInitialization");
+      setState(() => _initializedState = 5);
 
       hookOnFlutterErrorsStdout();
       mezDbgPrint("Done : hookOnFlutterErrorsStdout");
+      setState(() => _initializedState = 6);
 
       initializeThirdParties();
-
-      setState(() => _initialized = true);
-      mezDbgPrint("_initialized Set to : $_initialized");
+      setState(() => _initializedState = 7);
+      mezDbgPrint("_initialized");
+      unawaited(authInitStateStream?.cancel());
     } catch (e) {
       mezDbgPrint("[+] Error Happend =======> $e");
       setState(() {
@@ -207,7 +217,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
     final FirebaseApp _app = await getFirebase();
     mezDbgPrint("[+] App Initialized under Name ${_app.name} .");
     late FirebaseDatabase firebaseDb;
-
+    setState(() => _initializedState = 1.1);
     if (MezEnv.appLaunchMode == AppLaunchMode.prod) {
       firebaseDb = FirebaseDatabase.instanceFor(app: _app);
     } else if (MezEnv.appLaunchMode == AppLaunchMode.dev) {
@@ -236,12 +246,12 @@ class StartingPointBaseState extends State<StartingPointBase> {
         firebaseApp: _app,
       ),
     );
-
+    setState(() => _initializedState = 1.2);
     Get.put<AppLifeCycleController>(
       AppLifeCycleController(),
       permanent: true,
     );
-
+    setState(() => _initializedState = 1.3);
     Get.put(HasuraDb(), permanent: true);
   }
 
@@ -256,10 +266,14 @@ class StartingPointBaseState extends State<StartingPointBase> {
     if (MezEnv.previewMode == false) {
       await initializeDateFormatting(lc.userLanguageKey.name.toLowerCase());
     }
-    Get.put<AuthController>(
+    final AuthController authController = Get.put<AuthController>(
       AuthController(widget.signInCallback, widget.signOutCallback),
       permanent: true,
     );
+    authInitStateStream =
+        authController.authInitState.stream.listen((String authInitState) {
+      setState(() => _initializedStateAuth = authInitState);
+    });
     Get.put<SettingsController>(
       SettingsController(widget.locationPermissionType,
           sideMenuItems: widget.sideMenuItems ?? []),
@@ -286,8 +300,8 @@ class StartingPointBaseState extends State<StartingPointBase> {
   }) {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
-      final BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(), 'assets/images/shared/purpleCircle.png');
+      // final BitmapDescriptor desc = await BitmapDescriptor.fromAssetImage(
+      //     ImageConfiguration(), 'assets/images/shared/purpleCircle.png');
 
       print("[+] InitializedConfig -- the ${MezEnv.appType.toShortString()} !");
     }
