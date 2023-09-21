@@ -3564,6 +3564,13 @@
         "order": "Pedido",
         "viewImage": "Ver imagen"
       },
+      "DvConvoView":{
+        "respond": "Contestar",
+        "finish": "Terminar",
+        "whatsapp": "Abrir Whatsapp",
+        "respondedAt": "contestado a las",
+        "cancel": "Cancellar"
+      },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Órdenes actuales",
@@ -3574,6 +3581,11 @@
           "offlineBody": "Enciende para ver las órdenes entrantes",
           "pastOrders": "Hoy",
           "title": "Órdenes entrantes",
+          "confirmationDialog" : {
+            "markAll": "Marcar todos pedidos como terminado",
+            "yes": "Si, terminarles",
+            "cancel": "Cancellar"
+          },
           "Components": {
             "DriverNoOrdersComponent": {
               "noOrdersTitle": "No Hay Ordenes",

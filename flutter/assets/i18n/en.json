@@ -3559,6 +3559,13 @@
         "counterOffer": "Counter Offer",
         "reqCounterOffer": "Request price change"
       },
+      "DvConvoView":{
+        "respond": "Respond",
+        "finish": "Finish order",
+        "whatsapp": "Open Whatsapp",
+        "respondedAt": "responded at",
+        "cancel": "Cancel"
+      },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Current orders",
@@ -3569,6 +3576,11 @@
           "title": "Incoming orders",
           "offlineTitle": "You are offline",
           "offlineBody": "Turn on to see incoming orders",
+          "confirmationDialog" : {
+            "markAll": "Mark all orders as finished",
+            "yes": "Yes, finish orders",
+            "cancel": "Cancel"
+          },
           "Components": {
             "DriverNoOrdersComponent": {
               "noOrdersTitle": "No Orders Found",

@@ -110,7 +110,7 @@
         } else {
           console.log("web");
           callCloudFunction("web");
-          document.getElementById("message").innerText = "Not supported for this device";
+          document.getElementById("message").innerText = "Not supported for this device, download on iPhone or Android";
         }
 
       } catch (error) {
@@ -142,6 +142,8 @@
       console.log(window.location.pathname.split('/').pop());
       if (window.location.pathname.split('/').pop() == "serviamigos") {
         console.log("delivery link")
+        document.getElementById("appLink").textContent = "Abrir El App";
+        document.getElementById("storelink").textContent = "Si no lo tienes, descargar";
         redirect(deliveryAppLinks);
       } else {
         console.log("customer link")

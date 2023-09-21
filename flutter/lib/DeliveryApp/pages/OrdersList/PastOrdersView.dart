@@ -63,7 +63,7 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
                       style: context.textTheme.bodyLarge,
                     ),
                     MezInkwell(
-                      label: "Open orders",
+                      label: _i18n()["openOrders"],
                       backgroundColor: secondaryLightBlueColor,
                       textColor: primaryBlueColor,
                       onClick: () async {

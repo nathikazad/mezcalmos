@@ -153,7 +153,7 @@ class DeliveryMessage {
 class DvMessageEntry {
   final String id;
   final String from;
-  final DvTextMessage text;
+  final DvTextMessage? text;
   final String type;
   final bool resolved;
   final DateTime timestamp; // Change the type to DateTime
@@ -161,7 +161,7 @@ class DvMessageEntry {
   DvMessageEntry({
     required this.id,
     required this.from,
-    required this.text,
+    this.text,
     required this.type,
     required this.resolved,
     required this.timestamp,
@@ -171,7 +171,7 @@ class DvMessageEntry {
     return DvMessageEntry(
       id: json['id'] ?? '',
       from: json['from'] ?? '',
-      text: DvTextMessage.fromJson(json['text']),
+      text: DvTextMessage.fromJson(json['text'] ?? <String, dynamic>{}),
       type: json['type'] ?? '',
       resolved: json['resolved'] ?? false,
       timestamp: DateTime.fromMillisecondsSinceEpoch(

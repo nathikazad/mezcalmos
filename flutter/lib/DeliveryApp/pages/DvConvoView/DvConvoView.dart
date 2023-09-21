@@ -6,11 +6,15 @@ import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/controllers/DvConvoViewC
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/Chat/MezChatBubble.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
+    ["pages"]["DvConvoView"];
 
 class DvConvoView extends StatefulWidget {
   const DvConvoView({super.key});
@@ -52,8 +56,9 @@ class _DvConvoViewState extends State<DvConvoView> {
       bottomNavigationBar: Obx(
         () => !viewController.isFinished
             ? MezButton(
-                label:
-                    viewController.showAcceptBtn ? "Respond" : "Finish order",
+                label: viewController.showAcceptBtn
+                    ? _i18n()['respond']
+                    : _i18n()['finish'],
                 borderRadius: 0,
                 backgroundColor: viewController.showAcceptBtn
                     ? Colors.green
@@ -84,7 +89,7 @@ class _DvConvoViewState extends State<DvConvoView> {
                         children: [
                           _buildDateTitle(message.receivedTime),
                           MezChatBubble(
-                            message: message.entry.text.body,
+                            message: message.entry.text?.body ?? '',
                             timestamp: message.receivedTime,
                             imageUrl: message.userImage,
                           ),
@@ -96,7 +101,7 @@ class _DvConvoViewState extends State<DvConvoView> {
                       return Column(
                         children: [
                           MezChatBubble(
-                            message: message.entry.text.body,
+                            message: message.entry.text?.body ?? '',
                             timestamp: message.receivedTime,
                             imageUrl: message.userImage,
                           ),
@@ -119,7 +124,7 @@ class _DvConvoViewState extends State<DvConvoView> {
                         borderRadius: 15,
                         elevation: 0.7,
                         height: 40,
-                        label: "Open Whatsapp",
+                        label: _i18n()['whatsapp'],
                         icon: Ionicons.logo_whatsapp,
                         onClick: () async {
                           await callWhatsappNumber(viewController.phoneNumber);
@@ -136,11 +141,11 @@ class _DvConvoViewState extends State<DvConvoView> {
                       !viewController.showAcceptBtn)
                     Flexible(
                       child: MezButton(
-                        label: "Cancel order",
+                        label: _i18n()['cancel'],
                         borderRadius: 15,
                         height: 40,
                         onClick: () async {
-                          viewController.cancelOrder();
+                          await viewController.cancelOrder();
                         },
                         border: BorderSide(width: 1, color: redAccentColor),
                         backgroundColor: Colors.white,
@@ -158,32 +163,34 @@ class _DvConvoViewState extends State<DvConvoView> {
   }
 
   Widget _driverResponded(BuildContext context, DeliveryMessage message) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Text.rich(TextSpan(children: [
-        WidgetSpan(
-          child: InkWell(
-            onTap: () {
-              if (message.driverPhone != null) {
-                callWhatsappNumber(message.driverPhone!);
-              }
-            },
-            child: Ink(
-              child: Text(
-                "${message.driverName}",
-                style: context.textTheme.bodyMedium?.copyWith(
-                    color: primaryBlueColor,
-                    decoration: TextDecoration.underline),
+    if (message.driverName != null)
+      return Container(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        child: Text.rich(TextSpan(children: [
+          WidgetSpan(
+            child: InkWell(
+              onTap: () {
+                if (message.driverPhone != null) {
+                  callWhatsappNumber(message.driverPhone!);
+                }
+              },
+              child: Ink(
+                child: Text(
+                  "${message.driverName}",
+                  style: context.textTheme.bodyMedium?.copyWith(
+                      color: primaryBlueColor,
+                      decoration: TextDecoration.underline),
+                ),
               ),
             ),
           ),
-        ),
-        WidgetSpan(child: hTinySepartor),
-        TextSpan(
-            text:
-                "Responded at ${DateFormat("hh:mm a").format(message.respondedTime!)}"),
-      ])),
-    );
+          WidgetSpan(child: hTinySepartor),
+          TextSpan(
+              text:
+                  "${_i18n()['respondedAt']} ${DateFormat("hh:mm a").format(message.respondedTime!)}"),
+        ])),
+      );
+    return Container();
   }
 
   bool isSameDay(DateTime date1, DateTime date2) {

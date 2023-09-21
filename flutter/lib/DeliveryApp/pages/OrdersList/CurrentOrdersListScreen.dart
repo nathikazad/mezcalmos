@@ -64,7 +64,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             Obx(
               () => SwitchListTile.adaptive(
                   title: Text(
-                    "Incoming Orders",
+                    _i18n()['title'],
                     style: context.textTheme.bodyLarge,
                   ),
                   activeColor: primaryBlueColor,
@@ -115,7 +115,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 WidgetSpan(child: hTinySepartor),
                 TextSpan(
                     text:
-                        "Current Orders (${viewController.currentOrders.length})"),
+                        "${_i18n()['currentOrders']} (${viewController.currentOrders.length})"),
               ],
               style: context.textTheme.bodyLarge
                   ?.copyWith(color: primaryBlueColor))),
@@ -135,16 +135,16 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           ),
           Divider(),
           MezInkwell(
-            label: "Mark all orders as finished",
+            label: _i18n()['confirmationDialog']["markAll"],
             backgroundColor: secondaryLightBlueColor,
             textColor: primaryBlueColor,
             icon: Icons.arrow_forward,
             onClick: () async {
               await showConfirmationDialog(context,
-                  title: "Mark all orders as finished",
+                  title: _i18n()['confirmationDialog']["markAll"],
                   helperText: '',
-                  primaryButtonText: "Yes, finish orders",
-                  secondaryButtonText: "Cancel",
+                  primaryButtonText: _i18n()['confirmationDialog']['yes'],
+                  secondaryButtonText: _i18n()['confirmationDialog']['cancel'],
                   primaryColor: primaryBlueColor,
                   icon: Icons.done_all_rounded, onYesClick: () async {
                 await viewController.finishAllOrders();
@@ -173,7 +173,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 ),
                 WidgetSpan(child: hTinySepartor),
                 TextSpan(
-                    text: "Open Orders (${viewController.openOrders.length})"),
+                    text:
+                        "${_i18n()['openOrders']} (${viewController.openOrders.length})"),
               ],
               style:
                   context.textTheme.bodyLarge?.copyWith(color: Colors.purple))),
