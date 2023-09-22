@@ -12,27 +12,16 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderCustomer.dart';
-import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderEstTime.dart';
-import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderHandleButton.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderItems.dart';
-import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderStatusCard.dart';
-import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
-import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:mezcalmos/env.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -86,130 +75,151 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
               Text("${viewController.order.value?.customer.name ?? ""}"))),
       floatingActionButton:
           (MezEnv.appType == AppType.MezAdmin) ? _copyBtn() : null,
+      bottomNavigationBar: Obx(
+        () => viewController.showForwardBtn
+            ? MezButton(
+                label: "Forward to Servi Amigos",
+                borderRadius: 0,
+                onClick: () async {},
+              )
+            : SizedBox.shrink(),
+      ),
       body: Obx(() {
         if (viewController.order.value != null) {
           return SingleChildScrollView(
               padding: const EdgeInsets.all(12),
               child: Column(
                 children: [
-                  // order status
-                  ROpOrderStatusCard(order: viewController.order.value!),
-
-                  ROpOrderHandleButton(viewController: viewController),
-                  if (viewController.order.value!.scheduleTime != null)
-                    _getScheduleTime(),
-                  RestaurantOrderEstTime(order: viewController.order.value!),
-                  // if (viewController.order.value?.selfDelivery ?? false)
-                  //   ROpEstDeliveryTime(order: viewController.order.value!),
-                  ROpDriverCard(order: viewController.order.value!),
-                  if (viewController.order.value!.inDeliveryPhase())
-                    OrderMapWidget(
-                        deliveryOrderId:
-                            viewController.order.value!.deliveryOrderId!,
-                        updateDriver:
-                            viewController.order.value!.inDeliveryPhase(),
-                        polyline: viewController
-                            .order.value!.routeInformation?.polyline,
-                        from: viewController.order.value!.restaurant.location,
-                        to: viewController.order.value!.dropOffLocation),
-                  ROpOrderCustomer(order: viewController.order.value!),
-                  if (MezEnv.appType == AppType.MezAdmin)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${_i18n()['restaurant']}",
-                          style: context.txt.bodyLarge,
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        MezCard(
-                          contentPadding: const EdgeInsets.all(12),
-                          margin: const EdgeInsets.only(bottom: 20),
-                          firstAvatarBgImage: CachedNetworkImageProvider(
-                              viewController.order.value!.restaurant.image),
-                          content: Text(
-                            viewController.order.value!.restaurant.name,
-                            style: context.txt.bodyLarge,
-                          ),
-                          action: (viewController
-                                      .order.value!.restaurant.phoneNumber !=
-                                  null)
-                              ? MezIconButton(
-                                  onTap: () async {
-                                    final String number = viewController
-                                        .order.value!.restaurant.phoneNumber!;
-                                    await callWhatsappNumber(number);
-                                  },
-                                  icon: Ionicons.logo_whatsapp,
-                                  iconColor: Colors.green,
-                                  backgroundColor: Colors.white,
-                                )
-                              : null,
-                        ),
-                      ],
+                  // here call OrderMapWidget
+                  MezCard(
+                    label: "Customer",
+                    margin: const EdgeInsets.only(bottom: 15),
+                    radius: 22,
+                    firstAvatarBgImage:
+                        CachedNetworkImageProvider(defaultUserImgUrl),
+                    content: Text(
+                      "Customer Name",
+                      style: context.textTheme.bodyLarge,
                     ),
-
-                  _orderItemsList(),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      '${_i18n()["deliveryDet"]}',
-                      textAlign: TextAlign.center,
-                      style: context.txt.bodyLarge,
+                    action: MezIconButton(
+                      icon: Ionicons.logo_whatsapp,
+                      iconColor: Colors.white,
+                      backgroundColor: Colors.green,
+                      onTap: () {
+                        viewController.openCustomerWhatsapp();
+                      },
                     ),
                   ),
-                  OrderScheduledTimeCard(
-                      time: viewController.order.value!.scheduleTime,
-                      margin: const EdgeInsets.only(top: 8)),
-                  // RestaurantOrderDeliveryTimeCard(
-                  //   order: viewController.order.value!,
+                  MezCard(
+                    label: "Driver",
+                    margin: const EdgeInsets.only(bottom: 15),
+                    radius: 22,
+                    secondAvatarIconColor: primaryBlueColor,
+                    secondAvatarBgColor: secondaryLightBlueColor,
+                    secondAvatarIcon: Icons.delivery_dining_rounded,
+                    content: Text(
+                      "Driver Name",
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    action: MezIconButton(
+                      icon: Ionicons.logo_whatsapp,
+                      iconColor: Colors.white,
+                      backgroundColor: Colors.green,
+                      onTap: () {
+                        viewController.openDriverWhatsapp();
+                      },
+                    ),
+                  ),
+                  smallSepartor,
+                  MezButton(
+                    label: "Forward to driver",
+                    icon: Ionicons.logo_whatsapp,
+                    textColor: Colors.green,
+                    backgroundColor: Colors.white,
+                    elevation: 0.5,
+                    onClick: () async {},
+                  )
+
+                  // order status
+                  // ROpOrderStatusCard(order: viewController.order.value!),
+
+                  // ROpOrderHandleButton(viewController: viewController),
+                  // if (viewController.order.value!.scheduleTime != null)
+                  //   _getScheduleTime(),
+                  // RestaurantOrderEstTime(order: viewController.order.value!),
+                  // // if (viewController.order.value?.selfDelivery ?? false)
+                  // //   ROpEstDeliveryTime(order: viewController.order.value!),
+                  // ROpDriverCard(order: viewController.order.value!),
+                  // if (viewController.order.value!.inDeliveryPhase())
+                  //   OrderMapWidget(
+                  //       deliveryOrderId:
+                  //           viewController.order.value!.deliveryOrderId!,
+                  //       updateDriver:
+                  //           viewController.order.value!.inDeliveryPhase(),
+                  //       polyline: viewController
+                  //           .order.value!.routeInformation?.polyline,
+                  //       from: viewController.order.value!.restaurant.location,
+                  //       to: viewController.order.value!.dropOffLocation),
+                  // ROpOrderCustomer(order: viewController.order.value!),
+                  // if (MezEnv.appType == AppType.MezAdmin)
+                  //   _restaurantCard(context),
+
+                  // _orderItemsList(),
+                  // Container(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Text(
+                  //     '${_i18n()["deliveryDet"]}',
+                  //     textAlign: TextAlign.center,
+                  //     style: context.txt.bodyLarge,
+                  //   ),
+                  // ),
+                  // OrderScheduledTimeCard(
+                  //     time: viewController.order.value!.scheduleTime,
+                  //     margin: const EdgeInsets.only(top: 8)),
+
+                  // OrderDeliveryLocation(
+                  //   address:
+                  //       viewController.order.value!.dropOffLocation.address,
                   //   margin: const EdgeInsets.only(top: 8),
                   // ),
-                  OrderDeliveryLocation(
-                    address:
-                        viewController.order.value!.dropOffLocation.address,
-                    margin: const EdgeInsets.only(top: 8),
-                  ),
-                  OrderPaymentMethod(
-                    stripeOrderPaymentInfo:
-                        viewController.order.value!.stripePaymentInfo,
-                    paymentType: viewController.order.value!.paymentType,
-                  ),
-                  if (viewController.order.value!.review != null)
-                    ReviewCard(review: viewController.order.value!.review!),
-                  OrderNoteCard(note: viewController.order.value!.notes),
-                  OrderSummaryCard(
-                    margin: const EdgeInsets.only(bottom: 25),
-                    costs: viewController.order.value!.costs,
-                    stripeOrderPaymentInfo:
-                        viewController.order.value!.stripePaymentInfo,
-                  ),
-                  // ROpRefundButton(
-                  //   order: viewController.order.value!,
+                  // OrderPaymentMethod(
+                  //   stripeOrderPaymentInfo:
+                  //       viewController.order.value!.stripePaymentInfo,
+                  //   paymentType: viewController.order.value!.paymentType,
                   // ),
-                  if (viewController.order.value!.inProcess())
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: TextButton(
-                          style: TextButton.styleFrom(
-                              foregroundColor: Colors.red,
-                              backgroundColor: offRedColor),
-                          onPressed: () {
-                            showConfirmationDialog(context,
-                                onYesClick: () async {
-                              await viewController.cancelOrder().then(
-                                  (ChangeRestaurantStatusResponse value) =>
-                                      MezRouter.back());
-                            });
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(8),
-                            child: Text('${_i18n()["cancelOrder"]}'),
-                          )),
-                    )
+                  // if (viewController.order.value!.review != null)
+                  //   ReviewCard(review: viewController.order.value!.review!),
+                  // OrderNoteCard(note: viewController.order.value!.notes),
+                  // OrderSummaryCard(
+                  //   margin: const EdgeInsets.only(bottom: 25),
+                  //   costs: viewController.order.value!.costs,
+                  //   stripeOrderPaymentInfo:
+                  //       viewController.order.value!.stripePaymentInfo,
+                  // ),
+                  // // ROpRefundButton(
+                  // //   order: viewController.order.value!,
+                  // // ),
+                  // if (viewController.order.value!.inProcess())
+                  //   Padding(
+                  //     padding: const EdgeInsets.symmetric(vertical: 16),
+                  //     child: TextButton(
+                  //         style: TextButton.styleFrom(
+                  //             foregroundColor: Colors.red,
+                  //             backgroundColor: offRedColor),
+                  //         onPressed: () {
+                  //           showConfirmationDialog(context,
+                  //               onYesClick: () async {
+                  //             await viewController.cancelOrder().then(
+                  //                 (ChangeRestaurantStatusResponse value) =>
+                  //                     MezRouter.back());
+                  //           });
+                  //         },
+                  //         child: Container(
+                  //           alignment: Alignment.center,
+                  //           padding: const EdgeInsets.all(8),
+                  //           child: Text('${_i18n()["cancelOrder"]}'),
+                  //         )),
+                  //   ),
                 ],
               ));
         } else
@@ -218,6 +228,43 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
             child: MezLogoAnimation(centered: true),
           );
       }),
+    );
+  }
+
+  Column _restaurantCard(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "${_i18n()['restaurant']}",
+          style: context.txt.bodyLarge,
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        MezCard(
+          contentPadding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 20),
+          firstAvatarBgImage: CachedNetworkImageProvider(
+              viewController.order.value!.restaurant.image),
+          content: Text(
+            viewController.order.value!.restaurant.name,
+            style: context.txt.bodyLarge,
+          ),
+          action: (viewController.order.value!.restaurant.phoneNumber != null)
+              ? MezIconButton(
+                  onTap: () async {
+                    final String number =
+                        viewController.order.value!.restaurant.phoneNumber!;
+                    await callWhatsappNumber(number);
+                  },
+                  icon: Ionicons.logo_whatsapp,
+                  iconColor: Colors.green,
+                  backgroundColor: Colors.white,
+                )
+              : null,
+        ),
+      ],
     );
   }
 

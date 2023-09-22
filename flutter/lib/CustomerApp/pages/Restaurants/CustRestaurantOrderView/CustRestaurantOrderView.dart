@@ -129,9 +129,9 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                     label: "Driver",
                     margin: const EdgeInsets.only(bottom: 15),
                     radius: 22,
-                    firstAvatarIconColor: primaryBlueColor,
-                    firstAvatarBgColor: secondaryLightBlueColor,
-                    firstAvatarIcon: Icons.delivery_dining_rounded,
+                    secondAvatarIconColor: primaryBlueColor,
+                    secondAvatarBgColor: secondaryLightBlueColor,
+                    secondAvatarIcon: Icons.delivery_dining_rounded,
                     content: Text(
                       "Driver Name",
                       style: context.textTheme.bodyLarge,

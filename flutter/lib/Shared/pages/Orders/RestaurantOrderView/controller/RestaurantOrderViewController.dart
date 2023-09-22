@@ -31,6 +31,8 @@ class RestaurantOrderViewController {
   StreamSubscription<RestaurantOrder?>? orderStream;
   String? subscriptionId;
 
+  bool get showForwardBtn => false;
+
   // init
   Future<void> init({required int orderId}) async {
     MezRouter.registerReturnToViewCallback(
@@ -99,4 +101,8 @@ class RestaurantOrderViewController {
     Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
         orderType: cModels.OrderType.Restaurant, orderId: orderId);
   }
+
+  void openCustomerWhatsapp() {}
+
+  void openDriverWhatsapp() {}
 }
