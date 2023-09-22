@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
-import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -29,45 +28,51 @@ class CustRestaurantOrderViewController {
 
   StreamSubscription<RestaurantOrder?>? orderStream;
   String? subscriptionId;
+  // getters
+  bool get showReviewBtn {
+    return order.value != null &&
+        order.value!.status == cModels.RestaurantOrderStatus.Delivered &&
+        order.value!.review == null;
+  }
 
   Future<void> init({required int orderId}) async {
     mezDbgPrint(
         '======================================================================> $orderId');
     MezRouter.registerReturnToViewCallback(
-        ViewRestaurantOrderScreen.constructPath(orderId), () {
+        CustRestaurantOrderView.constructPath(orderId), () {
       clearNotifications(orderId);
     });
-    clearNotifications(orderId);
-    try {
-      order.value =
-          await get_restaurant_order_by_id(orderId: orderId, withCache: false);
-      if (order.value!.routeInformation != null) {
-        mGoogleMapController.decodeAndAddPolyline(
-            encodedPolylineString: order.value!.routeInformation!.polyline);
-      }
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
-    if (order.value == null) {
-      mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
-    } else {
-      // subscriptionId = hasuraDb.createSubscription(start: () {
-      //   orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
-      //       .listen((RestaurantOrder? event) {
-      //     if (event != null) {
-      //       mezDbgPrint(
-      //           "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
+    // clearNotifications(orderId);
+    // try {
+    //   order.value =
+    //       await get_restaurant_order_by_id(orderId: orderId, withCache: false);
+    //   if (order.value!.routeInformation != null) {
+    //     mGoogleMapController.decodeAndAddPolyline(
+    //         encodedPolylineString: order.value!.routeInformation!.polyline);
+    //   }
+    // } catch (e, stk) {
+    //   mezDbgPrint(e);
+    //   mezDbgPrint(stk);
+    // }
+    // if (order.value == null) {
+    //   mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
+    // } else {
+    // subscriptionId = hasuraDb.createSubscription(start: () {
+    //   orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
+    //       .listen((RestaurantOrder? event) {
+    //     if (event != null) {
+    //       mezDbgPrint(
+    //           "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
 
-      //       order.value = null;
-      //       order.value = event;
-      //     }
-      //   });
-      // }, cancel: () {
-      //   orderStream?.cancel();
-      //   orderStream = null;
-      // });
-    }
+    //       order.value = null;
+    //       order.value = event;
+    //     }
+    //   });
+    // }, cancel: () {
+    //   orderStream?.cancel();
+    //   orderStream = null;
+    // });
+    //  }
   }
 
   void clearNotifications(int orderId) {
@@ -100,4 +105,8 @@ class CustRestaurantOrderViewController {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
     order.close();
   }
+
+  void openDriverWhatsapp() {}
+
+  void openRestaurantWhatsapp() {}
 }

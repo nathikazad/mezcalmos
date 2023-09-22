@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/controllers/CustHomeViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -252,6 +253,11 @@ class _CustHomeViewState extends State<CustHomeView>
             }
             return SizedBox();
           }),
+          MezIconButton(
+              onTap: () {
+                CustRestaurantOrderView.navigate(orderId: 4);
+              },
+              icon: Icons.online_prediction_rounded),
           SizedBox(
             width: 8,
           ),
