@@ -80,8 +80,6 @@ insert_permissions:
     permission:
       check: {}
       columns:
-        - name_id
-        - service_provider_id
         - coupon_code
         - details
         - offer_type

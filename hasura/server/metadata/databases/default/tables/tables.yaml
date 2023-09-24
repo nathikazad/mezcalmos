@@ -61,6 +61,8 @@
 - "!include restaurant_restaurant.yaml"
 - "!include service_provider_delivery_partner.yaml"
 - "!include service_provider_details.yaml"
+- "!include service_provider_influencer.yaml"
+- "!include service_provider_influencer_offer.yaml"
 - "!include service_provider_location.yaml"
 - "!include service_provider_offer.yaml"
 - "!include service_provider_offer_applied.yaml"
