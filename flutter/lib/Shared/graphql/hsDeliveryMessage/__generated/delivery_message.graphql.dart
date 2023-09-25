@@ -2494,6 +2494,13 @@ const documentNodeSubscriptionlistenCurrentDeliveryMessages =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'phone'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: '__typename'),
                     alias: null,
                     arguments: [],
@@ -3295,20 +3302,25 @@ class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_mess
 class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
   Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user({
     this.name,
+    this.phone,
     required this.$__typename,
   });
 
   factory Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
+    final l$phone = json['phone'];
     final l$$__typename = json['__typename'];
     return Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
       name: (l$name as String?),
+      phone: (l$phone as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final String? name;
+
+  final String? phone;
 
   final String $__typename;
 
@@ -3316,6 +3328,8 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
     final _resultData = <String, dynamic>{};
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3324,9 +3338,11 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
   @override
   int get hashCode {
     final l$name = name;
+    final l$phone = phone;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
+      l$phone,
       l$$__typename,
     ]);
   }
@@ -3344,6 +3360,11 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3382,6 +3403,7 @@ abstract class CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_mess
 
   TRes call({
     String? name,
+    String? phone,
     String? $__typename,
   });
 }
@@ -3407,11 +3429,13 @@ class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages
 
   TRes call({
     Object? name = _undefined,
+    Object? phone = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
         name: name == _undefined ? _instance.name : (name as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3430,6 +3454,7 @@ class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_mess
 
   call({
     String? name,
+    String? phone,
     String? $__typename,
   }) =>
       _res;
@@ -4503,12 +4528,53 @@ const documentNodeSubscriptionListenOpenDeliveryMessages =
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'responded_time'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_is_null'),
-                    value: BooleanValueNode(value: true),
-                  )
+                name: NameNode(value: '_and'),
+                value: ListValueNode(values: [
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'responded_time'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_is_null'),
+                          value: BooleanValueNode(value: true),
+                        )
+                      ]),
+                    )
+                  ]),
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: '_not'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_and'),
+                          value: ListValueNode(values: [
+                            ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'driver_id'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_is_null'),
+                                    value: BooleanValueNode(value: false),
+                                  )
+                                ]),
+                              )
+                            ]),
+                            ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'finished_time'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_is_null'),
+                                    value: BooleanValueNode(value: true),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          ]),
+                        )
+                      ]),
+                    )
+                  ]),
                 ]),
               )
             ]),

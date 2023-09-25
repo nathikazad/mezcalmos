@@ -83,6 +83,8 @@ Stream<List<DeliveryMessage>?> listenDvCurrentMessages(
                 userName: e.customer?.name,
                 phoneNumber: e.phone_number,
                 driverId: e.driver_id,
+                driverName: e.driver?.user.name,
+                driverPhone: e.driver?.user.phone,
                 respondedTime: DateTime.tryParse(e.responded_time.toString()),
                 finishedTime: DateTime.tryParse(e.finished_time.toString()),
                 receivedTime: DateTime.parse(e.received_time),
