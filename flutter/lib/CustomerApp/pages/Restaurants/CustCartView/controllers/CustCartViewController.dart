@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages//Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -248,57 +249,55 @@ class CustCartViewController {
 
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
-    showRedirectText.value = true;
+    // showRedirectText.value = true;
 
-    final String message = await contructOrderMessage();
-    mezDbgPrint(message);
-    if (cart.restaurant?.info.phoneNumber != null) {
-      try {
-        final bool res = await callWhatsappNumber(
-            cart.restaurant!.info.phoneNumber!,
-            message: message);
+    // final String message = await contructOrderMessage();
+    // mezDbgPrint(message);
+    // if (cart.restaurant?.info.phoneNumber != null) {
+    //   try {
+    //     final bool res = await callWhatsappNumber(
+    //         cart.restaurant!.info.phoneNumber!,
+    //         message: message);
 
-        showRedirectText.value = false;
-        if (res) {
-          orderSentToRest.value = true;
-          await cartController.clearCart();
-        }
-      } catch (e, stk) {
-        showErrorSnackBar();
-        mezDbgPrint(e);
-        mezDbgPrint(stk);
-      }
-    } else {
-      showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
-    }
-    showRedirectText.value = false;
-
-    // cart.notes = noteText.text.inCaps;
-    // num? newOrderId;
-    // try {
-    //   // if (cart.paymentType == PaymentType.Card) {
-    //   //   final String? stripePaymentId =
-    //   //       await acceptPaymentByCardChoice(getCardChoice);
-    //   //   if (stripePaymentId != null) {
-    //   //     newOrderId =
-    //   //         await cartController.checkout(stripePaymentId: stripePaymentId);
-    //   //   }
-    //   // } else {
-    //   newOrderId = await cartController.checkout(stripePaymentId: null);
-    //   // }
-
-    //   if (newOrderId != null) {
-    //     // ignore: unawaited_futures
-    //     MezRouter.popEverythingTillBeforeHome().then((_) =>
-    //         ViewRestaurantOrderScreen.navigate(orderId: newOrderId!.toInt()));
+    //     showRedirectText.value = false;
+    //     if (res) {
+    //       orderSentToRest.value = true;
+    //       await cartController.clearCart();
+    //     }
+    //   } catch (e, stk) {
+    //     showErrorSnackBar();
+    //     mezDbgPrint(e);
+    //     mezDbgPrint(stk);
     //   }
-
-    //   mezDbgPrint("success funish checkout");
-    // } catch (e, s) {
-    //   mezDbgPrint(
-    //     "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
-    //   );
+    // } else {
+    //   showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
     // }
+    // showRedirectText.value = false;
+
+    try {
+      // if (cart.paymentType == PaymentType.Card) {
+      //   final String? stripePaymentId =
+      //       await acceptPaymentByCardChoice(getCardChoice);
+      //   if (stripePaymentId != null) {
+      //     newOrderId =
+      //         await cartController.checkout(stripePaymentId: stripePaymentId);
+      //   }
+      // } else {
+      num? newOrderId = await cartController.checkout(stripePaymentId: null);
+      // }
+
+      if (newOrderId != null) {
+        // ignore: unawaited_futures
+        MezRouter.popEverythingTillBeforeHome().then((_) =>
+            CustRestaurantOrderView.navigate(orderId: newOrderId.toInt()));
+      }
+
+      mezDbgPrint("success funish checkout");
+    } catch (e, s) {
+      mezDbgPrint(
+        "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
+      );
+    }
   }
 
   /// returns stripePaymentId

@@ -31,13 +31,12 @@ class OrderMapWidgetController {
     this.deliveryOrderId = deliveryOrderId;
     driver.value = await get_order_driver_info(orderId: deliveryOrderId);
     shouldUpdate = updateDriver;
-    // first time init map
-    mGoogleMapController.periodicRerendering.value = true;
-
-    mGoogleMapController.minMaxZoomPrefs =
-        MinMaxZoomPreference.unbounded; // LEZEM
+    // mGoogleMapController.initialZoomLevel = 14;
+    mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference(14, 16);
+    mGoogleMapController.openGmapsButton.value = true;
+    mGoogleMapController.periodicRerendering.value = false;
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
-
+    mGoogleMapController.recenterButtonEnabled.value = true;
     mGoogleMapController.setLocation(
       MezLocation(
         "",

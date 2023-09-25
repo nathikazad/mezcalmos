@@ -252,6 +252,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   }
   final RestaurantOrder res = RestaurantOrder(
     pickupLocation: null,
+    driverPhoneNumber: orderData.delivery?.delivery_driver?.user.phone,
     deliveryProviderType:
         orderData.delivery!.service_provider_type.toServiceProviderType(),
     serviceProviderDriverChatId:

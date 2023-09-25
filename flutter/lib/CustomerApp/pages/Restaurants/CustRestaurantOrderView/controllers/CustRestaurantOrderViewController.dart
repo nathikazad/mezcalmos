@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -42,18 +43,18 @@ class CustRestaurantOrderViewController {
         CustRestaurantOrderView.constructPath(orderId), () {
       clearNotifications(orderId);
     });
-    // clearNotifications(orderId);
-    // try {
-    //   order.value =
-    //       await get_restaurant_order_by_id(orderId: orderId, withCache: false);
-    //   if (order.value!.routeInformation != null) {
-    //     mGoogleMapController.decodeAndAddPolyline(
-    //         encodedPolylineString: order.value!.routeInformation!.polyline);
-    //   }
-    // } catch (e, stk) {
-    //   mezDbgPrint(e);
-    //   mezDbgPrint(stk);
-    // }
+    clearNotifications(orderId);
+    try {
+      order.value =
+          await get_restaurant_order_by_id(orderId: orderId, withCache: false);
+      if (order.value!.routeInformation != null) {
+        mGoogleMapController.decodeAndAddPolyline(
+            encodedPolylineString: order.value!.routeInformation!.polyline);
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
     // if (order.value == null) {
     //   mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
     // } else {
@@ -106,7 +107,39 @@ class CustRestaurantOrderViewController {
     order.close();
   }
 
-  void openDriverWhatsapp() {}
+  Future<void> openDriverWhatsapp() async {
+    final String? phoneNumber = order.value?.driverPhoneNumber;
+    if (phoneNumber != null) {
+      try {
+        final bool res = await callWhatsappNumber(phoneNumber);
+      } catch (e) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+      }
+    } else
+      mezDbgPrint("Phone number is null 🥲");
+  }
 
-  void openRestaurantWhatsapp() {}
+  Future<void> openRestaurantWhatsapp() async {
+    final String? phoneNumber = order.value?.restaurant.phoneNumber;
+    if (phoneNumber != null) {
+      try {
+        final bool res = await callWhatsappNumber(phoneNumber);
+      } catch (e) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+      }
+    } else
+      mezDbgPrint("Phone number is null 🥲");
+  }
+
+  Future<void> contactAdmin() async {
+    final String phoneNumber = "+12098628445";
+    try {
+      final bool res = await callWhatsappNumber(phoneNumber);
+    } catch (e) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+    }
+  }
 }

@@ -31,6 +31,7 @@ class MGoogleMapController {
   // this is used when we don't want to re-render the map periodically.
   RxBool periodicRerendering = false.obs;
   RxBool recenterButtonEnabled = false.obs;
+  RxBool openGmapsButton = false.obs;
   late RxBool myLocationButtonEnabled;
 
   MGoogleMapController({
@@ -506,4 +507,6 @@ class MGoogleMapController {
   void clearMarkers() {
     markers.clear();
   }
+
+  void openGoogleMaps() {}
 }

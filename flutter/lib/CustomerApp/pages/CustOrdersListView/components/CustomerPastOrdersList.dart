@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Courrier/CustCourierOrderView/CustCourierOrderView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/LaundryCurrentOrderView/CustLaundryOrderView.dart';
-import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
-
-import '../../../../CustomerOldStuff/CustOrderView/CustOrderView.dart';
-import '../../../../CustomerOldStuff/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
@@ -73,18 +69,18 @@ class CustomerPastOrdersList extends StatelessWidget {
               order: order,
               onTap: () {
                 switch (order.orderType) {
-                  case OrderType.Courier:
-                    CustCourierOrderView.navigate(orderId: order.id);
-                    break;
+                  // case OrderType.Courier:
+                  //   CustCourierOrderView.navigate(orderId: order.id);
+                  //   break;
                   case OrderType.Restaurant:
-                    ViewRestaurantOrderScreen.navigate(orderId: order.id);
+                    CustRestaurantOrderView.navigate(orderId: order.id);
                     break;
-                  case OrderType.Laundry:
-                    CustLaundryOrderView.navigate(orderId: order.id);
-                    break;
-                  case OrderType.Business:
-                    CustOrderView.navigate(orderId: order.id);
-                    break;
+                  // case OrderType.Laundry:
+                  //   CustLaundryOrderView.navigate(orderId: order.id);
+                  //   break;
+                  // case OrderType.Business:
+                  //   CustOrderView.navigate(orderId: order.id);
+                  //   break;
                   default:
                 }
               },

@@ -1239,7 +1239,13 @@
           "ViewRestaurantOrderScreen": {
             "orderStatus": "Order status",
             "writeReview": "Write review",
-            "deliveryDet": "Delivery details"
+            "deliveryDet": "Delivery details",
+            "restaurant": "Restaurant",
+            "driver": "Driver",
+            "noResponse": "If the restaurant or delivery driver does not respond",
+            "contactAdmin": "Contact Admin",
+            "orderSummary": "Order summary",
+            "orderCost": "Order cost"
           }
         },
         "ViewRestaurantScreen": {
@@ -3559,7 +3565,7 @@
         "counterOffer": "Counter Offer",
         "reqCounterOffer": "Request price change"
       },
-      "DvConvoView":{
+      "DvConvoView": {
         "respond": "Respond",
         "finish": "Finish order",
         "whatsapp": "Open Whatsapp",
@@ -3576,7 +3582,7 @@
           "title": "Incoming orders",
           "offlineTitle": "You are offline",
           "offlineBody": "Turn on to see incoming orders",
-          "confirmationDialog" : {
+          "confirmationDialog": {
             "markAll": "Mark all orders as finished",
             "yes": "Yes, finish orders",
             "cancel": "Cancel"

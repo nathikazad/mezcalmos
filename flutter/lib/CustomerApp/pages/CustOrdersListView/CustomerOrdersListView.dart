@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/components/CustomerPastOrdersList.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -8,10 +10,6 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../../CustomerOldStuff/CustOrdersListView/components/CustomerInprocessOrdersList.dart';
-import '../../../CustomerOldStuff/CustOrdersListView/components/CustomerPastOrdersList.dart';
-import '../../../CustomerOldStuff/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
@@ -61,9 +59,9 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    if (viewController.currentOrders.isNotEmpty)
-                      CustomerInprocessOrdersList(
-                          txt: txt, viewController: viewController),
+                    // if (viewController.currentOrders.isNotEmpty)
+                    //   CustomerInprocessOrdersList(
+                    //       txt: txt, viewController: viewController),
                     if (viewController.pastOrders.isNotEmpty)
                       CustomerPastOrdersList(
                           txt: txt, viewController: viewController),

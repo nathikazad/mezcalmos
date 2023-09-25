@@ -6977,6 +6977,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                       FieldNode(
+                        name: NameNode(value: 'phone'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'firebase_id'),
                         alias: null,
                         arguments: [],
@@ -11543,6 +11550,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     required this.id,
     this.image,
     this.name,
+    this.phone,
     required this.firebase_id,
     required this.language_id,
     required this.$__typename,
@@ -11553,6 +11561,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$phone = json['phone'];
     final l$firebase_id = json['firebase_id'];
     final l$language_id = json['language_id'];
     final l$$__typename = json['__typename'];
@@ -11560,6 +11569,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
       id: (l$id as int),
       image: (l$image as String?),
       name: (l$name as String?),
+      phone: (l$phone as String?),
       firebase_id: (l$firebase_id as String),
       language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -11571,6 +11581,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
   final String? image;
 
   final String? name;
+
+  final String? phone;
 
   final String firebase_id;
 
@@ -11586,6 +11598,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
     final l$language_id = language_id;
@@ -11600,6 +11614,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     final l$id = id;
     final l$image = image;
     final l$name = name;
+    final l$phone = phone;
     final l$firebase_id = firebase_id;
     final l$language_id = language_id;
     final l$$__typename = $__typename;
@@ -11607,6 +11622,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
       l$id,
       l$image,
       l$name,
+      l$phone,
       l$firebase_id,
       l$language_id,
       l$$__typename,
@@ -11636,6 +11652,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
       return false;
     }
     final l$firebase_id = firebase_id;
@@ -11686,6 +11707,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     int? id,
     String? image,
     String? name,
+    String? phone,
     String? firebase_id,
     String? language_id,
     String? $__typename,
@@ -11715,6 +11737,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? phone = _undefined,
     Object? firebase_id = _undefined,
     Object? language_id = _undefined,
     Object? $__typename = _undefined,
@@ -11724,6 +11747,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         name: name == _undefined ? _instance.name : (name as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
         firebase_id: firebase_id == _undefined || firebase_id == null
             ? _instance.firebase_id
             : (firebase_id as String),
@@ -11750,6 +11774,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     int? id,
     String? image,
     String? name,
+    String? phone,
     String? firebase_id,
     String? language_id,
     String? $__typename,

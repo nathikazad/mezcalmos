@@ -1230,7 +1230,13 @@
           "ViewRestaurantOrderScreen": {
             "orderStatus": "Estado de la orden",
             "writeReview": "Escribir un comentario",
-            "deliveryDet": "Detalles de la entrega"
+            "deliveryDet": "Detalles de la entrega",
+            "restaurant": "Restaurante",
+            "driver": "Repartidor",
+            "noResponse": "Si el restaurante o el repartidor no responden",
+            "contactAdmin": "Contactar al Administrador",
+            "orderSummary": "Resumen de la orden",
+            "orderCost": "Costo de la orden"
           }
         },
         "ViewRestaurantScreen": {
@@ -3564,7 +3570,7 @@
         "order": "Pedido",
         "viewImage": "Ver imagen"
       },
-      "DvConvoView":{
+      "DvConvoView": {
         "respond": "Contestar",
         "finish": "Terminar",
         "whatsapp": "Abrir Whatsapp",
@@ -3581,7 +3587,7 @@
           "offlineBody": "Enciende para ver las órdenes entrantes",
           "pastOrders": "Hoy",
           "title": "Órdenes entrantes",
-          "confirmationDialog" : {
+          "confirmationDialog": {
             "markAll": "Marcar todos pedidos como terminado",
             "yes": "Si, terminarles",
             "cancel": "Cancellar"

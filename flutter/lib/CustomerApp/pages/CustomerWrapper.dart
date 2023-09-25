@@ -11,6 +11,9 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustHomeView/CustHomeView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -94,40 +97,37 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _navBar(),
-      // body: Obx(() {
-      //   if (authController.user != null) {
-      //     return _getBody();
-      //   } else {
-      //     return AllServiceView();
-      //   }
-      // }),
+      body: Obx(() {
+        if (authController.user != null) {
+          return _getBody();
+        } else {
+          return CustHomeView();
+        }
+      }),
     );
   }
 
-  // Widget _getBody() {
-  //   switch (_index.value) {
-  //     case 0:
-  //       return AllServiceView();
-  //     case 1:
-  //       return CustomerOrdersListView(
-  //         asTab: true,
-  //       );
-  //     case 2:
-  //       return MessagesListView(
-  //         entityType: EntityType.Customer,
-  //       );
-  //     case 3:
-  //       return CustProfileView();
+  Widget _getBody() {
+    switch (_index.value) {
+      case 0:
+        return CustHomeView();
+      case 1:
+        return CustomerOrdersListView(
+          asTab: true,
+        );
 
-  //     default:
-  //       return Scaffold(
-  //         body: Container(
-  //           alignment: Alignment.center,
-  //           child: Text("Error"),
-  //         ),
-  //       );
-  //   }
-  // }
+      case 3:
+        return CustProfileView();
+
+      default:
+        return Scaffold(
+          body: Container(
+            alignment: Alignment.center,
+            child: Text("Error"),
+          ),
+        );
+    }
+  }
 
   Widget _navBar() {
     return Obx(
@@ -156,18 +156,18 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                           showBadge: numberOfCurrentOrders > 0,
                           child: Icon(Icons.history)),
                       label: "${_i18n()['orders']}"),
-                  BottomNavigationBarItem(
-                    icon: badge.Badge(
-                      badgeColor: Colors.red,
-                      showBadge: Get.find<ForegroundNotificationsController>()
-                          .hasNewSPMessageNotification(),
-                      position: badge.BadgePosition(top: 0, end: 0),
-                      child: Icon(
-                        Icons.sms_outlined,
-                      ),
-                    ),
-                    label: "${_i18n()['messages']}",
-                  ),
+                  // BottomNavigationBarItem(
+                  //   icon: badge.Badge(
+                  //     badgeColor: Colors.red,
+                  //     showBadge: Get.find<ForegroundNotificationsController>()
+                  //         .hasNewSPMessageNotification(),
+                  //     position: badge.BadgePosition(top: 0, end: 0),
+                  //     child: Icon(
+                  //       Icons.sms_outlined,
+                  //     ),
+                  //   ),
+                  //   label: "${_i18n()['messages']}",
+                  // ),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person_outline),
                       label: "${_i18n()['profile']}"),

@@ -349,3 +349,34 @@ Future<int?> get_customer_orders_count(
 
   return res.parsedData?.customer_minimal_orders_aggregate.aggregate?.count;
 }
+
+Future<List<MinimalOrder>> get_customer_restaurant_orders(
+    {required int customerId, required int limit, required int offest}) async {
+  final QueryResult<Query$getCustomerRestaurantOrders> res =
+      await _graphClient.query$getCustomerRestaurantOrders(
+    Options$Query$getCustomerRestaurantOrders(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Query$getCustomerRestaurantOrders(
+          custId: customerId, limit: limit, offset: offest),
+    ),
+  );
+  if (res.parsedData?.customer_minimal_orders == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData!.customer_minimal_orders
+      .map<MinimalOrder>(
+          (Query$getCustomerRestaurantOrders$customer_minimal_orders order) =>
+              MinimalOrder(
+                  id: order.id,
+                  toAdress: order.to_address,
+                  deliveryCost: order.delivery_cost,
+                  orderTime: DateTime.parse(order.order_time),
+                  title: order.name,
+                  image: order.image,
+                  status: _getStatus(
+                      orderType: order.order_type.toOrderType(),
+                      status: order.status),
+                  totalCost: order.total_cost,
+                  orderType: order.order_type.toOrderType()))
+      .toList();
+}

@@ -210,6 +210,7 @@ Widget _backButton({required VoidCallback? click}) {
     scale: 0.6,
     child: InkWell(
       onTap: click,
+      borderRadius: BorderRadius.circular(16),
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -221,17 +222,11 @@ Widget _backButton({required VoidCallback? click}) {
               offset: Offset(0, 7), // changes position of shadow
             ),
           ],
-          color: click == null ? Colors.grey.shade200 : null,
-          gradient: click == null
-              ? null
-              : LinearGradient(colors: [
-                  Color.fromARGB(255, 97, 127, 255),
-                  Color.fromARGB(255, 198, 90, 252),
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          color: click == null ? Colors.grey.shade200 : secondaryLightBlueColor,
         ),
         child: Icon(
           Icons.arrow_back_ios_new,
-          color: Colors.white,
+          color: primaryBlueColor,
         ),
       ),
     ),

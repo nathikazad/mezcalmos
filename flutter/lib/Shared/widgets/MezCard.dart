@@ -46,96 +46,99 @@ class MezCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (label != null) ...[
-          Text(label!, style: context.textTheme.bodyMedium),
-          smallSepartor,
-        ],
-        Card(
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(radius),
-          // ),
-          elevation: elevation,
-          margin: margin,
-          color: cardColor,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius)),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(borderRadius),
-            onTap: onClick,
-            child: Container(
-              padding: contentPadding,
-              child: Row(
-                children: [
-                  // leading //
-                  if (leading != null) leading!,
+    return Padding(
+      padding: margin ?? EdgeInsets.only(bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (label != null) ...[
+            Text(label!, style: context.textTheme.bodyMedium),
+            smallSepartor,
+          ],
+          Card(
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.circular(radius),
+            // ),
+            elevation: elevation,
 
-                  // first avatars//
-                  if (firstAvatarBgImage != null ||
-                      firstAvatarIcon != null ||
-                      firstAvatarBgColor != null)
-                    Stack(
-                      alignment: Alignment.center,
-                      clipBehavior: Clip.none,
-                      children: [
-                        CircleAvatar(
-                          radius: radius,
-                          backgroundColor: firstAvatarBgColor,
-                          backgroundImage: firstAvatarBgImage,
-                          child: Icon(
-                            firstAvatarIcon,
-                            color: firstAvatarIconColor,
-                            size: radius + 3,
+            color: cardColor,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius)),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(borderRadius),
+              onTap: onClick,
+              child: Container(
+                padding: contentPadding,
+                child: Row(
+                  children: [
+                    // leading //
+                    if (leading != null) leading!,
+
+                    // first avatars//
+                    if (firstAvatarBgImage != null ||
+                        firstAvatarIcon != null ||
+                        firstAvatarBgColor != null)
+                      Stack(
+                        alignment: Alignment.center,
+                        clipBehavior: Clip.none,
+                        children: [
+                          CircleAvatar(
+                            radius: radius,
+                            backgroundColor: firstAvatarBgColor,
+                            backgroundImage: firstAvatarBgImage,
+                            child: Icon(
+                              firstAvatarIcon,
+                              color: firstAvatarIconColor,
+                              size: radius + 3,
+                            ),
                           ),
-                        ),
-                        if (secondAvatarBgImage != null ||
-                            secondAvatarIcon != null ||
-                            secondAvatarBgColor != null)
-                          Positioned(
-                            right: -35,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: radius + 2,
+                          if (secondAvatarBgImage != null ||
+                              secondAvatarIcon != null ||
+                              secondAvatarBgColor != null)
+                            Positioned(
+                              right: -35,
                               child: CircleAvatar(
-                                radius: radius,
-                                backgroundColor: secondAvatarBgColor,
-                                backgroundImage: secondAvatarBgImage,
-                                child: Icon(
-                                  secondAvatarIcon,
-                                  size: radius + 3,
-                                  color: secondAvatarIconColor,
+                                backgroundColor: Colors.white,
+                                radius: radius + 2,
+                                child: CircleAvatar(
+                                  radius: radius,
+                                  backgroundColor: secondAvatarBgColor,
+                                  backgroundImage: secondAvatarBgImage,
+                                  child: Icon(
+                                    secondAvatarIcon,
+                                    size: radius + 3,
+                                    color: secondAvatarIconColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                      ],
+                            )
+                        ],
+                      ),
+
+                    SizedBox(
+                      width: ((firstAvatarBgImage != null ||
+                                  firstAvatarIcon != null ||
+                                  firstAvatarBgColor != null) &&
+                              (secondAvatarBgColor != null ||
+                                  secondAvatarBgImage != null ||
+                                  secondAvatarIcon != null))
+                          ? 40
+                          : 10,
                     ),
+                    Flexible(fit: FlexFit.tight, child: content),
 
-                  SizedBox(
-                    width: ((firstAvatarBgImage != null ||
-                                firstAvatarIcon != null ||
-                                firstAvatarBgColor != null) &&
-                            (secondAvatarBgColor != null ||
-                                secondAvatarBgImage != null ||
-                                secondAvatarIcon != null))
-                        ? 40
-                        : 10,
-                  ),
-                  Flexible(fit: FlexFit.tight, child: content),
-
-                  // buttons //
-                  SizedBox(
-                    width: 5,
-                  ),
-                  if (action != null) action!,
-                ],
+                    // buttons //
+                    SizedBox(
+                      width: 5,
+                    ),
+                    if (action != null) action!,
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -77,10 +77,20 @@ class _OrderMapWidgetState extends State<OrderMapWidget> {
                 "${_i18n()['mapWebText']}",
                 style: context.txt.bodyMedium,
               ))
-          : MGoogleMap(
-              padding: widget.mapPadding,
-              mGoogleMapController: viewController.mGoogleMapController,
-              recenterBtnBottomPadding: widget.recenterBtnBottomPadding,
+          : Container(
+              // padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                border: Border.all(width: 3, color: secondaryLightBlueColor),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: MGoogleMap(
+                  padding: widget.mapPadding,
+                  mGoogleMapController: viewController.mGoogleMapController,
+                  recenterBtnBottomPadding: widget.recenterBtnBottomPadding,
+                ),
+              ),
             ),
     );
   }

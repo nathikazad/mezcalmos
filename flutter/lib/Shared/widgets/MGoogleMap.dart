@@ -152,6 +152,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                   },
                   padding: widget.padding,
                   mapToolbarEnabled: false,
+
                   // gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
                   //   new Factory<OneSequenceGestureRecognizer>(
                   //     () => new EagerGestureRecognizer(),
@@ -183,6 +184,7 @@ class MGoogleMapState extends State<MGoogleMap> {
                   polylines: widget.mGoogleMapController.polylines,
                   zoomControlsEnabled: widget.zoomGesturesEnabled,
                   compassEnabled: false,
+
                   mapType: MapType.normal,
                   tiltGesturesEnabled: true,
                   initialCameraPosition: CameraPosition(
@@ -204,7 +206,9 @@ class MGoogleMapState extends State<MGoogleMap> {
             if (widget.mGoogleMapController.recenterButtonEnabled.value)
               recenterButton(),
             if (widget.mGoogleMapController.myLocationButtonEnabled.value)
-              locateMeButton()
+              locateMeButton(),
+            // if (widget.mGoogleMapController.openGmapsButton.value)
+            //   openGmapsBtn(),
           ],
         );
       },
@@ -274,6 +278,37 @@ class MGoogleMapState extends State<MGoogleMap> {
           child: Center(
             child: Icon(
               Icons.my_location_sharp,
+              color: Colors.black,
+              size: 25,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Positioned openGmapsBtn() {
+    return Positioned(
+      right: 12,
+      bottom: widget.recenterBtnBottomPadding,
+      child: InkWell(
+        onTap: () {
+          widget.mGoogleMapController.openGoogleMaps();
+        },
+        child: Container(
+          padding: EdgeInsets.all(5),
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            boxShadow: <BoxShadow>[
+              BoxShadow(blurRadius: 8, color: Colors.black38, spreadRadius: 1)
+            ],
+          ),
+          child: Center(
+            child: Icon(
+              Icons.map,
               color: Colors.black,
               size: 25,
             ),

@@ -151,6 +151,7 @@ extension OrderTypeHelper on cModels.OrderType {
 
 abstract class DeliverableOrder extends Order {
   UserInfo? driverInfo;
+  String? driverPhoneNumber;
   UserInfo? deliveryCompany;
   MezLocation? pickupLocation;
   int? deliveryOrderId;
@@ -174,6 +175,7 @@ abstract class DeliverableOrder extends Order {
     super.notes,
     super.review,
     this.customerReviewByDriver,
+    this.driverPhoneNumber,
     this.serviceReviewByDriver,
     required this.deliveryCompany,
     super.serviceProviderId,

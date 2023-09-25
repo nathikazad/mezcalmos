@@ -44,11 +44,11 @@ class CustomerOrdersListViewController {
 
     try {
       _fetchingData = true;
-      final List<MinimalOrder> newData = await get_customer_orders(
-          offest: _currentOffset,
-          limit: fetchSize,
-          customerId: _authController.hasuraUserId!,
-          inProcess: false);
+      final List<MinimalOrder> newData = await get_customer_restaurant_orders(
+        offest: _currentOffset,
+        limit: fetchSize,
+        customerId: _authController.hasuraUserId!,
+      );
       pastOrders.value += newData;
       if (newData.length == 0) {
         _reachedEndOfData = true;
