@@ -1348,7 +1348,23 @@ const documentNodeQueryGetCurrentDeliveryMessages = DocumentNode(definitions: [
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'distinct_on'),
-            value: EnumValueNode(name: NameNode(value: 'phone_number')),
+            value: ListValueNode(values: [
+              EnumValueNode(name: NameNode(value: 'phone_number')),
+              EnumValueNode(name: NameNode(value: 'received_time')),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'received_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'phone_number'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              ),
+            ]),
           ),
           ArgumentNode(
             name: NameNode(value: 'where'),
@@ -3595,12 +3611,53 @@ const documentNodeQueryGetOpenDeliveryMessages = DocumentNode(definitions: [
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'responded_time'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_is_null'),
-                    value: BooleanValueNode(value: true),
-                  )
+                name: NameNode(value: '_and'),
+                value: ListValueNode(values: [
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: 'responded_time'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_is_null'),
+                          value: BooleanValueNode(value: true),
+                        )
+                      ]),
+                    )
+                  ]),
+                  ObjectValueNode(fields: [
+                    ObjectFieldNode(
+                      name: NameNode(value: '_not'),
+                      value: ObjectValueNode(fields: [
+                        ObjectFieldNode(
+                          name: NameNode(value: '_and'),
+                          value: ListValueNode(values: [
+                            ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'driver_id'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_is_null'),
+                                    value: BooleanValueNode(value: false),
+                                  )
+                                ]),
+                              )
+                            ]),
+                            ObjectValueNode(fields: [
+                              ObjectFieldNode(
+                                name: NameNode(value: 'finished_time'),
+                                value: ObjectValueNode(fields: [
+                                  ObjectFieldNode(
+                                    name: NameNode(value: '_is_null'),
+                                    value: BooleanValueNode(value: true),
+                                  )
+                                ]),
+                              )
+                            ]),
+                          ]),
+                        )
+                      ]),
+                    )
+                  ]),
                 ]),
               )
             ]),

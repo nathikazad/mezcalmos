@@ -4,6 +4,7 @@ import { storage } from "firebase-admin";
 interface GenerateQRParams {
     imageUploadPath:string,
     shortLink: string
+    logoLink?: string
 }
 
 export async function generateQr(generateQRParams:GenerateQRParams): Promise<string>  {
@@ -42,7 +43,7 @@ export async function generateQr(generateQRParams:GenerateQRParams): Promise<str
                     "gradientColor2": "#AC59FC",
                     "gradientType": "linear",
                     "gradientOnEyes": "true",
-                    "logo": "https://new-mezcalmose-website.firebaseapp.com/assets/img/logo/logo.png", //"https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
+                    "logo": generateQRParams.logoLink ?? "https://new-mezcalmose-website.firebaseapp.com/assets/img/logo/logo.png", //"https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
                     "logoMode": "clean"
                 },
                 "size": 300,
