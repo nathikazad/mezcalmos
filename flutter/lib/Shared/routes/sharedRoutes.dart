@@ -21,8 +21,6 @@ import 'package:mezcalmos/Shared/pages/PickLocationView/PickLocationView.dart'
     deferred as pickLocationView;
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart'
     deferred as somethingWentWrong;
-import 'package:mezcalmos/Shared/pages/SplashScreen.dart'
-    deferred as splashScreen;
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart'
     deferred as userProfileView;
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserWelcomeView.dart'
@@ -37,7 +35,7 @@ class SharedRoutes {
   static const String kUserWelcomeRoute = '/welcome';
   static const String kHomeRoute = '/home';
   static const String kMessagesList = '/messagesList';
-  static const String kSplashRoute = '/splash';
+  // static const String kSplashRoute = '/splash';
   static const String kSignInRoute = '/sign_in';
   static const String kSignInAtOrderTimeRoute = '/sign_in_order_time';
   // static const String kMessagesRoute = '/messages/:chatId';
@@ -77,11 +75,11 @@ class SharedRoutes {
         name: kWrapperRoute,
         builder: () => wrapper.Wrapper(),
         middleware: <QMiddleware>[DefferedLoader(wrapper.loadLibrary)]),
-    QRoute(
-        path: kSplashRoute,
-        name: kSplashRoute,
-        builder: () => splashScreen.SplashScreen(),
-        middleware: <QMiddleware>[DefferedLoader(splashScreen.loadLibrary)]),
+    // QRoute(
+    //     path: kSplashRoute,
+    //     name: kSplashRoute,
+    //     builder: () => splashScreen.SplashScreen(),
+    //     middleware: <QMiddleware>[DefferedLoader(splashScreen.loadLibrary)]),
     QRoute(
         path: kSignInRoute,
         name: kSignInRoute,
