@@ -249,31 +249,32 @@ class CustCartViewController {
 
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
-    // showRedirectText.value = true;
+    showRedirectText.value = true;
 
-    // final String message = await contructOrderMessage();
-    // mezDbgPrint(message);
-    // if (cart.restaurant?.info.phoneNumber != null) {
-    //   try {
-    //     final bool res = await callWhatsappNumber(
-    //         cart.restaurant!.info.phoneNumber!,
-    //         message: message);
+    final String message = await contructOrderMessage();
+    mezDbgPrint(message);
+    if (cart.restaurant?.info.phoneNumber != null) {
+      try {
+        final bool res = await callWhatsappNumber(
+            cart.restaurant!.info.phoneNumber!,
+            message: message);
 
-    //     showRedirectText.value = false;
-    //     if (res) {
-    //       orderSentToRest.value = true;
-    //       await cartController.clearCart();
-    //     }
-    //   } catch (e, stk) {
-    //     showErrorSnackBar();
-    //     mezDbgPrint(e);
-    //     mezDbgPrint(stk);
-    //   }
-    // } else {
-    //   showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
-    // }
-    // showRedirectText.value = false;
+        if (res) {
+          await _sendOrderToDb();
+        }
+        showRedirectText.value = false;
+      } catch (e, stk) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
+    } else {
+      showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
+    }
+    showRedirectText.value = false;
+  }
 
+  Future<void> _sendOrderToDb() async {
     try {
       // if (cart.paymentType == PaymentType.Card) {
       //   final String? stripePaymentId =
@@ -291,8 +292,6 @@ class CustCartViewController {
         MezRouter.popEverythingTillBeforeHome().then((_) =>
             CustRestaurantOrderView.navigate(orderId: newOrderId.toInt()));
       }
-
-      mezDbgPrint("success funish checkout");
     } catch (e, s) {
       mezDbgPrint(
         "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
