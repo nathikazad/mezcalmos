@@ -37,6 +37,7 @@ select_permissions:
         - cost_per_km_from_base
         - customer_pickup
         - delivery_available
+        - sitin_available
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - id
@@ -47,16 +48,17 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - customer_pickup
-        - delivery_available
-        - self_delivery
-        - id
         - cost_per_km
         - cost_per_km_from_base
-        - free_delivery_minimum_cost
-        - minimum_cost
+        - customer_pickup
+        - delivery_available
+        - sitin_available
         - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - id
+        - minimum_cost
         - radius
+        - self_delivery
       filter: {}
   - role: delivery_driver
     permission:
@@ -73,6 +75,7 @@ select_permissions:
       columns:
         - customer_pickup
         - delivery_available
+        - sitin_available
         - self_delivery
         - id
         - cost_per_km
@@ -87,6 +90,7 @@ select_permissions:
       columns:
         - customer_pickup
         - delivery_available
+        - sitin_available
         - self_delivery
         - id
         - cost_per_km
@@ -100,6 +104,7 @@ select_permissions:
       columns:
         - customer_pickup
         - delivery_available
+        - sitin_available
         - self_delivery
         - id
         - cost_per_km
@@ -114,6 +119,7 @@ select_permissions:
       columns:
         - customer_pickup
         - delivery_available
+        - sitin_available
         - self_delivery
         - id
         - cost_per_km
@@ -141,6 +147,7 @@ update_permissions:
         - cost_per_km_from_base
         - customer_pickup
         - delivery_available
+        - sitin_available
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - minimum_cost
@@ -159,6 +166,7 @@ update_permissions:
         - cost_per_km_from_base
         - customer_pickup
         - delivery_available
+        - sitin_available
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - minimum_cost
@@ -175,6 +183,7 @@ update_permissions:
       columns:
         - customer_pickup
         - delivery_available
+        - sitin_available
         - self_delivery
         - id
         - cost_per_km
@@ -199,6 +208,7 @@ update_permissions:
         - cost_per_km_from_base
         - customer_pickup
         - delivery_available
+        - sitin_available
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - minimum_cost
