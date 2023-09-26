@@ -56,7 +56,6 @@ class RestaurantOrder extends DeliverableOrder {
       super.estimatedPackageReadyTime,
       super.driverInfo,
       super.review,
-      super.driverPhoneNumber,
       required super.deliveryProviderType,
       super.estimatedArrivalAtPickup,
       super.estimatedArrivalAtDropoff,

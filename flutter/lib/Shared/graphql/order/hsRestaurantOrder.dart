@@ -153,6 +153,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
             ? UserInfo(
                 hasuraId: orderData.delivery!.delivery_driver!.user.id,
                 name: orderData.delivery!.delivery_driver!.user.name,
+                //  name: orderData.delivery!.delivery_driver!.user,
                 image: orderData.delivery!.delivery_driver!.user.image,
                 language: orderData.delivery!.delivery_driver!.user.language_id
                     .toLanguage())
@@ -184,6 +185,36 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       res.items = items;
       res.stripePaymentInfo = _paymentInfo;
       return res;
+    }
+    return null;
+  });
+}
+
+Stream<UserInfo?> listen_on_restaurant_order_driver({required int orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_restaurant_order_driver(
+    Options$Subscription$listen_on_restaurant_order_driver(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$listen_on_restaurant_order_driver(
+        order_id: orderId,
+      ),
+    ),
+  )
+      .map<UserInfo?>(
+          (QueryResult<Subscription$listen_on_restaurant_order_driver> event) {
+    mezDbgPrint(
+        "Event from hs restaurant order 🚀🚀🚀 =====>driver ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
+
+    if (event.parsedData?.restaurant_order_by_pk != null) {
+      final Subscription$listen_on_restaurant_order_driver$restaurant_order_by_pk
+          orderData = event.parsedData!.restaurant_order_by_pk!;
+      return UserInfo(
+          hasuraId: orderData.delivery!.delivery_driver!.user.id,
+          name: orderData.delivery!.delivery_driver!.user.name,
+          phoneNumber: orderData.delivery!.delivery_driver!.user.phone,
+          image: orderData.delivery!.delivery_driver!.user.image,
+          language: orderData.delivery!.delivery_driver!.user.language_id
+              .toLanguage());
     }
     return null;
   });
@@ -252,7 +283,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   }
   final RestaurantOrder res = RestaurantOrder(
     pickupLocation: null,
-    driverPhoneNumber: orderData.delivery?.delivery_driver?.user.phone,
+
     deliveryProviderType:
         orderData.delivery!.service_provider_type.toServiceProviderType(),
     serviceProviderDriverChatId:
@@ -321,6 +352,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     driverInfo: (orderData.delivery?.delivery_driver != null)
         ? UserInfo(
             hasuraId: orderData.delivery!.delivery_driver!.user.id,
+            phoneNumber: orderData.delivery!.delivery_driver!.user.phone,
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,
             language: orderData.delivery!.delivery_driver!.user.language_id
