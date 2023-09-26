@@ -84,6 +84,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       }
 
       final RestaurantOrder res = RestaurantOrder(
+        deliveryType: orderData.delivery_type.toDeliveryType(),
         deliveryProviderType:
             orderData.delivery!.service_provider_type.toServiceProviderType(),
         serviceProviderDriverChatId:
@@ -283,6 +284,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   }
   final RestaurantOrder res = RestaurantOrder(
     pickupLocation: null,
+    deliveryType: orderData.delivery_type.toDeliveryType(),
 
     deliveryProviderType:
         orderData.delivery!.service_provider_type.toServiceProviderType(),

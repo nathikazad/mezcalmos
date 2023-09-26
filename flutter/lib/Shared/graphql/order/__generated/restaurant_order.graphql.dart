@@ -308,6 +308,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'scheduled_time'),
             alias: null,
             arguments: [],
@@ -1244,6 +1251,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
   Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk({
     required this.id,
     this.notes,
+    required this.delivery_type,
     this.scheduled_time,
     this.stripe_info,
     required this.restaurant,
@@ -1274,6 +1282,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$notes = json['notes'];
+    final l$delivery_type = json['delivery_type'];
     final l$scheduled_time = json['scheduled_time'];
     final l$stripe_info = json['stripe_info'];
     final l$restaurant = json['restaurant'];
@@ -1301,6 +1310,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     return Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk(
       id: (l$id as int),
       notes: (l$notes as String?),
+      delivery_type: (l$delivery_type as String),
       scheduled_time: (l$scheduled_time as String?),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       restaurant:
@@ -1347,6 +1357,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
   final int id;
 
   final String? notes;
+
+  final String delivery_type;
 
   final String? scheduled_time;
 
@@ -1408,6 +1420,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['id'] = l$id;
     final l$notes = notes;
     _resultData['notes'] = l$notes;
+    final l$delivery_type = delivery_type;
+    _resultData['delivery_type'] = l$delivery_type;
     final l$scheduled_time = scheduled_time;
     _resultData['scheduled_time'] = l$scheduled_time;
     final l$stripe_info = stripe_info;
@@ -1467,6 +1481,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
   int get hashCode {
     final l$id = id;
     final l$notes = notes;
+    final l$delivery_type = delivery_type;
     final l$scheduled_time = scheduled_time;
     final l$stripe_info = stripe_info;
     final l$restaurant = restaurant;
@@ -1494,6 +1509,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     return Object.hashAll([
       l$id,
       l$notes,
+      l$delivery_type,
       l$scheduled_time,
       l$stripe_info,
       l$restaurant,
@@ -1539,6 +1555,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$notes = notes;
     final lOther$notes = other.notes;
     if (l$notes != lOther$notes) {
+      return false;
+    }
+    final l$delivery_type = delivery_type;
+    final lOther$delivery_type = other.delivery_type;
+    if (l$delivery_type != lOther$delivery_type) {
       return false;
     }
     final l$scheduled_time = scheduled_time;
@@ -1700,6 +1721,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
   TRes call({
     int? id,
     String? notes,
+    String? delivery_type,
     String? scheduled_time,
     dynamic? stripe_info,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
@@ -1768,6 +1790,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
   TRes call({
     Object? id = _undefined,
     Object? notes = _undefined,
+    Object? delivery_type = _undefined,
     Object? scheduled_time = _undefined,
     Object? stripe_info = _undefined,
     Object? restaurant = _undefined,
@@ -1797,6 +1820,9 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         notes: notes == _undefined ? _instance.notes : (notes as String?),
+        delivery_type: delivery_type == _undefined || delivery_type == null
+            ? _instance.delivery_type
+            : (delivery_type as String),
         scheduled_time: scheduled_time == _undefined
             ? _instance.scheduled_time
             : (scheduled_time as String?),
@@ -1931,6 +1957,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
   call({
     int? id,
     String? notes,
+    String? delivery_type,
     String? scheduled_time,
     dynamic? stripe_info,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
@@ -7449,6 +7476,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'scheduled_time'),
             alias: null,
             arguments: [],
@@ -8422,6 +8456,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
   Query$get_restaurant_order_by_id$restaurant_order_by_pk({
     required this.id,
     this.notes,
+    required this.delivery_type,
     this.scheduled_time,
     this.stripe_info,
     required this.restaurant,
@@ -8452,6 +8487,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$notes = json['notes'];
+    final l$delivery_type = json['delivery_type'];
     final l$scheduled_time = json['scheduled_time'];
     final l$stripe_info = json['stripe_info'];
     final l$restaurant = json['restaurant'];
@@ -8479,6 +8515,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk(
       id: (l$id as int),
       notes: (l$notes as String?),
+      delivery_type: (l$delivery_type as String),
       scheduled_time: (l$scheduled_time as String?),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       restaurant:
@@ -8524,6 +8561,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
   final int id;
 
   final String? notes;
+
+  final String delivery_type;
 
   final String? scheduled_time;
 
@@ -8583,6 +8622,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['id'] = l$id;
     final l$notes = notes;
     _resultData['notes'] = l$notes;
+    final l$delivery_type = delivery_type;
+    _resultData['delivery_type'] = l$delivery_type;
     final l$scheduled_time = scheduled_time;
     _resultData['scheduled_time'] = l$scheduled_time;
     final l$stripe_info = stripe_info;
@@ -8642,6 +8683,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
   int get hashCode {
     final l$id = id;
     final l$notes = notes;
+    final l$delivery_type = delivery_type;
     final l$scheduled_time = scheduled_time;
     final l$stripe_info = stripe_info;
     final l$restaurant = restaurant;
@@ -8669,6 +8711,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     return Object.hashAll([
       l$id,
       l$notes,
+      l$delivery_type,
       l$scheduled_time,
       l$stripe_info,
       l$restaurant,
@@ -8713,6 +8756,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$notes = notes;
     final lOther$notes = other.notes;
     if (l$notes != lOther$notes) {
+      return false;
+    }
+    final l$delivery_type = delivery_type;
+    final lOther$delivery_type = other.delivery_type;
+    if (l$delivery_type != lOther$delivery_type) {
       return false;
     }
     final l$scheduled_time = scheduled_time;
@@ -8871,6 +8919,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
   TRes call({
     int? id,
     String? notes,
+    String? delivery_type,
     String? scheduled_time,
     dynamic? stripe_info,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant?
@@ -8932,6 +8981,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
   TRes call({
     Object? id = _undefined,
     Object? notes = _undefined,
+    Object? delivery_type = _undefined,
     Object? scheduled_time = _undefined,
     Object? stripe_info = _undefined,
     Object? restaurant = _undefined,
@@ -8960,6 +9010,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
       _then(Query$get_restaurant_order_by_id$restaurant_order_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         notes: notes == _undefined ? _instance.notes : (notes as String?),
+        delivery_type: delivery_type == _undefined || delivery_type == null
+            ? _instance.delivery_type
+            : (delivery_type as String),
         scheduled_time: scheduled_time == _undefined
             ? _instance.scheduled_time
             : (scheduled_time as String?),
@@ -9093,6 +9146,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
   call({
     int? id,
     String? notes,
+    String? delivery_type,
     String? scheduled_time,
     dynamic? stripe_info,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant?

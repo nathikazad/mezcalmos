@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RestaurantOrderViewController {
   // instances //
@@ -127,5 +128,10 @@ class RestaurantOrderViewController {
   void clearNotifications(int orderId) {
     Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
         orderType: cModels.OrderType.Restaurant, orderId: orderId);
+  }
+
+  Future<void> forwardToDriver() async {
+    final String text = await order.value!.contructOrderMessage();
+    await Share.share(text);
   }
 }

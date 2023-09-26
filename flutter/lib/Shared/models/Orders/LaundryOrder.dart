@@ -4,9 +4,7 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 // enum LaundryOrderStatus {
 //   OrderReceived,
@@ -70,6 +68,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       super.stripePaymentInfo,
       super.scheduleTime,
       super.serviceProviderId,
+      super.deliveryType = DeliveryType.Delivery,
       super.routeInformation,
       super.driverInfo,
       super.pickupDriver,

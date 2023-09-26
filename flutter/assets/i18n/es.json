@@ -4071,6 +4071,12 @@
         "schTitle": "Programado para",
         "cancelOrder": "Cancelar orden",
         "orderItems": "Encargar artículos",
+        "driver": "Conductora",
+        "customer": "Cliente",
+        "fwdCompany": "Adelante a servi amigos",
+        "fwdDriver": "Avance al conductor",
+        "orderCost": "Costo de la orden",
+        "orderSummary": "Resumen de pedido",
         "components": {
           "ROpSpecialItemTime": {
             "selectTime": "Seleccione su tiempo",

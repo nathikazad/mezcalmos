@@ -86,7 +86,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       bottomNavigationBar: Obx(
         () => viewController.showForwardBtn
             ? MezButton(
-                label: "Forward to Servi Amigos",
+                label: "${_i18n()['fwdCompany']}",
                 borderRadius: 0,
                 height: 75,
                 onClick: () async {},
@@ -111,7 +111,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                       to: viewController.order.value!.dropOffLocation),
                   // here call OrderMapWidget
                   MezCard(
-                    label: "Customer",
+                    label: "${_i18n()['customer']}",
                     margin: const EdgeInsets.only(top: 15),
                     radius: 22,
                     firstAvatarBgImage: CachedNetworkImageProvider(
@@ -132,7 +132,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                   ),
                   if (viewController.order.value?.driverInfo != null)
                     MezCard(
-                      label: "Driver",
+                      label: "${_i18n()['driver']}",
                       margin: const EdgeInsets.only(top: 15),
                       radius: 22,
                       firstAvatarBgImage: CachedNetworkImageProvider(
@@ -228,13 +228,15 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                       )),
                   bigSeperator,
                   MezButton(
-                    label: "Forward to driver",
+                    label: "${_i18n()['fwdDriver']}",
                     icon: Ionicons.logo_whatsapp,
                     textColor: Colors.green,
                     backgroundColor: Colors.grey.shade100,
                     border: BorderSide(color: Colors.green, width: 1),
                     elevation: 0.5,
-                    onClick: () async {},
+                    onClick: () async {
+                      await viewController.forwardToDriver();
+                    },
                   ),
                   bigSeperator,
                   // // ROpRefundButton(

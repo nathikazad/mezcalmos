@@ -4006,6 +4006,12 @@
         "restaurant": "Restaurant",
         "cancelOrder": "Cancel order",
         "orderItems": "Order Items",
+        "driver": "Driver",
+        "customer": "Customer",
+        "fwdCompany": "Forward to Servi Amigos",
+        "fwdDriver": "Forward to driver",
+        "orderCost": "Order cost",
+        "orderSummary": "Order summary",
         "components": {
           "ROpSpecialItemTime": {
             "selectTime": "Select your time",

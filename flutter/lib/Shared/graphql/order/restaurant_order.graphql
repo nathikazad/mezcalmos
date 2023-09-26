@@ -3,6 +3,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+    delivery_type
     scheduled_time
     stripe_info
     restaurant {
@@ -147,7 +148,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
-
+    delivery_type
     scheduled_time
     stripe_info
     restaurant {
