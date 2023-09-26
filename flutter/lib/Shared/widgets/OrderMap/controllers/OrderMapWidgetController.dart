@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
@@ -33,7 +34,7 @@ class OrderMapWidgetController {
     shouldUpdate = updateDriver;
     // mGoogleMapController.initialZoomLevel = 14;
     mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference(14, 16);
-    mGoogleMapController.openGmapsButton.value = true;
+
     mGoogleMapController.periodicRerendering.value = false;
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
     mGoogleMapController.recenterButtonEnabled.value = true;
@@ -67,6 +68,11 @@ class OrderMapWidgetController {
     } else {
       await driverLocationStream?.cancel();
       driverLocationStream = null;
+    }
+    if (from != null) {
+      final String mapsUrl =
+          getGMapsDirectionLink(from.toLatLng()!, to.toLatLng()!);
+      mGoogleMapController.gmapsLink.value = mapsUrl;
     }
   }
 

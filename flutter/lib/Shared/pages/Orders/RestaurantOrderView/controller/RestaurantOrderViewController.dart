@@ -31,7 +31,8 @@ class RestaurantOrderViewController {
   StreamSubscription<RestaurantOrder?>? orderStream;
   String? subscriptionId;
 
-  bool get showForwardBtn => false;
+  bool get showForwardBtn =>
+      order.value != null && order.value?.driverInfo == null;
 
   // init
   Future<void> init({required int orderId}) async {
@@ -53,26 +54,26 @@ class RestaurantOrderViewController {
       mezDbgPrint(e);
       mezDbgPrint(stk);
     }
-    if (order.value == null) {
-      mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
-    } else {
-      subscriptionId = hasuraDb.createSubscription(start: () {
-        orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
-            .listen((RestaurantOrder? event) {
-          mezDbgPrint(event);
-          if (event != null) {
-            mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.toFirebaseFormatJson()}");
-            order.value = null;
-            order.value = event;
-            order.value?.driverInfo = event.driverInfo;
-          }
-        });
-      }, cancel: () {
-        orderStream?.cancel();
-        orderStream = null;
-      });
-    }
+    // if (order.value == null) {
+    //   mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
+    // } else {
+    //   subscriptionId = hasuraDb.createSubscription(start: () {
+    //     orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
+    //         .listen((RestaurantOrder? event) {
+    //       mezDbgPrint(event);
+    //       if (event != null) {
+    //         mezDbgPrint(
+    //             "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.toFirebaseFormatJson()}");
+    //         order.value = null;
+    //         order.value = event;
+    //         order.value?.driverInfo = event.driverInfo;
+    //       }
+    //     });
+    //   }, cancel: () {
+    //     orderStream?.cancel();
+    //     orderStream = null;
+    //   });
+    // }
   }
 
 // Order status change methods

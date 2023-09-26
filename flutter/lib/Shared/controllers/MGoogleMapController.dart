@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/MezMarker.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
@@ -31,7 +32,7 @@ class MGoogleMapController {
   // this is used when we don't want to re-render the map periodically.
   RxBool periodicRerendering = false.obs;
   RxBool recenterButtonEnabled = false.obs;
-  RxBool openGmapsButton = false.obs;
+  RxnString gmapsLink = RxnString();
   late RxBool myLocationButtonEnabled;
 
   MGoogleMapController({
@@ -508,5 +509,15 @@ class MGoogleMapController {
     markers.clear();
   }
 
-  void openGoogleMaps() {}
+  Future<void> openGoogleMaps() async {
+    if (gmapsLink.value != null) {
+      try {
+        await launchUrl(Uri.parse(gmapsLink.value!),
+            mode: LaunchMode.externalApplication);
+      } catch (e) {
+        mezDbgPrint(e);
+        // TODO
+      }
+    }
+  }
 }

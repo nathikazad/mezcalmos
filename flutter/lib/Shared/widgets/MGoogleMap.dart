@@ -207,8 +207,8 @@ class MGoogleMapState extends State<MGoogleMap> {
               recenterButton(),
             if (widget.mGoogleMapController.myLocationButtonEnabled.value)
               locateMeButton(),
-            // if (widget.mGoogleMapController.openGmapsButton.value)
-            //   openGmapsBtn(),
+            if (widget.mGoogleMapController.gmapsLink.value != null)
+              openGmapsBtn(),
           ],
         );
       },
@@ -290,7 +290,7 @@ class MGoogleMapState extends State<MGoogleMap> {
   Positioned openGmapsBtn() {
     return Positioned(
       right: 12,
-      bottom: widget.recenterBtnBottomPadding,
+      top: widget.recenterBtnBottomPadding,
       child: InkWell(
         onTap: () {
           widget.mGoogleMapController.openGoogleMaps();
@@ -308,7 +308,7 @@ class MGoogleMapState extends State<MGoogleMap> {
           ),
           child: Center(
             child: Icon(
-              Icons.map,
+              Icons.open_in_new_rounded,
               color: Colors.black,
               size: 25,
             ),
