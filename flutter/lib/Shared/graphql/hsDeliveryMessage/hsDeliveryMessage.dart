@@ -15,21 +15,20 @@ Future<List<DeliveryMessage>> getDvOpenMessages({bool withCache = true}) async {
   if (res.hasException) {
     throw res.exception!;
   } else
-    return res.parsedData!.delivery_messages
+    return res.parsedData!.delivery_open_delivery_messages
         .map<DeliveryMessage>(
-            (Query$GetOpenDeliveryMessages$delivery_messages e) =>
+            (Query$GetOpenDeliveryMessages$delivery_open_delivery_messages e) =>
                 DeliveryMessage(
-                    id: e.id,
+                    id: e.id!,
                     entry: DvMessageEntry.fromJson(e.entry),
                     userImage: e.customer?.image,
                     userName: e.customer?.name,
-                    phoneNumber: e.phone_number,
+                    phoneNumber: e.phone_number!,
                     driverId: e.driver_id,
                     respondedTime:
                         DateTime.tryParse(e.responded_time.toString()),
                     finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                    receivedTime: DateTime.parse(e.received_time),
-                    userId: e.user_id))
+                    receivedTime: DateTime.parse(e.received_time!)))
         .toList();
 }
 
@@ -44,19 +43,21 @@ Stream<List<DeliveryMessage>?> listenDvOpenMessages() {
     if (event.hasException) {
       throwError(event.exception);
     }
-    return event.parsedData?.delivery_messages
-        .map((Subscription$ListenOpenDeliveryMessages$delivery_messages e) =>
-            DeliveryMessage(
-                id: e.id,
-                entry: DvMessageEntry.fromJson(e.entry),
-                userImage: e.customer?.image,
-                userName: e.customer?.name,
-                phoneNumber: e.phone_number,
-                driverId: e.driver_id,
-                respondedTime: DateTime.tryParse(e.responded_time.toString()),
-                finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                receivedTime: DateTime.parse(e.received_time),
-                userId: e.user_id))
+    return event.parsedData?.delivery_open_delivery_messages
+        .map(
+            (Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages
+                    e) =>
+                DeliveryMessage(
+                    id: e.id!,
+                    entry: DvMessageEntry.fromJson(e.entry),
+                    userImage: e.customer?.image,
+                    userName: e.customer?.name,
+                    phoneNumber: e.phone_number!,
+                    driverId: e.driver_id,
+                    respondedTime:
+                        DateTime.tryParse(e.responded_time.toString()),
+                    finishedTime: DateTime.tryParse(e.finished_time.toString()),
+                    receivedTime: DateTime.parse(e.received_time!)))
         .toList();
   });
 }
@@ -87,8 +88,7 @@ Stream<List<DeliveryMessage>?> listenDvCurrentMessages(
                 driverPhone: e.driver?.user.phone,
                 respondedTime: DateTime.tryParse(e.responded_time.toString()),
                 finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                receivedTime: DateTime.parse(e.received_time),
-                userId: e.user_id))
+                receivedTime: DateTime.parse(e.received_time)))
         .toList();
   });
 }
@@ -120,8 +120,7 @@ Future<List<DeliveryMessage>> getDvCurrentMessages(
                     respondedTime:
                         DateTime.tryParse(e.responded_time.toString()),
                     finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                    receivedTime: DateTime.parse(e.received_time),
-                    userId: e.user_id))
+                    receivedTime: DateTime.parse(e.received_time)))
         .toList();
 }
 
@@ -153,8 +152,7 @@ Future<List<DeliveryMessage>> getDvPastMessages(
                     respondedTime:
                         DateTime.tryParse(e.responded_time.toString()),
                     finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                    receivedTime: DateTime.parse(e.received_time),
-                    userId: e.user_id))
+                    receivedTime: DateTime.parse(e.received_time)))
         .toList();
 }
 
@@ -186,8 +184,7 @@ Future<List<DeliveryMessage>> getCustomerDvMessages(
                     respondedTime:
                         DateTime.tryParse(e.responded_time.toString()),
                     finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                    receivedTime: DateTime.parse(e.received_time),
-                    userId: e.user_id))
+                    receivedTime: DateTime.parse(e.received_time)))
         .toList();
 }
 

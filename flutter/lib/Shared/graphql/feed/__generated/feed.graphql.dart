@@ -1943,7 +1943,7 @@ class Query$getFeed$service_provider_post {
   Query$getFeed$service_provider_post({
     required this.id,
     this.image,
-    required this.likes,
+    this.likes,
     required this.message,
     required this.posted_on,
     this.restaurant,
@@ -1962,7 +1962,7 @@ class Query$getFeed$service_provider_post {
     return Query$getFeed$service_provider_post(
       id: (l$id as int),
       image: (l$image as String?),
-      likes: mapFromJson(l$likes),
+      likes: l$likes == null ? null : mapFromJson(l$likes),
       message: (l$message as String),
       posted_on: (l$posted_on as String),
       restaurant: l$restaurant == null
@@ -1977,7 +1977,7 @@ class Query$getFeed$service_provider_post {
 
   final String? image;
 
-  final dynamic likes;
+  final dynamic? likes;
 
   final String message;
 
@@ -1994,7 +1994,7 @@ class Query$getFeed$service_provider_post {
     final l$image = image;
     _resultData['image'] = l$image;
     final l$likes = likes;
-    _resultData['likes'] = mapToJson(l$likes);
+    _resultData['likes'] = l$likes == null ? null : mapToJson(l$likes);
     final l$message = message;
     _resultData['message'] = l$message;
     final l$posted_on = posted_on;
@@ -2130,9 +2130,7 @@ class _CopyWithImpl$Query$getFeed$service_provider_post<TRes>
       _then(Query$getFeed$service_provider_post(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
-        likes: likes == _undefined || likes == null
-            ? _instance.likes
-            : (likes as dynamic),
+        likes: likes == _undefined ? _instance.likes : (likes as dynamic?),
         message: message == _undefined || message == null
             ? _instance.message
             : (message as String),
