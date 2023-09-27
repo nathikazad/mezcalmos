@@ -8,9 +8,9 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
-import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -74,7 +74,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
             );
           } else {
             return Column(
-              children: [
+              children: <Widget>[
                 Container(
                   margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
                   child: TitleWithOnOffSwitcher(
@@ -122,12 +122,12 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
   Widget _inProcessOrders() {
     return Expanded(
       child: Column(
-        children: [
+        children: <Widget>[
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,

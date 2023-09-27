@@ -82,7 +82,8 @@ class ForegroundNotificationsController extends GetxController {
             removeNotification(_notification.id);
           }
         } catch (e, stk) {
-          mezDbgPrint("Invalid notification 🛑");
+          mezDbgPrint(
+              "Invalid notification 🛑===========>${event.snapshot.value}");
           mezDbgPrint(e);
           mezDbgPrint(stk);
         }
