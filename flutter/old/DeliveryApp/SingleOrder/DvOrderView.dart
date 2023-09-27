@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -10,11 +11,6 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-import '../../../../old/DeliveryApp/SingleOrder/components/AnimatedOrderInfoCard.dart';
-import '../../../../old/DeliveryApp/SingleOrder/components/DvOrderBottomCard.dart';
-import '../../../../old/DeliveryApp/SingleOrder/components/DvOrderStatusControllButtons.dart';
-import '../../../../old/DeliveryApp/SingleOrder/controllers/DvOrderViewController.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -85,17 +81,17 @@ class _DvOrderViewState extends State<DvOrderView> {
               style: TextStyle(fontFamily: 'Montserrat'),
             )),
       ),
-      bottomNavigationBar: Obx(
-        () => (viewController.hasData)
-            ? DvOrderStatusControllButtons(
-                viewController: viewController,
-              )
-            : SizedBox(),
-      ),
+      // bottomNavigationBar: Obx(
+      //   () => (viewController.hasData)
+      //       ? DvOrderStatusControllButtons(
+      //           viewController: viewController,
+      //         )
+      //       : SizedBox(),
+      // ),
       body: Obx(
         () => viewController.hasData
             ? Stack(
-                children: [
+                children: <Widget>[
                   OrderMapWidget(
                       mapPadding: _mapPadding,
                       recenterBtnBottomPadding: getRecenterBtnBottomPadding,
@@ -110,7 +106,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                     left: 5,
                     right: 4,
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.only(right: 10, bottom: 10),
                           child: Align(
@@ -135,7 +131,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                               child: Container(
                                 padding: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  boxShadow: [
+                                  boxShadow: <BoxShadow>[
                                     BoxShadow(
                                         color: Colors.black.withOpacity(.5),
                                         offset: Offset(-1, 0),
@@ -153,27 +149,27 @@ class _DvOrderViewState extends State<DvOrderView> {
                             ),
                           ),
                         ),
-                        Card(
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            child: DvOrderBottomCard(
-                              viewcontroller: viewController,
-                              onCardStateChange: (OrderInfoCardState state) {
-                                setState(() {
-                                  if (state == OrderInfoCardState.Maximized) {
-                                    _recenterBtnBottomPadding = 300;
-                                    _mapPadding =
-                                        EdgeInsets.only(top: 10, bottom: 220);
-                                  } else {
-                                    _recenterBtnBottomPadding = 180;
-                                    _mapPadding =
-                                        EdgeInsets.only(top: 10, bottom: 120);
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                        ),
+                        // Card(
+                        //   child: Container(
+                        //     padding: const EdgeInsets.all(8),
+                        //     child: DvOrderBottomCard(
+                        //       viewcontroller: viewController,
+                        //       onCardStateChange: (OrderInfoCardState state) {
+                        //         setState(() {
+                        //           if (state == OrderInfoCardState.Maximized) {
+                        //             _recenterBtnBottomPadding = 300;
+                        //             _mapPadding =
+                        //                 EdgeInsets.only(top: 10, bottom: 220);
+                        //           } else {
+                        //             _recenterBtnBottomPadding = 180;
+                        //             _mapPadding =
+                        //                 EdgeInsets.only(top: 10, bottom: 120);
+                        //           }
+                        //         });
+                        //       },
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   )

@@ -23,21 +23,21 @@ Notification deliveryDriverNotificationHandler(String key, value) {
       return _newMessageNotification(key, value);
     case NotificationType.DriverApproved:
       return _driverAprrovedNotification(key, value);
-    // case NotificationType.NewMessage:
-    //   return newMessageNotification(key, value);
+    case NotificationType.NewMessage:
+      return newMessageNotification(key, value);
     case NotificationType.PriceChange:
       return newPriceChangeNotification(key, value);
     case NotificationType.OrderStatusChange:
-      switch (value['orderType'].toString().toOrderType()) {
-        case OrderType.Restaurant:
-          return restaurantOrderStatusChangeNotificationHandler(key, value);
-        case OrderType.Laundry:
-          return laundryOrderStatusChangeNotificationHandler(key, value);
-        case OrderType.Courier:
-          return _courierOrderStatusChangeNotificationHandler(key, value);
-        default:
-          throw Exception("Unexpected Order Type $value['orderType']");
-      }
+      // switch (value['orderType'].toString().toOrderType()) {
+      //   case OrderType.Restaurant:
+      return restaurantOrderStatusChangeNotificationHandler(key, value);
+    // case OrderType.Laundry:
+    //   return laundryOrderStatusChangeNotificationHandler(key, value);
+    // case OrderType.Courier:
+    //   return _courierOrderStatusChangeNotificationHandler(key, value);
+    //   default:
+    //     throw Exception("Unexpected Order Type $value['orderType']");
+    // }
     default:
       throw StateError(
           "Invalid Notification Type==========>${value['notificationType']}");
@@ -285,20 +285,19 @@ Map<String, dynamic>? getLaundryOrderStatusFields(
   }
 }
 
-// Notification newMessageNotification(String key, value) {
-//   return Notification(
-//       id: key,
-//       linkUrl: value["linkUrl"] ??
-//           SharedRoutes.getMessagesRoute(chatId: value["chatId"]),
-//       body: value['message'],
-//       imgUrl: value['sender']['image'],
-//       title: value['sender']['name'],
-//       timestamp: DateTime.parse(value['time']),
-//       notificationType: NotificationType.NewMessage,
-//       notificationAction:
-//           (value["notificationAction"] as String).toNotificationAction(),
-//       variableParams: value);
-// }
+Notification newMessageNotification(String key, value) {
+  return Notification(
+      id: key,
+      linkUrl: value["linkUrl"],
+      body: value['message'],
+      imgUrl: value['sender']['image'],
+      title: value['sender']['name'],
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.NewMessage,
+      notificationAction:
+          (value["notificationAction"] as String).toNotificationAction(),
+      variableParams: value);
+}
 
 Notification newPriceChangeNotification(String key, value) {
   final bool accepted = value["accepted"];

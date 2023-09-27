@@ -60,7 +60,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Obx(
               () => SwitchListTile.adaptive(
                   title: Text(
@@ -74,20 +74,22 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                   }),
             ),
             Obx(
-              () => SingleChildScrollView(
-                child: (viewController.currentOrders.isNotEmpty ||
-                        viewController.openOrders.isNotEmpty)
-                    ? Column(
-                        children: [
-                          if (viewController.currentOrders.isNotEmpty)
-                            _currentOrders(context),
-                          if (viewController.openOrders.isNotEmpty)
-                            _openOrders(context),
-                        ],
-                      )
-                    : Padding(
-                        padding: EdgeInsets.only(top: 17.5.h),
-                        child: NoOrdersComponent()),
+              () => Expanded(
+                child: SingleChildScrollView(
+                  child: (viewController.currentOrders.isNotEmpty ||
+                          viewController.openOrders.isNotEmpty)
+                      ? Column(
+                          children: <Widget>[
+                            if (viewController.currentOrders.isNotEmpty)
+                              _currentOrders(context),
+                            if (viewController.openOrders.isNotEmpty)
+                              _openOrders(context),
+                          ],
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(top: 17.5.h),
+                          child: NoOrdersComponent()),
+                ),
               ),
             ),
           ],
@@ -103,9 +105,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
-        children: [
+        children: <Widget>[
           Text.rich(TextSpan(
-              children: [
+              children: <InlineSpan>[
                 WidgetSpan(
                   child: Icon(
                     Icons.route_rounded,
@@ -162,9 +164,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
       decoration: BoxDecoration(color: Colors.purple.shade100),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text.rich(TextSpan(
-              children: [
+              children: <InlineSpan>[
                 WidgetSpan(
                   child: Icon(
                     Icons.hourglass_empty_rounded,

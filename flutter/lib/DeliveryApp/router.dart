@@ -1,5 +1,6 @@
 import 'package:mezcalmos/DeliveryApp/pages/DeliveryWrapper.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/DvOrderView.dart';
 // import '../../old/DeliveryApp/OrderDetails/DvOrderDetailsView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart';
@@ -37,11 +38,11 @@ class DeliveryAppRoutes {
           name: SharedRoutes.kHomeRoute,
           builder: () => DeliveryWrapper(),
         ),
-        // QRoute(
-        //   path: kDvOrderView,
-        //   name: kDvOrderView,
-        //   builder: () => DvOrderView(),
-        // ),
+        QRoute(
+          path: kDvOrderView,
+          name: kDvOrderView,
+          builder: () => DvOrderView(),
+        ),
         // QRoute(
         //   path: kOrderDetailsViewRoute,
         //   name: kOrderDetailsViewRoute,

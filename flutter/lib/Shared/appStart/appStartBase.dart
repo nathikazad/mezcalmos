@@ -276,7 +276,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
     });
     Get.put<SettingsController>(
       SettingsController(widget.locationPermissionType,
-          sideMenuItems: widget.sideMenuItems ?? []),
+          sideMenuItems: widget.sideMenuItems ?? <SideMenuItem>[]),
       permanent: true,
     );
   }
@@ -347,7 +347,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
       routerDelegate: QRouterDelegate(
         routes,
-        observers: [BotToastNavigatorObserver()],
+        observers: <NavigatorObserver>[BotToastNavigatorObserver()],
       ),
     );
     //);
