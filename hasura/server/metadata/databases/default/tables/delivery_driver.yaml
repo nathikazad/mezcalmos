@@ -76,9 +76,7 @@ select_permissions:
         - app_version
         - status
         - delivery_company_type
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+      filter: {}
   - role: delivery_operator
     permission:
       columns:
