@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -75,6 +74,19 @@ Future<DateTime?> dv_update_est_dropoff_time(
   return DateTime.parse(res.parsedData!.update_delivery_order_by_pk!
       .estimated_arrival_at_dropoff_time!);
 }
+
 // company //
-
-
+Future<bool> update_dvorder_driver_and_cost(
+    {required int driverId, required double cost, required int orderId}) async {
+  final QueryResult<Mutation$updateDeliveryOrderDriverAndCost> res =
+      await _hasuraDb.graphQLClient.mutate$updateDeliveryOrderDriverAndCost(
+          Options$Mutation$updateDeliveryOrderDriverAndCost(
+              variables: Variables$Mutation$updateDeliveryOrderDriverAndCost(
+                  delivery_cost: cost,
+                  delivery_driver_id: driverId,
+                  orderId: orderId)));
+  if (res.hasException) {
+    throw Exception(res.exception);
+  } else
+    return res.parsedData?.update_delivery_order?.affected_rows == 1;
+}

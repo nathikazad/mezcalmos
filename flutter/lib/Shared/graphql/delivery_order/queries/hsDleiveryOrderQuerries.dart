@@ -4,12 +4,12 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -50,6 +50,17 @@ Future<DeliveryOrder?> get_driver_order_by_id(
   }
   return DeliveryOrder(
     orderId: orderData.id,
+    items: orderData.restaurant_order!.items
+        .map<DeliveryOrderItem>(
+            (Query$get_driver_order$delivery_order_by_pk$restaurant_order$items
+                    e) =>
+                DeliveryOrderItem(
+                    name: toLanguageMap(
+                        translations: e.restaurant_item.name.translations),
+                    costPerOne: e.cost_per_one,
+                    quantity: e.quantity,
+                    image: e.restaurant_item.image))
+        .toList(),
     scheduleTime: (orderData.schedule_time != null)
         ? DateTime.tryParse(orderData.schedule_time!)
         : null,
@@ -58,8 +69,15 @@ Future<DeliveryOrder?> get_driver_order_by_id(
     orderType: orderData.order_type.toOrderType(),
     stripePaymentInfo: _paymentInfo,
     serviceOrderId: orderData.restaurant_order?.id,
-    deliveryCompany: _getDeliveryCompany(orderData)!,
-    serviceProvider: _getServiceInfo(orderData)!,
+    deliveryCompany: _getDeliveryCompany(orderData),
+    serviceProvider: ServiceInfo(
+        location: MezLocation.fromHasura(
+            orderData.restaurant_order!.restaurant.details!.location.gps,
+            orderData.restaurant_order!.restaurant.details!.location.address
+                .toString()),
+        hasuraId: orderData.restaurant_order!.restaurant.id,
+        image: orderData.restaurant_order!.restaurant.details!.image,
+        name: orderData.restaurant_order!.restaurant.details!.name),
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
         image: orderData.customer.user.image,
@@ -199,7 +217,7 @@ Future<List<MinimalOrder>?> get_current_driver_orders(
 }
 
 Future<List<MinimalOrder>?> get_open_driver_orders(
-    {required int driverId, bool inProcess = true}) async {
+    {bool inProcess = true}) async {
   final QueryResult<Query$get_open_driver_orders> queryResult =
       await _hasuraDb.graphQLClient.query$get_open_driver_orders(
     Options$Query$get_open_driver_orders(
@@ -208,7 +226,7 @@ Future<List<MinimalOrder>?> get_open_driver_orders(
             Variables$Query$get_open_driver_orders(in_process: inProcess)),
   );
   if (queryResult.parsedData?.delivery_order != null) {
-    List<Query$get_open_driver_orders$delivery_order> ordersData =
+    final List<Query$get_open_driver_orders$delivery_order> ordersData =
         queryResult.parsedData!.delivery_order;
 
     final List<MinimalOrder> orders =
@@ -424,7 +442,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
 }
 
 Future<UserInfo?> get_order_driver_info({required int orderId}) async {
-  QueryResult<Query$get_order_driver_info> res =
+  final QueryResult<Query$get_order_driver_info> res =
       await _hasuraDb.graphQLClient.query$get_order_driver_info(
     Options$Query$get_order_driver_info(
       variables: Variables$Query$get_order_driver_info(orderId: orderId),
@@ -444,29 +462,29 @@ Future<UserInfo?> get_order_driver_info({required int orderId}) async {
 
 UserInfo? _getDeliveryCompany(
     Query$get_driver_order$delivery_order_by_pk orderData) {
-  mezDbgPrint(
-      "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.service_provider_type.toString()}");
-  final cModels.ServiceProviderType serviceProviderType =
-      orderData.service_provider_type.toString().toServiceProviderType();
-  switch (serviceProviderType) {
-    case cModels.ServiceProviderType.DeliveryCompany:
-      return UserInfo(
-          hasuraId: orderData.delivery_company!.id,
-          name: orderData.delivery_company!.details!.name,
-          image: orderData.delivery_company!.details!.image);
-    case cModels.ServiceProviderType.Restaurant:
-      return UserInfo(
-          hasuraId: orderData.restaurant!.id,
-          name: orderData.restaurant!.details!.name,
-          image: orderData.restaurant!.details!.image);
-    case cModels.ServiceProviderType.Laundry:
-      return UserInfo(
-          hasuraId: orderData.laundry!.id,
-          name: orderData.laundry!.details!.name,
-          image: orderData.laundry!.details!.image);
+  // mezDbgPrint(
+  //     "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData.service_provider_type.toString()}");
+  // final cModels.ServiceProviderType serviceProviderType =
+  //     orderData.service_provider_type.toString().toServiceProviderType();
+  // switch (serviceProviderType) {
+  //   case cModels.ServiceProviderType.DeliveryCompany:
+  //     return UserInfo(
+  //         hasuraId: orderData.delivery_company!.id,
+  //         name: orderData.delivery_company!.details!.name,
+  //         image: orderData.delivery_company!.details!.image);
+  //   case cModels.ServiceProviderType.Restaurant:
+  //     return UserInfo(
+  //         hasuraId: orderData.restaurant!.id,
+  //         name: orderData.restaurant!.details!.name,
+  //         image: orderData.restaurant!.details!.image);
+  //   case cModels.ServiceProviderType.Laundry:
+  //     return UserInfo(
+  //         hasuraId: orderData.laundry!.id,
+  //         name: orderData.laundry!.details!.name,
+  //         image: orderData.laundry!.details!.image);
 
-    default:
-  }
+  //   default:
+  // }
   return null;
 }
 
@@ -518,7 +536,7 @@ Future<num?> fetch_delivery_orders_count(
   num? count;
   switch (serviceProviderType) {
     case cModels.ServiceProviderType.Laundry:
-      QueryResult<Query$getLaundryOrdersCount> res = await _hasuraDb
+      final QueryResult<Query$getLaundryOrdersCount> res = await _hasuraDb
           .graphQLClient
           .query$getLaundryOrdersCount(Options$Query$getLaundryOrdersCount(
               variables:
@@ -531,7 +549,7 @@ Future<num?> fetch_delivery_orders_count(
 
       break;
     case cModels.ServiceProviderType.Restaurant:
-      QueryResult<Query$getRestaurantOrdersCount> res =
+      final QueryResult<Query$getRestaurantOrdersCount> res =
           await _hasuraDb.graphQLClient.query$getRestaurantOrdersCount(
               Options$Query$getRestaurantOrdersCount(
                   variables: Variables$Query$getRestaurantOrdersCount(
@@ -544,7 +562,7 @@ Future<num?> fetch_delivery_orders_count(
 
       break;
     case cModels.ServiceProviderType.Customer:
-      QueryResult<Query$getCustomerDvOrdersCount> res =
+      final QueryResult<Query$getCustomerDvOrdersCount> res =
           await _hasuraDb.graphQLClient.query$getCustomerDvOrdersCount(
               Options$Query$getCustomerDvOrdersCount(
                   variables:
@@ -557,7 +575,7 @@ Future<num?> fetch_delivery_orders_count(
 
       break;
     case cModels.ServiceProviderType.DeliveryCompany:
-      QueryResult<Query$getCompanyOrdersCount> res = await _hasuraDb
+      final QueryResult<Query$getCompanyOrdersCount> res = await _hasuraDb
           .graphQLClient
           .query$getCompanyOrdersCount(Options$Query$getCompanyOrdersCount(
               variables:
@@ -570,7 +588,7 @@ Future<num?> fetch_delivery_orders_count(
 
       break;
     case cModels.ServiceProviderType.Customer:
-      QueryResult<Query$getCustomerDvOrdersCount> res =
+      final QueryResult<Query$getCustomerDvOrdersCount> res =
           await _hasuraDb.graphQLClient.query$getCustomerDvOrdersCount(
               Options$Query$getCustomerDvOrdersCount(
                   variables:

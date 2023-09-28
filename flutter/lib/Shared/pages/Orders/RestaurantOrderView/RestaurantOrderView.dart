@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/RestaurantApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -17,7 +16,6 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/components/ROpOrderItems.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/controller/RestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -99,7 +97,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   OrderMapWidget(
                       deliveryOrderId:
                           viewController.order.value!.deliveryOrderId!,
@@ -211,10 +209,10 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                       margin: EdgeInsets.only(top: 8),
                       contentPadding: const EdgeInsets.all(12),
                       content: Column(
-                        children: [
+                        children: <Widget>[
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                            children: <Widget>[
                               Text("${_i18n()['orderCost']}"),
                               Text(
                                 viewController
@@ -277,7 +275,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
   Column _restaurantCard(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
           "${_i18n()['restaurant']}",
           style: context.txt.bodyLarge,
@@ -342,7 +340,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
       margin: const EdgeInsets.only(bottom: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
             '${_i18n()["orderItems"]}',
             style: context.txt.bodyLarge,
@@ -359,69 +357,6 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                     )),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _getMapWidget() {
-    if (viewController.order.value!.inDeliveryPhase())
-      return Container(
-        height: 350,
-        margin: const EdgeInsets.only(bottom: 25),
-        child: MGoogleMap(
-          mGoogleMapController: viewController.mGoogleMapController,
-          padding: EdgeInsets.all(20),
-          rerenderDuration: Duration(seconds: 30),
-          recenterBtnBottomPadding: 20,
-        ),
-      );
-    else
-      return SizedBox();
-  }
-
-  Widget _getScheduleTime() {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 25),
-      child: Container(
-        margin: const EdgeInsets.all(8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 20,
-              child: Icon(
-                Icons.schedule_send,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Flexible(
-              flex: 8,
-              fit: FlexFit.tight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${_i18n()["schTitle"]}',
-                    style: context.txt.bodyLarge,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  if (viewController.order.value?.scheduleTime != null)
-                    Text(
-                      "${DateFormat("dd MMMM, hh:mm a ").format(viewController.order.value!.scheduleTime!.toLocal())}",
-                      style: context.txt.bodyMedium,
-                    ),
-                ],
-              ),
-            ),
-            Spacer(),
-          ],
-        ),
       ),
     );
   }

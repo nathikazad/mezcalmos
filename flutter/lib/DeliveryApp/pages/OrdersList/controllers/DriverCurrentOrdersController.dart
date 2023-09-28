@@ -6,9 +6,11 @@ import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/hsDeliveryMessage.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 
 class DriverCurrentOrdersController {
   //instances
@@ -18,6 +20,8 @@ class DriverCurrentOrdersController {
   // vars
   RxList<DeliveryMessage> currentOrders = <DeliveryMessage>[].obs;
   RxList<DeliveryMessage> openOrders = <DeliveryMessage>[].obs;
+  RxList<MinimalOrder> deliveryOpenOrders = <MinimalOrder>[].obs;
+  RxList<MinimalOrder> deliveryCurrentOrders = <MinimalOrder>[].obs;
 
   RxBool initalized = RxBool(false);
   int get driverId => opAuthController.driver!.deliveryDriverId;
@@ -35,11 +39,16 @@ class DriverCurrentOrdersController {
   Future<void> init() async {
     _isOnline.value = opAuthController.driver!.deliveryDriverState.online;
     await _initOrders();
+
     _listenOnOrders();
   }
 
   Future<void> _initOrders() async {
     try {
+      deliveryOpenOrders.value =
+          await get_open_driver_orders() ?? <MinimalOrder>[];
+      mezDbgPrint(
+          "DV OPEN ORDERS ===============>${deliveryOpenOrders.value.length}");
       openOrders.value = await getDvOpenMessages(withCache: false);
 
       currentOrders.value =
@@ -96,7 +105,7 @@ class DriverCurrentOrdersController {
   }
 
   Future<void> finishAllOrders() async {
-    List<String> numbers = currentOrders
+    final List<String> numbers = currentOrders
         .map((DeliveryMessage element) => element.phoneNumber)
         .toList();
     try {

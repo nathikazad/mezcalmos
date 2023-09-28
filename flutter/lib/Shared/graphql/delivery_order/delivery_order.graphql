@@ -45,6 +45,24 @@ query get_driver_order($orderId: Int!) {
       #   charges_enabled
       #   charge_fees_on_customer
       # }
+      items {
+        in_json
+        restaurant_item {
+          name {
+            translations {
+              language_id
+              value
+            }
+          }
+
+          id
+          image
+        }
+        cost_per_one
+        id
+        notes
+        quantity
+      }
       restaurant {
         id
         details {
@@ -207,7 +225,7 @@ subscription listen_on_driver_order_variables($orderId: Int!) {
     estimated_package_ready_time
     status
     package_ready
-    delivery_driver{
+    delivery_driver {
       user {
         id
         image
@@ -216,7 +234,6 @@ subscription listen_on_driver_order_variables($orderId: Int!) {
     }
   }
 }
-
 
 subscription listen_on_order_driver_location($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
@@ -670,5 +687,36 @@ subscription listen_driver_order_prices($orderId: Int!) {
     delivery_cost
     package_cost_comp
     # change_price_request
+  }
+}
+subscription listen_on_delivery_order_driver($orderId: Int!) {
+  delivery_order_by_pk(id: $orderId) {
+    delivery_driver_id
+    delivery_driver {
+      user {
+        name
+        image
+        id
+        phone
+      }
+    }
+  }
+}
+mutation updateDeliveryOrderDriverAndCost(
+  $orderId: Int!
+  $delivery_driver_id: Int!
+  $delivery_cost: money!
+) {
+  update_delivery_order(
+    where: { delivery_driver_id: { _is_null: true }, id: { _eq: $orderId } }
+    _set: {
+      delivery_driver_id: $delivery_driver_id
+      delivery_cost: $delivery_cost
+    }
+  ) {
+    affected_rows
+    returning {
+      delivery_driver_id
+    }
   }
 }

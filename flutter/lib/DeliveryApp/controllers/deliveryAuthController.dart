@@ -13,6 +13,7 @@ class DeliveryAuthController extends GetxController {
 
   DeliveryDriverState? get driverState => _driver.value?.deliveryDriverState;
   DeliveryDriver? get driver => _driver.value;
+  int? get driverId => _driver.value?.deliveryDriverId;
 
   Rxn<LocationData> _currentLocation = Rxn<LocationData>();
 

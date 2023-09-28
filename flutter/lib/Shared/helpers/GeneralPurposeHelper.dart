@@ -35,7 +35,8 @@ class MezFormatter {
 
 extension ParseGeography on Geography {
   LocationData toLocationData() {
-    return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
+    return LocationData.fromMap(
+        <String, dynamic>{"latitude": latitude, "longitude": longitude});
   }
 
   LatLng toLatLng() {
@@ -209,7 +210,7 @@ Future showConfirmationDialog(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Container(
                   height: 55,
                   width: 55,
@@ -236,7 +237,7 @@ Future showConfirmationDialog(
                 ),
                 helperText != ""
                     ? Column(
-                        children: [
+                        children: <Widget>[
                           SizedBox(height: 8),
                           Text(
                             helperText ??
@@ -350,7 +351,7 @@ Future<void> showNormalDialog(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 Container(
                   height: 55,
                   width: 55,
@@ -416,13 +417,13 @@ Future<void> showStatusInfoDialog(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: <Widget>[
               SizedBox(
                 height: 10,
               ),
               Stack(
                 clipBehavior: Clip.none,
-                children: [
+                children: <Widget>[
                   Container(
                     height: 66,
                     width: 66,
@@ -502,7 +503,7 @@ Future<void> showStatusInfoDialog(
               if (secondaryCallBack != null)
                 Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: <Widget>[
                     SizedBox(
                       height: 4,
                     ),
@@ -559,7 +560,7 @@ Future<int?> addReviewDialog(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: <Widget>[
               Container(
                 decoration: BoxDecoration(
                     color: primaryBlueColor, shape: BoxShape.circle),
@@ -692,25 +693,31 @@ void showMezSheet({
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
     ),
-    builder: (BuildContext context) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (title != null) ...[
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-              child: Text(
-                title,
-                style: context.textTheme.bodyLarge,
-                textAlign: TextAlign.center,
+    builder: (BuildContext ctx) {
+      return Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            if (title != null) ...<Widget>[
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                child: Text(
+                  title,
+                  style: context.textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            Divider(),
+              Divider(),
+            ],
+            meduimSeperator,
+            Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: content),
+            bigSeperator,
           ],
-          content,
-          smallSepartor
-        ],
+        ),
       );
     },
   );
@@ -850,7 +857,7 @@ void showLoadingOverlay({String text = "Loading"}) {
       toastBuilder: (_) => Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 CircularProgressIndicator(
                   color: primaryBlueColor,
                 ),
@@ -916,7 +923,7 @@ Future<bool> callWhatsappNumber(String number, {String? message}) async {
     final Uri launchUri = Uri(
       scheme: 'https',
       path: 'web.whatsapp.com/send',
-      queryParameters: {
+      queryParameters: <String, dynamic>{
         'phone': number,
         'text': encodedMessage,
       },
@@ -940,10 +947,10 @@ Future<bool> callWhatsappNumber(String number, {String? message}) async {
 Future<String> getShortLink(String longUrl) async {
   final http.Response response = await http.post(
     Uri.parse('https://cleanuri.com/api/v1/shorten'),
-    headers: {
+    headers: <String, String>{
       'Content-Type': 'application/json',
     },
-    body: jsonEncode({'url': longUrl}),
+    body: jsonEncode(<String, String>{'url': longUrl}),
   );
   if (response.statusCode == 200) {
     final Map<String, dynamic> responseData = json.decode(response.body);

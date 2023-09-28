@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/components/DvConvoCard.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
+import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -61,6 +63,34 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Obx(() {
+              if (viewController.deliveryOpenOrders.isNotEmpty) {
+                return Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("Delivery orders"),
+                        Column(
+                          children: List.generate(
+                              viewController.deliveryOpenOrders.length,
+                              (int index) {
+                            return MinimalOrderCard(
+                                order: viewController.deliveryOpenOrders[index],
+                                onTap: () {
+                                  DvOrderView.navigate(
+                                      orderId: viewController
+                                          .deliveryOpenOrders[index].id);
+                                });
+                          }),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              } else
+                return SizedBox();
+            }),
             Obx(
               () => SwitchListTile.adaptive(
                   title: Text(
