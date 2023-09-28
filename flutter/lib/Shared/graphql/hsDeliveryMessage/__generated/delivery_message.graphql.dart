@@ -441,13 +441,6 @@ const documentNodeQueryGetPastDeliveryMessages = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'user_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'responded_time'),
             alias: null,
             arguments: [],
@@ -618,7 +611,6 @@ class Query$GetPastDeliveryMessages$delivery_messages {
     this.driver_id,
     required this.received_time,
     this.finished_time,
-    this.user_id,
     this.responded_time,
     this.customer,
     required this.$__typename,
@@ -632,7 +624,6 @@ class Query$GetPastDeliveryMessages$delivery_messages {
     final l$driver_id = json['driver_id'];
     final l$received_time = json['received_time'];
     final l$finished_time = json['finished_time'];
-    final l$user_id = json['user_id'];
     final l$responded_time = json['responded_time'];
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
@@ -643,7 +634,6 @@ class Query$GetPastDeliveryMessages$delivery_messages {
       driver_id: (l$driver_id as int?),
       received_time: (l$received_time as String),
       finished_time: (l$finished_time as String?),
-      user_id: (l$user_id as int?),
       responded_time: (l$responded_time as String?),
       customer: l$customer == null
           ? null
@@ -665,8 +655,6 @@ class Query$GetPastDeliveryMessages$delivery_messages {
 
   final String? finished_time;
 
-  final int? user_id;
-
   final String? responded_time;
 
   final Query$GetPastDeliveryMessages$delivery_messages$customer? customer;
@@ -687,8 +675,6 @@ class Query$GetPastDeliveryMessages$delivery_messages {
     _resultData['received_time'] = l$received_time;
     final l$finished_time = finished_time;
     _resultData['finished_time'] = l$finished_time;
-    final l$user_id = user_id;
-    _resultData['user_id'] = l$user_id;
     final l$responded_time = responded_time;
     _resultData['responded_time'] = l$responded_time;
     final l$customer = customer;
@@ -706,7 +692,6 @@ class Query$GetPastDeliveryMessages$delivery_messages {
     final l$driver_id = driver_id;
     final l$received_time = received_time;
     final l$finished_time = finished_time;
-    final l$user_id = user_id;
     final l$responded_time = responded_time;
     final l$customer = customer;
     final l$$__typename = $__typename;
@@ -717,7 +702,6 @@ class Query$GetPastDeliveryMessages$delivery_messages {
       l$driver_id,
       l$received_time,
       l$finished_time,
-      l$user_id,
       l$responded_time,
       l$customer,
       l$$__typename,
@@ -761,11 +745,6 @@ class Query$GetPastDeliveryMessages$delivery_messages {
     final l$finished_time = finished_time;
     final lOther$finished_time = other.finished_time;
     if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$user_id = user_id;
-    final lOther$user_id = other.user_id;
-    if (l$user_id != lOther$user_id) {
       return false;
     }
     final l$responded_time = responded_time;
@@ -814,7 +793,6 @@ abstract class CopyWith$Query$GetPastDeliveryMessages$delivery_messages<TRes> {
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
     Query$GetPastDeliveryMessages$delivery_messages$customer? customer,
     String? $__typename,
@@ -843,7 +821,6 @@ class _CopyWithImpl$Query$GetPastDeliveryMessages$delivery_messages<TRes>
     Object? driver_id = _undefined,
     Object? received_time = _undefined,
     Object? finished_time = _undefined,
-    Object? user_id = _undefined,
     Object? responded_time = _undefined,
     Object? customer = _undefined,
     Object? $__typename = _undefined,
@@ -864,7 +841,6 @@ class _CopyWithImpl$Query$GetPastDeliveryMessages$delivery_messages<TRes>
         finished_time: finished_time == _undefined
             ? _instance.finished_time
             : (finished_time as String?),
-        user_id: user_id == _undefined ? _instance.user_id : (user_id as int?),
         responded_time: responded_time == _undefined
             ? _instance.responded_time
             : (responded_time as String?),
@@ -900,7 +876,6 @@ class _CopyWithStubImpl$Query$GetPastDeliveryMessages$delivery_messages<TRes>
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
     Query$GetPastDeliveryMessages$delivery_messages$customer? customer,
     String? $__typename,
@@ -1435,13 +1410,6 @@ const documentNodeQueryGetCurrentDeliveryMessages = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'user_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'responded_time'),
             alias: null,
             arguments: [],
@@ -1612,7 +1580,6 @@ class Query$GetCurrentDeliveryMessages$delivery_messages {
     this.driver_id,
     required this.received_time,
     this.finished_time,
-    this.user_id,
     this.responded_time,
     this.customer,
     required this.$__typename,
@@ -1626,7 +1593,6 @@ class Query$GetCurrentDeliveryMessages$delivery_messages {
     final l$driver_id = json['driver_id'];
     final l$received_time = json['received_time'];
     final l$finished_time = json['finished_time'];
-    final l$user_id = json['user_id'];
     final l$responded_time = json['responded_time'];
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
@@ -1637,7 +1603,6 @@ class Query$GetCurrentDeliveryMessages$delivery_messages {
       driver_id: (l$driver_id as int?),
       received_time: (l$received_time as String),
       finished_time: (l$finished_time as String?),
-      user_id: (l$user_id as int?),
       responded_time: (l$responded_time as String?),
       customer: l$customer == null
           ? null
@@ -1659,8 +1624,6 @@ class Query$GetCurrentDeliveryMessages$delivery_messages {
 
   final String? finished_time;
 
-  final int? user_id;
-
   final String? responded_time;
 
   final Query$GetCurrentDeliveryMessages$delivery_messages$customer? customer;
@@ -1681,8 +1644,6 @@ class Query$GetCurrentDeliveryMessages$delivery_messages {
     _resultData['received_time'] = l$received_time;
     final l$finished_time = finished_time;
     _resultData['finished_time'] = l$finished_time;
-    final l$user_id = user_id;
-    _resultData['user_id'] = l$user_id;
     final l$responded_time = responded_time;
     _resultData['responded_time'] = l$responded_time;
     final l$customer = customer;
@@ -1700,7 +1661,6 @@ class Query$GetCurrentDeliveryMessages$delivery_messages {
     final l$driver_id = driver_id;
     final l$received_time = received_time;
     final l$finished_time = finished_time;
-    final l$user_id = user_id;
     final l$responded_time = responded_time;
     final l$customer = customer;
     final l$$__typename = $__typename;
@@ -1711,7 +1671,6 @@ class Query$GetCurrentDeliveryMessages$delivery_messages {
       l$driver_id,
       l$received_time,
       l$finished_time,
-      l$user_id,
       l$responded_time,
       l$customer,
       l$$__typename,
@@ -1755,11 +1714,6 @@ class Query$GetCurrentDeliveryMessages$delivery_messages {
     final l$finished_time = finished_time;
     final lOther$finished_time = other.finished_time;
     if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$user_id = user_id;
-    final lOther$user_id = other.user_id;
-    if (l$user_id != lOther$user_id) {
       return false;
     }
     final l$responded_time = responded_time;
@@ -1810,7 +1764,6 @@ abstract class CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages<
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
     Query$GetCurrentDeliveryMessages$delivery_messages$customer? customer,
     String? $__typename,
@@ -1840,7 +1793,6 @@ class _CopyWithImpl$Query$GetCurrentDeliveryMessages$delivery_messages<TRes>
     Object? driver_id = _undefined,
     Object? received_time = _undefined,
     Object? finished_time = _undefined,
-    Object? user_id = _undefined,
     Object? responded_time = _undefined,
     Object? customer = _undefined,
     Object? $__typename = _undefined,
@@ -1861,7 +1813,6 @@ class _CopyWithImpl$Query$GetCurrentDeliveryMessages$delivery_messages<TRes>
         finished_time: finished_time == _undefined
             ? _instance.finished_time
             : (finished_time as String?),
-        user_id: user_id == _undefined ? _instance.user_id : (user_id as int?),
         responded_time: responded_time == _undefined
             ? _instance.responded_time
             : (responded_time as String?),
@@ -1899,7 +1850,6 @@ class _CopyWithStubImpl$Query$GetCurrentDeliveryMessages$delivery_messages<TRes>
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
     Query$GetCurrentDeliveryMessages$delivery_messages$customer? customer,
     String? $__typename,
@@ -2432,13 +2382,6 @@ const documentNodeSubscriptionlistenCurrentDeliveryMessages =
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'user_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'responded_time'),
             alias: null,
             arguments: [],
@@ -2488,6 +2431,13 @@ const documentNodeSubscriptionlistenCurrentDeliveryMessages =
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
                     name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -2616,7 +2566,6 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages {
     this.driver_id,
     required this.received_time,
     this.finished_time,
-    this.user_id,
     this.responded_time,
     this.customer,
     this.driver,
@@ -2631,7 +2580,6 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages {
     final l$driver_id = json['driver_id'];
     final l$received_time = json['received_time'];
     final l$finished_time = json['finished_time'];
-    final l$user_id = json['user_id'];
     final l$responded_time = json['responded_time'];
     final l$customer = json['customer'];
     final l$driver = json['driver'];
@@ -2643,7 +2591,6 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages {
       driver_id: (l$driver_id as int?),
       received_time: (l$received_time as String),
       finished_time: (l$finished_time as String?),
-      user_id: (l$user_id as int?),
       responded_time: (l$responded_time as String?),
       customer: l$customer == null
           ? null
@@ -2669,8 +2616,6 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages {
 
   final String? finished_time;
 
-  final int? user_id;
-
   final String? responded_time;
 
   final Subscription$listenCurrentDeliveryMessages$delivery_messages$customer?
@@ -2695,8 +2640,6 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages {
     _resultData['received_time'] = l$received_time;
     final l$finished_time = finished_time;
     _resultData['finished_time'] = l$finished_time;
-    final l$user_id = user_id;
-    _resultData['user_id'] = l$user_id;
     final l$responded_time = responded_time;
     _resultData['responded_time'] = l$responded_time;
     final l$customer = customer;
@@ -2716,7 +2659,6 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages {
     final l$driver_id = driver_id;
     final l$received_time = received_time;
     final l$finished_time = finished_time;
-    final l$user_id = user_id;
     final l$responded_time = responded_time;
     final l$customer = customer;
     final l$driver = driver;
@@ -2728,7 +2670,6 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages {
       l$driver_id,
       l$received_time,
       l$finished_time,
-      l$user_id,
       l$responded_time,
       l$customer,
       l$driver,
@@ -2774,11 +2715,6 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages {
     final l$finished_time = finished_time;
     final lOther$finished_time = other.finished_time;
     if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$user_id = user_id;
-    final lOther$user_id = other.user_id;
-    if (l$user_id != lOther$user_id) {
       return false;
     }
     final l$responded_time = responded_time;
@@ -2835,7 +2771,6 @@ abstract class CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_mess
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
     Subscription$listenCurrentDeliveryMessages$delivery_messages$customer?
         customer,
@@ -2872,7 +2807,6 @@ class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages
     Object? driver_id = _undefined,
     Object? received_time = _undefined,
     Object? finished_time = _undefined,
-    Object? user_id = _undefined,
     Object? responded_time = _undefined,
     Object? customer = _undefined,
     Object? driver = _undefined,
@@ -2894,7 +2828,6 @@ class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages
         finished_time: finished_time == _undefined
             ? _instance.finished_time
             : (finished_time as String?),
-        user_id: user_id == _undefined ? _instance.user_id : (user_id as int?),
         responded_time: responded_time == _undefined
             ? _instance.responded_time
             : (responded_time as String?),
@@ -2948,7 +2881,6 @@ class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_mess
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
     Subscription$listenCurrentDeliveryMessages$delivery_messages$customer?
         customer,
@@ -3295,20 +3227,25 @@ class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_mess
 class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
   Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user({
     this.name,
+    this.phone,
     required this.$__typename,
   });
 
   factory Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
+    final l$phone = json['phone'];
     final l$$__typename = json['__typename'];
     return Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
       name: (l$name as String?),
+      phone: (l$phone as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final String? name;
+
+  final String? phone;
 
   final String $__typename;
 
@@ -3316,6 +3253,8 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
     final _resultData = <String, dynamic>{};
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3324,9 +3263,11 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
   @override
   int get hashCode {
     final l$name = name;
+    final l$phone = phone;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$name,
+      l$phone,
       l$$__typename,
     ]);
   }
@@ -3344,6 +3285,11 @@ class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3382,6 +3328,7 @@ abstract class CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_mess
 
   TRes call({
     String? name,
+    String? phone,
     String? $__typename,
   });
 }
@@ -3407,11 +3354,13 @@ class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages
 
   TRes call({
     Object? name = _undefined,
+    Object? phone = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
         name: name == _undefined ? _instance.name : (name as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3430,6 +3379,7 @@ class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_mess
 
   call({
     String? name,
+    String? phone,
     String? $__typename,
   }) =>
       _res;
@@ -3437,31 +3387,35 @@ class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_mess
 
 class Query$GetOpenDeliveryMessages {
   Query$GetOpenDeliveryMessages({
-    required this.delivery_messages,
+    required this.delivery_open_delivery_messages,
     required this.$__typename,
   });
 
   factory Query$GetOpenDeliveryMessages.fromJson(Map<String, dynamic> json) {
-    final l$delivery_messages = json['delivery_messages'];
+    final l$delivery_open_delivery_messages =
+        json['delivery_open_delivery_messages'];
     final l$$__typename = json['__typename'];
     return Query$GetOpenDeliveryMessages(
-      delivery_messages: (l$delivery_messages as List<dynamic>)
-          .map((e) => Query$GetOpenDeliveryMessages$delivery_messages.fromJson(
-              (e as Map<String, dynamic>)))
-          .toList(),
+      delivery_open_delivery_messages:
+          (l$delivery_open_delivery_messages as List<dynamic>)
+              .map((e) =>
+                  Query$GetOpenDeliveryMessages$delivery_open_delivery_messages
+                      .fromJson((e as Map<String, dynamic>)))
+              .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$GetOpenDeliveryMessages$delivery_messages> delivery_messages;
+  final List<Query$GetOpenDeliveryMessages$delivery_open_delivery_messages>
+      delivery_open_delivery_messages;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$delivery_messages = delivery_messages;
-    _resultData['delivery_messages'] =
-        l$delivery_messages.map((e) => e.toJson()).toList();
+    final l$delivery_open_delivery_messages = delivery_open_delivery_messages;
+    _resultData['delivery_open_delivery_messages'] =
+        l$delivery_open_delivery_messages.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3469,10 +3423,10 @@ class Query$GetOpenDeliveryMessages {
 
   @override
   int get hashCode {
-    final l$delivery_messages = delivery_messages;
+    final l$delivery_open_delivery_messages = delivery_open_delivery_messages;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$delivery_messages.map((v) => v)),
+      Object.hashAll(l$delivery_open_delivery_messages.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -3486,15 +3440,20 @@ class Query$GetOpenDeliveryMessages {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$delivery_messages = delivery_messages;
-    final lOther$delivery_messages = other.delivery_messages;
-    if (l$delivery_messages.length != lOther$delivery_messages.length) {
+    final l$delivery_open_delivery_messages = delivery_open_delivery_messages;
+    final lOther$delivery_open_delivery_messages =
+        other.delivery_open_delivery_messages;
+    if (l$delivery_open_delivery_messages.length !=
+        lOther$delivery_open_delivery_messages.length) {
       return false;
     }
-    for (int i = 0; i < l$delivery_messages.length; i++) {
-      final l$delivery_messages$entry = l$delivery_messages[i];
-      final lOther$delivery_messages$entry = lOther$delivery_messages[i];
-      if (l$delivery_messages$entry != lOther$delivery_messages$entry) {
+    for (int i = 0; i < l$delivery_open_delivery_messages.length; i++) {
+      final l$delivery_open_delivery_messages$entry =
+          l$delivery_open_delivery_messages[i];
+      final lOther$delivery_open_delivery_messages$entry =
+          lOther$delivery_open_delivery_messages[i];
+      if (l$delivery_open_delivery_messages$entry !=
+          lOther$delivery_open_delivery_messages$entry) {
         return false;
       }
     }
@@ -3526,14 +3485,15 @@ abstract class CopyWith$Query$GetOpenDeliveryMessages<TRes> {
       _CopyWithStubImpl$Query$GetOpenDeliveryMessages;
 
   TRes call({
-    List<Query$GetOpenDeliveryMessages$delivery_messages>? delivery_messages,
+    List<Query$GetOpenDeliveryMessages$delivery_open_delivery_messages>?
+        delivery_open_delivery_messages,
     String? $__typename,
   });
-  TRes delivery_messages(
-      Iterable<Query$GetOpenDeliveryMessages$delivery_messages> Function(
+  TRes delivery_open_delivery_messages(
+      Iterable<Query$GetOpenDeliveryMessages$delivery_open_delivery_messages> Function(
               Iterable<
-                  CopyWith$Query$GetOpenDeliveryMessages$delivery_messages<
-                      Query$GetOpenDeliveryMessages$delivery_messages>>)
+                  CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages<
+                      Query$GetOpenDeliveryMessages$delivery_open_delivery_messages>>)
           _fn);
 }
 
@@ -3551,28 +3511,30 @@ class _CopyWithImpl$Query$GetOpenDeliveryMessages<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? delivery_messages = _undefined,
+    Object? delivery_open_delivery_messages = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$GetOpenDeliveryMessages(
-        delivery_messages:
-            delivery_messages == _undefined || delivery_messages == null
-                ? _instance.delivery_messages
-                : (delivery_messages
-                    as List<Query$GetOpenDeliveryMessages$delivery_messages>),
+        delivery_open_delivery_messages: delivery_open_delivery_messages ==
+                    _undefined ||
+                delivery_open_delivery_messages == null
+            ? _instance.delivery_open_delivery_messages
+            : (delivery_open_delivery_messages as List<
+                Query$GetOpenDeliveryMessages$delivery_open_delivery_messages>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes delivery_messages(
-          Iterable<Query$GetOpenDeliveryMessages$delivery_messages> Function(
+  TRes delivery_open_delivery_messages(
+          Iterable<Query$GetOpenDeliveryMessages$delivery_open_delivery_messages> Function(
                   Iterable<
-                      CopyWith$Query$GetOpenDeliveryMessages$delivery_messages<
-                          Query$GetOpenDeliveryMessages$delivery_messages>>)
+                      CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages<
+                          Query$GetOpenDeliveryMessages$delivery_open_delivery_messages>>)
               _fn) =>
       call(
-          delivery_messages: _fn(_instance.delivery_messages.map(
-              (e) => CopyWith$Query$GetOpenDeliveryMessages$delivery_messages(
+          delivery_open_delivery_messages: _fn(
+              _instance.delivery_open_delivery_messages.map((e) =>
+                  CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages(
                     e,
                     (i) => i,
                   ))).toList());
@@ -3585,11 +3547,12 @@ class _CopyWithStubImpl$Query$GetOpenDeliveryMessages<TRes>
   TRes _res;
 
   call({
-    List<Query$GetOpenDeliveryMessages$delivery_messages>? delivery_messages,
+    List<Query$GetOpenDeliveryMessages$delivery_open_delivery_messages>?
+        delivery_open_delivery_messages,
     String? $__typename,
   }) =>
       _res;
-  delivery_messages(_fn) => _res;
+  delivery_open_delivery_messages(_fn) => _res;
 }
 
 const documentNodeQueryGetOpenDeliveryMessages = DocumentNode(definitions: [
@@ -3600,27 +3563,13 @@ const documentNodeQueryGetOpenDeliveryMessages = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'delivery_messages'),
+        name: NameNode(value: 'delivery_open_delivery_messages'),
         alias: null,
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'distinct_on'),
             value: EnumValueNode(name: NameNode(value: 'phone_number')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'where'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'responded_time'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_is_null'),
-                    value: BooleanValueNode(value: true),
-                  )
-                ]),
-              )
-            ]),
-          ),
+          )
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -3661,13 +3610,6 @@ const documentNodeQueryGetOpenDeliveryMessages = DocumentNode(definitions: [
           ),
           FieldNode(
             name: NameNode(value: 'finished_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'user_id'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3823,21 +3765,20 @@ extension ClientExtension$Query$GetOpenDeliveryMessages
   }
 }
 
-class Query$GetOpenDeliveryMessages$delivery_messages {
-  Query$GetOpenDeliveryMessages$delivery_messages({
-    required this.id,
-    required this.entry,
-    required this.phone_number,
+class Query$GetOpenDeliveryMessages$delivery_open_delivery_messages {
+  Query$GetOpenDeliveryMessages$delivery_open_delivery_messages({
+    this.id,
+    this.entry,
+    this.phone_number,
     this.driver_id,
-    required this.received_time,
+    this.received_time,
     this.finished_time,
-    this.user_id,
     this.responded_time,
     this.customer,
     required this.$__typename,
   });
 
-  factory Query$GetOpenDeliveryMessages$delivery_messages.fromJson(
+  factory Query$GetOpenDeliveryMessages$delivery_open_delivery_messages.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$entry = json['entry'];
@@ -3845,44 +3786,41 @@ class Query$GetOpenDeliveryMessages$delivery_messages {
     final l$driver_id = json['driver_id'];
     final l$received_time = json['received_time'];
     final l$finished_time = json['finished_time'];
-    final l$user_id = json['user_id'];
     final l$responded_time = json['responded_time'];
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
-    return Query$GetOpenDeliveryMessages$delivery_messages(
-      id: (l$id as int),
-      entry: mapFromJson(l$entry),
-      phone_number: (l$phone_number as String),
+    return Query$GetOpenDeliveryMessages$delivery_open_delivery_messages(
+      id: (l$id as int?),
+      entry: l$entry == null ? null : mapFromJson(l$entry),
+      phone_number: (l$phone_number as String?),
       driver_id: (l$driver_id as int?),
-      received_time: (l$received_time as String),
+      received_time: (l$received_time as String?),
       finished_time: (l$finished_time as String?),
-      user_id: (l$user_id as int?),
       responded_time: (l$responded_time as String?),
       customer: l$customer == null
           ? null
-          : Query$GetOpenDeliveryMessages$delivery_messages$customer.fromJson(
-              (l$customer as Map<String, dynamic>)),
+          : Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer
+              .fromJson((l$customer as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final int id;
+  final int? id;
 
-  final dynamic entry;
+  final dynamic? entry;
 
-  final String phone_number;
+  final String? phone_number;
 
   final int? driver_id;
 
-  final String received_time;
+  final String? received_time;
 
   final String? finished_time;
 
-  final int? user_id;
-
   final String? responded_time;
 
-  final Query$GetOpenDeliveryMessages$delivery_messages$customer? customer;
+  final Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer?
+      customer;
 
   final String $__typename;
 
@@ -3891,7 +3829,7 @@ class Query$GetOpenDeliveryMessages$delivery_messages {
     final l$id = id;
     _resultData['id'] = l$id;
     final l$entry = entry;
-    _resultData['entry'] = mapToJson(l$entry);
+    _resultData['entry'] = l$entry == null ? null : mapToJson(l$entry);
     final l$phone_number = phone_number;
     _resultData['phone_number'] = l$phone_number;
     final l$driver_id = driver_id;
@@ -3900,8 +3838,6 @@ class Query$GetOpenDeliveryMessages$delivery_messages {
     _resultData['received_time'] = l$received_time;
     final l$finished_time = finished_time;
     _resultData['finished_time'] = l$finished_time;
-    final l$user_id = user_id;
-    _resultData['user_id'] = l$user_id;
     final l$responded_time = responded_time;
     _resultData['responded_time'] = l$responded_time;
     final l$customer = customer;
@@ -3919,7 +3855,6 @@ class Query$GetOpenDeliveryMessages$delivery_messages {
     final l$driver_id = driver_id;
     final l$received_time = received_time;
     final l$finished_time = finished_time;
-    final l$user_id = user_id;
     final l$responded_time = responded_time;
     final l$customer = customer;
     final l$$__typename = $__typename;
@@ -3930,7 +3865,6 @@ class Query$GetOpenDeliveryMessages$delivery_messages {
       l$driver_id,
       l$received_time,
       l$finished_time,
-      l$user_id,
       l$responded_time,
       l$customer,
       l$$__typename,
@@ -3942,7 +3876,8 @@ class Query$GetOpenDeliveryMessages$delivery_messages {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$GetOpenDeliveryMessages$delivery_messages) ||
+    if (!(other
+            is Query$GetOpenDeliveryMessages$delivery_open_delivery_messages) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3976,11 +3911,6 @@ class Query$GetOpenDeliveryMessages$delivery_messages {
     if (l$finished_time != lOther$finished_time) {
       return false;
     }
-    final l$user_id = user_id;
-    final lOther$user_id = other.user_id;
-    if (l$user_id != lOther$user_id) {
-      return false;
-    }
     final l$responded_time = responded_time;
     final lOther$responded_time = other.responded_time;
     if (l$responded_time != lOther$responded_time) {
@@ -4000,25 +3930,28 @@ class Query$GetOpenDeliveryMessages$delivery_messages {
   }
 }
 
-extension UtilityExtension$Query$GetOpenDeliveryMessages$delivery_messages
-    on Query$GetOpenDeliveryMessages$delivery_messages {
-  CopyWith$Query$GetOpenDeliveryMessages$delivery_messages<
-          Query$GetOpenDeliveryMessages$delivery_messages>
-      get copyWith => CopyWith$Query$GetOpenDeliveryMessages$delivery_messages(
+extension UtilityExtension$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages
+    on Query$GetOpenDeliveryMessages$delivery_open_delivery_messages {
+  CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages<
+          Query$GetOpenDeliveryMessages$delivery_open_delivery_messages>
+      get copyWith =>
+          CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$GetOpenDeliveryMessages$delivery_messages<TRes> {
-  factory CopyWith$Query$GetOpenDeliveryMessages$delivery_messages(
-    Query$GetOpenDeliveryMessages$delivery_messages instance,
-    TRes Function(Query$GetOpenDeliveryMessages$delivery_messages) then,
-  ) = _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages;
+abstract class CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages<
+    TRes> {
+  factory CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages(
+    Query$GetOpenDeliveryMessages$delivery_open_delivery_messages instance,
+    TRes Function(Query$GetOpenDeliveryMessages$delivery_open_delivery_messages)
+        then,
+  ) = _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages;
 
-  factory CopyWith$Query$GetOpenDeliveryMessages$delivery_messages.stub(
+  factory CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_messages;
+      _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages;
 
   TRes call({
     int? id,
@@ -4027,25 +3960,29 @@ abstract class CopyWith$Query$GetOpenDeliveryMessages$delivery_messages<TRes> {
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
-    Query$GetOpenDeliveryMessages$delivery_messages$customer? customer,
+    Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer?
+        customer,
     String? $__typename,
   });
-  CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer<TRes>
-      get customer;
+  CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
+      TRes> get customer;
 }
 
-class _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages<TRes>
-    implements CopyWith$Query$GetOpenDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages(
+class _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages<
+        TRes>
+    implements
+        CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages<
+            TRes> {
+  _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages(
     this._instance,
     this._then,
   );
 
-  final Query$GetOpenDeliveryMessages$delivery_messages _instance;
+  final Query$GetOpenDeliveryMessages$delivery_open_delivery_messages _instance;
 
-  final TRes Function(Query$GetOpenDeliveryMessages$delivery_messages) _then;
+  final TRes Function(
+      Query$GetOpenDeliveryMessages$delivery_open_delivery_messages) _then;
 
   static const _undefined = {};
 
@@ -4056,53 +3993,53 @@ class _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages<TRes>
     Object? driver_id = _undefined,
     Object? received_time = _undefined,
     Object? finished_time = _undefined,
-    Object? user_id = _undefined,
     Object? responded_time = _undefined,
     Object? customer = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$GetOpenDeliveryMessages$delivery_messages(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        entry: entry == _undefined || entry == null
-            ? _instance.entry
-            : (entry as dynamic),
-        phone_number: phone_number == _undefined || phone_number == null
+      _then(Query$GetOpenDeliveryMessages$delivery_open_delivery_messages(
+        id: id == _undefined ? _instance.id : (id as int?),
+        entry: entry == _undefined ? _instance.entry : (entry as dynamic?),
+        phone_number: phone_number == _undefined
             ? _instance.phone_number
-            : (phone_number as String),
+            : (phone_number as String?),
         driver_id:
             driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
-        received_time: received_time == _undefined || received_time == null
+        received_time: received_time == _undefined
             ? _instance.received_time
-            : (received_time as String),
+            : (received_time as String?),
         finished_time: finished_time == _undefined
             ? _instance.finished_time
             : (finished_time as String?),
-        user_id: user_id == _undefined ? _instance.user_id : (user_id as int?),
         responded_time: responded_time == _undefined
             ? _instance.responded_time
             : (responded_time as String?),
         customer: customer == _undefined
             ? _instance.customer
             : (customer
-                as Query$GetOpenDeliveryMessages$delivery_messages$customer?),
+                as Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer<TRes>
-      get customer {
+  CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
+      TRes> get customer {
     final local$customer = _instance.customer;
     return local$customer == null
-        ? CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer
+        ? CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer
             .stub(_then(_instance))
-        : CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer(
+        : CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer(
             local$customer, (e) => call(customer: e));
   }
 }
 
-class _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_messages<TRes>
-    implements CopyWith$Query$GetOpenDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_messages(this._res);
+class _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages<
+        TRes>
+    implements
+        CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages<
+            TRes> {
+  _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages(
+      this._res);
 
   TRes _res;
 
@@ -4113,31 +4050,32 @@ class _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_messages<TRes>
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
-    Query$GetOpenDeliveryMessages$delivery_messages$customer? customer,
+    Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer?
+        customer,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer<TRes>
+  CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
+          TRes>
       get customer =>
-          CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer
+          CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer
               .stub(_res);
 }
 
-class Query$GetOpenDeliveryMessages$delivery_messages$customer {
-  Query$GetOpenDeliveryMessages$delivery_messages$customer({
+class Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer {
+  Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer({
     this.name,
     this.image,
     required this.$__typename,
   });
 
-  factory Query$GetOpenDeliveryMessages$delivery_messages$customer.fromJson(
+  factory Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
-    return Query$GetOpenDeliveryMessages$delivery_messages$customer(
+    return Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer(
       name: (l$name as String?),
       image: (l$image as String?),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4178,7 +4116,8 @@ class Query$GetOpenDeliveryMessages$delivery_messages$customer {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$GetOpenDeliveryMessages$delivery_messages$customer) ||
+    if (!(other
+            is Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4201,28 +4140,30 @@ class Query$GetOpenDeliveryMessages$delivery_messages$customer {
   }
 }
 
-extension UtilityExtension$Query$GetOpenDeliveryMessages$delivery_messages$customer
-    on Query$GetOpenDeliveryMessages$delivery_messages$customer {
-  CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer<
-          Query$GetOpenDeliveryMessages$delivery_messages$customer>
+extension UtilityExtension$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer
+    on Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer {
+  CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
+          Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer>
       get copyWith =>
-          CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer(
+          CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer<
+abstract class CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
     TRes> {
-  factory CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer(
-    Query$GetOpenDeliveryMessages$delivery_messages$customer instance,
-    TRes Function(Query$GetOpenDeliveryMessages$delivery_messages$customer)
+  factory CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer(
+    Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer
+        instance,
+    TRes Function(
+            Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer)
         then,
-  ) = _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer;
+  ) = _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer;
 
-  factory CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer.stub(
+  factory CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer;
+      _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer;
 
   TRes call({
     String? name,
@@ -4231,19 +4172,21 @@ abstract class CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer
   });
 }
 
-class _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer<
+class _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
         TRes>
     implements
-        CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer<
+        CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
             TRes> {
-  _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer(
+  _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer(
     this._instance,
     this._then,
   );
 
-  final Query$GetOpenDeliveryMessages$delivery_messages$customer _instance;
+  final Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer
+      _instance;
 
-  final TRes Function(Query$GetOpenDeliveryMessages$delivery_messages$customer)
+  final TRes Function(
+          Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer)
       _then;
 
   static const _undefined = {};
@@ -4253,7 +4196,8 @@ class _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer<
     Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$GetOpenDeliveryMessages$delivery_messages$customer(
+      _then(
+          Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer(
         name: name == _undefined ? _instance.name : (name as String?),
         image: image == _undefined ? _instance.image : (image as String?),
         $__typename: $__typename == _undefined || $__typename == null
@@ -4262,12 +4206,12 @@ class _CopyWithImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer<
       ));
 }
 
-class _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer<
+class _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
         TRes>
     implements
-        CopyWith$Query$GetOpenDeliveryMessages$delivery_messages$customer<
+        CopyWith$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer<
             TRes> {
-  _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer(
+  _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_open_delivery_messages$customer(
       this._res);
 
   TRes _res;
@@ -4282,33 +4226,37 @@ class _CopyWithStubImpl$Query$GetOpenDeliveryMessages$delivery_messages$customer
 
 class Subscription$ListenOpenDeliveryMessages {
   Subscription$ListenOpenDeliveryMessages({
-    required this.delivery_messages,
+    required this.delivery_open_delivery_messages,
     required this.$__typename,
   });
 
   factory Subscription$ListenOpenDeliveryMessages.fromJson(
       Map<String, dynamic> json) {
-    final l$delivery_messages = json['delivery_messages'];
+    final l$delivery_open_delivery_messages =
+        json['delivery_open_delivery_messages'];
     final l$$__typename = json['__typename'];
     return Subscription$ListenOpenDeliveryMessages(
-      delivery_messages: (l$delivery_messages as List<dynamic>)
-          .map((e) => Subscription$ListenOpenDeliveryMessages$delivery_messages
-              .fromJson((e as Map<String, dynamic>)))
+      delivery_open_delivery_messages: (l$delivery_open_delivery_messages
+              as List<dynamic>)
+          .map((e) =>
+              Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages
+                  .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Subscription$ListenOpenDeliveryMessages$delivery_messages>
-      delivery_messages;
+  final List<
+          Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages>
+      delivery_open_delivery_messages;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$delivery_messages = delivery_messages;
-    _resultData['delivery_messages'] =
-        l$delivery_messages.map((e) => e.toJson()).toList();
+    final l$delivery_open_delivery_messages = delivery_open_delivery_messages;
+    _resultData['delivery_open_delivery_messages'] =
+        l$delivery_open_delivery_messages.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -4316,10 +4264,10 @@ class Subscription$ListenOpenDeliveryMessages {
 
   @override
   int get hashCode {
-    final l$delivery_messages = delivery_messages;
+    final l$delivery_open_delivery_messages = delivery_open_delivery_messages;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$delivery_messages.map((v) => v)),
+      Object.hashAll(l$delivery_open_delivery_messages.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -4333,15 +4281,20 @@ class Subscription$ListenOpenDeliveryMessages {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$delivery_messages = delivery_messages;
-    final lOther$delivery_messages = other.delivery_messages;
-    if (l$delivery_messages.length != lOther$delivery_messages.length) {
+    final l$delivery_open_delivery_messages = delivery_open_delivery_messages;
+    final lOther$delivery_open_delivery_messages =
+        other.delivery_open_delivery_messages;
+    if (l$delivery_open_delivery_messages.length !=
+        lOther$delivery_open_delivery_messages.length) {
       return false;
     }
-    for (int i = 0; i < l$delivery_messages.length; i++) {
-      final l$delivery_messages$entry = l$delivery_messages[i];
-      final lOther$delivery_messages$entry = lOther$delivery_messages[i];
-      if (l$delivery_messages$entry != lOther$delivery_messages$entry) {
+    for (int i = 0; i < l$delivery_open_delivery_messages.length; i++) {
+      final l$delivery_open_delivery_messages$entry =
+          l$delivery_open_delivery_messages[i];
+      final lOther$delivery_open_delivery_messages$entry =
+          lOther$delivery_open_delivery_messages[i];
+      if (l$delivery_open_delivery_messages$entry !=
+          lOther$delivery_open_delivery_messages$entry) {
         return false;
       }
     }
@@ -4374,15 +4327,15 @@ abstract class CopyWith$Subscription$ListenOpenDeliveryMessages<TRes> {
       _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages;
 
   TRes call({
-    List<Subscription$ListenOpenDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages>?
+        delivery_open_delivery_messages,
     String? $__typename,
   });
-  TRes delivery_messages(
-      Iterable<Subscription$ListenOpenDeliveryMessages$delivery_messages> Function(
+  TRes delivery_open_delivery_messages(
+      Iterable<Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages> Function(
               Iterable<
-                  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages<
-                      Subscription$ListenOpenDeliveryMessages$delivery_messages>>)
+                  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages<
+                      Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages>>)
           _fn);
 }
 
@@ -4400,31 +4353,33 @@ class _CopyWithImpl$Subscription$ListenOpenDeliveryMessages<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? delivery_messages = _undefined,
+    Object? delivery_open_delivery_messages = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$ListenOpenDeliveryMessages(
-        delivery_messages:
-            delivery_messages == _undefined || delivery_messages == null
-                ? _instance.delivery_messages
-                : (delivery_messages as List<
-                    Subscription$ListenOpenDeliveryMessages$delivery_messages>),
+        delivery_open_delivery_messages: delivery_open_delivery_messages ==
+                    _undefined ||
+                delivery_open_delivery_messages == null
+            ? _instance.delivery_open_delivery_messages
+            : (delivery_open_delivery_messages as List<
+                Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes delivery_messages(
-          Iterable<Subscription$ListenOpenDeliveryMessages$delivery_messages> Function(
+  TRes delivery_open_delivery_messages(
+          Iterable<Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages> Function(
                   Iterable<
-                      CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages<
-                          Subscription$ListenOpenDeliveryMessages$delivery_messages>>)
+                      CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages<
+                          Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages>>)
               _fn) =>
       call(
-          delivery_messages: _fn(_instance.delivery_messages.map((e) =>
-              CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages(
-                e,
-                (i) => i,
-              ))).toList());
+          delivery_open_delivery_messages: _fn(
+              _instance.delivery_open_delivery_messages.map((e) =>
+                  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
 class _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages<TRes>
@@ -4434,12 +4389,12 @@ class _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages<TRes>
   TRes _res;
 
   call({
-    List<Subscription$ListenOpenDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages>?
+        delivery_open_delivery_messages,
     String? $__typename,
   }) =>
       _res;
-  delivery_messages(_fn) => _res;
+  delivery_open_delivery_messages(_fn) => _res;
 }
 
 const documentNodeSubscriptionListenOpenDeliveryMessages =
@@ -4451,27 +4406,13 @@ const documentNodeSubscriptionListenOpenDeliveryMessages =
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'delivery_messages'),
+        name: NameNode(value: 'delivery_open_delivery_messages'),
         alias: null,
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'distinct_on'),
             value: EnumValueNode(name: NameNode(value: 'phone_number')),
-          ),
-          ArgumentNode(
-            name: NameNode(value: 'where'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'responded_time'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_is_null'),
-                    value: BooleanValueNode(value: true),
-                  )
-                ]),
-              )
-            ]),
-          ),
+          )
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -4512,13 +4453,6 @@ const documentNodeSubscriptionListenOpenDeliveryMessages =
           ),
           FieldNode(
             name: NameNode(value: 'finished_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'user_id'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4653,21 +4587,20 @@ extension ClientExtension$Subscription$ListenOpenDeliveryMessages
               WatchOptions$Subscription$ListenOpenDeliveryMessages());
 }
 
-class Subscription$ListenOpenDeliveryMessages$delivery_messages {
-  Subscription$ListenOpenDeliveryMessages$delivery_messages({
-    required this.id,
-    required this.entry,
-    required this.phone_number,
+class Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages {
+  Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages({
+    this.id,
+    this.entry,
+    this.phone_number,
     this.driver_id,
-    required this.received_time,
+    this.received_time,
     this.finished_time,
-    this.user_id,
     this.responded_time,
     this.customer,
     required this.$__typename,
   });
 
-  factory Subscription$ListenOpenDeliveryMessages$delivery_messages.fromJson(
+  factory Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$entry = json['entry'];
@@ -4675,44 +4608,40 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages {
     final l$driver_id = json['driver_id'];
     final l$received_time = json['received_time'];
     final l$finished_time = json['finished_time'];
-    final l$user_id = json['user_id'];
     final l$responded_time = json['responded_time'];
     final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
-    return Subscription$ListenOpenDeliveryMessages$delivery_messages(
-      id: (l$id as int),
-      entry: mapFromJson(l$entry),
-      phone_number: (l$phone_number as String),
+    return Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages(
+      id: (l$id as int?),
+      entry: l$entry == null ? null : mapFromJson(l$entry),
+      phone_number: (l$phone_number as String?),
       driver_id: (l$driver_id as int?),
-      received_time: (l$received_time as String),
+      received_time: (l$received_time as String?),
       finished_time: (l$finished_time as String?),
-      user_id: (l$user_id as int?),
       responded_time: (l$responded_time as String?),
       customer: l$customer == null
           ? null
-          : Subscription$ListenOpenDeliveryMessages$delivery_messages$customer
+          : Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer
               .fromJson((l$customer as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final int id;
+  final int? id;
 
-  final dynamic entry;
+  final dynamic? entry;
 
-  final String phone_number;
+  final String? phone_number;
 
   final int? driver_id;
 
-  final String received_time;
+  final String? received_time;
 
   final String? finished_time;
 
-  final int? user_id;
-
   final String? responded_time;
 
-  final Subscription$ListenOpenDeliveryMessages$delivery_messages$customer?
+  final Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer?
       customer;
 
   final String $__typename;
@@ -4722,7 +4651,7 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages {
     final l$id = id;
     _resultData['id'] = l$id;
     final l$entry = entry;
-    _resultData['entry'] = mapToJson(l$entry);
+    _resultData['entry'] = l$entry == null ? null : mapToJson(l$entry);
     final l$phone_number = phone_number;
     _resultData['phone_number'] = l$phone_number;
     final l$driver_id = driver_id;
@@ -4731,8 +4660,6 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages {
     _resultData['received_time'] = l$received_time;
     final l$finished_time = finished_time;
     _resultData['finished_time'] = l$finished_time;
-    final l$user_id = user_id;
-    _resultData['user_id'] = l$user_id;
     final l$responded_time = responded_time;
     _resultData['responded_time'] = l$responded_time;
     final l$customer = customer;
@@ -4750,7 +4677,6 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages {
     final l$driver_id = driver_id;
     final l$received_time = received_time;
     final l$finished_time = finished_time;
-    final l$user_id = user_id;
     final l$responded_time = responded_time;
     final l$customer = customer;
     final l$$__typename = $__typename;
@@ -4761,7 +4687,6 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages {
       l$driver_id,
       l$received_time,
       l$finished_time,
-      l$user_id,
       l$responded_time,
       l$customer,
       l$$__typename,
@@ -4773,7 +4698,8 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Subscription$ListenOpenDeliveryMessages$delivery_messages) ||
+    if (!(other
+            is Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4807,11 +4733,6 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages {
     if (l$finished_time != lOther$finished_time) {
       return false;
     }
-    final l$user_id = user_id;
-    final lOther$user_id = other.user_id;
-    if (l$user_id != lOther$user_id) {
-      return false;
-    }
     final l$responded_time = responded_time;
     final lOther$responded_time = other.responded_time;
     if (l$responded_time != lOther$responded_time) {
@@ -4831,28 +4752,30 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages {
   }
 }
 
-extension UtilityExtension$Subscription$ListenOpenDeliveryMessages$delivery_messages
-    on Subscription$ListenOpenDeliveryMessages$delivery_messages {
-  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages<
-          Subscription$ListenOpenDeliveryMessages$delivery_messages>
+extension UtilityExtension$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages
+    on Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages {
+  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages<
+          Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages>
       get copyWith =>
-          CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages(
+          CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages<
+abstract class CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages<
     TRes> {
-  factory CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages(
-    Subscription$ListenOpenDeliveryMessages$delivery_messages instance,
-    TRes Function(Subscription$ListenOpenDeliveryMessages$delivery_messages)
+  factory CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages(
+    Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages
+        instance,
+    TRes Function(
+            Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages)
         then,
-  ) = _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages;
+  ) = _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages;
 
-  factory CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages.stub(
+  factory CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages;
+      _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages;
 
   TRes call({
     int? id,
@@ -4861,29 +4784,30 @@ abstract class CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_message
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
-    Subscription$ListenOpenDeliveryMessages$delivery_messages$customer?
+    Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer?
         customer,
     String? $__typename,
   });
-  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
+  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
       TRes> get customer;
 }
 
-class _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages<
+class _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages<
         TRes>
     implements
-        CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages<
+        CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages<
             TRes> {
-  _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages(
+  _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages(
     this._instance,
     this._then,
   );
 
-  final Subscription$ListenOpenDeliveryMessages$delivery_messages _instance;
+  final Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages
+      _instance;
 
-  final TRes Function(Subscription$ListenOpenDeliveryMessages$delivery_messages)
+  final TRes Function(
+          Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages)
       _then;
 
   static const _undefined = {};
@@ -4895,56 +4819,53 @@ class _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages<
     Object? driver_id = _undefined,
     Object? received_time = _undefined,
     Object? finished_time = _undefined,
-    Object? user_id = _undefined,
     Object? responded_time = _undefined,
     Object? customer = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Subscription$ListenOpenDeliveryMessages$delivery_messages(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        entry: entry == _undefined || entry == null
-            ? _instance.entry
-            : (entry as dynamic),
-        phone_number: phone_number == _undefined || phone_number == null
+      _then(
+          Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages(
+        id: id == _undefined ? _instance.id : (id as int?),
+        entry: entry == _undefined ? _instance.entry : (entry as dynamic?),
+        phone_number: phone_number == _undefined
             ? _instance.phone_number
-            : (phone_number as String),
+            : (phone_number as String?),
         driver_id:
             driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
-        received_time: received_time == _undefined || received_time == null
+        received_time: received_time == _undefined
             ? _instance.received_time
-            : (received_time as String),
+            : (received_time as String?),
         finished_time: finished_time == _undefined
             ? _instance.finished_time
             : (finished_time as String?),
-        user_id: user_id == _undefined ? _instance.user_id : (user_id as int?),
         responded_time: responded_time == _undefined
             ? _instance.responded_time
             : (responded_time as String?),
         customer: customer == _undefined
             ? _instance.customer
             : (customer
-                as Subscription$ListenOpenDeliveryMessages$delivery_messages$customer?),
+                as Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
+  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
       TRes> get customer {
     final local$customer = _instance.customer;
     return local$customer == null
-        ? CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer
+        ? CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer
             .stub(_then(_instance))
-        : CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer(
+        : CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer(
             local$customer, (e) => call(customer: e));
   }
 }
 
-class _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages<
+class _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages<
         TRes>
     implements
-        CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages<
+        CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages<
             TRes> {
-  _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages(
+  _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages(
       this._res);
 
   TRes _res;
@@ -4956,33 +4877,32 @@ class _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_message
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
-    Subscription$ListenOpenDeliveryMessages$delivery_messages$customer?
+    Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer?
         customer,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
+  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
           TRes>
       get customer =>
-          CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer
+          CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer
               .stub(_res);
 }
 
-class Subscription$ListenOpenDeliveryMessages$delivery_messages$customer {
-  Subscription$ListenOpenDeliveryMessages$delivery_messages$customer({
+class Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer {
+  Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer({
     this.name,
     this.image,
     required this.$__typename,
   });
 
-  factory Subscription$ListenOpenDeliveryMessages$delivery_messages$customer.fromJson(
+  factory Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
     final l$image = json['image'];
     final l$$__typename = json['__typename'];
-    return Subscription$ListenOpenDeliveryMessages$delivery_messages$customer(
+    return Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer(
       name: (l$name as String?),
       image: (l$image as String?),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -5024,7 +4944,7 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages$customer {
       return true;
     }
     if (!(other
-            is Subscription$ListenOpenDeliveryMessages$delivery_messages$customer) ||
+            is Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -5047,29 +4967,30 @@ class Subscription$ListenOpenDeliveryMessages$delivery_messages$customer {
   }
 }
 
-extension UtilityExtension$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer
-    on Subscription$ListenOpenDeliveryMessages$delivery_messages$customer {
-  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
-          Subscription$ListenOpenDeliveryMessages$delivery_messages$customer>
+extension UtilityExtension$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer
+    on Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer {
+  CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
+          Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer>
       get copyWith =>
-          CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer(
+          CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
+abstract class CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
     TRes> {
-  factory CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer(
-    Subscription$ListenOpenDeliveryMessages$delivery_messages$customer instance,
+  factory CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer(
+    Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer
+        instance,
     TRes Function(
-            Subscription$ListenOpenDeliveryMessages$delivery_messages$customer)
+            Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer)
         then,
-  ) = _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer;
+  ) = _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer;
 
-  factory CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer.stub(
+  factory CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer;
+      _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer;
 
   TRes call({
     String? name,
@@ -5078,21 +4999,22 @@ abstract class CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_message
   });
 }
 
-class _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
+class _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
         TRes>
     implements
-        CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
+        CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
             TRes> {
-  _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer(
+  _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer(
     this._instance,
     this._then,
   );
 
-  final Subscription$ListenOpenDeliveryMessages$delivery_messages$customer
+  final Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer
       _instance;
 
   final TRes Function(
-      Subscription$ListenOpenDeliveryMessages$delivery_messages$customer) _then;
+          Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer)
+      _then;
 
   static const _undefined = {};
 
@@ -5101,7 +5023,8 @@ class _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages$cu
     Object? image = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Subscription$ListenOpenDeliveryMessages$delivery_messages$customer(
+      _then(
+          Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer(
         name: name == _undefined ? _instance.name : (name as String?),
         image: image == _undefined ? _instance.image : (image as String?),
         $__typename: $__typename == _undefined || $__typename == null
@@ -5110,12 +5033,12 @@ class _CopyWithImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages$cu
       ));
 }
 
-class _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
+class _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
         TRes>
     implements
-        CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer<
+        CopyWith$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer<
             TRes> {
-  _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_messages$customer(
+  _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_open_delivery_messages$customer(
       this._res);
 
   TRes _res;
@@ -5123,6 +5046,2350 @@ class _CopyWithStubImpl$Subscription$ListenOpenDeliveryMessages$delivery_message
   call({
     String? name,
     String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$GetAllCurrentDeliveryMessages {
+  factory Variables$Query$GetAllCurrentDeliveryMessages(
+          {required int driver_id}) =>
+      Variables$Query$GetAllCurrentDeliveryMessages._({
+        r'driver_id': driver_id,
+      });
+
+  Variables$Query$GetAllCurrentDeliveryMessages._(this._$data);
+
+  factory Variables$Query$GetAllCurrentDeliveryMessages.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$driver_id = data['driver_id'];
+    result$data['driver_id'] = (l$driver_id as int);
+    return Variables$Query$GetAllCurrentDeliveryMessages._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get driver_id => (_$data['driver_id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$driver_id = driver_id;
+    result$data['driver_id'] = l$driver_id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$GetAllCurrentDeliveryMessages<
+          Variables$Query$GetAllCurrentDeliveryMessages>
+      get copyWith => CopyWith$Variables$Query$GetAllCurrentDeliveryMessages(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$GetAllCurrentDeliveryMessages) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driver_id = driver_id;
+    final lOther$driver_id = other.driver_id;
+    if (l$driver_id != lOther$driver_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$driver_id = driver_id;
+    return Object.hashAll([l$driver_id]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$GetAllCurrentDeliveryMessages<TRes> {
+  factory CopyWith$Variables$Query$GetAllCurrentDeliveryMessages(
+    Variables$Query$GetAllCurrentDeliveryMessages instance,
+    TRes Function(Variables$Query$GetAllCurrentDeliveryMessages) then,
+  ) = _CopyWithImpl$Variables$Query$GetAllCurrentDeliveryMessages;
+
+  factory CopyWith$Variables$Query$GetAllCurrentDeliveryMessages.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Query$GetAllCurrentDeliveryMessages;
+
+  TRes call({int? driver_id});
+}
+
+class _CopyWithImpl$Variables$Query$GetAllCurrentDeliveryMessages<TRes>
+    implements CopyWith$Variables$Query$GetAllCurrentDeliveryMessages<TRes> {
+  _CopyWithImpl$Variables$Query$GetAllCurrentDeliveryMessages(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$GetAllCurrentDeliveryMessages _instance;
+
+  final TRes Function(Variables$Query$GetAllCurrentDeliveryMessages) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? driver_id = _undefined}) =>
+      _then(Variables$Query$GetAllCurrentDeliveryMessages._({
+        ..._instance._$data,
+        if (driver_id != _undefined && driver_id != null)
+          'driver_id': (driver_id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$GetAllCurrentDeliveryMessages<TRes>
+    implements CopyWith$Variables$Query$GetAllCurrentDeliveryMessages<TRes> {
+  _CopyWithStubImpl$Variables$Query$GetAllCurrentDeliveryMessages(this._res);
+
+  TRes _res;
+
+  call({int? driver_id}) => _res;
+}
+
+class Query$GetAllCurrentDeliveryMessages {
+  Query$GetAllCurrentDeliveryMessages({
+    required this.delivery_messages,
+    required this.$__typename,
+  });
+
+  factory Query$GetAllCurrentDeliveryMessages.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_messages = json['delivery_messages'];
+    final l$$__typename = json['__typename'];
+    return Query$GetAllCurrentDeliveryMessages(
+      delivery_messages: (l$delivery_messages as List<dynamic>)
+          .map((e) =>
+              Query$GetAllCurrentDeliveryMessages$delivery_messages.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$GetAllCurrentDeliveryMessages$delivery_messages>
+      delivery_messages;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_messages = delivery_messages;
+    _resultData['delivery_messages'] =
+        l$delivery_messages.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_messages = delivery_messages;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_messages.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$GetAllCurrentDeliveryMessages) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_messages = delivery_messages;
+    final lOther$delivery_messages = other.delivery_messages;
+    if (l$delivery_messages.length != lOther$delivery_messages.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_messages.length; i++) {
+      final l$delivery_messages$entry = l$delivery_messages[i];
+      final lOther$delivery_messages$entry = lOther$delivery_messages[i];
+      if (l$delivery_messages$entry != lOther$delivery_messages$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetAllCurrentDeliveryMessages
+    on Query$GetAllCurrentDeliveryMessages {
+  CopyWith$Query$GetAllCurrentDeliveryMessages<
+          Query$GetAllCurrentDeliveryMessages>
+      get copyWith => CopyWith$Query$GetAllCurrentDeliveryMessages(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetAllCurrentDeliveryMessages<TRes> {
+  factory CopyWith$Query$GetAllCurrentDeliveryMessages(
+    Query$GetAllCurrentDeliveryMessages instance,
+    TRes Function(Query$GetAllCurrentDeliveryMessages) then,
+  ) = _CopyWithImpl$Query$GetAllCurrentDeliveryMessages;
+
+  factory CopyWith$Query$GetAllCurrentDeliveryMessages.stub(TRes res) =
+      _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages;
+
+  TRes call({
+    List<Query$GetAllCurrentDeliveryMessages$delivery_messages>?
+        delivery_messages,
+    String? $__typename,
+  });
+  TRes delivery_messages(
+      Iterable<Query$GetAllCurrentDeliveryMessages$delivery_messages> Function(
+              Iterable<
+                  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<
+                      Query$GetAllCurrentDeliveryMessages$delivery_messages>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$GetAllCurrentDeliveryMessages<TRes>
+    implements CopyWith$Query$GetAllCurrentDeliveryMessages<TRes> {
+  _CopyWithImpl$Query$GetAllCurrentDeliveryMessages(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetAllCurrentDeliveryMessages _instance;
+
+  final TRes Function(Query$GetAllCurrentDeliveryMessages) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_messages = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$GetAllCurrentDeliveryMessages(
+        delivery_messages: delivery_messages == _undefined ||
+                delivery_messages == null
+            ? _instance.delivery_messages
+            : (delivery_messages
+                as List<Query$GetAllCurrentDeliveryMessages$delivery_messages>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_messages(
+          Iterable<Query$GetAllCurrentDeliveryMessages$delivery_messages> Function(
+                  Iterable<
+                      CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<
+                          Query$GetAllCurrentDeliveryMessages$delivery_messages>>)
+              _fn) =>
+      call(
+          delivery_messages: _fn(_instance.delivery_messages.map((e) =>
+              CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages<TRes>
+    implements CopyWith$Query$GetAllCurrentDeliveryMessages<TRes> {
+  _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$GetAllCurrentDeliveryMessages$delivery_messages>?
+        delivery_messages,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_messages(_fn) => _res;
+}
+
+const documentNodeQueryGetAllCurrentDeliveryMessages =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'GetAllCurrentDeliveryMessages'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'driver_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_messages'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'distinct_on'),
+            value: ListValueNode(values: [
+              EnumValueNode(name: NameNode(value: 'phone_number')),
+              EnumValueNode(name: NameNode(value: 'received_time')),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'received_time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'phone_number'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              ),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'finished_time'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_is_null'),
+                    value: BooleanValueNode(value: true),
+                  )
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'entry'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'phone_number'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'driver_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'received_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'finished_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'responded_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$GetAllCurrentDeliveryMessages
+    _parserFn$Query$GetAllCurrentDeliveryMessages(Map<String, dynamic> data) =>
+        Query$GetAllCurrentDeliveryMessages.fromJson(data);
+
+class Options$Query$GetAllCurrentDeliveryMessages
+    extends graphql.QueryOptions<Query$GetAllCurrentDeliveryMessages> {
+  Options$Query$GetAllCurrentDeliveryMessages({
+    String? operationName,
+    required Variables$Query$GetAllCurrentDeliveryMessages variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryGetAllCurrentDeliveryMessages,
+          parserFn: _parserFn$Query$GetAllCurrentDeliveryMessages,
+        );
+}
+
+class WatchOptions$Query$GetAllCurrentDeliveryMessages
+    extends graphql.WatchQueryOptions<Query$GetAllCurrentDeliveryMessages> {
+  WatchOptions$Query$GetAllCurrentDeliveryMessages({
+    String? operationName,
+    required Variables$Query$GetAllCurrentDeliveryMessages variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryGetAllCurrentDeliveryMessages,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$GetAllCurrentDeliveryMessages,
+        );
+}
+
+class FetchMoreOptions$Query$GetAllCurrentDeliveryMessages
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$GetAllCurrentDeliveryMessages({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$GetAllCurrentDeliveryMessages variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryGetAllCurrentDeliveryMessages,
+        );
+}
+
+extension ClientExtension$Query$GetAllCurrentDeliveryMessages
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$GetAllCurrentDeliveryMessages>>
+      query$GetAllCurrentDeliveryMessages(
+              Options$Query$GetAllCurrentDeliveryMessages options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$GetAllCurrentDeliveryMessages>
+      watchQuery$GetAllCurrentDeliveryMessages(
+              WatchOptions$Query$GetAllCurrentDeliveryMessages options) =>
+          this.watchQuery(options);
+  void writeQuery$GetAllCurrentDeliveryMessages({
+    required Query$GetAllCurrentDeliveryMessages data,
+    required Variables$Query$GetAllCurrentDeliveryMessages variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryGetAllCurrentDeliveryMessages),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$GetAllCurrentDeliveryMessages? readQuery$GetAllCurrentDeliveryMessages({
+    required Variables$Query$GetAllCurrentDeliveryMessages variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryGetAllCurrentDeliveryMessages),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$GetAllCurrentDeliveryMessages.fromJson(result);
+  }
+}
+
+class Query$GetAllCurrentDeliveryMessages$delivery_messages {
+  Query$GetAllCurrentDeliveryMessages$delivery_messages({
+    required this.id,
+    required this.entry,
+    required this.phone_number,
+    this.driver_id,
+    required this.received_time,
+    this.finished_time,
+    this.responded_time,
+    this.customer,
+    required this.$__typename,
+  });
+
+  factory Query$GetAllCurrentDeliveryMessages$delivery_messages.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$entry = json['entry'];
+    final l$phone_number = json['phone_number'];
+    final l$driver_id = json['driver_id'];
+    final l$received_time = json['received_time'];
+    final l$finished_time = json['finished_time'];
+    final l$responded_time = json['responded_time'];
+    final l$customer = json['customer'];
+    final l$$__typename = json['__typename'];
+    return Query$GetAllCurrentDeliveryMessages$delivery_messages(
+      id: (l$id as int),
+      entry: mapFromJson(l$entry),
+      phone_number: (l$phone_number as String),
+      driver_id: (l$driver_id as int?),
+      received_time: (l$received_time as String),
+      finished_time: (l$finished_time as String?),
+      responded_time: (l$responded_time as String?),
+      customer: l$customer == null
+          ? null
+          : Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
+              .fromJson((l$customer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic entry;
+
+  final String phone_number;
+
+  final int? driver_id;
+
+  final String received_time;
+
+  final String? finished_time;
+
+  final String? responded_time;
+
+  final Query$GetAllCurrentDeliveryMessages$delivery_messages$customer?
+      customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$entry = entry;
+    _resultData['entry'] = mapToJson(l$entry);
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
+    final l$driver_id = driver_id;
+    _resultData['driver_id'] = l$driver_id;
+    final l$received_time = received_time;
+    _resultData['received_time'] = l$received_time;
+    final l$finished_time = finished_time;
+    _resultData['finished_time'] = l$finished_time;
+    final l$responded_time = responded_time;
+    _resultData['responded_time'] = l$responded_time;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$entry = entry;
+    final l$phone_number = phone_number;
+    final l$driver_id = driver_id;
+    final l$received_time = received_time;
+    final l$finished_time = finished_time;
+    final l$responded_time = responded_time;
+    final l$customer = customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$entry,
+      l$phone_number,
+      l$driver_id,
+      l$received_time,
+      l$finished_time,
+      l$responded_time,
+      l$customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$GetAllCurrentDeliveryMessages$delivery_messages) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$entry = entry;
+    final lOther$entry = other.entry;
+    if (l$entry != lOther$entry) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$driver_id = driver_id;
+    final lOther$driver_id = other.driver_id;
+    if (l$driver_id != lOther$driver_id) {
+      return false;
+    }
+    final l$received_time = received_time;
+    final lOther$received_time = other.received_time;
+    if (l$received_time != lOther$received_time) {
+      return false;
+    }
+    final l$finished_time = finished_time;
+    final lOther$finished_time = other.finished_time;
+    if (l$finished_time != lOther$finished_time) {
+      return false;
+    }
+    final l$responded_time = responded_time;
+    final lOther$responded_time = other.responded_time;
+    if (l$responded_time != lOther$responded_time) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetAllCurrentDeliveryMessages$delivery_messages
+    on Query$GetAllCurrentDeliveryMessages$delivery_messages {
+  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<
+          Query$GetAllCurrentDeliveryMessages$delivery_messages>
+      get copyWith =>
+          CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<
+    TRes> {
+  factory CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages(
+    Query$GetAllCurrentDeliveryMessages$delivery_messages instance,
+    TRes Function(Query$GetAllCurrentDeliveryMessages$delivery_messages) then,
+  ) = _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages;
+
+  factory CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages;
+
+  TRes call({
+    int? id,
+    dynamic? entry,
+    String? phone_number,
+    int? driver_id,
+    String? received_time,
+    String? finished_time,
+    String? responded_time,
+    Query$GetAllCurrentDeliveryMessages$delivery_messages$customer? customer,
+    String? $__typename,
+  });
+  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<TRes>
+      get customer;
+}
+
+class _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages<TRes>
+    implements
+        CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<TRes> {
+  _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetAllCurrentDeliveryMessages$delivery_messages _instance;
+
+  final TRes Function(Query$GetAllCurrentDeliveryMessages$delivery_messages)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? entry = _undefined,
+    Object? phone_number = _undefined,
+    Object? driver_id = _undefined,
+    Object? received_time = _undefined,
+    Object? finished_time = _undefined,
+    Object? responded_time = _undefined,
+    Object? customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$GetAllCurrentDeliveryMessages$delivery_messages(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        entry: entry == _undefined || entry == null
+            ? _instance.entry
+            : (entry as dynamic),
+        phone_number: phone_number == _undefined || phone_number == null
+            ? _instance.phone_number
+            : (phone_number as String),
+        driver_id:
+            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
+        received_time: received_time == _undefined || received_time == null
+            ? _instance.received_time
+            : (received_time as String),
+        finished_time: finished_time == _undefined
+            ? _instance.finished_time
+            : (finished_time as String?),
+        responded_time: responded_time == _undefined
+            ? _instance.responded_time
+            : (responded_time as String?),
+        customer: customer == _undefined
+            ? _instance.customer
+            : (customer
+                as Query$GetAllCurrentDeliveryMessages$delivery_messages$customer?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<TRes>
+      get customer {
+    final local$customer = _instance.customer;
+    return local$customer == null
+        ? CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
+            .stub(_then(_instance))
+        : CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
+            local$customer, (e) => call(customer: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages<
+        TRes>
+    implements
+        CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<TRes> {
+  _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? entry,
+    String? phone_number,
+    int? driver_id,
+    String? received_time,
+    String? finished_time,
+    String? responded_time,
+    Query$GetAllCurrentDeliveryMessages$delivery_messages$customer? customer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<TRes>
+      get customer =>
+          CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
+              .stub(_res);
+}
+
+class Query$GetAllCurrentDeliveryMessages$delivery_messages$customer {
+  Query$GetAllCurrentDeliveryMessages$delivery_messages$customer({
+    this.name,
+    this.image,
+    required this.$__typename,
+  });
+
+  factory Query$GetAllCurrentDeliveryMessages$delivery_messages$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetAllCurrentDeliveryMessages$delivery_messages$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
+    on Query$GetAllCurrentDeliveryMessages$delivery_messages$customer {
+  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
+          Query$GetAllCurrentDeliveryMessages$delivery_messages$customer>
+      get copyWith =>
+          CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
+    TRes> {
+  factory CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
+    Query$GetAllCurrentDeliveryMessages$delivery_messages$customer instance,
+    TRes Function(
+            Query$GetAllCurrentDeliveryMessages$delivery_messages$customer)
+        then,
+  ) = _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer;
+
+  factory CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
+        TRes>
+    implements
+        CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
+            TRes> {
+  _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
+      _instance;
+
+  final TRes Function(
+      Query$GetAllCurrentDeliveryMessages$delivery_messages$customer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
+        TRes>
+    implements
+        CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
+            TRes> {
+  _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Subscription$listenAllCurrentDeliveryMessages {
+  factory Variables$Subscription$listenAllCurrentDeliveryMessages(
+          {required int driver_id}) =>
+      Variables$Subscription$listenAllCurrentDeliveryMessages._({
+        r'driver_id': driver_id,
+      });
+
+  Variables$Subscription$listenAllCurrentDeliveryMessages._(this._$data);
+
+  factory Variables$Subscription$listenAllCurrentDeliveryMessages.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$driver_id = data['driver_id'];
+    result$data['driver_id'] = (l$driver_id as int);
+    return Variables$Subscription$listenAllCurrentDeliveryMessages._(
+        result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get driver_id => (_$data['driver_id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$driver_id = driver_id;
+    result$data['driver_id'] = l$driver_id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$listenAllCurrentDeliveryMessages<
+          Variables$Subscription$listenAllCurrentDeliveryMessages>
+      get copyWith =>
+          CopyWith$Variables$Subscription$listenAllCurrentDeliveryMessages(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$listenAllCurrentDeliveryMessages) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$driver_id = driver_id;
+    final lOther$driver_id = other.driver_id;
+    if (l$driver_id != lOther$driver_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$driver_id = driver_id;
+    return Object.hashAll([l$driver_id]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$listenAllCurrentDeliveryMessages<
+    TRes> {
+  factory CopyWith$Variables$Subscription$listenAllCurrentDeliveryMessages(
+    Variables$Subscription$listenAllCurrentDeliveryMessages instance,
+    TRes Function(Variables$Subscription$listenAllCurrentDeliveryMessages) then,
+  ) = _CopyWithImpl$Variables$Subscription$listenAllCurrentDeliveryMessages;
+
+  factory CopyWith$Variables$Subscription$listenAllCurrentDeliveryMessages.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$listenAllCurrentDeliveryMessages;
+
+  TRes call({int? driver_id});
+}
+
+class _CopyWithImpl$Variables$Subscription$listenAllCurrentDeliveryMessages<
+        TRes>
+    implements
+        CopyWith$Variables$Subscription$listenAllCurrentDeliveryMessages<TRes> {
+  _CopyWithImpl$Variables$Subscription$listenAllCurrentDeliveryMessages(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$listenAllCurrentDeliveryMessages _instance;
+
+  final TRes Function(Variables$Subscription$listenAllCurrentDeliveryMessages)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? driver_id = _undefined}) =>
+      _then(Variables$Subscription$listenAllCurrentDeliveryMessages._({
+        ..._instance._$data,
+        if (driver_id != _undefined && driver_id != null)
+          'driver_id': (driver_id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$listenAllCurrentDeliveryMessages<
+        TRes>
+    implements
+        CopyWith$Variables$Subscription$listenAllCurrentDeliveryMessages<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$listenAllCurrentDeliveryMessages(
+      this._res);
+
+  TRes _res;
+
+  call({int? driver_id}) => _res;
+}
+
+class Subscription$listenAllCurrentDeliveryMessages {
+  Subscription$listenAllCurrentDeliveryMessages({
+    required this.delivery_messages,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenAllCurrentDeliveryMessages.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_messages = json['delivery_messages'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenAllCurrentDeliveryMessages(
+      delivery_messages: (l$delivery_messages as List<dynamic>)
+          .map((e) =>
+              Subscription$listenAllCurrentDeliveryMessages$delivery_messages
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Subscription$listenAllCurrentDeliveryMessages$delivery_messages>
+      delivery_messages;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_messages = delivery_messages;
+    _resultData['delivery_messages'] =
+        l$delivery_messages.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_messages = delivery_messages;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_messages.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$listenAllCurrentDeliveryMessages) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_messages = delivery_messages;
+    final lOther$delivery_messages = other.delivery_messages;
+    if (l$delivery_messages.length != lOther$delivery_messages.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_messages.length; i++) {
+      final l$delivery_messages$entry = l$delivery_messages[i];
+      final lOther$delivery_messages$entry = lOther$delivery_messages[i];
+      if (l$delivery_messages$entry != lOther$delivery_messages$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages
+    on Subscription$listenAllCurrentDeliveryMessages {
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages<
+          Subscription$listenAllCurrentDeliveryMessages>
+      get copyWith => CopyWith$Subscription$listenAllCurrentDeliveryMessages(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages<TRes> {
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages(
+    Subscription$listenAllCurrentDeliveryMessages instance,
+    TRes Function(Subscription$listenAllCurrentDeliveryMessages) then,
+  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages;
+
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages;
+
+  TRes call({
+    List<Subscription$listenAllCurrentDeliveryMessages$delivery_messages>?
+        delivery_messages,
+    String? $__typename,
+  });
+  TRes delivery_messages(
+      Iterable<Subscription$listenAllCurrentDeliveryMessages$delivery_messages> Function(
+              Iterable<
+                  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
+                      Subscription$listenAllCurrentDeliveryMessages$delivery_messages>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages<TRes>
+    implements CopyWith$Subscription$listenAllCurrentDeliveryMessages<TRes> {
+  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenAllCurrentDeliveryMessages _instance;
+
+  final TRes Function(Subscription$listenAllCurrentDeliveryMessages) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_messages = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listenAllCurrentDeliveryMessages(
+        delivery_messages: delivery_messages == _undefined ||
+                delivery_messages == null
+            ? _instance.delivery_messages
+            : (delivery_messages as List<
+                Subscription$listenAllCurrentDeliveryMessages$delivery_messages>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_messages(
+          Iterable<Subscription$listenAllCurrentDeliveryMessages$delivery_messages> Function(
+                  Iterable<
+                      CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
+                          Subscription$listenAllCurrentDeliveryMessages$delivery_messages>>)
+              _fn) =>
+      call(
+          delivery_messages: _fn(_instance.delivery_messages.map((e) =>
+              CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages<TRes>
+    implements CopyWith$Subscription$listenAllCurrentDeliveryMessages<TRes> {
+  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages(this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$listenAllCurrentDeliveryMessages$delivery_messages>?
+        delivery_messages,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_messages(_fn) => _res;
+}
+
+const documentNodeSubscriptionlistenAllCurrentDeliveryMessages =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'listenAllCurrentDeliveryMessages'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'driver_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_messages'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'distinct_on'),
+            value: EnumValueNode(name: NameNode(value: 'phone_number')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'finished_time'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_is_null'),
+                    value: BooleanValueNode(value: true),
+                  )
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'entry'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'phone_number'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'driver_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'received_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'finished_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'responded_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'driver'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$listenAllCurrentDeliveryMessages
+    _parserFn$Subscription$listenAllCurrentDeliveryMessages(
+            Map<String, dynamic> data) =>
+        Subscription$listenAllCurrentDeliveryMessages.fromJson(data);
+
+class Options$Subscription$listenAllCurrentDeliveryMessages extends graphql
+    .SubscriptionOptions<Subscription$listenAllCurrentDeliveryMessages> {
+  Options$Subscription$listenAllCurrentDeliveryMessages({
+    String? operationName,
+    required Variables$Subscription$listenAllCurrentDeliveryMessages variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlistenAllCurrentDeliveryMessages,
+          parserFn: _parserFn$Subscription$listenAllCurrentDeliveryMessages,
+        );
+}
+
+class WatchOptions$Subscription$listenAllCurrentDeliveryMessages extends graphql
+    .WatchQueryOptions<Subscription$listenAllCurrentDeliveryMessages> {
+  WatchOptions$Subscription$listenAllCurrentDeliveryMessages({
+    String? operationName,
+    required Variables$Subscription$listenAllCurrentDeliveryMessages variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionlistenAllCurrentDeliveryMessages,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$listenAllCurrentDeliveryMessages,
+        );
+}
+
+class FetchMoreOptions$Subscription$listenAllCurrentDeliveryMessages
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$listenAllCurrentDeliveryMessages({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$listenAllCurrentDeliveryMessages variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionlistenAllCurrentDeliveryMessages,
+        );
+}
+
+extension ClientExtension$Subscription$listenAllCurrentDeliveryMessages
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$listenAllCurrentDeliveryMessages>>
+      subscribe$listenAllCurrentDeliveryMessages(
+              Options$Subscription$listenAllCurrentDeliveryMessages options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$listenAllCurrentDeliveryMessages>
+      watchSubscription$listenAllCurrentDeliveryMessages(
+              WatchOptions$Subscription$listenAllCurrentDeliveryMessages
+                  options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$listenAllCurrentDeliveryMessages$delivery_messages {
+  Subscription$listenAllCurrentDeliveryMessages$delivery_messages({
+    required this.id,
+    required this.entry,
+    required this.phone_number,
+    this.driver_id,
+    required this.received_time,
+    this.finished_time,
+    this.responded_time,
+    this.customer,
+    this.driver,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenAllCurrentDeliveryMessages$delivery_messages.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$entry = json['entry'];
+    final l$phone_number = json['phone_number'];
+    final l$driver_id = json['driver_id'];
+    final l$received_time = json['received_time'];
+    final l$finished_time = json['finished_time'];
+    final l$responded_time = json['responded_time'];
+    final l$customer = json['customer'];
+    final l$driver = json['driver'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
+      id: (l$id as int),
+      entry: mapFromJson(l$entry),
+      phone_number: (l$phone_number as String),
+      driver_id: (l$driver_id as int?),
+      received_time: (l$received_time as String),
+      finished_time: (l$finished_time as String?),
+      responded_time: (l$responded_time as String?),
+      customer: l$customer == null
+          ? null
+          : Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
+              .fromJson((l$customer as Map<String, dynamic>)),
+      driver: l$driver == null
+          ? null
+          : Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
+              .fromJson((l$driver as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic entry;
+
+  final String phone_number;
+
+  final int? driver_id;
+
+  final String received_time;
+
+  final String? finished_time;
+
+  final String? responded_time;
+
+  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer?
+      customer;
+
+  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver?
+      driver;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$entry = entry;
+    _resultData['entry'] = mapToJson(l$entry);
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
+    final l$driver_id = driver_id;
+    _resultData['driver_id'] = l$driver_id;
+    final l$received_time = received_time;
+    _resultData['received_time'] = l$received_time;
+    final l$finished_time = finished_time;
+    _resultData['finished_time'] = l$finished_time;
+    final l$responded_time = responded_time;
+    _resultData['responded_time'] = l$responded_time;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer?.toJson();
+    final l$driver = driver;
+    _resultData['driver'] = l$driver?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$entry = entry;
+    final l$phone_number = phone_number;
+    final l$driver_id = driver_id;
+    final l$received_time = received_time;
+    final l$finished_time = finished_time;
+    final l$responded_time = responded_time;
+    final l$customer = customer;
+    final l$driver = driver;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$entry,
+      l$phone_number,
+      l$driver_id,
+      l$received_time,
+      l$finished_time,
+      l$responded_time,
+      l$customer,
+      l$driver,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenAllCurrentDeliveryMessages$delivery_messages) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$entry = entry;
+    final lOther$entry = other.entry;
+    if (l$entry != lOther$entry) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$driver_id = driver_id;
+    final lOther$driver_id = other.driver_id;
+    if (l$driver_id != lOther$driver_id) {
+      return false;
+    }
+    final l$received_time = received_time;
+    final lOther$received_time = other.received_time;
+    if (l$received_time != lOther$received_time) {
+      return false;
+    }
+    final l$finished_time = finished_time;
+    final lOther$finished_time = other.finished_time;
+    if (l$finished_time != lOther$finished_time) {
+      return false;
+    }
+    final l$responded_time = responded_time;
+    final lOther$responded_time = other.responded_time;
+    if (l$responded_time != lOther$responded_time) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$driver = driver;
+    final lOther$driver = other.driver;
+    if (l$driver != lOther$driver) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages$delivery_messages
+    on Subscription$listenAllCurrentDeliveryMessages$delivery_messages {
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages>
+      get copyWith =>
+          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
+    TRes> {
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages instance,
+    TRes Function(
+            Subscription$listenAllCurrentDeliveryMessages$delivery_messages)
+        then,
+  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages;
+
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages;
+
+  TRes call({
+    int? id,
+    dynamic? entry,
+    String? phone_number,
+    int? driver_id,
+    String? received_time,
+    String? finished_time,
+    String? responded_time,
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer?
+        customer,
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver?
+        driver,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+      TRes> get customer;
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+      TRes> get driver;
+}
+
+class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
+        TRes>
+    implements
+        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
+            TRes> {
+  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages
+      _instance;
+
+  final TRes Function(
+      Subscription$listenAllCurrentDeliveryMessages$delivery_messages) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? entry = _undefined,
+    Object? phone_number = _undefined,
+    Object? driver_id = _undefined,
+    Object? received_time = _undefined,
+    Object? finished_time = _undefined,
+    Object? responded_time = _undefined,
+    Object? customer = _undefined,
+    Object? driver = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        entry: entry == _undefined || entry == null
+            ? _instance.entry
+            : (entry as dynamic),
+        phone_number: phone_number == _undefined || phone_number == null
+            ? _instance.phone_number
+            : (phone_number as String),
+        driver_id:
+            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
+        received_time: received_time == _undefined || received_time == null
+            ? _instance.received_time
+            : (received_time as String),
+        finished_time: finished_time == _undefined
+            ? _instance.finished_time
+            : (finished_time as String?),
+        responded_time: responded_time == _undefined
+            ? _instance.responded_time
+            : (responded_time as String?),
+        customer: customer == _undefined
+            ? _instance.customer
+            : (customer
+                as Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer?),
+        driver: driver == _undefined
+            ? _instance.driver
+            : (driver
+                as Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+      TRes> get customer {
+    final local$customer = _instance.customer;
+    return local$customer == null
+        ? CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
+            local$customer, (e) => call(customer: e));
+  }
+
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+      TRes> get driver {
+    final local$driver = _instance.driver;
+    return local$driver == null
+        ? CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
+            local$driver, (e) => call(driver: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
+        TRes>
+    implements
+        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? entry,
+    String? phone_number,
+    int? driver_id,
+    String? received_time,
+    String? finished_time,
+    String? responded_time,
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer?
+        customer,
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver?
+        driver,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+          TRes>
+      get customer =>
+          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
+              .stub(_res);
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+          TRes>
+      get driver =>
+          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
+              .stub(_res);
+}
+
+class Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer {
+  Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer({
+    this.name,
+    this.image,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
+    on Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer {
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer>
+      get copyWith =>
+          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+    TRes> {
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
+        instance,
+    TRes Function(
+            Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer)
+        then,
+  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer;
+
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+        TRes>
+    implements
+        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+            TRes> {
+  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
+      _instance;
+
+  final TRes Function(
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+        TRes>
+    implements
+        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver {
+  Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
+      user:
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
+              .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
+    on Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver {
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver>
+      get copyWith =>
+          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+    TRes> {
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
+        instance,
+    TRes Function(
+            Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver)
+        then,
+  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver;
+
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver;
+
+  TRes call({
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user?
+        user,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+        TRes>
+    implements
+        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+            TRes> {
+  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
+      _instance;
+
+  final TRes Function(
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+        TRes>
+    implements
+        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user?
+        user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+          TRes>
+      get user =>
+          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
+              .stub(_res);
+}
+
+class Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user {
+  Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user({
+    this.name,
+    this.phone,
+    required this.$__typename,
+  });
+
+  factory Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$phone = json['phone'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
+      name: (l$name as String?),
+      phone: (l$phone as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? phone;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$phone = phone;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$phone,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
+    on Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user {
+  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user>
+      get copyWith =>
+          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+    TRes> {
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
+    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
+        instance,
+    TRes Function(
+            Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user)
+        then,
+  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user;
+
+  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user;
+
+  TRes call({
+    String? name,
+    String? phone,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+        TRes>
+    implements
+        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+            TRes> {
+  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
+      _instance;
+
+  final TRes Function(
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? phone = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
+        name: name == _undefined ? _instance.name : (name as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+        TRes>
+    implements
+        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? phone,
     String? $__typename,
   }) =>
       _res;
@@ -5479,13 +7746,6 @@ const documentNodeQueryGetCustomerDeliveryMessages = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'user_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'responded_time'),
             alias: null,
             arguments: [],
@@ -5700,7 +7960,6 @@ class Query$GetCustomerDeliveryMessages$delivery_messages {
     this.driver_id,
     required this.received_time,
     this.finished_time,
-    this.user_id,
     this.responded_time,
     this.driver,
     this.customer,
@@ -5715,7 +7974,6 @@ class Query$GetCustomerDeliveryMessages$delivery_messages {
     final l$driver_id = json['driver_id'];
     final l$received_time = json['received_time'];
     final l$finished_time = json['finished_time'];
-    final l$user_id = json['user_id'];
     final l$responded_time = json['responded_time'];
     final l$driver = json['driver'];
     final l$customer = json['customer'];
@@ -5727,7 +7985,6 @@ class Query$GetCustomerDeliveryMessages$delivery_messages {
       driver_id: (l$driver_id as int?),
       received_time: (l$received_time as String),
       finished_time: (l$finished_time as String?),
-      user_id: (l$user_id as int?),
       responded_time: (l$responded_time as String?),
       driver: l$driver == null
           ? null
@@ -5753,8 +8010,6 @@ class Query$GetCustomerDeliveryMessages$delivery_messages {
 
   final String? finished_time;
 
-  final int? user_id;
-
   final String? responded_time;
 
   final Query$GetCustomerDeliveryMessages$delivery_messages$driver? driver;
@@ -5777,8 +8032,6 @@ class Query$GetCustomerDeliveryMessages$delivery_messages {
     _resultData['received_time'] = l$received_time;
     final l$finished_time = finished_time;
     _resultData['finished_time'] = l$finished_time;
-    final l$user_id = user_id;
-    _resultData['user_id'] = l$user_id;
     final l$responded_time = responded_time;
     _resultData['responded_time'] = l$responded_time;
     final l$driver = driver;
@@ -5798,7 +8051,6 @@ class Query$GetCustomerDeliveryMessages$delivery_messages {
     final l$driver_id = driver_id;
     final l$received_time = received_time;
     final l$finished_time = finished_time;
-    final l$user_id = user_id;
     final l$responded_time = responded_time;
     final l$driver = driver;
     final l$customer = customer;
@@ -5810,7 +8062,6 @@ class Query$GetCustomerDeliveryMessages$delivery_messages {
       l$driver_id,
       l$received_time,
       l$finished_time,
-      l$user_id,
       l$responded_time,
       l$driver,
       l$customer,
@@ -5855,11 +8106,6 @@ class Query$GetCustomerDeliveryMessages$delivery_messages {
     final l$finished_time = finished_time;
     final lOther$finished_time = other.finished_time;
     if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$user_id = user_id;
-    final lOther$user_id = other.user_id;
-    if (l$user_id != lOther$user_id) {
       return false;
     }
     final l$responded_time = responded_time;
@@ -5915,7 +8161,6 @@ abstract class CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages<
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
     Query$GetCustomerDeliveryMessages$delivery_messages$driver? driver,
     Query$GetCustomerDeliveryMessages$delivery_messages$customer? customer,
@@ -5949,7 +8194,6 @@ class _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages<TRes>
     Object? driver_id = _undefined,
     Object? received_time = _undefined,
     Object? finished_time = _undefined,
-    Object? user_id = _undefined,
     Object? responded_time = _undefined,
     Object? driver = _undefined,
     Object? customer = _undefined,
@@ -5971,7 +8215,6 @@ class _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages<TRes>
         finished_time: finished_time == _undefined
             ? _instance.finished_time
             : (finished_time as String?),
-        user_id: user_id == _undefined ? _instance.user_id : (user_id as int?),
         responded_time: responded_time == _undefined
             ? _instance.responded_time
             : (responded_time as String?),
@@ -6024,7 +8267,6 @@ class _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages<
     int? driver_id,
     String? received_time,
     String? finished_time,
-    int? user_id,
     String? responded_time,
     Query$GetCustomerDeliveryMessages$delivery_messages$driver? driver,
     Query$GetCustomerDeliveryMessages$delivery_messages$customer? customer,

@@ -1663,7 +1663,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     this.pickup_address,
     this.pickup_gps,
     this.restaurant,
-    this.service_provider_id,
+    required this.service_provider_id,
     this.delivery_driver,
     this.service_provider_review_by_driver_id,
     required this.service_provider_type,
@@ -1775,7 +1775,7 @@ class Query$get_driver_order$delivery_order_by_pk {
           ? null
           : Query$get_driver_order$delivery_order_by_pk$restaurant.fromJson(
               (l$restaurant as Map<String, dynamic>)),
-      service_provider_id: (l$service_provider_id as int?),
+      service_provider_id: (l$service_provider_id as int),
       delivery_driver: l$delivery_driver == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$delivery_driver
@@ -1863,7 +1863,7 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   final Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant;
 
-  final int? service_provider_id;
+  final int service_provider_id;
 
   final Query$get_driver_order$delivery_order_by_pk$delivery_driver?
       delivery_driver;
@@ -2542,9 +2542,10 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             ? _instance.restaurant
             : (restaurant
                 as Query$get_driver_order$delivery_order_by_pk$restaurant?),
-        service_provider_id: service_provider_id == _undefined
-            ? _instance.service_provider_id
-            : (service_provider_id as int?),
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -28885,7 +28886,7 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
     required this.payment_type,
     this.pickup_address,
     this.pickup_gps,
-    this.service_provider_id,
+    required this.service_provider_id,
     this.delivery_driver,
     required this.service_provider_type,
     required this.status,
@@ -28937,7 +28938,7 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
       payment_type: (l$payment_type as String),
       pickup_address: (l$pickup_address as String?),
       pickup_gps: l$pickup_gps == null ? null : geographyFromJson(l$pickup_gps),
-      service_provider_id: (l$service_provider_id as int?),
+      service_provider_id: (l$service_provider_id as int),
       delivery_driver: l$delivery_driver == null
           ? null
           : Query$get_pick_driver_order$delivery_order_by_pk$delivery_driver
@@ -28979,7 +28980,7 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
 
   final Geography? pickup_gps;
 
-  final int? service_provider_id;
+  final int service_provider_id;
 
   final Query$get_pick_driver_order$delivery_order_by_pk$delivery_driver?
       delivery_driver;
@@ -29340,9 +29341,10 @@ class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk<TRes>
         pickup_gps: pickup_gps == _undefined
             ? _instance.pickup_gps
             : (pickup_gps as Geography?),
-        service_provider_id: service_provider_id == _undefined
-            ? _instance.service_provider_id
-            : (service_provider_id as int?),
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver

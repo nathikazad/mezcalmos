@@ -93,7 +93,6 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
     /// initializeSetup
     initializeSetup();
-    ConnectivityHelper.instance.startCheckingInternet();
   }
 
   @override
@@ -251,6 +250,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
       AppLifeCycleController(),
       permanent: true,
     );
+    unawaited(ConnectivityHelper.instance.startCheckingInternet());
     setState(() => _initializedState = 1.3);
     Get.put(HasuraDb(), permanent: true);
   }

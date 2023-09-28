@@ -209,12 +209,12 @@ export const generate4by6 = async (
     shortLink: `https://mezc.co/${generateA4Params.uniqueId}/`
   });
 return generateImageWithQR(generateA4Params.uniqueId, {
-  height: 552,
+  height: 597,
   width: 398,
-  qrWidth: 166,
+  qrWidth: 180,
   additionalStyles: generateA4Params.additionalStyles ?? {
-      top: "286px",
-      left: "100px"
+      top: "287px",
+      left: "108px"
   },
   mainImage: generateA4Params.image,
   qrImage: generateA4Params.qrLink,
@@ -225,6 +225,17 @@ return generateImageWithQR(generateA4Params.uniqueId, {
     width: "10.16cm",
   }
 });
+}
+
+export const generateRestTableTop = async (
+  uniqueId: string
+): Promise<string|Buffer> => { 
+const restTableTop = "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/links%2Fyaab%2FFlyer%203%20-%20Mezkala-3%204x6.png?alt=media&token=4b865d88-b222-4ba1-beb4-b83157d34eb6"
+  return generate4by6({
+    uniqueId:uniqueId, 
+    location: "flyers/rest-tabletop", 
+    image: restTableTop, 
+  })
 }
 
 
@@ -273,6 +284,11 @@ const html = `<!DOCTYPE html>
             margin: 0;
             padding: 0;
             z-index: 1; /* to place it above the image */
+            font-size: 8px;
+          }
+
+          body {
+            margin: 0;
           }
       </style>
   </head>

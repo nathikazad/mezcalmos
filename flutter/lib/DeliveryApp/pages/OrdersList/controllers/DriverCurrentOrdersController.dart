@@ -139,7 +139,6 @@ class DeliveryMessage {
   final int? driverId;
   final DateTime receivedTime;
   final DateTime? finishedTime;
-  final int? userId;
   final DateTime? respondedTime;
 
   DeliveryMessage({
@@ -149,7 +148,6 @@ class DeliveryMessage {
     this.driverId,
     required this.receivedTime,
     this.finishedTime,
-    required this.userId,
     this.respondedTime,
     this.userImage,
     this.userName,

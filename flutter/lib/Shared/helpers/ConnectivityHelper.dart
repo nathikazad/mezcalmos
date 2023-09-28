@@ -3,11 +3,14 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mezcalmos/env.dart';
 
 enum InternetStatus { Online, Slow, Offline }
@@ -36,6 +39,13 @@ class ConnectivityHelper {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult c) async {
       _internetStatusStreamController.add(await checkForInternet());
     });
+
+    final AppLifeCycleController _appLifeCycleController =
+        Get.find<AppLifeCycleController>();
+    _appLifeCycleController.attachCallback(
+        AppLifecycleState.paused, () => _timer?.cancel());
+    _appLifeCycleController.attachCallback(
+        AppLifecycleState.resumed, () => checkConnectivity());
   }
 
   Future<void> checkConnectivity() async {
@@ -51,7 +61,7 @@ class ConnectivityHelper {
       onlineMode = false;
     }
     _timer?.cancel();
-    _timer = Timer(Duration(seconds: (onlineMode) ? 10 : 1), checkConnectivity);
+    _timer = Timer(Duration(seconds: (onlineMode) ? 60 : 5), checkConnectivity);
   }
 
   Future<InternetStatus> checkForInternet([ConnectivityResult? event]) async {
@@ -69,12 +79,12 @@ class ConnectivityHelper {
     }
     final Stopwatch stopwatch = Stopwatch()..start();
     final List<bool> results = await Future.wait(futures)
-        .timeout(Duration(seconds: 10), onTimeout: () => <bool>[false]);
+        .timeout(Duration(seconds: 30), onTimeout: () => <bool>[false]);
     if (results.contains(false)) {
       return InternetStatus.Offline;
     } else {
       // mezDbgPrint(stopwatch.elapsed.inMilliseconds);
-      if (stopwatch.elapsed.inMilliseconds < 5000)
+      if (stopwatch.elapsed.inMilliseconds < 15000)
         return InternetStatus.Online;
       else
         return InternetStatus.Slow;
