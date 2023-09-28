@@ -57,7 +57,7 @@ class _DvOrderViewState extends State<DvOrderView> {
           if (viewController.showAccept) {
             return _aceptButton();
           } else
-            return SizedBox();
+            return _cancelButton();
         }),
         body: Obx(() {
           if (viewController.hasData)
@@ -136,6 +136,17 @@ class _DvOrderViewState extends State<DvOrderView> {
             costs: viewController.order!.costs,
             stripeOrderPaymentInfo: null,
           ),
+          if (!viewController.showAccept) ...<Widget>[
+            bigSeperator,
+            MezButton(
+              label: "Cancel order",
+              backgroundColor: offRedColor,
+              textColor: redAccentColor,
+              onClick: () async {
+                Navigator.pop(context);
+              },
+            ),
+          ],
 
           bigSeperator,
         ],
@@ -241,6 +252,14 @@ class _DvOrderViewState extends State<DvOrderView> {
               );
             });
       },
+    );
+  }
+
+  Widget _cancelButton() {
+    return MezButton(
+      label: 'Finish Order',
+      borderRadius: 0,
+      onClick: () async {},
     );
   }
 }
