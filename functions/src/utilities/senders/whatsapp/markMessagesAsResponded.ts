@@ -17,7 +17,8 @@ export enum MarkMessagesError {
   UnhandledError = "unhandledError",
   InvalidParams = "invalidParams",
   UnauthorizedDriver = "unauthorizedDriver",
-  NoMessagesFound = "noMessagesFound"
+  NoMessagesFound = "noMessagesFound",
+  AnotherDriverTookTheOrder = "anotherDriverTookTheOrder"
 }
 
 export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsRespondedDetails): Promise<MarkMessagesResponse> {
@@ -91,7 +92,7 @@ export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsR
       if (mutationResponse.update_delivery_messages_many?.length ?? 0 > 0)
         return { success: true };
       else
-        throw new MezError(MarkMessagesError.NoMessagesFound);
+        throw new MezError(MarkMessagesError.AnotherDriverTookTheOrder);
     } else {
       throw new MezError(MarkMessagesError.NoMessagesFound);
     }
