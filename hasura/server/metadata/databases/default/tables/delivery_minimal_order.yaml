@@ -1,0 +1,22 @@
+table:
+  name: minimal_order
+  schema: delivery
+object_relationships:
+  - name: customer
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+  - name: driver
+    using:
+      manual_configuration:
+        column_mapping:
+          driver_id: id
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
