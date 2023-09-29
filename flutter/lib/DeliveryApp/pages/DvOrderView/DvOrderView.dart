@@ -57,7 +57,7 @@ class _DvOrderViewState extends State<DvOrderView> {
           if (viewController.showAccept) {
             return _aceptButton();
           } else
-            return _cancelButton();
+            return _finishButton();
         }),
         body: Obx(() {
           if (viewController.hasData)
@@ -143,7 +143,7 @@ class _DvOrderViewState extends State<DvOrderView> {
               backgroundColor: offRedColor,
               textColor: redAccentColor,
               onClick: () async {
-                Navigator.pop(context);
+                await viewController.cancelOrder();
               },
             ),
           ],
@@ -169,10 +169,10 @@ class _DvOrderViewState extends State<DvOrderView> {
           ),
           Column(
             children: List.generate(
-              viewController.order!.items.length,
+              viewController.order!.dvItems.length,
               (int index) {
                 final DeliveryOrderItem item =
-                    viewController.order!.items[index];
+                    viewController.order!.dvItems[index];
                 return MezCard(
                     firstAvatarBgImage: item.image != null
                         ? CachedNetworkImageProvider(item.image!)
@@ -255,11 +255,13 @@ class _DvOrderViewState extends State<DvOrderView> {
     );
   }
 
-  Widget _cancelButton() {
+  Widget _finishButton() {
     return MezButton(
       label: 'Finish Order',
       borderRadius: 0,
-      onClick: () async {},
+      onClick: () async {
+        await viewController.finishOrder();
+      },
     );
   }
 }

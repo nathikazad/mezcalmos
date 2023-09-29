@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -50,7 +51,7 @@ Future<DeliveryOrder?> get_driver_order_by_id(
   }
   return DeliveryOrder(
     orderId: orderData.id,
-    items: orderData.restaurant_order!.items
+    dvItems: orderData.restaurant_order!.items
         .map<DeliveryOrderItem>(
             (Query$get_driver_order$delivery_order_by_pk$restaurant_order$items
                     e) =>
@@ -604,4 +605,50 @@ Future<num?> fetch_delivery_orders_count(
   }
 
   return count;
+}
+
+Future<List<cModels.DeliveryMinimalOrder>?> get_delivery_minimal_orders({
+  required cModels.MinimalDeliveryOrderStatus status,
+  int? driverId,
+  required int limit,
+  required int offset,
+}) async {
+  final QueryResult<Query$GetMinimalDeliveryMessages> res =
+      await _hasuraDb.graphQLClient.query$GetMinimalDeliveryMessages(
+          Options$Query$GetMinimalDeliveryMessages(
+              fetchPolicy: FetchPolicy.networkOnly,
+              variables: Variables$Query$GetMinimalDeliveryMessages(
+                  driver_id: (driverId == null)
+                      ? Input$Int_comparison_exp($_is_null: true)
+                      : Input$Int_comparison_exp(
+                          $_eq: driverId!,
+                        ),
+                  status: status.toFirebaseFormatString(),
+                  limit: limit,
+                  offset: offset)));
+  if (res.hasException) {
+    throw Exception(res.exception);
+  }
+
+  return res.parsedData?.delivery_minimal_order
+      .map<cModels.DeliveryMinimalOrder>(
+          (Query$GetMinimalDeliveryMessages$delivery_minimal_order e) =>
+              cModels.DeliveryMinimalOrder(
+                  id: e.id!,
+                  customer: (e.customer != null)
+                      ? cModels.UserInfo(
+                          id: e.customer!.id,
+                          name: e.customer!.name,
+                          image: e.customer!.image,
+                          firebaseId: '',
+                          language: cModels.Language.EN)
+                      : null,
+                  phone_number: e.phone_number,
+                  driver_id: e.driver_id,
+                  delivery_order_type: e.delivery_order_type
+                      .toString()
+                      .toMinimalDeliveryOrderType(),
+                  status: e.status.toString().toMinimalDeliveryOrderStatus(),
+                  time: e.time!))
+      .toList();
 }

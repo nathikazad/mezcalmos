@@ -5,7 +5,7 @@ import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 
 class CourierOrder extends DeliveryOrder {
-  List<CourierOrdeItem> items = [];
+  List<CourierOrdeItem> courierItems = <CourierOrdeItem>[];
 
   String? billImage;
 
@@ -20,7 +20,8 @@ class CourierOrder extends DeliveryOrder {
       required super.driverInfo,
       required super.status,
       super.review,
-      required this.items,
+      super.dvItems = const <DeliveryOrderItem>[],
+      required this.courierItems,
       super.stripePaymentInfo,
       required super.scheduleTime,
       required super.estimatedArrivalAtDropoff,

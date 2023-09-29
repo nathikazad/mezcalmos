@@ -11,13 +11,10 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Courier/CourierOrderItem.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
-
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -153,7 +150,7 @@ Future<CourierOrder?> get_courier_order_by_id({required int orderId}) async {
           currency: orderData.delivery_order.delivery_company!.details!.currency
               .toCurrency()),
 
-      items: orderData.items
+      courierItems: orderData.items
           .map((Query$get_courier_order_by_id$delivery_courier_order_by_pk$items
                   item) =>
               CourierOrdeItem(
@@ -316,7 +313,7 @@ Stream<CourierOrder?> listen_on_courier_order_by_id({required int orderId}) {
                 .delivery_order.delivery_company!.details!.currency
                 .toCurrency()),
 
-        items: orderData.items
+        courierItems: orderData.items
             .map(
                 (Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$items
                         item) =>

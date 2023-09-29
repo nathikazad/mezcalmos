@@ -720,3 +720,30 @@ mutation updateDeliveryOrderDriverAndCost(
     }
   }
 }
+query GetMinimalDeliveryMessages(
+  $status: String!
+  $limit: Int!
+  $offset: Int!
+  $driver_id: Int_comparison_exp!
+) {
+  delivery_minimal_order(
+    limit: $limit
+    offset: $offset
+    order_by: { time: desc }
+    where: { status: { _eq: $status }, driver_id: $driver_id }
+  ) {
+    id
+    phone_number
+    delivery_order_type
+    user_id
+    service_provider_id
+    status
+    time
+    driver_id
+    customer {
+      name
+      image
+      id
+    }
+  }
+}

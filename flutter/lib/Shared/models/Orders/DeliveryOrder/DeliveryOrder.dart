@@ -11,7 +11,7 @@ class DeliveryOrder extends DeliverableOrder {
   DeliveryOrderStatus status;
 
   bool packageReady;
-  List<DeliveryOrderItem> items = <DeliveryOrderItem>[];
+  List<DeliveryOrderItem> dvItems = <DeliveryOrderItem>[];
 
   //bool driverAssigned;
   DeliveryOrder(
@@ -32,7 +32,7 @@ class DeliveryOrder extends DeliverableOrder {
       required super.estimatedPackageReadyTime,
       super.cancellationTime,
       super.deliveryType = DeliveryType.Delivery,
-      this.items = const <DeliveryOrderItem>[],
+      this.dvItems = const <DeliveryOrderItem>[],
       required super.serviceProvider,
       required super.deliveryProviderType,
       required super.driverInfo,

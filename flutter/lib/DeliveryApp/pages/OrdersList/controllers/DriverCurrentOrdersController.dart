@@ -1,16 +1,17 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/DvOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
-import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/hsDeliveryMessage.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 
 class DriverCurrentOrdersController {
   //instances
@@ -18,18 +19,22 @@ class DriverCurrentOrdersController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
 
   // vars
-  RxList<DeliveryMessage> currentOrders = <DeliveryMessage>[].obs;
-  RxList<DeliveryMessage> openOrders = <DeliveryMessage>[].obs;
-  RxList<MinimalOrder> deliveryOpenOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> deliveryCurrentOrders = <MinimalOrder>[].obs;
+  RxList<DeliveryMinimalOrder> currentOrders = <DeliveryMinimalOrder>[].obs;
+  RxList<DeliveryMinimalOrder> openOrders = <DeliveryMinimalOrder>[].obs;
 
   RxBool initalized = RxBool(false);
   int get driverId => opAuthController.driver!.deliveryDriverId;
   RxBool _isOnline = RxBool(true);
   RxBool onlineClicked = RxBool(false);
+  // paggination //
+  ScrollController scrollController = ScrollController();
+  final int openOrdersFetchSize = 20;
+  int _openOrdersCurrentOffset = 0;
+  bool _openOrdersFetchingData = false;
+  bool _openOrdersReachedEndOfData = false;
 // streams
-  StreamSubscription<List<DeliveryMessage>?>? currentOrdersListener;
-  StreamSubscription<List<DeliveryMessage>?>? openOrdersListener;
+  StreamSubscription<List<DeliveryMinimalOrder>?>? currentOrdersListener;
+  StreamSubscription<List<DeliveryMinimalOrder>?>? openOrdersListener;
   String? subscriptionId;
 
 // getters
@@ -38,21 +43,49 @@ class DriverCurrentOrdersController {
 
   Future<void> init() async {
     _isOnline.value = opAuthController.driver!.deliveryDriverState.online;
-    await _initOrders();
+
+    await Future.wait(
+        <Future<void>>[_fetchCurrentOrders(), _fetchOpenOrders()]);
 
     _listenOnOrders();
   }
 
-  Future<void> _initOrders() async {
+  Future<void> _fetchOpenOrders() async {
+    if (_openOrdersFetchingData || _openOrdersReachedEndOfData) {
+      return;
+    }
     try {
-      deliveryOpenOrders.value =
-          await get_open_driver_orders() ?? <MinimalOrder>[];
       mezDbgPrint(
-          "DV OPEN ORDERS ===============>${deliveryOpenOrders.value.length}");
-      openOrders.value = await getDvOpenMessages(withCache: false);
+          "👋 _fetchopenOrderses called with ferchSize : $openOrdersFetchSize offset: $_openOrdersCurrentOffset");
+      _openOrdersFetchingData = true;
+      final List<DeliveryMinimalOrder>? newList =
+          await get_delivery_minimal_orders(
+              status: MinimalDeliveryOrderStatus.Open,
+              limit: openOrdersFetchSize,
+              offset: _openOrdersCurrentOffset);
+      openOrders.value += newList ?? <DeliveryMinimalOrder>[];
+      if (newList?.length == 0) {
+        _openOrdersReachedEndOfData = true;
+      }
 
-      currentOrders.value =
-          await getDvCurrentMessages(driverId: driverId, withCache: false);
+      _openOrdersCurrentOffset += openOrdersFetchSize;
+    } catch (e) {
+      mezDbgPrint(e);
+    } finally {
+      _openOrdersFetchingData = false;
+    }
+  }
+
+  Future<void> _fetchCurrentOrders() async {
+    try {
+      //  openOrders.value = await get_delivery_minimal_orders(withCache: false);
+
+      currentOrders.value = await get_delivery_minimal_orders(
+              status: MinimalDeliveryOrderStatus.InProcess,
+              driverId: opAuthController.driverId!,
+              limit: 30,
+              offset: 0) ??
+          <DeliveryMinimalOrder>[];
       mezDbgPrint("Orders length ======>${openOrders.length}");
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -62,25 +95,25 @@ class DriverCurrentOrdersController {
   }
 
   void _listenOnOrders() {
-    subscriptionId = hasuraDb.createSubscription(start: () {
-      currentOrdersListener = listenDvCurrentMessages(driverId: driverId)
-          .listen((List<DeliveryMessage>? event) {
-        if (event != null) {
-          currentOrders.value = event;
-        }
-      });
-      openOrdersListener =
-          listenDvOpenMessages().listen((List<DeliveryMessage>? event) {
-        if (event != null) {
-          openOrders.value = event;
-        }
-      });
-    }, cancel: () {
-      currentOrdersListener?.cancel();
-      currentOrdersListener = null;
-      openOrdersListener?.cancel();
-      openOrdersListener = null;
-    });
+    // subscriptionId = hasuraDb.createSubscription(start: () {
+    //   currentOrdersListener = listenDvCurrentMessages(driverId: driverId)
+    //       .listen((List<DeliveryMessage>? event) {
+    //     if (event != null) {
+    //       currentOrders.value = event;
+    //     }
+    //   });
+    //   openOrdersListener =
+    //       listenDvOpenMessages().listen((List<DeliveryMessage>? event) {
+    //     if (event != null) {
+    //       openOrders.value = event;
+    //     }
+    //   });
+    // }, cancel: () {
+    //   currentOrdersListener?.cancel();
+    //   currentOrdersListener = null;
+    //   openOrdersListener?.cancel();
+    //   openOrdersListener = null;
+    // });
   }
 
   Future<void> switchOnlineStatus(bool value) async {
@@ -106,7 +139,7 @@ class DriverCurrentOrdersController {
 
   Future<void> finishAllOrders() async {
     final List<String> numbers = currentOrders
-        .map((DeliveryMessage element) => element.phoneNumber)
+        .map((DeliveryMinimalOrder element) => element.phone_number.toString())
         .toList();
     try {
       final MarkMessagesResponse res =
@@ -125,6 +158,14 @@ class DriverCurrentOrdersController {
 
   void dispose() {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
+  }
+
+  void handleNavigation({required DeliveryMinimalOrder order}) {
+    if (order.delivery_order_type == MinimalDeliveryOrderType.Message) {
+      DvConvoView.navigate(phoneNumber: order.phone_number!);
+    } else {
+      DvOrderView.navigate(orderId: order.id.toInt());
+    }
   }
 }
 
@@ -200,4 +241,8 @@ class DvTextMessage {
       body: json['body'] ?? '',
     );
   }
+}
+
+extension DvMinimalOrdersHelper on DeliveryMinimalOrder {
+  DateTime get receivedTime => DateTime.parse(time);
 }

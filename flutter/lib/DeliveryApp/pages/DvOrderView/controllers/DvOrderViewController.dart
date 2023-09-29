@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -53,6 +55,62 @@ class DvOrderViewController {
     }
   }
 
-  Future<void> openCustomerWhatsapp() async {}
-  Future<void> openRestaurantWhatsapp() async {}
+  Future<void> openRestaurantWhatsapp() async {
+    final String? phoneNumber = order?.serviceProvider.phoneNumber;
+    if (phoneNumber != null) {
+      try {
+        final bool res = await callWhatsappNumber(phoneNumber);
+      } catch (e) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+      }
+    } else
+      mezDbgPrint("Phone number is null 🥲");
+  }
+
+  Future<void> openCustomerWhatsapp() async {
+    final String? phoneNumber = order?.customer.phoneNumber;
+    if (phoneNumber != null) {
+      try {
+        final bool res = await callWhatsappNumber(phoneNumber);
+      } catch (e) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+      }
+    } else
+      mezDbgPrint("Phone number is null 🥲");
+  }
+
+  Future<void> finishOrder() async {
+    try {
+      final cm.ChangeDeliveryStatusResponse res =
+          await CloudFunctions.delivery3_changeStatus(
+              deliveryId: orderId, newStatus: cm.DeliveryOrderStatus.Delivered);
+      if (res.success) {
+        showSavedSnackBar();
+      } else
+        showErrorSnackBar(errorText: res.error.toString());
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar();
+    }
+  }
+
+  Future<void> cancelOrder() async {
+    try {
+      final cm.ChangeDeliveryStatusResponse res =
+          await CloudFunctions.delivery3_changeStatus(
+              deliveryId: orderId,
+              newStatus: cm.DeliveryOrderStatus.CancelledByDeliverer);
+      if (res.success) {
+        showSavedSnackBar();
+      } else
+        showErrorSnackBar(errorText: res.error.toString());
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar();
+    }
+  }
 }

@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/components/DvConvoCard.dart';
-import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/PastOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -54,10 +54,10 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
           } else {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(
                       "${_i18n()["pastOrders"]}",
                       style: context.textTheme.bodyLarge,
@@ -74,30 +74,30 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
                     )
                   ],
                 ),
-                GroupedListView<DeliveryMessage, DateTime>(
+                GroupedListView<DeliveryMinimalOrder, DateTime>(
                   shrinkWrap: true,
                   elements: _viewController.pastOrders,
-                  groupBy: (DeliveryMessage element) => DateTime(
-                      element.finishedTime!.year,
-                      element.finishedTime!.month,
-                      element.finishedTime!.day),
+                  groupBy: (DeliveryMinimalOrder element) => DateTime(
+                      element.receivedTime.year,
+                      element.receivedTime.month,
+                      element.receivedTime.day),
                   groupComparator: (DateTime value1, DateTime value2) =>
                       value2.compareTo(value1),
-                  itemComparator: (DeliveryMessage element1,
-                          DeliveryMessage element2) =>
-                      element2.finishedTime!.compareTo(element1.finishedTime!),
+                  itemComparator: (DeliveryMinimalOrder element1,
+                          DeliveryMinimalOrder element2) =>
+                      element2.receivedTime.compareTo(element1.receivedTime),
                   physics: NeverScrollableScrollPhysics(),
-                  groupHeaderBuilder: (DeliveryMessage element) {
+                  groupHeaderBuilder: (DeliveryMinimalOrder element) {
                     return Container(
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       child: Text(
-                        (calculateDateDifference(element.finishedTime!) == 0)
+                        (calculateDateDifference(element.receivedTime) == 0)
                             ? _i18n()["today"]
-                            : (calculateDateDifference(element.finishedTime!) ==
+                            : (calculateDateDifference(element.receivedTime) ==
                                     -1)
                                 ? _i18n()["yesterday"]
                                 : DateFormat('dd MMM yyyy')
-                                    .format(element.finishedTime!),
+                                    .format(element.receivedTime),
                         style: context.textTheme.bodyMedium,
                       ),
                     );
@@ -105,11 +105,12 @@ class _DriverPastOrdersViewState extends State<DriverPastOrdersView> {
                   separator: SizedBox(
                     height: 5,
                   ),
-                  itemBuilder: (BuildContext context, DeliveryMessage message) {
+                  itemBuilder:
+                      (BuildContext context, DeliveryMinimalOrder message) {
                     return DvConvoCard(
                       message: message,
                       onClick: () {
-                        DvConvoView.navigate(phoneNumber: message.phoneNumber);
+                        _viewController.handleNavigation(order: message);
                       },
                     );
                   },

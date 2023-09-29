@@ -97,7 +97,7 @@ class DvConvoViewController {
       try {
         final MarkMessagesResponse res =
             await CloudFunctions.whatsapp_markMessagesAsFinished(
-                phoneNumbers: [phoneNumber]);
+                phoneNumbers: <String>[phoneNumber]);
         if (res.success) {
           showSavedSnackBar(title: "Finished", subtitle: "Marked as finished");
           await _fetchMessages();

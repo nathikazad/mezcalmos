@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class DvConvoCard extends StatelessWidget {
-  final DeliveryMessage message;
+  final DeliveryMinimalOrder message;
   final VoidCallback onClick;
 
   const DvConvoCard({required this.message, required this.onClick});
@@ -16,15 +16,15 @@ class DvConvoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return MezCard(
       onClick: onClick,
-      firstAvatarBgImage: message.userImage != null
-          ? CachedNetworkImageProvider(message.userImage!)
+      firstAvatarBgImage: message.customer?.image != null
+          ? CachedNetworkImageProvider(message.customer!.image!)
           : null,
       margin: const EdgeInsets.only(bottom: 8),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text(
-            message.userName ?? message.phoneNumber,
+            message.customer?.name ?? message.phone_number.toString(),
             style: context.textTheme.bodyLarge,
           ),
           // Text(
@@ -35,7 +35,7 @@ class DvConvoCard extends StatelessWidget {
           // ),
           Text.rich(
             TextSpan(
-              children: [
+              children: <InlineSpan>[
                 WidgetSpan(
                   child: Icon(
                     Icons.watch_later_outlined,
@@ -43,7 +43,7 @@ class DvConvoCard extends StatelessWidget {
                   ),
                 ),
                 WidgetSpan(child: hTinySepartor),
-                TextSpan(text: message.receivedTime.getOrderTime()),
+                TextSpan(text: DateTime.parse(message.time).getOrderTime()),
               ],
             ),
           ),
