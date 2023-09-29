@@ -5,7 +5,7 @@ import axios from "axios";
 import { getHasura, getStagingHasura } from "../../hasura";
 import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
 import { DeliveryDriver } from "../../../shared/models/Generic/Delivery";
-import { getAllDeliveryDrivers } from "../../../shared/graphql/delivery/driver/getDeliveryDriver";
+import { getAllDeliveryDrivers, getDeliveryDriver } from "../../../shared/graphql/delivery/driver/getDeliveryDriver";
 import { ForegroundNotification, Notification, NotificationAction, NotificationType } from "../../../shared/models/Notification";
 import { ParticipantType } from "../../../shared/models/Generic/Chat";
 import { pushNotification } from "../notifyUser";
@@ -16,12 +16,12 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
   //   req.query['hub.verify_token'] !== "jkdawg"
   // )
   //   throw new functions.https.HttpsError('invalid-argument', 'The function must be called with correct token.');
-  
+
   if (req.query['hub.challenge']) {
     res.send(req.query['hub.challenge']);
     return;
   }
-  
+
   if (req.body && req.body.entry) {
     await addAndNotify(req.body.entry);
   }
@@ -32,16 +32,21 @@ export const handleWhatsapp = functions.https.onRequest(async (req, res) => {
 
 });
 
-export async function addAndNotify(entry:any) {
+export async function addAndNotify(entry: any) {
   let phoneNumber = await addMessageToDatabase(entry);
   if (phoneNumber) {
-    await notifyDrivers(phoneNumber);
+    let driverId = await getDriverWhoTookOrder(phoneNumber);
+    if (driverId) {
+      let driver = await getDeliveryDriver(driverId);
+      notifyCallback([driver], phoneNumber);
+    } else
+      await notifyDrivers(phoneNumber);
   }
 }
 
 export async function notifyDrivers(phoneNumber: string, excludeDriver?: number) {
   let drivers: DeliveryDriver[] = await getAllDeliveryDrivers();
-  drivers = drivers.filter((d) => d.id != excludeDriver )
+  drivers = drivers.filter((d) => d.id != excludeDriver)
   notifyCallback(drivers, phoneNumber);
   setTimeout(() => notifyCallback(drivers, phoneNumber), 10000);
 }
@@ -118,7 +123,35 @@ export async function addMessageToDatabase(entries: Entry[]): Promise<string | n
   return phoneNumber;
 }
 
+async function getDriverWhoTookOrder(phoneNumber: string): Promise<number | null> {
+  const chain = getHasura();
+  let messages = await chain.query({
+    delivery_messages: [{
+      where: {
+        _and: [{
+          phone_number: {
+            _eq: phoneNumber
+          }
+        }, {
+          finished_time: {
+            _is_null: true
+          }
+        }, {
+          driver_id: {
+            _is_null: false
+          }
+        }]
+      }
+    }, {
+      driver_id: true
+    }]
+  });
+  if (messages.delivery_messages.length == 0)
+    return null;
+  else
+    return messages.delivery_messages[0].driver_id!;
 
+}
 
 export interface MarkMessagesAsRespondedDetails {
   phoneNumber: string,

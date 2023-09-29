@@ -69,8 +69,16 @@ export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsR
             }
 
             return {
-              where: {
-                id: { _eq: msg.id }
+              where:
+              {
+                _and: [{
+                  id: { 
+                    _eq: msg.id 
+                  },
+                  responded_time: {
+                    _is_null: true
+                  }
+                }]
               },
               _set: setObject
             };
