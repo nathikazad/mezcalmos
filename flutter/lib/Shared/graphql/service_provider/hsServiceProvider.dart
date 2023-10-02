@@ -709,9 +709,10 @@ Future<int?> update_service_offer({
       service_provider_id: serviceProviderId,
       offer: Input$service_provider_offer_set_input(
         offer_type: offer.offerType.toFirebaseFormatString(),
-        details: offer.details.toFirebaseFormattedJson(),
+        details: offer.details.toJson(),
         status: offer.status.toFirebaseFormatString(),
         coupon_code: offer.couponCode,
+        influencer_details: offer.influencerDetails?.toJson(),
       ),
     )),
   );

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 
@@ -14,7 +15,7 @@ class OfferItemsSelectViewController {
   RxBool isFetching = RxBool(false);
   late int serviceId;
   late ServiceProviderType serviceProviderType;
-  List<int> oldSelectedItemsIds = [];
+  List<int> oldSelectedItemsIds = <int>[];
   String? lastSearchedKeyword;
 
   bool get endData => _reachedEndOfData;
@@ -40,43 +41,44 @@ class OfferItemsSelectViewController {
   }
 
   Future<void> _fetchItems({String? keyword}) async {
-    // mezDbgPrint(
-    //     "called fetch items with keyword offset: $_currentOffset   keyword: $keyword isFetching : $_fetchingData _endData: $_reachedEndOfData");
-    // isFetching.value = true;
-    // if (_fetchingData || _reachedEndOfData) {
-    //   return;
-    // }
-    // _fetchingData = true;
-    // List<OfferItemData> newList =
-    //     (serviceProviderType == ServiceProviderType.Restaurant)
-    //         ? await get_restaurant_offer_items(
-    //             withCache: false,
-    //             limit: fetchSize,
-    //             offset: _currentOffset,
-    //             keyword: keyword,
-    //             restuarntId: serviceId)
-    //         : await search_business_items(
-    //             withCache: false,
-    //             limit: fetchSize,
-    //             offset: _currentOffset,
-    //             keyword: keyword,
-    //             businessId: serviceId);
-    // allOfferings.value += newList;
-    // newList
-    //     .where(
-    //         (OfferItemData element) => oldSelectedItemsIds.contains(element.id))
-    //     .forEach((OfferItemData element) {
-    //   selectedOfferings.add(element);
-    // });
+    mezDbgPrint(
+        "called fetch items with keyword offset: $_currentOffset   keyword: $keyword isFetching : $_fetchingData _endData: $_reachedEndOfData");
+    isFetching.value = true;
+    if (_fetchingData || _reachedEndOfData) {
+      return;
+    }
+    _fetchingData = true;
+    final List<OfferItemData> newList =
+        // (serviceProviderType == ServiceProviderType.Restaurant)
+        //     ?
+        await get_restaurant_offer_items(
+            withCache: false,
+            limit: fetchSize,
+            offset: _currentOffset,
+            keyword: keyword,
+            restuarntId: serviceId);
+    // : await search_business_items(
+    //     withCache: false,
+    //     limit: fetchSize,
+    //     offset: _currentOffset,
+    //     keyword: keyword,
+    //     businessId: serviceId);
+    allOfferings.value += newList;
+    newList
+        .where(
+            (OfferItemData element) => oldSelectedItemsIds.contains(element.id))
+        .forEach((OfferItemData element) {
+      selectedOfferings.add(element);
+    });
 
-    // if (newList.length == 0) {
-    //   _reachedEndOfData = true;
-    // }
+    if (newList.length == 0) {
+      _reachedEndOfData = true;
+    }
 
-    // _currentOffset += fetchSize;
+    _currentOffset += fetchSize;
 
-    // _fetchingData = false;
-    // isFetching.value = false;
+    _fetchingData = false;
+    isFetching.value = false;
   }
 
   void search(String value) {
