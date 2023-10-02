@@ -106,27 +106,27 @@ Future<CouponError?> applyRestaurantCoupon(
 Future<void> applyOffersToRestaurantCart(
     {required int customerId, required Cart cart}) async {
   if (cart.restaurant?.restaurantId == null) return;
-  List<cModels.Offer> offers = await get_service_provider_offers(
+  final List<cModels.Offer> offers = await get_service_provider_offers(
       serviceProviderId: cart.restaurant!.restaurantId,
       serviceProviderType: cModels.ServiceProviderType.Restaurant);
 
-  List<int> appliedOffers = cart.offersApplied;
-  cart.offersApplied = [];
+  final List<int> appliedOffers = cart.offersApplied;
+  cart.offersApplied = <int>[];
   num discount = 0;
 
-  List<cModels.Offer> activeCoupons = offers
+  final List<cModels.Offer> activeCoupons = offers
       .where((cModels.Offer offer) =>
           offer.offerType == cModels.OfferType.Coupon &&
           offer.status == cModels.OfferStatus.Active)
       .toList();
   appliedOffers.forEach((int o) {
-    cModels.Offer? coupon = activeCoupons
+    final cModels.Offer? coupon = activeCoupons
         .firstWhereOrNull((cModels.Offer coupon) => o == coupon.id);
     if (coupon != null) {
       discount += calculateRestaurantCartDiscount(cart, coupon);
     }
   });
-  List<cModels.Offer> activePromotions = offers
+  final List<cModels.Offer> activePromotions = offers
       .where((cModels.Offer offer) =>
           offer.offerType == cModels.OfferType.Promotion &&
           offer.status == cModels.OfferStatus.Active)
@@ -202,17 +202,17 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
       } else {
         cart.cartItems.forEach((CartItem cartItem) {
           if (offer.details.offerForItems == "particularitems") {
-            offer.details.items!.forEach((num c) => {
+            offer.details.items!.forEach((num c) => <Set<num>>{
                   if (c == cartItem.item.id)
-                    {
+                    <num>{
                       discount +=
                           offer.details.discountValue * cartItem.quantity
                     }
                 });
           } else if (offer.details.offerForItems == "particularCategories") {
-            offer.details.categories!.forEach((num c) => {
+            offer.details.categories!.forEach((num c) => <Set<num>>{
                   if (c == cartItem.item.categoryId)
-                    {
+                    <num>{
                       discount +=
                           offer.details.discountValue * cartItem.quantity
                     }
@@ -224,9 +224,9 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
     case cModels.DiscountType.Percentage:
       cart.cartItems.forEach((CartItem cartItem) {
         if (offer.details.offerForItems == "particularItems") {
-          offer.details.items!.forEach((num c) => {
+          offer.details.items!.forEach((num c) => <Set<double>>{
                 if (c == cartItem.item.id)
-                  {
+                  <double>{
                     discount += cartItem.item.cost *
                         offer.details.discountValue /
                         100.0 *
@@ -234,9 +234,9 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
                   }
               });
         } else if (offer.details.offerForItems == "particularCategories") {
-          offer.details.categories!.forEach((num c) => {
+          offer.details.categories!.forEach((num c) => <Set<double>>{
                 if (c == cartItem.item.categoryId)
-                  {
+                  <double>{
                     discount += cartItem.item.cost *
                         offer.details.discountValue /
                         100.0 *
@@ -410,6 +410,15 @@ Future<String> generateOfferDescription(
         " from ${offerDetails.validityRangeStart} to ${offerDetails.validityRangeEnd}";
   }
   return description;
+}
+
+extension InfluencerDetailsHelper on cModels.InfluencerOfferDetails {
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      "rewardType": rewardType.toFirebaseFormatString(),
+      "rewardValue": rewardValue,
+    };
+  }
 }
 
 extension OfferDetailsExtensions on cModels.OfferDetails {

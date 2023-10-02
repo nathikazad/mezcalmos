@@ -32,10 +32,14 @@ class ServiceOfferEditViewController {
       Rxn<OfferOrderType>(OfferOrderType.AnyOrder);
   Rx<DiscountType> selectedDiscountType =
       Rx<DiscountType>(DiscountType.FlatAmount);
+  Rx<DiscountType> selectedRewardType =
+      Rx<DiscountType>(DiscountType.FlatAmount);
   TextEditingController discountController = TextEditingController();
+  TextEditingController rewardController = TextEditingController();
   TextEditingController minOrderCost = TextEditingController();
   Rxn<DateTime> selectedStartDate = Rxn<DateTime>();
   Rxn<DateTime> selectedEndDate = Rxn<DateTime>();
+  RxBool offerForInfluencer = RxBool(false);
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool get haveItems =>
@@ -68,28 +72,37 @@ class ServiceOfferEditViewController {
   Future<void> _initEditMode() async {
     isEditMode.value = true;
     await _fetchOfferInfo();
-    if (currentOffer.value?.details.items != null) {
-      unawaited(_fetchNames());
-    }
+    if (currentOffer.value != null) {
+      if (currentOffer.value?.details.items != null) {
+        unawaited(_fetchNames());
+      }
 
-    selectedOfferType.value = currentOffer.value!.offerType;
-    selectedStartDate.value = DateTime.tryParse(
-        currentOffer.value!.details.validityRangeStart.toString());
-    selectedEndDate.value = DateTime.tryParse(
-        currentOffer.value!.details.validityRangeEnd.toString());
-    offerNameController.text = (selectedOfferType.value == OfferType.Coupon)
-        ? currentOffer.value!.couponCode!
-        : currentOffer.value!.name?.getTranslation(userLanguage) ?? "";
-    selectedOfferOrderType.value =
-        currentOffer.value!.details.offerForOrder.toOfferOrderType();
-    selectedDiscountType.value = currentOffer.value!.details.discountType;
-    discountController.text =
-        currentOffer.value!.details.discountValue.toString();
-    if (currentOffer.value!.details.minimumOrderAmount != null) {
-      minOrderCost.text =
-          currentOffer.value!.details.minimumOrderAmount.toString();
+      selectedOfferType.value = currentOffer.value!.offerType;
+      selectedStartDate.value = DateTime.tryParse(
+          currentOffer.value!.details.validityRangeStart.toString());
+      selectedEndDate.value = DateTime.tryParse(
+          currentOffer.value!.details.validityRangeEnd.toString());
+      offerNameController.text = (selectedOfferType.value == OfferType.Coupon)
+          ? currentOffer.value!.couponCode!
+          : currentOffer.value!.name?.getTranslation(userLanguage) ?? "";
+      selectedOfferOrderType.value =
+          currentOffer.value!.details.offerForOrder.toOfferOrderType();
+      selectedDiscountType.value = currentOffer.value!.details.discountType;
+      discountController.text =
+          currentOffer.value!.details.discountValue.toString();
+      if (currentOffer.value!.details.minimumOrderAmount != null) {
+        minOrderCost.text =
+            currentOffer.value!.details.minimumOrderAmount.toString();
+      }
+      repeatOffer.value = currentOffer.value!.details.weeklyRepeat;
+      offerForInfluencer.value = currentOffer.value?.influencerDetails != null;
+      if (offerForInfluencer.value) {
+        selectedRewardType.value =
+            currentOffer.value!.influencerDetails!.rewardType;
+        rewardController.text =
+            currentOffer.value!.influencerDetails!.rewardValue.toString();
+      }
     }
-    repeatOffer.value = currentOffer.value!.details.weeklyRepeat;
   }
 
   Future<void> _fetchNames() async {
@@ -113,7 +126,7 @@ class ServiceOfferEditViewController {
   }
 
   Map<String, List<dynamic>> _constructSelectedOfferingItems() {
-    final Map<String, List<dynamic>> selectedOfferingItems = {
+    final Map<String, List<dynamic>> selectedOfferingItems = <String, List>{
       "ids": <num>[],
       "categories": <OfferingType>[],
       "nameIds": <num>[],
@@ -128,6 +141,11 @@ class ServiceOfferEditViewController {
 
   void _constructOffer() {
     currentOffer.value = Offer(
+      influencerDetails: offerForInfluencer.value
+          ? InfluencerOfferDetails(
+              rewardType: selectedRewardType.value,
+              rewardValue: double.parse(rewardController.text))
+          : null,
       serviceProviderImage: currentOffer.value?.serviceProviderImage ?? "",
       serviceProviderName: currentOffer.value?.serviceProviderName ?? "",
       id: currentOffer.value?.id ?? -1,
@@ -138,7 +156,7 @@ class ServiceOfferEditViewController {
           : null,
       serviceProviderType: serviceProviderType,
       status: OfferStatus.Active,
-      name: {
+      name: <Language, String>{
         Language.EN: offerNameController.text,
       },
       nameId: currentOffer.value?.nameId ?? -1,
@@ -193,6 +211,10 @@ class ServiceOfferEditViewController {
   void removeItem({required int id}) {
     selectedItems.removeWhere((OfferItemData element) => element.id == id);
     selectedItems.refresh();
+  }
+
+  void switchOfferInfluencer(bool v) {
+    offerForInfluencer.value = v;
   }
 }
 

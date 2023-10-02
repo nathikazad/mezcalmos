@@ -13727,6 +13727,13 @@ const documentNodeQueryget_offer_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'influencer_details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name_id'),
             alias: null,
             arguments: [],
@@ -13907,6 +13914,7 @@ class Query$get_offer_by_id$service_provider_offer_by_pk {
     required this.id,
     required this.details,
     this.coupon_code,
+    this.influencer_details,
     required this.name_id,
     required this.name,
     required this.$__typename,
@@ -13921,6 +13929,7 @@ class Query$get_offer_by_id$service_provider_offer_by_pk {
     final l$id = json['id'];
     final l$details = json['details'];
     final l$coupon_code = json['coupon_code'];
+    final l$influencer_details = json['influencer_details'];
     final l$name_id = json['name_id'];
     final l$name = json['name'];
     final l$$__typename = json['__typename'];
@@ -13932,6 +13941,9 @@ class Query$get_offer_by_id$service_provider_offer_by_pk {
       id: (l$id as int),
       details: mapFromJson(l$details),
       coupon_code: (l$coupon_code as String?),
+      influencer_details: l$influencer_details == null
+          ? null
+          : mapFromJson(l$influencer_details),
       name_id: (l$name_id as int),
       name: Query$get_offer_by_id$service_provider_offer_by_pk$name.fromJson(
           (l$name as Map<String, dynamic>)),
@@ -13952,6 +13964,8 @@ class Query$get_offer_by_id$service_provider_offer_by_pk {
   final dynamic details;
 
   final String? coupon_code;
+
+  final dynamic? influencer_details;
 
   final int name_id;
 
@@ -13975,6 +13989,9 @@ class Query$get_offer_by_id$service_provider_offer_by_pk {
     _resultData['details'] = mapToJson(l$details);
     final l$coupon_code = coupon_code;
     _resultData['coupon_code'] = l$coupon_code;
+    final l$influencer_details = influencer_details;
+    _resultData['influencer_details'] =
+        l$influencer_details == null ? null : mapToJson(l$influencer_details);
     final l$name_id = name_id;
     _resultData['name_id'] = l$name_id;
     final l$name = name;
@@ -13993,6 +14010,7 @@ class Query$get_offer_by_id$service_provider_offer_by_pk {
     final l$id = id;
     final l$details = details;
     final l$coupon_code = coupon_code;
+    final l$influencer_details = influencer_details;
     final l$name_id = name_id;
     final l$name = name;
     final l$$__typename = $__typename;
@@ -14004,6 +14022,7 @@ class Query$get_offer_by_id$service_provider_offer_by_pk {
       l$id,
       l$details,
       l$coupon_code,
+      l$influencer_details,
       l$name_id,
       l$name,
       l$$__typename,
@@ -14052,6 +14071,11 @@ class Query$get_offer_by_id$service_provider_offer_by_pk {
     final l$coupon_code = coupon_code;
     final lOther$coupon_code = other.coupon_code;
     if (l$coupon_code != lOther$coupon_code) {
+      return false;
+    }
+    final l$influencer_details = influencer_details;
+    final lOther$influencer_details = other.influencer_details;
+    if (l$influencer_details != lOther$influencer_details) {
       return false;
     }
     final l$name_id = name_id;
@@ -14103,6 +14127,7 @@ abstract class CopyWith$Query$get_offer_by_id$service_provider_offer_by_pk<
     int? id,
     dynamic? details,
     String? coupon_code,
+    dynamic? influencer_details,
     int? name_id,
     Query$get_offer_by_id$service_provider_offer_by_pk$name? name,
     String? $__typename,
@@ -14133,6 +14158,7 @@ class _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk<TRes>
     Object? id = _undefined,
     Object? details = _undefined,
     Object? coupon_code = _undefined,
+    Object? influencer_details = _undefined,
     Object? name_id = _undefined,
     Object? name = _undefined,
     Object? $__typename = _undefined,
@@ -14159,6 +14185,9 @@ class _CopyWithImpl$Query$get_offer_by_id$service_provider_offer_by_pk<TRes>
         coupon_code: coupon_code == _undefined
             ? _instance.coupon_code
             : (coupon_code as String?),
+        influencer_details: influencer_details == _undefined
+            ? _instance.influencer_details
+            : (influencer_details as dynamic?),
         name_id: name_id == _undefined || name_id == null
             ? _instance.name_id
             : (name_id as int),
@@ -14193,6 +14222,7 @@ class _CopyWithStubImpl$Query$get_offer_by_id$service_provider_offer_by_pk<TRes>
     int? id,
     dynamic? details,
     String? coupon_code,
+    dynamic? influencer_details,
     int? name_id,
     Query$get_offer_by_id$service_provider_offer_by_pk$name? name,
     String? $__typename,

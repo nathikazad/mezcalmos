@@ -21684,6 +21684,32 @@ type mutation_root {
   delete_service_provider_details_by_pk(id: Int!): service_provider_details
 
   """
+  delete data from the table: "service_provider.influencer"
+  """
+  delete_service_provider_influencer(
+    """filter the rows which have to be deleted"""
+    where: service_provider_influencer_bool_exp!
+  ): service_provider_influencer_mutation_response
+
+  """
+  delete single row from the table: "service_provider.influencer"
+  """
+  delete_service_provider_influencer_by_pk(id: Int!): service_provider_influencer
+
+  """
+  delete data from the table: "service_provider.influencer_offer"
+  """
+  delete_service_provider_influencer_offer(
+    """filter the rows which have to be deleted"""
+    where: service_provider_influencer_offer_bool_exp!
+  ): service_provider_influencer_offer_mutation_response
+
+  """
+  delete single row from the table: "service_provider.influencer_offer"
+  """
+  delete_service_provider_influencer_offer_by_pk(id: Int!): service_provider_influencer_offer
+
+  """
   delete data from the table: "service_provider.location"
   """
   delete_service_provider_location(
@@ -23204,6 +23230,50 @@ type mutation_root {
     """upsert condition"""
     on_conflict: service_provider_details_on_conflict
   ): service_provider_details
+
+  """
+  insert data into the table: "service_provider.influencer"
+  """
+  insert_service_provider_influencer(
+    """the rows to be inserted"""
+    objects: [service_provider_influencer_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: service_provider_influencer_on_conflict
+  ): service_provider_influencer_mutation_response
+
+  """
+  insert data into the table: "service_provider.influencer_offer"
+  """
+  insert_service_provider_influencer_offer(
+    """the rows to be inserted"""
+    objects: [service_provider_influencer_offer_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: service_provider_influencer_offer_on_conflict
+  ): service_provider_influencer_offer_mutation_response
+
+  """
+  insert a single row into the table: "service_provider.influencer_offer"
+  """
+  insert_service_provider_influencer_offer_one(
+    """the row to be inserted"""
+    object: service_provider_influencer_offer_insert_input!
+
+    """upsert condition"""
+    on_conflict: service_provider_influencer_offer_on_conflict
+  ): service_provider_influencer_offer
+
+  """
+  insert a single row into the table: "service_provider.influencer"
+  """
+  insert_service_provider_influencer_one(
+    """the row to be inserted"""
+    object: service_provider_influencer_insert_input!
+
+    """upsert condition"""
+    on_conflict: service_provider_influencer_on_conflict
+  ): service_provider_influencer
 
   """
   insert data into the table: "service_provider.location"
@@ -26374,6 +26444,74 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [service_provider_details_updates!]!
   ): [service_provider_details_mutation_response]
+
+  """
+  update data of the table: "service_provider.influencer"
+  """
+  update_service_provider_influencer(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_influencer_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_influencer_set_input
+
+    """filter the rows which have to be updated"""
+    where: service_provider_influencer_bool_exp!
+  ): service_provider_influencer_mutation_response
+
+  """
+  update single row of the table: "service_provider.influencer"
+  """
+  update_service_provider_influencer_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_influencer_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_influencer_set_input
+    pk_columns: service_provider_influencer_pk_columns_input!
+  ): service_provider_influencer
+
+  """
+  update multiples rows of table: "service_provider.influencer"
+  """
+  update_service_provider_influencer_many(
+    """updates to execute, in order"""
+    updates: [service_provider_influencer_updates!]!
+  ): [service_provider_influencer_mutation_response]
+
+  """
+  update data of the table: "service_provider.influencer_offer"
+  """
+  update_service_provider_influencer_offer(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_influencer_offer_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_influencer_offer_set_input
+
+    """filter the rows which have to be updated"""
+    where: service_provider_influencer_offer_bool_exp!
+  ): service_provider_influencer_offer_mutation_response
+
+  """
+  update single row of the table: "service_provider.influencer_offer"
+  """
+  update_service_provider_influencer_offer_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: service_provider_influencer_offer_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: service_provider_influencer_offer_set_input
+    pk_columns: service_provider_influencer_offer_pk_columns_input!
+  ): service_provider_influencer_offer
+
+  """
+  update multiples rows of table: "service_provider.influencer_offer"
+  """
+  update_service_provider_influencer_offer_many(
+    """updates to execute, in order"""
+    updates: [service_provider_influencer_offer_updates!]!
+  ): [service_provider_influencer_offer_mutation_response]
 
   """
   update data of the table: "service_provider.location"
@@ -30331,6 +30469,96 @@ type query_root {
   fetch data from the table: "service_provider.details" using primary key columns
   """
   service_provider_details_by_pk(id: Int!): service_provider_details
+
+  """
+  fetch data from the table: "service_provider.influencer"
+  """
+  service_provider_influencer(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_bool_exp
+  ): [service_provider_influencer!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider.influencer"
+  """
+  service_provider_influencer_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_bool_exp
+  ): service_provider_influencer_aggregate!
+
+  """
+  fetch data from the table: "service_provider.influencer" using primary key columns
+  """
+  service_provider_influencer_by_pk(id: Int!): service_provider_influencer
+
+  """
+  fetch data from the table: "service_provider.influencer_offer"
+  """
+  service_provider_influencer_offer(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_offer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_offer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_offer_bool_exp
+  ): [service_provider_influencer_offer!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider.influencer_offer"
+  """
+  service_provider_influencer_offer_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_offer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_offer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_offer_bool_exp
+  ): service_provider_influencer_offer_aggregate!
+
+  """
+  fetch data from the table: "service_provider.influencer_offer" using primary key columns
+  """
+  service_provider_influencer_offer_by_pk(id: Int!): service_provider_influencer_offer
 
   """
   fetch data from the table: "service_provider.location"
@@ -40347,6 +40575,516 @@ type service_provider_details_variance_fields {
 }
 
 """
+columns and relationships of "service_provider.influencer"
+"""
+type service_provider_influencer {
+  id: Int!
+  tag: String!
+
+  """An object relationship"""
+  user: user
+  user_id: String!
+}
+
+"""
+aggregated selection of "service_provider.influencer"
+"""
+type service_provider_influencer_aggregate {
+  aggregate: service_provider_influencer_aggregate_fields
+  nodes: [service_provider_influencer!]!
+}
+
+"""
+aggregate fields of "service_provider.influencer"
+"""
+type service_provider_influencer_aggregate_fields {
+  avg: service_provider_influencer_avg_fields
+  count(columns: [service_provider_influencer_select_column!], distinct: Boolean): Int!
+  max: service_provider_influencer_max_fields
+  min: service_provider_influencer_min_fields
+  stddev: service_provider_influencer_stddev_fields
+  stddev_pop: service_provider_influencer_stddev_pop_fields
+  stddev_samp: service_provider_influencer_stddev_samp_fields
+  sum: service_provider_influencer_sum_fields
+  var_pop: service_provider_influencer_var_pop_fields
+  var_samp: service_provider_influencer_var_samp_fields
+  variance: service_provider_influencer_variance_fields
+}
+
+"""aggregate avg on columns"""
+type service_provider_influencer_avg_fields {
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "service_provider.influencer".
+All fields are combined with a logical 'AND'.
+"""
+input service_provider_influencer_bool_exp {
+  _and: [service_provider_influencer_bool_exp!]
+  _not: service_provider_influencer_bool_exp
+  _or: [service_provider_influencer_bool_exp!]
+  id: Int_comparison_exp
+  tag: String_comparison_exp
+  user: user_bool_exp
+  user_id: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "service_provider.influencer"
+"""
+enum service_provider_influencer_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  influencer_pkey
+
+  """
+  unique or primary key constraint on columns "tag"
+  """
+  influencer_tag_key
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  influencer_user_id_key
+}
+
+"""
+input type for incrementing numeric columns in table "service_provider.influencer"
+"""
+input service_provider_influencer_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "service_provider.influencer"
+"""
+input service_provider_influencer_insert_input {
+  id: Int
+  tag: String
+  user: user_obj_rel_insert_input
+  user_id: String
+}
+
+"""aggregate max on columns"""
+type service_provider_influencer_max_fields {
+  id: Int
+  tag: String
+  user_id: String
+}
+
+"""aggregate min on columns"""
+type service_provider_influencer_min_fields {
+  id: Int
+  tag: String
+  user_id: String
+}
+
+"""
+response of any mutation on the table "service_provider.influencer"
+"""
+type service_provider_influencer_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [service_provider_influencer!]!
+}
+
+"""
+input type for inserting object relation for remote table "service_provider.influencer"
+"""
+input service_provider_influencer_obj_rel_insert_input {
+  data: service_provider_influencer_insert_input!
+
+  """upsert condition"""
+  on_conflict: service_provider_influencer_on_conflict
+}
+
+"""
+columns and relationships of "service_provider.influencer_offer"
+"""
+type service_provider_influencer_offer {
+  id: Int!
+
+  """An object relationship"""
+  influencer: service_provider_influencer
+  influencer_id: Int!
+
+  """An object relationship"""
+  offer: service_provider_offer
+  offer_id: Int!
+}
+
+"""
+aggregated selection of "service_provider.influencer_offer"
+"""
+type service_provider_influencer_offer_aggregate {
+  aggregate: service_provider_influencer_offer_aggregate_fields
+  nodes: [service_provider_influencer_offer!]!
+}
+
+"""
+aggregate fields of "service_provider.influencer_offer"
+"""
+type service_provider_influencer_offer_aggregate_fields {
+  avg: service_provider_influencer_offer_avg_fields
+  count(columns: [service_provider_influencer_offer_select_column!], distinct: Boolean): Int!
+  max: service_provider_influencer_offer_max_fields
+  min: service_provider_influencer_offer_min_fields
+  stddev: service_provider_influencer_offer_stddev_fields
+  stddev_pop: service_provider_influencer_offer_stddev_pop_fields
+  stddev_samp: service_provider_influencer_offer_stddev_samp_fields
+  sum: service_provider_influencer_offer_sum_fields
+  var_pop: service_provider_influencer_offer_var_pop_fields
+  var_samp: service_provider_influencer_offer_var_samp_fields
+  variance: service_provider_influencer_offer_variance_fields
+}
+
+"""aggregate avg on columns"""
+type service_provider_influencer_offer_avg_fields {
+  id: Float
+  influencer_id: Float
+  offer_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table
+"service_provider.influencer_offer". All fields are combined with a logical 'AND'.
+"""
+input service_provider_influencer_offer_bool_exp {
+  _and: [service_provider_influencer_offer_bool_exp!]
+  _not: service_provider_influencer_offer_bool_exp
+  _or: [service_provider_influencer_offer_bool_exp!]
+  id: Int_comparison_exp
+  influencer: service_provider_influencer_bool_exp
+  influencer_id: Int_comparison_exp
+  offer: service_provider_offer_bool_exp
+  offer_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "service_provider.influencer_offer"
+"""
+enum service_provider_influencer_offer_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  influencer_offer_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_inc_input {
+  id: Int
+  influencer_id: Int
+  offer_id: Int
+}
+
+"""
+input type for inserting data into table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_insert_input {
+  id: Int
+  influencer: service_provider_influencer_obj_rel_insert_input
+  influencer_id: Int
+  offer: service_provider_offer_obj_rel_insert_input
+  offer_id: Int
+}
+
+"""aggregate max on columns"""
+type service_provider_influencer_offer_max_fields {
+  id: Int
+  influencer_id: Int
+  offer_id: Int
+}
+
+"""aggregate min on columns"""
+type service_provider_influencer_offer_min_fields {
+  id: Int
+  influencer_id: Int
+  offer_id: Int
+}
+
+"""
+response of any mutation on the table "service_provider.influencer_offer"
+"""
+type service_provider_influencer_offer_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [service_provider_influencer_offer!]!
+}
+
+"""
+on_conflict condition type for table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_on_conflict {
+  constraint: service_provider_influencer_offer_constraint!
+  update_columns: [service_provider_influencer_offer_update_column!]! = []
+  where: service_provider_influencer_offer_bool_exp
+}
+
+"""
+Ordering options when selecting data from "service_provider.influencer_offer".
+"""
+input service_provider_influencer_offer_order_by {
+  id: order_by
+  influencer: service_provider_influencer_order_by
+  influencer_id: order_by
+  offer: service_provider_offer_order_by
+  offer_id: order_by
+}
+
+"""primary key columns input for table: service_provider.influencer_offer"""
+input service_provider_influencer_offer_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "service_provider.influencer_offer"
+"""
+enum service_provider_influencer_offer_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  influencer_id
+
+  """column name"""
+  offer_id
+}
+
+"""
+input type for updating data in table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_set_input {
+  id: Int
+  influencer_id: Int
+  offer_id: Int
+}
+
+"""aggregate stddev on columns"""
+type service_provider_influencer_offer_stddev_fields {
+  id: Float
+  influencer_id: Float
+  offer_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type service_provider_influencer_offer_stddev_pop_fields {
+  id: Float
+  influencer_id: Float
+  offer_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type service_provider_influencer_offer_stddev_samp_fields {
+  id: Float
+  influencer_id: Float
+  offer_id: Float
+}
+
+"""
+Streaming cursor of the table "service_provider_influencer_offer"
+"""
+input service_provider_influencer_offer_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: service_provider_influencer_offer_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input service_provider_influencer_offer_stream_cursor_value_input {
+  id: Int
+  influencer_id: Int
+  offer_id: Int
+}
+
+"""aggregate sum on columns"""
+type service_provider_influencer_offer_sum_fields {
+  id: Int
+  influencer_id: Int
+  offer_id: Int
+}
+
+"""
+update columns of table "service_provider.influencer_offer"
+"""
+enum service_provider_influencer_offer_update_column {
+  """column name"""
+  id
+
+  """column name"""
+  influencer_id
+
+  """column name"""
+  offer_id
+}
+
+input service_provider_influencer_offer_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: service_provider_influencer_offer_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: service_provider_influencer_offer_set_input
+
+  """filter the rows which have to be updated"""
+  where: service_provider_influencer_offer_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type service_provider_influencer_offer_var_pop_fields {
+  id: Float
+  influencer_id: Float
+  offer_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type service_provider_influencer_offer_var_samp_fields {
+  id: Float
+  influencer_id: Float
+  offer_id: Float
+}
+
+"""aggregate variance on columns"""
+type service_provider_influencer_offer_variance_fields {
+  id: Float
+  influencer_id: Float
+  offer_id: Float
+}
+
+"""
+on_conflict condition type for table "service_provider.influencer"
+"""
+input service_provider_influencer_on_conflict {
+  constraint: service_provider_influencer_constraint!
+  update_columns: [service_provider_influencer_update_column!]! = []
+  where: service_provider_influencer_bool_exp
+}
+
+"""
+Ordering options when selecting data from "service_provider.influencer".
+"""
+input service_provider_influencer_order_by {
+  id: order_by
+  tag: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: service_provider.influencer"""
+input service_provider_influencer_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "service_provider.influencer"
+"""
+enum service_provider_influencer_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  tag
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "service_provider.influencer"
+"""
+input service_provider_influencer_set_input {
+  id: Int
+  tag: String
+  user_id: String
+}
+
+"""aggregate stddev on columns"""
+type service_provider_influencer_stddev_fields {
+  id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type service_provider_influencer_stddev_pop_fields {
+  id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type service_provider_influencer_stddev_samp_fields {
+  id: Float
+}
+
+"""
+Streaming cursor of the table "service_provider_influencer"
+"""
+input service_provider_influencer_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: service_provider_influencer_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input service_provider_influencer_stream_cursor_value_input {
+  id: Int
+  tag: String
+  user_id: String
+}
+
+"""aggregate sum on columns"""
+type service_provider_influencer_sum_fields {
+  id: Int
+}
+
+"""
+update columns of table "service_provider.influencer"
+"""
+enum service_provider_influencer_update_column {
+  """column name"""
+  id
+
+  """column name"""
+  tag
+
+  """column name"""
+  user_id
+}
+
+input service_provider_influencer_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: service_provider_influencer_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: service_provider_influencer_set_input
+
+  """filter the rows which have to be updated"""
+  where: service_provider_influencer_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type service_provider_influencer_var_pop_fields {
+  id: Float
+}
+
+"""aggregate var_samp on columns"""
+type service_provider_influencer_var_samp_fields {
+  id: Float
+}
+
+"""aggregate variance on columns"""
+type service_provider_influencer_variance_fields {
+  id: Float
+}
+
+"""
 columns and relationships of "service_provider.location"
 """
 type service_provider_location {
@@ -40604,6 +41342,12 @@ type service_provider_offer {
   ): jsonb!
   id: Int!
 
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details(
+    """JSON select path"""
+    path: String
+  ): jsonb
+
   """An object relationship"""
   laundry: laundry_store
 
@@ -40656,6 +41400,9 @@ input service_provider_offer_append_input {
   boolean coupon_reusable: boolean }
   """
   details: jsonb
+
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details: jsonb
 }
 
 """
@@ -40961,6 +41708,7 @@ input service_provider_offer_bool_exp {
   delivery_company: delivery_company_bool_exp
   details: jsonb_comparison_exp
   id: Int_comparison_exp
+  influencer_details: jsonb_comparison_exp
   laundry: laundry_store_bool_exp
   name: translation_bool_exp
   name_id: Int_comparison_exp
@@ -40995,6 +41743,9 @@ input service_provider_offer_delete_at_path_input {
   boolean coupon_reusable: boolean }
   """
   details: [String!]
+
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details: [String!]
 }
 
 """
@@ -41012,6 +41763,9 @@ input service_provider_offer_delete_elem_input {
   boolean coupon_reusable: boolean }
   """
   details: Int
+
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details: Int
 }
 
 """
@@ -41028,6 +41782,9 @@ input service_provider_offer_delete_key_input {
   boolean coupon_reusable: boolean }
   """
   details: String
+
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details: String
 }
 
 """
@@ -41058,6 +41815,9 @@ input service_provider_offer_insert_input {
   """
   details: jsonb
   id: Int
+
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details: jsonb
   laundry: laundry_store_obj_rel_insert_input
   name: translation_obj_rel_insert_input
   name_id: Int
@@ -41127,6 +41887,7 @@ input service_provider_offer_order_by {
   delivery_company: delivery_company_order_by
   details: order_by
   id: order_by
+  influencer_details: order_by
   laundry: laundry_store_order_by
   name: translation_order_by
   name_id: order_by
@@ -41154,6 +41915,9 @@ input service_provider_offer_prepend_input {
   boolean coupon_reusable: boolean }
   """
   details: jsonb
+
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details: jsonb
 }
 
 """
@@ -41168,6 +41932,9 @@ enum service_provider_offer_select_column {
 
   """column name"""
   id
+
+  """column name"""
+  influencer_details
 
   """column name"""
   name_id
@@ -41202,6 +41969,9 @@ input service_provider_offer_set_input {
   """
   details: jsonb
   id: Int
+
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details: jsonb
   name_id: Int
   offer_type: String
   service_provider_id: Int
@@ -41256,6 +42026,9 @@ input service_provider_offer_stream_cursor_value_input {
   """
   details: jsonb
   id: Int
+
+  """{  rewardType :  same as discountType  rewardValue : double  }"""
+  influencer_details: jsonb
   name_id: Int
   offer_type: String
   service_provider_id: Int
@@ -41282,6 +42055,9 @@ enum service_provider_offer_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  influencer_details
 
   """column name"""
   name_id
@@ -47503,6 +48279,124 @@ type subscription_root {
     """filter the rows returned"""
     where: service_provider_details_bool_exp
   ): [service_provider_details!]!
+
+  """
+  fetch data from the table: "service_provider.influencer"
+  """
+  service_provider_influencer(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_bool_exp
+  ): [service_provider_influencer!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider.influencer"
+  """
+  service_provider_influencer_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_bool_exp
+  ): service_provider_influencer_aggregate!
+
+  """
+  fetch data from the table: "service_provider.influencer" using primary key columns
+  """
+  service_provider_influencer_by_pk(id: Int!): service_provider_influencer
+
+  """
+  fetch data from the table: "service_provider.influencer_offer"
+  """
+  service_provider_influencer_offer(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_offer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_offer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_offer_bool_exp
+  ): [service_provider_influencer_offer!]!
+
+  """
+  fetch aggregated fields from the table: "service_provider.influencer_offer"
+  """
+  service_provider_influencer_offer_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_offer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_offer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_offer_bool_exp
+  ): service_provider_influencer_offer_aggregate!
+
+  """
+  fetch data from the table: "service_provider.influencer_offer" using primary key columns
+  """
+  service_provider_influencer_offer_by_pk(id: Int!): service_provider_influencer_offer
+
+  """
+  fetch data from the table in a streaming manner: "service_provider.influencer_offer"
+  """
+  service_provider_influencer_offer_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [service_provider_influencer_offer_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: service_provider_influencer_offer_bool_exp
+  ): [service_provider_influencer_offer!]!
+
+  """
+  fetch data from the table in a streaming manner: "service_provider.influencer"
+  """
+  service_provider_influencer_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [service_provider_influencer_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: service_provider_influencer_bool_exp
+  ): [service_provider_influencer!]!
 
   """
   fetch data from the table: "service_provider.location"

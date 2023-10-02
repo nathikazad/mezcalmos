@@ -35,9 +35,9 @@ Future<ServiceLink?> get_service_link_by_id(
   );
   Map<cModels.Language, String> convertCustomerFlyerLinks(
       Map<String, dynamic> map) {
-    final Map<cModels.Language, String> list = {};
+    final Map<cModels.Language, String> list = <cModels.Language, String>{};
     map.forEach((String key, value) {
-      list.addAll({
+      list.addAll(<cModels.Language, String>{
         key.toLanguage(): value,
       });
     });
@@ -101,7 +101,7 @@ Future<Service?> get_service_details_by_id(
     {required int serviceDetailsId,
     required int serviceId,
     bool withCache = true}) async {
-  QueryResult<Query$getServiceDetails> res =
+  final QueryResult<Query$getServiceDetails> res =
       await _db.graphQLClient.query$getServiceDetails(
     Options$Query$getServiceDetails(
       fetchPolicy:
@@ -148,7 +148,7 @@ Future<ServiceInfo?> get_service_info(
     {required int serviceDetailsId,
     required int serviceId,
     bool withCache = true}) async {
-  QueryResult<Query$getServiceInfo> res =
+  final QueryResult<Query$getServiceInfo> res =
       await _db.graphQLClient.query$getServiceInfo(
     Options$Query$getServiceInfo(
       fetchPolicy:
@@ -180,7 +180,7 @@ Future<ServiceInfo?> get_service_info(
 
 Future<PaymentInfo?> get_service_payment_info(
     {required int serviceDetailsId, bool withCache = true}) async {
-  QueryResult<Query$getServicePaymentInfo> res =
+  final QueryResult<Query$getServicePaymentInfo> res =
       await _db.graphQLClient.query$getServicePaymentInfo(
     Options$Query$getServicePaymentInfo(
       fetchPolicy:
@@ -203,7 +203,7 @@ Future<PaymentInfo?> get_service_payment_info(
 
 Future<MezLocation?> get_service_location(
     {required int serviceDetailsId, bool withCache = true}) async {
-  QueryResult<Query$getServiceInfo> res =
+  final QueryResult<Query$getServiceInfo> res =
       await _db.graphQLClient.query$getServiceInfo(
     Options$Query$getServiceInfo(
       fetchPolicy:
@@ -227,7 +227,7 @@ Future<MezLocation?> get_service_location(
 
 Future<cModels.Schedule?> get_service_schedule(
     {required int serviceDetailsId, bool withCache = true}) async {
-  QueryResult<Query$getServiceSchedule> res =
+  final QueryResult<Query$getServiceSchedule> res =
       await _db.graphQLClient.query$getServiceSchedule(
     Options$Query$getServiceSchedule(
       fetchPolicy:
@@ -303,7 +303,7 @@ Future<cModels.Schedule?> get_service_schedule(
 
 Future<ServiceInfo> update_service_info(
     {required ServiceInfo serviceInfo, required int detailsId}) async {
-  QueryResult<Mutation$updateServiceDetails> res =
+  final QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
       fetchPolicy: FetchPolicy.noCache,
@@ -339,7 +339,7 @@ Future<ServiceInfo> update_service_info(
 
 Future<cModels.Schedule?> update_service_schedule(
     {required cModels.Schedule schedule, required int detailsId}) async {
-  QueryResult<Mutation$updateServiceDetails> res =
+  final QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
       variables: Variables$Mutation$updateServiceDetails(
@@ -352,8 +352,8 @@ Future<cModels.Schedule?> update_service_schedule(
   if (res.parsedData?.update_service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
-  Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
-      res.parsedData!.update_service_provider_details_by_pk;
+  final Mutation$updateServiceDetails$update_service_provider_details_by_pk?
+      data = res.parsedData!.update_service_provider_details_by_pk;
   return scheduleFromData(data!.schedule);
 }
 
@@ -362,7 +362,7 @@ Future<bool> update_service_state({
   required bool? approved,
   required int detailsId,
 }) async {
-  QueryResult<Mutation$updateServiceDetails> res =
+  final QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
       variables: Variables$Mutation$updateServiceDetails(
@@ -376,15 +376,15 @@ Future<bool> update_service_state({
     mezDbgPrint("Error =======>${res.data}");
     throwError(res.exception);
   }
-  Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
-      res.parsedData!.update_service_provider_details_by_pk;
+  final Mutation$updateServiceDetails$update_service_provider_details_by_pk?
+      data = res.parsedData!.update_service_provider_details_by_pk;
   return data != null;
 }
 
 Future<bool> update_service_accepted_payments(
     {required Map<cModels.PaymentType, bool> payments,
     required int detailsId}) async {
-  QueryResult<Mutation$updateServiceDetails> res =
+  final QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
       variables: Variables$Mutation$updateServiceDetails(
@@ -399,14 +399,14 @@ Future<bool> update_service_accepted_payments(
   if (res.parsedData?.update_service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
-  Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
-      res.parsedData!.update_service_provider_details_by_pk;
+  final Mutation$updateServiceDetails$update_service_provider_details_by_pk?
+      data = res.parsedData!.update_service_provider_details_by_pk;
   return data != null;
 }
 
 Future<bool> update_service_charge_fees_fro_customer(
     {required bool value, required int detailsId}) async {
-  QueryResult<Mutation$updateServiceDetails> res =
+  final QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
       variables: Variables$Mutation$updateServiceDetails(
@@ -417,8 +417,8 @@ Future<bool> update_service_charge_fees_fro_customer(
   if (res.parsedData?.update_service_provider_details_by_pk == null) {
     throwError(res.exception);
   }
-  Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
-      res.parsedData!.update_service_provider_details_by_pk;
+  final Mutation$updateServiceDetails$update_service_provider_details_by_pk?
+      data = res.parsedData!.update_service_provider_details_by_pk;
   return data != null;
 }
 
@@ -441,7 +441,7 @@ Future<cModels.ServiceProviderLanguage?> get_service_lang(
 }
 
 Future<void> set_last_active_time({required int detailsId}) async {
-  QueryResult<Mutation$setLastActiveTime> res =
+  final QueryResult<Mutation$setLastActiveTime> res =
       await _db.graphQLClient.mutate$setLastActiveTime(
     Options$Mutation$setLastActiveTime(
       variables: Variables$Mutation$setLastActiveTime(id: detailsId),
@@ -470,7 +470,7 @@ Future<bool> update_business_online_ordering({
   required int detailsId,
   required bool onlineOrdering,
 }) async {
-  QueryResult<Mutation$update_business_online_ordering> res =
+  final QueryResult<Mutation$update_business_online_ordering> res =
       await _db.graphQLClient.mutate$update_business_online_ordering(
     Options$Mutation$update_business_online_ordering(
       variables: Variables$Mutation$update_business_online_ordering(
@@ -490,7 +490,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
     {required int serviceProviderId,
     required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {
-  QueryResult<Query$get_service_provider_offers> res =
+  final QueryResult<Query$get_service_provider_offers> res =
       await _db.graphQLClient.query$get_service_provider_offers(
     Options$Query$get_service_provider_offers(
       fetchPolicy: FetchPolicy.networkOnly,
@@ -503,7 +503,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
   // if (res.parsedData?.service_provider_offer == null) {
   //   throwError(res.exception);
   // }
-  final List<cModels.Offer> offers = [];
+  final List<cModels.Offer> offers = <cModels.Offer>[];
   res.parsedData?.service_provider_offer
       .forEach((Query$get_service_provider_offers$service_provider_offer data) {
     offers.add(cModels.Offer(
@@ -547,7 +547,7 @@ Future<cModels.Offer> check_coupon(
     required int serviceProviderId,
     required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {
-  QueryResult<Query$check_coupon> res =
+  final QueryResult<Query$check_coupon> res =
       await _db.graphQLClient.query$check_coupon(
     Options$Query$check_coupon(
       fetchPolicy:
@@ -579,7 +579,7 @@ Future<bool> check_offer_applied(
     {required int customerId,
     required int offerId,
     bool withCache = true}) async {
-  QueryResult<Query$check_offer_applied> res =
+  final QueryResult<Query$check_offer_applied> res =
       await _db.graphQLClient.query$check_offer_applied(
     Options$Query$check_offer_applied(
       fetchPolicy:
@@ -598,7 +598,7 @@ Future<bool> check_offer_applied(
 Future<cModels.Offer?> get_offer_by_id({
   required int id,
 }) async {
-  QueryResult<Query$get_offer_by_id> res = await _db.graphQLClient
+  final QueryResult<Query$get_offer_by_id> res = await _db.graphQLClient
       .query$get_offer_by_id(Options$Query$get_offer_by_id(
     variables: Variables$Query$get_offer_by_id(id: id),
   ));
@@ -607,7 +607,7 @@ Future<cModels.Offer?> get_offer_by_id({
   if (res.parsedData == null) {
     throwError(res.exception);
   }
-  Query$get_offer_by_id$service_provider_offer_by_pk? data =
+  final Query$get_offer_by_id$service_provider_offer_by_pk? data =
       res.parsedData!.service_provider_offer_by_pk;
   if (data == null) {
     return null;
@@ -619,6 +619,14 @@ Future<cModels.Offer?> get_offer_by_id({
       serviceProviderType: data.service_provider_type.toServiceProviderType(),
       offerType: data.offer_type.toOfferType(),
       nameId: data.name_id,
+      influencerDetails: (data.influencer_details != null)
+          ? cModels.InfluencerOfferDetails(
+              rewardType: data.influencer_details["rewardType"]
+                  .toString()
+                  .toDiscountType(),
+              rewardValue: double.parse(
+                  data.influencer_details["rewardValue"].toString()))
+          : null,
       details: cModels.OfferDetails(
         offerForOrder: data.details["offerForOrder"],
         discountType: data.details["discountType"].toString().toDiscountType(),
@@ -649,7 +657,7 @@ Future<int?> add_service_offer({
   required cModels.Offer offer,
   required int serviceProviderId,
 }) async {
-  QueryResult<Mutation$add_new_offer> res =
+  final QueryResult<Mutation$add_new_offer> res =
       await _db.graphQLClient.mutate$add_new_offer(
     Options$Mutation$add_new_offer(
         variables: Variables$Mutation$add_new_offer(
@@ -661,7 +669,7 @@ Future<int?> add_service_offer({
                 offer.serviceProviderType.toFirebaseFormatString(),
             translations: Input$translation_value_arr_rel_insert_input(
                 data: offer.name == null
-                    ? []
+                    ? <Input$translation_value_insert_input>[]
                     : offer.name!.entries
                         .map((MapEntry<cModels.Language, String> e) {
                         return Input$translation_value_insert_input(
@@ -676,6 +684,7 @@ Future<int?> add_service_offer({
         offer_type: offer.offerType.toFirebaseFormatString(),
         details: offer.details.toJson(),
         status: offer.status.toFirebaseFormatString(),
+        influencer_details: offer.influencerDetails?.toJson(),
         coupon_code: offer.couponCode,
       ),
     )),
@@ -692,7 +701,7 @@ Future<int?> update_service_offer({
   required cModels.Offer offer,
   required int serviceProviderId,
 }) async {
-  QueryResult<Mutation$update_offer> res =
+  final QueryResult<Mutation$update_offer> res =
       await _db.graphQLClient.mutate$update_offer(
     Options$Mutation$update_offer(
         variables: Variables$Mutation$update_offer(

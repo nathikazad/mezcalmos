@@ -103,7 +103,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
                         "Select your offer",
                         style: context.textTheme.bodyLarge,
@@ -115,7 +115,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                           langPath: _i18n(),
                           value: viewController.selectedOfferType.value
                               ?.toFirebaseFormatString(),
-                          items: [
+                          items: <OfferType>[
                             OfferType.Coupon,
                             OfferType.Promotion,
                             //     OfferType.MonthlySubscription
@@ -142,6 +142,27 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         );
                       }),
                       meduimSeperator,
+                      Obx(() => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SwitchListTile.adaptive(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(
+                                    "Offer for influencer",
+                                    style: context.textTheme.bodyLarge,
+                                  ),
+                                  value:
+                                      viewController.offerForInfluencer.value,
+                                  activeColor: primaryBlueColor,
+                                  onChanged: (bool v) {
+                                    viewController.switchOfferInfluencer(v);
+                                  }),
+                              if (viewController.offerForInfluencer.value)
+                                _rewardTypeSelector(),
+                            ],
+                          )),
+
+                      meduimSeperator,
                       Obx(
                         () => Text(
                           viewController.isCoupon ? "Coupon Code" : "Name",
@@ -164,6 +185,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         },
                       ),
                       meduimSeperator,
+
                       Text(
                         "Select type of order",
                         style: context.textTheme.bodyLarge,
@@ -175,7 +197,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                             .strings['Shared']['pages']['ServiceOfferView'],
                         value: viewController.selectedOfferOrderType.value
                             ?.toFirebaseFormatString(),
-                        items: [
+                        items: <String>[
                           OfferOrderType.AnyOrder.toFirebaseFormatString(),
                           OfferOrderType.FirstOrderOnly.toFirebaseFormatString()
                         ],
@@ -195,9 +217,9 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         Container(
                           margin: const EdgeInsets.all(5),
                           child: Column(
-                            children: [
+                            children: <Widget>[
                               RichText(
-                                text: TextSpan(children: [
+                                text: TextSpan(children: <InlineSpan>[
                                   WidgetSpan(
                                       child: Icon(
                                     Icons.check_circle_rounded,
@@ -268,61 +290,13 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
-                      Row(
-                        children: [
-                          Expanded(
-                            child: MezStringDropDown(
-                              labelText: "Select discount type",
-                              value: viewController.selectedDiscountType.value
-                                  .toFirebaseFormatString(),
-                              langPath: _i18n(),
-                              items: [
-                                DiscountType.FlatAmount,
-                                DiscountType.Percentage,
-                                // DiscountType.AnotherSameFlat
-                              ]
-                                  .map((DiscountType e) =>
-                                      e.toFirebaseFormatString())
-                                  .toList(),
-                              onChanged: (String? value) {
-                                if (value == null) return;
-                                viewController.selectedDiscountType.value =
-                                    value.toDiscountType();
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: TextFormField(
-                              controller: viewController.discountController,
-                              textAlignVertical: TextAlignVertical.top,
-                              decoration: InputDecoration(
-                                hintText: "0",
-                                label: null,
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.never,
-                                suffix:
-                                    viewController.selectedDiscountType.value !=
-                                            DiscountType.FlatAmount
-                                        ? Text("%")
-                                        : Text("\$"),
-                              ),
-                              validator: (String? value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Please enter your Coupon Code";
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      _discountTypeSelector(),
                       if (viewController.selectedDiscountType.value ==
                           DiscountType.AnotherSameFlat)
                         Container(
                           padding: const EdgeInsets.only(top: 5),
                           child: RichText(
-                              text: TextSpan(children: [
+                              text: TextSpan(children: <InlineSpan>[
                             WidgetSpan(
                                 child: Icon(Icons.info,
                                     color: primaryBlueColor, size: 18)),
@@ -393,6 +367,101 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
     );
   }
 
+  Widget _discountTypeSelector() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: MezStringDropDown(
+            labelText: "Select discount type",
+            value: viewController.selectedDiscountType.value
+                .toFirebaseFormatString(),
+            langPath: _i18n(),
+            items: <DiscountType>[
+              DiscountType.FlatAmount,
+              DiscountType.Percentage,
+              // DiscountType.AnotherSameFlat
+            ].map((DiscountType e) => e.toFirebaseFormatString()).toList(),
+            onChanged: (String? value) {
+              if (value == null) return;
+              viewController.selectedDiscountType.value =
+                  value.toDiscountType();
+            },
+          ),
+        ),
+        SizedBox(width: 10),
+        Expanded(
+          child: TextFormField(
+            controller: viewController.discountController,
+            textAlignVertical: TextAlignVertical.top,
+            decoration: InputDecoration(
+              hintText: "0",
+              label: null,
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              suffix: viewController.selectedDiscountType.value !=
+                      DiscountType.FlatAmount
+                  ? Text("%")
+                  : Text("\$"),
+            ),
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
+                return "Please enter your discount value";
+              }
+              return null;
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _rewardTypeSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        smallSepartor,
+        Text("Reward type"),
+        smallSepartor,
+        MezStringDropDown(
+          labelText: "Select reward type",
+          value:
+              viewController.selectedRewardType.value.toFirebaseFormatString(),
+          langPath: _i18n(),
+          items: <DiscountType>[
+            DiscountType.FlatAmount,
+            DiscountType.Percentage,
+            // DiscountType.AnotherSameFlat
+          ].map((DiscountType e) => e.toFirebaseFormatString()).toList(),
+          onChanged: (String? value) {
+            if (value == null) return;
+            viewController.selectedRewardType.value = value.toDiscountType();
+          },
+        ),
+        meduimSeperator,
+        Text("Reward value"),
+        smallSepartor,
+        TextFormField(
+          controller: viewController.rewardController,
+          textAlignVertical: TextAlignVertical.top,
+          decoration: InputDecoration(
+            hintText: "0",
+            label: null,
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+            suffix: viewController.selectedRewardType.value !=
+                    DiscountType.FlatAmount
+                ? Text("%")
+                : Text("\$"),
+          ),
+          validator: (String? value) {
+            if (value == null || value.isEmpty) {
+              return "Please enter your discount value";
+            }
+            return null;
+          },
+        ),
+      ],
+    );
+  }
+
   FormField<Object> _timeSelector(BuildContext context) {
     return FormField(
       validator: (Object? value) {
@@ -410,7 +479,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
         return Obx(
           () => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               InkWell(
                 onTap: () async {
                   showAvailability();
@@ -423,7 +492,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                     color: Colors.grey.shade200,
                   ),
                   child: Row(
-                    children: [
+                    children: <Widget>[
                       Icon(Icons.access_time_filled),
                       hTinySepartor,
                       viewController.selectedStartDate.value != null &&
@@ -463,7 +532,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Container(
                     margin: const EdgeInsets.all(5),
                     alignment: Alignment.center,

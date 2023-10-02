@@ -2141,6 +2141,78 @@ class DeliveryAdmin {
   }
 }
 
+enum MinimalDeliveryOrderStatus { Open, InProcess, Finished }
+
+extension ParseMinimalDeliveryOrderStatusToString
+    on MinimalDeliveryOrderStatus {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToMinimalDeliveryOrderStatus on String {
+  MinimalDeliveryOrderStatus toMinimalDeliveryOrderStatus() {
+    return MinimalDeliveryOrderStatus.values.firstWhere(
+        (MinimalDeliveryOrderStatus minimalDeliveryOrderStatus) =>
+            minimalDeliveryOrderStatus.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum MinimalDeliveryOrderType { Order, Message }
+
+extension ParseMinimalDeliveryOrderTypeToString on MinimalDeliveryOrderType {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToMinimalDeliveryOrderType on String {
+  MinimalDeliveryOrderType toMinimalDeliveryOrderType() {
+    return MinimalDeliveryOrderType.values.firstWhere(
+        (MinimalDeliveryOrderType minimalDeliveryOrderType) =>
+            minimalDeliveryOrderType.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+class DeliveryMinimalOrder {
+  num id;
+  String? phone_number;
+  MinimalDeliveryOrderType delivery_order_type;
+  String? user_id;
+  String time;
+  num? service_provider_id;
+  MinimalDeliveryOrderStatus status;
+  num? driver_id;
+  UserInfo? customer;
+  DeliveryMinimalOrder(
+      {required this.id,
+      this.phone_number,
+      required this.delivery_order_type,
+      this.user_id,
+      required this.time,
+      this.service_provider_id,
+      required this.status,
+      this.driver_id,
+      this.customer});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "id": id,
+      "phone_number": phone_number,
+      "delivery_order_type": delivery_order_type,
+      "user_id": user_id,
+      "time": time,
+      "service_provider_id": service_provider_id,
+      "status": status,
+      "driver_id": driver_id,
+      "customer": customer,
+    };
+  }
+}
+
 class Offer {
   num id;
   Map<Language, String>? name;
@@ -2154,6 +2226,7 @@ class Offer {
   OfferStatus status;
   String? serviceProviderName;
   String? serviceProviderImage;
+  InfluencerOfferDetails? influencerDetails;
   Offer(
       {required this.id,
       this.name,
@@ -2166,7 +2239,8 @@ class Offer {
       required this.details,
       required this.status,
       this.serviceProviderName,
-      this.serviceProviderImage});
+      this.serviceProviderImage,
+      this.influencerDetails});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "id": id,
@@ -2181,6 +2255,7 @@ class Offer {
       "status": status,
       "serviceProviderName": serviceProviderName,
       "serviceProviderImage": serviceProviderImage,
+      "influencerDetails": influencerDetails,
     };
   }
 }
@@ -2273,6 +2348,18 @@ class OfferDetails {
   }
 }
 
+class InfluencerOfferDetails {
+  DiscountType rewardType;
+  num rewardValue;
+  InfluencerOfferDetails({required this.rewardType, required this.rewardValue});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "rewardType": rewardType,
+      "rewardValue": rewardValue,
+    };
+  }
+}
+
 enum DiscountType {
   FlatAmount,
   Percentage,
@@ -2293,66 +2380,6 @@ extension ParseStringToDiscountType on String {
     return DiscountType.values.firstWhere((DiscountType discountType) =>
         discountType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
-}
-
-enum MinimalDeliveryOrderStatus { Open, InProcess, Finished }
-extension ParseMinimalDeliveryOrderStatusToString on MinimalDeliveryOrderStatus {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-extension ParseStringToMinimalDeliveryOrderStatus on String {
-  MinimalDeliveryOrderStatus toMinimalDeliveryOrderStatus() {
-    return MinimalDeliveryOrderStatus.values.firstWhere(
-        (MinimalDeliveryOrderStatus minimalDeliveryOrderStatus) =>
-            minimalDeliveryOrderStatus.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
-
-
-enum MinimalDeliveryOrderType { Order, Message }
-extension ParseMinimalDeliveryOrderTypeToString on MinimalDeliveryOrderType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-extension ParseStringToMinimalDeliveryOrderType on String {
-  MinimalDeliveryOrderType toMinimalDeliveryOrderType() {
-    return MinimalDeliveryOrderType.values.firstWhere(
-        (MinimalDeliveryOrderType minimalDeliveryOrderType) =>
-            minimalDeliveryOrderType.toFirebaseFormatString().toLowerCase() == toLowerCase());
-  }
-}
-
-
-class DeliveryMinimalOrder {
-  num id;
-  String? phone_number;
-  MinimalDeliveryOrderType delivery_order_type;
-  String? user_id;
-  String time;
-  num? service_provider_id;
-  MinimalDeliveryOrderStatus status;
-  num? driver_id;
-  UserInfo? customer;
-  DeliveryMinimalOrder({
-    required this.id, this.phone_number, required this.delivery_order_type, this.user_id, required this.time, this.service_provider_id, required this.status, this.driver_id, this.customer});
-Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "id": id,
-      "phone_number": phone_number,
-      "delivery_order_type": delivery_order_type,
-      "user_id": user_id,
-      "time": time,
-      "service_provider_id": service_provider_id,
-      "status": status,
-      "driver_id": driver_id,
-      "customer": customer,
-    };
-  }
-
 }
 
 class ServiceProvider {

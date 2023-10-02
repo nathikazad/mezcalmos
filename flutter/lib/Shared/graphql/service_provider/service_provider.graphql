@@ -233,6 +233,7 @@ query get_offer_by_id($id: Int!) {
     id
     details
     coupon_code
+    influencer_details
     name_id
     name {
       translations {

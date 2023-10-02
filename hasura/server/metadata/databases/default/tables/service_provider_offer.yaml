@@ -82,6 +82,9 @@ insert_permissions:
       columns:
         - coupon_code
         - details
+        - influencer_details
+        - service_provider_id
+        - service_provider_type
         - offer_type
         - status
 select_permissions:
@@ -131,14 +134,15 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - id
-        - name_id
-        - service_provider_id
         - coupon_code
+        - details
+        - id
+        - influencer_details
+        - name_id
         - offer_type
+        - service_provider_id
         - service_provider_type
         - status
-        - details
       filter: {}
 update_permissions:
   - role: business_operator
@@ -180,6 +184,7 @@ update_permissions:
       columns:
         - coupon_code
         - details
+        - influencer_details
         - offer_type
         - status
       filter: {}

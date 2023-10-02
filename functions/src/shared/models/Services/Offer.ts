@@ -15,6 +15,7 @@ export interface Offer {
   status: OfferStatus;
   serviceProviderName?: string;
   serviceProviderImage?: string;
+  influencerDetails?: InfluencerOfferDetails;
 }
 
 export enum OfferType {
@@ -52,6 +53,10 @@ export interface OfferDetails {
   // date_time
   validityRangeEnd?: string;
   weeklyRepeat: boolean;
+}
+export interface InfluencerOfferDetails {
+  rewardType: DiscountType;
+  rewardValue: number;
 }
 
 export enum DiscountType {
