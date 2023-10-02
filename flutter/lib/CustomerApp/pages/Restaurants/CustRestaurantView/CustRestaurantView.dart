@@ -90,7 +90,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
   Widget buildSliverScrollView() {
     return CustomScrollView(
       controller: _viewController.scrollController,
-      slivers: [
+      slivers: <Widget>[
         RestaurantSliverAppBar(controller: _viewController),
         if (_viewController.showOffers)
           SliverToBoxAdapter(
@@ -174,7 +174,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 0),
             child: Text(
@@ -214,7 +214,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Container(
             margin: const EdgeInsets.only(top: 7),
             child: Text(
@@ -280,7 +280,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Flexible(
             child: Text(
               '${_i18n()["scheduleTitle"]}',
@@ -302,7 +302,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Text(
               "Promotions",
               style: context.textTheme.bodyLarge,
@@ -314,7 +314,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                 final cModels.Offer offer = _viewController.offers[index];
                 return MezCard(
                   margin: const EdgeInsets.only(bottom: 7),
-                  footer: Text.rich(TextSpan(children: [
+                  footer: Text.rich(TextSpan(children: <InlineSpan>[
                     WidgetSpan(
                       child: Icon(
                         Icons.watch_later_outlined,
@@ -325,7 +325,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                     WidgetSpan(child: hTinySepartor),
                     TextSpan(text: offer.details.offerTimeString),
                   ])),
-                  bgColor: secondaryLightBlueColor,
+                  cardColor: secondaryLightBlueColor,
                   firstAvatarIcon: Icons.percent,
                   radius: 20,
                   firstAvatarBgColor: primaryBlueColor,
