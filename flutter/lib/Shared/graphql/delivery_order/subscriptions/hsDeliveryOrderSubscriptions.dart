@@ -5,19 +5,13 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/ChangePriceRequest.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
@@ -148,8 +142,8 @@ Stream<List<MinimalOrder>?> listen_on_open_driver_orders(
   )
       .map<List<MinimalOrder>?>(
           (QueryResult<Subscription$listen_open_driver_orders> event) {
-    List<Subscription$listen_open_driver_orders$delivery_order>? ordersData =
-        event.parsedData?.delivery_order;
+    final List<Subscription$listen_open_driver_orders$delivery_order>?
+        ordersData = event.parsedData?.delivery_order;
     if (ordersData != null) {
       if (Get.find<HasuraDb>()
           .dataConsumption
@@ -261,7 +255,7 @@ Stream<LatLng?> listen_order_driver_location({required int orderId}) {
         Get.find<HasuraDb>().dataConsumption["listen_order_driver_location"] =
             <int>[event.data.toString().length, 1];
       }
-      Geography data = event
+      final Geography data = event
           .parsedData!.delivery_order_by_pk!.delivery_driver!.current_location!;
       return LatLng(data.latitude, data.longitude);
     }
@@ -283,7 +277,7 @@ ServiceInfo? _getServiceInfo(orderData) {
           image: orderData.restaurant_order!.restaurant.details.image,
           name: orderData.restaurant_order!.restaurant.details.name);
     case cModels.OrderType.Laundry:
-      dynamic laundryOrder =
+      final dynamic laundryOrder =
           orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
       return ServiceInfo(
           location: MezLocation.fromHasura(
@@ -333,7 +327,7 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
       }
       mezDbgPrint(
           "listen_on_driver_order_costs: ${Get.find<HasuraDb>().dataConsumption["listen_on_driver_order_costs"]}");
-      Subscription$listen_driver_order_prices$delivery_order_by_pk data =
+      final Subscription$listen_driver_order_prices$delivery_order_by_pk data =
           event.parsedData!.delivery_order_by_pk!;
       return OrderCosts(
           deliveryCost: data.delivery_cost.toDouble(),
@@ -344,6 +338,32 @@ Stream<OrderCosts?> listen_on_driver_order_costs({required orderId}) {
           tax: data.tax,
           orderItemsCost: data.package_cost_comp,
           totalCost: data.total_cost);
+    }
+    return null;
+  });
+}
+
+Stream<UserInfo?> listen_on_delivery_order_driver({required int orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_delivery_order_driver(
+    Options$Subscription$listen_on_delivery_order_driver(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$listen_on_delivery_order_driver(
+        orderId: orderId,
+      ),
+    ),
+  )
+      .map<UserInfo?>(
+          (QueryResult<Subscription$listen_on_delivery_order_driver> event) {
+    if (event.parsedData?.delivery_order_by_pk?.delivery_driver != null) {
+      final Subscription$listen_on_delivery_order_driver$delivery_order_by_pk?
+          orderData = event.parsedData!.delivery_order_by_pk;
+      return UserInfo(
+        hasuraId: orderData!.delivery_driver!.user.id,
+        name: orderData.delivery_driver!.user.name,
+        phoneNumber: orderData.delivery_driver!.user.phone,
+        image: orderData.delivery_driver!.user.image,
+      );
     }
     return null;
   });

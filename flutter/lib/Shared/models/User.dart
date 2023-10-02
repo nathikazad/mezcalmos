@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class UserInfo {
   String? firebaseId;
+  String? phoneNumber;
   int hasuraId;
   String? _name;
   String? _image;
@@ -29,6 +30,7 @@ class UserInfo {
       required String? name,
       required String? image,
       this.creationTime,
+      this.phoneNumber,
       this.language}) {
     _name = name;
     _image = image;

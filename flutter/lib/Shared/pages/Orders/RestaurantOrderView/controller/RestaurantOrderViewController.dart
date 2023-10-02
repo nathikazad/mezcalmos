@@ -7,10 +7,13 @@ import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RestaurantOrderViewController {
   // instances //
@@ -28,8 +31,11 @@ class RestaurantOrderViewController {
   }
 
   // streams //
-  StreamSubscription<RestaurantOrder?>? orderStream;
+  StreamSubscription<UserInfo?>? orderStream;
   String? subscriptionId;
+
+  bool get showForwardBtn =>
+      order.value != null && order.value?.driverInfo == null;
 
   // init
   Future<void> init({required int orderId}) async {
@@ -55,15 +61,14 @@ class RestaurantOrderViewController {
       mezDbgPrint("🚨 Can't get order $orderId 🚨 ROpOrderViewController");
     } else {
       subscriptionId = hasuraDb.createSubscription(start: () {
-        orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
-            .listen((RestaurantOrder? event) {
+        orderStream = listen_on_restaurant_order_driver(orderId: orderId)
+            .listen((UserInfo? event) {
           mezDbgPrint(event);
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.driverInfo?.toFirebaseFormatJson()}");
-            order.value = null;
-            order.value = event;
-            order.value?.driverInfo = event.driverInfo;
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.toFirebaseFormatJson()}");
+
+            order.value?.driverInfo = event;
           }
         });
       }, cancel: () {
@@ -73,6 +78,31 @@ class RestaurantOrderViewController {
     }
   }
 
+  Future<void> openDriverWhatsapp() async {
+    final String? phoneNumber = order.value?.driverInfo?.phoneNumber;
+    if (phoneNumber != null) {
+      try {
+        final bool res = await callWhatsappNumber(phoneNumber);
+      } catch (e) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+      }
+    } else
+      mezDbgPrint("Phone number is null 🥲");
+  }
+
+  Future<void> openCustomerWhatsapp() async {
+    final String? phoneNumber = order.value?.customer.phoneNumber;
+    if (phoneNumber != null) {
+      try {
+        final bool res = await callWhatsappNumber(phoneNumber);
+      } catch (e) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+      }
+    } else
+      mezDbgPrint("Phone number is null 🥲");
+  }
 // Order status change methods
 
   Future<cModels.ChangeRestaurantStatusResponse> setReadyForDelivery() async {
@@ -98,5 +128,10 @@ class RestaurantOrderViewController {
   void clearNotifications(int orderId) {
     Get.find<ForegroundNotificationsController>().clearAllOrderNotifications(
         orderType: cModels.OrderType.Restaurant, orderId: orderId);
+  }
+
+  Future<void> forwardToDriver() async {
+    final String text = await order.value!.contructOrderMessage();
+    await Share.share(text);
   }
 }

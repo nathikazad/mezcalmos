@@ -1231,7 +1231,13 @@
           "ViewRestaurantOrderScreen": {
             "orderStatus": "Estado de la orden",
             "writeReview": "Escribir un comentario",
-            "deliveryDet": "Detalles de la entrega"
+            "deliveryDet": "Detalles de la entrega",
+            "restaurant": "Restaurante",
+            "driver": "Repartidor",
+            "noResponse": "Si el restaurante o el repartidor no responden",
+            "contactAdmin": "Contactar al Administrador",
+            "orderSummary": "Resumen de la orden",
+            "orderCost": "Costo de la orden"
           }
         },
         "ViewRestaurantScreen": {
@@ -3567,6 +3573,13 @@
         "order": "Pedido",
         "viewImage": "Ver imagen"
       },
+      "DvConvoView": {
+        "respond": "Contestar",
+        "finish": "Terminar",
+        "whatsapp": "Abrir Whatsapp",
+        "respondedAt": "contestado a las",
+        "cancel": "Cancellar"
+      },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Órdenes actuales",
@@ -3577,6 +3590,11 @@
           "offlineBody": "Enciende para ver las órdenes entrantes",
           "pastOrders": "Hoy",
           "title": "Órdenes entrantes",
+          "confirmationDialog": {
+            "markAll": "Marcar todos pedidos como terminado",
+            "yes": "Si, terminarles",
+            "cancel": "Cancellar"
+          },
           "Components": {
             "DriverNoOrdersComponent": {
               "noOrdersTitle": "No Hay Ordenes",
@@ -4056,6 +4074,12 @@
         "schTitle": "Programado para",
         "cancelOrder": "Cancelar orden",
         "orderItems": "Encargar artículos",
+        "driver": "Conductora",
+        "customer": "Cliente",
+        "fwdCompany": "Adelante a servi amigos",
+        "fwdDriver": "Avance al conductor",
+        "orderCost": "Costo de la orden",
+        "orderSummary": "Resumen de pedido",
         "components": {
           "ROpSpecialItemTime": {
             "selectTime": "Seleccione su tiempo",

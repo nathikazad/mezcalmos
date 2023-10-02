@@ -60,7 +60,10 @@ export const createQRFlyerPDF = async (uniqueId: string): Promise<QRFlyerLinks> 
 
     let customerQRUrl: string | undefined;
     try {
-        customerQRUrl = await generateQr(`links/${uniqueId}/customer`, `https://mezkala.app/${uniqueId}/`)
+        customerQRUrl = await generateQr({
+            imageUploadPath: `links/${uniqueId}/customer`, 
+            shortLink:`https://mezkala.app/${uniqueId}/`
+        });
 
     } catch(err: any) {
         console.log("QR image generation error: ", err)

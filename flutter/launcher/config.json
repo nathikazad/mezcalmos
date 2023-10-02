@@ -239,6 +239,7 @@
   "apps": {
     "WebApp": {
       "folderName": "CustomerApp",
+      "customUrl": "mezkala",
       "packages": {
         "stage": {
           "appName": "WebStaging",
@@ -295,6 +296,7 @@
     },
     "TaxiApp": {
       "folderName": "TaxiApp",
+      "customUrl": "meztaxi",
       "packages": {
         "stage": {
           "appName": "MeztaxiStaging",
@@ -342,6 +344,7 @@
     "MezAdminApp": {
     
       "folderName": "MezAdminApp",
+      "customUrl": "mezadmin",
       "packages": {
         "stage": {
           "appName": "MezAdmin Stage",
@@ -399,6 +402,7 @@
     },
     "CustomerApp": {
       "folderName": "CustomerApp",
+      "customUrl": "mezkala",
       "packages": {
         "stage": {
           "appName": "MezkalaStage",
@@ -466,6 +470,7 @@
     },
     "DeliveryApp": {
       "folderName": "DeliveryApp",
+      "customUrl": "mezdelivery",
       "packages": {
         "stage": {
           "appName": "MezdeliveryStaging",
@@ -525,6 +530,7 @@
     },
     "TaxiAdminApp": {
       "folderName": "TaxiAdminApp",
+      "customUrl": "meztaxiadmin",
       "packages": {
         "stage": {
           "appName": "Meztaxi Admin Stage",
@@ -567,6 +573,7 @@
     },
     "DeliveryAdminApp": {
       "folderName": "DeliveryAdminApp",
+      "customUrl": "mezdeliveryadmin",
       "packages": {
         "stage": {
           "appName": "Mezdelivery admin Stage",
@@ -595,7 +602,6 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0"
         },
         "assets": [
           "assets/images/",
@@ -619,6 +625,7 @@
     },
     "LaundryApp": {
       "folderName": "LaundryApp",
+      "customUrl": "mezlaundry",
       "packages": {
         "stage": {
           "appName": "MezLaundry Stage",
@@ -665,6 +672,7 @@
     },
     "RestaurantApp": {
       "folderName": "RestaurantApp",
+      "customUrl": "meztaurant",
       "packages": {
         "stage": {
           "appName": "MezChef Stage",
@@ -722,6 +730,7 @@
         "<uses-permission android:name='android.permission.ACCESS_BACKGROUND_LOCATION'/>"
       ],
       "folderName": "BusinessApp",
+      "customUrl": "mezbiz",
       "packages": {
         "stage": {
           "appName": "MezBiz Stage",

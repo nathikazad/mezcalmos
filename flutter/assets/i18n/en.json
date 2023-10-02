@@ -1240,7 +1240,13 @@
           "ViewRestaurantOrderScreen": {
             "orderStatus": "Order status",
             "writeReview": "Write review",
-            "deliveryDet": "Delivery details"
+            "deliveryDet": "Delivery details",
+            "restaurant": "Restaurant",
+            "driver": "Driver",
+            "noResponse": "If the restaurant or delivery driver does not respond",
+            "contactAdmin": "Contact Admin",
+            "orderSummary": "Order summary",
+            "orderCost": "Order cost"
           }
         },
         "ViewRestaurantScreen": {
@@ -3575,6 +3581,13 @@
         "counterOffer": "Counter Offer",
         "reqCounterOffer": "Request price change"
       },
+      "DvConvoView": {
+        "respond": "Respond",
+        "finish": "Finish order",
+        "whatsapp": "Open Whatsapp",
+        "respondedAt": "responded at",
+        "cancel": "Cancel"
+      },
       "CurrentOrders": {
         "CurrentOrdersListScreen": {
           "currentOrders": "Current orders",
@@ -3585,6 +3598,11 @@
           "title": "Incoming orders",
           "offlineTitle": "You are offline",
           "offlineBody": "Turn on to see incoming orders",
+          "confirmationDialog": {
+            "markAll": "Mark all orders as finished",
+            "yes": "Yes, finish orders",
+            "cancel": "Cancel"
+          },
           "Components": {
             "DriverNoOrdersComponent": {
               "noOrdersTitle": "No Orders Found",
@@ -4004,6 +4022,12 @@
         "restaurant": "Restaurant",
         "cancelOrder": "Cancel order",
         "orderItems": "Order Items",
+        "driver": "Driver",
+        "customer": "Customer",
+        "fwdCompany": "Forward to Servi Amigos",
+        "fwdDriver": "Forward to driver",
+        "orderCost": "Order cost",
+        "orderSummary": "Order summary",
         "components": {
           "ROpSpecialItemTime": {
             "selectTime": "Select your time",

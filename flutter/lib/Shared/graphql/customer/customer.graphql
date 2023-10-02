@@ -125,6 +125,26 @@ mutation updateLaundryOrderReviewId($orderId: Int!, $reviewId: Int!) {
   }
 }
 
+query getCustomerRestaurantOrders($custId: Int!, $limit: Int, $offset: Int) {
+  customer_minimal_orders(
+    where: { order_type: { _eq: "restaurant" } }
+    args: { cus_id: $custId }
+    offset: $offset
+    limit: $limit
+  ) {
+    id
+    image
+    in_process
+    name
+    delivery_cost
+    to_address
+    order_time
+    order_type
+    payment_type
+    status
+    total_cost
+  }
+}
 query getCustomerOrdersByType(
   $custId: Int!
   $orderType: String!

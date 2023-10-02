@@ -67,7 +67,7 @@ export async function markMessagesAsFinished(uid: number, data: MarkMessagesAsFi
             };
 
             if (msg.responded_time == null) {
-              msg.responded_time = new Date();
+              setObject.responded_time = new Date();
             }
 
             return {

@@ -6987,6 +6987,941 @@ class _CopyWithStubImpl$Mutation$updateLaundryOrderReviewId$update_laundry_order
       _res;
 }
 
+class Variables$Query$getCustomerRestaurantOrders {
+  factory Variables$Query$getCustomerRestaurantOrders({
+    required int custId,
+    int? limit,
+    int? offset,
+  }) =>
+      Variables$Query$getCustomerRestaurantOrders._({
+        r'custId': custId,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
+      });
+
+  Variables$Query$getCustomerRestaurantOrders._(this._$data);
+
+  factory Variables$Query$getCustomerRestaurantOrders.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$custId = data['custId'];
+    result$data['custId'] = (l$custId as int);
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    return Variables$Query$getCustomerRestaurantOrders._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get custId => (_$data['custId'] as int);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$custId = custId;
+    result$data['custId'] = l$custId;
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getCustomerRestaurantOrders<
+          Variables$Query$getCustomerRestaurantOrders>
+      get copyWith => CopyWith$Variables$Query$getCustomerRestaurantOrders(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getCustomerRestaurantOrders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$custId = custId;
+    final lOther$custId = other.custId;
+    if (l$custId != lOther$custId) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$custId = custId;
+    final l$limit = limit;
+    final l$offset = offset;
+    return Object.hashAll([
+      l$custId,
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getCustomerRestaurantOrders<TRes> {
+  factory CopyWith$Variables$Query$getCustomerRestaurantOrders(
+    Variables$Query$getCustomerRestaurantOrders instance,
+    TRes Function(Variables$Query$getCustomerRestaurantOrders) then,
+  ) = _CopyWithImpl$Variables$Query$getCustomerRestaurantOrders;
+
+  factory CopyWith$Variables$Query$getCustomerRestaurantOrders.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getCustomerRestaurantOrders;
+
+  TRes call({
+    int? custId,
+    int? limit,
+    int? offset,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$getCustomerRestaurantOrders<TRes>
+    implements CopyWith$Variables$Query$getCustomerRestaurantOrders<TRes> {
+  _CopyWithImpl$Variables$Query$getCustomerRestaurantOrders(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getCustomerRestaurantOrders _instance;
+
+  final TRes Function(Variables$Query$getCustomerRestaurantOrders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? custId = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
+      _then(Variables$Query$getCustomerRestaurantOrders._({
+        ..._instance._$data,
+        if (custId != _undefined && custId != null) 'custId': (custId as int),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getCustomerRestaurantOrders<TRes>
+    implements CopyWith$Variables$Query$getCustomerRestaurantOrders<TRes> {
+  _CopyWithStubImpl$Variables$Query$getCustomerRestaurantOrders(this._res);
+
+  TRes _res;
+
+  call({
+    int? custId,
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
+}
+
+class Query$getCustomerRestaurantOrders {
+  Query$getCustomerRestaurantOrders({
+    required this.customer_minimal_orders,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerRestaurantOrders.fromJson(
+      Map<String, dynamic> json) {
+    final l$customer_minimal_orders = json['customer_minimal_orders'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerRestaurantOrders(
+      customer_minimal_orders: (l$customer_minimal_orders as List<dynamic>)
+          .map((e) => Query$getCustomerRestaurantOrders$customer_minimal_orders
+              .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getCustomerRestaurantOrders$customer_minimal_orders>
+      customer_minimal_orders;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$customer_minimal_orders = customer_minimal_orders;
+    _resultData['customer_minimal_orders'] =
+        l$customer_minimal_orders.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$customer_minimal_orders = customer_minimal_orders;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$customer_minimal_orders.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCustomerRestaurantOrders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_minimal_orders = customer_minimal_orders;
+    final lOther$customer_minimal_orders = other.customer_minimal_orders;
+    if (l$customer_minimal_orders.length !=
+        lOther$customer_minimal_orders.length) {
+      return false;
+    }
+    for (int i = 0; i < l$customer_minimal_orders.length; i++) {
+      final l$customer_minimal_orders$entry = l$customer_minimal_orders[i];
+      final lOther$customer_minimal_orders$entry =
+          lOther$customer_minimal_orders[i];
+      if (l$customer_minimal_orders$entry !=
+          lOther$customer_minimal_orders$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerRestaurantOrders
+    on Query$getCustomerRestaurantOrders {
+  CopyWith$Query$getCustomerRestaurantOrders<Query$getCustomerRestaurantOrders>
+      get copyWith => CopyWith$Query$getCustomerRestaurantOrders(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerRestaurantOrders<TRes> {
+  factory CopyWith$Query$getCustomerRestaurantOrders(
+    Query$getCustomerRestaurantOrders instance,
+    TRes Function(Query$getCustomerRestaurantOrders) then,
+  ) = _CopyWithImpl$Query$getCustomerRestaurantOrders;
+
+  factory CopyWith$Query$getCustomerRestaurantOrders.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCustomerRestaurantOrders;
+
+  TRes call({
+    List<Query$getCustomerRestaurantOrders$customer_minimal_orders>?
+        customer_minimal_orders,
+    String? $__typename,
+  });
+  TRes customer_minimal_orders(
+      Iterable<Query$getCustomerRestaurantOrders$customer_minimal_orders> Function(
+              Iterable<
+                  CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders<
+                      Query$getCustomerRestaurantOrders$customer_minimal_orders>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCustomerRestaurantOrders<TRes>
+    implements CopyWith$Query$getCustomerRestaurantOrders<TRes> {
+  _CopyWithImpl$Query$getCustomerRestaurantOrders(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerRestaurantOrders _instance;
+
+  final TRes Function(Query$getCustomerRestaurantOrders) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? customer_minimal_orders = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCustomerRestaurantOrders(
+        customer_minimal_orders: customer_minimal_orders == _undefined ||
+                customer_minimal_orders == null
+            ? _instance.customer_minimal_orders
+            : (customer_minimal_orders as List<
+                Query$getCustomerRestaurantOrders$customer_minimal_orders>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes customer_minimal_orders(
+          Iterable<Query$getCustomerRestaurantOrders$customer_minimal_orders> Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders<
+                          Query$getCustomerRestaurantOrders$customer_minimal_orders>>)
+              _fn) =>
+      call(
+          customer_minimal_orders: _fn(_instance.customer_minimal_orders.map((e) =>
+              CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCustomerRestaurantOrders<TRes>
+    implements CopyWith$Query$getCustomerRestaurantOrders<TRes> {
+  _CopyWithStubImpl$Query$getCustomerRestaurantOrders(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getCustomerRestaurantOrders$customer_minimal_orders>?
+        customer_minimal_orders,
+    String? $__typename,
+  }) =>
+      _res;
+  customer_minimal_orders(_fn) => _res;
+}
+
+const documentNodeQuerygetCustomerRestaurantOrders = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getCustomerRestaurantOrders'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'custId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'customer_minimal_orders'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'order_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'restaurant',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'args'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'cus_id'),
+                value: VariableNode(name: NameNode(value: 'custId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'image'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'in_process'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'to_address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'payment_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'total_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getCustomerRestaurantOrders _parserFn$Query$getCustomerRestaurantOrders(
+        Map<String, dynamic> data) =>
+    Query$getCustomerRestaurantOrders.fromJson(data);
+
+class Options$Query$getCustomerRestaurantOrders
+    extends graphql.QueryOptions<Query$getCustomerRestaurantOrders> {
+  Options$Query$getCustomerRestaurantOrders({
+    String? operationName,
+    required Variables$Query$getCustomerRestaurantOrders variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetCustomerRestaurantOrders,
+          parserFn: _parserFn$Query$getCustomerRestaurantOrders,
+        );
+}
+
+class WatchOptions$Query$getCustomerRestaurantOrders
+    extends graphql.WatchQueryOptions<Query$getCustomerRestaurantOrders> {
+  WatchOptions$Query$getCustomerRestaurantOrders({
+    String? operationName,
+    required Variables$Query$getCustomerRestaurantOrders variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetCustomerRestaurantOrders,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getCustomerRestaurantOrders,
+        );
+}
+
+class FetchMoreOptions$Query$getCustomerRestaurantOrders
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getCustomerRestaurantOrders({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getCustomerRestaurantOrders variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetCustomerRestaurantOrders,
+        );
+}
+
+extension ClientExtension$Query$getCustomerRestaurantOrders
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getCustomerRestaurantOrders>>
+      query$getCustomerRestaurantOrders(
+              Options$Query$getCustomerRestaurantOrders options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getCustomerRestaurantOrders>
+      watchQuery$getCustomerRestaurantOrders(
+              WatchOptions$Query$getCustomerRestaurantOrders options) =>
+          this.watchQuery(options);
+  void writeQuery$getCustomerRestaurantOrders({
+    required Query$getCustomerRestaurantOrders data,
+    required Variables$Query$getCustomerRestaurantOrders variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetCustomerRestaurantOrders),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getCustomerRestaurantOrders? readQuery$getCustomerRestaurantOrders({
+    required Variables$Query$getCustomerRestaurantOrders variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerygetCustomerRestaurantOrders),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$getCustomerRestaurantOrders.fromJson(result);
+  }
+}
+
+class Query$getCustomerRestaurantOrders$customer_minimal_orders {
+  Query$getCustomerRestaurantOrders$customer_minimal_orders({
+    required this.id,
+    this.image,
+    required this.in_process,
+    this.name,
+    required this.delivery_cost,
+    this.to_address,
+    required this.order_time,
+    required this.order_type,
+    this.payment_type,
+    required this.status,
+    required this.total_cost,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerRestaurantOrders$customer_minimal_orders.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$in_process = json['in_process'];
+    final l$name = json['name'];
+    final l$delivery_cost = json['delivery_cost'];
+    final l$to_address = json['to_address'];
+    final l$order_time = json['order_time'];
+    final l$order_type = json['order_type'];
+    final l$payment_type = json['payment_type'];
+    final l$status = json['status'];
+    final l$total_cost = json['total_cost'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerRestaurantOrders$customer_minimal_orders(
+      id: (l$id as int),
+      image: (l$image as String?),
+      in_process: (l$in_process as bool),
+      name: (l$name as String?),
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      to_address: (l$to_address as String?),
+      order_time: (l$order_time as String),
+      order_type: (l$order_type as String),
+      payment_type: (l$payment_type as String?),
+      status: (l$status as String),
+      total_cost: moneyFromJson(l$total_cost),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? image;
+
+  final bool in_process;
+
+  final String? name;
+
+  final double delivery_cost;
+
+  final String? to_address;
+
+  final String order_time;
+
+  final String order_type;
+
+  final String? payment_type;
+
+  final String status;
+
+  final double total_cost;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$in_process = in_process;
+    _resultData['in_process'] = l$in_process;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$to_address = to_address;
+    _resultData['to_address'] = l$to_address;
+    final l$order_time = order_time;
+    _resultData['order_time'] = l$order_time;
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
+    final l$payment_type = payment_type;
+    _resultData['payment_type'] = l$payment_type;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$total_cost = total_cost;
+    _resultData['total_cost'] = moneyToJson(l$total_cost);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$image = image;
+    final l$in_process = in_process;
+    final l$name = name;
+    final l$delivery_cost = delivery_cost;
+    final l$to_address = to_address;
+    final l$order_time = order_time;
+    final l$order_type = order_type;
+    final l$payment_type = payment_type;
+    final l$status = status;
+    final l$total_cost = total_cost;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$image,
+      l$in_process,
+      l$name,
+      l$delivery_cost,
+      l$to_address,
+      l$order_time,
+      l$order_type,
+      l$payment_type,
+      l$status,
+      l$total_cost,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCustomerRestaurantOrders$customer_minimal_orders) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$in_process = in_process;
+    final lOther$in_process = other.in_process;
+    if (l$in_process != lOther$in_process) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$to_address = to_address;
+    final lOther$to_address = other.to_address;
+    if (l$to_address != lOther$to_address) {
+      return false;
+    }
+    final l$order_time = order_time;
+    final lOther$order_time = other.order_time;
+    if (l$order_time != lOther$order_time) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
+      return false;
+    }
+    final l$payment_type = payment_type;
+    final lOther$payment_type = other.payment_type;
+    if (l$payment_type != lOther$payment_type) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$total_cost = total_cost;
+    final lOther$total_cost = other.total_cost;
+    if (l$total_cost != lOther$total_cost) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerRestaurantOrders$customer_minimal_orders
+    on Query$getCustomerRestaurantOrders$customer_minimal_orders {
+  CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders<
+          Query$getCustomerRestaurantOrders$customer_minimal_orders>
+      get copyWith =>
+          CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders<
+    TRes> {
+  factory CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders(
+    Query$getCustomerRestaurantOrders$customer_minimal_orders instance,
+    TRes Function(Query$getCustomerRestaurantOrders$customer_minimal_orders)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerRestaurantOrders$customer_minimal_orders;
+
+  factory CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerRestaurantOrders$customer_minimal_orders;
+
+  TRes call({
+    int? id,
+    String? image,
+    bool? in_process,
+    String? name,
+    double? delivery_cost,
+    String? to_address,
+    String? order_time,
+    String? order_type,
+    String? payment_type,
+    String? status,
+    double? total_cost,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerRestaurantOrders$customer_minimal_orders<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerRestaurantOrders$customer_minimal_orders(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerRestaurantOrders$customer_minimal_orders _instance;
+
+  final TRes Function(Query$getCustomerRestaurantOrders$customer_minimal_orders)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? in_process = _undefined,
+    Object? name = _undefined,
+    Object? delivery_cost = _undefined,
+    Object? to_address = _undefined,
+    Object? order_time = _undefined,
+    Object? order_type = _undefined,
+    Object? payment_type = _undefined,
+    Object? status = _undefined,
+    Object? total_cost = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCustomerRestaurantOrders$customer_minimal_orders(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        in_process: in_process == _undefined || in_process == null
+            ? _instance.in_process
+            : (in_process as bool),
+        name: name == _undefined ? _instance.name : (name as String?),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        to_address: to_address == _undefined
+            ? _instance.to_address
+            : (to_address as String?),
+        order_time: order_time == _undefined || order_time == null
+            ? _instance.order_time
+            : (order_time as String),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
+        payment_type: payment_type == _undefined
+            ? _instance.payment_type
+            : (payment_type as String?),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        total_cost: total_cost == _undefined || total_cost == null
+            ? _instance.total_cost
+            : (total_cost as double),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerRestaurantOrders$customer_minimal_orders<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerRestaurantOrders$customer_minimal_orders<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerRestaurantOrders$customer_minimal_orders(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? image,
+    bool? in_process,
+    String? name,
+    double? delivery_cost,
+    String? to_address,
+    String? order_time,
+    String? order_type,
+    String? payment_type,
+    String? status,
+    double? total_cost,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$getCustomerOrdersByType {
   factory Variables$Query$getCustomerOrdersByType({
     required int custId,

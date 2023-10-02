@@ -1,13 +1,19 @@
 import axios from "axios";
 import { storage } from "firebase-admin";
 
-export async function generateQr(path:string, shortLink:string): Promise<string>  {
+interface GenerateQRParams {
+    imageUploadPath:string,
+    shortLink: string
+    logoLink?: string
+}
+
+export async function generateQr(generateQRParams:GenerateQRParams): Promise<string>  {
     try {
         const { data } = await axios.post(
             'https://qrcode-monkey.p.rapidapi.com/qr/custom',
             // '{"data":"https://www.qrcode-monkey.com","config":{"body":"rounded-pointed","eye":"frame14","eyeBall":"ball16","erf1":[],"erf2":["fh"],"erf3":["fv"],"brf1":[],"brf2":["fh"],"brf3":["fv"],"bodyColor":"#5C8B29","bgColor":"#FFFFFF","eye1Color":"#3F6B2B","eye2Color":"#3F6B2B","eye3Color":"#3F6B2B","eyeBall1Color":"#60A541","eyeBall2Color":"#60A541","eyeBall3Color":"#60A541","gradientColor1":"#5C8B29","gradientColor2":"#25492F","gradientType":"radial","gradientOnEyes":false,"logo":""},"size":300,"download":false,"file":"png"}',
             {
-                "data": shortLink,
+                "data": generateQRParams.shortLink,
                 "config": {
                     "body": "japnese",
                     "eye": "frame1",
@@ -37,7 +43,7 @@ export async function generateQr(path:string, shortLink:string): Promise<string>
                     "gradientColor2": "#AC59FC",
                     "gradientType": "linear",
                     "gradientOnEyes": "true",
-                    "logo": "https://new-mezcalmose-website.firebaseapp.com/assets/img/logo/logo.png", //"https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
+                    "logo": generateQRParams.logoLink ?? "https://new-mezcalmose-website.firebaseapp.com/assets/img/logo/logo.png", //"https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
                     "logoMode": "clean"
                 },
                 "size": 300,
@@ -57,7 +63,7 @@ export async function generateQr(path:string, shortLink:string): Promise<string>
             throw Error('Image Generation Error 1');
         else {
             console.log("uploading");
-            return await uploadQrImg(path, (data['imageUrl'] as string).replace('//', 'https://'));
+            return await uploadQrImg(generateQRParams.imageUploadPath, (data['imageUrl'] as string).replace('//', 'https://'));
         }
     } catch (error) {
         console.log(`Error Happend when generating the QR code:\n${error}`);
@@ -66,8 +72,8 @@ export async function generateQr(path:string, shortLink:string): Promise<string>
 };
 
 
-async function uploadQrImg(path:string , qrExternalUrl: string): Promise<string> {
-    console.log("[+] uploadRestaurantQrImg :: called  :: path ::", path);
+async function uploadQrImg(imageUploadPath:string , qrExternalUrl: string): Promise<string> {
+    console.log("[+] uploadRestaurantQrImg :: called  :: path ::", imageUploadPath);
     const response  = await axios
     .get(qrExternalUrl, {
       responseType: 'arraybuffer'
@@ -82,7 +88,7 @@ async function uploadQrImg(path:string , qrExternalUrl: string): Promise<string>
 
         const bucket = storage().bucket()
         // const imageByteArray = new Uint8Array(b64);
-        const file = bucket.file(`${path}-qr.png`);
+        const file = bucket.file(`${imageUploadPath}-qr.png`);
 
         console.log("[+] BEFORE file.save :: file.baseUrl :: ", file.publicUrl());
         await file.save(b64 , {

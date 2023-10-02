@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/User.dart' as user;
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/User.dart' as user;
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryOrder extends DeliverableOrder {
   int? serviceOrderId;
@@ -10,6 +11,7 @@ class DeliveryOrder extends DeliverableOrder {
   DeliveryOrderStatus status;
 
   bool packageReady;
+  List<DeliveryOrderItem> dvItems = <DeliveryOrderItem>[];
 
   //bool driverAssigned;
   DeliveryOrder(
@@ -29,6 +31,8 @@ class DeliveryOrder extends DeliverableOrder {
       required super.estimatedArrivalAtPickup,
       required super.estimatedPackageReadyTime,
       super.cancellationTime,
+      super.deliveryType = DeliveryType.Delivery,
+      this.dvItems = const <DeliveryOrderItem>[],
       required super.serviceProvider,
       required super.deliveryProviderType,
       required super.driverInfo,
@@ -149,4 +153,21 @@ class DeliveryOrderVariables {
       this.scheduleTime,
       this.cancellationTime,
       this.driverInfo});
+}
+
+class DeliveryOrderItem {
+  LanguageMap name;
+  double costPerOne;
+
+  int quantity;
+  String? image;
+
+  DeliveryOrderItem({
+    required this.name,
+    required this.costPerOne,
+    required this.quantity,
+    this.image,
+  });
+
+  double get totalCost => costPerOne * quantity;
 }

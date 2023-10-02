@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -47,6 +51,7 @@ class RestaurantOrder extends DeliverableOrder {
       required this.status,
       required super.serviceProviderId,
       required super.paymentType,
+      required super.deliveryType,
       required super.orderTime,
       required super.costs,
       required super.serviceProvider,
@@ -143,6 +148,66 @@ class RestaurantOrder extends DeliverableOrder {
 
     return text;
   }
+
+  bool get isSitIn => deliveryType == cModels.DeliveryType.SitIn;
+  bool get isInStorePickup => deliveryType == cModels.DeliveryType.Pickup;
+  bool get isDelivery => deliveryType == cModels.DeliveryType.Delivery;
+
+  Future<String> contructOrderMessage() async {
+    String? shortUrl;
+
+    if (isDelivery && pickupLocation != null) {
+      final String mapsUrl = getGMapsDirectionLink(
+          pickupLocation!.toLatLng()!, dropOffLocation.toLatLng()!);
+      shortUrl = await getShortLink(mapsUrl);
+    }
+
+    final String separator = "\n" + "=" * 10 + "\n";
+
+    final String customerInfo = "👤 Customer Info\nName: ${customer.name}" +
+        (isDelivery ? "\nAddress: ${dropOffLocation.address}" : "") +
+        (customer.phoneNumber != null
+            ? "\nPhone: ${customer.phoneNumber}"
+            : "") +
+        (shortUrl != null ? "\nRoute: $shortUrl" : "");
+    final String orderInfo =
+        "🛒 Order Info\nDelivery Type: ${isInStorePickup ? 'PICKUP' : isSitIn ? 'SIT-IN' : 'DELIVERY'}\nItems cost: \$${costs.orderItemsCost!.round()}\nQuantity: ${this.items.length}" +
+            (notes?.isNotEmpty == true ? "\nNotes: $notes" : "") +
+            (scheduleTime != null
+                ? "\n⏰ Scheduled Time: ${DateFormat('yyyy-MM-dd HH:mm a').format(scheduleTime!)}"
+                : "");
+
+    final String items =
+        "🍔 Items:\n${this.items.map<String>((RestaurantOrderItem e) => "${e.toReadableString()}").join("\n")}";
+
+    final String restaurantName = "🏠 Restaurant: ${restaurant.name}";
+
+    final DateTime now = DateTime.now();
+    final String formattedDateTime =
+        DateFormat('yyyy-MM-dd HH:mm a').format(now);
+    final String dateTimeInfo = "📅 $formattedDateTime";
+
+    String header = "\n----- 🛍️ NEW ORDER 🛍️ -----" +
+        (isInStorePickup
+            ? '\n----- 🚶‍♂️ PICKUP 🚶‍♂️ -----'
+            : isSitIn
+                ? '\n----- 🪑 SIT-IN 🪑 -----'
+                : '\n----- 🚚 DELIVERY 🚚 -----'); // Creative header
+
+    if (scheduleTime != null) {
+      header = "\n----- 🕒 SCHEDULED ORDER 🕒 -----"; // Scheduled order header
+    }
+
+    final String footer =
+        "\n🙏 Thank you for using MezKala app!\n$restaurantName\n";
+
+    final String message =
+        "$header$separator$dateTimeInfo$separator$customerInfo$separator$orderInfo$separator$items$separator$footer";
+
+    final String cleanedMessage = message.replaceAll(RegExp(r'[\[\]{},]'), '');
+
+    return cleanedMessage;
+  }
 }
 
 class RestaurantOrderItem {
@@ -193,5 +258,38 @@ class RestaurantOrderItem {
       });
     });
     return restaurantOrderItem;
+  }
+
+  String toReadableString() {
+    final String optionChoices =
+        chosenChoices.entries.map((MapEntry<String, List<Choice>> entry) {
+      final String? optionName =
+          optionNames[entry.key]?.getTranslation(userLanguage).toString();
+
+      final String choiceList = entry.value.map((Choice choice) {
+        String choiceText = choice.name.getTranslation(userLanguage) ?? "";
+        if (choice.cost > 0) {
+          choiceText += " + \$${choice.cost.round()}";
+        }
+
+        return "     -$choiceText";
+      }).join("\n");
+
+      return "  -$optionName:\n$choiceList";
+    }).join("\n");
+
+    final String choicesSection =
+        optionChoices.isNotEmpty ? "$optionChoices" : '';
+
+    final String notesSection =
+        notes?.isNotEmpty == true ? "Item notes: $notes," : '';
+
+    final String data =
+        "* ${name.getTranslation(userLanguage)}: \$${costPerOne.round()} x $quantity" +
+            (notesSection.isNotEmpty ? "\n  $notesSection" : '') +
+            (choicesSection.isNotEmpty ? "\n$choicesSection" : '') +
+            "\n";
+
+    return data;
   }
 }

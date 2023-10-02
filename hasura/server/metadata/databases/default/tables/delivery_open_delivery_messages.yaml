@@ -1,0 +1,35 @@
+table:
+  name: open_delivery_messages
+  schema: delivery
+object_relationships:
+  - name: customer
+    using:
+      manual_configuration:
+        column_mapping:
+          phone_number: phone
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+  - name: driver
+    using:
+      manual_configuration:
+        column_mapping:
+          driver_id: id
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
+select_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - driver_id
+        - id
+        - user_id
+        - entry
+        - phone_number
+        - finished_time
+        - received_time
+        - responded_time
+      filter: {}

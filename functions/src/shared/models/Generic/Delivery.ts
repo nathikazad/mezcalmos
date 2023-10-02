@@ -37,7 +37,7 @@ export interface DeliveryOrder {
   tripPolyline?: string;
   deliveryCost: number;
   packageCost?: number;
-  currentGps?: Location
+  currentGps?: Location;
   tripDistance?: number;
   tripDuration?: number;
   orderTime: string;
@@ -46,7 +46,7 @@ export interface DeliveryOrder {
   orderType: OrderType;
   direction: DeliveryDirection;
   distanceFromBase?: number;
-  changePriceRequest?: DeliveryChangePriceRequest
+  changePriceRequest?: DeliveryChangePriceRequest;
 }
 export enum DeliveryDirection {
   FromCustomer = "fromCustomer",
@@ -70,20 +70,20 @@ export interface DeliveryDriver {
 //   deliveryoperators?: DeliveryOperator[];
 // }
 export interface DeliveryDetails {
-    minimumCost?: number,
-    costPerKm?: number,
-    radius?: number,
-    freeDeliveryMinimumCost?: number,
-    freeDeliveryKmRange?: number,
-    deliveryAvailable: boolean;
-    customerPickup: boolean;
-    selfDelivery: boolean;
+  minimumCost?: number;
+  costPerKm?: number;
+  radius?: number;
+  freeDeliveryMinimumCost?: number;
+  freeDeliveryKmRange?: number;
+  deliveryAvailable: boolean;
+  customerPickup: boolean;
+  selfDelivery: boolean;
 }
 export interface DeliveryChangePriceRequest {
-  status: ChangePriceStatus,
-  newPrice: number,
-  oldPrice: number,
-  reason: string
+  status: ChangePriceStatus;
+  newPrice: number;
+  oldPrice: number;
+  reason: string;
 }
 export enum ChangePriceStatus {
   Requested = "requested",
@@ -144,7 +144,8 @@ export interface AuthorizeDriverNotification extends ForegroundNotification {
 export interface DriverApprovedNotification extends ForegroundNotification {
   approved: boolean;
 }
-export interface PriceChangeApprovalNotification extends ForegroundNotification {
+export interface PriceChangeApprovalNotification
+  extends ForegroundNotification {
   accepted: boolean;
 }
 
@@ -160,4 +161,28 @@ export interface DeliveryAdmin {
   authorized: boolean;
   versionNumber: string;
   notificationInfo: NotificationInfo;
+}
+
+enum MinimalDeliveryOrderStatus {
+  Open = "open",
+  InProcess = "inProcess",
+  Finished = "finished",
+}
+
+enum MinimalDeliveryOrderType {
+  Order = "order",
+  Message = "message",
+}
+
+interface DeliveryMinimalOrder {
+  id: number;
+  phone_number?: string;
+  delivery_order_type: MinimalDeliveryOrderType;
+  user_id?: string;
+  time: string;
+  service_provider_id?: number;
+  status: MinimalDeliveryOrderStatus;
+
+  driver_id?: number;
+  customer?: UserInfo;
 }

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
-import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/hsDeliveryMessage.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/DvOrderView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 
 class DriverPastOrdersController {
   DriverPastOrdersController();
-  RxList<DeliveryMessage> pastOrders = RxList.empty();
+  RxList<DeliveryMinimalOrder> pastOrders = RxList.empty();
+  DeliveryAuthController _deliveryAuthController =
+      Get.find<DeliveryAuthController>();
 
   /* SCROLL CONTROLLER */
   ScrollController get scrollController => _scrollController;
@@ -74,13 +78,13 @@ class DriverPastOrdersController {
 
     try {
       _fetchingData = true;
-      List<DeliveryMessage> newData = await getDvPastMessages(
-              offset: _currentOffset,
-              limit: fetchSize,
-              driverId: Get.find<DeliveryAuthController>()
-                  .driver!
-                  .deliveryDriverId) ??
-          [];
+      final List<DeliveryMinimalOrder> newData =
+          await get_delivery_minimal_orders(
+                  offset: _currentOffset,
+                  limit: fetchSize,
+                  driverId: _deliveryAuthController.driverId!,
+                  status: MinimalDeliveryOrderStatus.Finished) ??
+              <DeliveryMinimalOrder>[];
       pastOrders.value += newData;
       if (newData.length == 0) {
         _reachedEndOfData = true;
@@ -91,6 +95,14 @@ class DriverPastOrdersController {
     }
 
     // pastOrders.refresh();
+  }
+
+  void handleNavigation({required DeliveryMinimalOrder order}) {
+    if (order.delivery_order_type == MinimalDeliveryOrderType.Message) {
+      DvConvoView.navigate(phoneNumber: order.phone_number!);
+    } else {
+      DvOrderView.navigate(orderId: order.id.toInt());
+    }
   }
 
   void dispose() {

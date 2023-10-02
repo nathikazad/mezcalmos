@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/components/CustomerInprocessOrdersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/components/CustomerPastOrdersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
@@ -60,9 +59,9 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    if (viewController.currentOrders.isNotEmpty)
-                      CustomerInprocessOrdersList(
-                          txt: txt, viewController: viewController),
+                    // if (viewController.currentOrders.isNotEmpty)
+                    //   CustomerInprocessOrdersList(
+                    //       txt: txt, viewController: viewController),
                     if (viewController.pastOrders.isNotEmpty)
                       CustomerPastOrdersList(
                           txt: txt, viewController: viewController),
@@ -79,7 +78,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
-      children: [
+      children: <Widget>[
         Container(
           alignment: Alignment.center,
           height: 40.h,

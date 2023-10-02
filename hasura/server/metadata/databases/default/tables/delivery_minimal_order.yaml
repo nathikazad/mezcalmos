@@ -1,0 +1,41 @@
+table:
+  name: minimal_order
+  schema: delivery
+object_relationships:
+  - name: customer
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+  - name: driver
+    using:
+      manual_configuration:
+        column_mapping:
+          driver_id: id
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
+select_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+        - delivery_order_type
+        - user_id
+        - service_provider_id
+        - driver_id
+        - phone_number
+        - time
+        - status
+      filter:
+        _or:
+          - driver_id:
+              _is_null: true
+          - driver:
+              user_id:
+                _eq: X-Hasura-User-Id

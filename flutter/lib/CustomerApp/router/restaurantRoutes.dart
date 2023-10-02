@@ -39,7 +39,7 @@ class RestaurantRoutes {
     QRoute(
         path: restaurantOrdersRoute,
         name: restaurantOrdersRoute,
-        builder: () => restaurantOrder.ViewRestaurantOrderScreen(),
+        builder: () => restaurantOrder.CustRestaurantOrderView(),
         middleware: <QMiddleware>[DefferedLoader(restaurantOrder.loadLibrary)]),
     QRoute(
         path: cartRoute,

@@ -143,7 +143,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                 _index.value = v;
               },
               type: BottomNavigationBarType.fixed,
-              items: [
+              items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                       icon: Icon(
                           _index.value == 0 ? Icons.home : Icons.home_outlined),
@@ -270,7 +270,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget mezListOfServices() {
     return Obx(
       () => Column(
-        children: [
+        children: <Widget>[
           ServicesCard(
             title: "${_i18n()['food']["title"]}",
             url: "assets/images/customer/foodService.png",

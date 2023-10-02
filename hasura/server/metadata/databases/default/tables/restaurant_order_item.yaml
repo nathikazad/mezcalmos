@@ -37,12 +37,7 @@ select_permissions:
         - in_json
         - cost_per_one
         - notes
-      filter:
-        order:
-          delivery:
-            delivery_driver:
-              user_id:
-                _eq: X-Hasura-User-Id
+      filter: {}
   - role: mez_admin
     permission:
       columns:

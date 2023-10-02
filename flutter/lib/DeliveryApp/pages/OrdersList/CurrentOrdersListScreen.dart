@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/components/DvConvoCard.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -60,11 +60,11 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Obx(
               () => SwitchListTile.adaptive(
                   title: Text(
-                    "Incoming Orders",
+                    _i18n()['title'],
                     style: context.textTheme.bodyLarge,
                   ),
                   activeColor: primaryBlueColor,
@@ -74,20 +74,22 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                   }),
             ),
             Obx(
-              () => SingleChildScrollView(
-                child: (viewController.currentOrders.isNotEmpty ||
-                        viewController.openOrders.isNotEmpty)
-                    ? Column(
-                        children: [
-                          if (viewController.currentOrders.isNotEmpty)
-                            _currentOrders(context),
-                          if (viewController.openOrders.isNotEmpty)
-                            _openOrders(context),
-                        ],
-                      )
-                    : Padding(
-                        padding: EdgeInsets.only(top: 17.5.h),
-                        child: NoOrdersComponent()),
+              () => Expanded(
+                child: SingleChildScrollView(
+                  child: (viewController.currentOrders.isNotEmpty ||
+                          viewController.openOrders.isNotEmpty)
+                      ? Column(
+                          children: <Widget>[
+                            if (viewController.currentOrders.isNotEmpty)
+                              _currentOrders(context),
+                            if (viewController.openOrders.isNotEmpty)
+                              _openOrders(context),
+                          ],
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(top: 17.5.h),
+                          child: NoOrdersComponent()),
+                ),
               ),
             ),
           ],
@@ -103,9 +105,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
-        children: [
+        children: <Widget>[
           Text.rich(TextSpan(
-              children: [
+              children: <InlineSpan>[
                 WidgetSpan(
                   child: Icon(
                     Icons.route_rounded,
@@ -115,7 +117,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 WidgetSpan(child: hTinySepartor),
                 TextSpan(
                     text:
-                        "Current Orders (${viewController.currentOrders.length})"),
+                        "${_i18n()['currentOrders']} (${viewController.currentOrders.length})"),
               ],
               style: context.textTheme.bodyLarge
                   ?.copyWith(color: primaryBlueColor))),
@@ -123,28 +125,28 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Column(
             children:
                 List.generate(viewController.currentOrders.length, (int index) {
-              final DeliveryMessage message =
+              final DeliveryMinimalOrder message =
                   viewController.currentOrders[index];
               return DvConvoCard(
                 message: message,
                 onClick: () {
-                  DvConvoView.navigate(phoneNumber: message.phoneNumber);
+                  viewController.handleNavigation(order: message);
                 },
               );
             }),
           ),
           Divider(),
           MezInkwell(
-            label: "Mark all orders as finished",
+            label: _i18n()['confirmationDialog']["markAll"],
             backgroundColor: secondaryLightBlueColor,
             textColor: primaryBlueColor,
             icon: Icons.arrow_forward,
             onClick: () async {
               await showConfirmationDialog(context,
-                  title: "Mark all orders as finished",
+                  title: _i18n()['confirmationDialog']["markAll"],
                   helperText: '',
-                  primaryButtonText: "Yes, finish orders",
-                  secondaryButtonText: "Cancel",
+                  primaryButtonText: _i18n()['confirmationDialog']['yes'],
+                  secondaryButtonText: _i18n()['confirmationDialog']['cancel'],
                   primaryColor: primaryBlueColor,
                   icon: Icons.done_all_rounded, onYesClick: () async {
                 await viewController.finishAllOrders();
@@ -162,9 +164,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
       decoration: BoxDecoration(color: Colors.purple.shade100),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Text.rich(TextSpan(
-              children: [
+              children: <InlineSpan>[
                 WidgetSpan(
                   child: Icon(
                     Icons.hourglass_empty_rounded,
@@ -173,7 +175,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 ),
                 WidgetSpan(child: hTinySepartor),
                 TextSpan(
-                    text: "Open Orders (${viewController.openOrders.length})"),
+                    text:
+                        "${_i18n()['openOrders']} (${viewController.openOrders.length})"),
               ],
               style:
                   context.textTheme.bodyLarge?.copyWith(color: Colors.purple))),
@@ -181,11 +184,12 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
           Column(
             children:
                 List.generate(viewController.openOrders.length, (int index) {
-              final DeliveryMessage message = viewController.openOrders[index];
+              final DeliveryMinimalOrder message =
+                  viewController.openOrders[index];
               return DvConvoCard(
                 message: message,
                 onClick: () {
-                  DvConvoView.navigate(phoneNumber: message.phoneNumber);
+                  viewController.handleNavigation(order: message);
                 },
               );
             }),

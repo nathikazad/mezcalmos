@@ -1,5 +1,6 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,11 +11,21 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
 
 class SplashScreen extends StatefulWidget {
+  final num initializationState;
+  final String initializationStateAuth;
+  const SplashScreen(this.initializationState, this.initializationStateAuth,
+      {Key? key})
+      : super(key: key);
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreen> createState() {
+    return _SplashScreenState(initializationState, initializationStateAuth);
+  }
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  num initializationState;
+  String initializationStateAuth;
+  _SplashScreenState(this.initializationState, this.initializationStateAuth);
   bool internetStatus = true;
   Timer? timer;
   @override
@@ -113,23 +124,24 @@ class _SplashScreenState extends State<SplashScreen> {
                     ],
                   ),
                 ),
-                if (!internetStatus)
-                  Card(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 25, horizontal: 15),
-                    color: offRedColor,
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(8),
-                      child: Text(
-                        _isEs
-                            ? "No se pudo conectar a Internet. Por favor, verifica tu conexión de red e intenta de nuevo. Si el problema persiste, por favor intenta reiniciar la aplicación."
-                            : "Unable to connect to the internet. Please check your network connection and try again. If the problem persists, please try restarting the app.",
-                        style: TextStyle(color: redAccentColor),
-                        textAlign: TextAlign.center,
-                      ),
+                Card(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
+                  color: offRedColor,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(8),
+                    child: Text(
+                      internetStatus
+                          ? "$initializationState $initializationStateAuth"
+                          : _isEs
+                              ? "$initializationState $initializationStateAuth No se pudo conectar a Internet. Por favor, verifica tu conexión de red e intenta de nuevo. Si el problema persiste, por favor intenta reiniciar la aplicación."
+                              : "$initializationState $initializationStateAuth Unable to connect to the internet. Please check your network connection and try again. If the problem persists, please try restarting the app.",
+                      style: TextStyle(color: redAccentColor),
+                      textAlign: TextAlign.center,
                     ),
-                  )
+                  ),
+                )
               ],
             )),
       ),

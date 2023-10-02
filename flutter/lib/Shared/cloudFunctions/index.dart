@@ -650,7 +650,7 @@ class CloudFunctions {
           "toLocation": toLocation.toFirebaseFormattedJson(),
           "fromLocationGps": fromLocationGps?.toFirebaseFormattedJson(),
           "fromLocationText": fromLocationText,
-          "items": items.fold<List<dynamic>>([],
+          "items": items.fold<List<dynamic>>(<CourierItem>[],
               (List<dynamic> value, CourierItem element) {
             value.add(element.toFirebaseFormattedJson());
             return value;

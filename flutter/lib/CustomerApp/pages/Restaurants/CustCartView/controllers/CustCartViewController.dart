@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.d
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
@@ -53,7 +54,7 @@ class CustCartViewController {
 
   // dropdown value
   Rxn<PaymentOption> pickerChoice = Rxn<PaymentOption>();
-  PaymentOption cash = {PickerChoice.Cash: null};
+  PaymentOption cash = <PickerChoice, CreditCard?>{PickerChoice.Cash: null};
 
   // Payment Card //
   Rxn<CreditCard> card = Rxn();
@@ -126,7 +127,7 @@ class CustCartViewController {
 
   Future<void> _setDefaultOptions() async {
     mezDbgPrint("SUPER _setDefaultOptions");
-    options.add({PickerChoice.Cash: null});
+    options.add(<PickerChoice, CreditCard?>{PickerChoice.Cash: null});
     // if (await isApplePaySupported()) {
     //   options.add({PickerChoice.ApplePay: null});
     // }
@@ -264,11 +265,10 @@ class CustCartViewController {
             cart.restaurant!.info.phoneNumber!,
             message: message);
 
-        showRedirectText.value = false;
         if (res) {
-          orderSentToRest.value = true;
-          await cartController.clearCart();
+          await _sendOrderToDb();
         }
+        showRedirectText.value = false;
       } catch (e, stk) {
         showErrorSnackBar();
         mezDbgPrint(e);
@@ -278,33 +278,32 @@ class CustCartViewController {
       showErrorSnackBar(errorText: "Restaurant don't have a phonenumber");
     }
     showRedirectText.value = false;
+  }
 
-    // cart.notes = noteText.text.inCaps;
-    // num? newOrderId;
-    // try {
-    //   // if (cart.paymentType == PaymentType.Card) {
-    //   //   final String? stripePaymentId =
-    //   //       await acceptPaymentByCardChoice(getCardChoice);
-    //   //   if (stripePaymentId != null) {
-    //   //     newOrderId =
-    //   //         await cartController.checkout(stripePaymentId: stripePaymentId);
-    //   //   }
-    //   // } else {
-    //   newOrderId = await cartController.checkout(stripePaymentId: null);
-    //   // }
+  Future<void> _sendOrderToDb() async {
+    try {
+      // if (cart.paymentType == PaymentType.Card) {
+      //   final String? stripePaymentId =
+      //       await acceptPaymentByCardChoice(getCardChoice);
+      //   if (stripePaymentId != null) {
+      //     newOrderId =
+      //         await cartController.checkout(stripePaymentId: stripePaymentId);
+      //   }
+      // } else {
+      final num? newOrderId =
+          await cartController.checkout(stripePaymentId: null);
+      // }
 
-    //   if (newOrderId != null) {
-    //     // ignore: unawaited_futures
-    //     MezRouter.popEverythingTillBeforeHome().then((_) =>
-    //         ViewRestaurantOrderScreen.navigate(orderId: newOrderId!.toInt()));
-    //   }
-
-    //   mezDbgPrint("success funish checkout");
-    // } catch (e, s) {
-    //   mezDbgPrint(
-    //     "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
-    //   );
-    // }
+      if (newOrderId != null) {
+        // ignore: unawaited_futures
+        MezRouter.popEverythingTillBeforeHome().then((_) =>
+            CustRestaurantOrderView.navigate(orderId: newOrderId.toInt()));
+      }
+    } catch (e, s) {
+      mezDbgPrint(
+        "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
+      );
+    }
   }
 
   /// returns stripePaymentId
@@ -579,7 +578,7 @@ class CustCartViewController {
   Future<void> applyCoupon() async {
     if (couponTextController.text.isNotEmpty) {
       try {
-        CouponError? response = await applyRestaurantCoupon(
+        final CouponError? response = await applyRestaurantCoupon(
           cart: cart,
           customerId: Get.find<AuthController>().hasuraUserId!,
           couponCode: couponTextController.text.trim(),

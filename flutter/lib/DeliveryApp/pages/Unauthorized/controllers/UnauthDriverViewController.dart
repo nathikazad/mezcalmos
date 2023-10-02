@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpCurrentOrders.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
+import 'package:mezcalmos/DeliveryApp/deliveryDeepLinkHandler.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class UnautthDriverViewController {
   // instances
@@ -22,8 +25,9 @@ class UnautthDriverViewController {
 
   Future<void> init() async {
     await dvAuthController.setupDeliveryDriver();
+    if (dvAuthController.driverState?.status != AgentStatus.Authorized)
+      unawaited(DeliveryDeepLinkHandler.showDialogAndAddDriver('serviamigos'));
     _status.value = dvAuthController.driver?.deliveryDriverState.status;
-
     _startListeningOnSatus();
   }
 
@@ -53,8 +57,11 @@ class UnautthDriverViewController {
   Future<void> _handleStatusChange() async {
     if (_status.value == AgentStatus.Authorized) {
       await dvAuthController.setupDeliveryDriver();
-      // ignore: inference_failure_on_function_invocation, unawaited_futures
-      // MezRouter.popEverythingTillBeforeHome().then((value) => DvOpCurrentOrdersListView().navigate());
+      //ignore: inference_failure_on_function_invocation, unawaited_futures
+      Future.delayed(
+          Duration.zero,
+          () => MezRouter.popEverythingTillBeforeHome()
+              .then((value) => DvOpCurrentOrdersListView()));
     }
   }
 

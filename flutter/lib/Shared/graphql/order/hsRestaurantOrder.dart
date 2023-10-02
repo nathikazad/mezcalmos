@@ -38,7 +38,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         "Event from hs restaurant order 🚀🚀🚀 =====>driver ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
 
     if (event.parsedData?.restaurant_order_by_pk != null) {
-      final List<RestaurantOrderItem> items = [];
+      final List<RestaurantOrderItem> items = <RestaurantOrderItem>[];
       final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk
           orderData = event.parsedData!.restaurant_order_by_pk!;
       orderData.items.forEach(
@@ -58,7 +58,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         if (item.in_json['selected_options'] != null) {
           (item.in_json['selected_options'] as Map<String, dynamic>)
               .forEach((String key, value) {
-            final List<Choice> choices = [];
+            final List<Choice> choices = <Choice>[];
             _restauItem.optionNames[key] =
                 convertToLanguageMap(value['optionName']);
 
@@ -84,6 +84,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       }
 
       final RestaurantOrder res = RestaurantOrder(
+        deliveryType: orderData.delivery_type.toDeliveryType(),
         deliveryProviderType:
             orderData.delivery!.service_provider_type.toServiceProviderType(),
         serviceProviderDriverChatId:
@@ -153,6 +154,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
             ? UserInfo(
                 hasuraId: orderData.delivery!.delivery_driver!.user.id,
                 name: orderData.delivery!.delivery_driver!.user.name,
+                //  name: orderData.delivery!.delivery_driver!.user,
                 image: orderData.delivery!.delivery_driver!.user.image,
                 language: orderData.delivery!.delivery_driver!.user.language_id
                     .toLanguage())
@@ -189,6 +191,37 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
   });
 }
 
+Stream<UserInfo?> listen_on_restaurant_order_driver({required int orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_restaurant_order_driver(
+    Options$Subscription$listen_on_restaurant_order_driver(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$listen_on_restaurant_order_driver(
+        order_id: orderId,
+      ),
+    ),
+  )
+      .map<UserInfo?>(
+          (QueryResult<Subscription$listen_on_restaurant_order_driver> event) {
+    mezDbgPrint(
+        "Event from hs restaurant order 🚀🚀🚀 =====>driver ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
+
+    if (event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver !=
+        null) {
+      final Subscription$listen_on_restaurant_order_driver$restaurant_order_by_pk
+          orderData = event.parsedData!.restaurant_order_by_pk!;
+      return UserInfo(
+          hasuraId: orderData.delivery!.delivery_driver!.user.id,
+          name: orderData.delivery!.delivery_driver!.user.name,
+          phoneNumber: orderData.delivery!.delivery_driver!.user.phone,
+          image: orderData.delivery!.delivery_driver!.user.image,
+          language: orderData.delivery!.delivery_driver!.user.language_id
+              .toLanguage());
+    }
+    return null;
+  });
+}
+
 Future<RestaurantOrder?> get_restaurant_order_by_id(
     {required int orderId, bool withCache = true}) async {
   final QueryResult<Query$get_restaurant_order_by_id> response =
@@ -209,7 +242,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   mezDbgPrint(
       "Event from hs restaurant order from query 🚀🚀🚀 =====>driver ${orderData.delivery?.delivery_driver}");
 
-  final List<RestaurantOrderItem> items = [];
+  final List<RestaurantOrderItem> items = <RestaurantOrderItem>[];
 
   orderData.items.forEach(
       (Query$get_restaurant_order_by_id$restaurant_order_by_pk$items item) {
@@ -227,7 +260,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
           "[544D] item.in_json ===> ${item.in_json['selected_options']}");
       (item.in_json['selected_options'] as Map<String, dynamic>)
           .forEach((String key, value) {
-        final List<Choice> choices = [];
+        final List<Choice> choices = <Choice>[];
         _restauItem.optionNames[key] =
             convertToLanguageMap(value['optionName']);
 
@@ -252,6 +285,8 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   }
   final RestaurantOrder res = RestaurantOrder(
     pickupLocation: null,
+    deliveryType: orderData.delivery_type.toDeliveryType(),
+
     deliveryProviderType:
         orderData.delivery!.service_provider_type.toServiceProviderType(),
     serviceProviderDriverChatId:
@@ -320,6 +355,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     driverInfo: (orderData.delivery?.delivery_driver != null)
         ? UserInfo(
             hasuraId: orderData.delivery!.delivery_driver!.user.id,
+            phoneNumber: orderData.delivery!.delivery_driver!.user.phone,
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,
             language: orderData.delivery!.delivery_driver!.user.language_id
@@ -465,7 +501,7 @@ Future<List<MinimalOrder>?> get_past_restaurant_orders(
 
 Future<List<RestaurantOrderItem>> get_dv_order_restaurant_items(
     {required int deliveryOrderId, bool withCache = true}) async {
-  QueryResult<Query$get_restaurant_order_items_by_id> res =
+  final QueryResult<Query$get_restaurant_order_items_by_id> res =
       await _hasuraDb.graphQLClient.query$get_restaurant_order_items_by_id(
           Options$Query$get_restaurant_order_items_by_id(
               fetchPolicy:
@@ -475,8 +511,8 @@ Future<List<RestaurantOrderItem>> get_dv_order_restaurant_items(
   if (res.hasException) {
     throw res.exception!;
   }
-  List<Query$get_restaurant_order_items_by_id$restaurant_order$items> data =
-      res.parsedData!.restaurant_order.first.items;
+  final List<Query$get_restaurant_order_items_by_id$restaurant_order$items>
+      data = res.parsedData!.restaurant_order.first.items;
   return data
       .map((Query$get_restaurant_order_items_by_id$restaurant_order$items e) =>
           RestaurantOrderItem(

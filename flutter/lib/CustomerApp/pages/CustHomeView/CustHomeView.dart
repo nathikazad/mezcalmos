@@ -116,6 +116,7 @@ class _CustHomeViewState extends State<CustHomeView>
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
                       itemCount: viewController.restaurants.length,
                       itemBuilder: (BuildContext context, int index) {
                         final Restaurant restaurant =
@@ -248,7 +249,7 @@ class _CustHomeViewState extends State<CustHomeView>
       pinned: true,
       delegate: MezDelegate(
         max: kToolbarHeight * 2,
-        min: kToolbarHeight * 2,
+        min: kToolbarHeight * 1.9,
         child: Column(
           children: [
             Row(

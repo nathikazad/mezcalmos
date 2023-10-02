@@ -23,6 +23,8 @@
 - "!include delivery_courier_order_item.yaml"
 - "!include delivery_details.yaml"
 - "!include delivery_driver.yaml"
+- "!include delivery_minimal_order.yaml"
+- "!include delivery_open_delivery_messages.yaml"
 - "!include delivery_operator.yaml"
 - "!include delivery_order.yaml"
 - "!include delivery_order_public.yaml"

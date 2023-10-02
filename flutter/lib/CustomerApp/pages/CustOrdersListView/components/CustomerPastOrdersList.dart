@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/controllers/CustomerOrdersListViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
@@ -66,21 +68,21 @@ class CustomerPastOrdersList extends StatelessWidget {
             return MinimalOrderCard(
               order: order,
               onTap: () {
-                // switch (order.orderType) {
-                //   case OrderType.Courier:
-                //     CustCourierOrderView.navigate(orderId: order.id);
-                //     break;
-                //   case OrderType.Restaurant:
-                //     ViewRestaurantOrderScreen.navigate(orderId: order.id);
-                //     break;
-                //   case OrderType.Laundry:
-                //     CustLaundryOrderView.navigate(orderId: order.id);
-                //     break;
-                //   case OrderType.Business:
-                //     CustOrderView.navigate(orderId: order.id);
-                //     break;
-                //   default:
-                // }
+                switch (order.orderType) {
+                  // case OrderType.Courier:
+                  //   CustCourierOrderView.navigate(orderId: order.id);
+                  //   break;
+                  case OrderType.Restaurant:
+                    CustRestaurantOrderView.navigate(orderId: order.id);
+                    break;
+                  // case OrderType.Laundry:
+                  //   CustLaundryOrderView.navigate(orderId: order.id);
+                  //   break;
+                  // case OrderType.Business:
+                  //   CustOrderView.navigate(orderId: order.id);
+                  //   break;
+                  default:
+                }
               },
             );
           },

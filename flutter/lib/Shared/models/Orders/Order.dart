@@ -151,6 +151,7 @@ extension OrderTypeHelper on cModels.OrderType {
 
 abstract class DeliverableOrder extends Order {
   UserInfo? driverInfo;
+
   UserInfo? deliveryCompany;
   MezLocation? pickupLocation;
   int? deliveryOrderId;
@@ -163,6 +164,7 @@ abstract class DeliverableOrder extends Order {
   int? customerDriverChatId;
   DateTime? estimatedArrivalAtPickup;
   DateTime? estimatedArrivalAtDropoff;
+  cModels.DeliveryType deliveryType;
   bool notifiedOperator;
   bool notifiedAdmin;
   DeliverableOrder({
@@ -170,6 +172,7 @@ abstract class DeliverableOrder extends Order {
     required super.chatId,
     required this.deliveryOrderId,
     required this.driverLocation,
+    required this.deliveryType,
     required this.deliveryDirection,
     super.notes,
     super.review,
@@ -251,6 +254,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       {required super.orderId,
       required super.chatId,
       super.serviceProviderId,
+      required super.deliveryType,
       required super.paymentType,
       required super.orderTime,
       required super.deliveryProviderType,

@@ -3,6 +3,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+    delivery_type
     scheduled_time
     stripe_info
     restaurant {
@@ -125,11 +126,29 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     }
   }
 }
+subscription listen_on_restaurant_order_driver($order_id: Int!) {
+  restaurant_order_by_pk(id: $order_id) {
+    delivery {
+      delivery_cost
+      delivery_driver {
+        id
+        user {
+          id
+          image
+          name
+          phone
+          firebase_id
+          language_id
+        }
+      }
+    }
+  }
+}
 query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
-
+    delivery_type
     scheduled_time
     stripe_info
     restaurant {
@@ -246,6 +265,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
           id
           image
           name
+          phone
           firebase_id
           language_id
         }

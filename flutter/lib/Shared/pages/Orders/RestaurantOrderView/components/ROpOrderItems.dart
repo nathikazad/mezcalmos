@@ -259,7 +259,7 @@ Widget _itemChoiche(
                         Text(
                           "\$${choices[index].cost}",
                           style: context.txt.bodyMedium!
-                              .copyWith(color: Get.theme.primaryColorLight),
+                              .copyWith(color: primaryBlueColor),
                         ),
                     ],
                   ),

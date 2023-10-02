@@ -6,7 +6,7 @@ object_relationships:
     using:
       manual_configuration:
         column_mapping:
-          user_id: id
+          phone_number: phone
         insertion_order: null
         remote_table:
           name: user
@@ -26,13 +26,7 @@ select_permissions:
         - finished_time
         - user_id
         - responded_time
-      filter:
-        _or:
-          - driver:
-              user_id:
-                _eq: X-Hasura-User-Id
-          - driver_id:
-              _is_null: true
+      filter: {}
 update_permissions:
   - role: delivery_driver
     permission:

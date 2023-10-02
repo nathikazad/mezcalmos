@@ -13585,6 +13585,551 @@ type delivery_messages_variance_fields {
 }
 
 """
+columns and relationships of "delivery.minimal_order"
+"""
+type delivery_minimal_order {
+  """An object relationship"""
+  customer: user
+  delivery_order_type: String
+
+  """An object relationship"""
+  driver: delivery_driver
+  driver_id: Int
+  id: Int
+  phone_number: String
+  service_provider_id: Int
+  status: String
+  time: timestamptz
+  user_id: Int
+}
+
+"""
+aggregated selection of "delivery.minimal_order"
+"""
+type delivery_minimal_order_aggregate {
+  aggregate: delivery_minimal_order_aggregate_fields
+  nodes: [delivery_minimal_order!]!
+}
+
+"""
+aggregate fields of "delivery.minimal_order"
+"""
+type delivery_minimal_order_aggregate_fields {
+  avg: delivery_minimal_order_avg_fields
+  count(columns: [delivery_minimal_order_select_column!], distinct: Boolean): Int!
+  max: delivery_minimal_order_max_fields
+  min: delivery_minimal_order_min_fields
+  stddev: delivery_minimal_order_stddev_fields
+  stddev_pop: delivery_minimal_order_stddev_pop_fields
+  stddev_samp: delivery_minimal_order_stddev_samp_fields
+  sum: delivery_minimal_order_sum_fields
+  var_pop: delivery_minimal_order_var_pop_fields
+  var_samp: delivery_minimal_order_var_samp_fields
+  variance: delivery_minimal_order_variance_fields
+}
+
+"""aggregate avg on columns"""
+type delivery_minimal_order_avg_fields {
+  driver_id: Float
+  id: Float
+  service_provider_id: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "delivery.minimal_order". All fields are combined with a logical 'AND'.
+"""
+input delivery_minimal_order_bool_exp {
+  _and: [delivery_minimal_order_bool_exp!]
+  _not: delivery_minimal_order_bool_exp
+  _or: [delivery_minimal_order_bool_exp!]
+  customer: user_bool_exp
+  delivery_order_type: String_comparison_exp
+  driver: delivery_driver_bool_exp
+  driver_id: Int_comparison_exp
+  id: Int_comparison_exp
+  phone_number: String_comparison_exp
+  service_provider_id: Int_comparison_exp
+  status: String_comparison_exp
+  time: timestamptz_comparison_exp
+  user_id: Int_comparison_exp
+}
+
+"""aggregate max on columns"""
+type delivery_minimal_order_max_fields {
+  delivery_order_type: String
+  driver_id: Int
+  id: Int
+  phone_number: String
+  service_provider_id: Int
+  status: String
+  time: timestamptz
+  user_id: Int
+}
+
+"""aggregate min on columns"""
+type delivery_minimal_order_min_fields {
+  delivery_order_type: String
+  driver_id: Int
+  id: Int
+  phone_number: String
+  service_provider_id: Int
+  status: String
+  time: timestamptz
+  user_id: Int
+}
+
+"""Ordering options when selecting data from "delivery.minimal_order"."""
+input delivery_minimal_order_order_by {
+  customer: user_order_by
+  delivery_order_type: order_by
+  driver: delivery_driver_order_by
+  driver_id: order_by
+  id: order_by
+  phone_number: order_by
+  service_provider_id: order_by
+  status: order_by
+  time: order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "delivery.minimal_order"
+"""
+enum delivery_minimal_order_select_column {
+  """column name"""
+  delivery_order_type
+
+  """column name"""
+  driver_id
+
+  """column name"""
+  id
+
+  """column name"""
+  phone_number
+
+  """column name"""
+  service_provider_id
+
+  """column name"""
+  status
+
+  """column name"""
+  time
+
+  """column name"""
+  user_id
+}
+
+"""aggregate stddev on columns"""
+type delivery_minimal_order_stddev_fields {
+  driver_id: Float
+  id: Float
+  service_provider_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type delivery_minimal_order_stddev_pop_fields {
+  driver_id: Float
+  id: Float
+  service_provider_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type delivery_minimal_order_stddev_samp_fields {
+  driver_id: Float
+  id: Float
+  service_provider_id: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "delivery_minimal_order"
+"""
+input delivery_minimal_order_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: delivery_minimal_order_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input delivery_minimal_order_stream_cursor_value_input {
+  delivery_order_type: String
+  driver_id: Int
+  id: Int
+  phone_number: String
+  service_provider_id: Int
+  status: String
+  time: timestamptz
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type delivery_minimal_order_sum_fields {
+  driver_id: Int
+  id: Int
+  service_provider_id: Int
+  user_id: Int
+}
+
+"""aggregate var_pop on columns"""
+type delivery_minimal_order_var_pop_fields {
+  driver_id: Float
+  id: Float
+  service_provider_id: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type delivery_minimal_order_var_samp_fields {
+  driver_id: Float
+  id: Float
+  service_provider_id: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type delivery_minimal_order_variance_fields {
+  driver_id: Float
+  id: Float
+  service_provider_id: Float
+  user_id: Float
+}
+
+"""
+columns and relationships of "delivery.open_delivery_messages"
+"""
+type delivery_open_delivery_messages {
+  """An object relationship"""
+  customer: user
+
+  """An object relationship"""
+  driver: delivery_driver
+  driver_id: Int
+  entry(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  finished_time: timestamptz
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  responded_time: timestamptz
+  user_id: Int
+}
+
+"""
+aggregated selection of "delivery.open_delivery_messages"
+"""
+type delivery_open_delivery_messages_aggregate {
+  aggregate: delivery_open_delivery_messages_aggregate_fields
+  nodes: [delivery_open_delivery_messages!]!
+}
+
+"""
+aggregate fields of "delivery.open_delivery_messages"
+"""
+type delivery_open_delivery_messages_aggregate_fields {
+  avg: delivery_open_delivery_messages_avg_fields
+  count(columns: [delivery_open_delivery_messages_select_column!], distinct: Boolean): Int!
+  max: delivery_open_delivery_messages_max_fields
+  min: delivery_open_delivery_messages_min_fields
+  stddev: delivery_open_delivery_messages_stddev_fields
+  stddev_pop: delivery_open_delivery_messages_stddev_pop_fields
+  stddev_samp: delivery_open_delivery_messages_stddev_samp_fields
+  sum: delivery_open_delivery_messages_sum_fields
+  var_pop: delivery_open_delivery_messages_var_pop_fields
+  var_samp: delivery_open_delivery_messages_var_samp_fields
+  variance: delivery_open_delivery_messages_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input delivery_open_delivery_messages_append_input {
+  entry: jsonb
+}
+
+"""aggregate avg on columns"""
+type delivery_open_delivery_messages_avg_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table
+"delivery.open_delivery_messages". All fields are combined with a logical 'AND'.
+"""
+input delivery_open_delivery_messages_bool_exp {
+  _and: [delivery_open_delivery_messages_bool_exp!]
+  _not: delivery_open_delivery_messages_bool_exp
+  _or: [delivery_open_delivery_messages_bool_exp!]
+  customer: user_bool_exp
+  driver: delivery_driver_bool_exp
+  driver_id: Int_comparison_exp
+  entry: jsonb_comparison_exp
+  finished_time: timestamptz_comparison_exp
+  id: Int_comparison_exp
+  phone_number: String_comparison_exp
+  received_time: timestamptz_comparison_exp
+  responded_time: timestamptz_comparison_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input delivery_open_delivery_messages_delete_at_path_input {
+  entry: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input delivery_open_delivery_messages_delete_elem_input {
+  entry: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input delivery_open_delivery_messages_delete_key_input {
+  entry: String
+}
+
+"""
+input type for incrementing numeric columns in table "delivery.open_delivery_messages"
+"""
+input delivery_open_delivery_messages_inc_input {
+  driver_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "delivery.open_delivery_messages"
+"""
+input delivery_open_delivery_messages_insert_input {
+  customer: user_obj_rel_insert_input
+  driver: delivery_driver_obj_rel_insert_input
+  driver_id: Int
+  entry: jsonb
+  finished_time: timestamptz
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  responded_time: timestamptz
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type delivery_open_delivery_messages_max_fields {
+  driver_id: Int
+  finished_time: timestamptz
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  responded_time: timestamptz
+  user_id: Int
+}
+
+"""aggregate min on columns"""
+type delivery_open_delivery_messages_min_fields {
+  driver_id: Int
+  finished_time: timestamptz
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  responded_time: timestamptz
+  user_id: Int
+}
+
+"""
+response of any mutation on the table "delivery.open_delivery_messages"
+"""
+type delivery_open_delivery_messages_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [delivery_open_delivery_messages!]!
+}
+
+"""
+Ordering options when selecting data from "delivery.open_delivery_messages".
+"""
+input delivery_open_delivery_messages_order_by {
+  customer: user_order_by
+  driver: delivery_driver_order_by
+  driver_id: order_by
+  entry: order_by
+  finished_time: order_by
+  id: order_by
+  phone_number: order_by
+  received_time: order_by
+  responded_time: order_by
+  user_id: order_by
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input delivery_open_delivery_messages_prepend_input {
+  entry: jsonb
+}
+
+"""
+select columns of table "delivery.open_delivery_messages"
+"""
+enum delivery_open_delivery_messages_select_column {
+  """column name"""
+  driver_id
+
+  """column name"""
+  entry
+
+  """column name"""
+  finished_time
+
+  """column name"""
+  id
+
+  """column name"""
+  phone_number
+
+  """column name"""
+  received_time
+
+  """column name"""
+  responded_time
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "delivery.open_delivery_messages"
+"""
+input delivery_open_delivery_messages_set_input {
+  driver_id: Int
+  entry: jsonb
+  finished_time: timestamptz
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  responded_time: timestamptz
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type delivery_open_delivery_messages_stddev_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type delivery_open_delivery_messages_stddev_pop_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type delivery_open_delivery_messages_stddev_samp_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "delivery_open_delivery_messages"
+"""
+input delivery_open_delivery_messages_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: delivery_open_delivery_messages_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input delivery_open_delivery_messages_stream_cursor_value_input {
+  driver_id: Int
+  entry: jsonb
+  finished_time: timestamptz
+  id: Int
+  phone_number: String
+  received_time: timestamptz
+  responded_time: timestamptz
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type delivery_open_delivery_messages_sum_fields {
+  driver_id: Int
+  id: Int
+  user_id: Int
+}
+
+input delivery_open_delivery_messages_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: delivery_open_delivery_messages_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: delivery_open_delivery_messages_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: delivery_open_delivery_messages_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: delivery_open_delivery_messages_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: delivery_open_delivery_messages_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: delivery_open_delivery_messages_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: delivery_open_delivery_messages_set_input
+
+  """filter the rows which have to be updated"""
+  where: delivery_open_delivery_messages_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type delivery_open_delivery_messages_var_pop_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type delivery_open_delivery_messages_var_samp_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type delivery_open_delivery_messages_variance_fields {
+  driver_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
 columns and relationships of "delivery.operator"
 """
 type delivery_operator {
@@ -20738,6 +21283,14 @@ type mutation_root {
   delete_delivery_messages_by_pk(id: Int!): delivery_messages
 
   """
+  delete data from the table: "delivery.open_delivery_messages"
+  """
+  delete_delivery_open_delivery_messages(
+    """filter the rows which have to be deleted"""
+    where: delivery_open_delivery_messages_bool_exp!
+  ): delivery_open_delivery_messages_mutation_response
+
+  """
   delete data from the table: "delivery.operator"
   """
   delete_delivery_operator(
@@ -21965,6 +22518,22 @@ type mutation_root {
     """upsert condition"""
     on_conflict: delivery_messages_on_conflict
   ): delivery_messages
+
+  """
+  insert data into the table: "delivery.open_delivery_messages"
+  """
+  insert_delivery_open_delivery_messages(
+    """the rows to be inserted"""
+    objects: [delivery_open_delivery_messages_insert_input!]!
+  ): delivery_open_delivery_messages_mutation_response
+
+  """
+  insert a single row into the table: "delivery.open_delivery_messages"
+  """
+  insert_delivery_open_delivery_messages_one(
+    """the row to be inserted"""
+    object: delivery_open_delivery_messages_insert_input!
+  ): delivery_open_delivery_messages
 
   """
   insert data into the table: "delivery.operator"
@@ -24435,6 +25004,50 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [delivery_messages_updates!]!
   ): [delivery_messages_mutation_response]
+
+  """
+  update data of the table: "delivery.open_delivery_messages"
+  """
+  update_delivery_open_delivery_messages(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: delivery_open_delivery_messages_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: delivery_open_delivery_messages_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: delivery_open_delivery_messages_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: delivery_open_delivery_messages_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: delivery_open_delivery_messages_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: delivery_open_delivery_messages_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: delivery_open_delivery_messages_set_input
+
+    """filter the rows which have to be updated"""
+    where: delivery_open_delivery_messages_bool_exp!
+  ): delivery_open_delivery_messages_mutation_response
+
+  """
+  update multiples rows of table: "delivery.open_delivery_messages"
+  """
+  update_delivery_open_delivery_messages_many(
+    """updates to execute, in order"""
+    updates: [delivery_open_delivery_messages_updates!]!
+  ): [delivery_open_delivery_messages_mutation_response]
 
   """
   update data of the table: "delivery.operator"
@@ -28125,6 +28738,86 @@ type query_root {
   fetch data from the table: "delivery_messages" using primary key columns
   """
   delivery_messages_by_pk(id: Int!): delivery_messages
+
+  """
+  fetch data from the table: "delivery.minimal_order"
+  """
+  delivery_minimal_order(
+    """distinct select on columns"""
+    distinct_on: [delivery_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_minimal_order_bool_exp
+  ): [delivery_minimal_order!]!
+
+  """
+  fetch aggregated fields from the table: "delivery.minimal_order"
+  """
+  delivery_minimal_order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_minimal_order_bool_exp
+  ): delivery_minimal_order_aggregate!
+
+  """
+  fetch data from the table: "delivery.open_delivery_messages"
+  """
+  delivery_open_delivery_messages(
+    """distinct select on columns"""
+    distinct_on: [delivery_open_delivery_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_open_delivery_messages_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_open_delivery_messages_bool_exp
+  ): [delivery_open_delivery_messages!]!
+
+  """
+  fetch aggregated fields from the table: "delivery.open_delivery_messages"
+  """
+  delivery_open_delivery_messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_open_delivery_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_open_delivery_messages_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_open_delivery_messages_bool_exp
+  ): delivery_open_delivery_messages_aggregate!
 
   """
   fetch data from the table: "delivery.operator"
@@ -44755,6 +45448,114 @@ type subscription_root {
     """filter the rows returned"""
     where: delivery_messages_bool_exp
   ): [delivery_messages!]!
+
+  """
+  fetch data from the table: "delivery.minimal_order"
+  """
+  delivery_minimal_order(
+    """distinct select on columns"""
+    distinct_on: [delivery_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_minimal_order_bool_exp
+  ): [delivery_minimal_order!]!
+
+  """
+  fetch aggregated fields from the table: "delivery.minimal_order"
+  """
+  delivery_minimal_order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_minimal_order_bool_exp
+  ): delivery_minimal_order_aggregate!
+
+  """
+  fetch data from the table in a streaming manner: "delivery.minimal_order"
+  """
+  delivery_minimal_order_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [delivery_minimal_order_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: delivery_minimal_order_bool_exp
+  ): [delivery_minimal_order!]!
+
+  """
+  fetch data from the table: "delivery.open_delivery_messages"
+  """
+  delivery_open_delivery_messages(
+    """distinct select on columns"""
+    distinct_on: [delivery_open_delivery_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_open_delivery_messages_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_open_delivery_messages_bool_exp
+  ): [delivery_open_delivery_messages!]!
+
+  """
+  fetch aggregated fields from the table: "delivery.open_delivery_messages"
+  """
+  delivery_open_delivery_messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_open_delivery_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_open_delivery_messages_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_open_delivery_messages_bool_exp
+  ): delivery_open_delivery_messages_aggregate!
+
+  """
+  fetch data from the table in a streaming manner: "delivery.open_delivery_messages"
+  """
+  delivery_open_delivery_messages_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [delivery_open_delivery_messages_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: delivery_open_delivery_messages_bool_exp
+  ): [delivery_open_delivery_messages!]!
 
   """
   fetch data from the table: "delivery.operator"
