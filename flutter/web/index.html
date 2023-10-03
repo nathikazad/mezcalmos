@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Mezkala</title>
-    <link href="output.css" rel="stylesheet" />
+    <link href="/output.css" rel="stylesheet" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -503,10 +503,15 @@
       };
 
       window.addEventListener("load", () => {
-        console.log(window.location.pathname);
-        console.log(window.location.pathname.split("/"));
-        console.log(window.location.pathname.split("/").pop());
         let path = window.location.pathname.split("/").pop();
+        console.log(path)
+        // Handle case where URL ends with "/"
+        if (path === "") {
+          const parts = window.location.pathname.split("/");
+          if (parts.length > 2) {
+            path = parts[parts.length - 2]; // Get the second-to-last part
+          }
+        }
         if (path == "mandaditos") {
           console.log("delivery link");
           redirect(deliveryAppLinks);
