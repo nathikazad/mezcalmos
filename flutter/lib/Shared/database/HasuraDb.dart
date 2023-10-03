@@ -277,6 +277,8 @@ class HasuraDb {
         return "mez_admin";
       case AppType.Laundry:
         return "laundry_operator";
+      case AppType.Influencer:
+        return "influencer";
       default:
         return "customer";
     }

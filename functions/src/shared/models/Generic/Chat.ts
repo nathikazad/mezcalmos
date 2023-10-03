@@ -48,6 +48,7 @@ export enum ParticipantType {
   RestaurantOperator = "restaurantOperator",
   MezAdmin = "mezAdmin",
   BusinessOperator = "businessOperator",
+  Influcencer = "influencer",
 }
 
 export enum RecipientType {

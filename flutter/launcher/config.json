@@ -777,6 +777,74 @@
           "assets/images/shared/markers/"
         ]
       }
+    },
+    "InfluencerApp": {
+      "folderName": "InfluencerApp",
+      "customUrl": "mezfluence",
+      "packages": {
+        "stage": {
+          "appName": "MezfluenceStage",
+          "packageName": "com.mezstaging.influencer",
+          "googe-service-file": "services/stage/android/influencer.json",
+          "apple-service-file": "services/stage/ios/influencer.plist"
+        },
+        "prod": {
+          "appName": "Mezfluence",
+          "packageName": "com.mezcalmos.influencer",
+          "googe-service-file": "services/prod/android/influencer.json",
+          "apple-service-file": "services/prod/ios/influencer.plist"
+        },
+        "dev": {
+          "appName": "MezfluenceDev",
+          "packageName": "com.mezcalmos.influencer",
+          "googe-service-file": "services/prod/android/influencer.json",
+          "apple-service-file": "services/prod/ios/influencer.plist"
+        }
+      },
+      "appPermissions": [
+        "<uses-permission android:name='android.permission.READ_PHONE_STATE' />",
+        "<uses-permission android:name='android.permission.RECORD_AUDIO' />",
+        "<uses-permission android:name='android.permission.CAMERA' />",
+        "<uses-permission android:name='android.permission.MODIFY_AUDIO_SETTINGS' />",
+        "<uses-permission android:name='android.permission.ACCESS_NETWORK_STATE' />",
+        "<uses-permission android:name='android.permission.BLUETOOTH' />",
+        "<uses-permission android:name='android.permission.ACCESS_WIFI_STATE' />",
+        "<uses-permission android:name='android.permission.READ_EXTERNAL_STORAGE' />",
+        "<uses-permission android:name='android.permission.WAKE_LOCK' />",
+        "<uses-permission android:name='android.permission.READ_PRIVILEGED_PHONE_STATE' />"
+      ],
+      "MainActivityKt": {
+        "imports": [
+          "import io.flutter.embedding.android.FlutterFragmentActivity"
+        ],
+        "super": "FlutterFragmentActivity"
+      },
+      "pubspec": {
+        "dependencies": {
+          "uni_links": "0.5.1",
+          "uni_links_platform_interface": "1.0.0",
+          "uni_links_web": "0.1.0"
+        },
+        "assets": [
+          "assets/images/",
+          "assets/images/customer/",
+          "assets/images/shared/",
+          "assets/images/laundryApp/",
+          "assets/images/shared/notifications/",
+          "assets/images/shared/notifications/laundry/",
+          "assets/images/deliveryAdmin/",
+          "assets/images/customer/restaurants/",
+          "assets/images/customer/taxi/",
+          "assets/images/customer/laundry/",
+          "assets/fonts/",
+          "assets/i18n/",
+          "assets/animation/",
+          "assets/sounds/",
+          "assets/icons/appstore.png",
+          "assets/images/customer/rental/",
+          "assets/images/shared/markers/"
+        ]
+      }
     }
   }
 }

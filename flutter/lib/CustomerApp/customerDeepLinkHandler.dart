@@ -2,7 +2,7 @@ import 'dart:async';
 
 // import 'package:mezcalmos/CustomerApp/pages/CustBusinessView/custBusinessView.dart';
 // import 'package:mezcalmos/CustomerApp/pages/DeliveryServices/Laundry/SingleLaundry/SingleLaundryScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustRestaurantView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -18,7 +18,7 @@ class CustomerLinkHandler {
       switch (servicProviderInfo.serviceProviderType) {
         // ignore: unawaited_futures
         case ServiceProviderType.Restaurant:
-          unawaited(CustomerRestaurantView.navigate(
+          unawaited(CustRestaurantView.navigate(
               restaurantId: servicProviderInfo.serviceProviderId));
           break;
         case ServiceProviderType.Laundry:

@@ -320,7 +320,8 @@ enum ParticipantType {
   LaundryOperator,
   RestaurantOperator,
   MezAdmin,
-  BusinessOperator
+  BusinessOperator,
+  Influencer
 }
 
 extension ParseParticipantTypeToString on ParticipantType {
@@ -1746,7 +1747,8 @@ enum AppType {
   DeliveryAdmin,
   MezAdmin,
   Business,
-  Laundry
+  Laundry,
+  Influencer
 }
 
 extension ParseAppTypeToString on AppType {

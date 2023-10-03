@@ -46,9 +46,6 @@ final ThemeData _defaultAppTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
 );
 
-AppType _appType = AppType.Customer;
-AppType get appType => _appType;
-
 abstract class StartingPointBase extends StatefulWidget {
   final ThemeData? appTheme;
   final Function signInCallback;
@@ -99,8 +96,8 @@ class StartingPointBaseState extends State<StartingPointBase> {
   Widget build(BuildContext context) {
     // todo @sanchit
     // check if app is customer app
-    mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ $appType");
-    if (appType == AppType.Customer) {
+    mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ ${MezEnv.appType}");
+    if (MezEnv.appType == AppType.Customer) {
       final String myurl = Uri.base.toString();
       mezDbgPrint("🈚️🈚️🈚️🈚️🈚️ $myurl");
 
