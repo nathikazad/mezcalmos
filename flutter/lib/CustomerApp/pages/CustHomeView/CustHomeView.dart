@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
+import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/controllers/CustHomeViewController.dart';
@@ -11,6 +13,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
@@ -19,6 +22,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:uni_links/uni_links.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -36,8 +40,34 @@ class _CustHomeViewState extends State<CustHomeView>
 
   @override
   void initState() {
+    _startListeningForLinks();
     viewController.init(vsync: this, context: context);
     super.initState();
+  }
+
+  Future<void> _startListeningForLinks() async {
+    mezDbgPrint("👁️👁️👁️👁️👁️startListeningForLinks");
+    String? initialLink;
+    try {
+      initialLink = await getInitialLink();
+    } catch (error) {
+      // Handle error
+    }
+    // Parse the initial link (if it exists)
+    if (initialLink != null) {
+      await CustomerLinkHandler.handleLink(Uri.parse(initialLink));
+    }
+
+    // Subscribe to incoming links
+    if (kIsWeb == false) {
+      linkStream.listen((String? link) {
+        // Parse the link
+        mezDbgPrint("👁️👁️👁️👁️👁️new link $link");
+        if (link != null) {
+          CustomerLinkHandler.handleLink(Uri.parse(link));
+        }
+      });
+    }
   }
 
   @override
