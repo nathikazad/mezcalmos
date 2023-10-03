@@ -50,6 +50,14 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp()
 }
 
+export const receiveIP = functions.https.onCall((data, context) => {
+  const forwarded = context.rawRequest.headers['x-forwarded-for'];
+  const remoteAddress = context.rawRequest.socket.remoteAddress;
+  const optionalParam = data.optionalParam || "No optional parameter provided";
+  const incomingIPRef = firebase.database().ref("incomingIP");
+  incomingIPRef.push({forwarded: forwarded, optionalParam: optionalParam, remoteAddress: remoteAddress});
+});
+
 export const whatsapp = {
   newMessage: handleWhatsapp,
   markMessagesAsResponded: authenticatedCall((userId, data) => markMessagesAsResponded(userId, data)),
@@ -144,6 +152,8 @@ export const delivery3 = {
   // laundryFinishDropoff: authenticatedCall((userId, data) => laundryDelivery.finishDropoff(userId, data)),
   // setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
 }
+
+
 
 type AuthenticatedFunction = (userId:number, data:any) => any;
 function authenticatedCall(func:AuthenticatedFunction, runtimeOptions:RuntimeOptions= {memory: "256MB"}) {
