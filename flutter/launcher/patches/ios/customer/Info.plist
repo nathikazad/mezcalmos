@@ -29,6 +29,12 @@
 			<array>
 				<string>fb394067681830405</string>
 			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>mezkala</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
