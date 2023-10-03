@@ -506,11 +506,16 @@
         console.log(window.location.pathname);
         console.log(window.location.pathname.split("/"));
         console.log(window.location.pathname.split("/").pop());
-        if (window.location.pathname.split("/").pop() == "mandaditos") {
+        let path = window.location.pathname.split("/").pop();
+        if (path == "mandaditos") {
           console.log("delivery link");
           redirect(deliveryAppLinks);
         } else {
           console.log("customer link");
+          if (path && path.trim() !== "") {
+            customerAppLinks.ios.appLink = `mezkala://${path}`;
+            customerAppLinks.android.appLink = `mezkala://${path}`;
+          }
           redirect(customerAppLinks);
         }
       });
