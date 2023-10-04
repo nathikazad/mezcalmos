@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -26,6 +25,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:mezcalmos/env.dart';
@@ -201,29 +201,12 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                     ReviewCard(review: viewController.order.value!.review!),
                   OrderNoteCard(note: viewController.order.value!.notes),
                   meduimSeperator,
-                  Text(
-                    "${_i18n()['orderSummary']}",
-                    style: context.textTheme.bodyLarge,
+                  OrderSummaryCard(
+                    // margin: const EdgeInsets.only(top: 15),
+                    costs: viewController.order.value!.costs,
+                    stripeOrderPaymentInfo:
+                        viewController.order.value!.stripePaymentInfo,
                   ),
-                  MezCard(
-                      margin: EdgeInsets.only(top: 8),
-                      contentPadding: const EdgeInsets.all(12),
-                      content: Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text("${_i18n()['orderCost']}"),
-                              Text(
-                                viewController
-                                    .order.value!.costs.orderItemsCost!
-                                    .toPriceString(),
-                                style: context.textTheme.bodyLarge,
-                              ),
-                            ],
-                          )
-                        ],
-                      )),
                   bigSeperator,
                   MezButton(
                     label: "${_i18n()['fwdDriver']}",
