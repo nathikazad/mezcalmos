@@ -1,12 +1,15 @@
-import { FirebaseDynamicLinks, ShortLinkRequestBody, ShortLinkResponse } from "firebase-dynamic-links";
+import {
+  FirebaseDynamicLinks,
+  ShortLinkRequestBody,
+  ShortLinkResponse,
+} from "firebase-dynamic-links";
 import { AppType, MezError } from "../../shared/models/Generic/Generic";
 import { generateQr } from "./qr";
 
 export interface IDeepLink {
-  url: string
-  urlQrImage: string
+  url: string;
+  urlQrImage: string;
 }
-
 
 const appPackageIds: Record<AppType, string> = {
   [AppType.Delivery]: "com.mezcalmos.delivery",
@@ -16,7 +19,8 @@ const appPackageIds: Record<AppType, string> = {
   [AppType.DeliveryAdmin]: "com.mezcalmos.deliveryadmin",
   [AppType.MezAdmin]: "com.mezcalmos.mezadmin",
   [AppType.Business]: "com.mezcalmos.business",
-}
+  [AppType.Influencer]: "com.mezcalmos.influencer",
+};
 
 const appStoreIds: Record<AppType, string | undefined> = {
   [AppType.Delivery]: undefined,
@@ -26,29 +30,31 @@ const appStoreIds: Record<AppType, string | undefined> = {
   [AppType.DeliveryAdmin]: undefined,
   [AppType.MezAdmin]: undefined,
   [AppType.Business]: undefined,
-}
+  [AppType.Influencer]: undefined,
+};
 
 export enum DeepLinkType {
   AddDriver,
-  AddOperator
+  AddOperator,
 }
-
 
 // first generate unique id
 // generate 5 character secret
 // call generate deeplinks
 // save response to database including unique_id(sp.details) and secret(sp.service_links)
 
-
 // write script to do this for all existing service providers
 // make this happen when user creates a new service provider and accept a new param called uniqueId
 // create a new function called serviceProvider-changeUniqueId
 // Modify add operator and add driver to accept unique-id and secret
 
-export async function generateDeepLinks(uniqueId: string, appType: AppType): Promise<Partial<Record<DeepLinkType, IDeepLink>>> {
+export async function generateDeepLinks(
+  uniqueId: string,
+  appType: AppType
+): Promise<Partial<Record<DeepLinkType, IDeepLink>>> {
   let packageId = appPackageIds[AppType.Customer];
   let appStoreId = appStoreIds[AppType.Customer];
-  let prefix = `https://mezc.co`
+  let prefix = `https://mezc.co`;
 
   // Customer Deep Links
   // let customerlink = `https://mezkala.app/${uniqueId}/`
@@ -77,7 +83,7 @@ export async function generateDeepLinks(uniqueId: string, appType: AppType): Pro
   packageId = appPackageIds[appType];
   appStoreId = appStoreIds[appType];
 
-  let addOperatorDeeplink = `https://mezkala.app/op/${uniqueId}/`
+  let addOperatorDeeplink = `https://mezkala.app/op/${uniqueId}/`;
 
   // let addOperatorParameterisedLink = `${prefix}?link=${addOperatorDeeplink}&apn=${packageId}&ibi=${packageId}`;
   // if(appStoreId)
@@ -89,27 +95,31 @@ export async function generateDeepLinks(uniqueId: string, appType: AppType): Pro
       domainUriPrefix: prefix,
       link: addOperatorDeeplink,
       androidInfo: {
-        androidPackageName: packageId
+        androidPackageName: packageId,
       },
       iosInfo: {
         iosBundleId: packageId,
-        iosAppStoreId: appStoreId
+        iosAppStoreId: appStoreId,
       },
     },
     suffix: {
-      option: 'SHORT'
-    }
-  }
-  let addOperatorLinkResponse = await generateDeepLink(addOperatorRequestBody, uniqueId, "operator");
+      option: "SHORT",
+    },
+  };
+  let addOperatorLinkResponse = await generateDeepLink(
+    addOperatorRequestBody,
+    uniqueId,
+    "operator"
+  );
   if (appType == AppType.Business) {
     return {
       [DeepLinkType.AddOperator]: addOperatorLinkResponse,
-    }
+    };
   }
   packageId = appPackageIds[AppType.Delivery];
   appStoreId = appStoreIds[AppType.Delivery];
 
-  let addDriverDeeplink = `https://mezkala.app/dr/${uniqueId}/`
+  let addDriverDeeplink = `https://mezkala.app/dr/${uniqueId}/`;
   // let addDriverParameterisedLink = `${prefix}?link=${addDriverDeeplink}&apn=${packageId}&ibi=${packageId}`;
   // if(appStoreId)
   // addDriverParameterisedLink += `&isi=${appStoreId}`
@@ -120,51 +130,59 @@ export async function generateDeepLinks(uniqueId: string, appType: AppType): Pro
       domainUriPrefix: prefix,
       link: addDriverDeeplink,
       androidInfo: {
-        androidPackageName: packageId
+        androidPackageName: packageId,
       },
       iosInfo: {
         iosBundleId: packageId,
-        iosAppStoreId: appStoreIds[appType]
+        iosAppStoreId: appStoreIds[appType],
       },
     },
     suffix: {
-      option: 'SHORT'
-    }
-  }
-  let addDriverLinkResponse = await generateDeepLink(addDriverRequestBody, uniqueId, "driver");
+      option: "SHORT",
+    },
+  };
+  let addDriverLinkResponse = await generateDeepLink(
+    addDriverRequestBody,
+    uniqueId,
+    "driver"
+  );
 
   return {
     [DeepLinkType.AddOperator]: addOperatorLinkResponse,
     [DeepLinkType.AddDriver]: addDriverLinkResponse,
-  }
-};
+  };
+}
 
 // `https://mezprovs.page.link/?link=https://www.mezcalmos.com/?app%3D${appName}%26?type%3D${parameters['providerType']}%26id%3D${parameters['providerId']}&apn=${appPkgName}&ibi=${appPkgName}`
-export async function generateDeepLink(requestBody: ShortLinkRequestBody, uniqueId: string, fileName: string): Promise<IDeepLink> {
-  const firebaseLinks: FirebaseDynamicLinks = new FirebaseDynamicLinks("AIzaSyCOVuUV0qhw0SbNrQMfMVTBDm-5bJVozYg");
-  let response: ShortLinkResponse
+export async function generateDeepLink(
+  requestBody: ShortLinkRequestBody,
+  uniqueId: string,
+  fileName: string
+): Promise<IDeepLink> {
+  const firebaseLinks: FirebaseDynamicLinks = new FirebaseDynamicLinks(
+    "AIzaSyCOVuUV0qhw0SbNrQMfMVTBDm-5bJVozYg"
+  );
+  let response: ShortLinkResponse;
   try {
-    response =
-      await firebaseLinks.createLink(requestBody)
-    console.log("response: ", response.shortLink)
+    response = await firebaseLinks.createLink(requestBody);
+    console.log("response: ", response.shortLink);
   } catch (err: any) {
-    console.log("create link Error: ", err)
+    console.log("create link Error: ", err);
     throw new MezError("deepLinkError");
   }
   try {
     let qrUrl: string = await generateQr({
       imageUploadPath: `links/${uniqueId}/${fileName}`,
-      shortLink: response.shortLink
-    })
+      shortLink: response.shortLink,
+    });
     return {
       url: response.shortLink,
-      urlQrImage: qrUrl
-    }
+      urlQrImage: qrUrl,
+    };
   } catch (err: any) {
-    console.log("QR image generation error: ", err)
+    console.log("QR image generation error: ", err);
     throw new MezError("QRGenerationError");
   }
-
 
   // result = {
   //   url: shortLinkResponse,

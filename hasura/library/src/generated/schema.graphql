@@ -40583,7 +40583,7 @@ type service_provider_influencer {
 
   """An object relationship"""
   user: user
-  user_id: String!
+  user_id: Int!
 }
 
 """
@@ -40614,6 +40614,7 @@ type service_provider_influencer_aggregate_fields {
 """aggregate avg on columns"""
 type service_provider_influencer_avg_fields {
   id: Float
+  user_id: Float
 }
 
 """
@@ -40627,7 +40628,7 @@ input service_provider_influencer_bool_exp {
   id: Int_comparison_exp
   tag: String_comparison_exp
   user: user_bool_exp
-  user_id: String_comparison_exp
+  user_id: Int_comparison_exp
 }
 
 """
@@ -40655,6 +40656,7 @@ input type for incrementing numeric columns in table "service_provider.influence
 """
 input service_provider_influencer_inc_input {
   id: Int
+  user_id: Int
 }
 
 """
@@ -40664,21 +40666,21 @@ input service_provider_influencer_insert_input {
   id: Int
   tag: String
   user: user_obj_rel_insert_input
-  user_id: String
+  user_id: Int
 }
 
 """aggregate max on columns"""
 type service_provider_influencer_max_fields {
   id: Int
   tag: String
-  user_id: String
+  user_id: Int
 }
 
 """aggregate min on columns"""
 type service_provider_influencer_min_fields {
   id: Int
   tag: String
-  user_id: String
+  user_id: Int
 }
 
 """
@@ -41003,22 +41005,25 @@ input type for updating data in table "service_provider.influencer"
 input service_provider_influencer_set_input {
   id: Int
   tag: String
-  user_id: String
+  user_id: Int
 }
 
 """aggregate stddev on columns"""
 type service_provider_influencer_stddev_fields {
   id: Float
+  user_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type service_provider_influencer_stddev_pop_fields {
   id: Float
+  user_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type service_provider_influencer_stddev_samp_fields {
   id: Float
+  user_id: Float
 }
 
 """
@@ -41036,12 +41041,13 @@ input service_provider_influencer_stream_cursor_input {
 input service_provider_influencer_stream_cursor_value_input {
   id: Int
   tag: String
-  user_id: String
+  user_id: Int
 }
 
 """aggregate sum on columns"""
 type service_provider_influencer_sum_fields {
   id: Int
+  user_id: Int
 }
 
 """
@@ -41072,16 +41078,19 @@ input service_provider_influencer_updates {
 """aggregate var_pop on columns"""
 type service_provider_influencer_var_pop_fields {
   id: Float
+  user_id: Float
 }
 
 """aggregate var_samp on columns"""
 type service_provider_influencer_var_samp_fields {
   id: Float
+  user_id: Float
 }
 
 """aggregate variance on columns"""
 type service_provider_influencer_variance_fields {
   id: Float
+  user_id: Float
 }
 
 """

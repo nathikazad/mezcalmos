@@ -1,0 +1,97 @@
+query GetInfluencerByUserId($userId: Int!) {
+  service_provider_influencer(where: { user_id: { _eq: $userId } }) {
+    id
+    tag
+    user_id
+    user {
+      id
+      firebase_id
+      image
+      name
+    }
+  }
+}
+query GetInfOpenOffers {
+  service_provider_offer(
+    where: {
+      influencer_details: { _is_null: false }
+      status: { _eq: "active" }
+    }
+  ) {
+    id
+    name_id
+    name {
+      translations {
+        value
+        language_id
+      }
+    }
+    service_provider_id
+    coupon_code
+    offer_type
+    service_provider_type
+    status
+    influencer_details
+    details
+    restaurant {
+      details {
+        image
+        id
+        name
+      }
+    }
+  }
+}
+query getInfOffers($inf_id: Int) {
+  service_provider_influencer_offer(
+    where: { influencer_id: { _eq: $inf_id } }
+  ) {
+    offer {
+      id
+      name_id
+      name {
+        translations {
+          value
+          language_id
+        }
+      }
+      service_provider_id
+      coupon_code
+      offer_type
+      service_provider_type
+      status
+      influencer_details
+      details
+      restaurant {
+        details {
+          image
+          id
+          name
+        }
+      }
+    }
+  }
+}
+mutation DeleteInfluencerOffer($influencer_id: Int!, $offer_id: Int!) {
+  delete_service_provider_influencer_offer(
+    where: {
+      influencer_id: { _eq: $influencer_id }
+      offer_id: { _eq: $offer_id }
+    }
+  ) {
+    affected_rows
+  }
+}
+
+mutation InsertInfluencerOffer($influencer_id: Int, $offer_id: Int) {
+  insert_service_provider_influencer_offer(
+    objects: { influencer_id: $influencer_id, offer_id: $offer_id }
+  ) {
+    affected_rows
+    returning {
+      id
+      influencer_id
+      offer_id
+    }
+  }
+}

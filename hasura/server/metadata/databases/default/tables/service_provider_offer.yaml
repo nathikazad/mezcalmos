@@ -83,8 +83,6 @@ insert_permissions:
         - coupon_code
         - details
         - influencer_details
-        - service_provider_id
-        - service_provider_type
         - offer_type
         - status
 select_permissions:
@@ -112,6 +110,21 @@ select_permissions:
         - status
         - details
       filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - id
+        - name_id
+        - service_provider_id
+        - coupon_code
+        - offer_type
+        - service_provider_type
+        - status
+        - influencer_details
+        - details
+      filter:
+        influencer_details:
+          _is_null: false
   - role: mez_admin
     permission:
       columns:

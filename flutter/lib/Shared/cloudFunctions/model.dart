@@ -321,7 +321,7 @@ enum ParticipantType {
   RestaurantOperator,
   MezAdmin,
   BusinessOperator,
-  Influencer
+  Influcencer
 }
 
 extension ParseParticipantTypeToString on ParticipantType {
@@ -3191,6 +3191,26 @@ class CourierOrder {
       "tax": tax,
       "stripeFees": stripeFees,
       "discountValue": discountValue,
+    };
+  }
+}
+
+class Influencer {
+  String tag;
+  num id;
+  num user_id;
+  UserInfo info;
+  Influencer(
+      {required this.tag,
+      required this.id,
+      required this.user_id,
+      required this.info});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "tag": tag,
+      "id": id,
+      "user_id": user_id,
+      "info": info,
     };
   }
 }

@@ -57,16 +57,14 @@ insert_permissions:
   - role: influencer
     permission:
       check:
-        _and:
-          - app_type_id:
-              _eq: influencer
-          - user_id:
-              _eq: X-Hasura-User-Id
+        user_id:
+          _eq: X-Hasura-User-Id
       columns:
+        - turn_off_notifications
+        - id
+        - user_id
         - app_type_id
         - token
-        - user_id
-        - turn_off_notifications
   - role: laundry_operator
     permission:
       check:
@@ -163,11 +161,11 @@ select_permissions:
   - role: influencer
     permission:
       columns:
-        - app_type_id
-        - id
-        - token
-        - user_id
         - turn_off_notifications
+        - id
+        - user_id
+        - app_type_id
+        - token
       filter:
         user_id:
           _eq: X-Hasura-User-Id
@@ -281,12 +279,11 @@ update_permissions:
         - token
         - turn_off_notifications
       filter:
-        _and:
-          - app_type_id:
-              _eq: influencer
-          - user_id:
-              _eq: X-Hasura-User-Id
-      check: null
+        user_id:
+          _eq: X-Hasura-User-Id
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
   - role: laundry_operator
     permission:
       columns:

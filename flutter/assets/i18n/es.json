@@ -4407,6 +4407,14 @@
       }
     }
   },
+  "InfluencerApp": {
+    "Pages": {
+      "InfTabsView": {
+        "deals": "Ofertas",
+        "earnings": "Ganancias"
+      }
+    }
+  },
   "General": {
     "to": "a",
     "required": "Requerida",

@@ -188,6 +188,34 @@ select_permissions:
           delivery_operators:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: influencer
+    permission:
+      columns:
+        - approved
+        - online_ordering
+        - description_id
+        - id
+        - location_id
+        - referral_points
+        - service_link_id
+        - stripe_id
+        - accepted_payments
+        - schedule
+        - currency
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - time_zone
+        - unique_id
+        - creation_time
+        - last_active_time
+        - language
+      computed_fields:
+        - is_open
+      filter: {}
   - role: laundry_operator
     permission:
       columns:

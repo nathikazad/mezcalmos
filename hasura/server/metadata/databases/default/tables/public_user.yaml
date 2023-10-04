@@ -82,10 +82,12 @@ select_permissions:
         - firebase_id
         - image
         - language_id
-        - creation_time
         - name
         - phone
-      filter: {}
+        - creation_time
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
   - role: laundry_operator
     permission:
       columns:
@@ -172,6 +174,20 @@ update_permissions:
         - image
         - language_id
         - name
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check:
+        id:
+          _eq: X-Hasura-User-Id
+  - role: influencer
+    permission:
+      columns:
+        - email
+        - image
+        - language_id
+        - name
+        - phone
       filter:
         id:
           _eq: X-Hasura-User-Id

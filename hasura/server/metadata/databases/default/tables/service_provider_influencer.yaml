@@ -11,3 +11,13 @@ object_relationships:
         remote_table:
           name: user
           schema: public
+select_permissions:
+  - role: influencer
+    permission:
+      columns:
+        - id
+        - user_id
+        - tag
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

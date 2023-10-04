@@ -4,7 +4,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/InfluencerApp/controllers/InfluencerAuthController.dart';
+import 'package:mezcalmos/InfluencerApp/controllers/influencerAuthController.dart';
+import 'package:mezcalmos/InfluencerApp/pages/InfTabsView.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -23,7 +24,8 @@ class InfluencerWrapper extends StatefulWidget {
 
 class _InfluencerWrapperState extends State<InfluencerWrapper> {
   AuthController authController = Get.find<AuthController>();
-  InfluencerAuthController? influencerAuthController;
+  InfluencerAuthController influencerAuthController =
+      Get.find<InfluencerAuthController>();
 
   AppLifeCycleController appLifeCycleController =
       Get.find<AppLifeCycleController>();
@@ -33,9 +35,18 @@ class _InfluencerWrapperState extends State<InfluencerWrapper> {
 
   @override
   void initState() {
-    super.initState();
-    _notificationsStreamListener = initializeShowNotificationsListener();
+    influencerAuthController.fetchInfluencer().then((value) {
+      if (influencerAuthController.influencer != null) {
+        _notificationsStreamListener = initializeShowNotificationsListener();
+        InfTabsView.navigate();
+      } else {
+        // when influencer is not there ??
+      }
+    });
+
     logEventToServer("Influencer Wrapper init");
+
+    super.initState();
   }
 
   @override
@@ -49,7 +60,11 @@ class _InfluencerWrapperState extends State<InfluencerWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       // bottomNavigationBar: _navBar(),
-      body: Container(),
+      body: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(12),
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

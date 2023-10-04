@@ -173,7 +173,6 @@ enum MinimalDeliveryOrderType {
   Order = "order",
   Message = "message",
 }
-
 interface DeliveryMinimalOrder {
   id: number;
   phone_number?: string;

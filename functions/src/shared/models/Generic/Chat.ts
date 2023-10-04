@@ -3,12 +3,13 @@ import { AppType, NotificationInfo } from "./Generic";
 import { OrderType } from "./Order";
 import { UserInfo } from "./User";
 
-export type Participants = { [key in ParticipantType]?: Record<string, Participant> };
-
+export type Participants = {
+  [key in ParticipantType]?: Record<string, Participant>;
+};
 
 export enum ChatType {
   Direct = "direct",
-  Group = "group"
+  Group = "group",
 }
 
 export enum ChatInfoAppName {
@@ -18,7 +19,8 @@ export enum ChatInfoAppName {
   MezAdminApp = "MezAdminApp",
   RestaurantApp = "RestaurantApp",
   LaundryApp = "LaundryApp",
-  BusinessApp = "BusinessApp"
+  BusinessApp = "BusinessApp",
+  InfluencerApp = "InfluencerApp",
 }
 
 export const AppTypeToChatInfoAppName: Record<AppType, ChatInfoAppName> = {
@@ -29,14 +31,15 @@ export const AppTypeToChatInfoAppName: Record<AppType, ChatInfoAppName> = {
   [AppType.Business]: ChatInfoAppName.BusinessApp,
   [AppType.Restaurant]: ChatInfoAppName.RestaurantApp,
   [AppType.Laundry]: ChatInfoAppName.LaundryApp,
-}
+  [AppType.Influencer]: ChatInfoAppName.InfluencerApp,
+};
 
 export interface ChatInfo {
-  chatTitle: string,
-  chatImage: string,
-  phoneNumber?: string,
-  participantType?: ParticipantType,
-  parentLink?: string
+  chatTitle: string;
+  chatImage: string;
+  phoneNumber?: string;
+  participantType?: ParticipantType;
+  parentLink?: string;
 }
 
 export enum ParticipantType {
@@ -60,14 +63,17 @@ export enum RecipientType {
   DeliveryCompany = "deliveryCompany",
 }
 
-export const RecipientTypeToChatInfoAppName: Record<RecipientType, ChatInfoAppName> = {
+export const RecipientTypeToChatInfoAppName: Record<
+  RecipientType,
+  ChatInfoAppName
+> = {
   [RecipientType.Customer]: ChatInfoAppName.CustomerApp,
   [RecipientType.DeliveryCompany]: ChatInfoAppName.DeliveryAdminApp,
   [RecipientType.DeliveryDriver]: ChatInfoAppName.DeliveryApp,
   [RecipientType.Business]: ChatInfoAppName.BusinessApp,
   [RecipientType.Restaurant]: ChatInfoAppName.RestaurantApp,
   [RecipientType.Laundry]: ChatInfoAppName.LaundryApp,
-}
+};
 export const RecipientAppType: Record<RecipientType, AppType> = {
   [RecipientType.Customer]: AppType.Customer,
   [RecipientType.DeliveryCompany]: AppType.DeliveryAdmin,
@@ -75,7 +81,7 @@ export const RecipientAppType: Record<RecipientType, AppType> = {
   [RecipientType.Business]: AppType.Business,
   [RecipientType.Restaurant]: AppType.Restaurant,
   [RecipientType.Laundry]: AppType.Laundry,
-}
+};
 
 export const AppParticipant: Record<AppType, ParticipantType> = {
   [AppType.Customer]: ParticipantType.Customer,
@@ -84,69 +90,71 @@ export const AppParticipant: Record<AppType, ParticipantType> = {
   [AppType.MezAdmin]: ParticipantType.MezAdmin,
   [AppType.Business]: ParticipantType.BusinessOperator,
   [AppType.Restaurant]: ParticipantType.RestaurantOperator,
-  [AppType.Laundry]: ParticipantType.LaundryOperator
+  [AppType.Laundry]: ParticipantType.LaundryOperator,
+  [AppType.Influencer]: ParticipantType.Influcencer,
+};
+
+export function getAppTypeFromParticipantType(
+  participantType: ParticipantType
+): AppType {
+  return Object.keys(AppParticipant).filter(function (key) {
+    return AppParticipant[key as AppType] === participantType;
+  })[0] as AppType;
 }
-
-
-export function getAppTypeFromParticipantType(participantType: ParticipantType): AppType {
-  return Object.keys(AppParticipant).filter(function(key) {return AppParticipant[key as AppType] === participantType})[0] as AppType;
-}
-
 
 export interface Chat {
-  chatId: number,
-  chatInfo: Partial<Record<ChatInfoAppName, ChatInfo>>,
-  messages?: Array<Message>
-  chatType: ChatType
+  chatId: number;
+  chatInfo: Partial<Record<ChatInfoAppName, ChatInfo>>;
+  messages?: Array<Message>;
+  chatType: ChatType;
   participants?: Array<Participant>;
   isServiceProviderChat?: boolean;
 }
 
 export interface Participant extends UserInfo {
-  participantType: ParticipantType,
-  notificationInfo: NotificationInfo | null
+  participantType: ParticipantType;
+  notificationInfo: NotificationInfo | null;
 }
 
 export interface Message {
   userId: string;
-  message: string,
-  timestamp: string
+  message: string;
+  timestamp: string;
 }
 
-
 export interface MessageNotificationForQueue extends NotificationForQueue {
-  message: string,
-  userId: number,
-  chatId: number,
-  chatType: ChatType,
-  participantType: ParticipantType,
-  messageId: number,
-  orderId?: number,
-  orderType: OrderType
+  message: string;
+  userId: number;
+  chatId: number;
+  chatType: ChatType;
+  participantType: ParticipantType;
+  messageId: number;
+  orderId?: number;
+  orderType: OrderType;
 }
 
 export enum CallNotificationtType {
   Incoming = "incoming",
-  EndCall = "endCall"
-
+  EndCall = "endCall",
 }
 export interface CallNotificationForQueue extends NotificationForQueue {
-  chatId: number,
-  callerId: number,
-  callerParticipantType: ParticipantType,
-  recipientId: number,
-  recipientParticipantType: ParticipantType,
-  callNotificationType: CallNotificationtType,
+  chatId: number;
+  callerId: number;
+  callerParticipantType: ParticipantType;
+  recipientId: number;
+  recipientParticipantType: ParticipantType;
+  callNotificationType: CallNotificationtType;
 }
 
 export interface ParticipantAgoraDetails {
-  uid: number,
-  token: string,
-  expirationTime: string
+  uid: number;
+  token: string;
+  expirationTime: string;
 }
 
 export interface ParticipantWithAgora extends Participant {
-  agora: ParticipantAgoraDetails
+  agora: ParticipantAgoraDetails;
 }
 
-export const chatInfoImage: string = "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
+export const chatInfoImage: string =
+  "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";

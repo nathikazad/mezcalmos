@@ -144,6 +144,13 @@ select_permissions:
         - service_provider_id
         - service_provider_type
       filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
   - role: laundry_operator
     permission:
       columns:

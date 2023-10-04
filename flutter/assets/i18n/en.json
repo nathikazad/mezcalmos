@@ -4388,6 +4388,14 @@
       }
     }
   },
+  "InfluencerApp": {
+    "Pages": {
+      "InfTabsView": {
+        "deals": "Deals",
+        "earnings": "Earnings"
+      }
+    }
+  },
   "General": {
     "to": "To",
     "required": "Required",
