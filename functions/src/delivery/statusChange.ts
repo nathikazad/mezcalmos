@@ -1,13 +1,26 @@
-import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import {
+  DeliveryOrder,
+  DeliveryOrderStatus,
+} from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { unassignDriver, updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
+import {
+  unassignDriver,
+  updateDeliveryOrderStatus,
+} from "../shared/graphql/delivery/updateDelivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { OrderType } from "../shared/models/Generic/Order";
 import { changeRestaurantOrderStatus } from "./restaurantStatusChange";
 import { changeLaundryOrderStatus } from "./laundryStatusChange";
-import { CourierOrder, CourierOrderStatusChangeNotification } from "../shared/models/Services/Courier/Courier";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import {
+  CourierOrder,
+  CourierOrderStatusChangeNotification,
+} from "../shared/models/Services/Courier/Courier";
+import {
+  Notification,
+  NotificationAction,
+  NotificationType,
+} from "../shared/models/Notification";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
@@ -17,40 +30,51 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { getCourierOrderFromDelivery } from "../shared/graphql/delivery/courier/getCourierOrder";
 import { cancelCourierFromDelivery } from "../shared/models/Services/Courier/updateCourier";
 
-let statusArrayInSeq: Array<DeliveryOrderStatus> = [
-  DeliveryOrderStatus.OrderReceived,
-  DeliveryOrderStatus.OnTheWayToPickup,
-  DeliveryOrderStatus.AtPickup,
-  DeliveryOrderStatus.OnTheWayToDropoff,
-  DeliveryOrderStatus.AtDropoff,
-  DeliveryOrderStatus.Delivered
-]
+// let statusArrayInSeq: Array<DeliveryOrderStatus> = [
+//   DeliveryOrderStatus.OrderReceived,
+//   DeliveryOrderStatus.OnTheWayToPickup,
+//   DeliveryOrderStatus.AtPickup,
+//   DeliveryOrderStatus.OnTheWayToDropoff,
+//   DeliveryOrderStatus.AtDropoff,
+//   DeliveryOrderStatus.Delivered,
+// ];
 
-function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
-  if(newStatus == DeliveryOrderStatus.CancelledByAdmin || newStatus == DeliveryOrderStatus.CancelledByDeliverer) {
-    if(!statusArrayInSeq.slice(0, -1).includes(currentStatus)) {
-      throw new MezError(ChangeDeliveryStatusError.OrderNotInProcess);
-    }
-    return;
-  }
-  if ((newStatus == DeliveryOrderStatus.OnTheWayToPickup)
-    && (currentStatus != DeliveryOrderStatus.OrderReceived)
-  ) {
-    throw new MezError(ChangeDeliveryStatusError.InvalidStatus);
-
-  } else if (currentStatus != statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == newStatus) - 1]) {
-    throw new MezError(ChangeDeliveryStatusError.InvalidStatus);
-  }
-}
+// function checkExpectedStatus(
+//   currentStatus: DeliveryOrderStatus,
+//   newStatus: DeliveryOrderStatus
+// ) {
+//   if (
+//     newStatus == DeliveryOrderStatus.CancelledByAdmin ||
+//     newStatus == DeliveryOrderStatus.CancelledByDeliverer
+//   ) {
+//     if (!statusArrayInSeq.slice(0, -1).includes(currentStatus)) {
+//       throw new MezError(ChangeDeliveryStatusError.OrderNotInProcess);
+//     }
+//     return;
+//   }
+//   if (
+//     newStatus == DeliveryOrderStatus.OnTheWayToPickup &&
+//     currentStatus != DeliveryOrderStatus.OrderReceived
+//   ) {
+//     throw new MezError(ChangeDeliveryStatusError.InvalidStatus);
+//   } else if (
+//     currentStatus !=
+//     statusArrayInSeq[
+//       statusArrayInSeq.findIndex((element) => element == newStatus) - 1
+//     ]
+//   ) {
+//     throw new MezError(ChangeDeliveryStatusError.InvalidStatus);
+//   }
+// }
 
 export interface ChangeDeliveryStatusDetails {
-  deliveryId: number,
-  newStatus: DeliveryOrderStatus
+  deliveryId: number;
+  newStatus: DeliveryOrderStatus;
 }
 export interface ChangeDeliveryStatusResponse {
-  success: boolean,
-  error?: ChangeDeliveryStatusError
-  unhandledError?: string,
+  success: boolean;
+  error?: ChangeDeliveryStatusError;
+  unhandledError?: string;
 }
 
 enum ChangeDeliveryStatusError {
@@ -71,35 +95,44 @@ enum ChangeDeliveryStatusError {
   OrderCreationError = "orderCreationError",
   NoDeliveryChatWithStoreId = " noDeliveryChatWithStoreId",
   DeliveryCompanyOperatorsNotFound = "deliveryCompanyOperatorsNotFound",
-  CannotCancelByDriver = "cannotCancelByDriver"
+  CannotCancelByDriver = "cannotCancelByDriver",
 }
 
-export async function changeDeliveryStatus(userId: number, changeDeliveryStatusDetails: ChangeDeliveryStatusDetails): Promise<ChangeDeliveryStatusResponse> {
+export async function changeDeliveryStatus(
+  userId: number,
+  changeDeliveryStatusDetails: ChangeDeliveryStatusDetails
+): Promise<ChangeDeliveryStatusResponse> {
   try {
-    let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
+    let deliveryOrder: DeliveryOrder = await getDeliveryOrder(
+      changeDeliveryStatusDetails.deliveryId
+    );
 
-    await errorChecks(deliveryOrder, userId, changeDeliveryStatusDetails.newStatus);
+    await errorChecks(
+      deliveryOrder,
+      userId,
+      changeDeliveryStatusDetails.newStatus
+    );
 
     let customer: CustomerInfo = await getCustomer(deliveryOrder.customerId);
 
-    checkExpectedStatus(deliveryOrder.status, changeDeliveryStatusDetails.newStatus);
+    // checkExpectedStatus(deliveryOrder.status, changeDeliveryStatusDetails.newStatus);
 
     deliveryOrder.status = changeDeliveryStatusDetails.newStatus;
 
-    if(deliveryOrder.status !== DeliveryOrderStatus.CancelledByDeliverer)
-      updateDeliveryOrderStatus(deliveryOrder);
+    // if (deliveryOrder.status !== DeliveryOrderStatus.CancelledByDeliverer)
+    updateDeliveryOrderStatus(deliveryOrder);
     switch (deliveryOrder.orderType) {
       case OrderType.Restaurant:
-        changeRestaurantOrderStatus(customer, deliveryOrder)
+        changeRestaurantOrderStatus(customer, deliveryOrder);
         break;
       case OrderType.Laundry:
-        changeLaundryOrderStatus(customer, deliveryOrder)
+        changeLaundryOrderStatus(customer, deliveryOrder);
         break;
       case OrderType.Courier:
         switch (deliveryOrder.status) {
           case DeliveryOrderStatus.CancelledByDeliverer:
             unassignDriver(deliveryOrder.deliveryId);
-            notifyDeliveryCompany(deliveryOrder)
+            notifyDeliveryCompany(deliveryOrder);
             break;
           case DeliveryOrderStatus.CancelledByAdmin:
             cancelCourierFromDelivery(deliveryOrder.deliveryId);
@@ -110,35 +143,40 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
       default:
         break;
     }
-    
+
     return {
-      success: true
-    }
+      success: true,
+    };
   } catch (e: any) {
     if (e instanceof MezError) {
       if (Object.values(ChangeDeliveryStatusError).includes(e.message as any)) {
         return {
           success: false,
-          error: e.message as any
-        }
+          error: e.message as any,
+        };
       } else {
         return {
           success: false,
           error: ChangeDeliveryStatusError.UnhandledError,
-          unhandledError: e.message as any
-        }
+          unhandledError: e.message as any,
+        };
       }
     } else {
-      throw e
+      throw e;
     }
   }
 }
 
-async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStatus: DeliveryOrderStatus) {
-  if (deliveryOrder.status == DeliveryOrderStatus.Delivered
-    || deliveryOrder.status == DeliveryOrderStatus.CancelledByCustomer
-    || deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer
-    || deliveryOrder.status == DeliveryOrderStatus.CancelledByServiceProvider
+async function errorChecks(
+  deliveryOrder: DeliveryOrder,
+  userId: number,
+  newStatus: DeliveryOrderStatus
+) {
+  if (
+    deliveryOrder.status == DeliveryOrderStatus.Delivered ||
+    deliveryOrder.status == DeliveryOrderStatus.CancelledByCustomer ||
+    deliveryOrder.status == DeliveryOrderStatus.CancelledByDeliverer ||
+    deliveryOrder.status == DeliveryOrderStatus.CancelledByServiceProvider
   ) {
     throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
   }
@@ -146,27 +184,35 @@ async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStat
     if (deliveryOrder.deliveryDriver == null) {
       throw new MezError(ChangeDeliveryStatusError.DriverNotAssigned);
     }
-    if(userId != deliveryOrder.deliveryDriver.userId)
+    if (userId != deliveryOrder.deliveryDriver.userId)
       throw new MezError(ChangeDeliveryStatusError.UnauthorizedAccess);
-    else if(newStatus == DeliveryOrderStatus.CancelledByDeliverer && deliveryOrder.orderType != OrderType.Courier)
+    else if (
+      newStatus == DeliveryOrderStatus.CancelledByDeliverer &&
+      deliveryOrder.orderType != OrderType.Courier
+    )
       throw new MezError(ChangeDeliveryStatusError.CannotCancelByDriver);
   }
 }
 
-async function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo) {
-  let courierOrder: CourierOrder = await getCourierOrderFromDelivery(deliveryOrder)
+async function notifyCourierStatusChange(
+  deliveryOrder: DeliveryOrder,
+  customer: CustomerInfo
+) {
+  let courierOrder: CourierOrder = await getCourierOrderFromDelivery(
+    deliveryOrder
+  );
   let notification: Notification = {
     foreground: <CourierOrderStatusChangeNotification>{
       status: deliveryOrder.status,
-      time: (new Date()).toISOString(),
+      time: new Date().toISOString(),
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Courier,
       notificationAction: NotificationAction.ShowSnackBarAlways,
-      orderId: courierOrder.id
+      orderId: courierOrder.id,
     },
     // todo @SanchitUke fix the background message based on Restaurant Order Status
     background: deliveryOrderStatusChangeMessages[deliveryOrder.status],
-    linkUrl: orderUrl(OrderType.Courier, courierOrder.id)
+    linkUrl: orderUrl(OrderType.Courier, courierOrder.id),
   };
 
   pushNotification(
@@ -176,9 +222,13 @@ async function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer:
     ParticipantType.Customer,
     customer.language
   );
-  if(deliveryOrder.status == DeliveryOrderStatus.CancelledByAdmin && deliveryOrder.deliveryDriver) {
+  if (
+    deliveryOrder.status == DeliveryOrderStatus.CancelledByAdmin &&
+    deliveryOrder.deliveryDriver
+  ) {
     notification.linkUrl = `/orders/${deliveryOrder.deliveryId}`;
-    pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!,
+    pushNotification(
+      deliveryOrder.deliveryDriver.user?.firebaseId!,
       notification,
       deliveryOrder.deliveryDriver.notificationInfo,
       ParticipantType.DeliveryDriver,

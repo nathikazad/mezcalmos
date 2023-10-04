@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -56,8 +57,12 @@ class _DvOrderViewState extends State<DvOrderView> {
         bottomNavigationBar: Obx(() {
           if (viewController.showAccept) {
             return _aceptButton();
-          } else
+          } else if (viewController.showFinish)
             return _finishButton();
+          else if (viewController.order != null) {
+            return _orderStatusCard();
+          } else
+            return SizedBox();
         }),
         body: Obx(() {
           if (viewController.hasData)
@@ -136,7 +141,7 @@ class _DvOrderViewState extends State<DvOrderView> {
             costs: viewController.order!.costs,
             stripeOrderPaymentInfo: null,
           ),
-          if (!viewController.showAccept) ...<Widget>[
+          if (viewController.showFinish) ...<Widget>[
             bigSeperator,
             MezButton(
               label: "Cancel order",
@@ -262,6 +267,31 @@ class _DvOrderViewState extends State<DvOrderView> {
       onClick: () async {
         await viewController.finishOrder();
       },
+    );
+  }
+
+  Widget _orderStatusCard() {
+    return Container(
+      height: 70,
+      child: Card(
+        margin: EdgeInsets.zero,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          child: Row(
+            children: <Widget>[
+              Flexible(
+                fit: FlexFit.tight,
+                child: Text(
+                  viewController.order!.status.title,
+                  style: context.textTheme.bodyLarge,
+                ),
+              ),
+              hSmallSepartor,
+              viewController.order!.status.widget(packageReady: false)
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

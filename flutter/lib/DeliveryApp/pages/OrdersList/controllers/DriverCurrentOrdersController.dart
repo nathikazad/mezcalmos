@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
@@ -81,9 +82,9 @@ class DriverCurrentOrdersController {
       //  openOrders.value = await get_delivery_minimal_orders(withCache: false);
 
       currentOrders.value = await get_delivery_minimal_orders(
-              status: MinimalDeliveryOrderStatus.InProcess,
+              status: MinimalDeliveryOrderStatus.Open,
               driverId: opAuthController.driverId!,
-              limit: 30,
+              limit: 20,
               offset: 0) ??
           <DeliveryMinimalOrder>[];
       mezDbgPrint("Orders length ======>${openOrders.length}");
@@ -95,25 +96,35 @@ class DriverCurrentOrdersController {
   }
 
   void _listenOnOrders() {
-    // subscriptionId = hasuraDb.createSubscription(start: () {
-    //   currentOrdersListener = listenDvCurrentMessages(driverId: driverId)
-    //       .listen((List<DeliveryMessage>? event) {
-    //     if (event != null) {
-    //       currentOrders.value = event;
-    //     }
-    //   });
-    //   openOrdersListener =
-    //       listenDvOpenMessages().listen((List<DeliveryMessage>? event) {
-    //     if (event != null) {
-    //       openOrders.value = event;
-    //     }
-    //   });
-    // }, cancel: () {
-    //   currentOrdersListener?.cancel();
-    //   currentOrdersListener = null;
-    //   openOrdersListener?.cancel();
-    //   openOrdersListener = null;
-    // });
+    subscriptionId = hasuraDb.createSubscription(start: () {
+      currentOrdersListener = listen_delivery_minimal_orders(
+              status: MinimalDeliveryOrderStatus.Open,
+              driverId: opAuthController.driverId!,
+              limit: 20,
+              offset: 0)
+          .listen((List<DeliveryMinimalOrder>? event) {
+        if (event != null) {
+          currentOrders.value = event;
+        }
+      });
+      openOrdersListener = listen_delivery_minimal_orders(
+              status: MinimalDeliveryOrderStatus.Open,
+              driverId: null,
+              limit: openOrdersFetchSize,
+              offset: 0)
+          .listen((List<DeliveryMinimalOrder>? event) {
+        if (event != null) {
+          mezDbgPrint(
+              "😇  Setting open orders from listners ::::::=================>${event.length}");
+          openOrders.value = event;
+        }
+      });
+    }, cancel: () {
+      currentOrdersListener?.cancel();
+      currentOrdersListener = null;
+      openOrdersListener?.cancel();
+      openOrdersListener = null;
+    });
   }
 
   Future<void> switchOnlineStatus(bool value) async {

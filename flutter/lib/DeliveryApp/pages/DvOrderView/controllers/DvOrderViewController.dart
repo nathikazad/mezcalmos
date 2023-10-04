@@ -23,6 +23,8 @@ class DvOrderViewController {
   bool get hasData => _order.value != null;
   bool get showAccept =>
       _order.value != null && _order.value!.driverInfo == null;
+  bool get showFinish =>
+      _order.value != null && !showAccept && _order.value!.inProcess();
 
   void init({required int orderId}) {
     this.orderId = orderId;
@@ -88,6 +90,7 @@ class DvOrderViewController {
               deliveryId: orderId, newStatus: cm.DeliveryOrderStatus.Delivered);
       if (res.success) {
         showSavedSnackBar();
+        await _fetchOrder();
       } else
         showErrorSnackBar(errorText: res.error.toString());
     } catch (e, stk) {
@@ -105,6 +108,7 @@ class DvOrderViewController {
               newStatus: cm.DeliveryOrderStatus.CancelledByDeliverer);
       if (res.success) {
         showSavedSnackBar();
+        await _fetchOrder();
       } else
         showErrorSnackBar(errorText: res.error.toString());
     } catch (e, stk) {
