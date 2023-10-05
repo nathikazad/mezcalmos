@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -22,6 +23,8 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
+import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
+import 'package:mezcalmos/Shared/widgets/ServiAmigosCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -80,15 +83,15 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // OrderMapWidget(
-                  //     deliveryOrderId:
-                  //         viewController.order.value!.deliveryOrderId!,
-                  //     height: 70.mezW,
-                  //     updateDriver: false,
-                  //     polyline: viewController
-                  //         .order.value!.routeInformation?.polyline,
-                  //     from: viewController.order.value!.restaurant.location,
-                  //     to: viewController.order.value!.dropOffLocation),
+                  OrderMapWidget(
+                      deliveryOrderId:
+                          viewController.order.value!.deliveryOrderId!,
+                      height: 70.mezW,
+                      updateDriver: false,
+                      polyline: viewController
+                          .order.value!.routeInformation?.polyline,
+                      from: viewController.order.value!.restaurant.location,
+                      to: viewController.order.value!.dropOffLocation),
                   MezCard(
                     label: "${_i18n()['restaurant']}",
                     margin: const EdgeInsets.only(top: 15),
@@ -108,7 +111,8 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                       },
                     ),
                   ),
-                  if (viewController.order.value!.driverInfo != null)
+                  if (viewController.order.value!.driverInfo !=
+                      null) ...<Widget>[
                     MezCard(
                       label: "${_i18n()['driver']}",
                       margin: const EdgeInsets.only(top: 15),
@@ -129,9 +133,13 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                         },
                       ),
                     ),
+                    meduimSeperator,
+                    ServiceAmigosCard(),
+                  ],
                   OrderItemsCard(
                     order: viewController.order.value!,
                   ),
+
                   Container(
                     margin: const EdgeInsets.only(top: 15),
                     child: Text(
@@ -188,6 +196,12 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                     stripeOrderPaymentInfo:
                         viewController.order.value!.stripePaymentInfo,
                   ),
+                  if (viewController.order.value?.driverInfo == null)
+                    MezCard(
+                        firstAvatarIcon: Icons.delivery_dining,
+                        firstAvatarIconColor: primaryBlueColor,
+                        firstAvatarBgColor: secondaryLightBlueColor,
+                        content: Text("${_i18n()['dvHelper']}")),
                   bigSeperator,
                   Text.rich(
                     TextSpan(

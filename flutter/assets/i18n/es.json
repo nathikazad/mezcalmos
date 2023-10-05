@@ -1236,7 +1236,10 @@
             "noResponse": "Si el restaurante o el repartidor no responden",
             "contactAdmin": "Contactar al Administrador",
             "orderSummary": "Resumen de la orden",
-            "orderCost": "Costo de la orden"
+            "orderCost": "Costo de la orden",
+            "dvHelper": "El precio de entrega será establecido por el restaurante al revisar tu pedido y ubicación.",
+            "dvService": "Servicio de entrega",
+            "drivers": "Conductoras"
           }
         },
         "ViewRestaurantScreen": {

@@ -1245,7 +1245,10 @@
             "noResponse": "If the restaurant or delivery driver does not respond",
             "contactAdmin": "Contact Admin",
             "orderSummary": "Order summary",
-            "orderCost": "Order cost"
+            "orderCost": "Order cost",
+            "dvHelper": "The delivery price will be determined by the restaurant once your order and location are reviewed.",
+            "dvService": "Delivery Service",
+            "drivers": "Drivers"
           }
         },
         "ViewRestaurantScreen": {

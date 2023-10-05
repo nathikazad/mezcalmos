@@ -14,6 +14,7 @@ class MezCard extends StatelessWidget {
       this.label,
       this.cardColor,
       this.firstAvatarBgColor,
+      this.labelStyle,
       this.firstAvatarBgImage,
       this.firstAvatarIcon,
       this.firstAvatarIconColor,
@@ -43,6 +44,7 @@ class MezCard extends StatelessWidget {
   final double borderRadius;
   final double? elevation;
   final String? label;
+  final TextStyle? labelStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +52,9 @@ class MezCard extends StatelessWidget {
       padding: margin ?? EdgeInsets.only(bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (label != null) ...[
-            Text(label!, style: context.textTheme.bodyMedium),
+        children: <Widget>[
+          if (label != null) ...<Widget>[
+            Text(label!, style: labelStyle ?? context.textTheme.bodyMedium),
             smallSepartor,
           ],
           Card(
@@ -70,7 +72,7 @@ class MezCard extends StatelessWidget {
               child: Container(
                 padding: contentPadding,
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     // leading //
                     if (leading != null) leading!,
 
@@ -81,7 +83,7 @@ class MezCard extends StatelessWidget {
                       Stack(
                         alignment: Alignment.center,
                         clipBehavior: Clip.none,
-                        children: [
+                        children: <Widget>[
                           CircleAvatar(
                             radius: radius,
                             backgroundColor: firstAvatarBgColor,
