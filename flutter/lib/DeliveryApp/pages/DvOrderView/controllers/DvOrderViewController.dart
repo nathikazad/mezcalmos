@@ -61,7 +61,7 @@ class DvOrderViewController {
     final String? phoneNumber = order?.serviceProvider.phoneNumber;
     if (phoneNumber != null) {
       try {
-        final bool res = await callWhatsappNumber(phoneNumber);
+        await callWhatsappNumber(phoneNumber);
       } catch (e) {
         showErrorSnackBar();
         mezDbgPrint(e);
@@ -74,7 +74,7 @@ class DvOrderViewController {
     final String? phoneNumber = order?.customer.phoneNumber;
     if (phoneNumber != null) {
       try {
-        final bool res = await callWhatsappNumber(phoneNumber);
+        await callWhatsappNumber(phoneNumber);
       } catch (e) {
         showErrorSnackBar();
         mezDbgPrint(e);
@@ -85,9 +85,8 @@ class DvOrderViewController {
 
   Future<void> finishOrder() async {
     try {
-      final cm.ChangeDeliveryStatusResponse res =
-          await CloudFunctions.delivery3_changeStatus(
-              deliveryId: orderId, newStatus: cm.DeliveryOrderStatus.Delivered);
+      final cm.CompleteRestaurantOrderResponse res =
+          await CloudFunctions.restaurant3_completeOrder(orderId: orderId);
       if (res.success) {
         showSavedSnackBar();
         await _fetchOrder();

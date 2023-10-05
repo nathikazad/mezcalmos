@@ -1,4 +1,4 @@
-import { $ } from "../../../../../hasura/library/src/generated/graphql-zeus";
+
 import { AssignDriverError } from "../../../delivery/assignDriver";
 import { getHasura } from "../../../utilities/hasura";
 import {
