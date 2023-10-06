@@ -10,7 +10,7 @@ import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Business/Business.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
-import '../../../../CustomerOldStuff/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
+import '../../../../../CustomerOldStuff/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['components']['OnMapRentalCard'];
@@ -31,13 +31,15 @@ class OnMapRentalCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
-          boxShadow: [BoxShadow(blurRadius: 1, color: Colors.grey.shade400)]),
+          boxShadow: <BoxShadow>[
+            BoxShadow(blurRadius: 1, color: Colors.grey.shade400)
+          ]),
       child: InkWell(
         onTap: () => CustHomeRentalView.navigate(
           rentalId: rental.details.id.toInt(),
         ),
         child: Row(
-          children: [
+          children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
@@ -53,7 +55,7 @@ class OnMapRentalCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+                children: <Widget>[
                   Text(
                     rental.details.name.getTranslation(userLanguage)!.inCaps,
                     overflow: TextOverflow.ellipsis,
@@ -64,11 +66,11 @@ class OnMapRentalCard extends StatelessWidget {
                   Wrap(
                     spacing: 5,
                     runSpacing: 5,
-                    children: [
+                    children: <Widget>[
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
-                        children: [
+                        children: <Widget>[
                           Icon(Icons.price_check),
                           Text(
                             '${rental.details.cost.values.first.toPriceString()}/${'${_i18n()[rental.details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
@@ -83,7 +85,7 @@ class OnMapRentalCard extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children: <Widget>[
                             Icon(Icons.single_bed_outlined, size: 15.mezSp),
                             Text(' ${rental.bedrooms} ${_i18n()['bedrooms']}',
                                 style: context.textTheme.bodyLarge?.copyWith(
@@ -95,7 +97,7 @@ class OnMapRentalCard extends StatelessWidget {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
-                          children: [
+                          children: <Widget>[
                             Icon(Icons.house_siding, size: 15.mezSp),
                             Text(
                                 ' ${rental.details.additionalParameters?['area']}m²',

@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
-import '../../../../CustomerOldStuff/AllServices/AllServiceListView/AllServiceListView.dart';
-import '../../../../CustomerOldStuff/JoinUs/JoinUsView.dart';
+import '../../../../../CustomerOldStuff/AllServices/AllServiceListView/AllServiceListView.dart';
+import '../../../../../CustomerOldStuff/JoinUs/JoinUsView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['AllServices']['AllServiceView']['AllServiceView'];
@@ -41,7 +41,7 @@ class _AllServiceViewState extends State<AllServiceView> {
       drawer: MezSideMenu(),
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
-        actionIcons: [
+        actionIcons: <Widget>[
           FloatingCartComponent(
             cartType: CartType.business,
           ),

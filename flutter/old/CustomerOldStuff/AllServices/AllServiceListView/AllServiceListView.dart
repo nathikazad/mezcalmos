@@ -6,17 +6,17 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/common/hsCommon.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
-import '../../../../CustomerOldStuff/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
-import '../../../../CustomerOldStuff/Businesses/AdevntureView/CustAdventureListView.dart';
-import '../../../../CustomerOldStuff/Businesses/ClassView/CustClassesListView.dart';
-import '../../../../CustomerOldStuff/Businesses/EventsViews/CustEventsListView.dart';
-import '../../../../CustomerOldStuff/Businesses/FoodView/CustFoodWrapper.dart';
-import '../../../../CustomerOldStuff/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart';
-import '../../../../CustomerOldStuff/Businesses/RealEstateView/CustRealEstateListView.dart';
-import '../../../../CustomerOldStuff/Businesses/RentalsView/CustRentalsWrapper.dart';
-import '../../../../CustomerOldStuff/Businesses/ServicesViews/CustServicesWrapper.dart';
-import '../../../../CustomerOldStuff/Businesses/TherapyView/CustTherapyListView.dart';
-import '../../../../CustomerOldStuff/Businesses/VolunteerView/CustVolunteerListView.dart';
+import '../../../../../CustomerOldStuff/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import '../../../../../CustomerOldStuff/Businesses/AdevntureView/CustAdventureListView.dart';
+import '../../../../../CustomerOldStuff/Businesses/ClassView/CustClassesListView.dart';
+import '../../../../../CustomerOldStuff/Businesses/EventsViews/CustEventsListView.dart';
+import '../../../../../CustomerOldStuff/Businesses/FoodView/CustFoodWrapper.dart';
+import '../../../../../CustomerOldStuff/Businesses/LocallyMadeView/CustLocallyMadeWrapper.dart';
+import '../../../../../CustomerOldStuff/Businesses/RealEstateView/CustRealEstateListView.dart';
+import '../../../../../CustomerOldStuff/Businesses/RentalsView/CustRentalsWrapper.dart';
+import '../../../../../CustomerOldStuff/Businesses/ServicesViews/CustServicesWrapper.dart';
+import '../../../../../CustomerOldStuff/Businesses/TherapyView/CustTherapyListView.dart';
+import '../../../../../CustomerOldStuff/Businesses/VolunteerView/CustVolunteerListView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['AllServices']['AllServiceListView']['AllServiceListView'];
@@ -147,7 +147,7 @@ class _AllServiceListViewState extends State<AllServiceListView> {
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
+                              children: <Widget>[
                                 Expanded(
                                   child: Container(
                                     margin: EdgeInsets.symmetric(

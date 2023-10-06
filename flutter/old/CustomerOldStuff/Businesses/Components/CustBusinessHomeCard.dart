@@ -10,19 +10,19 @@ import 'package:mezcalmos/Shared/helpers/TimeUnitHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-import '../../../../CustomerOldStuff/Businesses/Offerings/CustRentalView/CustRentalView.dart';
+import '../../../../../CustomerOldStuff/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['components']['CustBusinessRentalCard'];
 
-class CustBusinessRentalCard extends StatelessWidget {
+class CustBusinessHomeCard extends StatelessWidget {
   final EdgeInsets margin;
   final EdgeInsetsGeometry contentPadding;
-  final Rental rental;
+  final Home rental;
   final double? elevation;
   final TextStyle? textStyle;
 
-  const CustBusinessRentalCard(
+  const CustBusinessHomeCard(
       {super.key,
       this.margin = const EdgeInsets.only(top: 5),
       this.contentPadding = const EdgeInsets.all(8),
@@ -36,18 +36,14 @@ class CustBusinessRentalCard extends StatelessWidget {
       margin: margin,
       elevation: elevation,
       onClick: () {
-        // if (rental.category1 == RentalCategory1.Home) {
-        //   CustHomeRentalView.navigate(rentalId: rental.details.id.toInt());
-        // } else {
-        CustRentalView.navigate(rentalId: rental.details.id.toInt());
-        // }
+        CustHomeRentalView.navigate(rentalId: rental.details.id.toInt());
       },
       firstAvatarBgImage:
           (rental.details.image != null && rental.details.image!.isNotEmpty)
               ? CachedNetworkImageProvider(rental.details.image![0])
               : null,
       content: Text(
-        rental.details.name.getTranslation(userLanguage)!,
+        rental.details.name.getTranslation(userLanguage)!.inCaps,
         style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.mezSp),
         overflow: TextOverflow.ellipsis,
       ),
@@ -62,39 +58,5 @@ class CustBusinessRentalCard extends StatelessWidget {
         ),
       ),
     );
-    /*return Card(
-      elevation: elevation,
-      margin: margin,
-      child: Padding(
-        padding: contentPadding,
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          CircleAvatar(
-            radius: 17.5.sp,
-            backgroundImage: (rental.details.image != null &&
-                    rental.details.image!.isNotEmpty)
-                ? CachedNetworkImageProvider(rental.details.image![0])
-                : null,
-            backgroundColor: backgroundShadeColor,
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Flexible(
-            flex: 7,
-            child: Text(
-              rental.details.name.getTranslation(userLanguage) ?? "",
-              style: context.textTheme.bodyLarge?.copyWith(fontSize: 11.5.sp),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Spacer(),
-          Text(
-            '\$${rental.details.cost.values.first.toString()}/${rental.details.cost.keys.first.toStringDuration()}',
-            style: context.textTheme.bodyLarge,
-          )
-        ]),
-      ),
-    );*/
   }
 }

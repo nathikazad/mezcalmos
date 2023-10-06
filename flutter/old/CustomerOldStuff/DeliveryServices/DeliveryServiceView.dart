@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
-import '../../../CustomerOldStuff/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
+import '../../../../CustomerOldStuff/AllServices/AllServiceListView/controllers/AllServiceListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -31,7 +31,7 @@ class DeliveryServiceView extends StatefulWidget {
   State<DeliveryServiceView> createState() => _DeliveryServiceViewState();
 
   static Future<void> navigate({required List<ServiceTree> serviceTree}) {
-    return MezRouter.toPath(XRouter.deliveryServicesRoute, arguments: {
+    return MezRouter.toPath(XRouter.deliveryServicesRoute, arguments: <String, >{
       "serviceTree": serviceTree,
     });
   }
@@ -125,7 +125,7 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
   Widget mezListOfServices() {
     Future<void> navigateToListView(MezService mezService) async {
       if (Get.find<AuthController>().hasuraUserId != null) {
-        int? orderId = await get_customer_last_order_id(
+        final int? orderId = await get_customer_last_order_id(
             customerId: Get.find<AuthController>().hasuraUserId!,
             orderType: mezService.toOrderType());
         if (orderId != null && orderId > 0) {

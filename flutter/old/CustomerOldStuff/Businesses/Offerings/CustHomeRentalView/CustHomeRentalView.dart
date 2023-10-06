@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/BusinessApp/pages/ServiceViews/BsEventView/components/BsOpDateTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/router/businessRoutes.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/CustHomeRentalView/controllers/CustHomeRentalViewController.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessMessageCard.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessRentalCost.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustCircularLoader.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustGuestPicker.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustOrderCostCard.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/CustHomeRentalView/controllers/CustHomeRentalViewController.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessDurationPicker.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessMessageCard.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessRentalCost.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustCircularLoader.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustGuestPicker.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustOrderCostCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -46,7 +46,7 @@ class CustHomeRentalView extends StatefulWidget {
             .replaceFirst(":id", "$rentalId")
         : CustBusinessRoutes.custHomeRentalRoute
             .replaceFirst(":id", "$rentalId");
-    return MezRouter.toPath(route, arguments: {
+    return MezRouter.toPath(route, arguments: <String, >{
       "startDate": startDate,
       "timeCost": timeCost,
       "guestCount": guestCount,
@@ -113,7 +113,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
       body: Obx(() {
         if (viewController.homeRental != null) {
           return CustomScrollView(
-            slivers: [
+            slivers: <Widget>[
               CustBusinessItemAppbar(
                   itemDetails: viewController.homeRental!.details),
               SliverToBoxAdapter(
@@ -121,7 +121,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                   margin: const EdgeInsets.all(12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
                         viewController.homeRental!.details.name
                             .getTranslation(userLanguage)!
@@ -131,7 +131,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                       if (!viewController.isMultipleRooms.value)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: <Widget>[
                             _CustBusinessAdditionalData(
                               homeRental: viewController.homeRental!,
                             ),
@@ -182,7 +182,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                           key: viewController.formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               bigSeperator,
                               BsOpDateTimePicker(
                                 fillColor: Colors.white,
@@ -276,7 +276,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
     return Column(
       children: List.generate(
         viewController.additionalRooms.length,
-        (index) {
+        (int index) {
           final String roomType =
               viewController.additionalRooms[index]["roomType"];
           final Map<TimeUnit, num> costs =
@@ -286,10 +286,10 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
           return Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Row(
-              children: [
+              children: <Widget>[
                 Expanded(
                   child: Wrap(
-                    children: [
+                    children: <Widget>[
                       Text(
                         "${_i18n()[roomType]}",
                         style: context.textTheme.bodyMedium!.copyWith(
@@ -299,7 +299,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                         ),
                       ),
                       ...costs.entries.map(
-                        (e) => Padding(
+                        (MapEntry<TimeUnit, num> e) => Padding(
                           padding: const EdgeInsets.only(left: 4.0),
                           child: Text(
                             "$circle \$${e.value.toDouble().toStringAsFixed(0)}/${_i18n()[e.key.toFirebaseFormatString()]}",
@@ -320,7 +320,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
                     activeColor: primaryBlueColor,
                     value: roomType,
                     groupValue: viewController.selectedRoom.value,
-                    onChanged: (value) {
+                    onChanged: (String? value) {
                       mezDbgPrint("RADIO Value: $value");
                       viewController.changeSelectedRoom(value!);
                     },
@@ -336,7 +336,7 @@ class _CustHomeRentalViewState extends State<CustHomeRentalView> {
   Column _description(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         SizedBox(
           height: 15,
         ),
@@ -370,7 +370,7 @@ class _CustBusinessAdditionalData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String wholeAdditionalParamString() {
-      final Map<String, String> additionalValues = {
+      final Map<String, String> additionalValues = <String, String>{
         'bedRooms': '${homeRental?.bedrooms ?? 0} ${_i18n()['bedrooms']}',
         'bathRooms': '${homeRental?.bathrooms ?? 0} ${_i18n()['bathrooms']}',
         'houseType':

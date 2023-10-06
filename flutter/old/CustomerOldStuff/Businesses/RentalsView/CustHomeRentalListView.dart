@@ -19,10 +19,10 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-import '../../../../CustomerOldStuff/Businesses/Components/CustBusinessFilterSheet.dart';
-import '../../../../CustomerOldStuff/Businesses/Components/NoServicesFound.dart';
-import '../../../../CustomerOldStuff/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
-import '../../../../CustomerOldStuff/Businesses/RentalsView/controllers/CustHomeRentalsListViewController.dart';
+import '../../../../../CustomerOldStuff/Businesses/Components/CustBusinessFilterSheet.dart';
+import '../../../../../CustomerOldStuff/Businesses/Components/NoServicesFound.dart';
+import '../../../../../CustomerOldStuff/Businesses/Offerings/CustHomeRentalView/CustHomeRentalView.dart';
+import '../../../../../CustomerOldStuff/Businesses/RentalsView/controllers/CustHomeRentalsListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['RentalsView']['CustHomeRentalListView'];
@@ -55,7 +55,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          actionIcons: [
+          actionIcons: <Widget>[
             FloatingCartComponent(
               cartType: CartType.business,
             ),
@@ -95,12 +95,12 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
             child: CustomScrollView(
               physics: AlwaysScrollableScrollPhysics(),
               controller: viewController.scrollController,
-              slivers: [
+              slivers: <Widget>[
                 SliverFillRemaining(
                   hasScrollBody: false,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       // search bar
 
                       _viewBusinessesSwitcher(),
@@ -132,74 +132,81 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
       TimeUnit.PerWeek,
       TimeUnit.PerMonth
     ];
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
-        color: Colors.white,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Text(
-              '${_i18n()['showCost']}',
-              style: context.textTheme.bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            Row(
-                children: List.generate(
-                    timeUnits.length,
-                    (int index) => Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  shape: StadiumBorder(
-                                      side: BorderSide(
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+            color: Colors.white,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      '${_i18n()['showCost']}',
+                      style: context.textTheme.bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                        children: List.generate(
+                            timeUnits.length,
+                            (int index) => Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          shape: StadiumBorder(
+                                              side: BorderSide(
+                                                  color: viewController
+                                                              .filterTag ==
+                                                          timeUnits[index]
+                                                      ? Colors.transparent
+                                                      : Colors.black54)),
+                                          backgroundColor:
+                                              viewController.filterTag ==
+                                                      timeUnits[index]
+                                                  ? primaryBlueColor
+                                                  : Colors.white,
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 4.25),
+                                          tapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                          minimumSize: Size.zero),
+                                      onPressed: () {
+                                        viewController
+                                            .setFilter(timeUnits[index]);
+                                      },
+                                      child: Text(
+                                        '${_i18n()[timeUnits[index].toFirebaseFormatString()]}',
+                                        style: TextStyle(
                                           color: viewController.filterTag ==
                                                   timeUnits[index]
-                                              ? Colors.transparent
-                                              : Colors.black54)),
-                                  backgroundColor: viewController.filterTag ==
-                                          timeUnits[index]
-                                      ? primaryBlueColor
-                                      : Colors.white,
-                                  shadowColor: Colors.transparent,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 4.25),
-                                  tapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                  minimumSize: Size.zero),
-                              onPressed: () {
-                                viewController.setFilter(timeUnits[index]);
-                              },
-                              child: Text(
-                                '${_i18n()[timeUnits[index].toFirebaseFormatString()]}',
-                                style: TextStyle(
-                                  color: viewController.filterTag ==
-                                          timeUnits[index]
-                                      ? Colors.white
-                                      : Colors.black54,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 11.mezSp,
-                                ),
-                              )),
-                        )))
-          ]),
-        ),
-      ),
-      Obx(
-        () => Expanded(
-          child: MezServicesMapView(
-            mGoogleMapController: viewController.mapController,
-            fetchNewData: (LatLng? mapCenter, double? distance) async {
-              await viewController.fetchMapViewRentals(
-                  fromLoc: mapCenter, distance: distance);
-              return viewController.allMarkers.toList();
-            },
-            markers: viewController.allMarkers.value,
+                                              ? Colors.white
+                                              : Colors.black54,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 11.mezSp,
+                                        ),
+                                      )),
+                                )))
+                  ]),
+            ),
           ),
-        ),
-      ),
-    ]);
+          Obx(
+            () => Expanded(
+              child: MezServicesMapView(
+                mGoogleMapController: viewController.mapController,
+                fetchNewData: (LatLng? mapCenter, double? distance) async {
+                  await viewController.fetchMapViewRentals(
+                      fromLoc: mapCenter, distance: distance);
+                  return viewController.allMarkers.toList();
+                },
+                markers: viewController.allMarkers.value,
+              ),
+            ),
+          ),
+        ]);
   }
 
   Widget _filterButton(BuildContext context) {
@@ -211,7 +218,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
           // _showFilterSheet(context);
-          FilterInput? data = await cusShowBusinessFilerSheet(
+          final FilterInput? data = await cusShowBusinessFilerSheet(
               context: context,
               filterInput: viewController.filterInput,
               defaultFilterInput: viewController.defaultFilters());
@@ -224,7 +231,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Icon(
                 Icons.filter_alt,
                 color: Colors.black,
@@ -254,7 +261,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
 
   Widget _viewBusinessesSwitcher() {
     return Row(
-      children: [
+      children: <Widget>[
         Flexible(
           child: MezButton(
             label: '${_i18n()['home']}',
@@ -320,7 +327,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                     SizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         _getAcceptedPaymentIcons(
                             viewController.businesses[index].acceptedPayments),
                         SizedBox(
@@ -332,7 +339,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                           Flexible(
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
+                              children: <Widget>[
                                 Icon(
                                   Icons.star,
                                   size: 17.5.mezSp,
@@ -379,7 +386,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                     },
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           viewController.rentals[index].details.name
                               .getTranslation(userLanguage)!
@@ -392,17 +399,17 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children: <Widget>[
                             Expanded(
                               child: Wrap(
                                 spacing: 10,
                                 runSpacing: 5,
-                                children: [
+                                children: <Widget>[
                                   Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisSize: MainAxisSize.min,
-                                    children: [
+                                    children: <Widget>[
                                       Icon(Icons.price_check),
                                       Text(
                                         '${viewController.rentals[index].details.cost.values.first.toPriceString()}/${'${_i18n()[viewController.rentals[index].details.cost.keys.first.toStringDuration().toLowerCase()]}'}',
@@ -420,7 +427,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
-                                      children: [
+                                      children: <Widget>[
                                         Icon(Icons.single_bed_outlined,
                                             size: 15.mezSp),
                                         Text(
@@ -454,7 +461,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
-                                      children: [
+                                      children: <Widget>[
                                         Icon(Icons.house_siding,
                                             size: 15.mezSp),
                                         Text(
@@ -493,7 +500,7 @@ class _CustHomeRentalListViewState extends State<CustHomeRentalListView> {
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
-    final List<IconData> iconList = [];
+    final List<IconData> iconList = <IconData>[];
     acceptedPayments.forEach((PaymentType key, bool value) {
       if (value) {
         switch (key) {
