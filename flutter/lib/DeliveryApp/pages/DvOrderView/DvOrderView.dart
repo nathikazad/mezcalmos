@@ -20,8 +20,8 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpOrderView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
+    ['pages']['DvOrderView'];
 
 class DvOrderView extends StatefulWidget {
   const DvOrderView({super.key});
@@ -83,7 +83,7 @@ class _DvOrderViewState extends State<DvOrderView> {
         children: <Widget>[
           OrderMapWidget(
               deliveryOrderId: viewController.order!.orderId,
-              height: 70.mezW,
+              height: 80.mezW,
               updateDriver: false,
               polyline: viewController.order!.routeInformation?.polyline,
               from: viewController.order!.pickupLocation,
@@ -144,7 +144,7 @@ class _DvOrderViewState extends State<DvOrderView> {
           if (viewController.showFinish) ...<Widget>[
             bigSeperator,
             MezButton(
-              label: "Cancel order",
+              label: "${_i18n()['cancelOrder']}",
               backgroundColor: offRedColor,
               textColor: redAccentColor,
               onClick: () async {
@@ -206,7 +206,7 @@ class _DvOrderViewState extends State<DvOrderView> {
 
   Widget _aceptButton() {
     return MezButton(
-      label: 'Accept Order',
+      label: "${_i18n()['acceptOrder']}",
       borderRadius: 0,
       backgroundColor: Colors.green,
       textColor: Colors.white,
@@ -220,7 +220,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      "Delivery Cost",
+                      "${_i18n()['deliveryCost']}",
                       style: context.textTheme.bodyLarge,
                     ),
                     meduimSeperator,
@@ -229,11 +229,12 @@ class _DvOrderViewState extends State<DvOrderView> {
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       decoration: InputDecoration(
-                          hintText: "Price", suffix: Icon(Icons.attach_money)),
+                          hintText: "${_i18n()['price']}",
+                          suffix: Icon(Icons.attach_money)),
                     ),
                     meduimSeperator,
                     MezButton(
-                      label: "Accept Order",
+                      label: "${_i18n()['acceptOrder']}",
                       onClick: () async {
                         final double? cost =
                             double.tryParse(viewController.priceTxt.text);
@@ -245,7 +246,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                     ),
                     meduimSeperator,
                     MezButton(
-                      label: "Cancel",
+                      label: "${_i18n()['cancel']}",
                       backgroundColor: offRedColor,
                       textColor: redAccentColor,
                       onClick: () async {
@@ -262,7 +263,7 @@ class _DvOrderViewState extends State<DvOrderView> {
 
   Widget _finishButton() {
     return MezButton(
-      label: 'Finish Order',
+      label: "${_i18n()['finishOrder']}",
       borderRadius: 0,
       onClick: () async {
         await viewController.finishOrder();
