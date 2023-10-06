@@ -134,7 +134,7 @@ class OrderSummaryCard extends StatelessWidget {
                               Container(
                                 margin: const EdgeInsets.only(left: 3),
                                 child: Text(
-                                    "${(divideDeliveryCost) ? "${((costs.deliveryCost ?? 0) / 2).toPriceString()} x 2 " : "${(costs.deliveryCost?.toPriceString() ?? "-")}"}"),
+                                    "${(divideDeliveryCost) ? "${((costs.deliveryCost ?? 0) / 2).toPriceString(hideZero: true)} x 2 " : "${(costs.deliveryCost?.toPriceString(hideZero: true) ?? "-")}"}"),
                               ),
                           ],
                         ),
