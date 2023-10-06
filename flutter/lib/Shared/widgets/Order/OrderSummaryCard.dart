@@ -105,7 +105,7 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyMedium,
                         ),
                         Row(
-                          children: [
+                          children: <Widget>[
                             if (setDeliveryCallBack != null)
                               Container(
                                 child: (costs.requested)
@@ -209,7 +209,7 @@ class OrderSummaryCard extends StatelessWidget {
                         ),
                         Text(
                           (costs.orderItemsCost != 0)
-                              ? costs.totalCost?.toPriceString() ?? "-"
+                              ? costs.calculateTotalCost?.toPriceString() ?? "-"
                               : "-",
                           style: txt.bodyLarge,
                         ),

@@ -191,7 +191,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
   });
 }
 
-Stream<UserInfo?> listen_on_restaurant_order_driver({required int orderId}) {
+Stream<CustRestaurantOrderVariables?> listen_on_restaurant_order_driver(
+    {required int orderId}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_on_restaurant_order_driver(
     Options$Subscription$listen_on_restaurant_order_driver(
@@ -201,7 +202,7 @@ Stream<UserInfo?> listen_on_restaurant_order_driver({required int orderId}) {
       ),
     ),
   )
-      .map<UserInfo?>(
+      .map<CustRestaurantOrderVariables?>(
           (QueryResult<Subscription$listen_on_restaurant_order_driver> event) {
     mezDbgPrint(
         "Event from hs restaurant order 🚀🚀🚀 =====>driver ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
@@ -210,13 +211,16 @@ Stream<UserInfo?> listen_on_restaurant_order_driver({required int orderId}) {
         null) {
       final Subscription$listen_on_restaurant_order_driver$restaurant_order_by_pk
           orderData = event.parsedData!.restaurant_order_by_pk!;
-      return UserInfo(
-          hasuraId: orderData.delivery!.delivery_driver!.user.id,
-          name: orderData.delivery!.delivery_driver!.user.name,
-          phoneNumber: orderData.delivery!.delivery_driver!.user.phone,
-          image: orderData.delivery!.delivery_driver!.user.image,
-          language: orderData.delivery!.delivery_driver!.user.language_id
-              .toLanguage());
+      return CustRestaurantOrderVariables(
+          deliveryCost:
+              event.parsedData!.restaurant_order_by_pk?.delivery?.delivery_cost,
+          driverInfo: UserInfo(
+              hasuraId: orderData.delivery!.delivery_driver!.user.id,
+              name: orderData.delivery!.delivery_driver!.user.name,
+              phoneNumber: orderData.delivery!.delivery_driver!.user.phone,
+              image: orderData.delivery!.delivery_driver!.user.image,
+              language: orderData.delivery!.delivery_driver!.user.language_id
+                  .toLanguage()));
     }
     return null;
   });
@@ -367,6 +371,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
         image: orderData.customer.user.image,
+        phoneNumber: orderData.customer.user.phone,
         name: orderData.customer.user.name),
     dropOffLocation: MezLocation(orderData.to_location_address!,
         orderData.to_location_gps!.toLocationData()),
@@ -543,4 +548,13 @@ Future<int> number_of_customer_restaurant_orders(
     throw Exception(
         "🚨 Getting number_of_customer_restaurant_orders exceptions \n ${queryResult.exception}");
   }
+}
+
+class CustRestaurantOrderVariables {
+  UserInfo? driverInfo;
+  double? deliveryCost;
+  CustRestaurantOrderVariables({
+    required this.driverInfo,
+    required this.deliveryCost,
+  });
 }

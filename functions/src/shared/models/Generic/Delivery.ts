@@ -173,7 +173,8 @@ enum MinimalDeliveryOrderType {
   Order = "order",
   Message = "message",
 }
-interface DeliveryMinimalOrder {
+
+export interface DeliveryMinimalOrder {
   id: number;
   phone_number?: string;
   delivery_order_type: MinimalDeliveryOrderType;

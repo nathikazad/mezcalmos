@@ -8130,6 +8130,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'phone'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: '__typename'),
                     alias: null,
                     arguments: [],
@@ -12105,6 +12112,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     required this.id,
     this.name,
     this.image,
+    this.phone,
     required this.$__typename,
   });
 
@@ -12113,11 +12121,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$image = json['image'];
+    final l$phone = json['phone'];
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user(
       id: (l$id as int),
       name: (l$name as String?),
       image: (l$image as String?),
+      phone: (l$phone as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -12127,6 +12137,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
   final String? name;
 
   final String? image;
+
+  final String? phone;
 
   final String $__typename;
 
@@ -12138,6 +12150,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     _resultData['name'] = l$name;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -12148,11 +12162,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     final l$id = id;
     final l$name = name;
     final l$image = image;
+    final l$phone = phone;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$image,
+      l$phone,
       l$$__typename,
     ]);
   }
@@ -12180,6 +12196,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -12220,6 +12241,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     int? id,
     String? name,
     String? image,
+    String? phone,
     String? $__typename,
   });
 }
@@ -12247,6 +12269,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$cust
     Object? id = _undefined,
     Object? name = _undefined,
     Object? image = _undefined,
+    Object? phone = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -12254,6 +12277,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$cust
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined ? _instance.name : (name as String?),
         image: image == _undefined ? _instance.image : (image as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -12274,6 +12298,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     int? id,
     String? name,
     String? image,
+    String? phone,
     String? $__typename,
   }) =>
       _res;

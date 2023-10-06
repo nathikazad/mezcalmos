@@ -78,8 +78,7 @@ Notification _newOrderNotification(String key, value) {
       title: '${_i18n()['driverNotifTitle']}',
       timestamp: DateTime.parse(value['time']),
       notificationType: NotificationType.NewOrder,
-      notificationAction:
-          (value["notificationAction"] as String).toNotificationAction(),
+      notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
       variableParams: value);
 }
 

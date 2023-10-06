@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
@@ -22,8 +21,10 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
+import 'package:mezcalmos/Shared/widgets/ServiAmigosCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
@@ -85,7 +86,7 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                   OrderMapWidget(
                       deliveryOrderId:
                           viewController.order.value!.deliveryOrderId!,
-                      height: 70.mezW,
+                      height: 80.mezW,
                       updateDriver: false,
                       polyline: viewController
                           .order.value!.routeInformation?.polyline,
@@ -110,7 +111,8 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                       },
                     ),
                   ),
-                  if (viewController.order.value!.driverInfo != null)
+                  if (viewController.order.value!.driverInfo !=
+                      null) ...<Widget>[
                     MezCard(
                       label: "${_i18n()['driver']}",
                       margin: const EdgeInsets.only(top: 15),
@@ -131,9 +133,13 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                         },
                       ),
                     ),
+                    meduimSeperator,
+                    ServiceAmigosCard(),
+                  ],
                   OrderItemsCard(
                     order: viewController.order.value!,
                   ),
+
                   Container(
                     margin: const EdgeInsets.only(top: 15),
                     child: Text(
@@ -160,33 +166,46 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                         showReviewTitle: true,
                         review: viewController.order.value!.review!),
                   meduimSeperator,
-                  Text(
-                    "${_i18n()['orderSummary']}",
-                    style: context.textTheme.bodyLarge,
+                  // Text(
+                  //   "${_i18n()['orderSummary']}",
+                  //   style: context.textTheme.bodyLarge,
+                  // ),
+                  // MezCard(
+                  //     margin: EdgeInsets.only(top: 8),
+                  //     contentPadding: const EdgeInsets.all(12),
+                  //     content: Column(
+                  //       children: <Widget>[
+                  //         Row(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: <Widget>[
+                  //             Text("${_i18n()['orderCost']}"),
+                  //             Text(
+                  //               viewController
+                  //                   .order.value!.costs.orderItemsCost!
+                  //                   .toPriceString(),
+                  //               style: context.textTheme.bodyLarge,
+                  //             ),
+                  //           ],
+                  //         )
+                  //       ],
+                  //     )),
+
+                  OrderSummaryCard(
+                    //  margin: const EdgeInsets.only(top: 15),
+                    costs: viewController.order.value!.costs,
+                    stripeOrderPaymentInfo:
+                        viewController.order.value!.stripePaymentInfo,
                   ),
-                  MezCard(
-                      margin: EdgeInsets.only(top: 8),
-                      contentPadding: const EdgeInsets.all(12),
-                      content: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("${_i18n()['orderCost']}"),
-                              Text(
-                                viewController
-                                    .order.value!.costs.orderItemsCost!
-                                    .toPriceString(),
-                                style: context.textTheme.bodyLarge,
-                              ),
-                            ],
-                          )
-                        ],
-                      )),
+                  if (viewController.order.value?.driverInfo == null)
+                    MezCard(
+                        firstAvatarIcon: Icons.delivery_dining,
+                        firstAvatarIconColor: primaryBlueColor,
+                        firstAvatarBgColor: secondaryLightBlueColor,
+                        content: Text("${_i18n()['dvHelper']}")),
                   bigSeperator,
                   Text.rich(
                     TextSpan(
-                      children: [
+                      children: <InlineSpan>[
                         TextSpan(text: "${_i18n()['noResponse']}"),
                         WidgetSpan(child: hSmallSepartor),
                         WidgetSpan(
@@ -208,12 +227,7 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                     textAlign: TextAlign.center,
                   ),
                   bigSeperator,
-                  // OrderSummaryCard(
-                  //   margin: const EdgeInsets.only(top: 15),
-                  //   costs: viewController.order.value!.costs,
-                  //   stripeOrderPaymentInfo:
-                  //       viewController.order.value!.stripePaymentInfo,
-                  // ),
+
                   SizedBox(
                     height: 9,
                   ),

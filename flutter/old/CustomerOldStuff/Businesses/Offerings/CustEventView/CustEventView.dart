@@ -17,16 +17,16 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../../../CustomerOldStuff/Businesses/Offerings/CustEventView/controllers/CustEventViewController.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessAdditionalData.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessMessageCard.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustCircularLoader.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustGuestPicker.dart';
-import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustOrderCostCard.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/CustEventView/controllers/CustEventViewController.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessAdditionalData.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessInquryBanner.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessItemAppbar.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessMessageCard.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessNoOrderBanner.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustCircularLoader.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustGuestPicker.dart';
+import '../../../../../../CustomerOldStuff/Businesses/Offerings/components/CustOrderCostCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['Offerings']['CustEventView'];
@@ -47,7 +47,7 @@ class CustEventView extends StatefulWidget {
     final String route = cartId != null
         ? CustBusinessRoutes.custEventRouteEdit.replaceFirst(":id", "$eventId")
         : constructRoute(eventId);
-    return MezRouter.toPath(route, arguments: {
+    return MezRouter.toPath(route, arguments: <String, >{
       "startDate": startDate,
       "timeCost": timeCost,
       "duration": duration,
@@ -137,7 +137,7 @@ class _CustEventViewState extends State<CustEventView> {
           mezDbgPrint(
               "EVENT ${viewController.event?.toFirebaseFormattedJson()}");
           return CustomScrollView(
-            slivers: [
+            slivers: <Widget>[
               CustBusinessItemAppbar(
                   itemDetails: viewController.event!.details),
               SliverToBoxAdapter(
@@ -145,7 +145,7 @@ class _CustEventViewState extends State<CustEventView> {
                   margin: const EdgeInsets.all(12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
                         viewController.event!.details.name
                             .getTranslation(userLanguage)!
@@ -155,7 +155,7 @@ class _CustEventViewState extends State<CustEventView> {
                       CustBusinessAdditionalData(
                         additionalValues: viewController
                                 .event!.details.additionalParameters ??
-                            {},
+                            <, >{},
                       ),
                       // Price
                       SizedBox(
@@ -200,7 +200,7 @@ class _CustEventViewState extends State<CustEventView> {
                           key: viewController.formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                            children: <Widget>[
                               if (viewController.event!.scheduleType !=
                                   ScheduleType.OneTime)
                                 BsOpDateTimePicker(
@@ -223,7 +223,7 @@ class _CustEventViewState extends State<CustEventView> {
                               if (viewController.event!.scheduleType ==
                                   ScheduleType.OnDemand)
                                 Column(
-                                  children: [
+                                  children: <Widget>[
                                     SizedBox(
                                       height: 15,
                                     ),
@@ -242,7 +242,7 @@ class _CustEventViewState extends State<CustEventView> {
                                   ScheduleType.OnDemand)
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                  children: <Widget>[
                                     Text(
                                       '${_i18n()['notes']}',
                                       style: context.textTheme.bodyLarge,
@@ -282,7 +282,7 @@ class _CustEventViewState extends State<CustEventView> {
 
   Column _schedule() {
     return Column(
-      children: [
+      children: <Widget>[
         SizedBox(
           height: 15,
         ),
@@ -299,7 +299,7 @@ class _CustEventViewState extends State<CustEventView> {
   Column _description(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         SizedBox(
           height: 15,
         ),

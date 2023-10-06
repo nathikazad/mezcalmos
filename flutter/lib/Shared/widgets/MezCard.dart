@@ -15,6 +15,7 @@ class MezCard extends StatelessWidget {
       this.label,
       this.cardColor,
       this.firstAvatarBgColor,
+      this.labelStyle,
       this.firstAvatarBgImage,
       this.firstAvatarIcon,
       this.firstAvatarIconColor,
@@ -45,6 +46,7 @@ class MezCard extends StatelessWidget {
   final double? elevation;
   final String? label;
   final Widget? footer;
+  final TextStyle? labelStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class MezCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           if (label != null) ...<Widget>[
-            Text(label!, style: context.textTheme.bodyMedium),
+            Text(label!, style: labelStyle ?? context.textTheme.bodyMedium),
             smallSepartor,
           ],
           Card(

@@ -329,4 +329,11 @@ class OrderCosts {
   bool get requested =>
       changePriceRequest?.status == ChangePriceRequestStatus.Requested;
   num get itemCostsWithTax => (tax ?? 0) + orderItemsCost!;
+
+  num? get calculateTotalCost {
+    if (deliveryCost != null && deliveryCost! > 0) {
+      return totalCost! + deliveryCost!;
+    } else
+      return totalCost;
+  }
 }

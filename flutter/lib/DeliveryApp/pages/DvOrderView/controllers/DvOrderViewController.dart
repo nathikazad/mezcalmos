@@ -23,6 +23,8 @@ class DvOrderViewController {
   bool get hasData => _order.value != null;
   bool get showAccept =>
       _order.value != null && _order.value!.driverInfo == null;
+  bool get showFinish =>
+      _order.value != null && !showAccept && _order.value!.inProcess();
 
   void init({required int orderId}) {
     this.orderId = orderId;
@@ -59,7 +61,7 @@ class DvOrderViewController {
     final String? phoneNumber = order?.serviceProvider.phoneNumber;
     if (phoneNumber != null) {
       try {
-        final bool res = await callWhatsappNumber(phoneNumber);
+        await callWhatsappNumber(phoneNumber);
       } catch (e) {
         showErrorSnackBar();
         mezDbgPrint(e);
@@ -72,7 +74,7 @@ class DvOrderViewController {
     final String? phoneNumber = order?.customer.phoneNumber;
     if (phoneNumber != null) {
       try {
-        final bool res = await callWhatsappNumber(phoneNumber);
+        await callWhatsappNumber(phoneNumber);
       } catch (e) {
         showErrorSnackBar();
         mezDbgPrint(e);
@@ -83,11 +85,11 @@ class DvOrderViewController {
 
   Future<void> finishOrder() async {
     try {
-      final cm.ChangeDeliveryStatusResponse res =
-          await CloudFunctions.delivery3_changeStatus(
-              deliveryId: orderId, newStatus: cm.DeliveryOrderStatus.Delivered);
+      final cm.CompleteRestaurantOrderResponse res =
+          await CloudFunctions.restaurant3_completeOrder(orderId: orderId);
       if (res.success) {
         showSavedSnackBar();
+        await _fetchOrder();
       } else
         showErrorSnackBar(errorText: res.error.toString());
     } catch (e, stk) {
@@ -105,6 +107,7 @@ class DvOrderViewController {
               newStatus: cm.DeliveryOrderStatus.CancelledByDeliverer);
       if (res.success) {
         showSavedSnackBar();
+        await _fetchOrder();
       } else
         showErrorSnackBar(errorText: res.error.toString());
     } catch (e, stk) {

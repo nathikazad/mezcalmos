@@ -1,17 +1,16 @@
-import { RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
-import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
+import { RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { OrderType } from "../shared/models/Generic/Order";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
-import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { CustomerInfo } from "../shared/models/Generic/User";
-import { Operator } from "../shared/models/Services/Service";
 import { MezError } from "../shared/models/Generic/Generic";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
+import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
+import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 
 // Customer Canceling
 interface CompleteOrderDetails {
@@ -33,23 +32,25 @@ enum CompleteOrderError {
 }
 export async function completeOrder(userId: number, data: CompleteOrderDetails): Promise<CompleteRestaurantOrderResponse> {
   try {
-
-    let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
-    console.log("[+] getRestaurantOrder " , order);
-
-    let restaurantOperators: Operator[] = await  getRestaurantOperators(order.restaurantId);
     
-    if(restaurantOperators.find((r) => r.userId == userId) == undefined) {
-      throw new MezError(CompleteOrderError.UnauthorizedAccess);
-    }
+    let order: DeliveryOrder = await getDeliveryOrder(data.orderId);
+    
+    // let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
+    // console.log("[+] getRestaurantOrder " , order);
 
-    if (order.status != RestaurantOrderStatus.InProcess) {
-      throw new MezError(CompleteOrderError.OrderNotInProcess);
-    }
+    // let restaurantOperators: Operator[] = await  getRestaurantOperators(order.restaurantId);
+    
+    // if(restaurantOperators.find((r) => r.userId == userId) == undefined) {
+    //   throw new MezError(CompleteOrderError.UnauthorizedAccess);
+    // }
 
-    order.status = RestaurantOrderStatus.Delivered;
+    // if (order.status != RestaurantOrderStatus.InProcess) {
+    //   throw new MezError(CompleteOrderError.OrderNotInProcess);
+    // }
 
-    updateRestaurantOrderStatus(order)
+    order.status = DeliveryOrderStatus.Delivered;
+
+    updateDeliveryOrderStatus(order)
     
     
     let notification: Notification = {

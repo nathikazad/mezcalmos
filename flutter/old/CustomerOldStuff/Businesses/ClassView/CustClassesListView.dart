@@ -17,11 +17,11 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
-import '../../../../CustomerOldStuff/Businesses/ClassView/controllers/CustClassesListViewController.dart';
-import '../../../../CustomerOldStuff/Businesses/Components/CustBusinessFilterSheet.dart';
-import '../../../../CustomerOldStuff/Businesses/Components/NoServicesFound.dart';
-import '../../../../CustomerOldStuff/Businesses/Offerings/CustEventView/CustEventView.dart';
-import '../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
+import '../../../../../CustomerOldStuff/Businesses/ClassView/controllers/CustClassesListViewController.dart';
+import '../../../../../CustomerOldStuff/Businesses/Components/CustBusinessFilterSheet.dart';
+import '../../../../../CustomerOldStuff/Businesses/Components/NoServicesFound.dart';
+import '../../../../../CustomerOldStuff/Businesses/Offerings/CustEventView/CustEventView.dart';
+import '../../../../../CustomerOldStuff/Businesses/Offerings/components/CustBusinessScheduleBuilder.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Businesses']['ClassView']['CustEventsListView'];
@@ -53,7 +53,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        actionIcons: [
+        actionIcons: <Widget>[
           FloatingCartComponent(
             cartType: CartType.business,
           ),
@@ -68,14 +68,14 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           return CustomScrollView(
             controller: viewController.scrollController,
             physics: AlwaysScrollableScrollPhysics(),
-            slivers: [
+            slivers: <Widget>[
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Container(
                   margin: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       _viewBusinessesSwitcher(),
                       if (viewController.showBusiness.isFalse)
                         _filterButton(context),
@@ -98,7 +98,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
 
   Widget _viewBusinessesSwitcher() {
     return Row(
-      children: [
+      children: <Widget>[
         Flexible(
           child: MezButton(
             label: '${_i18n()['classes']}',
@@ -147,7 +147,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
           // _showFilterSheet(context);
-          FilterInput? data = await cusShowBusinessFilerSheet(
+          final FilterInput? data = await cusShowBusinessFilerSheet(
               context: context,
               filterInput: viewController.filterInput,
               isClass: true,
@@ -161,7 +161,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Icon(
                 Icons.filter_alt,
                 color: Colors.black,
@@ -209,7 +209,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 viewController.businesses[index].image),
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   viewController.businesses[index].name,
                   style: context.textTheme.displaySmall?.copyWith(
@@ -218,7 +218,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     _getAcceptedPaymentIcons(
                         viewController.businesses[index].acceptedPayments),
                     SizedBox(
@@ -229,7 +229,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                       Flexible(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
+                          children: <Widget>[
                             Icon(
                               Icons.star,
                               size: 17.5.mezSp,
@@ -242,7 +242,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                               alignment: Alignment.center,
                               child: RichText(
                                 text: TextSpan(
-                                  children: [
+                                  children: <InlineSpan>[
                                     WidgetSpan(
                                         alignment: PlaceholderAlignment.middle,
                                         child: Text(
@@ -290,13 +290,13 @@ class _CustClassesListViewState extends State<CustClassesListView> {
             },
             content: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     if (viewController.classes[index].details.image != null)
                       Row(
-                        children: [
+                        children: <Widget>[
                           CachedNetworkImage(
                             imageUrl: viewController
                                     .classes[index].details.firstImage ??
@@ -338,7 +338,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                     (viewController.classes[index].scheduleType !=
                         ScheduleType.OnDemand))
                   Column(
-                    children: [
+                    children: <Widget>[
                       Divider(),
                       CustBusinessScheduleBuilder(
                           period: viewController.classes[index].period,
@@ -356,7 +356,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
                 Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Text(viewController.classes[index].businessName),
                     Text(classType(viewController.classes[index].scheduleType,
                         viewController.classes[index].category1)),
@@ -375,11 +375,11 @@ class _CustClassesListViewState extends State<CustClassesListView> {
             classData.startsAt != null &&
             classData.endsAt != null)
         ? Column(
-            children: [
+            children: <Widget>[
               Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: <Widget>[
                   Text(
                     "${classData.period?.start.toDayName().inCaps} ${classData.period?.start.day} ${classData.period != null ? DateFormat.MMMM().format(classData.period!.start) : ""}",
                     style: TextStyle(fontWeight: FontWeight.w600),
@@ -399,7 +399,7 @@ class _CustClassesListViewState extends State<CustClassesListView> {
   }
 
   Row _getAcceptedPaymentIcons(Map<PaymentType, bool> acceptedPayments) {
-    final List<IconData> iconList = [];
+    final List<IconData> iconList = <IconData>[];
     acceptedPayments.forEach((PaymentType key, bool value) {
       if (value) {
         switch (key) {

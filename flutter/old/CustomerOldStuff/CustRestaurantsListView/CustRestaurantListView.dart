@@ -16,10 +16,10 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../../../CustomerOldStuff/CustRestaurantsListView/components/RestaurantCard.dart';
-import '../../../../../CustomerOldStuff/CustRestaurantsListView/components/RestaurantShimmerList.dart';
-import '../../../../../CustomerOldStuff/CustRestaurantsListView/components/SearchItemCard.dart';
-import '../../../../../CustomerOldStuff/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
+import '../../../../../../CustomerOldStuff/CustRestaurantsListView/components/RestaurantCard.dart';
+import '../../../../../../CustomerOldStuff/CustRestaurantsListView/components/RestaurantShimmerList.dart';
+import '../../../../../../CustomerOldStuff/CustRestaurantsListView/components/SearchItemCard.dart';
+import '../../../../../../CustomerOldStuff/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ListRestaurantsScreen"]["ListRestaurantScreen"];
@@ -65,7 +65,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
 
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
             onClick: MezRouter.back,
-            actionIcons: [
+            actionIcons: <Widget>[
               FloatingCartComponent(
                 cartType: CartType.restaurant,
               ),
@@ -104,7 +104,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   _searchInput(),
                   _searchFilter(),
                   // _sortingSwitcher(),
@@ -148,7 +148,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Icon(
                 Icons.filter_alt,
                 color: Colors.black,
@@ -177,28 +177,30 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   }
 
   Widget _mapView() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Obx(() => CustSwitchOpenService(
-            label: '${_i18n()["showOnlyOpenRestaurants"]}',
-            showOnlyOpen: viewController.showOnlyOpenOnMap,
-            onChange: (bool value) async {
-              await viewController.setOnlyOpenOnMap();
-            },
-          )),
-      Obx(
-        () => Expanded(
-          child: MezServicesMapView(
-            mGoogleMapController: viewController.mapController,
-            fetchNewData: (LatLng? mapCenter, double? distance) async {
-              await viewController.fetchMapViewRentals(
-                  fromLoc: mapCenter, distance: distance);
-              return viewController.restaurantsMarkers.toList();
-            },
-            markers: viewController.restaurantsMarkers.value,
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Obx(() => CustSwitchOpenService(
+                label: '${_i18n()["showOnlyOpenRestaurants"]}',
+                showOnlyOpen: viewController.showOnlyOpenOnMap,
+                onChange: (bool value) async {
+                  await viewController.setOnlyOpenOnMap();
+                },
+              )),
+          Obx(
+            () => Expanded(
+              child: MezServicesMapView(
+                mGoogleMapController: viewController.mapController,
+                fetchNewData: (LatLng? mapCenter, double? distance) async {
+                  await viewController.fetchMapViewRentals(
+                      fromLoc: mapCenter, distance: distance);
+                  return viewController.restaurantsMarkers.toList();
+                },
+                markers: viewController.restaurantsMarkers.value,
+              ),
+            ),
           ),
-        ),
-      ),
-    ]);
+        ]);
   }
 
   Widget _searchedItemsList() {
@@ -215,7 +217,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             CircleAvatar(
               backgroundColor: Colors.grey.shade300,
               radius: 40,
@@ -294,7 +296,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
     return Obx(() => Container(
           margin: const EdgeInsets.only(bottom: 10, top: 15),
           child: Row(
-            children: [
+            children: <Widget>[
               Flexible(
                 child: MezButton(
                   label: '${_i18n()["restaurants"]}',
@@ -361,7 +363,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
       } else {
         return Center(
           child: Column(
-            children: [
+            children: <Widget>[
               //give space when its bigger size.
               SizedBox(
                 height: 20,

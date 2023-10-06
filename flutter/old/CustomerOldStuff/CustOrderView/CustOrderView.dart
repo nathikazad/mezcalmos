@@ -24,7 +24,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
-import '../../../CustomerOldStuff/CustOrderView/controllers/AdminOrderViewController.dart';
+import '../../../../CustomerOldStuff/CustOrderView/controllers/AdminOrderViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustOrderView']['CustOrderView'];
@@ -37,7 +37,7 @@ class CustOrderView extends StatefulWidget {
 
   static Future<void> navigate({required int orderId, EntityType? entityType}) {
     return MezRouter.toPath(constructPath(orderId),
-        arguments: {"entityType": entityType});
+        arguments: <String, >{"entityType": entityType});
   }
 
   static String constructPath(int orderId) {
@@ -122,17 +122,17 @@ class _CustOrderViewState extends State<CustOrderView> {
                 )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: <Widget>[
                             orderStatusCard(),
                             smallSepartor,
                             MezCard(
                                 content: Row(
-                              children: [
+                              children: <Widget>[
                                 CircleAvatar(
                                   backgroundImage:
                                       NetworkImage(getBusinessImage()),
@@ -242,7 +242,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                               elevation: 1,
                               content: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: <Widget>[
                                   Text(
                                     '${_i18n()['summary']}',
                                     style: context.textTheme.bodyLarge,
@@ -251,7 +251,7 @@ class _CustOrderViewState extends State<CustOrderView> {
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: [
+                                    children: <Widget>[
                                       Text(
                                         '${_i18n()['orderCost']}',
                                         style: context.textTheme.bodyMedium,
@@ -341,6 +341,7 @@ class _CustOrderViewState extends State<CustOrderView> {
         return custBusinessCartController
             .currentOrderInView.value!.items.first.home!.business.phoneNo;
     }
+    return null;
   }
 
   Widget bottomButtons(BuildContext context) {
@@ -356,12 +357,12 @@ class _CustOrderViewState extends State<CustOrderView> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         if (custBusinessCartController.currentOrderInView.value!.status !=
             BusinessOrderRequestStatus.Confirmed)
           MezCard(
             content: Row(
-              children: [
+              children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Icon(
@@ -424,7 +425,7 @@ class _CustOrderViewState extends State<CustOrderView> {
       content: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Row(
-          children: [
+          children: <Widget>[
             Icon(
               custBusinessCartController.currentOrderInView.value!.status!
                   .getIcon(),

@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/widgets/LoadingWidgets/MezLoadingOverlay.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+import 'package:mezcalmos/Shared/widgets/ServiAmigosCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -78,7 +79,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Icon(
                       Icons.check_circle_rounded,
                       color: primaryBlueColor,
@@ -140,7 +141,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       key: viewController.formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: <Widget>[
                           DeliveryTimePicker(
                             deliveryTime: viewController.cart.deliveryTime,
                             fixed7days: !viewController.cart.isSpecial,
@@ -169,13 +170,12 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: 25,
                     ),
-                    // Container(
-                    //   child: PaymentMethodPicker(
-                    //     viewCartController: viewController,
-                    //   ),
-                    // ),
+                    if (viewController.showDelivery) ...<Widget>[
+                      ServiceAmigosCard(),
+                      meduimSeperator,
+                    ],
                     Container(
                       //alignment: Alignment.centerLeft,
                       child: Text("${_i18n()['notesTitle']}",
@@ -217,7 +217,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Widget _deliveryLocation() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Container(
           margin: EdgeInsets.only(top: 15),
           alignment: Alignment.centerLeft,
@@ -231,7 +231,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Container(
-            decoration: BoxDecoration(boxShadow: [
+            decoration: BoxDecoration(boxShadow: <BoxShadow>[
               BoxShadow(
                   color: Colors.grey.shade300,
                   blurRadius: 1,

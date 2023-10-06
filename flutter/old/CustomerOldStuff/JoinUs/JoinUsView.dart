@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 
-import '../../../CustomerOldStuff/JoinUs/controllers/JoinUsController.dart';
+import '../../../../CustomerOldStuff/JoinUs/controllers/JoinUsController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['JoinUsView'];
@@ -60,7 +60,7 @@ class JoinUsView extends StatelessWidget {
                                 child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: [
+                                    children: <Widget>[
                                       Flexible(
                                         child: Column(
                                           crossAxisAlignment:
@@ -75,7 +75,7 @@ class JoinUsView extends StatelessWidget {
                                                 text:
                                                     '${_i18n()[key]['subtitle']} ',
                                                 style: context.textTheme.titleMedium,
-                                                children: [
+                                                children: <InlineSpan>[
                                                   WidgetSpan(
                                                       child: Icon(
                                                           Icons.arrow_forward,

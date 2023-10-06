@@ -660,6 +660,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                       FieldNode(
+                        name: NameNode(value: 'phone_number'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'location'),
                         alias: null,
                         arguments: [],
@@ -1138,6 +1145,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'name'),
                     alias: null,
                     arguments: [],
@@ -1340,6 +1354,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -4627,6 +4648,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     this.firebase_id,
     required this.image,
     required this.name,
+    this.phone_number,
     required this.location,
     required this.$__typename,
   });
@@ -4637,6 +4659,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$phone_number = json['phone_number'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details(
@@ -4644,6 +4667,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
+      phone_number: (l$phone_number as String?),
       location:
           Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -4658,6 +4682,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
   final String image;
 
   final String name;
+
+  final String? phone_number;
 
   final Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location
       location;
@@ -4674,6 +4700,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -4687,6 +4715,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
+    final l$phone_number = phone_number;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -4694,6 +4723,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
       l$firebase_id,
       l$image,
       l$name,
+      l$phone_number,
       l$location,
       l$$__typename,
     ]);
@@ -4727,6 +4757,11 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$location = location;
@@ -4773,6 +4808,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_o
     String? firebase_id,
     String? image,
     String? name,
+    String? phone_number,
     Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location?
         location,
     String? $__typename,
@@ -4805,6 +4841,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? phone_number = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -4820,6 +4857,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -4851,6 +4891,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_o
     String? firebase_id,
     String? image,
     String? name,
+    String? phone_number,
     Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location?
         location,
     String? $__typename,
@@ -7345,6 +7386,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     required this.id,
     this.firebase_id,
     required this.image,
+    this.phone_number,
     required this.name,
     required this.location,
     required this.language,
@@ -7357,6 +7399,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
+    final l$phone_number = json['phone_number'];
     final l$name = json['name'];
     final l$location = json['location'];
     final l$language = json['language'];
@@ -7366,6 +7409,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
+      phone_number: (l$phone_number as String?),
       name: (l$name as String),
       location:
           Query$get_driver_order$delivery_order_by_pk$restaurant$details$location
@@ -7381,6 +7425,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
   final String? firebase_id;
 
   final String image;
+
+  final String? phone_number;
 
   final String name;
 
@@ -7401,6 +7447,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     _resultData['firebase_id'] = l$firebase_id;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
@@ -7419,6 +7467,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
+    final l$phone_number = phone_number;
     final l$name = name;
     final l$location = location;
     final l$language = language;
@@ -7428,6 +7477,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
       l$id,
       l$firebase_id,
       l$image,
+      l$phone_number,
       l$name,
       l$location,
       l$language,
@@ -7459,6 +7509,11 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$name = name;
@@ -7518,6 +7573,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$d
     int? id,
     String? firebase_id,
     String? image,
+    String? phone_number,
     String? name,
     Query$get_driver_order$delivery_order_by_pk$restaurant$details$location?
         location,
@@ -7551,6 +7607,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$detai
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
+    Object? phone_number = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
     Object? language = _undefined,
@@ -7565,6 +7622,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$detai
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -7604,6 +7664,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$d
     int? id,
     String? firebase_id,
     String? image,
+    String? phone_number,
     String? name,
     Query$get_driver_order$delivery_order_by_pk$restaurant$details$location?
         location,
@@ -8292,6 +8353,7 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     required this.id,
     this.image,
     this.name,
+    this.phone,
     required this.language_id,
     required this.$__typename,
   });
@@ -8301,12 +8363,14 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$phone = json['phone'];
     final l$language_id = json['language_id'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$customer$user(
       id: (l$id as int),
       image: (l$image as String?),
       name: (l$name as String?),
+      phone: (l$phone as String?),
       language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -8317,6 +8381,8 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
   final String? image;
 
   final String? name;
+
+  final String? phone;
 
   final String language_id;
 
@@ -8330,6 +8396,8 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$$__typename = $__typename;
@@ -8342,12 +8410,14 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     final l$id = id;
     final l$image = image;
     final l$name = name;
+    final l$phone = phone;
     final l$language_id = language_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$image,
       l$name,
+      l$phone,
       l$language_id,
       l$$__typename,
     ]);
@@ -8375,6 +8445,11 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
       return false;
     }
     final l$language_id = language_id;
@@ -8418,6 +8493,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$customer$use
     int? id,
     String? image,
     String? name,
+    String? phone,
     String? language_id,
     String? $__typename,
   });
@@ -8444,6 +8520,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer$user<
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? phone = _undefined,
     Object? language_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -8451,6 +8528,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer$user<
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         name: name == _undefined ? _instance.name : (name as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -8474,6 +8552,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$customer$use
     int? id,
     String? image,
     String? name,
+    String? phone,
     String? language_id,
     String? $__typename,
   }) =>
@@ -37251,6 +37330,1117 @@ class _CopyWithStubImpl$Query$GetMinimalDeliveryMessages$delivery_minimal_order$
         CopyWith$Query$GetMinimalDeliveryMessages$delivery_minimal_order$customer<
             TRes> {
   _CopyWithStubImpl$Query$GetMinimalDeliveryMessages$delivery_minimal_order$customer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Subscription$ListenMinimalDeliveryMessages {
+  factory Variables$Subscription$ListenMinimalDeliveryMessages({
+    required String status,
+    required int limit,
+    required int offset,
+    required Input$Int_comparison_exp driver_id,
+  }) =>
+      Variables$Subscription$ListenMinimalDeliveryMessages._({
+        r'status': status,
+        r'limit': limit,
+        r'offset': offset,
+        r'driver_id': driver_id,
+      });
+
+  Variables$Subscription$ListenMinimalDeliveryMessages._(this._$data);
+
+  factory Variables$Subscription$ListenMinimalDeliveryMessages.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$status = data['status'];
+    result$data['status'] = (l$status as String);
+    final l$limit = data['limit'];
+    result$data['limit'] = (l$limit as int);
+    final l$offset = data['offset'];
+    result$data['offset'] = (l$offset as int);
+    final l$driver_id = data['driver_id'];
+    result$data['driver_id'] = Input$Int_comparison_exp.fromJson(
+        (l$driver_id as Map<String, dynamic>));
+    return Variables$Subscription$ListenMinimalDeliveryMessages._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String get status => (_$data['status'] as String);
+  int get limit => (_$data['limit'] as int);
+  int get offset => (_$data['offset'] as int);
+  Input$Int_comparison_exp get driver_id =>
+      (_$data['driver_id'] as Input$Int_comparison_exp);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$status = status;
+    result$data['status'] = l$status;
+    final l$limit = limit;
+    result$data['limit'] = l$limit;
+    final l$offset = offset;
+    result$data['offset'] = l$offset;
+    final l$driver_id = driver_id;
+    result$data['driver_id'] = l$driver_id.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Subscription$ListenMinimalDeliveryMessages<
+          Variables$Subscription$ListenMinimalDeliveryMessages>
+      get copyWith =>
+          CopyWith$Variables$Subscription$ListenMinimalDeliveryMessages(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Subscription$ListenMinimalDeliveryMessages) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$driver_id = driver_id;
+    final lOther$driver_id = other.driver_id;
+    if (l$driver_id != lOther$driver_id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$status = status;
+    final l$limit = limit;
+    final l$offset = offset;
+    final l$driver_id = driver_id;
+    return Object.hashAll([
+      l$status,
+      l$limit,
+      l$offset,
+      l$driver_id,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Subscription$ListenMinimalDeliveryMessages<
+    TRes> {
+  factory CopyWith$Variables$Subscription$ListenMinimalDeliveryMessages(
+    Variables$Subscription$ListenMinimalDeliveryMessages instance,
+    TRes Function(Variables$Subscription$ListenMinimalDeliveryMessages) then,
+  ) = _CopyWithImpl$Variables$Subscription$ListenMinimalDeliveryMessages;
+
+  factory CopyWith$Variables$Subscription$ListenMinimalDeliveryMessages.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Subscription$ListenMinimalDeliveryMessages;
+
+  TRes call({
+    String? status,
+    int? limit,
+    int? offset,
+    Input$Int_comparison_exp? driver_id,
+  });
+}
+
+class _CopyWithImpl$Variables$Subscription$ListenMinimalDeliveryMessages<TRes>
+    implements
+        CopyWith$Variables$Subscription$ListenMinimalDeliveryMessages<TRes> {
+  _CopyWithImpl$Variables$Subscription$ListenMinimalDeliveryMessages(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Subscription$ListenMinimalDeliveryMessages _instance;
+
+  final TRes Function(Variables$Subscription$ListenMinimalDeliveryMessages)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? status = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+    Object? driver_id = _undefined,
+  }) =>
+      _then(Variables$Subscription$ListenMinimalDeliveryMessages._({
+        ..._instance._$data,
+        if (status != _undefined && status != null)
+          'status': (status as String),
+        if (limit != _undefined && limit != null) 'limit': (limit as int),
+        if (offset != _undefined && offset != null) 'offset': (offset as int),
+        if (driver_id != _undefined && driver_id != null)
+          'driver_id': (driver_id as Input$Int_comparison_exp),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Subscription$ListenMinimalDeliveryMessages<
+        TRes>
+    implements
+        CopyWith$Variables$Subscription$ListenMinimalDeliveryMessages<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$ListenMinimalDeliveryMessages(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? status,
+    int? limit,
+    int? offset,
+    Input$Int_comparison_exp? driver_id,
+  }) =>
+      _res;
+}
+
+class Subscription$ListenMinimalDeliveryMessages {
+  Subscription$ListenMinimalDeliveryMessages({
+    required this.delivery_minimal_order,
+    required this.$__typename,
+  });
+
+  factory Subscription$ListenMinimalDeliveryMessages.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_minimal_order = json['delivery_minimal_order'];
+    final l$$__typename = json['__typename'];
+    return Subscription$ListenMinimalDeliveryMessages(
+      delivery_minimal_order: (l$delivery_minimal_order as List<dynamic>)
+          .map((e) =>
+              Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order>
+      delivery_minimal_order;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_minimal_order = delivery_minimal_order;
+    _resultData['delivery_minimal_order'] =
+        l$delivery_minimal_order.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_minimal_order = delivery_minimal_order;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_minimal_order.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Subscription$ListenMinimalDeliveryMessages) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_minimal_order = delivery_minimal_order;
+    final lOther$delivery_minimal_order = other.delivery_minimal_order;
+    if (l$delivery_minimal_order.length !=
+        lOther$delivery_minimal_order.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_minimal_order.length; i++) {
+      final l$delivery_minimal_order$entry = l$delivery_minimal_order[i];
+      final lOther$delivery_minimal_order$entry =
+          lOther$delivery_minimal_order[i];
+      if (l$delivery_minimal_order$entry !=
+          lOther$delivery_minimal_order$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$ListenMinimalDeliveryMessages
+    on Subscription$ListenMinimalDeliveryMessages {
+  CopyWith$Subscription$ListenMinimalDeliveryMessages<
+          Subscription$ListenMinimalDeliveryMessages>
+      get copyWith => CopyWith$Subscription$ListenMinimalDeliveryMessages(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$ListenMinimalDeliveryMessages<TRes> {
+  factory CopyWith$Subscription$ListenMinimalDeliveryMessages(
+    Subscription$ListenMinimalDeliveryMessages instance,
+    TRes Function(Subscription$ListenMinimalDeliveryMessages) then,
+  ) = _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages;
+
+  factory CopyWith$Subscription$ListenMinimalDeliveryMessages.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages;
+
+  TRes call({
+    List<Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order>?
+        delivery_minimal_order,
+    String? $__typename,
+  });
+  TRes delivery_minimal_order(
+      Iterable<Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order> Function(
+              Iterable<
+                  CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order<
+                      Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order>>)
+          _fn);
+}
+
+class _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages<TRes>
+    implements CopyWith$Subscription$ListenMinimalDeliveryMessages<TRes> {
+  _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$ListenMinimalDeliveryMessages _instance;
+
+  final TRes Function(Subscription$ListenMinimalDeliveryMessages) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_minimal_order = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$ListenMinimalDeliveryMessages(
+        delivery_minimal_order: delivery_minimal_order == _undefined ||
+                delivery_minimal_order == null
+            ? _instance.delivery_minimal_order
+            : (delivery_minimal_order as List<
+                Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_minimal_order(
+          Iterable<Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order> Function(
+                  Iterable<
+                      CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order<
+                          Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order>>)
+              _fn) =>
+      call(
+          delivery_minimal_order: _fn(_instance.delivery_minimal_order.map((e) =>
+              CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages<TRes>
+    implements CopyWith$Subscription$ListenMinimalDeliveryMessages<TRes> {
+  _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages(this._res);
+
+  TRes _res;
+
+  call({
+    List<Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order>?
+        delivery_minimal_order,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_minimal_order(_fn) => _res;
+}
+
+const documentNodeSubscriptionListenMinimalDeliveryMessages =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.subscription,
+    name: NameNode(value: 'ListenMinimalDeliveryMessages'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'status')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'driver_id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int_comparison_exp'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_minimal_order'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'time'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'status'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'status')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'driver_id'),
+                value: VariableNode(name: NameNode(value: 'driver_id')),
+              ),
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'phone_number'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'user_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'service_provider_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'driver_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Subscription$ListenMinimalDeliveryMessages
+    _parserFn$Subscription$ListenMinimalDeliveryMessages(
+            Map<String, dynamic> data) =>
+        Subscription$ListenMinimalDeliveryMessages.fromJson(data);
+
+class Options$Subscription$ListenMinimalDeliveryMessages extends graphql
+    .SubscriptionOptions<Subscription$ListenMinimalDeliveryMessages> {
+  Options$Subscription$ListenMinimalDeliveryMessages({
+    String? operationName,
+    required Variables$Subscription$ListenMinimalDeliveryMessages variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionListenMinimalDeliveryMessages,
+          parserFn: _parserFn$Subscription$ListenMinimalDeliveryMessages,
+        );
+}
+
+class WatchOptions$Subscription$ListenMinimalDeliveryMessages extends graphql
+    .WatchQueryOptions<Subscription$ListenMinimalDeliveryMessages> {
+  WatchOptions$Subscription$ListenMinimalDeliveryMessages({
+    String? operationName,
+    required Variables$Subscription$ListenMinimalDeliveryMessages variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeSubscriptionListenMinimalDeliveryMessages,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Subscription$ListenMinimalDeliveryMessages,
+        );
+}
+
+class FetchMoreOptions$Subscription$ListenMinimalDeliveryMessages
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Subscription$ListenMinimalDeliveryMessages({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Subscription$ListenMinimalDeliveryMessages variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeSubscriptionListenMinimalDeliveryMessages,
+        );
+}
+
+extension ClientExtension$Subscription$ListenMinimalDeliveryMessages
+    on graphql.GraphQLClient {
+  Stream<graphql.QueryResult<Subscription$ListenMinimalDeliveryMessages>>
+      subscribe$ListenMinimalDeliveryMessages(
+              Options$Subscription$ListenMinimalDeliveryMessages options) =>
+          this.subscribe(options);
+  graphql.ObservableQuery<Subscription$ListenMinimalDeliveryMessages>
+      watchSubscription$ListenMinimalDeliveryMessages(
+              WatchOptions$Subscription$ListenMinimalDeliveryMessages
+                  options) =>
+          this.watchQuery(options);
+}
+
+class Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order {
+  Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order({
+    this.id,
+    this.phone_number,
+    this.delivery_order_type,
+    this.user_id,
+    this.service_provider_id,
+    this.status,
+    this.time,
+    this.driver_id,
+    this.customer,
+    required this.$__typename,
+  });
+
+  factory Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$phone_number = json['phone_number'];
+    final l$delivery_order_type = json['delivery_order_type'];
+    final l$user_id = json['user_id'];
+    final l$service_provider_id = json['service_provider_id'];
+    final l$status = json['status'];
+    final l$time = json['time'];
+    final l$driver_id = json['driver_id'];
+    final l$customer = json['customer'];
+    final l$$__typename = json['__typename'];
+    return Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order(
+      id: (l$id as int?),
+      phone_number: (l$phone_number as String?),
+      delivery_order_type: (l$delivery_order_type as String?),
+      user_id: (l$user_id as int?),
+      service_provider_id: (l$service_provider_id as int?),
+      status: (l$status as String?),
+      time: (l$time as String?),
+      driver_id: (l$driver_id as int?),
+      customer: l$customer == null
+          ? null
+          : Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer
+              .fromJson((l$customer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? id;
+
+  final String? phone_number;
+
+  final String? delivery_order_type;
+
+  final int? user_id;
+
+  final int? service_provider_id;
+
+  final String? status;
+
+  final String? time;
+
+  final int? driver_id;
+
+  final Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer?
+      customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
+    final l$delivery_order_type = delivery_order_type;
+    _resultData['delivery_order_type'] = l$delivery_order_type;
+    final l$user_id = user_id;
+    _resultData['user_id'] = l$user_id;
+    final l$service_provider_id = service_provider_id;
+    _resultData['service_provider_id'] = l$service_provider_id;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$time = time;
+    _resultData['time'] = l$time;
+    final l$driver_id = driver_id;
+    _resultData['driver_id'] = l$driver_id;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$phone_number = phone_number;
+    final l$delivery_order_type = delivery_order_type;
+    final l$user_id = user_id;
+    final l$service_provider_id = service_provider_id;
+    final l$status = status;
+    final l$time = time;
+    final l$driver_id = driver_id;
+    final l$customer = customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$phone_number,
+      l$delivery_order_type,
+      l$user_id,
+      l$service_provider_id,
+      l$status,
+      l$time,
+      l$driver_id,
+      l$customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$delivery_order_type = delivery_order_type;
+    final lOther$delivery_order_type = other.delivery_order_type;
+    if (l$delivery_order_type != lOther$delivery_order_type) {
+      return false;
+    }
+    final l$user_id = user_id;
+    final lOther$user_id = other.user_id;
+    if (l$user_id != lOther$user_id) {
+      return false;
+    }
+    final l$service_provider_id = service_provider_id;
+    final lOther$service_provider_id = other.service_provider_id;
+    if (l$service_provider_id != lOther$service_provider_id) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$time = time;
+    final lOther$time = other.time;
+    if (l$time != lOther$time) {
+      return false;
+    }
+    final l$driver_id = driver_id;
+    final lOther$driver_id = other.driver_id;
+    if (l$driver_id != lOther$driver_id) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order
+    on Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order {
+  CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order<
+          Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order>
+      get copyWith =>
+          CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order<
+    TRes> {
+  factory CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order(
+    Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order instance,
+    TRes Function(
+            Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order)
+        then,
+  ) = _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order;
+
+  factory CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order;
+
+  TRes call({
+    int? id,
+    String? phone_number,
+    String? delivery_order_type,
+    int? user_id,
+    int? service_provider_id,
+    String? status,
+    String? time,
+    int? driver_id,
+    Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer?
+        customer,
+    String? $__typename,
+  });
+  CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+      TRes> get customer;
+}
+
+class _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order<
+        TRes>
+    implements
+        CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order<
+            TRes> {
+  _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order
+      _instance;
+
+  final TRes Function(
+      Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? phone_number = _undefined,
+    Object? delivery_order_type = _undefined,
+    Object? user_id = _undefined,
+    Object? service_provider_id = _undefined,
+    Object? status = _undefined,
+    Object? time = _undefined,
+    Object? driver_id = _undefined,
+    Object? customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order(
+        id: id == _undefined ? _instance.id : (id as int?),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
+        delivery_order_type: delivery_order_type == _undefined
+            ? _instance.delivery_order_type
+            : (delivery_order_type as String?),
+        user_id: user_id == _undefined ? _instance.user_id : (user_id as int?),
+        service_provider_id: service_provider_id == _undefined
+            ? _instance.service_provider_id
+            : (service_provider_id as int?),
+        status: status == _undefined ? _instance.status : (status as String?),
+        time: time == _undefined ? _instance.time : (time as String?),
+        driver_id:
+            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
+        customer: customer == _undefined
+            ? _instance.customer
+            : (customer
+                as Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+      TRes> get customer {
+    final local$customer = _instance.customer;
+    return local$customer == null
+        ? CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer
+            .stub(_then(_instance))
+        : CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer(
+            local$customer, (e) => call(customer: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order<
+        TRes>
+    implements
+        CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order<
+            TRes> {
+  _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? phone_number,
+    String? delivery_order_type,
+    int? user_id,
+    int? service_provider_id,
+    String? status,
+    String? time,
+    int? driver_id,
+    Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer?
+        customer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+          TRes>
+      get customer =>
+          CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer
+              .stub(_res);
+}
+
+class Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer {
+  Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer({
+    this.name,
+    this.image,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer
+    on Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer {
+  CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+          Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer>
+      get copyWith =>
+          CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+    TRes> {
+  factory CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer(
+    Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer
+        instance,
+    TRes Function(
+            Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer)
+        then,
+  ) = _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer;
+
+  factory CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer;
+
+  TRes call({
+    String? name,
+    String? image,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+        TRes>
+    implements
+        CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+            TRes> {
+  _CopyWithImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer
+      _instance;
+
+  final TRes Function(
+          Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+        TRes>
+    implements
+        CopyWith$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer<
+            TRes> {
+  _CopyWithStubImpl$Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order$customer(
       this._res);
 
   TRes _res;

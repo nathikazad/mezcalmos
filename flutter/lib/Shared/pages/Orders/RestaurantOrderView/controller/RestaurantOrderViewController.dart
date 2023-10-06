@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/pages/Orders/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -31,7 +30,7 @@ class RestaurantOrderViewController {
   }
 
   // streams //
-  StreamSubscription<UserInfo?>? orderStream;
+  StreamSubscription<CustRestaurantOrderVariables?>? orderStream;
   String? subscriptionId;
 
   bool get showForwardBtn =>
@@ -62,13 +61,16 @@ class RestaurantOrderViewController {
     } else {
       subscriptionId = hasuraDb.createSubscription(start: () {
         orderStream = listen_on_restaurant_order_driver(orderId: orderId)
-            .listen((UserInfo? event) {
+            .listen((CustRestaurantOrderVariables? event) {
           mezDbgPrint(event);
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.toFirebaseFormatJson()}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
 
-            order.value?.driverInfo = event;
+            order.value?.driverInfo = event.driverInfo;
+            order.value?.costs.deliveryCost = event.deliveryCost;
+
+            order.refresh();
           }
         });
       }, cancel: () {

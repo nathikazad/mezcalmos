@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -366,5 +367,55 @@ Stream<UserInfo?> listen_on_delivery_order_driver({required int orderId}) {
       );
     }
     return null;
+  });
+}
+
+Stream<List<cModels.DeliveryMinimalOrder>?> listen_delivery_minimal_orders({
+  required cModels.MinimalDeliveryOrderStatus status,
+  int? driverId,
+  required int limit,
+  required int offset,
+}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$ListenMinimalDeliveryMessages(
+          Options$Subscription$ListenMinimalDeliveryMessages(
+              fetchPolicy: FetchPolicy.networkOnly,
+              variables: Variables$Subscription$ListenMinimalDeliveryMessages(
+                  driver_id: (driverId == null)
+                      ? Input$Int_comparison_exp($_is_null: true)
+                      : Input$Int_comparison_exp(
+                          $_eq: driverId,
+                        ),
+                  status: status.toFirebaseFormatString(),
+                  limit: limit,
+                  offset: offset)))
+      .map<List<cModels.DeliveryMinimalOrder>?>(
+          (QueryResult<Subscription$ListenMinimalDeliveryMessages> res) {
+    if (res.hasException) {
+      throw Exception(res.exception);
+    }
+
+    return res.parsedData?.delivery_minimal_order
+        .map<cModels.DeliveryMinimalOrder>(
+            (Subscription$ListenMinimalDeliveryMessages$delivery_minimal_order
+                    e) =>
+                cModels.DeliveryMinimalOrder(
+                    id: e.id!,
+                    customer: (e.customer != null)
+                        ? cModels.UserInfo(
+                            id: e.customer!.id,
+                            name: e.customer!.name,
+                            image: e.customer!.image,
+                            firebaseId: '',
+                            language: cModels.Language.EN)
+                        : null,
+                    phone_number: e.phone_number,
+                    driver_id: e.driver_id,
+                    delivery_order_type: e.delivery_order_type
+                        .toString()
+                        .toMinimalDeliveryOrderType(),
+                    status: e.status.toString().toMinimalDeliveryOrderStatus(),
+                    time: e.time!))
+        .toList();
   });
 }

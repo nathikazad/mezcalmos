@@ -242,6 +242,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
         id
         name
         image
+        phone
       }
     }
     delivery_cost
