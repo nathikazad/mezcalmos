@@ -72,7 +72,8 @@ Future<DeliveryOrder?> get_driver_order_by_id(
     serviceOrderId: orderData.restaurant_order?.id,
     deliveryCompany: _getDeliveryCompany(orderData),
     serviceProvider: ServiceInfo(
-        phoneNumber: orderData.restaurant_order!.restaurant.details!.phone,
+        phoneNumber:
+            orderData.restaurant_order!.restaurant.details!.phone_number,
         location: MezLocation.fromHasura(
             orderData.restaurant_order!.restaurant.details!.location.gps,
             orderData.restaurant_order!.restaurant.details!.location.address

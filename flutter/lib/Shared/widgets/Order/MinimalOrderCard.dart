@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList']["components"]["ROpOrderCard"];
@@ -76,7 +75,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
 
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
+                    children: <Widget>[
                       Text(
                         widget.order.orderTime.getOrderTime(),
                         style: context.textTheme.bodyMedium?.copyWith(
@@ -92,7 +91,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                         Stack(
                           alignment: Alignment.center,
                           clipBehavior: Clip.none,
-                          children: [
+                          children: <Widget>[
                             Container(
                                 margin: EdgeInsets.only(right: 28),
                                 child: CircleAvatar(
@@ -164,7 +163,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                     ),
                   if (widget.order.deliveryCost != null)
                     Row(
-                      children: [
+                      children: <Widget>[
                         SizedBox(
                           width: 12,
                         ),
@@ -184,8 +183,8 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                         )
                       ],
                     ),
-                  Spacer(),
-                  getOrderWidget()
+                  // Spacer(),
+                  // getOrderWidget()
                 ],
               ),
             ],

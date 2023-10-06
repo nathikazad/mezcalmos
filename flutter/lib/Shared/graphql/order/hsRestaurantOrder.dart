@@ -371,6 +371,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
         image: orderData.customer.user.image,
+        phoneNumber: orderData.customer.user.phone,
         name: orderData.customer.user.name),
     dropOffLocation: MezLocation(orderData.to_location_address!,
         orderData.to_location_gps!.toLocationData()),
