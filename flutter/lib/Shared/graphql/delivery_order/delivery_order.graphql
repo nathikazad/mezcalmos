@@ -70,6 +70,7 @@ query get_driver_order($orderId: Int!) {
           firebase_id
           image
           name
+          phone_number
           location {
             gps
             address
@@ -159,6 +160,7 @@ query get_driver_order($orderId: Int!) {
         id
         firebase_id
         image
+        phone_number
         name
         location {
           gps
@@ -190,6 +192,7 @@ query get_driver_order($orderId: Int!) {
         id
         image
         name
+        phone
         language_id
       }
     }

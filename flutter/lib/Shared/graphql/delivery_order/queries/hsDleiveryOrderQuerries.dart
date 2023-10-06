@@ -72,6 +72,7 @@ Future<DeliveryOrder?> get_driver_order_by_id(
     serviceOrderId: orderData.restaurant_order?.id,
     deliveryCompany: _getDeliveryCompany(orderData),
     serviceProvider: ServiceInfo(
+        phoneNumber: orderData.restaurant_order!.restaurant.details!.phone,
         location: MezLocation.fromHasura(
             orderData.restaurant_order!.restaurant.details!.location.gps,
             orderData.restaurant_order!.restaurant.details!.location.address
@@ -81,6 +82,7 @@ Future<DeliveryOrder?> get_driver_order_by_id(
         name: orderData.restaurant_order!.restaurant.details!.name),
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
+        phoneNumber: orderData.customer.user.phone,
         image: orderData.customer.user.image,
         name: orderData.customer.user.name),
     deliveryDirection: orderData.direction.toDeliveryDirection(),
@@ -621,7 +623,7 @@ Future<List<cModels.DeliveryMinimalOrder>?> get_delivery_minimal_orders({
                   driver_id: (driverId == null)
                       ? Input$Int_comparison_exp($_is_null: true)
                       : Input$Int_comparison_exp(
-                          $_eq: driverId!,
+                          $_eq: driverId,
                         ),
                   status: status.toFirebaseFormatString(),
                   limit: limit,
