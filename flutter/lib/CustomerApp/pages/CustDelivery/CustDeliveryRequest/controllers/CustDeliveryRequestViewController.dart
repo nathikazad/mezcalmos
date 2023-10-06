@@ -5,25 +5,26 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
+import 'package:mezcalmos/CustomerApp/models/CustDeliveryType.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustDeliveryRequestViewController {
+  late CustDeliveryType deliveryType;
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   AuthController _authController = Get.find<AuthController>();
 
@@ -56,7 +57,8 @@ class CustDeliveryRequestViewController {
   // bool get canOrder
 
   // methods //
-  Future<void> init() async {
+  Future<void> init({required CustDeliveryType deliveryType}) async {
+    this.deliveryType = deliveryType;
     if (_authController.isUserSignedIn) {
       toLoc.value = Get.find<CustomerAuthController>()
           .customer
@@ -138,48 +140,50 @@ class CustDeliveryRequestViewController {
   Future<void> _callCloudFunc() async {
     mezDbgPrint("Calling cloud func with from text : ${fromLocText.text}");
     try {
-      await _uploadItemsImages();
-      final cModels.CreateCourierResponse res =
-          await CloudFunctions.delivery3_createCourierOrder(
-        toLocation: cModels.Location(
-            lat: toLoc.value!.position.latitude!,
-            lng: toLoc.value!.position.longitude!,
-            address: toLoc.value!.address),
-        items: items
-            .asMap()
-            .entries
-            .map(
-              (MapEntry<int, CourierItem> e) => cModels.CourierItem(
-                name: itemsNames[e.key].text.inCaps,
-                image: e.value.image,
-                estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
-                notes: itemsNotes[e.key].text.inCaps,
-              ),
-            )
-            .toList(),
-        fromLocationText:
-            (fromLocText.text.length > 1) ? fromLocText.text : null,
-        fromLocationGps: (fromLoc.value != null)
-            ? cModels.Location(
-                lat: fromLoc.value!.position.latitude!,
-                lng: fromLoc.value!.position.longitude!,
-                address: fromLoc.value!.address)
-            : null,
-        deliveryCompanyId: company.value!.info.hasuraId,
-        deliveryCost: shippingCost.value,
-        scheduledTime: deliveryTime.value?.toUtc().toString(),
-        customerAppType: cModels.CustomerAppType.Native,
-        tripDistance: routeInfo?.distance.distanceInMeters,
-        tripDuration: routeInfo?.duration.seconds,
-        tripPolyline: routeInfo?.polyline,
-      );
-      if (res.success == true) {
-        // await MezRouter.popEverythingTillBeforeHome().then((_) =>
-        //     CustCourierOrderView.navigate(orderId: res.orderId!.toInt()));
-      } else {
-        showErrorSnackBar(errorText: res.error.toString());
-        mezDbgPrint(res.error);
-      }
+      final String message = await contructOrderMessage();
+      mezDbgPrint(message);
+      //  await _uploadItemsImages();
+      // final cModels.CreateCourierResponse res =
+      //     await CloudFunctions.delivery3_createCourierOrder(
+      //   toLocation: cModels.Location(
+      //       lat: toLoc.value!.position.latitude!,
+      //       lng: toLoc.value!.position.longitude!,
+      //       address: toLoc.value!.address),
+      //   items: items
+      //       .asMap()
+      //       .entries
+      //       .map(
+      //         (MapEntry<int, CourierItem> e) => cModels.CourierItem(
+      //           name: itemsNames[e.key].text.inCaps,
+      //           image: e.value.image,
+      //           estimatedCost: num.tryParse(itemsEstCosts[e.key].text),
+      //           notes: itemsNotes[e.key].text.inCaps,
+      //         ),
+      //       )
+      //       .toList(),
+      //   fromLocationText:
+      //       (fromLocText.text.length > 1) ? fromLocText.text : null,
+      //   fromLocationGps: (fromLoc.value != null)
+      //       ? cModels.Location(
+      //           lat: fromLoc.value!.position.latitude!,
+      //           lng: fromLoc.value!.position.longitude!,
+      //           address: fromLoc.value!.address)
+      //       : null,
+      //   deliveryCompanyId: company.value!.info.hasuraId,
+      //   deliveryCost: shippingCost.value,
+      //   scheduledTime: deliveryTime.value?.toUtc().toString(),
+      //   customerAppType: cModels.CustomerAppType.Native,
+      //   tripDistance: routeInfo?.distance.distanceInMeters,
+      //   tripDuration: routeInfo?.duration.seconds,
+      //   tripPolyline: routeInfo?.polyline,
+      // );
+      // if (res.success == true) {
+      //   // await MezRouter.popEverythingTillBeforeHome().then((_) =>
+      //   //     CustCourierOrderView.navigate(orderId: res.orderId!.toInt()));
+      // } else {
+      //   showErrorSnackBar(errorText: res.error.toString());
+      //   mezDbgPrint(res.error);
+      // }
       // ignore: unawaited_futures
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
@@ -267,5 +271,64 @@ class CustDeliveryRequestViewController {
     toLoc.value = location;
     updateShippingPrice();
     mezDbgPrint("set to loc =========>${toLoc.value}");
+  }
+
+  Future<String> contructOrderMessage() async {
+    final UserInfo? user = Get.find<AuthController>().user;
+    String? shortUrl;
+    if (fromLoc.value != null && toLoc.value != null) {
+      final String mapsUrl = MapHelper.getGMapsDirectionLink(
+          fromLoc.value!.toLatLng()!, toLoc.value!.toLatLng()!);
+      shortUrl = await getShortLink(mapsUrl);
+    }
+
+    final String separator = "\n" + "=" * 10 + "\n";
+
+    final String? phoneNumber =
+        Get.find<CustomerAuthController>().customer?.phoneNumber;
+
+    final String customerInfo = "👤 Customer Info\nName: ${user!.name}" +
+        (toLoc.value != null ? "\nAddress: ${toLoc.value!.address}" : "") +
+        (phoneNumber != null ? "\nPhone: $phoneNumber" : "") +
+        (shortUrl != null ? "\nRoute: $shortUrl" : "");
+    // final String orderInfo =
+    //     "🛒 Order Info\nItems cost: \$${itemsCost().round()}\nTotal: ${(cart.itemsCost().round()).toPriceString()}\nQuantity: ${cart.quantity()}" +
+    //         (this.no.isNotEmpty == true ? "\nNotes: ${cart.notes}" : "") +
+    //         (cart.deliveryTime != null
+    //             ? "\n⏰ Scheduled Time: ${DateFormat('yyyy-MM-dd HH:mm a').format(cart.deliveryTime!)}"
+    //             : "");
+
+    final String items =
+        "👉 Items:\n${this.items.map<String>((CourierItem e) => "${e.toReadableString()}").join("\n")}";
+
+    final String restaurantName = "🏠 Delivery Company: Servi Amigos";
+
+    final DateTime now = DateTime.now();
+    final String formattedDateTime =
+        DateFormat('yyyy-MM-dd HH:mm a').format(now);
+    final String dateTimeInfo = "📅 $formattedDateTime";
+
+    final String header = "\n----- 🛍️ NEW ORDER 🛍️ -----" +
+        (deliveryType == CustDeliveryType.Chedraui
+            ? '\n----- 🛒 Chedraui 🛒 -----'
+            : deliveryType == CustDeliveryType.Fruits
+                ? '\n----- 🍎 Fruits & Veggies 🍎 -----'
+                : deliveryType == CustDeliveryType.Pharmacy
+                    ? '\n----- 🏥 PHARMACY 🏥 -----'
+                    : '\n----- 🚚 OPEN DELIVERY 🚚 -----'); // Creative header
+
+    // if (deliveryTime != null) {
+    //   header = "\n----- 🕒 SCHEDULED ORDER 🕒 -----"; // Scheduled order header
+    // }
+
+    final String footer =
+        "\n🙏 Thank you for using MezKala app!\n$restaurantName\n";
+
+    final String message =
+        "$header$separator$dateTimeInfo$separator$customerInfo$separator$items$separator$footer";
+
+    final String cleanedMessage = message.replaceAll(RegExp(r'[\[\]{},]'), '');
+
+    return cleanedMessage;
   }
 }

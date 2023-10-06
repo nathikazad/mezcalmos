@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/CustFoodListView.da
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -32,6 +33,9 @@ class _CustServicesListState extends State<CustServicesList>
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       backgroundColor: Colors.white,
+      appBar: MezcalmosAppBar(
+        AppBarLeftButtonType.Menu,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

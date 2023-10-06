@@ -11,9 +11,9 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/CustFoodListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustomerServicesList.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -101,7 +101,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
         if (authController.user != null) {
           return _getBody();
         } else {
-          return CustFoodListView();
+          return CustServicesList();
         }
       }),
     );
@@ -110,7 +110,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget _getBody() {
     switch (_index.value) {
       case 0:
-        return CustFoodListView();
+        return CustServicesList();
       case 1:
         return CustomerOrdersListView(
           asTab: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
+import 'package:mezcalmos/CustomerApp/models/CustDeliveryType.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustDelivery/CustDeliveryRequest/CustDeliveryRequestView.dart';
 import 'package:mezcalmos/CustomerApp/router/deliveryRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -38,39 +39,18 @@ class _CustDeliveryWrapperViewState extends State<CustDeliveryWrapperView>
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: <Widget>[
-            meduimSeperator,
-            ServicesCard(
-              title: "Food",
-              subtitle: "Food subtitle",
-              imageAssetPath: aRestaurant,
-              onTap: () {},
-            ),
-            smallSepartor,
-            ServicesCard(
-              title: "Delivery",
-              subtitle: "Delivey subtitle",
-              imageAssetPath: aDelivery,
-              onTap: () {},
-            ),
-            smallSepartor,
-            ServicesCard(
-              title: "Delivery",
-              subtitle: "Delivey subtitle",
-              imageAssetPath: aDelivery,
-              onTap: () {},
-            ),
-            smallSepartor,
-            ServicesCard(
-              title: "Open",
-              subtitle: "Open subtitle",
-              imageAssetPath: aDelivery,
-              onTap: () {
-                CustDeliveryRequestView.navigate();
-              },
-            ),
-          ],
-        ),
+            children:
+                List.generate(CustDeliveryType.values.length, (int index) {
+          return ServicesCard(
+            title: CustDeliveryType.values[index].name,
+            subtitle: " subtitle",
+            imageAssetPath: aRestaurant,
+            onTap: () {
+              CustDeliveryRequestView.navigate(
+                  deliveryType: CustDeliveryType.values[index]);
+            },
+          );
+        })),
       ),
     );
   }

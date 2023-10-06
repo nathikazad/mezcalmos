@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
+import 'package:mezcalmos/CustomerApp/models/CustDeliveryType.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustDelivery/CustDeliveryRequest/components/CustDeliveryRequestitems.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustDelivery/CustDeliveryRequest/controllers/CustDeliveryRequestViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
 import 'package:mezcalmos/CustomerApp/router/customerRoutes.dart';
@@ -23,8 +25,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustRequestCourierView"];
 
 class CustDeliveryRequestView extends StatefulWidget {
-  static Future<void> navigate() {
-    return MezRouter.toPath(CustDeliveryRoutes.deliveryRequestRoute);
+  static Future<void> navigate({required CustDeliveryType deliveryType}) {
+    return MezRouter.toPath(CustDeliveryRoutes.deliveryRequestRoute,
+        arguments: <String, dynamic>{
+          "dvType": deliveryType.toFirebaseFormatString(),
+        });
   }
 
   const CustDeliveryRequestView({super.key});
@@ -39,7 +44,11 @@ class _CustDeliveryRequestViewState extends State<CustDeliveryRequestView> {
       CustDeliveryRequestViewController();
   @override
   void initState() {
-    viewController.init();
+    final CustDeliveryType? dvType =
+        MezRouter.bodyArguments?["dvType"].toString().toCustDeliveryType();
+    if (dvType != null) {
+      viewController.init(deliveryType: dvType);
+    }
 
     super.initState();
   }
@@ -51,23 +60,17 @@ class _CustDeliveryRequestViewState extends State<CustDeliveryRequestView> {
         AppBarLeftButtonType.Back,
         ordersRoute: CustomerRoutes.customerOrdersRoute,
         onClick: viewController.handleBack,
-        title: '${_i18n()["title"]}',
+        title: viewController.deliveryType.name,
       ),
       body: Obx(
         () {
-          if (viewController.company.value != null) {
-            return PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: viewController.pageController,
-                children: <Widget>[
-                  _itemsPage(),
-                  _deliveryPage(context),
-                ]);
-          } else
-            return Container(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
-            );
+          return PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: viewController.pageController,
+              children: <Widget>[
+                _itemsPage(),
+                _deliveryPage(context),
+              ]);
         },
       ),
       bottomSheet: Obx(
@@ -126,7 +129,7 @@ class _CustDeliveryRequestViewState extends State<CustDeliveryRequestView> {
                 viewController.deliveryTime.value = null;
               },
               periodOfTime: null,
-              schedule: viewController.company.value!.schedule,
+              schedule: viewController.company.value?.schedule,
             ),
           ),
 
@@ -191,9 +194,9 @@ class _CustDeliveryRequestViewState extends State<CustDeliveryRequestView> {
                 SizedBox(
                   height: 15,
                 ),
-                // CustRequestCourierItems(
-                //   viewController: viewController,
-                // ),
+                CustDeliveryRequestItems(
+                  viewController: viewController,
+                ),
               ],
             ),
           ),

@@ -13,8 +13,8 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustRequestCourierView"]["CustRequestCourierItems"];
 
-class CustDeliveryRequesttems extends StatelessWidget {
-  const CustDeliveryRequesttems({super.key, required this.viewController});
+class CustDeliveryRequestItems extends StatelessWidget {
+  const CustDeliveryRequestItems({super.key, required this.viewController});
   final CustDeliveryRequestViewController viewController;
 
   @override

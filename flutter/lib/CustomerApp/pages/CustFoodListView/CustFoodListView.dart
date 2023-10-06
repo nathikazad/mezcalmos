@@ -9,7 +9,6 @@ import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -19,7 +18,6 @@ import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -49,8 +47,7 @@ class _CustFoodListViewState extends State<CustFoodListView>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: MezSideMenu(),
+
       backgroundColor: Colors.white,
 
       // floatingActionButton: Padding(
@@ -407,7 +404,7 @@ class _CustFoodListViewState extends State<CustFoodListView>
       scale: 0.6,
       child: InkWell(
         onTap: () {
-          Get.find<SideMenuDrawerController>().openMenu();
+          MezRouter.back();
         },
         child: Ink(
           decoration: BoxDecoration(
@@ -420,11 +417,8 @@ class _CustFoodListViewState extends State<CustFoodListView>
                   offset: Offset(0, 7),
                 ),
               ],
-              color: primaryBlueColor),
-          child: Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
+              color: secondaryLightBlueColor),
+          child: Icon(Icons.arrow_back_ios_new, color: primaryBlueColor),
         ),
       ),
     );
