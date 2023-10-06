@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantItemCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/controllers/CustHomeViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/components/CustRestaurantCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/components/CustRestaurantItemCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/controllers/CustFoodListViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -23,16 +25,19 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
 
-class CustHomeView extends StatefulWidget {
-  const CustHomeView({super.key});
+class CustFoodListView extends StatefulWidget {
+  const CustFoodListView({super.key});
+  static Future<void> navigate() {
+    return MezRouter.toPath(RestaurantRoutes.foodListRoute);
+  }
 
   @override
-  State<CustHomeView> createState() => _CustHomeViewState();
+  State<CustFoodListView> createState() => _CustFoodListViewState();
 }
 
-class _CustHomeViewState extends State<CustHomeView>
+class _CustFoodListViewState extends State<CustFoodListView>
     with TickerProviderStateMixin {
-  CustHomeViewController viewController = CustHomeViewController();
+  CustFoodListViewController viewController = CustFoodListViewController();
 
   @override
   void initState() {
@@ -69,7 +74,7 @@ class _CustHomeViewState extends State<CustHomeView>
       // ),
       // floatingActionButtonLocation: viewController.dockedFabLocation(context),
       body: Stack(
-        children: [
+        children: <Widget>[
           Obx(() {
             if (viewController.isMapView)
               return _mapView();
@@ -107,7 +112,7 @@ class _CustHomeViewState extends State<CustHomeView>
       controller: viewController.restaurantsScrollController,
       physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       headerSliverBuilder: (BuildContext context, _) {
-        return [
+        return <Widget>[
           _appBar(context),
           _searchAndFilter(context),
         ];
@@ -119,7 +124,7 @@ class _CustHomeViewState extends State<CustHomeView>
   TabBarView tabsView() {
     return TabBarView(
       controller: viewController.tabController,
-      children: [
+      children: <Widget>[
         Obx(
           () {
             if (viewController.showRestaurantShimmer) {
@@ -133,7 +138,7 @@ class _CustHomeViewState extends State<CustHomeView>
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -153,7 +158,7 @@ class _CustHomeViewState extends State<CustHomeView>
                       },
                     ),
                     if (viewController.hasReachedEndData.isFalse &&
-                        viewController.searchQuery.isEmpty) ...[
+                        viewController.searchQuery.isEmpty) ...<Widget>[
                       smallSepartor,
                       Container(
                         margin: const EdgeInsets.all(15),
@@ -194,7 +199,7 @@ class _CustHomeViewState extends State<CustHomeView>
                 } else if (viewController.filteredItems.isNotEmpty)
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Column(
                         children: List.generate(
                             viewController.items.length,
@@ -203,7 +208,7 @@ class _CustHomeViewState extends State<CustHomeView>
                                 )),
                       ),
                       if (viewController.itemsHasReachedEndData.isFalse &&
-                          viewController.searchQuery.isEmpty) ...[
+                          viewController.searchQuery.isEmpty) ...<Widget>[
                         smallSepartor,
                         Container(
                           margin: const EdgeInsets.all(15),
@@ -242,7 +247,7 @@ class _CustHomeViewState extends State<CustHomeView>
         elevation: 0,
         automaticallyImplyLeading: false,
         leading: _menuBtn(),
-        actions: [
+        actions: <Widget>[
           Obx(() {
             if (Get.find<AuthController>().user == null) {
               return MezIconButton(
@@ -272,10 +277,10 @@ class _CustHomeViewState extends State<CustHomeView>
         max: kToolbarHeight * 2,
         min: kToolbarHeight * 1.9,
         child: Column(
-          children: [
+          children: <Widget>[
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 hSmallSepartor,
                 Expanded(
                   child: TextField(
@@ -313,11 +318,11 @@ class _CustHomeViewState extends State<CustHomeView>
                 indicatorSize: TabBarIndicatorSize.label,
                 automaticIndicatorColorAdjustment: true,
                 padding: EdgeInsets.zero,
-                tabs: [
+                tabs: <Widget>[
                   Tab(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Icon(Icons.food_bank_rounded),
                         hTinySepartor,
                         Text("${_i18n()['restaurants']['title']}"),
@@ -327,7 +332,7 @@ class _CustHomeViewState extends State<CustHomeView>
                   Tab(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Icon(Icons.fastfood_rounded),
                         hTinySepartor,
                         Text("${_i18n()['items']}"),
@@ -354,7 +359,7 @@ class _CustHomeViewState extends State<CustHomeView>
                 content: Container(
                   margin: const EdgeInsets.all(8),
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       Obx(
                         () => SwitchListTile.adaptive(
                             activeColor: primaryBlueColor,
@@ -407,7 +412,7 @@ class _CustHomeViewState extends State<CustHomeView>
         child: Ink(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              boxShadow: [
+              boxShadow: <BoxShadow>[
                 BoxShadow(
                   color: Color.fromARGB(255, 216, 225, 249),
                   spreadRadius: 0,
@@ -456,29 +461,31 @@ class _CustHomeViewState extends State<CustHomeView>
   // }
 
   Widget _mapView() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      MezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: []),
-      Obx(
-        () => Expanded(
-          child: MezServicesMapView(
-            mGoogleMapController: viewController.mapController,
-            fetchNewData: (LatLng? mapCenter, double? distance) async {
-              await viewController.fetchMapViewRentals(
-                  fromLoc: mapCenter, distance: distance);
-              return viewController.restaurantsMarkers.toList();
-            },
-            markers: viewController.restaurantsMarkers.value,
-            children: [
-              Container(
-                alignment: Alignment.topRight,
-                margin: const EdgeInsets.all(7),
-                child: _filterButton(context),
-              )
-            ],
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          MezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: <Widget>[]),
+          Obx(
+            () => Expanded(
+              child: MezServicesMapView(
+                mGoogleMapController: viewController.mapController,
+                fetchNewData: (LatLng? mapCenter, double? distance) async {
+                  await viewController.fetchMapViewRentals(
+                      fromLoc: mapCenter, distance: distance);
+                  return viewController.restaurantsMarkers.toList();
+                },
+                markers: viewController.restaurantsMarkers.value,
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.topRight,
+                    margin: const EdgeInsets.all(7),
+                    child: _filterButton(context),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    ]);
+        ]);
   }
 
   // Obx _switchMapBtn() {

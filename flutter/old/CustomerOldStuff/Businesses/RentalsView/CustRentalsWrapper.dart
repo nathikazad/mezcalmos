@@ -21,7 +21,7 @@ class CustRentalWrapper extends StatefulWidget {
   const CustRentalWrapper({super.key});
   static Future<void> navigate({required List<ServiceTree> serviceTree}) {
     final String route = CustBusinessRoutes.custRentalsWrapperRoute;
-    return MezRouter.toPath(route, arguments: {
+    return MezRouter.toPath(route, arguments: <String, >{
       "serviceTree": serviceTree,
     });
   }
@@ -75,7 +75,7 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
         AppBarLeftButtonType.Back,
         onClick: MezRouter.back,
         title: '${_i18n()['rentals']}',
-        actionIcons: [
+        actionIcons: <Widget>[
           FloatingCartComponent(
             cartType: CartType.business,
           ),
@@ -92,7 +92,7 @@ class _CustRentalWrapperState extends State<CustRentalWrapper> {
                 onTap: () {
                   navigateToListView(serviceTree[index].name);
                 },
-                url: getCardImage(serviceTree[index].name),
+                imageAssetPath: getCardImage(serviceTree[index].name),
                 title:
                     '${_i18n()[serviceTree[index].name.toFirebaseFormatString()]['title']}',
                 subtitle:

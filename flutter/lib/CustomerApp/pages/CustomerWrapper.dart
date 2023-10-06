@@ -11,7 +11,7 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/CustHomeView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/CustFoodListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -101,7 +101,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
         if (authController.user != null) {
           return _getBody();
         } else {
-          return CustHomeView();
+          return CustFoodListView();
         }
       }),
     );
@@ -110,7 +110,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget _getBody() {
     switch (_index.value) {
       case 0:
-        return CustHomeView();
+        return CustFoodListView();
       case 1:
         return CustomerOrdersListView(
           asTab: true,
@@ -141,7 +141,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                 _index.value = v;
               },
               type: BottomNavigationBarType.fixed,
-              items: [
+              items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                       icon: Icon(Icons.home_outlined),
                       label: "${_i18n()['home']}"),
@@ -263,23 +263,23 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget mezListOfServices() {
     return Obx(
       () => Column(
-        children: [
+        children: <Widget>[
           ServicesCard(
             title: "${_i18n()['food']["title"]}",
-            url: "assets/images/customer/foodService.png",
+            imageAssetPath: "assets/images/customer/foodService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
             onTap: () {},
           ),
           ServicesCard(
             title: "${_i18n()['laundry']["title"]}",
             subtitle: "${_i18n()['laundry']["subtitle"]}",
-            url: "assets/images/customer/laundryService.png",
+            imageAssetPath: "assets/images/customer/laundryService.png",
             onTap: () {},
           ),
           ServicesCard(
             title: "${_i18n()['courier']["title"]}",
             subtitle: "${_i18n()['courier']["subtitle"]}",
-            url: "assets/images/customer/courrierService.png",
+            imageAssetPath: "assets/images/customer/courrierService.png",
             onTap: () {},
           ),
         ],

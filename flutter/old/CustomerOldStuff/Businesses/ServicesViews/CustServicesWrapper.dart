@@ -19,7 +19,7 @@ class CustServicesWrapper extends StatefulWidget {
   const CustServicesWrapper({super.key});
   static Future<void> navigate({required List<ServiceTree> serviceTree}) {
     final String route = CustBusinessRoutes.custServicesWrapperRoute;
-    return MezRouter.toPath(route, arguments: {
+    return MezRouter.toPath(route, arguments: <String, >{
       "serviceTree": serviceTree,
     });
   }
@@ -101,7 +101,7 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
     return Scaffold(
       appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
-        actionIcons: [
+        actionIcons: <Widget>[
           FloatingCartComponent(
             cartType: CartType.business,
           ),
@@ -118,7 +118,7 @@ class _CustServicesWrapperState extends State<CustServicesWrapper> {
               onTap: () {
                 navigateToListView(serviceTree[index].name);
               },
-              url: getCardImage(serviceTree[index].name),
+              imageAssetPath: getCardImage(serviceTree[index].name),
               title:
                   '${_i18n()[serviceTree[index].name.toFirebaseFormatString()]['title']}',
               subtitle:

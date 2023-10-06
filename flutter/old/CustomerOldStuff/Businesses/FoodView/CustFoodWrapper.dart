@@ -25,7 +25,7 @@ class CustFoodWrapper extends StatefulWidget {
   const CustFoodWrapper({super.key});
   static Future<void> navigate({required List<ServiceTree> serviceTree}) {
     final String route = CustBusinessRoutes.custFoodWrapperRoute;
-    return MezRouter.toPath(route, arguments: {
+    return MezRouter.toPath(route, arguments: <String, >{
       "serviceTree": serviceTree,
     });
   }
@@ -64,7 +64,7 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
       case MezService.LocallyMade:
         mezDbgPrint("going to locally made =======");
         unawaited(CustLocallyMadeListView.navigate(
-          productCategories: [ProductCategory1.Consumable],
+          productCategories: <ProductCategory1>[ProductCategory1.Consumable],
         ));
         break;
       case MezService.MealPlanning:
@@ -106,7 +106,7 @@ class _CustFoodWrapperState extends State<CustFoodWrapper> {
               onTap: () {
                 navigateToListView(serviceTree[index].name);
               },
-              url: getCardImage(serviceTree[index].name),
+              imageAssetPath: getCardImage(serviceTree[index].name),
               title: _i18n()[serviceTree[index].name.toFirebaseFormatString()]
                   ['title'],
               subtitle:

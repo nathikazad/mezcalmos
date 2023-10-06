@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -12,13 +11,13 @@ class ServicesCard extends StatelessWidget {
     Key? key,
     required this.title,
     required this.subtitle,
-    required this.url,
+    required this.imageAssetPath,
     this.onTap,
   }) : super(key: key);
 
   final String title;
   final String subtitle;
-  final String url;
+  final String imageAssetPath;
 
   final GestureTapCallback? onTap;
 
@@ -55,7 +54,7 @@ class ServicesCard extends StatelessWidget {
                 width: 25.mezW,
                 height: 20.mezW,
                 child: Image.asset(
-                  url,
+                  imageAssetPath,
                   fit: BoxFit.fill,
                 ),
               )
