@@ -86,7 +86,7 @@ class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
                   OrderMapWidget(
                       deliveryOrderId:
                           viewController.order.value!.deliveryOrderId!,
-                      height: 70.mezW,
+                      height: 80.mezW,
                       updateDriver: false,
                       polyline: viewController
                           .order.value!.routeInformation?.polyline,

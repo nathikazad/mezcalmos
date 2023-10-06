@@ -175,7 +175,7 @@ class CustRestaurantCartController extends GetxController {
                     lat: cart.value!.toLocation!.latitude,
                     lng: cart.value!.toLocation!.longitude,
                     address: cart.value!.toLocation!.address),
-                deliveryCost: cart.value!.shippingCost!,
+                deliveryCost: cart.value!.shippingCost ?? 0,
                 paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
                 notes: cart.value?.notes,
                 restaurantId: cart.value!.restaurant!.info.hasuraId,
@@ -217,7 +217,10 @@ class CustRestaurantCartController extends GetxController {
           LocModel.MezLocation(
             "Test _ Location ",
             LocationData.fromMap(
-              {"latitude": 15.872451864887513, "longitude": -97.0771243663329},
+              <String, dynamic>{
+                "latitude": 15.872451864887513,
+                "longitude": -97.0771243663329
+              },
             ),
           ).toFirebaseFormattedJson(),
       "deliveryCost": cart.value?.shippingCost ?? 0,
