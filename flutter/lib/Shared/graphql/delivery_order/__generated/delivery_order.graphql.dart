@@ -660,6 +660,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                       FieldNode(
+                        name: NameNode(value: 'phone_number'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: 'location'),
                         alias: null,
                         arguments: [],
@@ -1138,6 +1145,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'name'),
                     alias: null,
                     arguments: [],
@@ -1340,6 +1354,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -4627,6 +4648,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     this.firebase_id,
     required this.image,
     required this.name,
+    this.phone_number,
     required this.location,
     required this.$__typename,
   });
@@ -4637,6 +4659,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$phone_number = json['phone_number'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details(
@@ -4644,6 +4667,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
+      phone_number: (l$phone_number as String?),
       location:
           Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location
               .fromJson((l$location as Map<String, dynamic>)),
@@ -4658,6 +4682,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
   final String image;
 
   final String name;
+
+  final String? phone_number;
 
   final Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location
       location;
@@ -4674,6 +4700,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
@@ -4687,6 +4715,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
+    final l$phone_number = phone_number;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -4694,6 +4723,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
       l$firebase_id,
       l$image,
       l$name,
+      l$phone_number,
       l$location,
       l$$__typename,
     ]);
@@ -4727,6 +4757,11 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$de
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$location = location;
@@ -4773,6 +4808,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_o
     String? firebase_id,
     String? image,
     String? name,
+    String? phone_number,
     Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location?
         location,
     String? $__typename,
@@ -4805,6 +4841,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? phone_number = _undefined,
     Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -4820,6 +4857,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -4851,6 +4891,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_o
     String? firebase_id,
     String? image,
     String? name,
+    String? phone_number,
     Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location?
         location,
     String? $__typename,
@@ -7345,6 +7386,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     required this.id,
     this.firebase_id,
     required this.image,
+    this.phone_number,
     required this.name,
     required this.location,
     required this.language,
@@ -7357,6 +7399,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
+    final l$phone_number = json['phone_number'];
     final l$name = json['name'];
     final l$location = json['location'];
     final l$language = json['language'];
@@ -7366,6 +7409,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
+      phone_number: (l$phone_number as String?),
       name: (l$name as String),
       location:
           Query$get_driver_order$delivery_order_by_pk$restaurant$details$location
@@ -7381,6 +7425,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
   final String? firebase_id;
 
   final String image;
+
+  final String? phone_number;
 
   final String name;
 
@@ -7401,6 +7447,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     _resultData['firebase_id'] = l$firebase_id;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
@@ -7419,6 +7467,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$image = image;
+    final l$phone_number = phone_number;
     final l$name = name;
     final l$location = location;
     final l$language = language;
@@ -7428,6 +7477,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
       l$id,
       l$firebase_id,
       l$image,
+      l$phone_number,
       l$name,
       l$location,
       l$language,
@@ -7459,6 +7509,11 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$details {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$name = name;
@@ -7518,6 +7573,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$d
     int? id,
     String? firebase_id,
     String? image,
+    String? phone_number,
     String? name,
     Query$get_driver_order$delivery_order_by_pk$restaurant$details$location?
         location,
@@ -7551,6 +7607,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$detai
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
+    Object? phone_number = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
     Object? language = _undefined,
@@ -7565,6 +7622,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$detai
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -7604,6 +7664,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$d
     int? id,
     String? firebase_id,
     String? image,
+    String? phone_number,
     String? name,
     Query$get_driver_order$delivery_order_by_pk$restaurant$details$location?
         location,
@@ -8292,6 +8353,7 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     required this.id,
     this.image,
     this.name,
+    this.phone,
     required this.language_id,
     required this.$__typename,
   });
@@ -8301,12 +8363,14 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
+    final l$phone = json['phone'];
     final l$language_id = json['language_id'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$customer$user(
       id: (l$id as int),
       image: (l$image as String?),
       name: (l$name as String?),
+      phone: (l$phone as String?),
       language_id: (l$language_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -8317,6 +8381,8 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
   final String? image;
 
   final String? name;
+
+  final String? phone;
 
   final String language_id;
 
@@ -8330,6 +8396,8 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$$__typename = $__typename;
@@ -8342,12 +8410,14 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     final l$id = id;
     final l$image = image;
     final l$name = name;
+    final l$phone = phone;
     final l$language_id = language_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$image,
       l$name,
+      l$phone,
       l$language_id,
       l$$__typename,
     ]);
@@ -8375,6 +8445,11 @@ class Query$get_driver_order$delivery_order_by_pk$customer$user {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
       return false;
     }
     final l$language_id = language_id;
@@ -8418,6 +8493,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$customer$use
     int? id,
     String? image,
     String? name,
+    String? phone,
     String? language_id,
     String? $__typename,
   });
@@ -8444,6 +8520,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer$user<
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
+    Object? phone = _undefined,
     Object? language_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -8451,6 +8528,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$customer$user<
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined ? _instance.image : (image as String?),
         name: name == _undefined ? _instance.name : (name as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -8474,6 +8552,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$customer$use
     int? id,
     String? image,
     String? name,
+    String? phone,
     String? language_id,
     String? $__typename,
   }) =>
