@@ -83,10 +83,12 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
             title: viewController.currentOffer.value != null
                 ? viewController.currentOffer.value!.name!.getTranslation(
                     Get.find<LanguageController>().userLanguageKey)
-                : "Add Offer"),
+                : "${_i18n()['addOffer']}"),
         bottomNavigationBar: MezButton(
           borderRadius: 0,
-          label: viewController.isEditMode.value ? "Update" : "Add",
+          label: viewController.isEditMode.value
+              ? "${_i18n()['update']}"
+              : "${_i18n()['add']}",
           withGradient: true,
           onClick: () async {
             await viewController.save();
@@ -105,19 +107,20 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Select your offer",
+                        "${_i18n()['selectYourOffer']}",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
                       Builder(builder: (BuildContext context) {
                         return MezStringDropDown(
-                          labelText: "Select your offer",
+                          labelText: "${_i18n()['selectYourOffer']}",
                           langPath: _i18n(),
                           value: viewController.selectedOfferType.value
                               ?.toFirebaseFormatString(),
                           items: <OfferType>[
                             OfferType.Coupon,
                             OfferType.Promotion,
+                            OfferType.Influencer,
                             //     OfferType.MonthlySubscription
                           ]
                               .map((OfferType e) => e.toFirebaseFormatString())
@@ -131,7 +134,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                             if (value == null ||
                                 viewController.selectedOfferType.value ==
                                     null) {
-                              return "Please select your offer";
+                              return "${_i18n()['required']}";
                             }
                             return null;
                           },
@@ -142,30 +145,19 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         );
                       }),
                       meduimSeperator,
-                      Obx(() => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              SwitchListTile.adaptive(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: Text(
-                                    "Offer for influencer",
-                                    style: context.textTheme.bodyLarge,
-                                  ),
-                                  value:
-                                      viewController.offerForInfluencer.value,
-                                  activeColor: primaryBlueColor,
-                                  onChanged: (bool v) {
-                                    viewController.switchOfferInfluencer(v);
-                                  }),
-                              if (viewController.offerForInfluencer.value)
-                                _rewardTypeSelector(),
-                            ],
-                          )),
+                      Obx(() {
+                        if (viewController.offerForInfluencer)
+                          return _rewardTypeSelector();
+                        else
+                          return SizedBox();
+                      }),
 
                       meduimSeperator,
                       Obx(
                         () => Text(
-                          viewController.isCoupon ? "Coupon Code" : "Name",
+                          viewController.isCoupon
+                              ? "${_i18n()['couponCode']}"
+                              : "${_i18n()['name']}",
                           style: context.textTheme.bodyLarge,
                         ),
                       ),
@@ -173,13 +165,12 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       TextFormField(
                         controller: viewController.offerNameController,
                         decoration: InputDecoration(
-                          hintText: viewController.isCoupon
-                              ? "Enter your Coupon Code"
-                              : "Enter your promotion name",
-                        ),
+                            hintText: viewController.isCoupon
+                                ? "${_i18n()['enterYourCouponCode']}"
+                                : "${_i18n()['enterYourPromotionName']}"),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
-                            return "Required";
+                            return "${_i18n()['required']}";
                           }
                           return null;
                         },
@@ -187,12 +178,12 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       meduimSeperator,
 
                       Text(
-                        "Select type of order",
+                        "${_i18n()['selectTypeOfOrder']}",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
                       MezStringDropDown(
-                        labelText: "Select your offer",
+                        labelText: "${_i18n()['selectYourOffer']}",
                         langPath: Get.find<LanguageController>()
                             .strings['Shared']['pages']['ServiceOfferView'],
                         value: viewController.selectedOfferOrderType.value
@@ -208,7 +199,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       ),
                       meduimSeperator,
                       Text(
-                        "Items",
+                        "${_i18n()['items']}",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
@@ -227,13 +218,13 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                                   )),
                                   WidgetSpan(child: hTinySepartor),
                                   TextSpan(
-                                      text: "All items",
+                                      text: "${_i18n()['allItems']}",
                                       style: context.textTheme.bodyLarge)
                                 ]),
                               ),
                               smallSepartor,
                               Text(
-                                "No particular items have been selected this offer will be applied to all items",
+                                "${_i18n()['noItemsSelected']}",
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -241,20 +232,20 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         ),
 
                       MezAddButton(
-                        btnHeight: 45,
-                        onClick: () async {
-                          final List<OfferItemData>? data =
-                              await OfferItemsSelectView.navigate(
-                                  selectedItems: viewController.initalItemsIds,
-                                  serviceProviderId: serviceProviderId!,
-                                  serviceProviderType: serviceProviderType);
+                          btnHeight: 45,
+                          onClick: () async {
+                            final List<OfferItemData>? data =
+                                await OfferItemsSelectView.navigate(
+                                    selectedItems:
+                                        viewController.initalItemsIds,
+                                    serviceProviderId: serviceProviderId!,
+                                    serviceProviderType: serviceProviderType);
 
-                          if (data != null) {
-                            viewController.selectedItems.value = data;
-                          }
-                        },
-                        title: "Select items",
-                      ),
+                            if (data != null) {
+                              viewController.selectedItems.value = data;
+                            }
+                          },
+                          title: "${_i18n()['selectItems']}"),
                       if (viewController.itemsNames.isNotEmpty &&
                           viewController.selectedItems.isEmpty)
                         Column(
@@ -286,7 +277,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
 
                       meduimSeperator,
                       Text(
-                        "Discount type",
+                        "${_i18n()['discountType']}",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
@@ -301,15 +292,14 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                                 child: Icon(Icons.info,
                                     color: primaryBlueColor, size: 18)),
                             TextSpan(
-                                text:
-                                    "When customer adds two then the second gets discount.",
+                                text: "${_i18n()['customerTwoItemText']}",
                                 style: context.textTheme.bodyMedium
                                     ?.copyWith(color: primaryBlueColor))
                           ])),
                         ),
                       meduimSeperator,
                       Text(
-                        "Minimum order cost",
+                        "${_i18n()['minimumOrderCost']}",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
@@ -320,11 +310,11 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                         decoration: InputDecoration(
                             focusColor: primaryBlueColor,
                             hintText:
-                                "Leave it empty if there no minimum order cost",
+                                "${_i18n()['leaveItEmptyIfThereIsNoMinimumOrderCost']}",
                             suffixIcon: Icon(Icons.attach_money)),
                         validator: (String? value) {
                           if (value != null && double.tryParse(value) == null) {
-                            return "Not valid";
+                            return "${_i18n()['notValid']}";
                           }
                           return null;
                         },
@@ -332,7 +322,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
 
                       meduimSeperator,
                       Text(
-                        "Select your availability",
+                        "${_i18n()['selectYourAvailability']}",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,
@@ -372,7 +362,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
       children: <Widget>[
         Expanded(
           child: MezStringDropDown(
-            labelText: "Select discount type",
+            labelText: "${_i18n()['SelectDiscountType']}",
             value: viewController.selectedDiscountType.value
                 .toFirebaseFormatString(),
             langPath: _i18n(),
@@ -404,7 +394,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return "Please enter your discount value";
+                return "${_i18n()['required']}";
               }
               return null;
             },
@@ -419,10 +409,13 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         smallSepartor,
-        Text("Reward type"),
+        Text(
+          "${_i18n()['rewardType']}",
+          style: context.textTheme.bodyLarge,
+        ),
         smallSepartor,
         MezStringDropDown(
-          labelText: "Select reward type",
+          labelText: "${_i18n()['selectRewardType']}",
           value:
               viewController.selectedRewardType.value.toFirebaseFormatString(),
           langPath: _i18n(),
@@ -437,7 +430,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
           },
         ),
         meduimSeperator,
-        Text("Reward value"),
+        Text("${_i18n()['rewardValue']}", style: context.textTheme.bodyLarge),
         smallSepartor,
         TextFormField(
           controller: viewController.rewardController,
@@ -453,7 +446,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
           ),
           validator: (String? value) {
             if (value == null || value.isEmpty) {
-              return "Please enter your discount value";
+              return "${_i18n()['required']}";
             }
             return null;
           },
@@ -467,11 +460,11 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
       validator: (Object? value) {
         if (viewController.selectedStartDate.value == null ||
             viewController.selectedEndDate.value == null) {
-          return "Please select your availability";
+          return "${_i18n()['selectYourAv']}";
         }
         if (viewController.selectedStartDate.value!
             .isAfter(viewController.selectedEndDate.value!)) {
-          return "Start date must be before end date";
+          return "${_i18n()['startDateError']}";
         }
         return null;
       },
@@ -500,7 +493,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                           ? Text(
                               "${viewController.selectedStartDate.value!.getOrderTime()} - ${viewController.selectedEndDate.value!.getOrderTime()}")
                           : Text(
-                              "Select your time",
+                              "${_i18n()['selectYourTime']}",
                             ),
                     ],
                   ),
@@ -537,7 +530,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                     margin: const EdgeInsets.all(5),
                     alignment: Alignment.center,
                     child: Text(
-                      "Offer Availibilty",
+                      "${_i18n()['offerAvailibilty']}",
                       style: context.textTheme.bodyLarge,
                     )),
                 Divider(
@@ -549,13 +542,13 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                   onNewPeriodSelected: (DateTime v) {
                     viewController.selectedStartDate.value = v;
                   },
-                  label: "Start date",
+                  label: "${_i18n()['startDate']}",
                   validator: (DateTime? p0) {
                     if (p0 == null) {
                       BotToast.showText(
-                          text: "Please select a time",
+                          text: "${_i18n()['required']}",
                           duration: Duration(seconds: 5));
-                      return "Please select a time";
+                      return "${_i18n()['required']}";
                     }
                     return null;
                   },
@@ -567,13 +560,13 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                   onNewPeriodSelected: (DateTime v) {
                     viewController.selectedEndDate.value = v;
                   },
-                  label: "End Date",
+                  label: "${_i18n()['endDate']}",
                   validator: (DateTime? p0) {
                     if (p0 == null) {
                       BotToast.showText(
-                          text: "Please select a time",
+                          text: "${_i18n()['required']}",
                           duration: Duration(seconds: 5));
-                      return "Please select a time";
+                      return "${_i18n()['required']}";
                     }
                     return null;
                   },
@@ -582,7 +575,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                 bigSeperator,
                 MezButton(
                   height: 50,
-                  label: "Save",
+                  label: "${_i18n()['save']}",
                   onClick: () async {
                     Navigator.pop(context);
                   },

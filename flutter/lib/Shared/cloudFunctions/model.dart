@@ -2262,7 +2262,7 @@ class Offer {
   }
 }
 
-enum OfferType { Promotion, Coupon, MonthlySubscription }
+enum OfferType { Promotion, Coupon, MonthlySubscription, Influencer }
 
 extension ParseOfferTypeToString on OfferType {
   String toFirebaseFormatString() {

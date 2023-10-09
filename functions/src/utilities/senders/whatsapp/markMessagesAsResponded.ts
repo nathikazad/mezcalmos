@@ -1,16 +1,14 @@
-
 import { getHasura } from "../../hasura";
 import { MezError } from "../../../shared/models/Generic/Generic";
 
-
 export interface MarkMessagesAsRespondedDetails {
-  phoneNumber: string,
+  phoneNumber: string;
 }
 
 export interface MarkMessagesResponse {
-  success: boolean,
-  error?: MarkMessagesError
-  unhandledError?: string,
+  success: boolean;
+  error?: MarkMessagesError;
+  unhandledError?: string;
 }
 
 export enum MarkMessagesError {
@@ -18,10 +16,13 @@ export enum MarkMessagesError {
   InvalidParams = "invalidParams",
   UnauthorizedDriver = "unauthorizedDriver",
   NoMessagesFound = "noMessagesFound",
-  AnotherDriverTookTheOrder = "anotherDriverTookTheOrder"
+  AnotherDriverTookTheOrder = "anotherDriverTookTheOrder",
 }
 
-export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsRespondedDetails): Promise<MarkMessagesResponse> {
+export async function markMessagesAsResponded(
+  uid: number,
+  data: MarkMessagesAsRespondedDetails
+): Promise<MarkMessagesResponse> {
   try {
     const phoneNumber = data.phoneNumber;
     if (!phoneNumber) {
@@ -33,24 +34,27 @@ export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsR
 
     // get all messages that match phone number and do not have responded time
     const response = await chain.query({
-      delivery_messages: [{
-        where:
+      delivery_messages: [
         {
-          _and: [{
-            phone_number: {
-              _eq: phoneNumber
-            },
-            responded_time: {
-              _is_null: true
-            }
-          }]
-        }
-      }, {
-        entry: [{}, true],
-        id: true
-      }]
+          where: {
+            _and: [
+              {
+                phone_number: {
+                  _eq: phoneNumber,
+                },
+                responded_time: {
+                  _is_null: true,
+                },
+              },
+            ],
+          },
+        },
+        {
+          entry: [{}, true],
+          id: true,
+        },
+      ],
     });
-
 
     type SetInput = {
       driver_id?: number;
@@ -59,77 +63,81 @@ export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsR
     if (response.delivery_messages.length > 0) {
       // mark all messages as responded and only the last message with driver_id
       let mutationResponse = await chain.mutation({
-        update_delivery_messages_many: [{
-          updates: response.delivery_messages.map((msg, index) => {
-            let setObject: SetInput = {
-              responded_time: new Date()
-            };
+        update_delivery_messages_many: [
+          {
+            updates: response.delivery_messages.map((msg, index) => {
+              let setObject: SetInput = {
+                responded_time: new Date(),
+              };
 
-            if (index === response.delivery_messages.length - 1) {
-              setObject.driver_id = driverId;
-            }
+              if (index === response.delivery_messages.length - 1) {
+                setObject.driver_id = driverId;
+              }
 
-            return {
-              where:
-              {
-                _and: [{
-                  id: { 
-                    _eq: msg.id 
-                  },
-                  responded_time: {
-                    _is_null: true
-                  }
-                }]
-              },
-              _set: setObject
-            };
-          })
-        }, {
-          affected_rows: true
-        }]
+              return {
+                where: {
+                  _and: [
+                    {
+                      id: {
+                        _eq: msg.id,
+                      },
+                      responded_time: {
+                        _is_null: true,
+                      },
+                    },
+                  ],
+                },
+                _set: setObject,
+              };
+            }),
+          },
+          {
+            affected_rows: true,
+          },
+        ],
       });
 
       if (mutationResponse.update_delivery_messages_many?.length ?? 0 > 0)
         return { success: true };
-      else
-        throw new MezError(MarkMessagesError.AnotherDriverTookTheOrder);
+      else throw new MezError(MarkMessagesError.AnotherDriverTookTheOrder);
     } else {
       throw new MezError(MarkMessagesError.NoMessagesFound);
     }
-
   } catch (e: any) {
     if (e instanceof MezError) {
       if (Object.values(MarkMessagesError).includes(e.message as any)) {
         return {
           success: false,
-          error: e.message as any
-        }
+          error: e.message as any,
+        };
       } else {
         return {
           success: false,
           error: MarkMessagesError.UnhandledError,
-          unhandledError: e.message as any
-        }
+          unhandledError: e.message as any,
+        };
       }
     } else {
-      throw e
+      throw e;
     }
-
   }
 }
 
 export async function getDriverId(uid: number) {
   const chain = getHasura();
   const response = await chain.query({
-    delivery_driver: [{
-      where: {
-        user_id: {
-          _eq: uid
-        }
-      }
-    }, {
-      id: true
-    }]
+    delivery_driver: [
+      {
+        where: {
+          user_id: {
+            _eq: uid,
+          },
+        },
+      },
+      {
+        id: true,
+      },
+    ],
   });
 
   if (response.delivery_driver.length < 1) {

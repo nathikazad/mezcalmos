@@ -82,7 +82,10 @@ insert_permissions:
       columns:
         - coupon_code
         - details
+        - name_id
         - influencer_details
+        - service_provider_id
+        - service_provider_type
         - offer_type
         - status
 select_permissions:

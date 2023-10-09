@@ -39,7 +39,8 @@ class ServiceOfferEditViewController {
   TextEditingController minOrderCost = TextEditingController();
   Rxn<DateTime> selectedStartDate = Rxn<DateTime>();
   Rxn<DateTime> selectedEndDate = Rxn<DateTime>();
-  RxBool offerForInfluencer = RxBool(false);
+  bool get offerForInfluencer =>
+      selectedOfferType.value == OfferType.Influencer;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool get haveItems =>
@@ -95,8 +96,8 @@ class ServiceOfferEditViewController {
             currentOffer.value!.details.minimumOrderAmount.toString();
       }
       repeatOffer.value = currentOffer.value!.details.weeklyRepeat;
-      offerForInfluencer.value = currentOffer.value?.influencerDetails != null;
-      if (offerForInfluencer.value) {
+
+      if (currentOffer.value?.influencerDetails != null) {
         selectedRewardType.value =
             currentOffer.value!.influencerDetails!.rewardType;
         rewardController.text =
@@ -141,7 +142,7 @@ class ServiceOfferEditViewController {
 
   void _constructOffer() {
     currentOffer.value = Offer(
-      influencerDetails: offerForInfluencer.value
+      influencerDetails: offerForInfluencer
           ? InfluencerOfferDetails(
               rewardType: selectedRewardType.value,
               rewardValue: double.parse(rewardController.text))
@@ -213,9 +214,9 @@ class ServiceOfferEditViewController {
     selectedItems.refresh();
   }
 
-  void switchOfferInfluencer(bool v) {
-    offerForInfluencer.value = v;
-  }
+  // void switchOfferInfluencer(bool v) {
+  //   offerForInfluencer.value = v;
+  // }
 }
 
 class OfferItemData {

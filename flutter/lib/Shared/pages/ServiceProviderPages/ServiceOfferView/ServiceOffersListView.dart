@@ -91,7 +91,7 @@ class _ServiceOffersListViewState extends State<ServiceOffersListView> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: [
+          children: <Widget>[
             MezAddButton(
               onClick: () async {
                 final bool? needRefetch = await ServiceOfferEditView.navigate(
@@ -112,10 +112,10 @@ class _ServiceOffersListViewState extends State<ServiceOffersListView> {
                 }
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     meduimSeperator,
                     Text(
-                      "Active Offers",
+                      "${_i18n()['activeOffers']}",
                       style: context.textTheme.bodyLarge,
                     ),
                     smallSepartor,
@@ -129,7 +129,7 @@ class _ServiceOffersListViewState extends State<ServiceOffersListView> {
                       },
                     ),
                     MezToggle(
-                        title: "Inactive Offers",
+                        title: "${_i18n()['inactiveOffers']}",
                         content: Column(
                           children: List.generate(
                               viewController.inActiveOffers.length,
@@ -158,7 +158,7 @@ class _ServiceOffersListViewState extends State<ServiceOffersListView> {
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Text(
             offer.couponCode != null
                 ? "${offer.couponCode}"
@@ -171,7 +171,7 @@ class _ServiceOffersListViewState extends State<ServiceOffersListView> {
         ],
       ),
       action: Row(
-        children: [
+        children: <Widget>[
           MezIconButton(
             icon: Icons.bar_chart,
             onTap: null,

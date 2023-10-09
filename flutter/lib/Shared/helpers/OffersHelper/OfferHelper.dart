@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
@@ -311,10 +310,12 @@ extension OffersHelper on cModels.Offer {
     if (details.validityRangeStart != null &&
         details.validityRangeEnd != null &&
         status == cModels.OfferStatus.Active) {
-      final DateTime now = DateTime.now();
-      final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-      final DateTime startDate = dateFormat.parse(details.validityRangeStart!);
-      final DateTime endDate = dateFormat.parse(details.validityRangeEnd!);
+      final DateTime now = DateTime.now().toLocal();
+      // final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+      final DateTime startDate =
+          DateTime.parse(details.validityRangeStart!).toLocal();
+      final DateTime endDate =
+          DateTime.parse(details.validityRangeEnd!).toLocal();
 
       if (now.isAfter(startDate) && now.isBefore(endDate)) {
         return true;
@@ -345,6 +346,8 @@ extension OffersHelper on cModels.Offer {
         return Icons.price_check;
       case cModels.OfferType.MonthlySubscription:
         return Icons.workspace_premium_rounded;
+      case cModels.OfferType.Influencer:
+        return Icons.people;
     }
   }
 }

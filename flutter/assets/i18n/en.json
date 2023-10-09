@@ -2443,6 +2443,9 @@
     },
     "pages": {
       "ServiceOfferView": {
+        "activeOffers": "Active offers",
+        "inactiveOffers": "Inactive offers",
+        "influencer": "Influencer",
         "offers": "Offers",
         "addOffer": "Add offer",
         "coupon": "Coupon",
@@ -2454,7 +2457,40 @@
         "particularCategory": "Particular Category",
         "flatAmount": "Flat",
         "percentage": "Percentage",
-        "anotherSameFlat": "Another Same"
+        "anotherSameFlat": "Another Same",
+        "selectYourOffer": "Select your offer",
+        "couponCode": "Coupon code",
+        "enterYourCouponCode": "Enter your coupon code",
+        "name": "Name",
+        "enterYourPromotionName": "Enter your promotion name",
+        "selectTypeOfOrder": "Select type of order",
+        "selectRewardType": "Select reward type",
+        "rewardValue": "Reward value",
+        "offerAvailibilty": "Offer availability",
+
+        "discountType": "Discount type",
+        "rewardType": "Reward type",
+        "minimumOrderCost": "Minimum order cost",
+        "leaveItEmptyIfThereIsNoMinimumOrderCost": "Leave it empty if there is no minimum order cost",
+        "selectYourAvailability": "Select your availability",
+        "selectYourTime": "Select your time",
+
+        "offerAvailability": "Offer availability",
+        "startDate": "Start date",
+        "endDate": "End date",
+        "save": "Save",
+        "items": "Items",
+        "allItems": "All items",
+        "selectItems": "Select items",
+
+        "customerTwoItemText": "When customer adds two then the second gets discount.",
+        "selectYourAv": "Please select your availability",
+        "startDateError": "Start date must be before end date",
+        "noItemsSelected": "No particular items have been selected this offer will be applied to all items",
+        "add": "Add",
+        "update": "Update",
+        "required": "Required",
+        "notValid": "Not valid"
       },
       "ServiceProviderPages": {
         "ServiceScheduleViews": {
