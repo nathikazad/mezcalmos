@@ -176,11 +176,9 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                           width: 2,
                         ),
                         Text(
-                          widget.order.deliveryCost!.toPriceString(),
-                          style: context.txt.titleSmall?.copyWith(
-                            color: blackColor,
-                          ),
-                        )
+                            widget.order.deliveryCost!
+                                .toPriceString(hideZero: true),
+                            style: context.txt.bodyMedium)
                       ],
                     ),
                   // Spacer(),
