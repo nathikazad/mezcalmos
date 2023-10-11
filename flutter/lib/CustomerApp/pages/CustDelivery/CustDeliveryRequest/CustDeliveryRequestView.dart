@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
@@ -14,11 +13,12 @@ import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/LoadingWidgets/MezLoadingOverlay.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/ServiAmigosCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -55,35 +55,42 @@ class _CustDeliveryRequestViewState extends State<CustDeliveryRequestView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: MezcalmosAppBar(
-        AppBarLeftButtonType.Back,
-        ordersRoute: CustomerRoutes.customerOrdersRoute,
-        onClick: viewController.handleBack,
-        title: viewController.deliveryType.name,
-      ),
-      body: Obx(
-        () {
-          return PageView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: viewController.pageController,
-              children: <Widget>[
-                _itemsPage(),
-                _deliveryPage(context),
-              ]);
-        },
-      ),
-      bottomSheet: Obx(
-        () => MezButton(
-          label: viewController.currentPage.value == 0
-              ? '${_i18n()["next"]}'
-              : '${_i18n()["orderNow"]}',
-          withGradient: true,
-          height: 75,
-          onClick: () async {
-            await viewController.handleNext();
-          },
-          borderRadius: 0,
+    return Obx(
+      () => MezLoadingOverlay(
+        isLoading: viewController.showRedirectText.value,
+        label: "${_i18n()['redirectText']}",
+        labelStyle: context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+        child: Scaffold(
+          appBar: MezcalmosAppBar(
+            AppBarLeftButtonType.Back,
+            ordersRoute: CustomerRoutes.customerOrdersRoute,
+            onClick: viewController.handleBack,
+            title: viewController.deliveryType.name,
+          ),
+          body: Obx(
+            () {
+              return PageView(
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: viewController.pageController,
+                  children: <Widget>[
+                    _itemsPage(),
+                    _deliveryPage(context),
+                  ]);
+            },
+          ),
+          bottomSheet: Obx(
+            () => MezButton(
+              label: viewController.currentPage.value == 0
+                  ? '${_i18n()["next"]}'
+                  : '${_i18n()["orderNow"]}',
+              withGradient: true,
+              height: 75,
+              onClick: () async {
+                await viewController.handleNext();
+              },
+              borderRadius: 0,
+            ),
+          ),
         ),
       ),
     );
@@ -95,21 +102,22 @@ class _CustDeliveryRequestViewState extends State<CustDeliveryRequestView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            '${_i18n()["deliveryCompany"]}',
-            style: context.txt.bodyLarge,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          if (viewController.company.value != null)
-            MezCard(
-                firstAvatarBgImage: CachedNetworkImageProvider(
-                    viewController.company.value!.info.image),
-                content: Text(
-                  viewController.company.value!.info.name,
-                  style: context.txt.bodyLarge,
-                )),
+          // Text(
+          //   '${_i18n()["deliveryCompany"]}',
+          //   style: context.txt.bodyLarge,
+          // ),
+          // SizedBox(
+          //   height: 5,
+          // ),
+          // if (viewController.company.value != null)
+          //   MezCard(
+          //       firstAvatarBgImage: CachedNetworkImageProvider(
+          //           viewController.company.value!.info.image),
+          //       content: Text(
+          //         viewController.company.value!.info.name,
+          //         style: context.txt.bodyLarge,
+          //       )),
+          ServiceAmigosCard(),
 
           Form(
             key: viewController.secondFormKey,
@@ -158,17 +166,19 @@ class _CustDeliveryRequestViewState extends State<CustDeliveryRequestView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            '${_i18n()["from"]}',
-            style: context.txt.bodyLarge,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          _fromFeild(),
-          SizedBox(
-            height: 15,
-          ),
+          if (viewController.showFromLocation) ...<Widget>[
+            Text(
+              '${_i18n()["from"]}',
+              style: context.txt.bodyLarge,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            _fromFeild(),
+            SizedBox(
+              height: 15,
+            ),
+          ],
           Text(
             '${_i18n()["to"]}',
             style: context.txt.bodyLarge,

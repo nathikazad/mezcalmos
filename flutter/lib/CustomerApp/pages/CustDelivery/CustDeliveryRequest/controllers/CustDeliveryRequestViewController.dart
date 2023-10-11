@@ -11,10 +11,10 @@ import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
 import 'package:mezcalmos/CustomerApp/models/CustDeliveryType.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -48,12 +48,14 @@ class CustDeliveryRequestViewController {
   GlobalKey<FormState> secondFormKey = GlobalKey<FormState>();
   Rxn<num> shippingCost = Rxn();
   DeliveryCost? deliveryCost;
+  RxBool showRedirectText = RxBool(false);
 
   MapHelper.RouteInformation? routeInfo;
 
   // getters //
 
   bool get isFromLocation => fromLoc.value != null;
+  bool get showFromLocation => deliveryType == CustDeliveryType.Open;
   // bool get canOrder
 
   // methods //
@@ -126,12 +128,12 @@ class CustDeliveryRequestViewController {
   Future<void> _makeOrder() async {
     final bool nameAndImageChecker =
         await Get.find<AuthController>().nameAndImageChecker();
-    final bool? isOpen =
-        await get_service_is_open(detailsId: company.value!.serviceDetailsId);
-    if (isOpen != true) {
-      showServiceClosedSnackBar();
-      return;
-    }
+    // final bool? isOpen =
+    //     await get_service_is_open(detailsId: company.value!.serviceDetailsId);
+    // if (isOpen != true) {
+    //   showServiceClosedSnackBar();
+    //   return;
+    // }
     if (nameAndImageChecker) {
       await _callCloudFunc();
     }
@@ -140,8 +142,31 @@ class CustDeliveryRequestViewController {
   Future<void> _callCloudFunc() async {
     mezDbgPrint("Calling cloud func with from text : ${fromLocText.text}");
     try {
+      showRedirectText.value = true;
+
       final String message = await contructOrderMessage();
+
       mezDbgPrint(message);
+      if (company.value?.info.phoneNumber != null) {
+        try {
+          final bool res = await callWhatsappNumber(
+              company.value!.info.phoneNumber!,
+              message: message);
+
+          // if (res) {
+          //   await _sendOrderToDb();
+          // }
+          showRedirectText.value = false;
+        } catch (e, stk) {
+          showErrorSnackBar();
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
+        }
+      } else {
+        showErrorSnackBar(errorText: "Company don't have a phonenumber");
+      }
+      showRedirectText.value = false;
+
       //  await _uploadItemsImages();
       // final cModels.CreateCourierResponse res =
       //     await CloudFunctions.delivery3_createCourierOrder(
@@ -299,7 +324,7 @@ class CustDeliveryRequestViewController {
     //             : "");
 
     final String items =
-        "👉 Items:\n${this.items.map<String>((CourierItem e) => "${e.toReadableString()}").join("\n")}";
+        "👉 Items:\n${_constructItems().map<String>((CourierItem e) => "${e.toReadableString()}").join("\n")}";
 
     final String restaurantName = "🏠 Delivery Company: Servi Amigos";
 
@@ -330,5 +355,20 @@ class CustDeliveryRequestViewController {
     final String cleanedMessage = message.replaceAll(RegExp(r'[\[\]{},]'), '');
 
     return cleanedMessage;
+  }
+
+  List<CourierItem> _constructItems() {
+    return items
+        .asMap()
+        .entries
+        .map(
+          (MapEntry<int, CourierItem> e) => CourierItem(
+            name: itemsNames[e.key].text.inCaps,
+            image: e.value.image,
+            estCost: num.tryParse(itemsEstCosts[e.key].text),
+            notes: itemsNotes[e.key].text.inCaps,
+          ),
+        )
+        .toList();
   }
 }

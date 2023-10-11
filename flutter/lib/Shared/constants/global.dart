@@ -47,47 +47,47 @@ const int nSplashScreenTimer = 1;
 // const int nQualityCompressionOfUserImage = 10;
 const int nDefaultCounterOfferValidExpireTimeInSeconds = 30;
 const int nScheduledCounterOfferValidExpireTimeInSeconds = 900; // 15mins
-const Map<String, dynamic> defaultSchedule = {
-  "monday": {
+const Map<String, dynamic> defaultSchedule = <String, dynamic>{
+  "monday": <String, Object>{
     "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    "openHours": <Map<String, Object>>[
+      <String, Object>{"from": "8:00", "isOpen": false, "to": "20:00"}
     ],
   },
-  "tuesday": {
+  "tuesday": <String, Object>{
     "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    "openHours": <Map<String, Object>>[
+      <String, Object>{"from": "8:00", "isOpen": false, "to": "20:00"}
     ],
   },
-  "wednesday": {
+  "wednesday": <String, Object>{
     "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    "openHours": <Map<String, Object>>[
+      <String, Object>{"from": "8:00", "isOpen": false, "to": "20:00"}
     ],
   },
-  "thursday": {
+  "thursday": <String, Object>{
     "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    "openHours": <Map<String, Object>>[
+      <String, Object>{"from": "8:00", "isOpen": false, "to": "20:00"}
     ],
   },
-  "friday": {
+  "friday": <String, Object>{
     "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    "openHours": <Map<String, Object>>[
+      <String, Object>{"from": "8:00", "isOpen": false, "to": "20:00"}
     ],
   },
-  "saturday": {
+  "saturday": <String, Object>{
     "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    "openHours": <Map<String, Object>>[
+      <String, Object>{"from": "8:00", "isOpen": false, "to": "20:00"}
     ],
   },
-  "sunday": {
+  "sunday": <String, Object>{
     "isOpen": true,
-    "openHours": [
-      {"from": "8:00", "isOpen": false, "to": "20:00"}
+    "openHours": <Map<String, Object>>[
+      <String, Object>{"from": "8:00", "isOpen": false, "to": "20:00"}
     ],
   },
 };
@@ -204,6 +204,12 @@ const String aTourismAgency = "assets/images/customer/tourismAgency.png";
 const String aMealPlanning = "assets/images/customer/mealPlanning.png";
 const String aRealEstate = "assets/images/customer/realEstate.png";
 const String aLanguageSchool = "assets/images/customer/languageSchool.png";
+
+// CustDelivery
+const String aChedraui = "assets/images/customer/custDelivery/chedraui.png";
+const String aOpenDv = "assets/images/customer/custDelivery/open.png";
+const String aPharmacy = "assets/images/customer/custDelivery/pharmacy.png";
+const String aFruitsAndVeg = "assets/images/customer/custDelivery/fruits.png";
 
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";
@@ -331,7 +337,7 @@ const Color blackColor = Colors.black;
 const Color unratedStarColor = Color(0XFFF2F2F2);
 const Color softPurple = Color(0xFFE0E4FF);
 const LinearGradient bluePurpleGradient = LinearGradient(
-  colors: [
+  colors: <Color>[
     primaryBlueColor,
     purpleColor,
   ],

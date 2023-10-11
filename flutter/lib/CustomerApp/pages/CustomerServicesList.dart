@@ -42,8 +42,8 @@ class _CustServicesListState extends State<CustServicesList>
           children: <Widget>[
             meduimSeperator,
             ServicesCard(
-              title: "Food",
-              subtitle: "Food subtitle",
+              title: "${_i18n()['food']['title']}",
+              subtitle: "${_i18n()['food']['subtitle']}",
               imageAssetPath: aRestaurant,
               onTap: () {
                 CustFoodListView.navigate();
@@ -51,8 +51,8 @@ class _CustServicesListState extends State<CustServicesList>
             ),
             smallSepartor,
             ServicesCard(
-              title: "Delivery",
-              subtitle: "Delivey subtitle",
+              title: "${_i18n()['courier']['title']}",
+              subtitle: "${_i18n()['courier']['subtitle']}",
               imageAssetPath: aDelivery,
               onTap: () {
                 CustDeliveryWrapperView.navigate();

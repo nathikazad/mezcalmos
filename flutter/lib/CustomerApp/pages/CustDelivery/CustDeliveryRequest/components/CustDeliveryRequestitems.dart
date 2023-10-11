@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["courrier"]["CustRequestCourierView"]["CustRequestCourierItems"];
@@ -38,6 +37,7 @@ class CustDeliveryRequestItems extends StatelessWidget {
           ),
           MezAddButton(
               btnHeight: 50,
+              title: "${_i18n()['addItem']}",
               onClick: () {
                 viewController.addNewEmptyItem();
               }),
@@ -116,44 +116,44 @@ class CustDeliveryRequestItems extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                Obx(
-                  () => InkWell(
-                    onTap: () async {
-                      if (viewController.imagesFiles[index].path.isEmpty) {
-                        await viewController.addItemImage(
-                            itemIndex: index, context: context);
-                      } else {
-                        viewController.removeItemImage(index);
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          image: (viewController
-                                  .imagesFiles[index].path.isNotEmpty)
-                              ? DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: FileImage(
-                                      viewController.imagesFiles[index]))
-                              : null),
-                      width: 49,
-                      height: 49,
-                      child: (viewController.imagesFiles[index].path.isNotEmpty)
-                          ? Align(
-                              alignment: Alignment.topRight,
-                              child: Icon(Icons.cancel_rounded,
-                                  color: offLightShadeGreyColor, size: 12.5.sp),
-                            )
-                          : Center(
-                              child: (viewController.imagesLoading
-                                      .contains(index))
-                                  ? CircularProgressIndicator()
-                                  : Icon(Icons.add_photo_alternate_outlined),
-                            ),
-                    ),
-                  ),
-                )
+                // Obx(
+                //   () => InkWell(
+                //     onTap: () async {
+                //       if (viewController.imagesFiles[index].path.isEmpty) {
+                //         await viewController.addItemImage(
+                //             itemIndex: index, context: context);
+                //       } else {
+                //         viewController.removeItemImage(index);
+                //       }
+                //     },
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //           color: Colors.white,
+                //           borderRadius: BorderRadius.circular(5),
+                //           image: (viewController
+                //                   .imagesFiles[index].path.isNotEmpty)
+                //               ? DecorationImage(
+                //                   fit: BoxFit.cover,
+                //                   image: FileImage(
+                //                       viewController.imagesFiles[index]))
+                //               : null),
+                //       width: 49,
+                //       height: 49,
+                //       child: (viewController.imagesFiles[index].path.isNotEmpty)
+                //           ? Align(
+                //               alignment: Alignment.topRight,
+                //               child: Icon(Icons.cancel_rounded,
+                //                   color: offLightShadeGreyColor, size: 12.5.sp),
+                //             )
+                //           : Center(
+                //               child: (viewController.imagesLoading
+                //                       .contains(index))
+                //                   ? CircularProgressIndicator()
+                //                   : Icon(Icons.add_photo_alternate_outlined),
+                //             ),
+                //     ),
+                //   ),
+                // )
                 // MezIconButton(
                 //   icon: Icons.image,
                 //   iconColor: Colors.black,

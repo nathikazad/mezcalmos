@@ -5,6 +5,10 @@ extension ParseCustDeliveryTypeToString on CustDeliveryType {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
+
+  String get imageAsset {
+    return "assets/images/customer/custDelivery/${toFirebaseFormatString()}.png";
+  }
 }
 
 extension ParseStringToCustDeliveryType on String {

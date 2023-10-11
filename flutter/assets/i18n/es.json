@@ -576,6 +576,27 @@
       }
     },
     "pages": {
+      "CustDelivery": {
+        "CustDeliveryWrapperView": {
+          "delivery": "Entrega",
+          "fruits": {
+            "title": "Frutas y Verduras",
+            "subtitle": "Encuentra y compra frutas, verduras, granos y otros productos cultivados localmente directamente de los agricultores."
+          },
+          "open": {
+            "title": "Entrega Abierta",
+            "subtitle": "Selecciona los productos que deseas, los conductores los entregarán rápidamente en tu ubicación."
+          },
+          "pharmacy": {
+            "title": "Farmacia",
+            "subtitle": "Tu destino confiable para la salud y el bienestar."
+          },
+          "chedraui": {
+            "title": "Chedraui",
+            "subtitle": "Selecciona los productos que deseas de la tienda de comestibles Chedraui."
+          }
+        }
+      },
       "CustOrderView": {
         "CustOrderView": {
           "order": "Orden",
@@ -884,6 +905,7 @@
         },
         "CustRequestCourierView": {
           "title": "Entrega abierta",
+          "redirectText": "Ahora será redirigido a WhatsApp con su pedido y número de empresas de entrega completada. Puede enviar mensajes a la compañía de entrega y le responderán.",
           "from": "De",
           "to": "A",
           "thisFieldCanBeEmpty": "Este campo puede estar vacío",
@@ -894,6 +916,7 @@
           "CustRequestCourierItems": {
             "item": "Artículo",
             "remove": "Eliminar",
+            "addItem": "Añadir artículo",
             "whatCanWeGetYou": "¿Qué podemos conseguirte?",
             "name": "Nombre",
             "notes": "Notas",
@@ -2162,8 +2185,8 @@
           "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
         },
         "courier": {
-          "title": "Entrega abierta",
-          "subtitle": "Obtenga la entrega de todo lo que desee a su ubicación."
+          "title": "Entrega",
+          "subtitle": "Los conductores entregarán de inmediato sus productos seleccionados a su ubicación."
         },
         "comingSoon": "Próximamente...",
         "supportText": "Necesitas ayuda ? contacta con nuestro equipo de soporte",

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 
@@ -33,7 +34,7 @@ class ServicesCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 17.5),
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +46,7 @@ class ServicesCard extends StatelessWidget {
                   children: <Widget>[
                     //================= title=============
                     Text("$title", style: textTheme.displaySmall),
-                    //================ subtitle============
+                    smallSepartor,
                     Text("$subtitle", style: textTheme.titleMedium)
                   ],
                 ),
