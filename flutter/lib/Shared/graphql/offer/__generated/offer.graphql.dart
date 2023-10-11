@@ -2480,7 +2480,7 @@ extension ClientExtension$Query$check_offer_applied on graphql.GraphQLClient {
 
 class Query$check_offer_applied$service_provider_offer_applied {
   Query$check_offer_applied$service_provider_offer_applied({
-    required this.order_id,
+    this.order_id,
     required this.$__typename,
   });
 
@@ -2489,12 +2489,12 @@ class Query$check_offer_applied$service_provider_offer_applied {
     final l$order_id = json['order_id'];
     final l$$__typename = json['__typename'];
     return Query$check_offer_applied$service_provider_offer_applied(
-      order_id: (l$order_id as int),
+      order_id: (l$order_id as int?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final int order_id;
+  final int? order_id;
 
   final String $__typename;
 
@@ -2591,9 +2591,8 @@ class _CopyWithImpl$Query$check_offer_applied$service_provider_offer_applied<
     Object? $__typename = _undefined,
   }) =>
       _then(Query$check_offer_applied$service_provider_offer_applied(
-        order_id: order_id == _undefined || order_id == null
-            ? _instance.order_id
-            : (order_id as int),
+        order_id:
+            order_id == _undefined ? _instance.order_id : (order_id as int?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

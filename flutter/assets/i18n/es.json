@@ -4475,6 +4475,24 @@
       "InfTabsView": {
         "deals": "Ofertas",
         "earnings": "Ganancias"
+      },
+      "InfDealsView": {
+        "deals": "Ofertas",
+        "myOffers": "Mis ofertas",
+        "openOffers": "Ofertas abiertas",
+        "noDeals": "No se encontraron ofertas",
+        "noDealsText": "Una vez que su socio comercial cree ofertas, se mostrará aquí.",
+        "refCode": "Código de referencia",
+        "refTitle": "Envíe una referencia utilizando este código QR",
+        "or": "O",
+        "copyLink": "Copiar link",
+        "downloadedQr": "Descargar la imagen QR"
+      },
+      "InfEarningsView": {
+        "earnings": "Ganancias",
+        "totalEarnings": "Ganancias Totales",
+        "noEranings": "Todavía no hay ganancias",
+        "noEarningsSubtitle": "Una vez que su referencia realizó una compra, se le notificará y sus ganancias aumentarán."
       }
     }
   },

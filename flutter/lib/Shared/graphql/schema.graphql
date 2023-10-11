@@ -21741,7 +21741,7 @@ type mutation_root {
   """
   delete single row from the table: "service_provider.offer_applied"
   """
-  delete_service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, order_type: String!): service_provider_offer_applied
+  delete_service_provider_offer_applied_by_pk(id: Int!): service_provider_offer_applied
 
   """
   delete single row from the table: "service_provider.offer"
@@ -30688,7 +30688,7 @@ type query_root {
   """
   fetch data from the table: "service_provider.offer_applied" using primary key columns
   """
-  service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, order_type: String!): service_provider_offer_applied
+  service_provider_offer_applied_by_pk(id: Int!): service_provider_offer_applied
 
   """
   fetch data from the table: "service_provider.offer" using primary key columns
@@ -41420,6 +41420,12 @@ columns and relationships of "service_provider.offer_applied"
 type service_provider_offer_applied {
   """An object relationship"""
   business_order: business_order_request
+  comission: money
+  id: Int!
+
+  """An object relationship"""
+  influencer: service_provider_influencer
+  influencer_id: Int
 
   """An object relationship"""
   laundry_order: laundry_order
@@ -41428,7 +41434,8 @@ type service_provider_offer_applied {
   """An object relationship"""
   offer: service_provider_offer!
   offer_id: Int!
-  order_id: Int!
+  order_id: Int
+  order_total: money
   order_type: String!
 
   """An object relationship"""
@@ -41462,9 +41469,13 @@ type service_provider_offer_applied_aggregate_fields {
 
 """aggregate avg on columns"""
 type service_provider_offer_applied_avg_fields {
+  comission: Float
+  id: Float
+  influencer_id: Float
   loss: Float
   offer_id: Float
   order_id: Float
+  order_total: Float
 }
 
 """
@@ -41476,11 +41487,16 @@ input service_provider_offer_applied_bool_exp {
   _not: service_provider_offer_applied_bool_exp
   _or: [service_provider_offer_applied_bool_exp!]
   business_order: business_order_request_bool_exp
+  comission: money_comparison_exp
+  id: Int_comparison_exp
+  influencer: service_provider_influencer_bool_exp
+  influencer_id: Int_comparison_exp
   laundry_order: laundry_order_bool_exp
   loss: money_comparison_exp
   offer: service_provider_offer_bool_exp
   offer_id: Int_comparison_exp
   order_id: Int_comparison_exp
+  order_total: money_comparison_exp
   order_type: String_comparison_exp
   restaurant_order: restaurant_order_bool_exp
 }
@@ -41490,7 +41506,12 @@ unique or primary key constraints on table "service_provider.offer_applied"
 """
 enum service_provider_offer_applied_constraint {
   """
-  unique or primary key constraint on columns "offer_id", "order_id", "order_type"
+  unique or primary key constraint on columns "id"
+  """
+  offer_applied_id_key
+
+  """
+  unique or primary key constraint on columns "id"
   """
   offer_applied_pkey
 }
@@ -41499,9 +41520,13 @@ enum service_provider_offer_applied_constraint {
 input type for incrementing numeric columns in table "service_provider.offer_applied"
 """
 input service_provider_offer_applied_inc_input {
+  comission: money
+  id: Int
+  influencer_id: Int
   loss: money
   offer_id: Int
   order_id: Int
+  order_total: money
 }
 
 """
@@ -41509,28 +41534,41 @@ input type for inserting data into table "service_provider.offer_applied"
 """
 input service_provider_offer_applied_insert_input {
   business_order: business_order_request_obj_rel_insert_input
+  comission: money
+  id: Int
+  influencer: service_provider_influencer_obj_rel_insert_input
+  influencer_id: Int
   laundry_order: laundry_order_obj_rel_insert_input
   loss: money
   offer: service_provider_offer_obj_rel_insert_input
   offer_id: Int
   order_id: Int
+  order_total: money
   order_type: String
   restaurant_order: restaurant_order_obj_rel_insert_input
 }
 
 """aggregate max on columns"""
 type service_provider_offer_applied_max_fields {
+  comission: money
+  id: Int
+  influencer_id: Int
   loss: money
   offer_id: Int
   order_id: Int
+  order_total: money
   order_type: String
 }
 
 """aggregate min on columns"""
 type service_provider_offer_applied_min_fields {
+  comission: money
+  id: Int
+  influencer_id: Int
   loss: money
   offer_id: Int
   order_id: Int
+  order_total: money
   order_type: String
 }
 
@@ -41559,26 +41597,38 @@ Ordering options when selecting data from "service_provider.offer_applied".
 """
 input service_provider_offer_applied_order_by {
   business_order: business_order_request_order_by
+  comission: order_by
+  id: order_by
+  influencer: service_provider_influencer_order_by
+  influencer_id: order_by
   laundry_order: laundry_order_order_by
   loss: order_by
   offer: service_provider_offer_order_by
   offer_id: order_by
   order_id: order_by
+  order_total: order_by
   order_type: order_by
   restaurant_order: restaurant_order_order_by
 }
 
 """primary key columns input for table: service_provider.offer_applied"""
 input service_provider_offer_applied_pk_columns_input {
-  offer_id: Int!
-  order_id: Int!
-  order_type: String!
+  id: Int!
 }
 
 """
 select columns of table "service_provider.offer_applied"
 """
 enum service_provider_offer_applied_select_column {
+  """column name"""
+  comission
+
+  """column name"""
+  id
+
+  """column name"""
+  influencer_id
+
   """column name"""
   loss
 
@@ -41589,6 +41639,9 @@ enum service_provider_offer_applied_select_column {
   order_id
 
   """column name"""
+  order_total
+
+  """column name"""
   order_type
 }
 
@@ -41596,31 +41649,47 @@ enum service_provider_offer_applied_select_column {
 input type for updating data in table "service_provider.offer_applied"
 """
 input service_provider_offer_applied_set_input {
+  comission: money
+  id: Int
+  influencer_id: Int
   loss: money
   offer_id: Int
   order_id: Int
+  order_total: money
   order_type: String
 }
 
 """aggregate stddev on columns"""
 type service_provider_offer_applied_stddev_fields {
+  comission: Float
+  id: Float
+  influencer_id: Float
   loss: Float
   offer_id: Float
   order_id: Float
+  order_total: Float
 }
 
 """aggregate stddev_pop on columns"""
 type service_provider_offer_applied_stddev_pop_fields {
+  comission: Float
+  id: Float
+  influencer_id: Float
   loss: Float
   offer_id: Float
   order_id: Float
+  order_total: Float
 }
 
 """aggregate stddev_samp on columns"""
 type service_provider_offer_applied_stddev_samp_fields {
+  comission: Float
+  id: Float
+  influencer_id: Float
   loss: Float
   offer_id: Float
   order_id: Float
+  order_total: Float
 }
 
 """
@@ -41636,23 +41705,40 @@ input service_provider_offer_applied_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_provider_offer_applied_stream_cursor_value_input {
+  comission: money
+  id: Int
+  influencer_id: Int
   loss: money
   offer_id: Int
   order_id: Int
+  order_total: money
   order_type: String
 }
 
 """aggregate sum on columns"""
 type service_provider_offer_applied_sum_fields {
+  comission: money
+  id: Int
+  influencer_id: Int
   loss: money
   offer_id: Int
   order_id: Int
+  order_total: money
 }
 
 """
 update columns of table "service_provider.offer_applied"
 """
 enum service_provider_offer_applied_update_column {
+  """column name"""
+  comission
+
+  """column name"""
+  id
+
+  """column name"""
+  influencer_id
+
   """column name"""
   loss
 
@@ -41661,6 +41747,9 @@ enum service_provider_offer_applied_update_column {
 
   """column name"""
   order_id
+
+  """column name"""
+  order_total
 
   """column name"""
   order_type
@@ -41679,23 +41768,35 @@ input service_provider_offer_applied_updates {
 
 """aggregate var_pop on columns"""
 type service_provider_offer_applied_var_pop_fields {
+  comission: Float
+  id: Float
+  influencer_id: Float
   loss: Float
   offer_id: Float
   order_id: Float
+  order_total: Float
 }
 
 """aggregate var_samp on columns"""
 type service_provider_offer_applied_var_samp_fields {
+  comission: Float
+  id: Float
+  influencer_id: Float
   loss: Float
   offer_id: Float
   order_id: Float
+  order_total: Float
 }
 
 """aggregate variance on columns"""
 type service_provider_offer_applied_variance_fields {
+  comission: Float
+  id: Float
+  influencer_id: Float
   loss: Float
   offer_id: Float
   order_id: Float
+  order_total: Float
 }
 
 """aggregate avg on columns"""
@@ -48549,7 +48650,7 @@ type subscription_root {
   """
   fetch data from the table: "service_provider.offer_applied" using primary key columns
   """
-  service_provider_offer_applied_by_pk(offer_id: Int!, order_id: Int!, order_type: String!): service_provider_offer_applied
+  service_provider_offer_applied_by_pk(id: Int!): service_provider_offer_applied
 
   """
   fetch data from the table in a streaming manner: "service_provider.offer_applied"

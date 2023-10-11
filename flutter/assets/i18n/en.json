@@ -4444,6 +4444,24 @@
       "InfTabsView": {
         "deals": "Deals",
         "earnings": "Earnings"
+      },
+      "InfDealsView": {
+        "deals": "Deals",
+        "myOffers": "My offers",
+        "openOffers": "Open offers",
+        "noDeals": "No deals found",
+        "noDealsText": "Once your business partner create deals it will be displayed here.",
+        "refCode": "Referral code",
+        "refTitle": "Send a referral using this QR code",
+        "or": "OR",
+        "copyLink": "Copy link",
+        "downloadedQr": "Download QR image"
+      },
+      "InfEarningsView": {
+        "earnings": "Earnings",
+        "totalEarnings": "Total earnings",
+        "noEranings": "No earnings yet",
+        "noEarningsSubtitle": "Once your referral made a purchase, you’ll be notified and your earnings will increase."
       }
     }
   },

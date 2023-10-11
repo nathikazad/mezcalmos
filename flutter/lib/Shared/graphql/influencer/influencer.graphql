@@ -95,3 +95,14 @@ mutation InsertInfluencerOffer($influencer_id: Int, $offer_id: Int) {
     }
   }
 }
+query getInfluencerTotalComissions($influencer_id: Int!) {
+  service_provider_offer_applied_aggregate(
+    where: { influencer_id: { _eq: $influencer_id } }
+  ) {
+    aggregate {
+      sum {
+        comission
+      }
+    }
+  }
+}

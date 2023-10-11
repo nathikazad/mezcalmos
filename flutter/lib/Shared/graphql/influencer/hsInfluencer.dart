@@ -199,3 +199,19 @@ Future<bool> unassign_influencer_offer(
           ?.affected_rows ==
       1;
 }
+
+Future<num?> get_influencer_earnings_sum({required int influencerId}) async {
+  final QueryResult<Query$getInfluencerTotalComissions> res =
+      await _db.graphQLClient.query$getInfluencerTotalComissions(
+          Options$Query$getInfluencerTotalComissions(
+              fetchPolicy: FetchPolicy.networkOnly,
+              variables: Variables$Query$getInfluencerTotalComissions(
+                  influencer_id: influencerId)));
+
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+
+  return res.parsedData?.service_provider_offer_applied_aggregate.aggregate?.sum
+      ?.comission;
+}
