@@ -82,7 +82,7 @@ class DriverCurrentOrdersController {
       //  openOrders.value = await get_delivery_minimal_orders(withCache: false);
 
       currentOrders.value = await get_delivery_minimal_orders(
-              status: MinimalDeliveryOrderStatus.Open,
+              status: MinimalDeliveryOrderStatus.InProcess,
               driverId: opAuthController.driverId!,
               limit: 20,
               offset: 0) ??
@@ -98,7 +98,7 @@ class DriverCurrentOrdersController {
   void _listenOnOrders() {
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener = listen_delivery_minimal_orders(
-              status: MinimalDeliveryOrderStatus.Open,
+              status: MinimalDeliveryOrderStatus.InProcess,
               driverId: opAuthController.driverId!,
               limit: 20,
               offset: 0)

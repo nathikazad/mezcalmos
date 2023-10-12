@@ -26,6 +26,7 @@ select_permissions:
         - finished_time
         - user_id
         - responded_time
+        - show_driver_info
       filter: {}
 update_permissions:
   - role: delivery_driver
