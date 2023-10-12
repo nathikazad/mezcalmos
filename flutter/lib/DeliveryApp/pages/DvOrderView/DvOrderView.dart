@@ -184,6 +184,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                         : null,
                     firstAvatarIcon:
                         item.image == null ? Icons.fastfood_rounded : null,
+                    firstAvatarIconColor: Colors.white,
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
