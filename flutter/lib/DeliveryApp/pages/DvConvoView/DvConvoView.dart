@@ -163,7 +163,7 @@ class _DvConvoViewState extends State<DvConvoView> {
   }
 
   Widget _driverResponded(BuildContext context, DeliveryMessage message) {
-    if (message.driverName != null)
+    if (message.showDriverInfo && message.driverName != null)
       return Container(
         margin: const EdgeInsets.symmetric(vertical: 8),
         child: Text.rich(TextSpan(children: [
