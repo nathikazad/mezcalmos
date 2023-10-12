@@ -11,6 +11,7 @@ import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
 import 'package:mezcalmos/CustomerApp/models/CustDeliveryType.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -22,6 +23,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/env.dart';
 
 class CustDeliveryRequestViewController {
   late CustDeliveryType deliveryType;
@@ -53,6 +55,7 @@ class CustDeliveryRequestViewController {
   MapHelper.RouteInformation? routeInfo;
 
   // getters //
+  int get _companyId => MezEnv.appLaunchMode == AppLaunchMode.prod ? 3 : 7;
 
   bool get isFromLocation => fromLoc.value != null;
   bool get showFromLocation => deliveryType == CustDeliveryType.Open;
@@ -61,6 +64,7 @@ class CustDeliveryRequestViewController {
   // methods //
   Future<void> init({required CustDeliveryType deliveryType}) async {
     this.deliveryType = deliveryType;
+    company.value = await get_delivery_company(companyId: _companyId);
     if (_authController.isUserSignedIn) {
       toLoc.value = Get.find<CustomerAuthController>()
           .customer
