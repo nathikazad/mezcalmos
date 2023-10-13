@@ -80,7 +80,9 @@
         "flutter_callkit_incoming": "^1.0.3+1",
         "soundpool": "^2.2.0",
         "permission_handler": "^10.0.0",
-
+        "uni_links": "0.5.1",
+        "uni_links_platform_interface": "1.0.0",
+        "uni_links_web": "0.1.0",
         "image_cropper": "^3.0.0",
         "image_picker": "^0.8.4",
         "progress_indicators": "^1.0.0",
@@ -443,9 +445,6 @@
       },
       "pubspec": {
         "dependencies": {
-          "uni_links": "0.5.1",
-          "uni_links_platform_interface": "1.0.0",
-          "uni_links_web": "0.1.0"
         },
         "assets": [
           "assets/images/",
