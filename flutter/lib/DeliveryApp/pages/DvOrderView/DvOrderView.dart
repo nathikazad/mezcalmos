@@ -110,7 +110,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                     viewController.openCustomerWhatsapp();
                   },
                 ),
-                hSmallSepartor,
+                hMeduimSeperator,
                 MezIconButton(
                   icon: Icons.my_location,
                   iconColor: Colors.black,
@@ -143,7 +143,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                     viewController.openRestaurantWhatsapp();
                   },
                 ),
-                hSmallSepartor,
+                hMeduimSeperator,
                 MezIconButton(
                   icon: Icons.my_location,
                   iconColor: Colors.black,
