@@ -100,13 +100,26 @@ class _DvOrderViewState extends State<DvOrderView> {
               viewController.order!.customer.name,
               style: context.textTheme.bodyLarge,
             ),
-            action: MezIconButton(
-              icon: Ionicons.logo_whatsapp,
-              iconColor: Colors.white,
-              backgroundColor: Colors.green,
-              onTap: () {
-                viewController.openCustomerWhatsapp();
-              },
+            action: Row(
+              children: <Widget>[
+                MezIconButton(
+                  icon: Ionicons.logo_whatsapp,
+                  iconColor: Colors.white,
+                  backgroundColor: Colors.green,
+                  onTap: () {
+                    viewController.openCustomerWhatsapp();
+                  },
+                ),
+                hSmallSepartor,
+                MezIconButton(
+                  icon: Icons.my_location,
+                  iconColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  onTap: () async {
+                    await viewController.openCustomerMap();
+                  },
+                ),
+              ],
             ),
           ),
           MezCard(
@@ -120,13 +133,26 @@ class _DvOrderViewState extends State<DvOrderView> {
               viewController.order!.serviceProvider.name,
               style: context.textTheme.bodyLarge,
             ),
-            action: MezIconButton(
-              icon: Ionicons.logo_whatsapp,
-              iconColor: Colors.white,
-              backgroundColor: Colors.green,
-              onTap: () {
-                viewController.openRestaurantWhatsapp();
-              },
+            action: Row(
+              children: <Widget>[
+                MezIconButton(
+                  icon: Ionicons.logo_whatsapp,
+                  iconColor: Colors.white,
+                  backgroundColor: Colors.green,
+                  onTap: () {
+                    viewController.openRestaurantWhatsapp();
+                  },
+                ),
+                hSmallSepartor,
+                MezIconButton(
+                  icon: Icons.my_location,
+                  iconColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  onTap: () async {
+                    await viewController.openRestaurantMap();
+                  },
+                ),
+              ],
             ),
           ),
 

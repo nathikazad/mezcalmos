@@ -9,7 +9,9 @@ import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrde
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DvOrderViewController {
   late int orderId;
@@ -114,6 +116,34 @@ class DvOrderViewController {
       mezDbgPrint(e);
       mezDbgPrint(stk);
       showErrorSnackBar();
+    }
+  }
+
+  Future<void> openRestaurantMap() async {
+    if (order?.pickupLocation != null) {
+      final String mapUrl =
+          getGMapsDirectionLink(null, order!.pickupLocation!.toLatLng()!);
+      try {
+        await launchUrl(Uri.parse(mapUrl),
+            mode: LaunchMode.externalApplication);
+      } catch (e) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+      }
+    }
+  }
+
+  Future<void> openCustomerMap() async {
+    if (order?.dropOffLocation != null) {
+      final String mapUrl =
+          getGMapsDirectionLink(null, order!.dropOffLocation.toLatLng()!);
+      try {
+        await launchUrl(Uri.parse(mapUrl),
+            mode: LaunchMode.externalApplication);
+      } catch (e) {
+        showErrorSnackBar();
+        mezDbgPrint(e);
+      }
     }
   }
 }

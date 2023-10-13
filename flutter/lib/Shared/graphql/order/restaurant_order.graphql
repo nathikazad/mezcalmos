@@ -159,6 +159,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
         firebase_id
         image
         language
+        phone_number
         currency
         location {
           gps

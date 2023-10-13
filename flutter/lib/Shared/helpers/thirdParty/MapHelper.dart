@@ -71,8 +71,11 @@ class RideDistance {
   RideDistance(this.distanceStringInKm, this.distanceInMeters);
 
   Map<String, dynamic> toJson() {
-    return {
-      "distance": {"text": distanceStringInKm, "value": distanceInMeters}
+    return <String, dynamic>{
+      "distance": <String, Object>{
+        "text": distanceStringInKm,
+        "value": distanceInMeters
+      }
     };
   }
 
@@ -102,8 +105,8 @@ class RideDuration {
   RideDuration(this._text, this.seconds);
 
   Map<String, dynamic> toJson() {
-    return {
-      "duration": {"text": longTextVersion, "value": seconds}
+    return <String, dynamic>{
+      "duration": <String, Object>{"text": longTextVersion, "value": seconds}
     };
   }
 
@@ -139,7 +142,7 @@ Future<LocModel.MezLocation> getCurrentLocation() async {
 
 Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
   mezDbgPrint("Getting locations with query =======>$search");
-  final List<AutoCompleteResult> _returnedPredictions = [];
+  final List<AutoCompleteResult> _returnedPredictions = <AutoCompleteResult>[];
 
   final cModels.Language userLanguage =
       Get.find<LanguageController>().userLanguageKey;
@@ -195,7 +198,7 @@ Future<LocModel.MezLocation?> getLocationFromPlaceId(
     final double lng = respJson["result"]["geometry"]["location"]["lng"];
 
     return LocModel.MezLocation.fromFirebaseData(
-        {"address": description, "lat": lat, "lng": lng});
+        <String, Object>{"address": description, "lat": lat, "lng": lng});
   } else {
     return null;
     // in case there is a problem on request!
@@ -338,7 +341,7 @@ String encodePolyline(List<List<double>> coordinates, int precision) {
 List<LatLng> loadUpPolyline(String? polyline) {
   // Polylines stuff.
   if (polyline == null) return <LatLng>[];
-  final List<LatLng> pLineCoords = [];
+  final List<LatLng> pLineCoords = <LatLng>[];
 
   final List<PointLatLng> res = PolylinePoints().decodePolyline(polyline);
 
@@ -398,26 +401,44 @@ class AutoCompleteResult {
   }
 }
 
-String getGMapsDirectionLink(LatLng origin, LatLng destination) {
+String getGMapsDirectionLink(LatLng? origin, LatLng destination) {
   final String baseUrl = 'https://www.google.com/maps/dir/?api=1';
-  final String originParam = 'origin=${origin.latitude},${origin.longitude}';
+
   final String destinationParam =
       'destination=${destination.latitude},${destination.longitude}';
-  final String waypoints =
-      'waypoints=${origin.latitude},${origin.longitude}|${destination.latitude},${destination.longitude}';
+
+  String? originParam;
+  String? waypoints;
+  String? polylinePoints;
+  String? markers;
+
+  if (origin != null) {
+    originParam = 'origin=${origin.latitude},${origin.longitude}';
+    waypoints =
+        'waypoints=${origin.latitude},${origin.longitude}|${destination.latitude},${destination.longitude}';
+    polylinePoints = 'path=color:0x0000ff|enc:${_encodePolyline(<LatLng>[
+          origin,
+          destination
+        ])}';
+    markers =
+        'markers=color:red|label:O|${origin.latitude},${origin.longitude}&markers=color:blue|label:D|${destination.latitude},${destination.longitude}';
+  }
 
   // Encode the waypoints for polyline
-  final String polylinePoints =
-      'path=color:0x0000ff|enc:${_encodePolyline([origin, destination])}';
 
-  final String markers =
-      'markers=color:red|label:O|${origin.latitude},${origin.longitude}'
-      '&markers=color:blue|label:D|${destination.latitude},${destination.longitude}';
+  final String modeParam = 'travelmode=driving';
 
-  final String modeParam = 'travelmode=driving'; // Add the mode parameter here
+  final List<String> params = <String>[
+    baseUrl,
+    if (originParam != null) originParam,
+    destinationParam,
+    if (waypoints != null) waypoints,
+    if (polylinePoints != null) polylinePoints,
+    if (markers != null) markers,
+    modeParam
+  ];
 
-  final String url =
-      '$baseUrl&$originParam&$destinationParam&$waypoints&$polylinePoints&$markers&$modeParam';
+  final String url = params.join('&');
   return url;
 }
 
