@@ -82,7 +82,7 @@ class DriverCurrentOrdersController {
       //  openOrders.value = await get_delivery_minimal_orders(withCache: false);
 
       currentOrders.value = await get_delivery_minimal_orders(
-              status: MinimalDeliveryOrderStatus.Open,
+              status: MinimalDeliveryOrderStatus.InProcess,
               driverId: opAuthController.driverId!,
               limit: 20,
               offset: 0) ??
@@ -98,7 +98,7 @@ class DriverCurrentOrdersController {
   void _listenOnOrders() {
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener = listen_delivery_minimal_orders(
-              status: MinimalDeliveryOrderStatus.Open,
+              status: MinimalDeliveryOrderStatus.InProcess,
               driverId: opAuthController.driverId!,
               limit: 20,
               offset: 0)
@@ -192,20 +192,21 @@ class DeliveryMessage {
   final DateTime receivedTime;
   final DateTime? finishedTime;
   final DateTime? respondedTime;
+  final bool showDriverInfo;
 
-  DeliveryMessage({
-    required this.id,
-    required this.entry,
-    required this.phoneNumber,
-    this.driverId,
-    required this.receivedTime,
-    this.finishedTime,
-    this.respondedTime,
-    this.userImage,
-    this.userName,
-    this.driverName,
-    this.driverPhone,
-  });
+  DeliveryMessage(
+      {required this.id,
+      required this.entry,
+      required this.phoneNumber,
+      this.driverId,
+      required this.receivedTime,
+      this.finishedTime,
+      this.respondedTime,
+      this.userImage,
+      this.userName,
+      this.driverName,
+      this.driverPhone,
+      this.showDriverInfo = false});
   bool get isResponded => respondedTime != null && driverId != null;
 }
 

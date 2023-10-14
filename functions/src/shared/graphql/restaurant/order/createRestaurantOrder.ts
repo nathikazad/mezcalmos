@@ -79,12 +79,15 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
             delivery_cost: checkoutReq.deliveryCost,
           
             status: DeliveryOrderStatus.OrderReceived,
-            service_provider_id: (restaurant.deliveryDetails.selfDelivery) 
-              ? restaurant.id 
-              : 1,
-            service_provider_type: (restaurant.deliveryDetails.selfDelivery) 
-              ? DeliveryServiceProviderType.Restaurant
-              : DeliveryServiceProviderType.DeliveryCompany,
+            service_provider_id: 3,
+            service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
+            
+          //   service_provider_id: (restaurant.deliveryDetails.selfDelivery) 
+          //   ? restaurant.id 
+          //   : 1,
+          // service_provider_type: (restaurant.deliveryDetails.selfDelivery) 
+          //   ? DeliveryServiceProviderType.Restaurant
+          //   : DeliveryServiceProviderType.DeliveryCompany,
             scheduled_time: checkoutReq.scheduledTime,
             trip_distance: checkoutReq.tripDistance,
             trip_duration: checkoutReq.tripDuration,

@@ -72,6 +72,20 @@ select_permissions:
         - name
         - phone
       filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - deleted
+        - id
+        - big_image
+        - email
+        - firebase_id
+        - image
+        - language_id
+        - creation_time
+        - name
+        - phone
+      filter: {}
   - role: laundry_operator
     permission:
       columns:

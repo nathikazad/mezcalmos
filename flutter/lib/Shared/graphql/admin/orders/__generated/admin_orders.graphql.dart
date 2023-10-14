@@ -543,7 +543,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     required this.dropoff_address,
     required this.dropoff_gps,
     required this.customer,
-    this.service_provider_id,
+    required this.service_provider_id,
     required this.service_provider_type,
     required this.$__typename,
   });
@@ -575,7 +575,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
       dropoff_gps: geographyFromJson(l$dropoff_gps),
       customer: Subscription$admin_listen_on_dv_orders$delivery_order$customer
           .fromJson((l$customer as Map<String, dynamic>)),
-      service_provider_id: (l$service_provider_id as int?),
+      service_provider_id: (l$service_provider_id as int),
       service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -601,7 +601,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
 
   final Subscription$admin_listen_on_dv_orders$delivery_order$customer customer;
 
-  final int? service_provider_id;
+  final int service_provider_id;
 
   final String service_provider_type;
 
@@ -850,9 +850,10 @@ class _CopyWithImpl$Subscription$admin_listen_on_dv_orders$delivery_order<TRes>
             ? _instance.customer
             : (customer
                 as Subscription$admin_listen_on_dv_orders$delivery_order$customer),
-        service_provider_id: service_provider_id == _undefined
-            ? _instance.service_provider_id
-            : (service_provider_id as int?),
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
@@ -1875,7 +1876,7 @@ class Query$admin_get_dv_orders$delivery_order {
     required this.dropoff_gps,
     required this.order_type,
     required this.customer,
-    this.service_provider_id,
+    required this.service_provider_id,
     required this.service_provider_type,
     required this.$__typename,
   });
@@ -1907,7 +1908,7 @@ class Query$admin_get_dv_orders$delivery_order {
       order_type: (l$order_type as String),
       customer: Query$admin_get_dv_orders$delivery_order$customer.fromJson(
           (l$customer as Map<String, dynamic>)),
-      service_provider_id: (l$service_provider_id as int?),
+      service_provider_id: (l$service_provider_id as int),
       service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -1933,7 +1934,7 @@ class Query$admin_get_dv_orders$delivery_order {
 
   final Query$admin_get_dv_orders$delivery_order$customer customer;
 
-  final int? service_provider_id;
+  final int service_provider_id;
 
   final String service_provider_type;
 
@@ -2175,9 +2176,10 @@ class _CopyWithImpl$Query$admin_get_dv_orders$delivery_order<TRes>
         customer: customer == _undefined || customer == null
             ? _instance.customer
             : (customer as Query$admin_get_dv_orders$delivery_order$customer),
-        service_provider_id: service_provider_id == _undefined
-            ? _instance.service_provider_id
-            : (service_provider_id as int?),
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
@@ -9010,7 +9012,7 @@ class Query$admin_get_service__orders$delivery_order {
     required this.order_type,
     required this.dropoff_gps,
     required this.customer,
-    this.service_provider_id,
+    required this.service_provider_id,
     required this.service_provider_type,
     required this.$__typename,
   });
@@ -9041,7 +9043,7 @@ class Query$admin_get_service__orders$delivery_order {
       customer:
           Query$admin_get_service__orders$delivery_order$customer.fromJson(
               (l$customer as Map<String, dynamic>)),
-      service_provider_id: (l$service_provider_id as int?),
+      service_provider_id: (l$service_provider_id as int),
       service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -9065,7 +9067,7 @@ class Query$admin_get_service__orders$delivery_order {
 
   final Query$admin_get_service__orders$delivery_order$customer customer;
 
-  final int? service_provider_id;
+  final int service_provider_id;
 
   final String service_provider_type;
 
@@ -9296,9 +9298,10 @@ class _CopyWithImpl$Query$admin_get_service__orders$delivery_order<TRes>
             ? _instance.customer
             : (customer
                 as Query$admin_get_service__orders$delivery_order$customer),
-        service_provider_id: service_provider_id == _undefined
-            ? _instance.service_provider_id
-            : (service_provider_id as int?),
+        service_provider_id:
+            service_provider_id == _undefined || service_provider_id == null
+                ? _instance.service_provider_id
+                : (service_provider_id as int),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type

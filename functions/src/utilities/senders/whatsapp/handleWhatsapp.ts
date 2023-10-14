@@ -36,23 +36,51 @@ export async function addAndNotify(entry: any) {
   let phoneNumber = await addMessageToDatabase(entry);
   if (phoneNumber) {
     let driverId = await getDriverWhoTookOrder(phoneNumber);
-    if (driverId) {
-      let driver = await getDeliveryDriver(driverId);
-      notifyCallback([driver], phoneNumber);
-    } else
-      await notifyDrivers(phoneNumber);
+      let notification: Notification = buildNotification(phoneNumber)
+      console.log("Not pause notifying drivers");
+      if (driverId) {
+        let driver = await getDeliveryDriver(driverId);
+        notifyCallback(notification, [driver]);
+      } else
+        await notifyDrivers(notification);
   }
 }
 
-export async function notifyDrivers(phoneNumber: string, excludeDriver?: number) {
+export async function notifyDrivers(notification:Notification, excludeDriver?: number) {
   let drivers: DeliveryDriver[] = await getAllDeliveryDrivers();
   drivers = drivers.filter((d) => d.id != excludeDriver)
-  notifyCallback(drivers, phoneNumber);
-  setTimeout(() => notifyCallback(drivers, phoneNumber), 10000);
+  notifyCallback(notification, drivers);
+  setTimeout(() => notifyCallback(notification, drivers), 10000);
 }
 
-function notifyCallback(drivers: DeliveryDriver[], phoneNumber: string | null) {
-  let notification: Notification = {
+async function notifyCallback(notification: Notification, drivers: DeliveryDriver[]) {
+  const whatsAppRef = firebase.database().ref(`/metadata/whatsapp`);
+  const snapshot = await whatsAppRef.once('value');
+  const pauseNotifyingDrivers = snapshot.val()?.pauseNotifyingDrivers ?? false;
+  
+  if (pauseNotifyingDrivers == false) {
+    drivers.forEach((d) => {
+      if (!d.user)
+        return;
+      pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
+    });
+  } else if (pauseNotifyingDrivers == "test") {
+    console.log("only notifying test drivers");
+    drivers.filter((d) => d.id == 71).forEach((d) => {
+      if (!d.user)
+        return;
+      pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
+    });
+  } else {
+    console.log("Pause notifying drivers");
+    
+  }
+}
+
+
+
+function buildNotification(phoneNumber: string | null): Notification {
+  return {
     foreground: <ForegroundNotification>{
       time: (new Date()).toISOString(),
       notificationType: NotificationType.NewMessage,
@@ -69,12 +97,7 @@ function notifyCallback(drivers: DeliveryDriver[], phoneNumber: string | null) {
       }
     },
     linkUrl: `/convo/${phoneNumber}`
-  }
-  drivers.forEach((d) => {
-    if (!d.user)
-      return;
-    pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
-  });
+  };
 }
 
 export async function addMessageToDatabase(entries: Entry[]): Promise<string | null> {

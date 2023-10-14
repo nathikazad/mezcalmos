@@ -55,6 +55,7 @@ export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsR
     type SetInput = {
       driver_id?: number;
       responded_time?: Date;
+      show_driver_info?: boolean;
     };
     if (response.delivery_messages.length > 0) {
       // mark all messages as responded and only the last message with driver_id
@@ -62,11 +63,12 @@ export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsR
         update_delivery_messages_many: [{
           updates: response.delivery_messages.map((msg, index) => {
             let setObject: SetInput = {
-              responded_time: new Date()
+              responded_time: new Date(),
+              driver_id: driverId
             };
 
             if (index === response.delivery_messages.length - 1) {
-              setObject.driver_id = driverId;
+              setObject.show_driver_info = true;
             }
 
             return {
