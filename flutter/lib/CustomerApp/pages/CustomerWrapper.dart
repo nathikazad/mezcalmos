@@ -116,8 +116,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
           asTab: true,
         );
 
-      case 3:
-        return CustProfileView();
+      // case 3:
+      //   return CustProfileView();
 
       default:
         return Scaffold(
@@ -141,7 +141,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                 _index.value = v;
               },
               type: BottomNavigationBarType.fixed,
-              items: [
+              items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                       icon: Icon(Icons.home_outlined),
                       label: "${_i18n()['home']}"),
@@ -168,9 +168,9 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                   //   ),
                   //   label: "${_i18n()['messages']}",
                   // ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.person_outline),
-                      label: "${_i18n()['profile']}"),
+                  // BottomNavigationBarItem(
+                  //     icon: Icon(Icons.person_outline),
+                  //     label: "${_i18n()['profile']}"),
                 ])
           : SizedBox(),
     );
@@ -263,7 +263,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget mezListOfServices() {
     return Obx(
       () => Column(
-        children: [
+        children: <Widget>[
           ServicesCard(
             title: "${_i18n()['food']["title"]}",
             url: "assets/images/customer/foodService.png",
