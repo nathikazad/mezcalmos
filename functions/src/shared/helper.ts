@@ -1,5 +1,6 @@
 import { deliveryNewOrderMessage } from "../delivery/bgNotificationMessages";
 import { RemoveDriverError } from "../delivery/removeDriver";
+import { getHasura } from "../utilities/hasura";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getDeliveryDrivers } from "./graphql/delivery/driver/getDeliveryDriver";
 import { getDeliveryOperatorByUserId, getDeliveryOperators } from "./graphql/delivery/operator/getDeliveryOperator";
@@ -10,6 +11,9 @@ import { ParticipantType } from "./models/Generic/Chat";
 import { DeliveryOrder, DeliveryDriver, DeliveryServiceProviderType } from "./models/Generic/Delivery";
 import { AuthorizationStatus, MezError } from "./models/Generic/Generic";
 import { OrderNotification, NotificationType, NotificationAction, Notification } from "./models/Notification";
+import { BusinessCart } from "./models/Services/Business/BusinessOrder";
+import { CommissionType, DiscountType, Offer } from "./models/Services/Offer";
+import { Cart } from "./models/Services/Restaurant/Cart";
 import { Operator } from "./models/Services/Service";
 
 export async function isMezAdmin(userId: number): Promise<boolean> {
@@ -125,5 +129,144 @@ export async function checkOperatorAuthorization(userId: number, deliveryService
       }
     default:
       break;
+  }
+}
+
+export async function calculateRestaurantOfferDiscount(cart: Cart, offer: Offer): Promise<{discount: number, commission: number}> {
+
+  let chain = getHasura();
+  
+  let discount: number = 0;
+  if(offer.details.offerForItems == null) {
+    switch (offer.details.discountType) {
+      case DiscountType.FlatAmount:
+        discount = offer.details.discountValue;
+        break;
+      case DiscountType.Percentage:
+        discount = cart.cost * offer.details.discountValue / 100;
+      default:
+        break;
+    }
+  } else if(offer.details.offerForItems == "particularItems") {
+    switch (offer.details.discountType) {
+      case DiscountType.FlatAmount:
+        let numberOfItems: number = 0;
+        cart.items.forEach((i) => {
+          if(offer.details.items?.find((j) => j == i.itemId)) {
+            numberOfItems += i.quantity;
+          }
+        })
+        discount = offer.details.discountValue * numberOfItems;
+        break;
+      case DiscountType.Percentage:
+        cart.items.forEach((i) => {
+          if(offer.details.items?.find((j) => j == i.itemId)) {
+            discount += i.costPerOne * i.quantity * offer.details.discountValue / 100;
+          }
+        })
+      break;
+    }
+  } else if(offer.details.offerForItems == "particularCategories") {
+    switch (offer.details.discountType) {
+      case DiscountType.FlatAmount:
+        let numberOfItems: number = 0;
+        cart.items.forEach((i) => {
+          if(offer.details.categories?.find((j) => j == i.categoryId)) {
+            numberOfItems += i.quantity;
+          }
+        })
+        discount = offer.details.discountValue * numberOfItems;
+        break;
+      case DiscountType.Percentage:
+        cart.items.forEach((i) => {
+          if(offer.details.categories?.find((j) => j == i.categoryId)) {
+            discount += i.costPerOne * i.quantity * offer.details.discountValue / 100;
+          }
+        })
+        break;
+    }
+  }
+  let commission: number = 0;
+  if( offer.details.influencerCommission) {
+    switch (offer.details.influencerCommission.commissionType) {
+      case CommissionType.FlatAmount:
+        commission = offer.details.influencerCommission.value;
+        break;
+      case CommissionType.Percentage:
+        commission = cart.cost * offer.details.influencerCommission.value / 100;
+        break;
+    }
+  }
+  return {
+    discount,
+    commission
+  }
+}
+
+
+export async function calculateBusinessOfferDiscount(cart: BusinessCart, offer: Offer): Promise<{discount: number, commission: number}> {
+
+  let chain = getHasura();
+  
+  let discount: number = 0;
+  if(offer.details.offerForItems == null) {
+    switch (offer.details.discountType) {
+      case DiscountType.FlatAmount:
+        discount = offer.details.discountValue;
+        break;
+      case DiscountType.Percentage:
+        discount = cart.cost * offer.details.discountValue / 100;
+      default:
+        break;
+    }
+  } else if(offer.details.offerForItems == "particularItems") {
+    switch (offer.details.discountType) {
+      case DiscountType.FlatAmount:
+        cart.items.forEach((i) => {
+          if(offer.details.items?.find((j) => j == i.itemId)) {
+            discount += offer.details.discountValue;
+          }
+        })
+        break;
+      case DiscountType.Percentage:
+        cart.items.forEach((i) => {
+          if(offer.details.items?.find((j) => j == i.itemId)) {
+            discount += i.cost * offer.details.discountValue / 100;
+          }
+        })
+      break;
+    }
+  } else if(offer.details.offerForItems == "particularServices") {
+    switch (offer.details.discountType) {
+      case DiscountType.FlatAmount:
+        cart.items.forEach((i) => {
+          if(offer.details.offeringTypes?.find((j) => j == i.offeringType)) {
+            discount += offer.details.discountValue;
+          }
+        })
+        break;
+      case DiscountType.Percentage:
+        cart.items.forEach((i) => {
+          if(offer.details.offeringTypes?.find((j) => j == i.offeringType)) {
+            discount += i.cost * offer.details.discountValue / 100;
+          }
+        })
+        break;
+    }
+  }
+  let commission: number = 0;
+  if( offer.details.influencerCommission) {
+    switch (offer.details.influencerCommission.commissionType) {
+      case CommissionType.FlatAmount:
+        commission = offer.details.influencerCommission.value;
+        break;
+      case CommissionType.Percentage:
+        commission = cart.cost * offer.details.influencerCommission.value / 100;
+        break;
+    }
+  }
+  return {
+    discount,
+    commission
   }
 }

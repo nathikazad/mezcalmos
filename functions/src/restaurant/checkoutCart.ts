@@ -18,7 +18,10 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
 import { ServiceProvider } from '../shared/models/Services/Service';
-import { notifyDeliveryCompany } from '../shared/helper';
+import { calculateRestaurantOfferDiscount, notifyDeliveryCompany } from '../shared/helper';
+import { updateOffersApplied } from '../shared/graphql/offer/updateOffer';
+import { Offer, OfferApplied } from '../shared/models/Services/Offer';
+import { fetchOffers } from '../shared/graphql/offer/getOffer';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
@@ -96,6 +99,25 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     // clear user cart 
     clearCart(customerId);
 
+    if(customerCart.appliedOffers.length > 0) {
+
+      const offers: Offer[] = await fetchOffers(customerCart.appliedOffers);
+
+      // calculate discount
+      let offersApplied: OfferApplied[] = [];
+      for(let offer of offers) {
+        const offerResponse = await calculateRestaurantOfferDiscount(customerCart, offer);
+        offersApplied.push({
+          orderId: orderResponse.restaurantOrder.orderId,
+          offerId: offer.id,
+          orderType: OrderType.Restaurant,
+          discount: offerResponse.discount,
+          commission: offerResponse.commission
+        })
+      }
+
+      updateOffersApplied(orderResponse.restaurantOrder.orderId, offersApplied, OrderType.Restaurant);
+    }
     return {
       success: true,
       orderId: orderResponse.restaurantOrder.orderId
