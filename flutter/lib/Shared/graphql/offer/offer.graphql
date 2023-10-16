@@ -235,3 +235,15 @@ query fetch_all_promotions_within_distance(
     }
   }
 }
+mutation insertOfferApplied(
+  $object: service_provider_offer_applied_insert_input!
+) {
+  insert_service_provider_offer_applied_one(object: $object) {
+    id
+  }
+}
+query getInfluencerIdByTag($tag: String!) {
+  service_provider_influencer(where: { tag: { _eq: $tag } }) {
+    id
+  }
+}

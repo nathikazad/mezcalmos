@@ -686,10 +686,13 @@ Future<int?> addReviewDialog(
 void showMezSheet({
   required BuildContext context,
   required Widget content,
+  bool isScrollControlled = false,
+  bool showCancel = true,
   String? title,
 }) {
   showModalBottomSheet(
     context: context,
+    isScrollControlled: isScrollControlled,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
     ),
@@ -715,6 +718,20 @@ void showMezSheet({
             Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: content),
+            if (showCancel) ...<Widget>[
+              meduimSeperator,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: MezButton(
+                  label: "Cancel",
+                  backgroundColor: offRedColor,
+                  textColor: redAccentColor,
+                  onClick: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+              )
+            ],
             bigSeperator,
           ],
         ),

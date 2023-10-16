@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/ServiceOfferEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferView/controllers/ServiceOffersListViewController.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/SingleOfferView/SingleOfferStatsView.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
@@ -174,9 +175,11 @@ class _ServiceOffersListViewState extends State<ServiceOffersListView> {
         children: <Widget>[
           MezIconButton(
             icon: Icons.bar_chart,
-            onTap: null,
+            onTap: () {
+              SingleOfferStatsView.navigate(offerId: offer.id.toInt());
+            },
             elevation: 0,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
           ),
           SizedBox(
             width: 5,

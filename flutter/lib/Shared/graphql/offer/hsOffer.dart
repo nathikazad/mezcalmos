@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/offer/__generated/offer.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
@@ -13,7 +14,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
     {required int serviceProviderId,
     required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {
-  QueryResult<Query$get_service_provider_offers> res =
+  final QueryResult<Query$get_service_provider_offers> res =
       await _db.graphQLClient.query$get_service_provider_offers(
     Options$Query$get_service_provider_offers(
       fetchPolicy:
@@ -27,7 +28,7 @@ Future<List<cModels.Offer>> get_service_provider_offers(
   // if (res.parsedData?.service_provider_offer == null) {
   //   throwError(res.exception);
   // }
-  final List<cModels.Offer> offers = [];
+  final List<cModels.Offer> offers = <cModels.Offer>[];
   res.parsedData?.service_provider_offer
       .forEach((Query$get_service_provider_offers$service_provider_offer data) {
     offers.add(cModels.Offer(
@@ -80,7 +81,7 @@ Future<cModels.Offer?> check_coupon(
     required int serviceProviderId,
     required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {
-  QueryResult<Query$check_coupon> res =
+  final QueryResult<Query$check_coupon> res =
       await _db.graphQLClient.query$check_coupon(
     Options$Query$check_coupon(
       fetchPolicy: FetchPolicy.networkOnly,
@@ -142,7 +143,7 @@ Future<bool> check_offer_applied(
     required int offerId,
     required cModels.OrderType orderType,
     bool withCache = true}) async {
-  QueryResult<Query$check_offer_applied> res =
+  final QueryResult<Query$check_offer_applied> res =
       await _db.graphQLClient.query$check_offer_applied(
     Options$Query$check_offer_applied(
       fetchPolicy:
@@ -165,7 +166,7 @@ Future<List<cModels.Offer>> fetch_promotions(
     {required int serviceProviderId,
     required cModels.ServiceProviderType serviceProviderType,
     bool withCache = true}) async {
-  QueryResult<Query$fetchPromotions> res =
+  final QueryResult<Query$fetchPromotions> res =
       await _db.graphQLClient.query$fetchPromotions(
     Options$Query$fetchPromotions(
       fetchPolicy: FetchPolicy.networkOnly,
@@ -178,7 +179,7 @@ Future<List<cModels.Offer>> fetch_promotions(
   // if (res.parsedData?.service_provider_offer == null) {
   //   throwError(res.exception);
   // }
-  final List<cModels.Offer> offers = [];
+  final List<cModels.Offer> offers = <cModels.Offer>[];
   res.parsedData?.service_provider_offer
       .forEach((Query$fetchPromotions$service_provider_offer data) {
     offers.add(cModels.Offer(
@@ -231,7 +232,7 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
     int? limit,
     int? offset,
     bool withCache = true}) async {
-  QueryResult<Query$fetch_subscribed_promotions> res =
+  final QueryResult<Query$fetch_subscribed_promotions> res =
       await _db.graphQLClient.query$fetch_subscribed_promotions(
     Options$Query$fetch_subscribed_promotions(
       fetchPolicy:
@@ -244,7 +245,8 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
   // if (res.parsedData?.service_provider_offer == null) {
   //   throwError(res.exception);
   // }
-  List<List<Map<cModels.Language, String>>> alltranslations = [];
+  final List<List<Map<cModels.Language, String>>> alltranslations =
+      <List<Map<cModels.Language, String>>>[];
   if (res.parsedData?.service_provider_offer != null) {
     for (int i = 0; i < res.parsedData!.service_provider_offer.length; i++) {
       alltranslations.add(await fetch_translations(
@@ -255,7 +257,7 @@ Future<List<cModels.Offer>> fetch_subscribed_promotions(
   }
   int index = 0;
 
-  final List<cModels.Offer> offers = [];
+  final List<cModels.Offer> offers = <cModels.Offer>[];
   res.parsedData?.service_provider_offer
       .forEach((Query$fetch_subscribed_promotions$service_provider_offer data) {
     final cModels.ServiceProviderType serviceProviderType =
@@ -335,7 +337,7 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
     int? limit,
     int? offset,
     bool withCache = true}) async {
-  QueryResult<Query$fetch_all_promotions_within_distance> res =
+  final QueryResult<Query$fetch_all_promotions_within_distance> res =
       await _db.graphQLClient.query$fetch_all_promotions_within_distance(
     Options$Query$fetch_all_promotions_within_distance(
       fetchPolicy:
@@ -353,7 +355,8 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
   // if (res.parsedData?.service_provider_offer == null) {
   //   throwError(res.exception);
   // }
-  List<List<Map<cModels.Language, String>>> alltranslations = [];
+  final List<List<Map<cModels.Language, String>>> alltranslations =
+      <List<Map<cModels.Language, String>>>[];
   if (res.parsedData?.service_provider_offer != null) {
     for (int i = 0; i < res.parsedData!.service_provider_offer.length; i++) {
       if (res.parsedData?.service_provider_offer[i].details["nameIds"] !=
@@ -368,7 +371,7 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
   }
   int index = 0;
 
-  final List<cModels.Offer> offers = [];
+  final List<cModels.Offer> offers = <cModels.Offer>[];
   res.parsedData?.service_provider_offer.forEach(
       (Query$fetch_all_promotions_within_distance$service_provider_offer data) {
     final cModels.ServiceProviderType serviceProviderType =
@@ -440,4 +443,41 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
     index++;
   });
   return offers;
+}
+
+Future<bool> insert_offer_applied({
+  required num orderTotal,
+  required num infComission,
+  required int influencerId,
+  required int offerId,
+}) async {
+  final QueryResult<Mutation$insertOfferApplied> res = await _db.graphQLClient
+      .mutate$insertOfferApplied(Options$Mutation$insertOfferApplied(
+          variables: Variables$Mutation$insertOfferApplied(
+              object: Input$service_provider_offer_applied_insert_input(
+    order_total: orderTotal.toDouble(),
+    influencer_id: influencerId,
+    offer_id: offerId,
+    comission: infComission.toDouble(),
+  ))));
+
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+
+  return res.parsedData?.insert_service_provider_offer_applied_one?.id != null;
+}
+
+Future<int?> get_inf_id_by_tag({required String tag}) async {
+  final QueryResult<Query$getInfluencerIdByTag> res = await _db.graphQLClient
+      .query$getInfluencerIdByTag(Options$Query$getInfluencerIdByTag(
+          variables: Variables$Query$getInfluencerIdByTag(tag: tag)));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  final List<Query$getInfluencerIdByTag$service_provider_influencer>? data =
+      res.parsedData?.service_provider_influencer;
+  if (data?.isNotEmpty == true)
+    return res.parsedData?.service_provider_influencer.first.id;
+  return null;
 }

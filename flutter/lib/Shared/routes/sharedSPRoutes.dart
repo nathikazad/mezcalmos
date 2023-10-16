@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceProfileView/S
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/ServiceReviewsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/ServiceScheduleView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceScheduleViews/SingleDayScheduleView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/SingleOfferView/SingleOfferStatsView.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class SharedServiceProviderRoutes {
@@ -42,11 +43,17 @@ class SharedServiceProviderRoutes {
       "/offers/:serviceProviderId/:serviceLinkId";
   static const String kServiceEditOffersRoute = "/editOffers/:offerId";
   static const String kServiceOfferingListView = "/serviceOfferingListView";
-  static final List<QRoute> routes = [
+  static const String kSingleOfferStatsView = "/offerStats/:offerId";
+  static final List<QRoute> routes = <QRoute>[
     QRoute(
       path: kServiceOffersRoute,
       name: kServiceOffersRoute,
       builder: () => ServiceOffersListView(),
+    ),
+    QRoute(
+      path: kSingleOfferStatsView,
+      name: kSingleOfferStatsView,
+      builder: () => SingleOfferStatsView(),
     ),
     QRoute(
       path: kServiceEditOffersRoute,

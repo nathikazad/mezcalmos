@@ -95,7 +95,7 @@ class MezCard extends StatelessWidget {
                                 backgroundImage: firstAvatarBgImage,
                                 child: Icon(
                                   firstAvatarIcon,
-                                  color: firstAvatarIconColor,
+                                  color: firstAvatarIconColor ?? Colors.white,
                                   size: radius + 3,
                                 ),
                               ),

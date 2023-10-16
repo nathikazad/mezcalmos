@@ -1,3 +1,5 @@
+import '../../__generated/schema.graphql.dart';
+import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -9776,6 +9778,1127 @@ class _CopyWithStubImpl$Query$fetch_all_promotions_within_distance$service_provi
   call({
     String? name,
     String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$insertOfferApplied {
+  factory Variables$Mutation$insertOfferApplied(
+          {required Input$service_provider_offer_applied_insert_input
+              object}) =>
+      Variables$Mutation$insertOfferApplied._({
+        r'object': object,
+      });
+
+  Variables$Mutation$insertOfferApplied._(this._$data);
+
+  factory Variables$Mutation$insertOfferApplied.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$object = data['object'];
+    result$data['object'] =
+        Input$service_provider_offer_applied_insert_input.fromJson(
+            (l$object as Map<String, dynamic>));
+    return Variables$Mutation$insertOfferApplied._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$service_provider_offer_applied_insert_input get object =>
+      (_$data['object'] as Input$service_provider_offer_applied_insert_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$object = object;
+    result$data['object'] = l$object.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$insertOfferApplied<
+          Variables$Mutation$insertOfferApplied>
+      get copyWith => CopyWith$Variables$Mutation$insertOfferApplied(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$insertOfferApplied) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$object = object;
+    final lOther$object = other.object;
+    if (l$object != lOther$object) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$object = object;
+    return Object.hashAll([l$object]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$insertOfferApplied<TRes> {
+  factory CopyWith$Variables$Mutation$insertOfferApplied(
+    Variables$Mutation$insertOfferApplied instance,
+    TRes Function(Variables$Mutation$insertOfferApplied) then,
+  ) = _CopyWithImpl$Variables$Mutation$insertOfferApplied;
+
+  factory CopyWith$Variables$Mutation$insertOfferApplied.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$insertOfferApplied;
+
+  TRes call({Input$service_provider_offer_applied_insert_input? object});
+}
+
+class _CopyWithImpl$Variables$Mutation$insertOfferApplied<TRes>
+    implements CopyWith$Variables$Mutation$insertOfferApplied<TRes> {
+  _CopyWithImpl$Variables$Mutation$insertOfferApplied(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$insertOfferApplied _instance;
+
+  final TRes Function(Variables$Mutation$insertOfferApplied) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? object = _undefined}) =>
+      _then(Variables$Mutation$insertOfferApplied._({
+        ..._instance._$data,
+        if (object != _undefined && object != null)
+          'object':
+              (object as Input$service_provider_offer_applied_insert_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$insertOfferApplied<TRes>
+    implements CopyWith$Variables$Mutation$insertOfferApplied<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$insertOfferApplied(this._res);
+
+  TRes _res;
+
+  call({Input$service_provider_offer_applied_insert_input? object}) => _res;
+}
+
+class Mutation$insertOfferApplied {
+  Mutation$insertOfferApplied({
+    this.insert_service_provider_offer_applied_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$insertOfferApplied.fromJson(Map<String, dynamic> json) {
+    final l$insert_service_provider_offer_applied_one =
+        json['insert_service_provider_offer_applied_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$insertOfferApplied(
+      insert_service_provider_offer_applied_one:
+          l$insert_service_provider_offer_applied_one == null
+              ? null
+              : Mutation$insertOfferApplied$insert_service_provider_offer_applied_one
+                  .fromJson((l$insert_service_provider_offer_applied_one
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$insertOfferApplied$insert_service_provider_offer_applied_one?
+      insert_service_provider_offer_applied_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_service_provider_offer_applied_one =
+        insert_service_provider_offer_applied_one;
+    _resultData['insert_service_provider_offer_applied_one'] =
+        l$insert_service_provider_offer_applied_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_service_provider_offer_applied_one =
+        insert_service_provider_offer_applied_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_service_provider_offer_applied_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$insertOfferApplied) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_service_provider_offer_applied_one =
+        insert_service_provider_offer_applied_one;
+    final lOther$insert_service_provider_offer_applied_one =
+        other.insert_service_provider_offer_applied_one;
+    if (l$insert_service_provider_offer_applied_one !=
+        lOther$insert_service_provider_offer_applied_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$insertOfferApplied
+    on Mutation$insertOfferApplied {
+  CopyWith$Mutation$insertOfferApplied<Mutation$insertOfferApplied>
+      get copyWith => CopyWith$Mutation$insertOfferApplied(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$insertOfferApplied<TRes> {
+  factory CopyWith$Mutation$insertOfferApplied(
+    Mutation$insertOfferApplied instance,
+    TRes Function(Mutation$insertOfferApplied) then,
+  ) = _CopyWithImpl$Mutation$insertOfferApplied;
+
+  factory CopyWith$Mutation$insertOfferApplied.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$insertOfferApplied;
+
+  TRes call({
+    Mutation$insertOfferApplied$insert_service_provider_offer_applied_one?
+        insert_service_provider_offer_applied_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+      TRes> get insert_service_provider_offer_applied_one;
+}
+
+class _CopyWithImpl$Mutation$insertOfferApplied<TRes>
+    implements CopyWith$Mutation$insertOfferApplied<TRes> {
+  _CopyWithImpl$Mutation$insertOfferApplied(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$insertOfferApplied _instance;
+
+  final TRes Function(Mutation$insertOfferApplied) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_service_provider_offer_applied_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$insertOfferApplied(
+        insert_service_provider_offer_applied_one:
+            insert_service_provider_offer_applied_one == _undefined
+                ? _instance.insert_service_provider_offer_applied_one
+                : (insert_service_provider_offer_applied_one
+                    as Mutation$insertOfferApplied$insert_service_provider_offer_applied_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+      TRes> get insert_service_provider_offer_applied_one {
+    final local$insert_service_provider_offer_applied_one =
+        _instance.insert_service_provider_offer_applied_one;
+    return local$insert_service_provider_offer_applied_one == null
+        ? CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one
+            .stub(_then(_instance))
+        : CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one(
+            local$insert_service_provider_offer_applied_one,
+            (e) => call(insert_service_provider_offer_applied_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$insertOfferApplied<TRes>
+    implements CopyWith$Mutation$insertOfferApplied<TRes> {
+  _CopyWithStubImpl$Mutation$insertOfferApplied(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$insertOfferApplied$insert_service_provider_offer_applied_one?
+        insert_service_provider_offer_applied_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+          TRes>
+      get insert_service_provider_offer_applied_one =>
+          CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one
+              .stub(_res);
+}
+
+const documentNodeMutationinsertOfferApplied = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'insertOfferApplied'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'object')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'service_provider_offer_applied_insert_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_service_provider_offer_applied_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: VariableNode(name: NameNode(value: 'object')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$insertOfferApplied _parserFn$Mutation$insertOfferApplied(
+        Map<String, dynamic> data) =>
+    Mutation$insertOfferApplied.fromJson(data);
+typedef OnMutationCompleted$Mutation$insertOfferApplied = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$insertOfferApplied?,
+);
+
+class Options$Mutation$insertOfferApplied
+    extends graphql.MutationOptions<Mutation$insertOfferApplied> {
+  Options$Mutation$insertOfferApplied({
+    String? operationName,
+    required Variables$Mutation$insertOfferApplied variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$insertOfferApplied? onCompleted,
+    graphql.OnMutationUpdate<Mutation$insertOfferApplied>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$insertOfferApplied(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationinsertOfferApplied,
+          parserFn: _parserFn$Mutation$insertOfferApplied,
+        );
+
+  final OnMutationCompleted$Mutation$insertOfferApplied? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$insertOfferApplied
+    extends graphql.WatchQueryOptions<Mutation$insertOfferApplied> {
+  WatchOptions$Mutation$insertOfferApplied({
+    String? operationName,
+    required Variables$Mutation$insertOfferApplied variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationinsertOfferApplied,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$insertOfferApplied,
+        );
+}
+
+extension ClientExtension$Mutation$insertOfferApplied on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$insertOfferApplied>>
+      mutate$insertOfferApplied(
+              Options$Mutation$insertOfferApplied options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$insertOfferApplied>
+      watchMutation$insertOfferApplied(
+              WatchOptions$Mutation$insertOfferApplied options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$insertOfferApplied$insert_service_provider_offer_applied_one {
+  Mutation$insertOfferApplied$insert_service_provider_offer_applied_one({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$insertOfferApplied$insert_service_provider_offer_applied_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$insertOfferApplied$insert_service_provider_offer_applied_one(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$insertOfferApplied$insert_service_provider_offer_applied_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one
+    on Mutation$insertOfferApplied$insert_service_provider_offer_applied_one {
+  CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+          Mutation$insertOfferApplied$insert_service_provider_offer_applied_one>
+      get copyWith =>
+          CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+    TRes> {
+  factory CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one(
+    Mutation$insertOfferApplied$insert_service_provider_offer_applied_one
+        instance,
+    TRes Function(
+            Mutation$insertOfferApplied$insert_service_provider_offer_applied_one)
+        then,
+  ) = _CopyWithImpl$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one;
+
+  factory CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+        TRes>
+    implements
+        CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+            TRes> {
+  _CopyWithImpl$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$insertOfferApplied$insert_service_provider_offer_applied_one
+      _instance;
+
+  final TRes Function(
+          Mutation$insertOfferApplied$insert_service_provider_offer_applied_one)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$insertOfferApplied$insert_service_provider_offer_applied_one(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+        TRes>
+    implements
+        CopyWith$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one<
+            TRes> {
+  _CopyWithStubImpl$Mutation$insertOfferApplied$insert_service_provider_offer_applied_one(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getInfluencerIdByTag {
+  factory Variables$Query$getInfluencerIdByTag({required String tag}) =>
+      Variables$Query$getInfluencerIdByTag._({
+        r'tag': tag,
+      });
+
+  Variables$Query$getInfluencerIdByTag._(this._$data);
+
+  factory Variables$Query$getInfluencerIdByTag.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$tag = data['tag'];
+    result$data['tag'] = (l$tag as String);
+    return Variables$Query$getInfluencerIdByTag._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String get tag => (_$data['tag'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$tag = tag;
+    result$data['tag'] = l$tag;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getInfluencerIdByTag<
+          Variables$Query$getInfluencerIdByTag>
+      get copyWith => CopyWith$Variables$Query$getInfluencerIdByTag(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getInfluencerIdByTag) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$tag = tag;
+    final lOther$tag = other.tag;
+    if (l$tag != lOther$tag) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$tag = tag;
+    return Object.hashAll([l$tag]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getInfluencerIdByTag<TRes> {
+  factory CopyWith$Variables$Query$getInfluencerIdByTag(
+    Variables$Query$getInfluencerIdByTag instance,
+    TRes Function(Variables$Query$getInfluencerIdByTag) then,
+  ) = _CopyWithImpl$Variables$Query$getInfluencerIdByTag;
+
+  factory CopyWith$Variables$Query$getInfluencerIdByTag.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getInfluencerIdByTag;
+
+  TRes call({String? tag});
+}
+
+class _CopyWithImpl$Variables$Query$getInfluencerIdByTag<TRes>
+    implements CopyWith$Variables$Query$getInfluencerIdByTag<TRes> {
+  _CopyWithImpl$Variables$Query$getInfluencerIdByTag(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getInfluencerIdByTag _instance;
+
+  final TRes Function(Variables$Query$getInfluencerIdByTag) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? tag = _undefined}) =>
+      _then(Variables$Query$getInfluencerIdByTag._({
+        ..._instance._$data,
+        if (tag != _undefined && tag != null) 'tag': (tag as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getInfluencerIdByTag<TRes>
+    implements CopyWith$Variables$Query$getInfluencerIdByTag<TRes> {
+  _CopyWithStubImpl$Variables$Query$getInfluencerIdByTag(this._res);
+
+  TRes _res;
+
+  call({String? tag}) => _res;
+}
+
+class Query$getInfluencerIdByTag {
+  Query$getInfluencerIdByTag({
+    required this.service_provider_influencer,
+    required this.$__typename,
+  });
+
+  factory Query$getInfluencerIdByTag.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_influencer = json['service_provider_influencer'];
+    final l$$__typename = json['__typename'];
+    return Query$getInfluencerIdByTag(
+      service_provider_influencer: (l$service_provider_influencer
+              as List<dynamic>)
+          .map((e) =>
+              Query$getInfluencerIdByTag$service_provider_influencer.fromJson(
+                  (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getInfluencerIdByTag$service_provider_influencer>
+      service_provider_influencer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_influencer = service_provider_influencer;
+    _resultData['service_provider_influencer'] =
+        l$service_provider_influencer.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_influencer = service_provider_influencer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_influencer.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getInfluencerIdByTag) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_influencer = service_provider_influencer;
+    final lOther$service_provider_influencer =
+        other.service_provider_influencer;
+    if (l$service_provider_influencer.length !=
+        lOther$service_provider_influencer.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_influencer.length; i++) {
+      final l$service_provider_influencer$entry =
+          l$service_provider_influencer[i];
+      final lOther$service_provider_influencer$entry =
+          lOther$service_provider_influencer[i];
+      if (l$service_provider_influencer$entry !=
+          lOther$service_provider_influencer$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getInfluencerIdByTag
+    on Query$getInfluencerIdByTag {
+  CopyWith$Query$getInfluencerIdByTag<Query$getInfluencerIdByTag>
+      get copyWith => CopyWith$Query$getInfluencerIdByTag(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getInfluencerIdByTag<TRes> {
+  factory CopyWith$Query$getInfluencerIdByTag(
+    Query$getInfluencerIdByTag instance,
+    TRes Function(Query$getInfluencerIdByTag) then,
+  ) = _CopyWithImpl$Query$getInfluencerIdByTag;
+
+  factory CopyWith$Query$getInfluencerIdByTag.stub(TRes res) =
+      _CopyWithStubImpl$Query$getInfluencerIdByTag;
+
+  TRes call({
+    List<Query$getInfluencerIdByTag$service_provider_influencer>?
+        service_provider_influencer,
+    String? $__typename,
+  });
+  TRes service_provider_influencer(
+      Iterable<Query$getInfluencerIdByTag$service_provider_influencer> Function(
+              Iterable<
+                  CopyWith$Query$getInfluencerIdByTag$service_provider_influencer<
+                      Query$getInfluencerIdByTag$service_provider_influencer>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getInfluencerIdByTag<TRes>
+    implements CopyWith$Query$getInfluencerIdByTag<TRes> {
+  _CopyWithImpl$Query$getInfluencerIdByTag(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getInfluencerIdByTag _instance;
+
+  final TRes Function(Query$getInfluencerIdByTag) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_influencer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getInfluencerIdByTag(
+        service_provider_influencer:
+            service_provider_influencer == _undefined ||
+                    service_provider_influencer == null
+                ? _instance.service_provider_influencer
+                : (service_provider_influencer as List<
+                    Query$getInfluencerIdByTag$service_provider_influencer>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_influencer(
+          Iterable<Query$getInfluencerIdByTag$service_provider_influencer> Function(
+                  Iterable<
+                      CopyWith$Query$getInfluencerIdByTag$service_provider_influencer<
+                          Query$getInfluencerIdByTag$service_provider_influencer>>)
+              _fn) =>
+      call(
+          service_provider_influencer: _fn(_instance.service_provider_influencer
+              .map((e) =>
+                  CopyWith$Query$getInfluencerIdByTag$service_provider_influencer(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getInfluencerIdByTag<TRes>
+    implements CopyWith$Query$getInfluencerIdByTag<TRes> {
+  _CopyWithStubImpl$Query$getInfluencerIdByTag(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getInfluencerIdByTag$service_provider_influencer>?
+        service_provider_influencer,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_influencer(_fn) => _res;
+}
+
+const documentNodeQuerygetInfluencerIdByTag = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getInfluencerIdByTag'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'tag')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_influencer'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'tag'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'tag')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getInfluencerIdByTag _parserFn$Query$getInfluencerIdByTag(
+        Map<String, dynamic> data) =>
+    Query$getInfluencerIdByTag.fromJson(data);
+
+class Options$Query$getInfluencerIdByTag
+    extends graphql.QueryOptions<Query$getInfluencerIdByTag> {
+  Options$Query$getInfluencerIdByTag({
+    String? operationName,
+    required Variables$Query$getInfluencerIdByTag variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetInfluencerIdByTag,
+          parserFn: _parserFn$Query$getInfluencerIdByTag,
+        );
+}
+
+class WatchOptions$Query$getInfluencerIdByTag
+    extends graphql.WatchQueryOptions<Query$getInfluencerIdByTag> {
+  WatchOptions$Query$getInfluencerIdByTag({
+    String? operationName,
+    required Variables$Query$getInfluencerIdByTag variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetInfluencerIdByTag,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getInfluencerIdByTag,
+        );
+}
+
+class FetchMoreOptions$Query$getInfluencerIdByTag
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getInfluencerIdByTag({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getInfluencerIdByTag variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetInfluencerIdByTag,
+        );
+}
+
+extension ClientExtension$Query$getInfluencerIdByTag on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getInfluencerIdByTag>>
+      query$getInfluencerIdByTag(
+              Options$Query$getInfluencerIdByTag options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getInfluencerIdByTag>
+      watchQuery$getInfluencerIdByTag(
+              WatchOptions$Query$getInfluencerIdByTag options) =>
+          this.watchQuery(options);
+  void writeQuery$getInfluencerIdByTag({
+    required Query$getInfluencerIdByTag data,
+    required Variables$Query$getInfluencerIdByTag variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetInfluencerIdByTag),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getInfluencerIdByTag? readQuery$getInfluencerIdByTag({
+    required Variables$Query$getInfluencerIdByTag variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetInfluencerIdByTag),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getInfluencerIdByTag.fromJson(result);
+  }
+}
+
+class Query$getInfluencerIdByTag$service_provider_influencer {
+  Query$getInfluencerIdByTag$service_provider_influencer({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$getInfluencerIdByTag$service_provider_influencer.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$getInfluencerIdByTag$service_provider_influencer(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getInfluencerIdByTag$service_provider_influencer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getInfluencerIdByTag$service_provider_influencer
+    on Query$getInfluencerIdByTag$service_provider_influencer {
+  CopyWith$Query$getInfluencerIdByTag$service_provider_influencer<
+          Query$getInfluencerIdByTag$service_provider_influencer>
+      get copyWith =>
+          CopyWith$Query$getInfluencerIdByTag$service_provider_influencer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getInfluencerIdByTag$service_provider_influencer<
+    TRes> {
+  factory CopyWith$Query$getInfluencerIdByTag$service_provider_influencer(
+    Query$getInfluencerIdByTag$service_provider_influencer instance,
+    TRes Function(Query$getInfluencerIdByTag$service_provider_influencer) then,
+  ) = _CopyWithImpl$Query$getInfluencerIdByTag$service_provider_influencer;
+
+  factory CopyWith$Query$getInfluencerIdByTag$service_provider_influencer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getInfluencerIdByTag$service_provider_influencer;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getInfluencerIdByTag$service_provider_influencer<TRes>
+    implements
+        CopyWith$Query$getInfluencerIdByTag$service_provider_influencer<TRes> {
+  _CopyWithImpl$Query$getInfluencerIdByTag$service_provider_influencer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getInfluencerIdByTag$service_provider_influencer _instance;
+
+  final TRes Function(Query$getInfluencerIdByTag$service_provider_influencer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getInfluencerIdByTag$service_provider_influencer(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getInfluencerIdByTag$service_provider_influencer<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerIdByTag$service_provider_influencer<TRes> {
+  _CopyWithStubImpl$Query$getInfluencerIdByTag$service_provider_influencer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
     String? $__typename,
   }) =>
       _res;
