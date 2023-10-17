@@ -81,11 +81,13 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     notifyOperators(orderResponse.restaurantOrder.orderId, restaurant);
 
-    if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == true) {
-
+    if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
       updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, 3);
       notifyDrivers(buildNotification(customer?.name, restaurant.name, orderResponse.deliveryOrder.deliveryId));
+      console.log(`Order total: ${customerCart.cost} restauant order id:${orderResponse.restaurantOrder.orderId} notifying drivers`)
       // notifyDeliveryCompany(orderResponse.deliveryOrder);
+    } else {
+      console.log(`Order total: ${customerCart.cost} restauant order id:${orderResponse.restaurantOrder.orderId} NOTTTTT notifying drivers`)
     }
     
     if(checkoutRequest.paymentType == PaymentType.Card) {

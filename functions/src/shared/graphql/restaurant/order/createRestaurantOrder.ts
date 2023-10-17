@@ -79,8 +79,8 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
             delivery_cost: checkoutReq.deliveryCost,
           
             status: DeliveryOrderStatus.OrderReceived,
-            service_provider_id: 3,
-            service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
+            service_provider_id: checkoutReq.restaurantId,
+            service_provider_type: DeliveryServiceProviderType.Restaurant,
             
           //   service_provider_id: (restaurant.deliveryDetails.selfDelivery) 
           //   ? restaurant.id 

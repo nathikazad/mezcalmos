@@ -57,6 +57,7 @@ async function notifyCallback(notification: Notification, drivers: DeliveryDrive
   const whatsAppRef = firebase.database().ref(`/metadata/whatsapp`);
   const snapshot = await whatsAppRef.once('value');
   const pauseNotifyingDrivers = snapshot.val()?.pauseNotifyingDrivers ?? false;
+  console.log(`dbvalue: ${snapshot.val()?.pauseNotifyingDrivers} final: ${pauseNotifyingDrivers}`);
   
   if (pauseNotifyingDrivers == false) {
     drivers.forEach((d) => {
@@ -65,10 +66,12 @@ async function notifyCallback(notification: Notification, drivers: DeliveryDrive
       pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
     });
   } else if (pauseNotifyingDrivers == "test") {
-    console.log("only notifying test drivers");
+    console.log(`only notifying test drivers ${drivers.filter((d) => d.id == 71).length}`);
     drivers.filter((d) => d.id == 71).forEach((d) => {
       if (!d.user)
         return;
+      console.log(d.notificationInfo);
+      
       pushNotification(d.user.firebaseId, notification, d.notificationInfo, ParticipantType.DeliveryDriver, d.user.language);
     });
   } else {
