@@ -40,6 +40,7 @@ export async function getCart(customerId: number): Promise<Cart> {
                 ],
               },
               image: true,
+              category_id: true
             },
           },
         ],
@@ -64,6 +65,7 @@ export async function getCart(customerId: number): Promise<Cart> {
       costPerOne: i.cost_per_one,
       quantity: i.quantity,
       itemId: i.restaurant_item_id,
+      categoryId: i.restaurant_item.category_id,
       name: i.restaurant_item.name.translations.reduce(
         (prev: Record<any, any>, current: any) => {
           prev[current.language_id] = current.value;

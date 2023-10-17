@@ -54,7 +54,8 @@ export interface BusinessCart {
     businessId?: number;
     cost: number;
     items: Array<BusinessOrderItem>;
-    discountValue?: number;
+    discountValue: number;
+    appliedOffers: Array<number>;
 }
 
 export interface NewBusinessOrderRequestNotification extends OrderNotification {

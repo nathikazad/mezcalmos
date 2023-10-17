@@ -15,6 +15,10 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { clearBusinessCart } from "../shared/graphql/business/cart/clearCart";
 import { OpenStatus } from "../shared/models/Services/Service";
+import { updateOffersApplied } from "../shared/graphql/offer/updateOffer";
+import { fetchOffers } from "../shared/graphql/offer/getOffer";
+import { calculateBusinessOfferDiscount, calculateRestaurantOfferDiscount } from "../shared/helper";
+import { Offer, OfferApplied } from "../shared/models/Services/Offer";
 
 export interface OrderRequestDetails {
     customerAppType: CustomerAppType,
@@ -60,7 +64,26 @@ export async function requestOrder(customerId: number, orderRequestDetails: Orde
     notify(order, business, mezAdmins);
 
     clearBusinessCart(customerId);
+
+    if(cart.appliedOffers.length > 0) {
+
+      const offers: Offer[] = await fetchOffers(cart.appliedOffers);
+
+      // calculate discount
+      let offersApplied: OfferApplied[] = [];
+      for(let offer of offers) {
+        const offerResponse = await calculateBusinessOfferDiscount(cart, offer);
+        offersApplied.push({
+          orderId: order.orderId,
+          offerId: offer.id,
+          orderType: OrderType.Business,
+          discount: offerResponse.discount,
+          commission: offerResponse.commission
+        })
+      }
+      updateOffersApplied(order.orderId, offersApplied,  OrderType.Business);
     
+    }
     return {
       success: true,
       orderId: order.orderId

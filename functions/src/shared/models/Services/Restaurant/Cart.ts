@@ -20,4 +20,5 @@ export interface CartItem {
   notes?: string;
   name: Record<Language, string>;
   image?: string;
+  categoryId?: number;
 }

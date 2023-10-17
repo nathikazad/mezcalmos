@@ -44,3 +44,9 @@ object_relationships:
         remote_table:
           name: order
           schema: restaurant
+computed_fields:
+  - name: loss
+    definition:
+      function:
+        name: offer_loss
+        schema: service_provider
