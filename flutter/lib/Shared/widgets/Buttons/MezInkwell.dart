@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -100,16 +101,15 @@ class _MezInkwellState extends State<MezInkwell> {
                 // alignment: Alignment.center,
                 padding: widget.padding,
                 child: (isLoading.value)
-                    ? Transform.scale(
-                        scale: 0.5,
-                        child: CircularProgressIndicator(
-                          color: widget.textColor ?? primaryBlueColor,
-                        ))
+                    ? SpinKitRing(
+                        color: widget.textColor ?? primaryBlueColor,
+                        lineWidth: 5,
+                      )
                     : Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                        children: <Widget>[
                           if (widget.icon != null)
                             Padding(
                               padding: (widget.label != null)

@@ -69,34 +69,36 @@ class _CustHomeViewState extends State<CustHomeView>
       // ),
       // floatingActionButtonLocation: viewController.dockedFabLocation(context),
       body: Stack(
-        children: [
+        children: <Widget>[
           Obx(() {
             if (viewController.isMapView)
               return _mapView();
             else
               return listScrollView();
           }),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Obx(
-              () => Padding(
-                padding: EdgeInsets.only(bottom: 60),
-                child: MezInkwell(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  onClick: () async {
-                    viewController.switchView();
-                  },
-                  icon:
-                      viewController.isMapView ? Icons.list : Icons.map_rounded,
-                  label: viewController.isMapView
-                      ? '${_i18n()['viewAsList']}'
-                      : '${_i18n()['viewOnMap']}',
-                  borderRadius: 50,
+          if (viewController.isShownRestaurantSheet.isFalse)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Obx(
+                () => Padding(
+                  padding: EdgeInsets.only(bottom: 30),
+                  child: MezInkwell(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    onClick: () async {
+                      viewController.switchView();
+                    },
+                    icon: viewController.isMapView
+                        ? Icons.list
+                        : Icons.map_rounded,
+                    label: viewController.isMapView
+                        ? '${_i18n()['viewAsList']}'
+                        : '${_i18n()['viewOnMap']}',
+                    borderRadius: 50,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
@@ -107,7 +109,7 @@ class _CustHomeViewState extends State<CustHomeView>
       controller: viewController.restaurantsScrollController,
       physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       headerSliverBuilder: (BuildContext context, _) {
-        return [
+        return <Widget>[
           _appBar(context),
           _searchAndFilter(context),
         ];
@@ -119,7 +121,7 @@ class _CustHomeViewState extends State<CustHomeView>
   TabBarView tabsView() {
     return TabBarView(
       controller: viewController.tabController,
-      children: [
+      children: <Widget>[
         Obx(
           () {
             if (viewController.showRestaurantShimmer) {
@@ -133,7 +135,7 @@ class _CustHomeViewState extends State<CustHomeView>
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: <Widget>[
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -153,7 +155,7 @@ class _CustHomeViewState extends State<CustHomeView>
                       },
                     ),
                     if (viewController.hasReachedEndData.isFalse &&
-                        viewController.searchQuery.isEmpty) ...[
+                        viewController.searchQuery.isEmpty) ...<Widget>[
                       smallSepartor,
                       Container(
                         margin: const EdgeInsets.all(15),
@@ -194,7 +196,7 @@ class _CustHomeViewState extends State<CustHomeView>
                 } else if (viewController.filteredItems.isNotEmpty)
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Column(
                         children: List.generate(
                             viewController.items.length,
@@ -203,7 +205,7 @@ class _CustHomeViewState extends State<CustHomeView>
                                 )),
                       ),
                       if (viewController.itemsHasReachedEndData.isFalse &&
-                          viewController.searchQuery.isEmpty) ...[
+                          viewController.searchQuery.isEmpty) ...<Widget>[
                         smallSepartor,
                         Container(
                           margin: const EdgeInsets.all(15),
@@ -242,7 +244,7 @@ class _CustHomeViewState extends State<CustHomeView>
         elevation: 0,
         automaticallyImplyLeading: false,
         leading: _menuBtn(),
-        actions: [
+        actions: <Widget>[
           Obx(() {
             if (Get.find<AuthController>().user == null) {
               return MezIconButton(
@@ -272,10 +274,10 @@ class _CustHomeViewState extends State<CustHomeView>
         max: kToolbarHeight * 2,
         min: kToolbarHeight * 1.9,
         child: Column(
-          children: [
+          children: <Widget>[
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 hSmallSepartor,
                 Expanded(
                   child: TextField(
@@ -313,11 +315,11 @@ class _CustHomeViewState extends State<CustHomeView>
                 indicatorSize: TabBarIndicatorSize.label,
                 automaticIndicatorColorAdjustment: true,
                 padding: EdgeInsets.zero,
-                tabs: [
+                tabs: <Widget>[
                   Tab(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Icon(Icons.food_bank_rounded),
                         hTinySepartor,
                         Text("${_i18n()['restaurants']['title']}"),
@@ -327,7 +329,7 @@ class _CustHomeViewState extends State<CustHomeView>
                   Tab(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: <Widget>[
                         Icon(Icons.fastfood_rounded),
                         hTinySepartor,
                         Text("${_i18n()['items']}"),
@@ -354,7 +356,7 @@ class _CustHomeViewState extends State<CustHomeView>
                 content: Container(
                   margin: const EdgeInsets.all(8),
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       Obx(
                         () => SwitchListTile.adaptive(
                             activeColor: primaryBlueColor,
@@ -407,7 +409,7 @@ class _CustHomeViewState extends State<CustHomeView>
         child: Ink(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              boxShadow: [
+              boxShadow: <BoxShadow>[
                 BoxShadow(
                   color: Color.fromARGB(255, 216, 225, 249),
                   spreadRadius: 0,
@@ -456,29 +458,31 @@ class _CustHomeViewState extends State<CustHomeView>
   // }
 
   Widget _mapView() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      MezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: []),
-      Obx(
-        () => Expanded(
-          child: MezServicesMapView(
-            mGoogleMapController: viewController.mapController,
-            fetchNewData: (LatLng? mapCenter, double? distance) async {
-              await viewController.fetchMapViewRentals(
-                  fromLoc: mapCenter, distance: distance);
-              return viewController.restaurantsMarkers.toList();
-            },
-            markers: viewController.restaurantsMarkers.value,
-            children: [
-              Container(
-                alignment: Alignment.topRight,
-                margin: const EdgeInsets.all(7),
-                child: _filterButton(context),
-              )
-            ],
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          MezcalmosAppBar(AppBarLeftButtonType.Menu, actionIcons: <Widget>[]),
+          Obx(
+            () => Expanded(
+              child: MezServicesMapView(
+                mGoogleMapController: viewController.mapController,
+                fetchNewData: (LatLng? mapCenter, double? distance) async {
+                  await viewController.fetchMapViewRentals(
+                      fromLoc: mapCenter, distance: distance);
+                  return viewController.restaurantsMarkers.toList();
+                },
+                markers: viewController.restaurantsMarkers.value,
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.topRight,
+                    margin: const EdgeInsets.all(7),
+                    child: _filterButton(context),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-    ]);
+        ]);
   }
 
   // Obx _switchMapBtn() {
