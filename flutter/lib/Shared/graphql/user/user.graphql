@@ -40,6 +40,15 @@ mutation changeUserBigImg($id: user_pk_columns_input!, $img: String!) {
   }
 }
 
+# Update the user phone using pk.
+
+mutation changePhoneNumber($id: user_pk_columns_input!, $phoneNumber: String!) {
+  update_user_by_pk(pk_columns:$id , _set : {phone : $phoneNumber})
+  {
+  	phone
+  }
+}
+
 
 # Update the user image using pk.
 
