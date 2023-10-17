@@ -52,6 +52,11 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   RxInt numberOfCurrentOrders = RxInt(0);
 
   StreamSubscription<dynamic>? _authStateChnagesListener;
+  List<Widget> tabs = <Widget>[
+    CustHomeView(),
+    CustomerOrdersListView(asTab: true),
+    CustProfileView(),
+  ];
 
   @override
   void initState() {
@@ -65,6 +70,9 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       });
 
       _checkOrders();
+      if (customerAuthController?.customerOffer != null) {
+        tabs.insert(2, CustDealsView());
+      }
     }
     startAuthListener();
     // DeepLinkHandler.startDynamicLinkCheckRoutine(
@@ -100,7 +108,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       bottomNavigationBar: _navBar(),
       body: Obx(() {
         if (authController.user != null) {
-          return _getBody();
+          return tabs[_index.value];
         } else {
           return CustHomeView();
         }
@@ -108,28 +116,28 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     );
   }
 
-  Widget _getBody() {
-    switch (_index.value) {
-      case 0:
-        return CustHomeView();
-      case 1:
-        return CustomerOrdersListView(
-          asTab: true,
-        );
-      case 2:
-        return CustDealsView();
-      case 3:
-        return CustProfileView();
+  // Widget _getBody() {
+  //   switch (_index.value) {
+  //     case 0:
+  //       return CustHomeView();
+  //     case 1:
+  //       return CustomerOrdersListView(
+  //         asTab: true,
+  //       );
+  //     case 2:
+  //       return CustDealsView();
+  //     case 3:
+  //       return CustProfileView();
 
-      default:
-        return Scaffold(
-          body: Container(
-            alignment: Alignment.center,
-            child: Text("Error"),
-          ),
-        );
-    }
-  }
+  //     default:
+  //       return Scaffold(
+  //         body: Container(
+  //           alignment: Alignment.center,
+  //           child: Text("Error"),
+  //         ),
+  //       );
+  //   }
+  // }
 
   Widget _navBar() {
     return Obx(
@@ -161,18 +169,17 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                               ? Icons.history
                               : Icons.history_outlined)),
                       label: "${_i18n()['orders']}"),
-                  BottomNavigationBarItem(
-                    icon: badge.Badge(
-                      badgeColor: Colors.red,
-                      showBadge: Get.find<ForegroundNotificationsController>()
-                          .hasNewSPMessageNotification(),
-                      position: badge.BadgePosition(top: 0, end: 0),
-                      child: Icon(_index.value == 2
-                          ? Icons.discount
-                          : Icons.discount_outlined),
+                  if (customerAuthController?.customerOffer != null)
+                    BottomNavigationBarItem(
+                      icon: badge.Badge(
+                        badgeColor: Colors.red,
+                        position: badge.BadgePosition(top: 0, end: 0),
+                        child: Icon(_index.value == 2
+                            ? Icons.discount
+                            : Icons.discount_outlined),
+                      ),
+                      label: "${_i18n()['deals']}",
                     ),
-                    label: "${_i18n()['deals']}",
-                  ),
                   BottomNavigationBarItem(
                       icon: Icon(_index.value == 3
                           ? Icons.person

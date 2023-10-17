@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart' as locPkg;
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
+import 'package:mezcalmos/Shared/graphql/influencer/hsInfluencer.dart';
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 
 class CustDealsViewController {
   // instances //
@@ -28,13 +28,18 @@ class CustDealsViewController {
   ScrollController get promoScrollController => _promoScrollController;
   bool get isFetching => _promoFetchingData;
   RxBool isInitalized = RxBool(false);
+  int? influencerId;
 
   // methods //
 
   Future<void> init() async {
+    if (Get.find<CustomerAuthController>().customerOffer != null) {
+      influencerId = await get_inf_id_by_tag(
+          tag: Get.find<CustomerAuthController>().customerOffer!);
+    }
     _promoScrollController.onBottomReach(
       () {
-        showSubscribedOnly ? _fetchPromotions() : _fetchAllPromotions();
+        showSubscribedOnly ? _fetchPromotions() : _fetchInfPromotions();
       },
       sensitivity: 200,
     );
@@ -43,7 +48,7 @@ class CustDealsViewController {
   }
 
   Future<void> _fetchPromos() async {
-    showSubscribedOnly ? await _fetchPromotions() : await _fetchAllPromotions();
+    showSubscribedOnly ? await _fetchPromotions() : await _fetchInfPromotions();
   }
 
   void dispose() {}
@@ -73,7 +78,7 @@ class CustDealsViewController {
     // _promotions.refresh();
   }
 
-  Future<void> _fetchAllPromotions() async {
+  Future<void> _fetchInfPromotions() async {
     if (_promoFetchingData || _promoReachedEndOfData) {
       return;
     }
@@ -85,12 +90,8 @@ class CustDealsViewController {
         _fromLocation = Location(
             lat: location.latitude!, lng: location.longitude!, address: "");
       }
-      final List<Offer> newData = await fetch_all_promotions_within_distance(
-        offset: _promoCurrentOffset,
-        limit: promoFetchSize,
-        distance: getFetchDistance,
-        fromLocation: puertoEscondidoLocation,
-      );
+      final List<Offer> newData = await get_inf_current_offers(
+          influencerId: influencerId!, withCache: false);
       print(newData.length);
       _offers.value += newData;
       if (newData.length == 0) {
