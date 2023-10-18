@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
@@ -16,19 +15,24 @@ import 'package:url_launcher/url_launcher.dart';
 class DvOrderViewController {
   late int orderId;
   Rxn<DeliveryOrder> _order = Rxn<DeliveryOrder>();
-  DeliveryAuthController _deliveryAuthController =
-      Get.find<DeliveryAuthController>();
+  // DeliveryAuthController _deliveryAuthController =
+  //     Get.find<DeliveryAuthController>();
   TextEditingController priceTxt = TextEditingController();
 
   // getters //
   DeliveryOrder? get order => _order.value;
   bool get hasData => _order.value != null;
-  bool get showAccept =>
+  bool get showAccept => isOpenOrder && driverId != null;
+  bool get isOpenOrder =>
       _order.value != null && _order.value!.driverInfo == null;
   bool get showFinish =>
-      _order.value != null && !showAccept && _order.value!.inProcess();
+      _order.value != null &&
+      _order.value!.driverInfo != null &&
+      _order.value!.inProcess();
+  int? driverId;
 
-  void init({required int orderId}) {
+  void init({required int orderId, int? driverId}) {
+    this.driverId = driverId;
     this.orderId = orderId;
     _fetchOrder();
   }
@@ -40,22 +44,22 @@ class DvOrderViewController {
   }
 
   Future<void> acceptOrder({required double deliveryCost}) async {
-    try {
-      final bool res = await update_dvorder_driver_and_cost(
-          driverId: _deliveryAuthController.driverId!,
-          cost: deliveryCost,
-          orderId: orderId);
-      if (res) {
-        showSavedSnackBar(
-            title: "Assigned", subtitle: "You are assigned to this order");
-        await (_fetchOrder());
-        mezDbgPrint("ORDER REFETCH =============>${order?.driverInfo}");
-      } else {
-        showErrorSnackBar(errorText: "Driver Already Assigned");
+    if (driverId != null) {
+      try {
+        final bool res = await update_dvorder_driver_and_cost(
+            driverId: driverId!, cost: deliveryCost, orderId: orderId);
+        if (res) {
+          showSavedSnackBar(
+              title: "Assigned", subtitle: "You are assigned to this order");
+          await (_fetchOrder());
+          mezDbgPrint("ORDER REFETCH =============>${order?.driverInfo}");
+        } else {
+          showErrorSnackBar(errorText: "Driver Already Assigned");
+        }
+      } catch (e) {
+        mezDbgPrint(e);
+        showErrorSnackBar();
       }
-    } catch (e) {
-      mezDbgPrint(e);
-      showErrorSnackBar();
     }
   }
 

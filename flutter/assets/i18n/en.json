@@ -4163,6 +4163,7 @@
           }
         },
         "currentOrders": "Current orders",
+        "openOrders": "Open orders",
         "pastButton": "View past orders",
         "pastOrders": "Past orders",
         "incomingOrders": "Incoming orders",

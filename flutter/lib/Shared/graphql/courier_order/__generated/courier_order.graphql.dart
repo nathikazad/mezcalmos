@@ -1958,7 +1958,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
     this.trip_polyline,
     required this.package_ready,
     required this.direction,
-    required this.service_provider_id,
+    this.service_provider_id,
     this.delivery_driver,
     required this.$__typename,
   });
@@ -2028,7 +2028,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
       trip_polyline: (l$trip_polyline as String?),
       package_ready: (l$package_ready as bool),
       direction: (l$direction as String),
-      service_provider_id: (l$service_provider_id as int),
+      service_provider_id: (l$service_provider_id as int?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver
@@ -2086,7 +2086,7 @@ class Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order 
 
   final String direction;
 
-  final int service_provider_id;
+  final int? service_provider_id;
 
   final Query$get_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver?
       delivery_driver;
@@ -2560,10 +2560,9 @@ class _CopyWithImpl$Query$get_courier_order_by_id$delivery_courier_order_by_pk$d
         direction: direction == _undefined || direction == null
             ? _instance.direction
             : (direction as String),
-        service_provider_id:
-            service_provider_id == _undefined || service_provider_id == null
-                ? _instance.service_provider_id
-                : (service_provider_id as int),
+        service_provider_id: service_provider_id == _undefined
+            ? _instance.service_provider_id
+            : (service_provider_id as int?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -9825,7 +9824,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
     this.trip_polyline,
     required this.package_ready,
     required this.direction,
-    required this.service_provider_id,
+    this.service_provider_id,
     this.delivery_driver,
     required this.$__typename,
   });
@@ -9895,7 +9894,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
       trip_polyline: (l$trip_polyline as String?),
       package_ready: (l$package_ready as bool),
       direction: (l$direction as String),
-      service_provider_id: (l$service_provider_id as int),
+      service_provider_id: (l$service_provider_id as int?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver
@@ -9953,7 +9952,7 @@ class Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$de
 
   final String direction;
 
-  final int service_provider_id;
+  final int? service_provider_id;
 
   final Subscription$listen_on_courier_order_by_id$delivery_courier_order_by_pk$delivery_order$delivery_driver?
       delivery_driver;
@@ -10427,10 +10426,9 @@ class _CopyWithImpl$Subscription$listen_on_courier_order_by_id$delivery_courier_
         direction: direction == _undefined || direction == null
             ? _instance.direction
             : (direction as String),
-        service_provider_id:
-            service_provider_id == _undefined || service_provider_id == null
-                ? _instance.service_provider_id
-                : (service_provider_id as int),
+        service_provider_id: service_provider_id == _undefined
+            ? _instance.service_provider_id
+            : (service_provider_id as int?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver

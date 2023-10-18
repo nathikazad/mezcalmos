@@ -58,9 +58,7 @@ subscription listenCurrentDeliveryMessages($driver_id: Int!) {
 }
 
 query GetOpenDeliveryMessages {
-  delivery_open_delivery_messages(
-    distinct_on: phone_number
-  ) {
+  delivery_open_delivery_messages(distinct_on: phone_number) {
     id
     entry
     phone_number
@@ -76,9 +74,7 @@ query GetOpenDeliveryMessages {
 }
 
 subscription ListenOpenDeliveryMessages {
-  delivery_open_delivery_messages(
-    distinct_on: phone_number
-  ) {
+  delivery_open_delivery_messages(distinct_on: phone_number) {
     id
     entry
     phone_number
@@ -97,7 +93,7 @@ query GetAllCurrentDeliveryMessages($driver_id: Int!) {
   delivery_messages(
     distinct_on: [phone_number, received_time]
     order_by: { received_time: desc, phone_number: desc }
-    where: {finished_time: { _is_null: true } }
+    where: { finished_time: { _is_null: true } }
   ) {
     ...deliveryMessageFields
   }
@@ -106,7 +102,7 @@ query GetAllCurrentDeliveryMessages($driver_id: Int!) {
 subscription listenAllCurrentDeliveryMessages($driver_id: Int!) {
   delivery_messages(
     distinct_on: phone_number
-    where: {finished_time: { _is_null: true } }
+    where: { finished_time: { _is_null: true } }
   ) {
     ...deliveryMessageWithDriver
   }

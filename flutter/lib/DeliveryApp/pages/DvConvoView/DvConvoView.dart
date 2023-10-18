@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/controllers/DvConvoViewController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryMessage.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/SharedDeliveryRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/Chat/MezChatBubble.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -19,7 +19,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
 class DvConvoView extends StatefulWidget {
   const DvConvoView({super.key});
   static Future<void> navigate({required String phoneNumber}) async {
-    final String route = DeliveryAppRoutes.kDriverConvoRoute
+    final String route = SharedDvRoutes.kDriverConvoRoute
         .replaceFirst(":phoneNumber", "$phoneNumber");
     return MezRouter.toPath(route);
   }
@@ -32,7 +32,7 @@ class _DvConvoViewState extends State<DvConvoView> {
   DvConvoViewController viewController = DvConvoViewController();
   @override
   void initState() {
-    String? phoneNumber =
+    final String? phoneNumber =
         MezRouter.urlArguments["phoneNumber"]?.value.toString();
     if (phoneNumber != null) {
       viewController.init(phoneNumber: phoneNumber);
@@ -71,7 +71,7 @@ class _DvConvoViewState extends State<DvConvoView> {
       ),
       body: Obx(
         () => Column(
-          children: [
+          children: <Widget>[
             Expanded(
               child: ListView.builder(
                   controller: viewController.scrollController,
@@ -86,7 +86,7 @@ class _DvConvoViewState extends State<DvConvoView> {
                             viewController.dvMessages[index - 1].receivedTime,
                             message.receivedTime)) {
                       return Column(
-                        children: [
+                        children: <Widget>[
                           _buildDateTitle(message.receivedTime),
                           MezChatBubble(
                             message: message.entry.text?.body ?? '',
@@ -99,7 +99,7 @@ class _DvConvoViewState extends State<DvConvoView> {
                       );
                     } else {
                       return Column(
-                        children: [
+                        children: <Widget>[
                           MezChatBubble(
                             message: message.entry.text?.body ?? '',
                             timestamp: message.receivedTime,
@@ -116,7 +116,7 @@ class _DvConvoViewState extends State<DvConvoView> {
             Container(
               margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               child: Row(
-                children: [
+                children: <Widget>[
                   if (viewController.isResponded)
                     Flexible(
                       child: MezButton(
@@ -166,7 +166,7 @@ class _DvConvoViewState extends State<DvConvoView> {
     if (message.showDriverInfo && message.driverName != null)
       return Container(
         margin: const EdgeInsets.symmetric(vertical: 8),
-        child: Text.rich(TextSpan(children: [
+        child: Text.rich(TextSpan(children: <InlineSpan>[
           WidgetSpan(
             child: InkWell(
               onTap: () {

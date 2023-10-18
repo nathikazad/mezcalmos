@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvOpPastOrdersViewController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/DvConvoCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList'];
@@ -65,11 +64,11 @@ class _DvOpPastOrdersViewState extends State<DvOpPastOrdersView> {
                   itemCount: _viewController.pastOrders.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, int index) {
-                    return MinimalOrderCard(
-                      order: _viewController.pastOrders[index],
-                      onTap: () {
-                        DvCompanyOrderView.navigate(
-                            orderId: _viewController.pastOrders[index].id);
+                    return DvConvoCard(
+                      message: _viewController.pastOrders[index],
+                      onClick: () {
+                        // DvCompanyOrderView.navigate(
+                        //     orderId: _viewController.pastOrders[index].id);
                       },
                     );
                   },

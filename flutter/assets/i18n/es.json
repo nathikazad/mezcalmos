@@ -4194,6 +4194,7 @@
             "canceled": "Cancelada"
           }
         },
+        "openOrders": "Ordenes abiertas",
         "incomingOrders": "Órdenes entrantes",
         "pastButton": "ver pasadas",
         "currentOrders": "Órdenes actuales",
