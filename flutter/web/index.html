@@ -200,7 +200,7 @@
           style="background-color: #fafafa"
         >
           <div>
-            <p class="text-center text-5xl leading-7 font-semibold">
+            <p class="text-center text-5xl leading-7 font-semibold" id="welcomeTitle">
               Welcome to Mezkala
             </p>
             <div class="flex w-full justify-center items-center">
@@ -222,7 +222,7 @@
             <div style="background: #e9e8e8; height: 2px"></div>
           </div>
           <div class="flex flex-col items-center text-center w-full mt-16">
-            <p class="text-4xl leading-7 font-medium">
+            <p class="text-4xl leading-7 font-medium" id="dontHaveText">
               Don't have the app Mezkala yet?
             </p>
             <a
@@ -259,7 +259,7 @@
                     fill="#6779FE"
                   ></path>
                 </svg>
-                <span class="align-middle">Download</span>
+                <span class="align-middle" id="download">Download</span>
               </a>
             </button>
             <div class="w-full mx-16 mt-12 px-10">
@@ -504,6 +504,19 @@
 
       window.addEventListener("load", () => {
         let path = window.location.pathname.split("/").pop();
+
+        var userLang = navigator.language || navigator.userLanguage; 
+
+        if (userLang.includes('es')) {
+            // If the language is Spanish, update content to Spanish
+            document.getElementById('welcomeTitle').innerText = 'Bienvenido a Mezkala';
+            document.getElementById('appLink').innerText = 'Abrir';
+            document.getElementById('dontHaveText').innerText = 'Aun no tienes el app?';
+            document.getElementById('download').innerText = 'Descargar';
+            document.getElementById('storelink').innerText = 'Descargar';
+        }
+
+
         console.log(path)
         // Handle case where URL ends with "/"
         if (path === "") {
