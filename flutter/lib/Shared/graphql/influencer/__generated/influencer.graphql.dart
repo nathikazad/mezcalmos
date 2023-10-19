@@ -2396,9 +2396,15 @@ class _CopyWithStubImpl$Query$GetInfOpenOffers$service_provider_offer$restaurant
 }
 
 class Variables$Query$getInfOffers {
-  factory Variables$Query$getInfOffers({int? inf_id}) =>
+  factory Variables$Query$getInfOffers({
+    int? inf_id,
+    int? limit,
+    int? offset,
+  }) =>
       Variables$Query$getInfOffers._({
         if (inf_id != null) r'inf_id': inf_id,
+        if (limit != null) r'limit': limit,
+        if (offset != null) r'offset': offset,
       });
 
   Variables$Query$getInfOffers._(this._$data);
@@ -2409,17 +2415,35 @@ class Variables$Query$getInfOffers {
       final l$inf_id = data['inf_id'];
       result$data['inf_id'] = (l$inf_id as int?);
     }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
     return Variables$Query$getInfOffers._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int? get inf_id => (_$data['inf_id'] as int?);
+  int? get limit => (_$data['limit'] as int?);
+  int? get offset => (_$data['offset'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     if (_$data.containsKey('inf_id')) {
       final l$inf_id = inf_id;
       result$data['inf_id'] = l$inf_id;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
     }
     return result$data;
   }
@@ -2446,13 +2470,35 @@ class Variables$Query$getInfOffers {
     if (l$inf_id != lOther$inf_id) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$inf_id = inf_id;
-    return Object.hashAll([_$data.containsKey('inf_id') ? l$inf_id : const {}]);
+    final l$limit = limit;
+    final l$offset = offset;
+    return Object.hashAll([
+      _$data.containsKey('inf_id') ? l$inf_id : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+      _$data.containsKey('offset') ? l$offset : const {},
+    ]);
   }
 }
 
@@ -2465,7 +2511,11 @@ abstract class CopyWith$Variables$Query$getInfOffers<TRes> {
   factory CopyWith$Variables$Query$getInfOffers.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$getInfOffers;
 
-  TRes call({int? inf_id});
+  TRes call({
+    int? inf_id,
+    int? limit,
+    int? offset,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$getInfOffers<TRes>
@@ -2481,10 +2531,16 @@ class _CopyWithImpl$Variables$Query$getInfOffers<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? inf_id = _undefined}) =>
+  TRes call({
+    Object? inf_id = _undefined,
+    Object? limit = _undefined,
+    Object? offset = _undefined,
+  }) =>
       _then(Variables$Query$getInfOffers._({
         ..._instance._$data,
         if (inf_id != _undefined) 'inf_id': (inf_id as int?),
+        if (limit != _undefined) 'limit': (limit as int?),
+        if (offset != _undefined) 'offset': (offset as int?),
       }));
 }
 
@@ -2494,7 +2550,12 @@ class _CopyWithStubImpl$Variables$Query$getInfOffers<TRes>
 
   TRes _res;
 
-  call({int? inf_id}) => _res;
+  call({
+    int? inf_id,
+    int? limit,
+    int? offset,
+  }) =>
+      _res;
 }
 
 class Query$getInfOffers {
@@ -2681,7 +2742,25 @@ const documentNodeQuerygetInfOffers = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -2689,6 +2768,14 @@ const documentNodeQuerygetInfOffers = DocumentNode(definitions: [
         name: NameNode(value: 'service_provider_influencer_offer'),
         alias: null,
         arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
           ArgumentNode(
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
@@ -2702,7 +2789,7 @@ const documentNodeQuerygetInfOffers = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [

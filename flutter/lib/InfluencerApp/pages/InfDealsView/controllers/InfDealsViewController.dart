@@ -23,6 +23,8 @@ class InfDealsViewController {
 
   Future<void> fetchOffers() async {
     _currentOffers.value = await get_inf_current_offers(
+        offset: 0,
+        limit: 25,
         influencerId: _influencerAuthController.influencer!.id.toInt(),
         withCache: false);
     _openOffers.value = await get_inf_open_offers(withCache: false);

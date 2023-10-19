@@ -99,14 +99,16 @@ Future<List<Offer>> get_inf_open_offers({bool withCache = true}) async {
 }
 
 Future<List<Offer>> get_inf_current_offers(
-    {required int influencerId, bool withCache = true}) async {
+    {required int influencerId,
+    bool withCache = true,
+    required int limit,
+    required int offset}) async {
   final QueryResult<Query$getInfOffers> res = await _db.graphQLClient
       .query$getInfOffers(Options$Query$getInfOffers(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables: Variables$Query$getInfOffers(
-            inf_id: influencerId,
-          )));
+              inf_id: influencerId, limit: limit, offset: offset)));
   mezDbgPrint("👋 called get service provider offers ===========>${res.data}");
   if (res.hasException) {
     throwError(res.exception);

@@ -42,8 +42,10 @@ query GetInfOpenOffers {
     }
   }
 }
-query getInfOffers($inf_id: Int) {
+query getInfOffers($inf_id: Int, $limit: Int, $offset: Int) {
   service_provider_influencer_offer(
+    limit: $limit
+    offset: $offset
     where: { influencer_id: { _eq: $inf_id } }
   ) {
     offer {

@@ -33,50 +33,51 @@ class CustDealsViewController {
   // methods //
 
   Future<void> init() async {
-    if (Get.find<CustomerAuthController>().customerOffer != null) {
-      influencerId = await get_inf_id_by_tag(
-          tag: Get.find<CustomerAuthController>().customerOffer!);
-    }
     _promoScrollController.onBottomReach(
       () {
-        showSubscribedOnly ? _fetchPromotions() : _fetchInfPromotions();
+        _fetchInfPromotions();
       },
       sensitivity: 200,
     );
-    await _fetchPromos();
+    if (Get.find<CustomerAuthController>().customerOffer != null) {
+      influencerId = await get_inf_id_by_tag(
+          tag: Get.find<CustomerAuthController>().customerOffer!);
+      await _fetchInfPromotions();
+    }
+
     isInitalized.value = true;
   }
 
-  Future<void> _fetchPromos() async {
-    showSubscribedOnly ? await _fetchPromotions() : await _fetchInfPromotions();
-  }
+  // Future<void> _fetchPromos() async {
+  //   showSubscribedOnly ? await _fetchPromotions() : await _fetchInfPromotions();
+  // }
 
   void dispose() {}
 
-  Future<void> _fetchPromotions() async {
-    if (_promoFetchingData || _promoReachedEndOfData) {
-      return;
-    }
-    try {
-      _promoFetchingData = true;
-      final List<Offer> newData = await fetch_subscribed_promotions(
-        offset: _promoCurrentOffset,
-        limit: promoFetchSize,
-        withCache: false,
-        customerId: _authController.hasuraUserId!,
-      );
-      print(newData.length);
-      _offers.value += newData;
-      if (newData.length == 0) {
-        _promoReachedEndOfData = true;
-      }
-      _promoCurrentOffset += promoFetchSize;
-    } finally {
-      _promoFetchingData = false;
-    }
+  // Future<void> _fetchPromotions() async {
+  //   if (_promoFetchingData || _promoReachedEndOfData) {
+  //     return;
+  //   }
+  //   try {
+  //     _promoFetchingData = true;
+  //     final List<Offer> newData = await fetch_subscribed_promotions(
+  //       offset: _promoCurrentOffset,
+  //       limit: promoFetchSize,
+  //       withCache: false,
+  //       customerId: _authController.hasuraUserId!,
+  //     );
+  //     print(newData.length);
+  //     _offers.value += newData;
+  //     if (newData.length == 0) {
+  //       _promoReachedEndOfData = true;
+  //     }
+  //     _promoCurrentOffset += promoFetchSize;
+  //   } finally {
+  //     _promoFetchingData = false;
+  //   }
 
-    // _promotions.refresh();
-  }
+  //   // _promotions.refresh();
+  // }
 
   Future<void> _fetchInfPromotions() async {
     if (_promoFetchingData || _promoReachedEndOfData) {
@@ -91,7 +92,11 @@ class CustDealsViewController {
             lat: location.latitude!, lng: location.longitude!, address: "");
       }
       final List<Offer> newData = await get_inf_current_offers(
-          influencerId: influencerId!, withCache: false);
+        influencerId: influencerId!,
+        limit: promoFetchSize,
+        offset: _promoCurrentOffset,
+        withCache: false,
+      );
       print(newData.length);
       _offers.value += newData;
       if (newData.length == 0) {
@@ -111,6 +116,6 @@ class CustDealsViewController {
     _promoCurrentOffset = 0;
     _promoFetchingData = false;
     _promoReachedEndOfData = false;
-    _fetchPromos();
+    // _fetchPromos();
   }
 }
