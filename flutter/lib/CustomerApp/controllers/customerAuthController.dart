@@ -17,7 +17,7 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
   AuthController authController = Get.find<AuthController>();
   Customer? get customer => _customer.value;
-  String? get customerOffer => "INF10";
+  String? get customerOffer => "mimi";
 
   bool _initialized = false;
   StreamController<bool> _cusAuthControllerInitializedStreamController =

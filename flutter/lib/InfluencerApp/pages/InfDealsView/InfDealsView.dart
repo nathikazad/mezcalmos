@@ -14,7 +14,7 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["InfluencerApp"]
-    ["Pages"]["InfDealssView"];
+    ["Pages"]["InfDealsView"];
 
 class InfDealsView extends StatefulWidget {
   const InfDealsView({super.key});

@@ -12,6 +12,13 @@ object_relationships:
           name: user
           schema: public
 select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - id
+        - user_id
+        - tag
+      filter: {}
   - role: influencer
     permission:
       columns:
