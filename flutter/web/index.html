@@ -15,12 +15,21 @@
       body {
         font-family: "Montserrat", sans-serif;
       }
+      #notSupported {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            text-align: center;
+        }
     </style>
   </head>
 
   <body>
     <!-- <p id="message">Redirecting...</p> -->
-    <div class="relative h-screen overflow-y-auto">
+    <div id="notSupported" style="display: none;">Not supported for web, visit from your phone</div>
+    <div class="relative h-screen overflow-y-auto" id="supported">
       <!-- This div acts as a container that sets the maximum height to the screen size -->
       <div class="flex flex-col items-stretch h-full">
         <!-- This div allows the child elements to stretch and fill the space -->
@@ -470,6 +479,8 @@
             setLinks(links.ios);
           } else {
             console.log("web or unsupported device");
+            document.getElementById('notSupported').style.display = 'block';
+            document.getElementById('supported').style.display = 'none';
             callCloudFunction("web", path);
 
             // Add your logic here for handling desktop browsers
