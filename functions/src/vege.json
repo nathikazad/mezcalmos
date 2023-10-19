@@ -1,0 +1,210 @@
+{
+    "Tacos": {
+        "name": {
+            "en": "Tacos",
+            "es": "Tacos"
+        },
+        "items": {
+            "Al Pastor": {
+                "name": {
+                    "en": "Al Pastor", 
+                    "es": "Al Pastor"
+                },
+                "cost": 40,
+                "desc": {
+                    "en": "Corn tortilla filled with al pastor", 
+                    "es": "Tortilla de maíz relleno con al pastor"
+                },
+                "options": {
+                    "cantidad": {
+                        "name": {
+                            "en": "Quantity",
+                            "es": "Cantidad"
+                        },
+                        "type": "chooseOne",
+                        "choices": {
+                            "2x": {
+                                "name": {
+                                    "en": "2x",
+                                    "es": "2x"
+                                },
+                                "cost": 0,
+                                "default": true
+                            },
+                            "4x": {
+                                "name": {
+                                    "en": "4x",
+                                    "es": "4x"
+                                },
+                                "cost": 20
+                            }
+                        }
+                    }
+                }
+            },
+            "Soyatomic": {
+                "name": {
+                    "en": "Soyatomic", 
+                    "es": "Soyatomic"
+                },
+                "cost": 40,
+                "desc": {
+                    "en": "Soyatomic", 
+                    "es": "Soyatomic"
+                },
+                "options": {
+                    "cantidad": {
+                        "name": {
+                            "en": "Quantity",
+                            "es": "Cantidad"
+                        },
+                        "type": "chooseOne",
+                        "choices": {
+                            "2x": {
+                                "name": {
+                                    "en": "2x",
+                                    "es": "2x"
+                                },
+                                "cost": 0,
+                                "default": true
+                            },
+                            "4x": {
+                                "name": {
+                                    "en": "4x",
+                                    "es": "4x"
+                                },
+                                "cost": 20
+                            }
+                        }
+                    }
+                }
+            },
+            "Milanesa": {
+                "name": {
+                    "en": "Milanesa", 
+                    "es": "Milanesa"
+                },
+                "cost": 25,
+                "desc": {
+                    "en": "Corn tortilla, cheese, cactus", 
+                    "es": "Tortilla de maíz, quesillo, nopales"
+                },
+                "options": {
+                    "cantidad": {
+                        "name": {
+                            "en": "Quantity",
+                            "es": "Cantidad"
+                        },
+                        "type": "chooseOne",
+                        "choices": {
+                            "1x": {
+                                "name": {
+                                    "en": "1x",
+                                    "es": "1x"
+                                },
+                                "cost": 0,
+                                "default": true
+                            },
+                            "3x": {
+                                "name": {
+                                    "en": "3x",
+                                    "es": "3x"
+                                },
+                                "cost": 45
+                            }
+                        }
+                    }
+                }
+            },
+            "Suadero": {
+                "name": {
+                    "en": "Suadero",
+                    "es": "Suadero"
+                },
+                "cost": 80,
+                "desc": {
+                    "en": "5x Corn tortilla",
+                    "es": "5x Tortilla de maíz"
+                }
+            }
+        }
+    },
+    "Tortas": {
+        "name": {
+            "en": "Sandwiches",
+            "es": "Tortas"
+        },
+        "items": {
+            "Al Pastor": {
+                "name": {
+                    "en": "Al Pastor",
+                    "es": "Al Pastor"
+                },
+                "cost": 60,
+                "desc": {
+                    "en": "Bread, cheese, avocado, pineapple",
+                    "es": "Pan telera, quesillo, aguacate, piña"
+                }
+            },
+            "Carnitas": {
+                "name": {
+                    "en": "Carnitas",
+                    "es": "Carnitas"
+                },
+                "cost": 60,
+                "desc": {
+                    "en": "Bread, cheese, avocado, lettuce",
+                    "es": "Pan telera, quesillo, aguacate, lechuga"
+                }
+            },
+            "Milanesa": {
+                "name": {
+                    "en": "Milanesa",
+                    "es": "Milanesa"
+                },
+                "cost": 60,
+                "desc": {
+                    "en": "Bread, cheese, avocado, lettuce, tomato",
+                    "es": "Pan telera, quesillo, aguacate, lechuga, tomate"
+                }
+            }
+        }
+    },
+    "Gringas": {
+        "name": {
+            "en": "Gringas",
+            "es": "Gringas"
+        },
+        "items": {
+            "Clásica": {
+                "name": {
+                    "en": "Classic",
+                    "es": "Clásica"
+                },
+                "cost": 45,
+                "desc": {
+                    "en": "Flour tortilla, cheese, onion, bell pepper, mushroom",
+                    "es": "Tortilla de harina, quesillo, cebolla, morón, champiñón"
+                }
+            },
+            "Al Pastor": {
+                "name": {
+                    "en": "Al Pastor",
+                    "es": "Al Pastor"
+                },
+                "cost": 45
+            },
+            "Carnitas": {
+                "name": {
+                    "en": "Carnitas",
+                    "es": "Carnitas"
+                },
+                "cost": 45
+            }
+        }
+    }
+}
+
+
+
+

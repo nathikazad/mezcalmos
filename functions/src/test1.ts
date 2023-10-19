@@ -2,10 +2,10 @@
 // import * as firebase from "firebase-admin";
 
 import { getHasura } from "./utilities/hasura";
-import * as fs from 'fs';
-import * as yaml from 'js-yaml';
+// import * as fs from 'fs';
+// import * as yaml from 'js-yaml';
 import { initEnv } from "../../supervisor/src/init";
-
+import menu from './vege.json';
 // Assuming you have the yaml in a file named 'input.yaml'
 
 initEnv();
@@ -114,7 +114,7 @@ const writeMenu = async () => {
       {
         objects: Object.entries(jsonData).map(([itemName, itemData], index) => {
           console.log(index + 25);
-          
+
           const [enDesc, esDesc] = itemData.description;
           const prices = itemData.price.split('|').map((price: string) => price.trim());
           const [personalPrice, grandePrice] = prices.map(price => parseFloat(price.split('$')[1]));
@@ -238,4 +238,234 @@ const writeMenu = async () => {
 
 };
 
-writeMenu();
+
+
+interface OptionChoice {
+  cost: number;
+  name: {
+    en: string;
+    es: string;
+  };
+  default?: boolean;
+}
+
+interface Option {
+  name: {
+    en: string;
+    es: string;
+  };
+  type: string;
+  choices: Record<string, OptionChoice>;
+}
+
+interface Item {
+  name: {
+    en: string;
+    es: string;
+  };
+  cost: number;
+  desc?: {
+    en: string;
+    es: string;
+  };
+  options?: Record<string, Option>;
+}
+
+interface Category {
+  name: {
+    en: string;
+    es: string;
+  };
+  items: Record<string, Item>;
+}
+
+type Menu = Record<string, Category>;
+const writeMenu2 = async (menu: Menu) => {
+  const restaurantId = 170;
+  let chain = getHasura();
+  let options = menu["Tacos"].items["Al Pastor"].options;
+  let response = await chain.mutation({
+    insert_restaurant_category: [
+      {
+        objects: Object.entries(menu).map(([categoryName, categoryData]) => {
+          return {
+            name: {
+              data: {
+                service_provider_id: restaurantId,
+                service_provider_type: "restaurant",
+                translations: {
+                  data: [
+                    { language_id: "en", value: categoryData.name.en },
+                    { language_id: "es", value: categoryData.name.es }
+                  ]
+                }
+              }
+            },
+            items: {
+              data: Object.entries(categoryData.items).map(([itemName, itemData], index) => {
+                return {
+                  restaurant_id: restaurantId,
+                  cost: itemData.cost,
+                  position: index + 1,
+                  name: {
+                    data: {
+                      service_provider_id: restaurantId,
+                      service_provider_type: "restaurant",
+                      translations: {
+                        data: [
+                          { language_id: "en", value: itemData.name.en },
+                          { language_id: "es", value: itemData.name.es }
+                        ]
+                      }
+                    }
+                  },
+                  description: itemData.desc && {
+                    data: {
+                      service_provider_id: restaurantId,
+                      service_provider_type: "restaurant",
+                      translations: {
+                        data: [
+                          { value: itemData.desc.en, language_id: "en" },
+                          { value: itemData.desc.es, language_id: "es" }
+                        ]
+                      }
+                    }
+                  },
+
+                  options: itemData.options ? {
+                    data: Object.entries(itemData.options).map(([optionName, optionData], index2) => {
+                      return {
+                        
+                        restaurant_id: restaurantId,
+                        item_options: {
+                          data: [{
+                            restaurant_id: restaurantId,
+                            name: {
+                              data: {
+                                service_provider_id: restaurantId,
+                                service_provider_type: "restaurant",
+                                translations: {
+                                  data: [
+                                    { language_id: "en", value: optionData.name.en },
+                                    { language_id: "es", value: optionData.name.es }
+                                  ]
+                                }
+                              }
+                            },
+                            cost_per_extra: "$0.00",
+                            free_choice: 1,
+                            maximum_choice: 1,
+                            minimum_choice: 1,
+                            choices: {
+                              data: Object.entries(optionData.choices).map(([choiceName, choiceData]) => {
+                                return {
+                                  restaurant_id: restaurantId,
+                                  
+                                  option_choices: {
+                                    data: [{
+                                      restaurant_id: restaurantId,
+                                      cost: choiceData.cost.toString(),
+                                      available: true,
+                                      name: {
+                                        data: {
+                                          service_provider_id: restaurantId,
+                                          service_provider_type: "restaurant",
+                                          translations: {
+                                            data: [
+                                              { value: choiceData.name.en, language_id: "en" },
+                                              { value: choiceData.name.es, language_id: "es" }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                      // default: choiceData.default
+                                    }]
+                                  }
+                                };
+                              })
+                            }
+                          }]
+                        }
+                      };
+                    })
+                  } : undefined
+                  
+                }
+              })
+
+
+            },
+            restaurant_id: restaurantId
+          }
+        })
+      },
+      {
+        affected_rows: true
+      }
+    ],
+  });
+
+  // You can uncomment the following line if you want to log the response
+  // console.log(response.insert_restaurant_item?.affected_rows);
+};
+
+writeMenu2(menu);
+
+
+
+
+
+// options: {
+//   data: 
+//   [{
+//       restaurant_id: restaurantId,
+//       item_options: {
+//         data: [{
+//           restaurant_id: restaurantId,
+//           name: {
+//             data: {
+//               service_provider_id: restaurantId,
+//               service_provider_type: "restaurant",
+//               translations: {
+//                 data: [
+//                   { language_id: "en", value: option.name.en },
+//                   { language_id: "es", value: option.name.es }
+//                 ]
+//               }
+//             }
+//           },
+//           cost_per_extra: "$0.00",
+//           free_choice: 1,
+//           position: 1,
+//           maximum_choice: 1,
+//           minimum_choice: 1,
+//           choices: {
+//             data: [{
+//               restaurant_id: restaurantId,
+//                 option_choices: {
+//                   data: [{
+//                     restaurant_id: restaurantId,
+//                     cost: option.choices["dsf"].cost.toString(),
+//                     available: true,
+//                     name: {
+//                       data: {
+//                         service_provider_id: restaurantId,
+//                         service_provider_type: "restaurant",
+//                         translations: {
+//                           data: [
+//                             { value: option.choices["dsf"].name.en, language_id: "en" },
+//                             { value: option.choices["dsf"].name.es, language_id: "es" }
+//                           ]
+//                         }
+//                       }
+//                     }
+//                     // default: choiceData.default
+//                   }]
+//                 }
+//             }]
+            
+//           }
+//         }]
+//       }
+//     }]
+// }
