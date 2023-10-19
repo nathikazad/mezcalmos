@@ -41,6 +41,7 @@ import { completeOrder } from "./restaurant/completeOrder";
 import { markMessagesAsResponded } from "./utilities/senders/whatsapp/markMessagesAsResponded";
 import { markMessagesAsFinished } from "./utilities/senders/whatsapp/markMessagesAsFinished";
 import { markMessagesAsCancelled } from "./utilities/senders/whatsapp/markMessagesAsCancelled";
+import { getLandingUrl, setLandingUrl } from "./utilities/landingUrl";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -50,13 +51,14 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp()
 }
 
-export const receiveIP = functions.https.onCall((data, context) => {
-  const forwarded = context.rawRequest.headers['x-forwarded-for'];
-  const remoteAddress = context.rawRequest.socket.remoteAddress;
-  const optionalParam = data.optionalParam || "No optional parameter provided";
-  const incomingIPRef = firebase.database().ref("incomingIP");
-  incomingIPRef.push({forwarded: forwarded, optionalParam: optionalParam, remoteAddress: remoteAddress});
-});
+
+
+
+
+export const landingWebUrl = {
+  set:setLandingUrl,
+  get:getLandingUrl
+}
 
 export const whatsapp = {
   newMessage: handleWhatsapp,

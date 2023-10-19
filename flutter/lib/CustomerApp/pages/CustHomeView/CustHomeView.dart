@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustHomeView/controllers/CustHomeViewController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -40,6 +42,7 @@ class _CustHomeViewState extends State<CustHomeView>
 
   @override
   void initState() {
+    redirectIfFirstTime();
     _startListeningForLinks();
     viewController.init(vsync: this, context: context);
     super.initState();
@@ -55,7 +58,8 @@ class _CustHomeViewState extends State<CustHomeView>
     }
     // Parse the initial link (if it exists)
     if (initialLink != null) {
-      await CustomerLinkHandler.handleLink(Uri.parse(initialLink));
+      await CustomerLinkHandler.handleLink(
+          initialLink.replaceFirst("mezkala://", ""));
     }
 
     // Subscribe to incoming links
@@ -64,9 +68,23 @@ class _CustHomeViewState extends State<CustHomeView>
         // Parse the link
         mezDbgPrint("👁️👁️👁️👁️👁️new link $link");
         if (link != null) {
-          CustomerLinkHandler.handleLink(Uri.parse(link));
+          CustomerLinkHandler.handleLink(link.replaceFirst("mezkala://", ""));
         }
       });
+    }
+  }
+
+  Future<void> redirectIfFirstTime() async {
+    final bool isFirstTime = GetStorage().read("first_time") ?? true;
+
+    if (isFirstTime) {
+      // This is the first time the app is launched
+      // GetStorage().write('first_time', false);
+      mezDbgPrint('⏰⏰⏰⏰⏰ App is launched for the first time');
+      final dynamic landingUrl = await CloudFunctions.callCloudFunction(
+          functionName: 'landingWebUrl-get');
+      mezDbgPrint('⏰⏰⏰⏰⏰ landing url is $landingUrl');
+      if (landingUrl != null) await CustomerLinkHandler.handleLink(landingUrl);
     }
   }
 

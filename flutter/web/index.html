@@ -398,9 +398,9 @@
       firebase.initializeApp(firebaseConfig);
       const functions = firebase.functions();
 
-      async function callCloudFunction(os) {
-        const callable = functions.httpsCallable("receiveIP");
-        callable({ optionalParam: os })
+      async function callCloudFunction(os, path) {
+        const callable = functions.httpsCallable("landingWebUrl-set");
+        callable({ optionalParam: {os:os, path:path }})
           .then((result) => {
             console.log(result.data);
           })
@@ -450,7 +450,7 @@
       //   }
       // }
 
-      async function redirect(links) {
+      async function redirect(links, path) {
         try {
           // Redirect user to the correct app store
           const userAgent =
@@ -458,7 +458,7 @@
 
           if (/android/i.test(userAgent) && links.android != null) {
             console.log("android");
-            callCloudFunction("android");
+            callCloudFunction("android", path);
             setLinks(links.android);
           } else if (
             /iPad|iPhone|iPod/.test(userAgent) &&
@@ -466,11 +466,11 @@
             links.ios != null
           ) {
             console.log("ios");
-            callCloudFunction("ios");
+            callCloudFunction("ios", path);
             setLinks(links.ios);
           } else {
             console.log("web or unsupported device");
-            callCloudFunction("web");
+            callCloudFunction("web", path);
 
             // Add your logic here for handling desktop browsers
             document.getElementById("message").innerText =
@@ -534,7 +534,7 @@
             customerAppLinks.ios.appLink = `mezkala://${path}`;
             customerAppLinks.android.appLink = `mezkala://${path}`;
           }
-          redirect(customerAppLinks);
+          redirect(customerAppLinks, path);
         }
       });
     </script>
