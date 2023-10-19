@@ -39,3 +39,15 @@ select_permissions:
           - driver:
               user_id:
                 _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - delivery_order_type
+        - user_id
+        - service_provider_id
+        - driver_id
+        - phone_number
+        - time
+        - status
+      filter: {}

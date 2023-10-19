@@ -57,14 +57,16 @@ insert_permissions:
   - role: influencer
     permission:
       check:
-        user_id:
-          _eq: X-Hasura-User-Id
+        _and:
+          - app_type_id:
+              _eq: influencer
+          - user_id:
+              _eq: X-Hasura-User-Id
       columns:
-        - turn_off_notifications
-        - id
-        - user_id
         - app_type_id
         - token
+        - user_id
+        - turn_off_notifications
   - role: laundry_operator
     permission:
       check:

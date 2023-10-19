@@ -16,11 +16,16 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class CustRestaurantCard extends StatelessWidget {
   final Restaurant? restaurant;
 
+  final bool withBorder;
+
   // Constructor with a restaurant
-  const CustRestaurantCard({super.key, required this.restaurant});
+  const CustRestaurantCard(
+      {super.key, required this.restaurant, this.withBorder = false});
 
   // Constructor for shimmer effect
-  const CustRestaurantCard.shimmer() : restaurant = null;
+  const CustRestaurantCard.shimmer()
+      : restaurant = null,
+        withBorder = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +34,11 @@ class CustRestaurantCard extends StatelessWidget {
     }
     return Card(
       elevation: 0,
+      shape: withBorder
+          ? RoundedRectangleBorder(
+              side: BorderSide(color: secondaryLightBlueColor, width: 1.5),
+              borderRadius: BorderRadius.circular(10))
+          : null,
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         onTap: () {
@@ -41,10 +51,10 @@ class CustRestaurantCard extends StatelessWidget {
           height: 30.mezW,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Stack(
                 alignment: Alignment.center,
-                children: [
+                children: <Widget>[
                   CachedNetworkImage(
                     imageUrl: restaurant!.info.image,
                     height: double.infinity,
@@ -82,7 +92,7 @@ class CustRestaurantCard extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10)),
-                          child: Text.rich(TextSpan(children: [
+                          child: Text.rich(TextSpan(children: <InlineSpan>[
                             WidgetSpan(
                               child: Icon(
                                 Icons.lock_clock,
@@ -103,10 +113,10 @@ class CustRestaurantCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
+                        children: <Widget>[
                           Flexible(
                             child: Text(
                               restaurant!.info.name,
@@ -121,7 +131,7 @@ class CustRestaurantCard extends StatelessWidget {
                                   vertical: 3, horizontal: 5),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25)),
-                              child: Text.rich(TextSpan(children: [
+                              child: Text.rich(TextSpan(children: <InlineSpan>[
                                 WidgetSpan(
                                   child: Icon(
                                     Icons.star_rate_rounded,
@@ -176,7 +186,7 @@ Widget _shimmerCard() {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Container(
               height: double.infinity,
               width: 30.mezW,
@@ -191,11 +201,11 @@ Widget _shimmerCard() {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: <Widget>[
                         Container(
                           width: 100,
                           height: 12,

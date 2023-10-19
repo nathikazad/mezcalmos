@@ -31,7 +31,7 @@ class MezServicesMapView extends StatefulWidget {
   const MezServicesMapView(
       {required this.markers,
       required this.fetchNewData,
-      this.children = const [],
+      this.children = const <Widget>[],
       required this.mGoogleMapController});
 
   @override
@@ -67,7 +67,7 @@ class _MezServicesMapViewState extends State<MezServicesMapView> {
   Widget build(BuildContext context) {
     return Obx(
       () => Stack(
-        children: [
+        children: <Widget>[
           MGoogleMap(
             mGoogleMapController: _controller.mGoogleMapController,
             zoomGesturesEnabled: true,
@@ -153,13 +153,13 @@ class MezServicesMapController {
   }
 
   Future<void> fetchData() async {
-    LatLng? mapCenter = await mGoogleMapController.getMapCenter();
-    double? distance = calculateDistanceFromBounds(
+    final LatLng? mapCenter = await mGoogleMapController.getMapCenter();
+    final double? distance = calculateDistanceFromBounds(
         await mGoogleMapController.controller.value!.getVisibleRegion());
 
     mezlog("Fetch with new center ${mapCenter?.toJson()}");
-    if (mapCenter != null) {
-      List<Marker> newMarkers = await fetchNewData(mapCenter, distance);
+    if (mapCenter != null && distance != null) {
+      final List<Marker> newMarkers = await fetchNewData(mapCenter, distance);
       fillInMarkers(newMarkers);
 
       mezDbgPrint(
@@ -171,7 +171,7 @@ class MezServicesMapController {
   void fillInMarkers(List<Marker> newMarkers) {
     mezDbgPrint("👊new markers ========>${newMarkers.length}");
 
-    List<MezMarker> newMarkersToAdd = [];
+    final List<MezMarker> newMarkersToAdd = <MezMarker>[];
 
     for (Marker newMarker in newMarkers) {
       // if (newMarkersToAdd.length >= 10) {

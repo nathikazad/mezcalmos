@@ -39,7 +39,8 @@ class CustHomeViewController {
   RxList<Item> filteredItems = RxList<Item>.empty();
   RxSet<Marker> _restaurantsMarkers = <Marker>{}.obs;
   RxSet<Marker> get restaurantsMarkers => _restaurantsMarkers;
-  List<int> servicesIds = [];
+  List<int> servicesIds = <int>[];
+  RxBool isShownRestaurantSheet = RxBool(false);
 
   int fetchSize = 25;
   int offset = 0;
@@ -126,7 +127,7 @@ class CustHomeViewController {
       isFetchingRestaurants.value = true;
       mezDbgPrint("Fetching new restaurants ...");
 
-      List<Restaurant> newData = await fetch_restaurants(
+      final List<Restaurant> newData = await fetch_restaurants(
         is_open: showOnlyOpen.value,
         delivery_available: showOnlyDelivery.value,
         withCache: false,
@@ -179,7 +180,7 @@ class CustHomeViewController {
     } else {
       servicesIds =
           newList.map<int>((Restaurant v) => v.info.hasuraId).toList();
-      List<Item> newItems = filteredItems.filterByServiceIds(servicesIds);
+      final List<Item> newItems = filteredItems.filterByServiceIds(servicesIds);
 
       filteredItems.value = newItems;
     }
@@ -193,7 +194,7 @@ class CustHomeViewController {
     try {
       isFetchingItems.value = true;
       mezDbgPrint("Fetching items ===========>>>$itemsOffset");
-      List<Item> newItems = await search_items(
+      final List<Item> newItems = await search_items(
           servicesIds: servicesIds,
           keyword: searchQuery.value,
           limit: itemsFetchSize,
@@ -236,7 +237,7 @@ class CustHomeViewController {
       isFetchingRestaurants.value = false;
       try {
         isFetchingRestaurants.value = true;
-        List<Restaurant> newData = await fetch_restaurants(
+        final List<Restaurant> newData = await fetch_restaurants(
             is_open: showOnlyOpen.value,
             delivery_available: showOnlyDelivery.value,
             withCache: false,
@@ -321,8 +322,8 @@ class CustHomeViewController {
     }
   }
 
-  void _onSelectRentalTag(Restaurant restaurant) {
-    showModalBottomSheet(
+  Future<void> _onSelectRentalTag(Restaurant restaurant) async {
+    await showModalBottomSheet(
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
         context: context,
@@ -332,7 +333,7 @@ class CustHomeViewController {
             margin: const EdgeInsets.only(left: 8.0, right: 8, bottom: 8),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Obx(
                   () => Padding(
                     padding: EdgeInsets.only(bottom: 10),
@@ -349,7 +350,11 @@ class CustHomeViewController {
                     ),
                   ),
                 ),
-                CustRestaurantCard(restaurant: restaurant),
+                CustRestaurantCard(
+                  restaurant: restaurant,
+                  withBorder: true,
+                ),
+                bigSeperator,
               ],
             ),
           );
@@ -357,8 +362,8 @@ class CustHomeViewController {
   }
 
   Future<void> _fetchCurrentMapMarkers() async {
-    LatLng? mapCenter = await mapController.getMapCenter();
-    double? distance = calculateDistanceFromBounds(
+    final LatLng? mapCenter = await mapController.getMapCenter();
+    final double? distance = calculateDistanceFromBounds(
         await mapController.controller.value!.getVisibleRegion());
     mezDbgPrint("✅DATA");
     mezDbgPrint(mapCenter);

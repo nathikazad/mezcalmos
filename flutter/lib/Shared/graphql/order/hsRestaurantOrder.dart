@@ -353,6 +353,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       firebaseId: orderData.restaurant.details!.firebase_id,
       hasuraId: orderData.restaurant.id,
       image: orderData.restaurant.details!.image,
+      phoneNumber: orderData.restaurant.details?.phone_number,
       name: orderData.restaurant.details!.name,
       currency: orderData.restaurant.details!.currency.toCurrency(),
     ),

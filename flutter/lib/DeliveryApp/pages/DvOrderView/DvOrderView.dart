@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/controllers/DvOrderViewController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -13,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/SharedDeliveryRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -26,9 +26,12 @@ dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
 class DvOrderView extends StatefulWidget {
   const DvOrderView({super.key});
 
-  static void navigate({required int orderId}) {
+  static void navigate({required int orderId, required int? driverId}) {
     MezRouter.toPath(
-        DeliveryAppRoutes.kDvOrderView.replaceFirst(":orderId", "$orderId"));
+        SharedDvRoutes.kDvOrderView.replaceFirst(":orderId", "$orderId"),
+        arguments: <String, dynamic>{
+          "driverId": driverId,
+        });
   }
 
   @override
@@ -40,8 +43,9 @@ class _DvOrderViewState extends State<DvOrderView> {
   @override
   void initState() {
     final int? orderId = MezRouter.urlArguments["orderId"]?.asInt;
+    final int? driverId = MezRouter.bodyArguments?["driverId"]?.asInt;
     if (orderId != null) {
-      viewController.init(orderId: orderId);
+      viewController.init(orderId: orderId, driverId: driverId);
     } else
       showErrorSnackBar(errorText: "Order Not Found");
     super.initState();
@@ -100,13 +104,26 @@ class _DvOrderViewState extends State<DvOrderView> {
               viewController.order!.customer.name,
               style: context.textTheme.bodyLarge,
             ),
-            action: MezIconButton(
-              icon: Ionicons.logo_whatsapp,
-              iconColor: Colors.white,
-              backgroundColor: Colors.green,
-              onTap: () {
-                viewController.openCustomerWhatsapp();
-              },
+            action: Row(
+              children: <Widget>[
+                MezIconButton(
+                  icon: Ionicons.logo_whatsapp,
+                  iconColor: Colors.white,
+                  backgroundColor: Colors.green,
+                  onTap: () {
+                    viewController.openCustomerWhatsapp();
+                  },
+                ),
+                hMeduimSeperator,
+                MezIconButton(
+                  icon: Icons.my_location,
+                  iconColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  onTap: () async {
+                    await viewController.openCustomerMap();
+                  },
+                ),
+              ],
             ),
           ),
           MezCard(
@@ -120,13 +137,26 @@ class _DvOrderViewState extends State<DvOrderView> {
               viewController.order!.serviceProvider.name,
               style: context.textTheme.bodyLarge,
             ),
-            action: MezIconButton(
-              icon: Ionicons.logo_whatsapp,
-              iconColor: Colors.white,
-              backgroundColor: Colors.green,
-              onTap: () {
-                viewController.openRestaurantWhatsapp();
-              },
+            action: Row(
+              children: <Widget>[
+                MezIconButton(
+                  icon: Ionicons.logo_whatsapp,
+                  iconColor: Colors.white,
+                  backgroundColor: Colors.green,
+                  onTap: () {
+                    viewController.openRestaurantWhatsapp();
+                  },
+                ),
+                hMeduimSeperator,
+                MezIconButton(
+                  icon: Icons.my_location,
+                  iconColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  onTap: () async {
+                    await viewController.openRestaurantMap();
+                  },
+                ),
+              ],
             ),
           ),
 
@@ -184,6 +214,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                         : null,
                     firstAvatarIcon:
                         item.image == null ? Icons.fastfood_rounded : null,
+                    firstAvatarIconColor: Colors.white,
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[

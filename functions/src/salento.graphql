@@ -1,0 +1,69 @@
+mutation createRestaurant {
+    insert_restaurant_restaurant_one(object: {details: {data: {name: "II Salento", phone_number: "+529541622896", image: "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/restaurants%2Fsalento%2F334795030_253049307066254_4990233207884072439_n.jpg?alt=media&token=68175fb1-633f-469f-a82e-12d8a0e119c4&_gl=1*1go8vri*_ga*MjEzODU1NzI3Ny4xNjg5OTU5MTE4*_ga_CW55HF8NVT*MTY5NzU0MDU5My41OS4xLjE2OTc1NDA2MTkuMzQuMC4w", location: {data: {address: "Punta zicatela, Alejandro Cárdenas Peralta, Brisas de Zicatela, 70934 Brisas de Zicatela, Oax., Mexico", gps: "{ \"type\": \"Point\", \"crs\": { \"type\": \"name\", \"properties\": { \"name\": \"urn:ogc:def:crs:EPSG::4326\" } }, \"coordinates\": [ -97.044274, 15.836922 ] }"}}, service_provider_type: "restaurant", unique_id: "salento", schedule: "{     \"friday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"monday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"sunday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"tuesday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"saturday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"thursday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"wednesday\": {       \"isOpen\": false,       \"openHours\": [         {           \"to\": \"20:0\",           \"from\": \"18:0\"         }       ]     }   }   "}}, delivery_details: {data: {self_delivery: true, sitin_available: true, customer_pickup: true, delivery_available: true}}, 
+      }) {
+      id
+    }
+  }
+  
+  mutation createCategories {
+    insert_restaurant_category(objects: 
+      
+        [
+          {position:1,
+          restaurant_id: 169,
+          name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Pizzas"}, 
+                {language_id: "es", value: "Pizzas"}]
+              }
+            }}},
+          {position: 2,
+            restaurant_id: 169,
+            name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Calzone"}, 
+                {language_id: "es", value: "Calzone"}]
+              }
+            }}},
+          {position: 3,
+            restaurant_id: 169,
+            name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Salad"}, 
+                {language_id: "es", value: "Ensaladas"}]
+              }
+            }}},
+          {position: 4,
+            restaurant_id: 169,
+            name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Calzone"}, 
+                {language_id: "es", value: "Calzone"}]
+              }
+            }}},
+          {restaurant_id: 169,
+            name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Desserts"}, 
+                {language_id: "es", value: "Le Nostre Pucce"}]
+              }
+            }}},
+        ]){
+      affected_rows
+    }
+  }

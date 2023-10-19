@@ -3592,8 +3592,8 @@
         "customer": "Cliente",
         "orderSummary": "Resumen de pedido",
         "acceptOrder": "Aceptar pedido",
-        "finishOrder": "Orden de acabado",
-        "cancelOrder": "Cancelar orden",
+        "finishOrder": "Terminar pedido",
+        "cancelOrder": "Cancelar pedido",
         "deliveryCost": "Coste de envío",
         "orderItems": "Encargar artículos",
         "cancel": "Cancelar",
@@ -4245,6 +4245,7 @@
             "canceled": "Cancelada"
           }
         },
+        "openOrders": "Ordenes abiertas",
         "incomingOrders": "Órdenes entrantes",
         "pastButton": "ver pasadas",
         "currentOrders": "Órdenes actuales",

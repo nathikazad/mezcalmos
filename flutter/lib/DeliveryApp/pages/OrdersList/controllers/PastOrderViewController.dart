@@ -20,46 +20,6 @@ class DriverPastOrdersController {
   int _currentOffset = 0;
   bool _fetchingData = false;
   bool _reachedEndOfData = false;
-  /* SCROLL CONTROLLER */
-  // List<DeliveryMessage> get resolvedMessages =>
-  //     _messages.where((DeliveryMessage element) => element.resolved).toList();
-  // List<WhMessage> get unResolvedMessages =>
-  //     _messages.where((WhMessage element) => !element.resolved).toList();
-
-  // RxList<WhMessage> _messages = RxList<WhMessage>([
-  //   WhMessage(
-  //     from: "12098628445",
-  //     id: "wamid.HBgLMTIwOTg2Mjg0NDUVAgASGBQzQTBBOEQ2Q0E2Mjk2QjEwRDlGNAA=",
-  //     resolved: false,
-  //     text: TextMessage(body: "Hey"),
-  //     timestamp: DateTime.now(),
-  //     type: "text",
-  //   ),
-  //   WhMessage(
-  //     from: "123456789",
-  //     id: "wamid.XYZ123456789",
-  //     resolved: true,
-  //     text: TextMessage(body: "Hello there!"),
-  //     timestamp: DateTime.now().subtract(Duration(days: 1)),
-  //     type: "text",
-  //   ),
-  //   WhMessage(
-  //     from: "987654321",
-  //     id: "wamid.ABC987654321",
-  //     resolved: false,
-  //     text: TextMessage(body: "Hi, how are you?"),
-  //     timestamp: DateTime.now().subtract(Duration(days: 2)),
-  //     type: "text",
-  //   ),
-  //   WhMessage(
-  //     from: "555555555",
-  //     id: "wamid.PQR555555555",
-  //     resolved: true,
-  //     text: TextMessage(body: "Goodbye"),
-  //     timestamp: DateTime.now().subtract(Duration(days: 3)),
-  //     type: "text",
-  //   ),
-  // ]);
 
   Future<void> init() async {
     await initOrders();
@@ -101,7 +61,9 @@ class DriverPastOrdersController {
     if (order.delivery_order_type == MinimalDeliveryOrderType.Message) {
       DvConvoView.navigate(phoneNumber: order.phone_number!);
     } else {
-      DvOrderView.navigate(orderId: order.id.toInt());
+      DvOrderView.navigate(
+          orderId: order.id.toInt(),
+          driverId: _deliveryAuthController.driverId!);
     }
   }
 

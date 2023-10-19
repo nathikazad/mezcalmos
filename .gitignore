@@ -23,3 +23,4 @@ service-account.json
 mason.yaml
 mason-lock.json
 .mason
+functions/lib

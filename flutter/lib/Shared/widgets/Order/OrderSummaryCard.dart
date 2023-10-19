@@ -209,7 +209,7 @@ class OrderSummaryCard extends StatelessWidget {
                         ),
                         Text(
                           (costs.orderItemsCost != 0)
-                              ? costs.calculateTotalCost?.toPriceString() ?? "-"
+                              ? costs.totalCost?.toPriceString() ?? "-"
                               : "-",
                           style: txt.bodyLarge,
                         ),

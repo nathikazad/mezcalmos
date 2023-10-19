@@ -268,7 +268,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
       permanent: true,
     );
     authInitStateStream =
-        authController.authInitState.stream.listen((String authInitState) {
+        authController.logAuthInitState.stream.listen((String authInitState) {
       setState(() => _initializedStateAuth = authInitState);
     });
     Get.put<SettingsController>(

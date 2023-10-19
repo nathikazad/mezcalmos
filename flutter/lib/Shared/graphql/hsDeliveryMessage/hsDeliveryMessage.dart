@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/__generated/delivery_message.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryMessage.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 Future<List<DeliveryMessage>> getDvOpenMessages({bool withCache = true}) async {
@@ -12,6 +12,7 @@ Future<List<DeliveryMessage>> getDvOpenMessages({bool withCache = true}) async {
           fetchPolicy: withCache
               ? FetchPolicy.cacheAndNetwork
               : FetchPolicy.networkOnly));
+
   if (res.hasException) {
     throw res.exception!;
   } else
@@ -75,20 +76,21 @@ Stream<List<DeliveryMessage>?> listenDvCurrentMessages(
     if (event.hasException) {
       throwError(event.exception);
     }
+
     return event.parsedData?.delivery_messages
-        .map((Subscription$listenCurrentDeliveryMessages$delivery_messages e) =>
-            DeliveryMessage(
-                id: e.id,
-                entry: DvMessageEntry.fromJson(e.entry),
-                userImage: e.customer?.image,
-                userName: e.customer?.name,
-                phoneNumber: e.phone_number,
-                driverId: e.driver_id,
-                driverName: e.driver?.user.name,
-                driverPhone: e.driver?.user.phone,
-                respondedTime: DateTime.tryParse(e.responded_time.toString()),
-                finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                receivedTime: DateTime.parse(e.received_time)))
+        .map((Fragment$deliveryMessageWithDriver e) => DeliveryMessage(
+            id: e.id,
+            entry: DvMessageEntry.fromJson(e.entry),
+            userImage: e.customer?.image,
+            userName: e.customer?.name,
+            phoneNumber: e.phone_number,
+            driverId: e.driver_id,
+            //    showDriverInfo: e.show_driver_info,
+            driverName: e.driver?.user.name,
+            driverPhone: e.driver?.user.phone,
+            respondedTime: DateTime.tryParse(e.responded_time.toString()),
+            finishedTime: DateTime.tryParse(e.finished_time.toString()),
+            receivedTime: DateTime.parse(e.received_time)))
         .toList();
   });
 }
@@ -109,18 +111,17 @@ Future<List<DeliveryMessage>> getDvCurrentMessages(
   } else
     return res.parsedData!.delivery_messages
         .map<DeliveryMessage>(
-            (Query$GetCurrentDeliveryMessages$delivery_messages e) =>
-                DeliveryMessage(
-                    id: e.id,
-                    entry: DvMessageEntry.fromJson(e.entry),
-                    userImage: e.customer?.image,
-                    userName: e.customer?.name,
-                    phoneNumber: e.phone_number,
-                    driverId: e.driver_id,
-                    respondedTime:
-                        DateTime.tryParse(e.responded_time.toString()),
-                    finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                    receivedTime: DateTime.parse(e.received_time)))
+            (Fragment$deliveryMessageFields e) => DeliveryMessage(
+                id: e.id,
+                entry: DvMessageEntry.fromJson(e.entry),
+                userImage: e.customer?.image,
+                userName: e.customer?.name,
+                phoneNumber: e.phone_number,
+                driverId: e.driver_id,
+                //  showDriverInfo: e.show_driver_info,
+                respondedTime: DateTime.tryParse(e.responded_time.toString()),
+                finishedTime: DateTime.tryParse(e.finished_time.toString()),
+                receivedTime: DateTime.parse(e.received_time)))
         .toList();
 }
 
@@ -141,18 +142,17 @@ Future<List<DeliveryMessage>> getDvPastMessages(
   } else
     return res.parsedData!.delivery_messages
         .map<DeliveryMessage>(
-            (Query$GetPastDeliveryMessages$delivery_messages e) =>
-                DeliveryMessage(
-                    id: e.id,
-                    entry: DvMessageEntry.fromJson(e.entry),
-                    userImage: e.customer?.image,
-                    userName: e.customer?.name,
-                    phoneNumber: e.phone_number,
-                    driverId: e.driver_id,
-                    respondedTime:
-                        DateTime.tryParse(e.responded_time.toString()),
-                    finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                    receivedTime: DateTime.parse(e.received_time)))
+            (Fragment$deliveryMessageFields e) => DeliveryMessage(
+                id: e.id,
+                entry: DvMessageEntry.fromJson(e.entry),
+                userImage: e.customer?.image,
+                userName: e.customer?.name,
+                phoneNumber: e.phone_number,
+                driverId: e.driver_id,
+                //   showDriverInfo: e.show_driver_info,
+                respondedTime: DateTime.tryParse(e.responded_time.toString()),
+                finishedTime: DateTime.tryParse(e.finished_time.toString()),
+                receivedTime: DateTime.parse(e.received_time)))
         .toList();
 }
 
@@ -171,20 +171,19 @@ Future<List<DeliveryMessage>> getCustomerDvMessages(
   } else
     return res.parsedData!.delivery_messages
         .map<DeliveryMessage>(
-            (Query$GetCustomerDeliveryMessages$delivery_messages e) =>
-                DeliveryMessage(
-                    id: e.id,
-                    entry: DvMessageEntry.fromJson(e.entry),
-                    userImage: e.customer?.image,
-                    userName: e.customer?.name,
-                    phoneNumber: e.phone_number,
-                    driverId: e.driver_id,
-                    driverName: e.driver?.user.name,
-                    driverPhone: e.driver?.user.phone,
-                    respondedTime:
-                        DateTime.tryParse(e.responded_time.toString()),
-                    finishedTime: DateTime.tryParse(e.finished_time.toString()),
-                    receivedTime: DateTime.parse(e.received_time)))
+            (Fragment$deliveryMessageWithDriver e) => DeliveryMessage(
+                id: e.id,
+                entry: DvMessageEntry.fromJson(e.entry),
+                userImage: e.customer?.image,
+                userName: e.customer?.name,
+                phoneNumber: e.phone_number,
+                driverId: e.driver_id,
+                driverName: e.driver?.user.name,
+                driverPhone: e.driver?.user.phone,
+                //  showDriverInfo: e.show_driver_info,
+                respondedTime: DateTime.tryParse(e.responded_time.toString()),
+                finishedTime: DateTime.tryParse(e.finished_time.toString()),
+                receivedTime: DateTime.parse(e.received_time)))
         .toList();
 }
 

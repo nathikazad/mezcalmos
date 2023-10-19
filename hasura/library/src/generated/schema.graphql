@@ -12938,6 +12938,7 @@ type delivery_messages {
   phone_number: String!
   received_time: timestamptz!
   responded_time: timestamptz
+  show_driver_info: Boolean!
   user_id: Int
 }
 
@@ -12994,6 +12995,7 @@ input delivery_messages_bool_exp {
   phone_number: String_comparison_exp
   received_time: timestamptz_comparison_exp
   responded_time: timestamptz_comparison_exp
+  show_driver_info: Boolean_comparison_exp
   user_id: Int_comparison_exp
 }
 
@@ -13051,6 +13053,7 @@ input delivery_messages_insert_input {
   phone_number: String
   received_time: timestamptz
   responded_time: timestamptz
+  show_driver_info: Boolean
   user_id: Int
 }
 
@@ -13107,6 +13110,7 @@ input delivery_messages_order_by {
   phone_number: order_by
   received_time: order_by
   responded_time: order_by
+  show_driver_info: order_by
   user_id: order_by
 }
 
@@ -13146,6 +13150,9 @@ enum delivery_messages_select_column {
   responded_time
 
   """column name"""
+  show_driver_info
+
+  """column name"""
   user_id
 }
 
@@ -13160,6 +13167,7 @@ input delivery_messages_set_input {
   phone_number: String
   received_time: timestamptz
   responded_time: timestamptz
+  show_driver_info: Boolean
   user_id: Int
 }
 
@@ -13204,6 +13212,7 @@ input delivery_messages_stream_cursor_value_input {
   phone_number: String
   received_time: timestamptz
   responded_time: timestamptz
+  show_driver_info: Boolean
   user_id: Int
 }
 
@@ -13238,6 +13247,9 @@ enum delivery_messages_update_column {
 
   """column name"""
   responded_time
+
+  """column name"""
+  show_driver_info
 
   """column name"""
   user_id

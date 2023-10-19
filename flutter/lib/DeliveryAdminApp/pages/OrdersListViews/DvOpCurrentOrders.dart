@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpPastOrdersList.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvOpCurrentOrdersController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/widgets/DvConvoCard.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
-import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -58,18 +54,33 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
         appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Menu,
           showNotifications: true,
+          ordersRoute: DeliveryAdminRoutes.kDeliveryOpPastOrdersRoute,
         ),
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
-        body: Obx(() {
-          if (!viewController.hasData) {
-            return MezLogoAnimation(
-              centered: true,
-            );
-          } else {
-            return _inProcessOrders();
-          }
-        }),
+        body: Column(
+          children: <Widget>[
+            Obx(
+              () => Expanded(
+                child: SingleChildScrollView(
+                  child: (viewController.currentOrders.isNotEmpty ||
+                          viewController.openOrders.isNotEmpty)
+                      ? Column(
+                          children: <Widget>[
+                            if (viewController.currentOrders.isNotEmpty)
+                              _currentOrders(context),
+                            if (viewController.openOrders.isNotEmpty)
+                              _openOrders(context),
+                          ],
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(top: 17.5.h),
+                          child: NoOrdersComponent()),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -93,56 +104,84 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
     );
   }
 
-  Widget _inProcessOrders() {
-    return SingleChildScrollView(
+  Widget _currentOrders(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+      decoration: BoxDecoration(color: secondaryLightBlueColor),
       child: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                    fit: FlexFit.tight,
-                    child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: context.txt.bodyLarge)),
-                Flexible(
-                  child: MezButton(
-                    backgroundColor: secondaryLightBlueColor,
-                    textColor: primaryBlueColor,
-                    height: 32,
-                    width: 35.w,
-                    textStyle: context.txt.bodyLarge
-                        ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
-                    // width: ,
-                    borderRadius: 35,
-                    label: '${_i18n()["pastOrders"]}'.inCaps,
-                    onClick: () async {
-                      await DvOpPastOrdersView.navigate();
-                    },
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Text.rich(TextSpan(
+              children: <InlineSpan>[
+                WidgetSpan(
+                  child: Icon(
+                    Icons.route_rounded,
+                    color: primaryBlueColor,
                   ),
                 ),
+                WidgetSpan(child: hTinySepartor),
+                TextSpan(
+                    text:
+                        "${_i18n()['currentOrders']} (${viewController.currentOrders.length})"),
               ],
-            ),
+              style: context.textTheme.bodyLarge
+                  ?.copyWith(color: primaryBlueColor))),
+          meduimSeperator,
+          Column(
+            children:
+                List.generate(viewController.currentOrders.length, (int index) {
+              final DeliveryMinimalOrder message =
+                  viewController.currentOrders[index];
+              return DvConvoCard(
+                message: message,
+                onClick: () {
+                  viewController.handleNavigation(order: message);
+                },
+              );
+            }),
           ),
-          viewController.currentOrders.value!.isNotEmpty
-              ? Column(
-                  children: List.generate(
-                      viewController.currentOrders.value!.length, (int index) {
-                    return MinimalOrderCard(
-                      order: viewController.currentOrders.value![index],
-                      onTap: () {
-                        DvCompanyOrderView.navigate(
-                            orderId:
-                                viewController.currentOrders.value![index].id);
-                      },
-                    );
-                  }),
-                )
-              : Container(
-                  margin: EdgeInsets.only(top: 10.h),
-                  alignment: Alignment.center,
-                  child: Center(child: NoOrdersComponent())),
+        ],
+      ),
+    );
+  }
+
+  Container _openOrders(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+      decoration: BoxDecoration(color: Colors.purple.shade100),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text.rich(TextSpan(
+              children: <InlineSpan>[
+                WidgetSpan(
+                  child: Icon(
+                    Icons.hourglass_empty_rounded,
+                    color: Colors.purple,
+                  ),
+                ),
+                WidgetSpan(child: hTinySepartor),
+                TextSpan(
+                    text:
+                        "${_i18n()['openOrders']} (${viewController.openOrders.length})"),
+              ],
+              style:
+                  context.textTheme.bodyLarge?.copyWith(color: Colors.purple))),
+          meduimSeperator,
+          Column(
+            children:
+                List.generate(viewController.openOrders.length, (int index) {
+              final DeliveryMinimalOrder message =
+                  viewController.openOrders[index];
+              return DvConvoCard(
+                message: message,
+                onClick: () {
+                  viewController.handleNavigation(order: message);
+                },
+              );
+            }),
+          ),
         ],
       ),
     );

@@ -12,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileView/UserProfileView.dart';
-import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
 
@@ -35,7 +34,7 @@ class MezSideMenu extends GetWidget<AuthController> {
           padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,24 +123,24 @@ class MezSideMenu extends GetWidget<AuthController> {
         //       MezRouter.toPath(_drawerController.pastOrdersRoute!);
         //     },
         //   ),
-        SideMenuItem(
-          onClick: () {
-            _drawerController.closeMenu();
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return ContactUsPopUp();
-                });
-          },
-          icon: Icons.alternate_email,
-          title: '${_i18n()["contact"]}',
-        ),
+        // SideMenuItem(
+        //   onClick: () {
+        //     _drawerController.closeMenu();
+        //     showDialog(
+        //         context: context,
+        //         builder: (BuildContext context) {
+        //           return ContactUsPopUp();
+        //         });
+        //   },
+        //   icon: Icons.alternate_email,
+        //   title: '${_i18n()["contact"]}',
+        // ),
         if (MezEnv.appType != AppType.MezAdmin &&
             Get.find<AuthController>().hasuraUserId != null)
           SideMenuItem(
             titleWidget: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   "${_i18n()["language"]}",
                   style: context.txt.bodyLarge,
@@ -302,7 +301,7 @@ class SideMenuItem extends StatelessWidget {
         color: backgroundColor,
         margin: EdgeInsets.symmetric(vertical: 1.h),
         child: Row(
-          children: [
+          children: <Widget>[
             Icon(
               icon,
               color: Colors.grey.shade400,
