@@ -33,3 +33,16 @@ select_permissions:
         - received_time
         - responded_time
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - driver_id
+        - id
+        - user_id
+        - entry
+        - phone_number
+        - finished_time
+        - received_time
+        - responded_time
+      filter: {}
+    comment: ""

@@ -123,6 +123,25 @@ select_permissions:
         - special_period_end
         - special_period_start
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - description_id
+        - id
+        - name_id
+        - position
+        - restaurant_id
+        - tags
+        - cost
+        - image
+        - special_period_end
+        - special_period_start
+        - item_type
+      filter: {}
+    comment: ""
   - role: mez_admin
     permission:
       columns:

@@ -1,0 +1,30 @@
+table:
+  name: influencer
+  schema: service_provider
+object_relationships:
+  - name: user
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - id
+        - user_id
+        - tag
+      filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - id
+        - user_id
+        - tag
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

@@ -42,12 +42,12 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
-        - delivery_order_type
-        - driver_id
         - id
-        - phone_number
-        - service_provider_id
-        - status
-        - time
+        - delivery_order_type
         - user_id
+        - service_provider_id
+        - driver_id
+        - phone_number
+        - time
+        - status
       filter: {}

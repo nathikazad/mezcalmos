@@ -122,6 +122,15 @@ select_permissions:
         - details_id
         - id
       filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - restaurant_type
+        - service_provider_type
+      filter: {}
   - role: laundry_operator
     permission:
       columns:

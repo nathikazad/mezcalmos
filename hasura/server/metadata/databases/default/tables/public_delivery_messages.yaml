@@ -41,6 +41,7 @@ select_permissions:
         - received_time
         - responded_time
       filter: {}
+    comment: ""
 update_permissions:
   - role: delivery_driver
     permission:
@@ -60,3 +61,13 @@ update_permissions:
                 _eq: X-Hasura-User-Id
           - driver_id:
               _is_null: true
+  - role: delivery_operator
+    permission:
+      columns: []
+      filter:
+        driver_id:
+          _is_null: false
+      check:
+        driver_id:
+          _is_null: false
+    comment: ""

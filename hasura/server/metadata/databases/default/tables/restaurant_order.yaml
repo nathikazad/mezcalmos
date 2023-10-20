@@ -96,12 +96,7 @@ select_permissions:
       columns:
         - id
         - stripe_info
-      filter:
-        delivery:
-          delivery_company:
-            delivery_operators:
-              user_id:
-                _eq: X-Hasura-User-Id
+      filter: {}
   - role: mez_admin
     permission:
       columns:
