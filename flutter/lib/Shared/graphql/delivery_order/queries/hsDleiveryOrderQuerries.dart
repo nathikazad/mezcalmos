@@ -51,17 +51,19 @@ Future<DeliveryOrder?> get_driver_order_by_id(
   }
   return DeliveryOrder(
     orderId: orderData.id,
-    dvItems: orderData.restaurant_order!.items
-        .map<DeliveryOrderItem>(
-            (Query$get_driver_order$delivery_order_by_pk$restaurant_order$items
-                    e) =>
-                DeliveryOrderItem(
-                    name: toLanguageMap(
-                        translations: e.restaurant_item.name.translations),
-                    costPerOne: e.cost_per_one,
-                    quantity: e.quantity,
-                    image: e.restaurant_item.image))
-        .toList(),
+    dvItems: orderData.restaurant_order != null
+        ? orderData.restaurant_order!.items
+            .map<DeliveryOrderItem>(
+                (Query$get_driver_order$delivery_order_by_pk$restaurant_order$items
+                        e) =>
+                    DeliveryOrderItem(
+                        name: toLanguageMap(
+                            translations: e.restaurant_item.name.translations),
+                        costPerOne: e.cost_per_one,
+                        quantity: e.quantity,
+                        image: e.restaurant_item.image))
+            .toList()
+        : <DeliveryOrderItem>[],
     scheduleTime: (orderData.schedule_time != null)
         ? DateTime.tryParse(orderData.schedule_time!)
         : null,
@@ -612,6 +614,7 @@ Future<num?> fetch_delivery_orders_count(
 
 Future<List<cModels.DeliveryMinimalOrder>?> get_delivery_minimal_orders({
   required cModels.MinimalDeliveryOrderStatus status,
+  bool forCompany = false,
   int? driverId,
   required int limit,
   required int offset,
@@ -621,11 +624,13 @@ Future<List<cModels.DeliveryMinimalOrder>?> get_delivery_minimal_orders({
           Options$Query$GetMinimalDeliveryMessages(
               fetchPolicy: FetchPolicy.networkOnly,
               variables: Variables$Query$GetMinimalDeliveryMessages(
-                  driver_id: (driverId == null)
-                      ? Input$Int_comparison_exp($_is_null: true)
-                      : Input$Int_comparison_exp(
-                          $_eq: driverId,
-                        ),
+                  driver_id: (driverId == null && forCompany == true)
+                      ? Input$Int_comparison_exp($_is_null: false)
+                      : (driverId == null)
+                          ? Input$Int_comparison_exp($_is_null: true)
+                          : Input$Int_comparison_exp(
+                              $_eq: driverId,
+                            ),
                   status: status.toFirebaseFormatString(),
                   limit: limit,
                   offset: offset)));

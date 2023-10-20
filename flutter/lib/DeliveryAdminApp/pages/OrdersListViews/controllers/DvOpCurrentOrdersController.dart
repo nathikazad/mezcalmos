@@ -85,6 +85,7 @@ class DvOpCurrentOrdersController {
       currentOrders.value = await get_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
               driverId: null,
+              forCompany: true,
               limit: 20,
               offset: 0) ??
           <DeliveryMinimalOrder>[];
@@ -101,6 +102,7 @@ class DvOpCurrentOrdersController {
       currentOrdersListener = listen_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
               driverId: null,
+              forCompany: true,
               limit: 30,
               offset: 0)
           .listen((List<DeliveryMinimalOrder>? event) {

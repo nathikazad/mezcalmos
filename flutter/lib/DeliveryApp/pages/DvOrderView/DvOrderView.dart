@@ -42,8 +42,10 @@ class _DvOrderViewState extends State<DvOrderView> {
   DvOrderViewController viewController = DvOrderViewController();
   @override
   void initState() {
-    final int? orderId = MezRouter.urlArguments["orderId"]?.asInt;
-    final int? driverId = MezRouter.bodyArguments?["driverId"]?.asInt;
+    final int? orderId =
+        int.tryParse(MezRouter.urlArguments["orderId"].toString());
+    final int? driverId =
+        int.tryParse(MezRouter.bodyArguments?["driverId"]?.toString() ?? "");
     if (orderId != null) {
       viewController.init(orderId: orderId, driverId: driverId);
     } else

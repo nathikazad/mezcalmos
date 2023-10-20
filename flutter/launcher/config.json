@@ -374,9 +374,7 @@
         "super": "FlutterFragmentActivity"
       },
       "pubspec": {
-        "dependencies": {
-          "open_file": "^3.3.2"
-        },
+        "dependencies": {},
         "assets": [
           "assets/images/",
           "assets/images/customer/",
@@ -501,9 +499,7 @@
         "<uses-permission android:name='android.permission.READ_PRIVILEGED_PHONE_STATE' />"
       ],
       "pubspec": {
-        "dependencies": {
-          "open_file": "^3.3.2"
-        },
+        "dependencies": {},
         "assets": [
           "assets/images/",
           "assets/images/customer/",
@@ -695,9 +691,7 @@
         "super": "FlutterFragmentActivity"
       },
       "pubspec": {
-        "dependencies": {
-          "open_file": "^3.3.2"
-        },
+        "dependencies": {},
         "assets": [
           "assets/images/",
           "assets/images/customer/",
@@ -751,8 +745,7 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0",
-          "open_file": "^3.3.2"
+          "agora_rtc_engine": "6.1.0"
         },
         "assets": [
           "assets/images/",
