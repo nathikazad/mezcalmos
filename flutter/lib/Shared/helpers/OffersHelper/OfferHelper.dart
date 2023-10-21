@@ -130,9 +130,23 @@ Future<void> applyOffersToRestaurantCart(
           offer.offerType == cModels.OfferType.Promotion &&
           offer.status == cModels.OfferStatus.Active)
       .toList();
+  final List<cModels.Offer> activeInfPromotions = offers
+      .where((cModels.Offer offer) =>
+          offer.offerType == cModels.OfferType.Influencer &&
+          offer.status == cModels.OfferStatus.Active)
+      .toList();
 
   int numberOfCustomerRestaurantOrders = 0;
   for (cModels.Offer promo in activePromotions) {
+    if (promo.details.offerForOrder == "firstOrder") {
+      numberOfCustomerRestaurantOrders =
+          await number_of_customer_restaurant_orders(
+              customerId: customerId,
+              restaurantId: cart.restaurant!.restaurantId);
+      break;
+    }
+  }
+  for (cModels.Offer promo in activeInfPromotions) {
     if (promo.details.offerForOrder == "firstOrder") {
       numberOfCustomerRestaurantOrders =
           await number_of_customer_restaurant_orders(
