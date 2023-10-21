@@ -38,7 +38,8 @@ class CustCartViewController {
   // Obs variables //
   //Rxn<CustStripeInfo> custStripeInfo = Rxn();
   Rx<cModels.DeliveryType> dvType = Rx(cModels.DeliveryType.Delivery);
-  List<cModels.DeliveryType> get dvTypes => deliveryCost!.dvTypes;
+  List<cModels.DeliveryType>? get dvTypes =>
+      cart.restaurant?.deliveryCost?.dvTypes;
 
   Rxn<List<CreditCard>> _cards = Rxn();
   RxBool orderSentToRest = RxBool(false);
@@ -92,7 +93,9 @@ class CustCartViewController {
   // init //
   Future<void> init() async {
     mezDbgPrint("SUPER INIT");
-    dvType.value = dvTypes.first;
+    if (dvTypes != null && dvTypes!.isNotEmpty) {
+      dvType.value = dvTypes!.first;
+    }
     final loc.MezLocation? baseLoc =
         await get_service_location(serviceDetailsId: 63);
     mezDbgPrint("base looooooooc ====>${baseLoc?.toFirebaseFormattedJson()}");

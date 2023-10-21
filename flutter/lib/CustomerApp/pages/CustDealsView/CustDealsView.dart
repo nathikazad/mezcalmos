@@ -31,36 +31,27 @@ class _CustDealsViewState extends State<CustDealsView> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu, title: "Deals"),
       body: Obx(() => Column(
-            children: [
-              // if (_viewController.isFetching) LinearProgressIndicator(),
-              // ListTile(
-              //   title: Text(
-              //     "Show only subscribed",
-              //     style: context.textTheme.bodyLarge?.copyWith(fontSize: 15),
-              //   ),
-              //   trailing: Switch(
-              //     activeColor: primaryBlueColor,
-              //     value: _viewController.showSubscribedOnly,
-              //     onChanged: (bool value) {
-              //       _viewController.setPromotionSwitch(value);
-              //     },
-              //   ),
-              // ),
-              Expanded(
-                child: _viewController.offers.isEmpty &&
-                        !_viewController.isFetching
-                    ? Container(
-                        margin: const EdgeInsets.all(15),
-                        child: Text("Sorry no promotions found..."))
-                    : ListView.builder(
-                        controller: _viewController.promoScrollController,
-                        itemCount: _viewController.offers.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            CustPromoCard(
-                          promotion: _viewController.offers[index],
-                        ),
-                      ),
-              )
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              (_viewController.isInitalized.isFalse)
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator())
+                  : Expanded(
+                      child: _viewController.offers.isEmpty &&
+                              !_viewController.isFetching
+                          ? Container(
+                              margin: const EdgeInsets.all(15),
+                              child: Text("Sorry no promotions found..."))
+                          : ListView.builder(
+                              controller: _viewController.promoScrollController,
+                              itemCount: _viewController.offers.length,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  CustPromoCard(
+                                promotion: _viewController.offers[index],
+                              ),
+                            ),
+                    )
             ],
           )),
     );

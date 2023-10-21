@@ -157,14 +157,15 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                             periodOfTime: viewController.cart.cartPeriod,
                             schedule: viewController.cart.restaurant!.schedule,
                           ),
-                          CustDeliveryTypeSelector(
-                            types: viewController.dvTypes,
-                            onDeliveryTypeChanged: (DeliveryType value) {
-                              viewController.switchDeliveryType(type: value);
-                              mezDbgPrint(
-                                  "Changed from parent callback ==>$value");
-                            },
-                          ),
+                          if (viewController.dvTypes != null)
+                            CustDeliveryTypeSelector(
+                              types: viewController.dvTypes!,
+                              onDeliveryTypeChanged: (DeliveryType value) {
+                                viewController.switchDeliveryType(type: value);
+                                mezDbgPrint(
+                                    "Changed from parent callback ==>$value");
+                              },
+                            ),
                           if (viewController.showDelivery) _deliveryLocation(),
                         ],
                       ),

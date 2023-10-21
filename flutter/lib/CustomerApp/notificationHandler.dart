@@ -15,8 +15,8 @@ Notification customerNotificationHandler(
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
   switch (notificationType) {
-    // case NotificationType.NewMessage:
-    //   return newMessageNotification(key, value);
+    case NotificationType.NewMessage:
+      return newMessageNotification(key, value);
 
     case NotificationType.OrderStatusChange:
       final OrderType orderType = value['orderType'].toString().toOrderType();
@@ -34,6 +34,7 @@ Notification customerNotificationHandler(
     case NotificationType.Call:
       throw StateError("Callllll forgrouned notif!!");
     case NotificationType.PriceChange:
+
     //@saad needs to be implemented
     // return Notification(
     //     id: id,
@@ -333,18 +334,17 @@ Map<String, dynamic>? getTaxiOrderStatusFields(
   return null;
 }
 
-// Notification newMessageNotification(String key, value) {
-//   return Notification(
-//       id: key,
-//       linkUrl: value["linkUrl"] ??
-//           SharedRoutes.getMessagesRoute(chatId: int.parse(value["chatId"])),
-//       body: value['message'],
-//       imgUrl: value['sender']['image'],
-//       title: value['sender']['name'],
-//       timestamp: DateTime.parse(value['time']),
-//       notificationType: NotificationType.NewMessage,
-//       notificationAction:
-//           value["notificationAction"]?.toString().toNotificationAction() ??
-//               NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-//       variableParams: value);
-// }
+Notification newMessageNotification(String key, value) {
+  return Notification(
+      id: key,
+      linkUrl: value["linkUrl"],
+      body: value['message'],
+      imgUrl: value['sender']['image'],
+      title: value['sender']['name'],
+      timestamp: DateTime.parse(value['time']),
+      notificationType: NotificationType.NewMessage,
+      notificationAction:
+          value["notificationAction"]?.toString().toNotificationAction() ??
+              NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+      variableParams: value);
+}

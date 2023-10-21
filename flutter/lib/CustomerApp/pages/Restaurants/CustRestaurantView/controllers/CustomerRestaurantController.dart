@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -34,12 +35,13 @@ class CustomerRestaurantController {
   RxNum basShippingPrice = RxNum(50);
   RxBool showInfo = RxBool(false);
   Rx<RestaurantViewTab> mainTab = Rx<RestaurantViewTab>(RestaurantViewTab.Menu);
-  Map<int, dynamic> itemKeys = {};
+  Map<int, dynamic> itemKeys = <int, dynamic>{};
   RxBool pauseRectGetterIndex = RxBool(false);
   RxList<Item> specials = RxList.empty();
   RxBool _initialized = RxBool(false);
   RxList<cModels.Offer> _offers = RxList<cModels.Offer>.empty();
-  List<cModels.Offer> get offers => _offers.value;
+  List<cModels.Offer> get offers =>
+      _offers.value.where((cModels.Offer e) => e.isActive).toList();
 
   bool get isInitialzed {
     return _initialized.value;
@@ -114,7 +116,7 @@ class CustomerRestaurantController {
 
   List<int> getVisibleItemsIndex() {
     final Rect? rect = RectGetter.getRectFromKey(listViewKey);
-    final List<int> items = [];
+    final List<int> items = <int>[];
     if (rect == null) return items;
     itemKeys.forEach((int index, key) {
       final Rect? itemRect = RectGetter.getRectFromKey(key);

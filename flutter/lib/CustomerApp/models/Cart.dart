@@ -76,7 +76,7 @@ class Cart {
   }
 
   Map<String, dynamic> toFirebaseFormattedJson() {
-    final Map<int, dynamic> items = {};
+    final Map<int, dynamic> items = <int, dynamic>{};
     cartItems.forEach((CartItem cartItem) {
       if (cartItem.idInCart != null)
         items[cartItem.idInCart!] = cartItem.toFirebaseFunctionFormattedJson();
@@ -101,7 +101,7 @@ class Cart {
   }
 
   Map<String, dynamic> toReadableJson() {
-    return {
+    return <String, dynamic>{
       "Name": Get.find<AuthController>().user!.name,
       "To Adress": toLocation?.address,
       "Quantity": quantity(),
@@ -126,7 +126,7 @@ class Cart {
   }
 
   num get totalCost {
-    num tcost = itemsCost() + (shippingCost ?? 0);
+    num tcost = itemsCost();
     if (paymentType == cModels.PaymentType.Card &&
         restaurant!.paymentInfo?.stripe?.chargeFeesOnCustomer == true) {
       tcost += stripeFees;
@@ -303,10 +303,11 @@ class CartItem {
 
   //{ 2 : {choices : [] , optionName: {en: ... , es: ...}}}
   Map<String, Map<String, dynamic>> selectedOptionsToJson() {
-    final Map<String, Map<String, dynamic>> json = {};
+    final Map<String, Map<String, dynamic>> json =
+        <String, Map<String, dynamic>>{};
 
     chosenChoices.forEach((String optionId, List<Choice> choices) {
-      final Map<String, dynamic> data = {};
+      final Map<String, dynamic> data = <String, dynamic>{};
       choices.forEach((Choice choice) {
         data[choice.id.toString()] = choice.toJson();
       });
