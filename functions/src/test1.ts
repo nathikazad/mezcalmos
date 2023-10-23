@@ -353,9 +353,9 @@ const writeMenu2 = async (menu: Menu) => {
                               }
                             },
                             cost_per_extra: "$0.00",
-                            free_choice: 1,
-                            maximum_choice: 1,
-                            minimum_choice: 1,
+                            free_choice: 0,
+                            maximum_choice: (optionData.type == "chooseOne") ? 1 : Object.entries(optionData.choices).length,
+                            minimum_choice: (optionData.type == "chooseOne") ? 1 : 0,
                             choices: {
                               data: Object.entries(optionData.choices).map(([choiceName, choiceData]) => {
                                 return {
