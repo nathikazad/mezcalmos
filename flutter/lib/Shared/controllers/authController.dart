@@ -36,7 +36,8 @@ class AuthController extends GetxController {
   StreamController<fireAuth.User?> _authStateStreamController =
       StreamController<fireAuth.User?>.broadcast();
 
-  StreamController<String> authInitState = StreamController<String>.broadcast();
+  StreamController<String> logAuthInitState =
+      StreamController<String>.broadcast();
 
   Stream<fireAuth.User?> get authStateStream =>
       _authStateStreamController.stream;
@@ -56,7 +57,7 @@ class AuthController extends GetxController {
 
     _auth.authStateChanges().listen((fireAuth.User? user) async {
       logEventToServer("Auth state change user: ${user?.uid}");
-      authInitState.add("1");
+      logAuthInitState.add("1");
       await authChangeCallback(user);
     });
 
@@ -72,48 +73,48 @@ class AuthController extends GetxController {
       return;
     }
     _previousUserValue = user?.toString();
-    authInitState.add("2");
+    logAuthInitState.add("2");
 
     mezDbgPrint('Authcontroller:: Auth state change!');
     mezDbgPrint(user?.hashCode);
     mezDbgPrint(user ?? "empty");
 
     if (user == null) {
-      authInitState.add("3a.1");
+      logAuthInitState.add("3a.1");
       _hasuraUserId.value = null;
       await hasuraDb.initializeHasura();
-      authInitState.add("3a.2");
+      logAuthInitState.add("3a.2");
       await _onSignOutCallback();
-      authInitState.add("3a.3");
+      logAuthInitState.add("3a.3");
       mezDbgPrint('AuthController: User is currently signed out!');
     } else {
       mezDbgPrint('AuthController: User is currently signed in!');
-      authInitState.add("3b.1");
+      logAuthInitState.add("3b.1");
       fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
       mezDbgPrint(tokenResult.claims);
-      authInitState.add("3b.2");
+      logAuthInitState.add("3b.2");
       if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null ||
           roleMissing(tokenResult.claims!['https://hasura.io/jwt/claims']
               ['x-hasura-allowed-roles'])) {
         mezDbgPrint("No token, calling addHasuraClaims");
-        authInitState.add("3b.3a.1");
+        logAuthInitState.add("3b.3a.1");
         await CloudFunctions.user2_addHasuraClaim();
-        authInitState.add("3b.3a.2");
+        logAuthInitState.add("3b.3a.2");
         tokenResult = await user.getIdTokenResult(true);
       }
-      authInitState.add("3b.4");
+      logAuthInitState.add("3b.4");
       _hasuraUserId.value = int.parse(tokenResult
           .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
 
       mezDbgPrint(_hasuraUserId.value);
 
       await hasuraDb.initializeHasura();
-      authInitState.add("3b.5");
-      await fetchUserInfoFromHasura();
-      authInitState.add("3b.6");
+      logAuthInitState.add("3b.5");
+      await fetchUserInfoFromHasura(phoneNumber: user.phoneNumber);
+      logAuthInitState.add("3b.6");
       _setLAppLanguage();
       await _onSignInCallback();
-      authInitState.add("3b.7");
+      logAuthInitState.add("3b.7");
       // todo @sanchit
       // we check if user just signed up using _userInfo.value.created time < 120 seconds
       //    if yes we check if uniqueId is set in local storage
@@ -141,7 +142,7 @@ class AuthController extends GetxController {
         }
       }
     }
-    authInitState.add("4");
+    logAuthInitState.add("4");
     _authStateStreamController.add(user);
   }
 
@@ -164,7 +165,7 @@ class AuthController extends GetxController {
     return difference.length > 0;
   }
 
-  Future<void> fetchUserInfoFromHasura() async {
+  Future<void> fetchUserInfoFromHasura({String? phoneNumber}) async {
     mezDbgPrint(
         "[777] fetchingUser Info from hasure using firebaseid : ${fireAuthUser?.uid} \n hasura id : $hasuraUserId ");
 
@@ -172,6 +173,10 @@ class AuthController extends GetxController {
         await get_user_by_hasura_id(hasuraId: _hasuraUserId.value!);
     mezDbgPrint(
         "[77] =====> fetchUserInfoFromHasura:: userInfo ===> ${_userInfo.value?.toFirebaseFormatJson()}");
+    if (_userInfo.value?.phoneNumber == null && phoneNumber != null) {
+      await change_phone_number(
+          userId: _hasuraUserId.value!, phone_number: phoneNumber);
+    }
   }
 
   bool isDisplayNameSet() {

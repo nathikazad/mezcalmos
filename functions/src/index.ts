@@ -41,6 +41,7 @@ import { completeOrder } from "./restaurant/completeOrder";
 import { markMessagesAsResponded } from "./utilities/senders/whatsapp/markMessagesAsResponded";
 import { markMessagesAsFinished } from "./utilities/senders/whatsapp/markMessagesAsFinished";
 import { markMessagesAsCancelled } from "./utilities/senders/whatsapp/markMessagesAsCancelled";
+import { getLandingUrl, setLandingUrl } from "./utilities/landingUrl";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -48,6 +49,15 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
   });
 } else {
   firebase.initializeApp()
+}
+
+
+
+
+
+export const landingWebUrl = {
+  set:setLandingUrl,
+  get:getLandingUrl
 }
 
 export const whatsapp = {
@@ -144,6 +154,8 @@ export const delivery3 = {
   // laundryFinishDropoff: authenticatedCall((userId, data) => laundryDelivery.finishDropoff(userId, data)),
   // setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
 }
+
+
 
 type AuthenticatedFunction = (userId:number, data:any) => any;
 function authenticatedCall(func:AuthenticatedFunction, runtimeOptions:RuntimeOptions= {memory: "256MB"}) {

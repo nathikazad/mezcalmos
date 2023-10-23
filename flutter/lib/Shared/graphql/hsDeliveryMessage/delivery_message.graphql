@@ -1,3 +1,28 @@
+fragment deliveryMessageFields on delivery_messages {
+  id
+  entry
+  phone_number
+  driver_id
+  received_time
+  finished_time
+  responded_time
+  show_driver_info
+  customer {
+    name
+    image
+  }
+}
+
+fragment deliveryMessageWithDriver on delivery_messages {
+  ...deliveryMessageFields
+  driver {
+    user {
+      name
+      phone
+    }
+  }
+}
+
 query GetPastDeliveryMessages($driver_id: Int!, $limit: Int!, $offset: Int!) {
   delivery_messages(
     distinct_on: [phone_number, received_time]
@@ -9,66 +34,31 @@ query GetPastDeliveryMessages($driver_id: Int!, $limit: Int!, $offset: Int!) {
       finished_time: { _is_null: false }
     }
   ) {
-    id
-    entry
-    phone_number
-    driver_id
-    received_time
-    finished_time
-    responded_time
-    customer {
-      name
-      image
-    }
+    ...deliveryMessageFields
   }
 }
+
 query GetCurrentDeliveryMessages($driver_id: Int!) {
   delivery_messages(
     distinct_on: [phone_number, received_time]
     order_by: { received_time: desc, phone_number: desc }
     where: { driver_id: { _eq: $driver_id }, finished_time: { _is_null: true } }
   ) {
-    id
-    entry
-    phone_number
-    driver_id
-    received_time
-    finished_time
-    responded_time
-    customer {
-      name
-      image
-    }
+    ...deliveryMessageFields
   }
 }
+
 subscription listenCurrentDeliveryMessages($driver_id: Int!) {
   delivery_messages(
     distinct_on: phone_number
     where: { driver_id: { _eq: $driver_id }, finished_time: { _is_null: true } }
   ) {
-    id
-    entry
-    phone_number
-    driver_id
-    received_time
-    finished_time
-    responded_time
-    customer {
-      name
-      image
-    }
-    driver {
-      user {
-        name
-        phone
-      }
-    }
+    ...deliveryMessageWithDriver
   }
 }
+
 query GetOpenDeliveryMessages {
-  delivery_open_delivery_messages(
-    distinct_on: phone_number
-  ) {
+  delivery_open_delivery_messages(distinct_on: phone_number) {
     id
     entry
     phone_number
@@ -82,10 +72,9 @@ query GetOpenDeliveryMessages {
     }
   }
 }
+
 subscription ListenOpenDeliveryMessages {
-  delivery_open_delivery_messages(
-    distinct_on: phone_number
-  ) {
+  delivery_open_delivery_messages(distinct_on: phone_number) {
     id
     entry
     phone_number
@@ -104,44 +93,18 @@ query GetAllCurrentDeliveryMessages($driver_id: Int!) {
   delivery_messages(
     distinct_on: [phone_number, received_time]
     order_by: { received_time: desc, phone_number: desc }
-    where: {finished_time: { _is_null: true } }
+    where: { finished_time: { _is_null: true } }
   ) {
-    id
-    entry
-    phone_number
-    driver_id
-    received_time
-    finished_time
-    responded_time
-    customer {
-      name
-      image
-    }
+    ...deliveryMessageFields
   }
 }
 
 subscription listenAllCurrentDeliveryMessages($driver_id: Int!) {
   delivery_messages(
     distinct_on: phone_number
-    where: {finished_time: { _is_null: true } }
+    where: { finished_time: { _is_null: true } }
   ) {
-    id
-    entry
-    phone_number
-    driver_id
-    received_time
-    finished_time
-    responded_time
-    customer {
-      name
-      image
-    }
-    driver {
-      user {
-        name
-        phone
-      }
-    }
+    ...deliveryMessageWithDriver
   }
 }
 
@@ -150,22 +113,6 @@ query GetCustomerDeliveryMessages($phone_number: String!) {
     where: { phone_number: { _eq: $phone_number } }
     order_by: { received_time: asc }
   ) {
-    id
-    entry
-    phone_number
-    driver_id
-    received_time
-    finished_time
-    responded_time
-    driver {
-      user {
-        name
-        phone
-      }
-    }
-    customer {
-      name
-      image
-    }
+    ...deliveryMessageWithDriver
   }
 }

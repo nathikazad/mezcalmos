@@ -3563,6 +3563,18 @@
         "order": "Order",
         "viewImage": "View image"
       },
+      "DvOrderView": {
+        "restaurant": "Restaurant",
+        "customer": "Customer",
+        "orderSummary": "Order summary",
+        "acceptOrder": "Accept order",
+        "finishOrder": "Finish order",
+        "cancelOrder": "Cancel Order",
+        "deliveryCost": "Delivery Cost",
+        "orderItems": "Order Items",
+        "cancel": "Cancel",
+        "price": "Price"
+      },
       "RestaurantOrderView": {
         "components": {
           "RestaurantOrderFromToComponent": {
@@ -4174,6 +4186,7 @@
           }
         },
         "currentOrders": "Current orders",
+        "openOrders": "Open orders",
         "pastButton": "View past orders",
         "pastOrders": "Past orders",
         "incomingOrders": "Incoming orders",

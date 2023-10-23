@@ -121,6 +121,13 @@ select_permissions:
         - language_id
         - value
       filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
   - role: laundry_operator
     permission:
       columns:
@@ -191,6 +198,14 @@ update_permissions:
             delivery_operators:
               user_id:
                 _eq: X-Hasura-User-Id
+  - role: influencer
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
+      check: {}
   - role: laundry_operator
     permission:
       columns:

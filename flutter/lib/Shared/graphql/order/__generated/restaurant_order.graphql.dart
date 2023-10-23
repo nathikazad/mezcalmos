@@ -7544,6 +7544,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'currency'),
                     alias: null,
                     arguments: [],
@@ -8124,6 +8131,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                   ),
                   FieldNode(
                     name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -9385,6 +9399,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     this.firebase_id,
     required this.image,
     required this.language,
+    this.phone_number,
     required this.currency,
     required this.location,
     required this.name,
@@ -9397,6 +9412,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$language = json['language'];
+    final l$phone_number = json['phone_number'];
     final l$currency = json['currency'];
     final l$location = json['location'];
     final l$name = json['name'];
@@ -9406,6 +9422,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language: mapFromJson(l$language),
+      phone_number: (l$phone_number as String?),
       currency: (l$currency as String),
       location:
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location
@@ -9422,6 +9439,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
   final String image;
 
   final dynamic language;
+
+  final String? phone_number;
 
   final String currency;
 
@@ -9442,6 +9461,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     _resultData['image'] = l$image;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$currency = currency;
     _resultData['currency'] = l$currency;
     final l$location = location;
@@ -9459,6 +9480,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$language = language;
+    final l$phone_number = phone_number;
     final l$currency = currency;
     final l$location = location;
     final l$name = name;
@@ -9468,6 +9490,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
       l$firebase_id,
       l$image,
       l$language,
+      l$phone_number,
       l$currency,
       l$location,
       l$name,
@@ -9503,6 +9526,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
       return false;
     }
     final l$currency = currency;
@@ -9559,6 +9587,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     String? firebase_id,
     String? image,
     dynamic? language,
+    String? phone_number,
     String? currency,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location?
         location,
@@ -9593,6 +9622,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$rest
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
+    Object? phone_number = _undefined,
     Object? currency = _undefined,
     Object? location = _undefined,
     Object? name = _undefined,
@@ -9610,6 +9640,9 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$rest
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         currency: currency == _undefined || currency == null
             ? _instance.currency
             : (currency as String),
@@ -9647,6 +9680,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     String? firebase_id,
     String? image,
     dynamic? language,
+    String? phone_number,
     String? currency,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$restaurant$details$location?
         location,
@@ -12105,6 +12139,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     required this.id,
     this.name,
     this.image,
+    this.phone,
     required this.$__typename,
   });
 
@@ -12113,11 +12148,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     final l$id = json['id'];
     final l$name = json['name'];
     final l$image = json['image'];
+    final l$phone = json['phone'];
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user(
       id: (l$id as int),
       name: (l$name as String?),
       image: (l$image as String?),
+      phone: (l$phone as String?),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -12127,6 +12164,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
   final String? name;
 
   final String? image;
+
+  final String? phone;
 
   final String $__typename;
 
@@ -12138,6 +12177,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     _resultData['name'] = l$name;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -12148,11 +12189,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     final l$id = id;
     final l$name = name;
     final l$image = image;
+    final l$phone = phone;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
       l$name,
       l$image,
+      l$phone,
       l$$__typename,
     ]);
   }
@@ -12180,6 +12223,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer$user {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -12220,6 +12268,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     int? id,
     String? name,
     String? image,
+    String? phone,
     String? $__typename,
   });
 }
@@ -12247,6 +12296,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$cust
     Object? id = _undefined,
     Object? name = _undefined,
     Object? image = _undefined,
+    Object? phone = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -12254,6 +12304,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$cust
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined ? _instance.name : (name as String?),
         image: image == _undefined ? _instance.image : (image as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -12274,6 +12325,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     int? id,
     String? name,
     String? image,
+    String? phone,
     String? $__typename,
   }) =>
       _res;

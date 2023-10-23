@@ -3,6 +3,1460 @@ import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
+class Fragment$deliveryMessageFields {
+  Fragment$deliveryMessageFields({
+    required this.id,
+    required this.entry,
+    required this.phone_number,
+    this.driver_id,
+    required this.received_time,
+    this.finished_time,
+    this.responded_time,
+    required this.show_driver_info,
+    this.customer,
+    required this.$__typename,
+  });
+
+  factory Fragment$deliveryMessageFields.fromJson(Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$entry = json['entry'];
+    final l$phone_number = json['phone_number'];
+    final l$driver_id = json['driver_id'];
+    final l$received_time = json['received_time'];
+    final l$finished_time = json['finished_time'];
+    final l$responded_time = json['responded_time'];
+    final l$show_driver_info = json['show_driver_info'];
+    final l$customer = json['customer'];
+    final l$$__typename = json['__typename'];
+    return Fragment$deliveryMessageFields(
+      id: (l$id as int),
+      entry: mapFromJson(l$entry),
+      phone_number: (l$phone_number as String),
+      driver_id: (l$driver_id as int?),
+      received_time: (l$received_time as String),
+      finished_time: (l$finished_time as String?),
+      responded_time: (l$responded_time as String?),
+      show_driver_info: (l$show_driver_info as bool),
+      customer: l$customer == null
+          ? null
+          : Fragment$deliveryMessageFields$customer.fromJson(
+              (l$customer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic entry;
+
+  final String phone_number;
+
+  final int? driver_id;
+
+  final String received_time;
+
+  final String? finished_time;
+
+  final String? responded_time;
+
+  final bool show_driver_info;
+
+  final Fragment$deliveryMessageFields$customer? customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$entry = entry;
+    _resultData['entry'] = mapToJson(l$entry);
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
+    final l$driver_id = driver_id;
+    _resultData['driver_id'] = l$driver_id;
+    final l$received_time = received_time;
+    _resultData['received_time'] = l$received_time;
+    final l$finished_time = finished_time;
+    _resultData['finished_time'] = l$finished_time;
+    final l$responded_time = responded_time;
+    _resultData['responded_time'] = l$responded_time;
+    final l$show_driver_info = show_driver_info;
+    _resultData['show_driver_info'] = l$show_driver_info;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$entry = entry;
+    final l$phone_number = phone_number;
+    final l$driver_id = driver_id;
+    final l$received_time = received_time;
+    final l$finished_time = finished_time;
+    final l$responded_time = responded_time;
+    final l$show_driver_info = show_driver_info;
+    final l$customer = customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$entry,
+      l$phone_number,
+      l$driver_id,
+      l$received_time,
+      l$finished_time,
+      l$responded_time,
+      l$show_driver_info,
+      l$customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Fragment$deliveryMessageFields) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$entry = entry;
+    final lOther$entry = other.entry;
+    if (l$entry != lOther$entry) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$driver_id = driver_id;
+    final lOther$driver_id = other.driver_id;
+    if (l$driver_id != lOther$driver_id) {
+      return false;
+    }
+    final l$received_time = received_time;
+    final lOther$received_time = other.received_time;
+    if (l$received_time != lOther$received_time) {
+      return false;
+    }
+    final l$finished_time = finished_time;
+    final lOther$finished_time = other.finished_time;
+    if (l$finished_time != lOther$finished_time) {
+      return false;
+    }
+    final l$responded_time = responded_time;
+    final lOther$responded_time = other.responded_time;
+    if (l$responded_time != lOther$responded_time) {
+      return false;
+    }
+    final l$show_driver_info = show_driver_info;
+    final lOther$show_driver_info = other.show_driver_info;
+    if (l$show_driver_info != lOther$show_driver_info) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Fragment$deliveryMessageFields
+    on Fragment$deliveryMessageFields {
+  CopyWith$Fragment$deliveryMessageFields<Fragment$deliveryMessageFields>
+      get copyWith => CopyWith$Fragment$deliveryMessageFields(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Fragment$deliveryMessageFields<TRes> {
+  factory CopyWith$Fragment$deliveryMessageFields(
+    Fragment$deliveryMessageFields instance,
+    TRes Function(Fragment$deliveryMessageFields) then,
+  ) = _CopyWithImpl$Fragment$deliveryMessageFields;
+
+  factory CopyWith$Fragment$deliveryMessageFields.stub(TRes res) =
+      _CopyWithStubImpl$Fragment$deliveryMessageFields;
+
+  TRes call({
+    int? id,
+    dynamic? entry,
+    String? phone_number,
+    int? driver_id,
+    String? received_time,
+    String? finished_time,
+    String? responded_time,
+    bool? show_driver_info,
+    Fragment$deliveryMessageFields$customer? customer,
+    String? $__typename,
+  });
+  CopyWith$Fragment$deliveryMessageFields$customer<TRes> get customer;
+}
+
+class _CopyWithImpl$Fragment$deliveryMessageFields<TRes>
+    implements CopyWith$Fragment$deliveryMessageFields<TRes> {
+  _CopyWithImpl$Fragment$deliveryMessageFields(
+    this._instance,
+    this._then,
+  );
+
+  final Fragment$deliveryMessageFields _instance;
+
+  final TRes Function(Fragment$deliveryMessageFields) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? entry = _undefined,
+    Object? phone_number = _undefined,
+    Object? driver_id = _undefined,
+    Object? received_time = _undefined,
+    Object? finished_time = _undefined,
+    Object? responded_time = _undefined,
+    Object? show_driver_info = _undefined,
+    Object? customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Fragment$deliveryMessageFields(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        entry: entry == _undefined || entry == null
+            ? _instance.entry
+            : (entry as dynamic),
+        phone_number: phone_number == _undefined || phone_number == null
+            ? _instance.phone_number
+            : (phone_number as String),
+        driver_id:
+            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
+        received_time: received_time == _undefined || received_time == null
+            ? _instance.received_time
+            : (received_time as String),
+        finished_time: finished_time == _undefined
+            ? _instance.finished_time
+            : (finished_time as String?),
+        responded_time: responded_time == _undefined
+            ? _instance.responded_time
+            : (responded_time as String?),
+        show_driver_info:
+            show_driver_info == _undefined || show_driver_info == null
+                ? _instance.show_driver_info
+                : (show_driver_info as bool),
+        customer: customer == _undefined
+            ? _instance.customer
+            : (customer as Fragment$deliveryMessageFields$customer?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Fragment$deliveryMessageFields$customer<TRes> get customer {
+    final local$customer = _instance.customer;
+    return local$customer == null
+        ? CopyWith$Fragment$deliveryMessageFields$customer.stub(
+            _then(_instance))
+        : CopyWith$Fragment$deliveryMessageFields$customer(
+            local$customer, (e) => call(customer: e));
+  }
+}
+
+class _CopyWithStubImpl$Fragment$deliveryMessageFields<TRes>
+    implements CopyWith$Fragment$deliveryMessageFields<TRes> {
+  _CopyWithStubImpl$Fragment$deliveryMessageFields(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? entry,
+    String? phone_number,
+    int? driver_id,
+    String? received_time,
+    String? finished_time,
+    String? responded_time,
+    bool? show_driver_info,
+    Fragment$deliveryMessageFields$customer? customer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Fragment$deliveryMessageFields$customer<TRes> get customer =>
+      CopyWith$Fragment$deliveryMessageFields$customer.stub(_res);
+}
+
+const fragmentDefinitiondeliveryMessageFields = FragmentDefinitionNode(
+  name: NameNode(value: 'deliveryMessageFields'),
+  typeCondition: TypeConditionNode(
+      on: NamedTypeNode(
+    name: NameNode(value: 'delivery_messages'),
+    isNonNull: false,
+  )),
+  directives: [],
+  selectionSet: SelectionSetNode(selections: [
+    FieldNode(
+      name: NameNode(value: 'id'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'entry'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'phone_number'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'driver_id'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'received_time'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'finished_time'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'responded_time'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'show_driver_info'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    FieldNode(
+      name: NameNode(value: 'customer'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+          name: NameNode(value: 'name'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        FieldNode(
+          name: NameNode(value: 'image'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+        FieldNode(
+          name: NameNode(value: '__typename'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+      ]),
+    ),
+    FieldNode(
+      name: NameNode(value: '__typename'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+  ]),
+);
+const documentNodeFragmentdeliveryMessageFields = DocumentNode(definitions: [
+  fragmentDefinitiondeliveryMessageFields,
+]);
+
+extension ClientExtension$Fragment$deliveryMessageFields
+    on graphql.GraphQLClient {
+  void writeFragment$deliveryMessageFields({
+    required Fragment$deliveryMessageFields data,
+    required Map<String, dynamic> idFields,
+    bool broadcast = true,
+  }) =>
+      this.writeFragment(
+        graphql.FragmentRequest(
+          idFields: idFields,
+          fragment: const graphql.Fragment(
+            fragmentName: 'deliveryMessageFields',
+            document: documentNodeFragmentdeliveryMessageFields,
+          ),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Fragment$deliveryMessageFields? readFragment$deliveryMessageFields({
+    required Map<String, dynamic> idFields,
+    bool optimistic = true,
+  }) {
+    final result = this.readFragment(
+      graphql.FragmentRequest(
+        idFields: idFields,
+        fragment: const graphql.Fragment(
+          fragmentName: 'deliveryMessageFields',
+          document: documentNodeFragmentdeliveryMessageFields,
+        ),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Fragment$deliveryMessageFields.fromJson(result);
+  }
+}
+
+class Fragment$deliveryMessageFields$customer {
+  Fragment$deliveryMessageFields$customer({
+    this.name,
+    this.image,
+    required this.$__typename,
+  });
+
+  factory Fragment$deliveryMessageFields$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Fragment$deliveryMessageFields$customer(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Fragment$deliveryMessageFields$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Fragment$deliveryMessageFields$customer
+    on Fragment$deliveryMessageFields$customer {
+  CopyWith$Fragment$deliveryMessageFields$customer<
+          Fragment$deliveryMessageFields$customer>
+      get copyWith => CopyWith$Fragment$deliveryMessageFields$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Fragment$deliveryMessageFields$customer<TRes> {
+  factory CopyWith$Fragment$deliveryMessageFields$customer(
+    Fragment$deliveryMessageFields$customer instance,
+    TRes Function(Fragment$deliveryMessageFields$customer) then,
+  ) = _CopyWithImpl$Fragment$deliveryMessageFields$customer;
+
+  factory CopyWith$Fragment$deliveryMessageFields$customer.stub(TRes res) =
+      _CopyWithStubImpl$Fragment$deliveryMessageFields$customer;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Fragment$deliveryMessageFields$customer<TRes>
+    implements CopyWith$Fragment$deliveryMessageFields$customer<TRes> {
+  _CopyWithImpl$Fragment$deliveryMessageFields$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Fragment$deliveryMessageFields$customer _instance;
+
+  final TRes Function(Fragment$deliveryMessageFields$customer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Fragment$deliveryMessageFields$customer(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Fragment$deliveryMessageFields$customer<TRes>
+    implements CopyWith$Fragment$deliveryMessageFields$customer<TRes> {
+  _CopyWithStubImpl$Fragment$deliveryMessageFields$customer(this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Fragment$deliveryMessageWithDriver
+    implements Fragment$deliveryMessageFields {
+  Fragment$deliveryMessageWithDriver({
+    required this.id,
+    required this.entry,
+    required this.phone_number,
+    this.driver_id,
+    required this.received_time,
+    this.finished_time,
+    this.responded_time,
+    required this.show_driver_info,
+    this.customer,
+    required this.$__typename,
+    this.driver,
+  });
+
+  factory Fragment$deliveryMessageWithDriver.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$entry = json['entry'];
+    final l$phone_number = json['phone_number'];
+    final l$driver_id = json['driver_id'];
+    final l$received_time = json['received_time'];
+    final l$finished_time = json['finished_time'];
+    final l$responded_time = json['responded_time'];
+    final l$show_driver_info = json['show_driver_info'];
+    final l$customer = json['customer'];
+    final l$$__typename = json['__typename'];
+    final l$driver = json['driver'];
+    return Fragment$deliveryMessageWithDriver(
+      id: (l$id as int),
+      entry: mapFromJson(l$entry),
+      phone_number: (l$phone_number as String),
+      driver_id: (l$driver_id as int?),
+      received_time: (l$received_time as String),
+      finished_time: (l$finished_time as String?),
+      responded_time: (l$responded_time as String?),
+      show_driver_info: (l$show_driver_info as bool),
+      customer: l$customer == null
+          ? null
+          : Fragment$deliveryMessageWithDriver$customer.fromJson(
+              (l$customer as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+      driver: l$driver == null
+          ? null
+          : Fragment$deliveryMessageWithDriver$driver.fromJson(
+              (l$driver as Map<String, dynamic>)),
+    );
+  }
+
+  final int id;
+
+  final dynamic entry;
+
+  final String phone_number;
+
+  final int? driver_id;
+
+  final String received_time;
+
+  final String? finished_time;
+
+  final String? responded_time;
+
+  final bool show_driver_info;
+
+  final Fragment$deliveryMessageWithDriver$customer? customer;
+
+  final String $__typename;
+
+  final Fragment$deliveryMessageWithDriver$driver? driver;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$entry = entry;
+    _resultData['entry'] = mapToJson(l$entry);
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
+    final l$driver_id = driver_id;
+    _resultData['driver_id'] = l$driver_id;
+    final l$received_time = received_time;
+    _resultData['received_time'] = l$received_time;
+    final l$finished_time = finished_time;
+    _resultData['finished_time'] = l$finished_time;
+    final l$responded_time = responded_time;
+    _resultData['responded_time'] = l$responded_time;
+    final l$show_driver_info = show_driver_info;
+    _resultData['show_driver_info'] = l$show_driver_info;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    final l$driver = driver;
+    _resultData['driver'] = l$driver?.toJson();
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$entry = entry;
+    final l$phone_number = phone_number;
+    final l$driver_id = driver_id;
+    final l$received_time = received_time;
+    final l$finished_time = finished_time;
+    final l$responded_time = responded_time;
+    final l$show_driver_info = show_driver_info;
+    final l$customer = customer;
+    final l$$__typename = $__typename;
+    final l$driver = driver;
+    return Object.hashAll([
+      l$id,
+      l$entry,
+      l$phone_number,
+      l$driver_id,
+      l$received_time,
+      l$finished_time,
+      l$responded_time,
+      l$show_driver_info,
+      l$customer,
+      l$$__typename,
+      l$driver,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Fragment$deliveryMessageWithDriver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$entry = entry;
+    final lOther$entry = other.entry;
+    if (l$entry != lOther$entry) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$driver_id = driver_id;
+    final lOther$driver_id = other.driver_id;
+    if (l$driver_id != lOther$driver_id) {
+      return false;
+    }
+    final l$received_time = received_time;
+    final lOther$received_time = other.received_time;
+    if (l$received_time != lOther$received_time) {
+      return false;
+    }
+    final l$finished_time = finished_time;
+    final lOther$finished_time = other.finished_time;
+    if (l$finished_time != lOther$finished_time) {
+      return false;
+    }
+    final l$responded_time = responded_time;
+    final lOther$responded_time = other.responded_time;
+    if (l$responded_time != lOther$responded_time) {
+      return false;
+    }
+    final l$show_driver_info = show_driver_info;
+    final lOther$show_driver_info = other.show_driver_info;
+    if (l$show_driver_info != lOther$show_driver_info) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    final l$driver = driver;
+    final lOther$driver = other.driver;
+    if (l$driver != lOther$driver) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Fragment$deliveryMessageWithDriver
+    on Fragment$deliveryMessageWithDriver {
+  CopyWith$Fragment$deliveryMessageWithDriver<
+          Fragment$deliveryMessageWithDriver>
+      get copyWith => CopyWith$Fragment$deliveryMessageWithDriver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Fragment$deliveryMessageWithDriver<TRes> {
+  factory CopyWith$Fragment$deliveryMessageWithDriver(
+    Fragment$deliveryMessageWithDriver instance,
+    TRes Function(Fragment$deliveryMessageWithDriver) then,
+  ) = _CopyWithImpl$Fragment$deliveryMessageWithDriver;
+
+  factory CopyWith$Fragment$deliveryMessageWithDriver.stub(TRes res) =
+      _CopyWithStubImpl$Fragment$deliveryMessageWithDriver;
+
+  TRes call({
+    int? id,
+    dynamic? entry,
+    String? phone_number,
+    int? driver_id,
+    String? received_time,
+    String? finished_time,
+    String? responded_time,
+    bool? show_driver_info,
+    Fragment$deliveryMessageWithDriver$customer? customer,
+    String? $__typename,
+    Fragment$deliveryMessageWithDriver$driver? driver,
+  });
+  CopyWith$Fragment$deliveryMessageWithDriver$customer<TRes> get customer;
+  CopyWith$Fragment$deliveryMessageWithDriver$driver<TRes> get driver;
+}
+
+class _CopyWithImpl$Fragment$deliveryMessageWithDriver<TRes>
+    implements CopyWith$Fragment$deliveryMessageWithDriver<TRes> {
+  _CopyWithImpl$Fragment$deliveryMessageWithDriver(
+    this._instance,
+    this._then,
+  );
+
+  final Fragment$deliveryMessageWithDriver _instance;
+
+  final TRes Function(Fragment$deliveryMessageWithDriver) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? entry = _undefined,
+    Object? phone_number = _undefined,
+    Object? driver_id = _undefined,
+    Object? received_time = _undefined,
+    Object? finished_time = _undefined,
+    Object? responded_time = _undefined,
+    Object? show_driver_info = _undefined,
+    Object? customer = _undefined,
+    Object? $__typename = _undefined,
+    Object? driver = _undefined,
+  }) =>
+      _then(Fragment$deliveryMessageWithDriver(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        entry: entry == _undefined || entry == null
+            ? _instance.entry
+            : (entry as dynamic),
+        phone_number: phone_number == _undefined || phone_number == null
+            ? _instance.phone_number
+            : (phone_number as String),
+        driver_id:
+            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
+        received_time: received_time == _undefined || received_time == null
+            ? _instance.received_time
+            : (received_time as String),
+        finished_time: finished_time == _undefined
+            ? _instance.finished_time
+            : (finished_time as String?),
+        responded_time: responded_time == _undefined
+            ? _instance.responded_time
+            : (responded_time as String?),
+        show_driver_info:
+            show_driver_info == _undefined || show_driver_info == null
+                ? _instance.show_driver_info
+                : (show_driver_info as bool),
+        customer: customer == _undefined
+            ? _instance.customer
+            : (customer as Fragment$deliveryMessageWithDriver$customer?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+        driver: driver == _undefined
+            ? _instance.driver
+            : (driver as Fragment$deliveryMessageWithDriver$driver?),
+      ));
+  CopyWith$Fragment$deliveryMessageWithDriver$customer<TRes> get customer {
+    final local$customer = _instance.customer;
+    return local$customer == null
+        ? CopyWith$Fragment$deliveryMessageWithDriver$customer.stub(
+            _then(_instance))
+        : CopyWith$Fragment$deliveryMessageWithDriver$customer(
+            local$customer, (e) => call(customer: e));
+  }
+
+  CopyWith$Fragment$deliveryMessageWithDriver$driver<TRes> get driver {
+    final local$driver = _instance.driver;
+    return local$driver == null
+        ? CopyWith$Fragment$deliveryMessageWithDriver$driver.stub(
+            _then(_instance))
+        : CopyWith$Fragment$deliveryMessageWithDriver$driver(
+            local$driver, (e) => call(driver: e));
+  }
+}
+
+class _CopyWithStubImpl$Fragment$deliveryMessageWithDriver<TRes>
+    implements CopyWith$Fragment$deliveryMessageWithDriver<TRes> {
+  _CopyWithStubImpl$Fragment$deliveryMessageWithDriver(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    dynamic? entry,
+    String? phone_number,
+    int? driver_id,
+    String? received_time,
+    String? finished_time,
+    String? responded_time,
+    bool? show_driver_info,
+    Fragment$deliveryMessageWithDriver$customer? customer,
+    String? $__typename,
+    Fragment$deliveryMessageWithDriver$driver? driver,
+  }) =>
+      _res;
+  CopyWith$Fragment$deliveryMessageWithDriver$customer<TRes> get customer =>
+      CopyWith$Fragment$deliveryMessageWithDriver$customer.stub(_res);
+  CopyWith$Fragment$deliveryMessageWithDriver$driver<TRes> get driver =>
+      CopyWith$Fragment$deliveryMessageWithDriver$driver.stub(_res);
+}
+
+const fragmentDefinitiondeliveryMessageWithDriver = FragmentDefinitionNode(
+  name: NameNode(value: 'deliveryMessageWithDriver'),
+  typeCondition: TypeConditionNode(
+      on: NamedTypeNode(
+    name: NameNode(value: 'delivery_messages'),
+    isNonNull: false,
+  )),
+  directives: [],
+  selectionSet: SelectionSetNode(selections: [
+    FragmentSpreadNode(
+      name: NameNode(value: 'deliveryMessageFields'),
+      directives: [],
+    ),
+    FieldNode(
+      name: NameNode(value: 'driver'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+          name: NameNode(value: 'user'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: SelectionSetNode(selections: [
+            FieldNode(
+              name: NameNode(value: 'name'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            FieldNode(
+              name: NameNode(value: 'phone'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+            FieldNode(
+              name: NameNode(value: '__typename'),
+              alias: null,
+              arguments: [],
+              directives: [],
+              selectionSet: null,
+            ),
+          ]),
+        ),
+        FieldNode(
+          name: NameNode(value: '__typename'),
+          alias: null,
+          arguments: [],
+          directives: [],
+          selectionSet: null,
+        ),
+      ]),
+    ),
+    FieldNode(
+      name: NameNode(value: '__typename'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+  ]),
+);
+const documentNodeFragmentdeliveryMessageWithDriver =
+    DocumentNode(definitions: [
+  fragmentDefinitiondeliveryMessageWithDriver,
+  fragmentDefinitiondeliveryMessageFields,
+]);
+
+extension ClientExtension$Fragment$deliveryMessageWithDriver
+    on graphql.GraphQLClient {
+  void writeFragment$deliveryMessageWithDriver({
+    required Fragment$deliveryMessageWithDriver data,
+    required Map<String, dynamic> idFields,
+    bool broadcast = true,
+  }) =>
+      this.writeFragment(
+        graphql.FragmentRequest(
+          idFields: idFields,
+          fragment: const graphql.Fragment(
+            fragmentName: 'deliveryMessageWithDriver',
+            document: documentNodeFragmentdeliveryMessageWithDriver,
+          ),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Fragment$deliveryMessageWithDriver? readFragment$deliveryMessageWithDriver({
+    required Map<String, dynamic> idFields,
+    bool optimistic = true,
+  }) {
+    final result = this.readFragment(
+      graphql.FragmentRequest(
+        idFields: idFields,
+        fragment: const graphql.Fragment(
+          fragmentName: 'deliveryMessageWithDriver',
+          document: documentNodeFragmentdeliveryMessageWithDriver,
+        ),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Fragment$deliveryMessageWithDriver.fromJson(result);
+  }
+}
+
+class Fragment$deliveryMessageWithDriver$customer
+    implements Fragment$deliveryMessageFields$customer {
+  Fragment$deliveryMessageWithDriver$customer({
+    this.name,
+    this.image,
+    required this.$__typename,
+  });
+
+  factory Fragment$deliveryMessageWithDriver$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$$__typename = json['__typename'];
+    return Fragment$deliveryMessageWithDriver$customer(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Fragment$deliveryMessageWithDriver$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Fragment$deliveryMessageWithDriver$customer
+    on Fragment$deliveryMessageWithDriver$customer {
+  CopyWith$Fragment$deliveryMessageWithDriver$customer<
+          Fragment$deliveryMessageWithDriver$customer>
+      get copyWith => CopyWith$Fragment$deliveryMessageWithDriver$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Fragment$deliveryMessageWithDriver$customer<TRes> {
+  factory CopyWith$Fragment$deliveryMessageWithDriver$customer(
+    Fragment$deliveryMessageWithDriver$customer instance,
+    TRes Function(Fragment$deliveryMessageWithDriver$customer) then,
+  ) = _CopyWithImpl$Fragment$deliveryMessageWithDriver$customer;
+
+  factory CopyWith$Fragment$deliveryMessageWithDriver$customer.stub(TRes res) =
+      _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$customer;
+
+  TRes call({
+    String? name,
+    String? image,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Fragment$deliveryMessageWithDriver$customer<TRes>
+    implements CopyWith$Fragment$deliveryMessageWithDriver$customer<TRes> {
+  _CopyWithImpl$Fragment$deliveryMessageWithDriver$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Fragment$deliveryMessageWithDriver$customer _instance;
+
+  final TRes Function(Fragment$deliveryMessageWithDriver$customer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Fragment$deliveryMessageWithDriver$customer(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$customer<TRes>
+    implements CopyWith$Fragment$deliveryMessageWithDriver$customer<TRes> {
+  _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$customer(this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Fragment$deliveryMessageWithDriver$driver {
+  Fragment$deliveryMessageWithDriver$driver({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Fragment$deliveryMessageWithDriver$driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Fragment$deliveryMessageWithDriver$driver(
+      user: Fragment$deliveryMessageWithDriver$driver$user.fromJson(
+          (l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Fragment$deliveryMessageWithDriver$driver$user user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Fragment$deliveryMessageWithDriver$driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Fragment$deliveryMessageWithDriver$driver
+    on Fragment$deliveryMessageWithDriver$driver {
+  CopyWith$Fragment$deliveryMessageWithDriver$driver<
+          Fragment$deliveryMessageWithDriver$driver>
+      get copyWith => CopyWith$Fragment$deliveryMessageWithDriver$driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Fragment$deliveryMessageWithDriver$driver<TRes> {
+  factory CopyWith$Fragment$deliveryMessageWithDriver$driver(
+    Fragment$deliveryMessageWithDriver$driver instance,
+    TRes Function(Fragment$deliveryMessageWithDriver$driver) then,
+  ) = _CopyWithImpl$Fragment$deliveryMessageWithDriver$driver;
+
+  factory CopyWith$Fragment$deliveryMessageWithDriver$driver.stub(TRes res) =
+      _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$driver;
+
+  TRes call({
+    Fragment$deliveryMessageWithDriver$driver$user? user,
+    String? $__typename,
+  });
+  CopyWith$Fragment$deliveryMessageWithDriver$driver$user<TRes> get user;
+}
+
+class _CopyWithImpl$Fragment$deliveryMessageWithDriver$driver<TRes>
+    implements CopyWith$Fragment$deliveryMessageWithDriver$driver<TRes> {
+  _CopyWithImpl$Fragment$deliveryMessageWithDriver$driver(
+    this._instance,
+    this._then,
+  );
+
+  final Fragment$deliveryMessageWithDriver$driver _instance;
+
+  final TRes Function(Fragment$deliveryMessageWithDriver$driver) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Fragment$deliveryMessageWithDriver$driver(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user as Fragment$deliveryMessageWithDriver$driver$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Fragment$deliveryMessageWithDriver$driver$user<TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Fragment$deliveryMessageWithDriver$driver$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$driver<TRes>
+    implements CopyWith$Fragment$deliveryMessageWithDriver$driver<TRes> {
+  _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$driver(this._res);
+
+  TRes _res;
+
+  call({
+    Fragment$deliveryMessageWithDriver$driver$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Fragment$deliveryMessageWithDriver$driver$user<TRes> get user =>
+      CopyWith$Fragment$deliveryMessageWithDriver$driver$user.stub(_res);
+}
+
+class Fragment$deliveryMessageWithDriver$driver$user {
+  Fragment$deliveryMessageWithDriver$driver$user({
+    this.name,
+    this.phone,
+    required this.$__typename,
+  });
+
+  factory Fragment$deliveryMessageWithDriver$driver$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$phone = json['phone'];
+    final l$$__typename = json['__typename'];
+    return Fragment$deliveryMessageWithDriver$driver$user(
+      name: (l$name as String?),
+      phone: (l$phone as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? phone;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$phone = phone;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$phone,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Fragment$deliveryMessageWithDriver$driver$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Fragment$deliveryMessageWithDriver$driver$user
+    on Fragment$deliveryMessageWithDriver$driver$user {
+  CopyWith$Fragment$deliveryMessageWithDriver$driver$user<
+          Fragment$deliveryMessageWithDriver$driver$user>
+      get copyWith => CopyWith$Fragment$deliveryMessageWithDriver$driver$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Fragment$deliveryMessageWithDriver$driver$user<TRes> {
+  factory CopyWith$Fragment$deliveryMessageWithDriver$driver$user(
+    Fragment$deliveryMessageWithDriver$driver$user instance,
+    TRes Function(Fragment$deliveryMessageWithDriver$driver$user) then,
+  ) = _CopyWithImpl$Fragment$deliveryMessageWithDriver$driver$user;
+
+  factory CopyWith$Fragment$deliveryMessageWithDriver$driver$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$driver$user;
+
+  TRes call({
+    String? name,
+    String? phone,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Fragment$deliveryMessageWithDriver$driver$user<TRes>
+    implements CopyWith$Fragment$deliveryMessageWithDriver$driver$user<TRes> {
+  _CopyWithImpl$Fragment$deliveryMessageWithDriver$driver$user(
+    this._instance,
+    this._then,
+  );
+
+  final Fragment$deliveryMessageWithDriver$driver$user _instance;
+
+  final TRes Function(Fragment$deliveryMessageWithDriver$driver$user) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? phone = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Fragment$deliveryMessageWithDriver$driver$user(
+        name: name == _undefined ? _instance.name : (name as String?),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$driver$user<TRes>
+    implements CopyWith$Fragment$deliveryMessageWithDriver$driver$user<TRes> {
+  _CopyWithStubImpl$Fragment$deliveryMessageWithDriver$driver$user(this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? phone,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$GetPastDeliveryMessages {
   factory Variables$Query$GetPastDeliveryMessages({
     required int driver_id,
@@ -159,14 +1613,14 @@ class Query$GetPastDeliveryMessages {
     final l$$__typename = json['__typename'];
     return Query$GetPastDeliveryMessages(
       delivery_messages: (l$delivery_messages as List<dynamic>)
-          .map((e) => Query$GetPastDeliveryMessages$delivery_messages.fromJson(
+          .map((e) => Fragment$deliveryMessageFields.fromJson(
               (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$GetPastDeliveryMessages$delivery_messages> delivery_messages;
+  final List<Fragment$deliveryMessageFields> delivery_messages;
 
   final String $__typename;
 
@@ -239,14 +1693,14 @@ abstract class CopyWith$Query$GetPastDeliveryMessages<TRes> {
       _CopyWithStubImpl$Query$GetPastDeliveryMessages;
 
   TRes call({
-    List<Query$GetPastDeliveryMessages$delivery_messages>? delivery_messages,
+    List<Fragment$deliveryMessageFields>? delivery_messages,
     String? $__typename,
   });
   TRes delivery_messages(
-      Iterable<Query$GetPastDeliveryMessages$delivery_messages> Function(
+      Iterable<Fragment$deliveryMessageFields> Function(
               Iterable<
-                  CopyWith$Query$GetPastDeliveryMessages$delivery_messages<
-                      Query$GetPastDeliveryMessages$delivery_messages>>)
+                  CopyWith$Fragment$deliveryMessageFields<
+                      Fragment$deliveryMessageFields>>)
           _fn);
 }
 
@@ -271,21 +1725,20 @@ class _CopyWithImpl$Query$GetPastDeliveryMessages<TRes>
         delivery_messages:
             delivery_messages == _undefined || delivery_messages == null
                 ? _instance.delivery_messages
-                : (delivery_messages
-                    as List<Query$GetPastDeliveryMessages$delivery_messages>),
+                : (delivery_messages as List<Fragment$deliveryMessageFields>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes delivery_messages(
-          Iterable<Query$GetPastDeliveryMessages$delivery_messages> Function(
+          Iterable<Fragment$deliveryMessageFields> Function(
                   Iterable<
-                      CopyWith$Query$GetPastDeliveryMessages$delivery_messages<
-                          Query$GetPastDeliveryMessages$delivery_messages>>)
+                      CopyWith$Fragment$deliveryMessageFields<
+                          Fragment$deliveryMessageFields>>)
               _fn) =>
       call(
-          delivery_messages: _fn(_instance.delivery_messages.map(
-              (e) => CopyWith$Query$GetPastDeliveryMessages$delivery_messages(
+          delivery_messages: _fn(_instance.delivery_messages
+              .map((e) => CopyWith$Fragment$deliveryMessageFields(
                     e,
                     (i) => i,
                   ))).toList());
@@ -298,7 +1751,7 @@ class _CopyWithStubImpl$Query$GetPastDeliveryMessages<TRes>
   TRes _res;
 
   call({
-    List<Query$GetPastDeliveryMessages$delivery_messages>? delivery_messages,
+    List<Fragment$deliveryMessageFields>? delivery_messages,
     String? $__typename,
   }) =>
       _res;
@@ -398,83 +1851,9 @@ const documentNodeQueryGetPastDeliveryMessages = DocumentNode(definitions: [
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
+          FragmentSpreadNode(
+            name: NameNode(value: 'deliveryMessageFields'),
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'entry'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'phone_number'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'received_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'finished_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'responded_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'customer'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'name'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'image'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -488,6 +1867,7 @@ const documentNodeQueryGetPastDeliveryMessages = DocumentNode(definitions: [
       
     ]),
   ),
+  fragmentDefinitiondeliveryMessageFields,
 ]);
 Query$GetPastDeliveryMessages _parserFn$Query$GetPastDeliveryMessages(
         Map<String, dynamic> data) =>
@@ -603,445 +1983,6 @@ extension ClientExtension$Query$GetPastDeliveryMessages
   }
 }
 
-class Query$GetPastDeliveryMessages$delivery_messages {
-  Query$GetPastDeliveryMessages$delivery_messages({
-    required this.id,
-    required this.entry,
-    required this.phone_number,
-    this.driver_id,
-    required this.received_time,
-    this.finished_time,
-    this.responded_time,
-    this.customer,
-    required this.$__typename,
-  });
-
-  factory Query$GetPastDeliveryMessages$delivery_messages.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$entry = json['entry'];
-    final l$phone_number = json['phone_number'];
-    final l$driver_id = json['driver_id'];
-    final l$received_time = json['received_time'];
-    final l$finished_time = json['finished_time'];
-    final l$responded_time = json['responded_time'];
-    final l$customer = json['customer'];
-    final l$$__typename = json['__typename'];
-    return Query$GetPastDeliveryMessages$delivery_messages(
-      id: (l$id as int),
-      entry: mapFromJson(l$entry),
-      phone_number: (l$phone_number as String),
-      driver_id: (l$driver_id as int?),
-      received_time: (l$received_time as String),
-      finished_time: (l$finished_time as String?),
-      responded_time: (l$responded_time as String?),
-      customer: l$customer == null
-          ? null
-          : Query$GetPastDeliveryMessages$delivery_messages$customer.fromJson(
-              (l$customer as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final dynamic entry;
-
-  final String phone_number;
-
-  final int? driver_id;
-
-  final String received_time;
-
-  final String? finished_time;
-
-  final String? responded_time;
-
-  final Query$GetPastDeliveryMessages$delivery_messages$customer? customer;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$entry = entry;
-    _resultData['entry'] = mapToJson(l$entry);
-    final l$phone_number = phone_number;
-    _resultData['phone_number'] = l$phone_number;
-    final l$driver_id = driver_id;
-    _resultData['driver_id'] = l$driver_id;
-    final l$received_time = received_time;
-    _resultData['received_time'] = l$received_time;
-    final l$finished_time = finished_time;
-    _resultData['finished_time'] = l$finished_time;
-    final l$responded_time = responded_time;
-    _resultData['responded_time'] = l$responded_time;
-    final l$customer = customer;
-    _resultData['customer'] = l$customer?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$entry = entry;
-    final l$phone_number = phone_number;
-    final l$driver_id = driver_id;
-    final l$received_time = received_time;
-    final l$finished_time = finished_time;
-    final l$responded_time = responded_time;
-    final l$customer = customer;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$entry,
-      l$phone_number,
-      l$driver_id,
-      l$received_time,
-      l$finished_time,
-      l$responded_time,
-      l$customer,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$GetPastDeliveryMessages$delivery_messages) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$entry = entry;
-    final lOther$entry = other.entry;
-    if (l$entry != lOther$entry) {
-      return false;
-    }
-    final l$phone_number = phone_number;
-    final lOther$phone_number = other.phone_number;
-    if (l$phone_number != lOther$phone_number) {
-      return false;
-    }
-    final l$driver_id = driver_id;
-    final lOther$driver_id = other.driver_id;
-    if (l$driver_id != lOther$driver_id) {
-      return false;
-    }
-    final l$received_time = received_time;
-    final lOther$received_time = other.received_time;
-    if (l$received_time != lOther$received_time) {
-      return false;
-    }
-    final l$finished_time = finished_time;
-    final lOther$finished_time = other.finished_time;
-    if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$responded_time = responded_time;
-    final lOther$responded_time = other.responded_time;
-    if (l$responded_time != lOther$responded_time) {
-      return false;
-    }
-    final l$customer = customer;
-    final lOther$customer = other.customer;
-    if (l$customer != lOther$customer) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetPastDeliveryMessages$delivery_messages
-    on Query$GetPastDeliveryMessages$delivery_messages {
-  CopyWith$Query$GetPastDeliveryMessages$delivery_messages<
-          Query$GetPastDeliveryMessages$delivery_messages>
-      get copyWith => CopyWith$Query$GetPastDeliveryMessages$delivery_messages(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetPastDeliveryMessages$delivery_messages<TRes> {
-  factory CopyWith$Query$GetPastDeliveryMessages$delivery_messages(
-    Query$GetPastDeliveryMessages$delivery_messages instance,
-    TRes Function(Query$GetPastDeliveryMessages$delivery_messages) then,
-  ) = _CopyWithImpl$Query$GetPastDeliveryMessages$delivery_messages;
-
-  factory CopyWith$Query$GetPastDeliveryMessages$delivery_messages.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetPastDeliveryMessages$delivery_messages;
-
-  TRes call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Query$GetPastDeliveryMessages$delivery_messages$customer? customer,
-    String? $__typename,
-  });
-  CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer<TRes>
-      get customer;
-}
-
-class _CopyWithImpl$Query$GetPastDeliveryMessages$delivery_messages<TRes>
-    implements CopyWith$Query$GetPastDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithImpl$Query$GetPastDeliveryMessages$delivery_messages(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetPastDeliveryMessages$delivery_messages _instance;
-
-  final TRes Function(Query$GetPastDeliveryMessages$delivery_messages) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? entry = _undefined,
-    Object? phone_number = _undefined,
-    Object? driver_id = _undefined,
-    Object? received_time = _undefined,
-    Object? finished_time = _undefined,
-    Object? responded_time = _undefined,
-    Object? customer = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetPastDeliveryMessages$delivery_messages(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        entry: entry == _undefined || entry == null
-            ? _instance.entry
-            : (entry as dynamic),
-        phone_number: phone_number == _undefined || phone_number == null
-            ? _instance.phone_number
-            : (phone_number as String),
-        driver_id:
-            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
-        received_time: received_time == _undefined || received_time == null
-            ? _instance.received_time
-            : (received_time as String),
-        finished_time: finished_time == _undefined
-            ? _instance.finished_time
-            : (finished_time as String?),
-        responded_time: responded_time == _undefined
-            ? _instance.responded_time
-            : (responded_time as String?),
-        customer: customer == _undefined
-            ? _instance.customer
-            : (customer
-                as Query$GetPastDeliveryMessages$delivery_messages$customer?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer<TRes>
-      get customer {
-    final local$customer = _instance.customer;
-    return local$customer == null
-        ? CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer
-            .stub(_then(_instance))
-        : CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer(
-            local$customer, (e) => call(customer: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$GetPastDeliveryMessages$delivery_messages<TRes>
-    implements CopyWith$Query$GetPastDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithStubImpl$Query$GetPastDeliveryMessages$delivery_messages(this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Query$GetPastDeliveryMessages$delivery_messages$customer? customer,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer<TRes>
-      get customer =>
-          CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer
-              .stub(_res);
-}
-
-class Query$GetPastDeliveryMessages$delivery_messages$customer {
-  Query$GetPastDeliveryMessages$delivery_messages$customer({
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Query$GetPastDeliveryMessages$delivery_messages$customer.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Query$GetPastDeliveryMessages$delivery_messages$customer(
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$GetPastDeliveryMessages$delivery_messages$customer) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetPastDeliveryMessages$delivery_messages$customer
-    on Query$GetPastDeliveryMessages$delivery_messages$customer {
-  CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer<
-          Query$GetPastDeliveryMessages$delivery_messages$customer>
-      get copyWith =>
-          CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer<
-    TRes> {
-  factory CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer(
-    Query$GetPastDeliveryMessages$delivery_messages$customer instance,
-    TRes Function(Query$GetPastDeliveryMessages$delivery_messages$customer)
-        then,
-  ) = _CopyWithImpl$Query$GetPastDeliveryMessages$delivery_messages$customer;
-
-  factory CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetPastDeliveryMessages$delivery_messages$customer;
-
-  TRes call({
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$GetPastDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithImpl$Query$GetPastDeliveryMessages$delivery_messages$customer(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetPastDeliveryMessages$delivery_messages$customer _instance;
-
-  final TRes Function(Query$GetPastDeliveryMessages$delivery_messages$customer)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetPastDeliveryMessages$delivery_messages$customer(
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$GetPastDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Query$GetPastDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithStubImpl$Query$GetPastDeliveryMessages$delivery_messages$customer(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? image,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
 class Variables$Query$GetCurrentDeliveryMessages {
   factory Variables$Query$GetCurrentDeliveryMessages(
           {required int driver_id}) =>
@@ -1152,16 +2093,14 @@ class Query$GetCurrentDeliveryMessages {
     final l$$__typename = json['__typename'];
     return Query$GetCurrentDeliveryMessages(
       delivery_messages: (l$delivery_messages as List<dynamic>)
-          .map((e) =>
-              Query$GetCurrentDeliveryMessages$delivery_messages.fromJson(
-                  (e as Map<String, dynamic>)))
+          .map((e) => Fragment$deliveryMessageFields.fromJson(
+              (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$GetCurrentDeliveryMessages$delivery_messages>
-      delivery_messages;
+  final List<Fragment$deliveryMessageFields> delivery_messages;
 
   final String $__typename;
 
@@ -1234,14 +2173,14 @@ abstract class CopyWith$Query$GetCurrentDeliveryMessages<TRes> {
       _CopyWithStubImpl$Query$GetCurrentDeliveryMessages;
 
   TRes call({
-    List<Query$GetCurrentDeliveryMessages$delivery_messages>? delivery_messages,
+    List<Fragment$deliveryMessageFields>? delivery_messages,
     String? $__typename,
   });
   TRes delivery_messages(
-      Iterable<Query$GetCurrentDeliveryMessages$delivery_messages> Function(
+      Iterable<Fragment$deliveryMessageFields> Function(
               Iterable<
-                  CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages<
-                      Query$GetCurrentDeliveryMessages$delivery_messages>>)
+                  CopyWith$Fragment$deliveryMessageFields<
+                      Fragment$deliveryMessageFields>>)
           _fn);
 }
 
@@ -1263,27 +2202,26 @@ class _CopyWithImpl$Query$GetCurrentDeliveryMessages<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$GetCurrentDeliveryMessages(
-        delivery_messages: delivery_messages == _undefined ||
-                delivery_messages == null
-            ? _instance.delivery_messages
-            : (delivery_messages
-                as List<Query$GetCurrentDeliveryMessages$delivery_messages>),
+        delivery_messages:
+            delivery_messages == _undefined || delivery_messages == null
+                ? _instance.delivery_messages
+                : (delivery_messages as List<Fragment$deliveryMessageFields>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes delivery_messages(
-          Iterable<Query$GetCurrentDeliveryMessages$delivery_messages> Function(
+          Iterable<Fragment$deliveryMessageFields> Function(
                   Iterable<
-                      CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages<
-                          Query$GetCurrentDeliveryMessages$delivery_messages>>)
+                      CopyWith$Fragment$deliveryMessageFields<
+                          Fragment$deliveryMessageFields>>)
               _fn) =>
       call(
-          delivery_messages: _fn(_instance.delivery_messages.map((e) =>
-              CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages(
-                e,
-                (i) => i,
-              ))).toList());
+          delivery_messages: _fn(_instance.delivery_messages
+              .map((e) => CopyWith$Fragment$deliveryMessageFields(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
 class _CopyWithStubImpl$Query$GetCurrentDeliveryMessages<TRes>
@@ -1293,7 +2231,7 @@ class _CopyWithStubImpl$Query$GetCurrentDeliveryMessages<TRes>
   TRes _res;
 
   call({
-    List<Query$GetCurrentDeliveryMessages$delivery_messages>? delivery_messages,
+    List<Fragment$deliveryMessageFields>? delivery_messages,
     String? $__typename,
   }) =>
       _res;
@@ -1367,83 +2305,9 @@ const documentNodeQueryGetCurrentDeliveryMessages = DocumentNode(definitions: [
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
+          FragmentSpreadNode(
+            name: NameNode(value: 'deliveryMessageFields'),
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'entry'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'phone_number'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'received_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'finished_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'responded_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'customer'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'name'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'image'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -1457,6 +2321,7 @@ const documentNodeQueryGetCurrentDeliveryMessages = DocumentNode(definitions: [
       
     ]),
   ),
+  fragmentDefinitiondeliveryMessageFields,
 ]);
 Query$GetCurrentDeliveryMessages _parserFn$Query$GetCurrentDeliveryMessages(
         Map<String, dynamic> data) =>
@@ -1570,451 +2435,6 @@ extension ClientExtension$Query$GetCurrentDeliveryMessages
         ? null
         : Query$GetCurrentDeliveryMessages.fromJson(result);
   }
-}
-
-class Query$GetCurrentDeliveryMessages$delivery_messages {
-  Query$GetCurrentDeliveryMessages$delivery_messages({
-    required this.id,
-    required this.entry,
-    required this.phone_number,
-    this.driver_id,
-    required this.received_time,
-    this.finished_time,
-    this.responded_time,
-    this.customer,
-    required this.$__typename,
-  });
-
-  factory Query$GetCurrentDeliveryMessages$delivery_messages.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$entry = json['entry'];
-    final l$phone_number = json['phone_number'];
-    final l$driver_id = json['driver_id'];
-    final l$received_time = json['received_time'];
-    final l$finished_time = json['finished_time'];
-    final l$responded_time = json['responded_time'];
-    final l$customer = json['customer'];
-    final l$$__typename = json['__typename'];
-    return Query$GetCurrentDeliveryMessages$delivery_messages(
-      id: (l$id as int),
-      entry: mapFromJson(l$entry),
-      phone_number: (l$phone_number as String),
-      driver_id: (l$driver_id as int?),
-      received_time: (l$received_time as String),
-      finished_time: (l$finished_time as String?),
-      responded_time: (l$responded_time as String?),
-      customer: l$customer == null
-          ? null
-          : Query$GetCurrentDeliveryMessages$delivery_messages$customer
-              .fromJson((l$customer as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final dynamic entry;
-
-  final String phone_number;
-
-  final int? driver_id;
-
-  final String received_time;
-
-  final String? finished_time;
-
-  final String? responded_time;
-
-  final Query$GetCurrentDeliveryMessages$delivery_messages$customer? customer;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$entry = entry;
-    _resultData['entry'] = mapToJson(l$entry);
-    final l$phone_number = phone_number;
-    _resultData['phone_number'] = l$phone_number;
-    final l$driver_id = driver_id;
-    _resultData['driver_id'] = l$driver_id;
-    final l$received_time = received_time;
-    _resultData['received_time'] = l$received_time;
-    final l$finished_time = finished_time;
-    _resultData['finished_time'] = l$finished_time;
-    final l$responded_time = responded_time;
-    _resultData['responded_time'] = l$responded_time;
-    final l$customer = customer;
-    _resultData['customer'] = l$customer?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$entry = entry;
-    final l$phone_number = phone_number;
-    final l$driver_id = driver_id;
-    final l$received_time = received_time;
-    final l$finished_time = finished_time;
-    final l$responded_time = responded_time;
-    final l$customer = customer;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$entry,
-      l$phone_number,
-      l$driver_id,
-      l$received_time,
-      l$finished_time,
-      l$responded_time,
-      l$customer,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$GetCurrentDeliveryMessages$delivery_messages) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$entry = entry;
-    final lOther$entry = other.entry;
-    if (l$entry != lOther$entry) {
-      return false;
-    }
-    final l$phone_number = phone_number;
-    final lOther$phone_number = other.phone_number;
-    if (l$phone_number != lOther$phone_number) {
-      return false;
-    }
-    final l$driver_id = driver_id;
-    final lOther$driver_id = other.driver_id;
-    if (l$driver_id != lOther$driver_id) {
-      return false;
-    }
-    final l$received_time = received_time;
-    final lOther$received_time = other.received_time;
-    if (l$received_time != lOther$received_time) {
-      return false;
-    }
-    final l$finished_time = finished_time;
-    final lOther$finished_time = other.finished_time;
-    if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$responded_time = responded_time;
-    final lOther$responded_time = other.responded_time;
-    if (l$responded_time != lOther$responded_time) {
-      return false;
-    }
-    final l$customer = customer;
-    final lOther$customer = other.customer;
-    if (l$customer != lOther$customer) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetCurrentDeliveryMessages$delivery_messages
-    on Query$GetCurrentDeliveryMessages$delivery_messages {
-  CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages<
-          Query$GetCurrentDeliveryMessages$delivery_messages>
-      get copyWith =>
-          CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages<
-    TRes> {
-  factory CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages(
-    Query$GetCurrentDeliveryMessages$delivery_messages instance,
-    TRes Function(Query$GetCurrentDeliveryMessages$delivery_messages) then,
-  ) = _CopyWithImpl$Query$GetCurrentDeliveryMessages$delivery_messages;
-
-  factory CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetCurrentDeliveryMessages$delivery_messages;
-
-  TRes call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Query$GetCurrentDeliveryMessages$delivery_messages$customer? customer,
-    String? $__typename,
-  });
-  CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer<TRes>
-      get customer;
-}
-
-class _CopyWithImpl$Query$GetCurrentDeliveryMessages$delivery_messages<TRes>
-    implements
-        CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithImpl$Query$GetCurrentDeliveryMessages$delivery_messages(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetCurrentDeliveryMessages$delivery_messages _instance;
-
-  final TRes Function(Query$GetCurrentDeliveryMessages$delivery_messages) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? entry = _undefined,
-    Object? phone_number = _undefined,
-    Object? driver_id = _undefined,
-    Object? received_time = _undefined,
-    Object? finished_time = _undefined,
-    Object? responded_time = _undefined,
-    Object? customer = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetCurrentDeliveryMessages$delivery_messages(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        entry: entry == _undefined || entry == null
-            ? _instance.entry
-            : (entry as dynamic),
-        phone_number: phone_number == _undefined || phone_number == null
-            ? _instance.phone_number
-            : (phone_number as String),
-        driver_id:
-            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
-        received_time: received_time == _undefined || received_time == null
-            ? _instance.received_time
-            : (received_time as String),
-        finished_time: finished_time == _undefined
-            ? _instance.finished_time
-            : (finished_time as String?),
-        responded_time: responded_time == _undefined
-            ? _instance.responded_time
-            : (responded_time as String?),
-        customer: customer == _undefined
-            ? _instance.customer
-            : (customer
-                as Query$GetCurrentDeliveryMessages$delivery_messages$customer?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer<TRes>
-      get customer {
-    final local$customer = _instance.customer;
-    return local$customer == null
-        ? CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer
-            .stub(_then(_instance))
-        : CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer(
-            local$customer, (e) => call(customer: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$GetCurrentDeliveryMessages$delivery_messages<TRes>
-    implements
-        CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithStubImpl$Query$GetCurrentDeliveryMessages$delivery_messages(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Query$GetCurrentDeliveryMessages$delivery_messages$customer? customer,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer<TRes>
-      get customer =>
-          CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer
-              .stub(_res);
-}
-
-class Query$GetCurrentDeliveryMessages$delivery_messages$customer {
-  Query$GetCurrentDeliveryMessages$delivery_messages$customer({
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Query$GetCurrentDeliveryMessages$delivery_messages$customer.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Query$GetCurrentDeliveryMessages$delivery_messages$customer(
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$GetCurrentDeliveryMessages$delivery_messages$customer) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetCurrentDeliveryMessages$delivery_messages$customer
-    on Query$GetCurrentDeliveryMessages$delivery_messages$customer {
-  CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer<
-          Query$GetCurrentDeliveryMessages$delivery_messages$customer>
-      get copyWith =>
-          CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer<
-    TRes> {
-  factory CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer(
-    Query$GetCurrentDeliveryMessages$delivery_messages$customer instance,
-    TRes Function(Query$GetCurrentDeliveryMessages$delivery_messages$customer)
-        then,
-  ) = _CopyWithImpl$Query$GetCurrentDeliveryMessages$delivery_messages$customer;
-
-  factory CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetCurrentDeliveryMessages$delivery_messages$customer;
-
-  TRes call({
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$GetCurrentDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithImpl$Query$GetCurrentDeliveryMessages$delivery_messages$customer(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetCurrentDeliveryMessages$delivery_messages$customer _instance;
-
-  final TRes Function(
-      Query$GetCurrentDeliveryMessages$delivery_messages$customer) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetCurrentDeliveryMessages$delivery_messages$customer(
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$GetCurrentDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Query$GetCurrentDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithStubImpl$Query$GetCurrentDeliveryMessages$delivery_messages$customer(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? image,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Variables$Subscription$listenCurrentDeliveryMessages {
@@ -2136,16 +2556,14 @@ class Subscription$listenCurrentDeliveryMessages {
     final l$$__typename = json['__typename'];
     return Subscription$listenCurrentDeliveryMessages(
       delivery_messages: (l$delivery_messages as List<dynamic>)
-          .map((e) =>
-              Subscription$listenCurrentDeliveryMessages$delivery_messages
-                  .fromJson((e as Map<String, dynamic>)))
+          .map((e) => Fragment$deliveryMessageWithDriver.fromJson(
+              (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Subscription$listenCurrentDeliveryMessages$delivery_messages>
-      delivery_messages;
+  final List<Fragment$deliveryMessageWithDriver> delivery_messages;
 
   final String $__typename;
 
@@ -2219,15 +2637,14 @@ abstract class CopyWith$Subscription$listenCurrentDeliveryMessages<TRes> {
       _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages;
 
   TRes call({
-    List<Subscription$listenCurrentDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Fragment$deliveryMessageWithDriver>? delivery_messages,
     String? $__typename,
   });
   TRes delivery_messages(
-      Iterable<Subscription$listenCurrentDeliveryMessages$delivery_messages> Function(
+      Iterable<Fragment$deliveryMessageWithDriver> Function(
               Iterable<
-                  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages<
-                      Subscription$listenCurrentDeliveryMessages$delivery_messages>>)
+                  CopyWith$Fragment$deliveryMessageWithDriver<
+                      Fragment$deliveryMessageWithDriver>>)
           _fn);
 }
 
@@ -2252,24 +2669,23 @@ class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages<TRes>
         delivery_messages: delivery_messages == _undefined ||
                 delivery_messages == null
             ? _instance.delivery_messages
-            : (delivery_messages as List<
-                Subscription$listenCurrentDeliveryMessages$delivery_messages>),
+            : (delivery_messages as List<Fragment$deliveryMessageWithDriver>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes delivery_messages(
-          Iterable<Subscription$listenCurrentDeliveryMessages$delivery_messages> Function(
+          Iterable<Fragment$deliveryMessageWithDriver> Function(
                   Iterable<
-                      CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages<
-                          Subscription$listenCurrentDeliveryMessages$delivery_messages>>)
+                      CopyWith$Fragment$deliveryMessageWithDriver<
+                          Fragment$deliveryMessageWithDriver>>)
               _fn) =>
       call(
-          delivery_messages: _fn(_instance.delivery_messages.map((e) =>
-              CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages(
-                e,
-                (i) => i,
-              ))).toList());
+          delivery_messages: _fn(_instance.delivery_messages
+              .map((e) => CopyWith$Fragment$deliveryMessageWithDriver(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
 class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages<TRes>
@@ -2279,8 +2695,7 @@ class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages<TRes>
   TRes _res;
 
   call({
-    List<Subscription$listenCurrentDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Fragment$deliveryMessageWithDriver>? delivery_messages,
     String? $__typename,
   }) =>
       _res;
@@ -2339,127 +2754,9 @@ const documentNodeSubscriptionlistenCurrentDeliveryMessages =
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
+          FragmentSpreadNode(
+            name: NameNode(value: 'deliveryMessageWithDriver'),
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'entry'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'phone_number'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'received_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'finished_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'responded_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'customer'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'name'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'image'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'user'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'phone'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -2473,6 +2770,8 @@ const documentNodeSubscriptionlistenCurrentDeliveryMessages =
       
     ]),
   ),
+  fragmentDefinitiondeliveryMessageWithDriver,
+  fragmentDefinitiondeliveryMessageFields,
 ]);
 Subscription$listenCurrentDeliveryMessages
     _parserFn$Subscription$listenCurrentDeliveryMessages(
@@ -2556,833 +2855,6 @@ extension ClientExtension$Subscription$listenCurrentDeliveryMessages
               WatchOptions$Subscription$listenCurrentDeliveryMessages
                   options) =>
           this.watchQuery(options);
-}
-
-class Subscription$listenCurrentDeliveryMessages$delivery_messages {
-  Subscription$listenCurrentDeliveryMessages$delivery_messages({
-    required this.id,
-    required this.entry,
-    required this.phone_number,
-    this.driver_id,
-    required this.received_time,
-    this.finished_time,
-    this.responded_time,
-    this.customer,
-    this.driver,
-    required this.$__typename,
-  });
-
-  factory Subscription$listenCurrentDeliveryMessages$delivery_messages.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$entry = json['entry'];
-    final l$phone_number = json['phone_number'];
-    final l$driver_id = json['driver_id'];
-    final l$received_time = json['received_time'];
-    final l$finished_time = json['finished_time'];
-    final l$responded_time = json['responded_time'];
-    final l$customer = json['customer'];
-    final l$driver = json['driver'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listenCurrentDeliveryMessages$delivery_messages(
-      id: (l$id as int),
-      entry: mapFromJson(l$entry),
-      phone_number: (l$phone_number as String),
-      driver_id: (l$driver_id as int?),
-      received_time: (l$received_time as String),
-      finished_time: (l$finished_time as String?),
-      responded_time: (l$responded_time as String?),
-      customer: l$customer == null
-          ? null
-          : Subscription$listenCurrentDeliveryMessages$delivery_messages$customer
-              .fromJson((l$customer as Map<String, dynamic>)),
-      driver: l$driver == null
-          ? null
-          : Subscription$listenCurrentDeliveryMessages$delivery_messages$driver
-              .fromJson((l$driver as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final dynamic entry;
-
-  final String phone_number;
-
-  final int? driver_id;
-
-  final String received_time;
-
-  final String? finished_time;
-
-  final String? responded_time;
-
-  final Subscription$listenCurrentDeliveryMessages$delivery_messages$customer?
-      customer;
-
-  final Subscription$listenCurrentDeliveryMessages$delivery_messages$driver?
-      driver;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$entry = entry;
-    _resultData['entry'] = mapToJson(l$entry);
-    final l$phone_number = phone_number;
-    _resultData['phone_number'] = l$phone_number;
-    final l$driver_id = driver_id;
-    _resultData['driver_id'] = l$driver_id;
-    final l$received_time = received_time;
-    _resultData['received_time'] = l$received_time;
-    final l$finished_time = finished_time;
-    _resultData['finished_time'] = l$finished_time;
-    final l$responded_time = responded_time;
-    _resultData['responded_time'] = l$responded_time;
-    final l$customer = customer;
-    _resultData['customer'] = l$customer?.toJson();
-    final l$driver = driver;
-    _resultData['driver'] = l$driver?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$entry = entry;
-    final l$phone_number = phone_number;
-    final l$driver_id = driver_id;
-    final l$received_time = received_time;
-    final l$finished_time = finished_time;
-    final l$responded_time = responded_time;
-    final l$customer = customer;
-    final l$driver = driver;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$entry,
-      l$phone_number,
-      l$driver_id,
-      l$received_time,
-      l$finished_time,
-      l$responded_time,
-      l$customer,
-      l$driver,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listenCurrentDeliveryMessages$delivery_messages) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$entry = entry;
-    final lOther$entry = other.entry;
-    if (l$entry != lOther$entry) {
-      return false;
-    }
-    final l$phone_number = phone_number;
-    final lOther$phone_number = other.phone_number;
-    if (l$phone_number != lOther$phone_number) {
-      return false;
-    }
-    final l$driver_id = driver_id;
-    final lOther$driver_id = other.driver_id;
-    if (l$driver_id != lOther$driver_id) {
-      return false;
-    }
-    final l$received_time = received_time;
-    final lOther$received_time = other.received_time;
-    if (l$received_time != lOther$received_time) {
-      return false;
-    }
-    final l$finished_time = finished_time;
-    final lOther$finished_time = other.finished_time;
-    if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$responded_time = responded_time;
-    final lOther$responded_time = other.responded_time;
-    if (l$responded_time != lOther$responded_time) {
-      return false;
-    }
-    final l$customer = customer;
-    final lOther$customer = other.customer;
-    if (l$customer != lOther$customer) {
-      return false;
-    }
-    final l$driver = driver;
-    final lOther$driver = other.driver;
-    if (l$driver != lOther$driver) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listenCurrentDeliveryMessages$delivery_messages
-    on Subscription$listenCurrentDeliveryMessages$delivery_messages {
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages<
-          Subscription$listenCurrentDeliveryMessages$delivery_messages>
-      get copyWith =>
-          CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages<
-    TRes> {
-  factory CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages(
-    Subscription$listenCurrentDeliveryMessages$delivery_messages instance,
-    TRes Function(Subscription$listenCurrentDeliveryMessages$delivery_messages)
-        then,
-  ) = _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages;
-
-  factory CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages;
-
-  TRes call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$customer?
-        customer,
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$driver? driver,
-    String? $__typename,
-  });
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-      TRes> get customer;
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-      TRes> get driver;
-}
-
-class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages<
-        TRes>
-    implements
-        CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages<
-            TRes> {
-  _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listenCurrentDeliveryMessages$delivery_messages _instance;
-
-  final TRes Function(
-      Subscription$listenCurrentDeliveryMessages$delivery_messages) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? entry = _undefined,
-    Object? phone_number = _undefined,
-    Object? driver_id = _undefined,
-    Object? received_time = _undefined,
-    Object? finished_time = _undefined,
-    Object? responded_time = _undefined,
-    Object? customer = _undefined,
-    Object? driver = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Subscription$listenCurrentDeliveryMessages$delivery_messages(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        entry: entry == _undefined || entry == null
-            ? _instance.entry
-            : (entry as dynamic),
-        phone_number: phone_number == _undefined || phone_number == null
-            ? _instance.phone_number
-            : (phone_number as String),
-        driver_id:
-            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
-        received_time: received_time == _undefined || received_time == null
-            ? _instance.received_time
-            : (received_time as String),
-        finished_time: finished_time == _undefined
-            ? _instance.finished_time
-            : (finished_time as String?),
-        responded_time: responded_time == _undefined
-            ? _instance.responded_time
-            : (responded_time as String?),
-        customer: customer == _undefined
-            ? _instance.customer
-            : (customer
-                as Subscription$listenCurrentDeliveryMessages$delivery_messages$customer?),
-        driver: driver == _undefined
-            ? _instance.driver
-            : (driver
-                as Subscription$listenCurrentDeliveryMessages$delivery_messages$driver?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-      TRes> get customer {
-    final local$customer = _instance.customer;
-    return local$customer == null
-        ? CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer(
-            local$customer, (e) => call(customer: e));
-  }
-
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-      TRes> get driver {
-    final local$driver = _instance.driver;
-    return local$driver == null
-        ? CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver(
-            local$driver, (e) => call(driver: e));
-  }
-}
-
-class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages<
-        TRes>
-    implements
-        CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$customer?
-        customer,
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$driver? driver,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-          TRes>
-      get customer =>
-          CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer
-              .stub(_res);
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-          TRes>
-      get driver =>
-          CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver
-              .stub(_res);
-}
-
-class Subscription$listenCurrentDeliveryMessages$delivery_messages$customer {
-  Subscription$listenCurrentDeliveryMessages$delivery_messages$customer({
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Subscription$listenCurrentDeliveryMessages$delivery_messages$customer.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listenCurrentDeliveryMessages$delivery_messages$customer(
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listenCurrentDeliveryMessages$delivery_messages$customer) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer
-    on Subscription$listenCurrentDeliveryMessages$delivery_messages$customer {
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$customer>
-      get copyWith =>
-          CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-    TRes> {
-  factory CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer(
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$customer
-        instance,
-    TRes Function(
-            Subscription$listenCurrentDeliveryMessages$delivery_messages$customer)
-        then,
-  ) = _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer;
-
-  factory CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer;
-
-  TRes call({
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listenCurrentDeliveryMessages$delivery_messages$customer
-      _instance;
-
-  final TRes Function(
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$customer)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$customer(
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$customer(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? image,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver {
-  Subscription$listenCurrentDeliveryMessages$delivery_messages$driver({
-    required this.user,
-    required this.$__typename,
-  });
-
-  factory Subscription$listenCurrentDeliveryMessages$delivery_messages$driver.fromJson(
-      Map<String, dynamic> json) {
-    final l$user = json['user'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listenCurrentDeliveryMessages$delivery_messages$driver(
-      user:
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user
-              .fromJson((l$user as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user
-      user;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$user = user;
-    _resultData['user'] = l$user.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$user = user;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$user,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listenCurrentDeliveryMessages$delivery_messages$driver) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$user = user;
-    final lOther$user = other.user;
-    if (l$user != lOther$user) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver
-    on Subscription$listenCurrentDeliveryMessages$delivery_messages$driver {
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$driver>
-      get copyWith =>
-          CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-    TRes> {
-  factory CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver(
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$driver
-        instance,
-    TRes Function(
-            Subscription$listenCurrentDeliveryMessages$delivery_messages$driver)
-        then,
-  ) = _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver;
-
-  factory CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver;
-
-  TRes call({
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user?
-        user,
-    String? $__typename,
-  });
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-      TRes> get user;
-}
-
-class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-        TRes>
-    implements
-        CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-            TRes> {
-  _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listenCurrentDeliveryMessages$delivery_messages$driver
-      _instance;
-
-  final TRes Function(
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$driver)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? user = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Subscription$listenCurrentDeliveryMessages$delivery_messages$driver(
-        user: user == _undefined || user == null
-            ? _instance.user
-            : (user
-                as Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-      TRes> get user {
-    final local$user = _instance.user;
-    return CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
-        local$user, (e) => call(user: e));
-  }
-}
-
-class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-        TRes>
-    implements
-        CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver(
-      this._res);
-
-  TRes _res;
-
-  call({
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user?
-        user,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-          TRes>
-      get user =>
-          CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user
-              .stub(_res);
-}
-
-class Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
-  Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user({
-    this.name,
-    this.phone,
-    required this.$__typename,
-  });
-
-  factory Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$phone = json['phone'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
-      name: (l$name as String?),
-      phone: (l$phone as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? phone;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$phone = phone;
-    _resultData['phone'] = l$phone;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$phone = phone;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$phone,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$phone = phone;
-    final lOther$phone = other.phone;
-    if (l$phone != lOther$phone) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user
-    on Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user {
-  CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user>
-      get copyWith =>
-          CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-    TRes> {
-  factory CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
-    Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user
-        instance,
-    TRes Function(
-            Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user)
-        then,
-  ) = _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user;
-
-  factory CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user;
-
-  TRes call({
-    String? name,
-    String? phone,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-        TRes>
-    implements
-        CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-            TRes> {
-  _CopyWithImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user
-      _instance;
-
-  final TRes Function(
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? phone = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
-        name: name == _undefined ? _instance.name : (name as String?),
-        phone: phone == _undefined ? _instance.phone : (phone as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-        TRes>
-    implements
-        CopyWith$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listenCurrentDeliveryMessages$delivery_messages$driver$user(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? phone,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Query$GetOpenDeliveryMessages {
@@ -5163,16 +4635,14 @@ class Query$GetAllCurrentDeliveryMessages {
     final l$$__typename = json['__typename'];
     return Query$GetAllCurrentDeliveryMessages(
       delivery_messages: (l$delivery_messages as List<dynamic>)
-          .map((e) =>
-              Query$GetAllCurrentDeliveryMessages$delivery_messages.fromJson(
-                  (e as Map<String, dynamic>)))
+          .map((e) => Fragment$deliveryMessageFields.fromJson(
+              (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$GetAllCurrentDeliveryMessages$delivery_messages>
-      delivery_messages;
+  final List<Fragment$deliveryMessageFields> delivery_messages;
 
   final String $__typename;
 
@@ -5246,15 +4716,14 @@ abstract class CopyWith$Query$GetAllCurrentDeliveryMessages<TRes> {
       _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages;
 
   TRes call({
-    List<Query$GetAllCurrentDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Fragment$deliveryMessageFields>? delivery_messages,
     String? $__typename,
   });
   TRes delivery_messages(
-      Iterable<Query$GetAllCurrentDeliveryMessages$delivery_messages> Function(
+      Iterable<Fragment$deliveryMessageFields> Function(
               Iterable<
-                  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<
-                      Query$GetAllCurrentDeliveryMessages$delivery_messages>>)
+                  CopyWith$Fragment$deliveryMessageFields<
+                      Fragment$deliveryMessageFields>>)
           _fn);
 }
 
@@ -5276,27 +4745,26 @@ class _CopyWithImpl$Query$GetAllCurrentDeliveryMessages<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$GetAllCurrentDeliveryMessages(
-        delivery_messages: delivery_messages == _undefined ||
-                delivery_messages == null
-            ? _instance.delivery_messages
-            : (delivery_messages
-                as List<Query$GetAllCurrentDeliveryMessages$delivery_messages>),
+        delivery_messages:
+            delivery_messages == _undefined || delivery_messages == null
+                ? _instance.delivery_messages
+                : (delivery_messages as List<Fragment$deliveryMessageFields>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes delivery_messages(
-          Iterable<Query$GetAllCurrentDeliveryMessages$delivery_messages> Function(
+          Iterable<Fragment$deliveryMessageFields> Function(
                   Iterable<
-                      CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<
-                          Query$GetAllCurrentDeliveryMessages$delivery_messages>>)
+                      CopyWith$Fragment$deliveryMessageFields<
+                          Fragment$deliveryMessageFields>>)
               _fn) =>
       call(
-          delivery_messages: _fn(_instance.delivery_messages.map((e) =>
-              CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages(
-                e,
-                (i) => i,
-              ))).toList());
+          delivery_messages: _fn(_instance.delivery_messages
+              .map((e) => CopyWith$Fragment$deliveryMessageFields(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
 class _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages<TRes>
@@ -5306,8 +4774,7 @@ class _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages<TRes>
   TRes _res;
 
   call({
-    List<Query$GetAllCurrentDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Fragment$deliveryMessageFields>? delivery_messages,
     String? $__typename,
   }) =>
       _res;
@@ -5373,83 +4840,9 @@ const documentNodeQueryGetAllCurrentDeliveryMessages =
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
+          FragmentSpreadNode(
+            name: NameNode(value: 'deliveryMessageFields'),
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'entry'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'phone_number'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'received_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'finished_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'responded_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'customer'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'name'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'image'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -5463,6 +4856,7 @@ const documentNodeQueryGetAllCurrentDeliveryMessages =
       
     ]),
   ),
+  fragmentDefinitiondeliveryMessageFields,
 ]);
 Query$GetAllCurrentDeliveryMessages
     _parserFn$Query$GetAllCurrentDeliveryMessages(Map<String, dynamic> data) =>
@@ -5576,456 +4970,6 @@ extension ClientExtension$Query$GetAllCurrentDeliveryMessages
         ? null
         : Query$GetAllCurrentDeliveryMessages.fromJson(result);
   }
-}
-
-class Query$GetAllCurrentDeliveryMessages$delivery_messages {
-  Query$GetAllCurrentDeliveryMessages$delivery_messages({
-    required this.id,
-    required this.entry,
-    required this.phone_number,
-    this.driver_id,
-    required this.received_time,
-    this.finished_time,
-    this.responded_time,
-    this.customer,
-    required this.$__typename,
-  });
-
-  factory Query$GetAllCurrentDeliveryMessages$delivery_messages.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$entry = json['entry'];
-    final l$phone_number = json['phone_number'];
-    final l$driver_id = json['driver_id'];
-    final l$received_time = json['received_time'];
-    final l$finished_time = json['finished_time'];
-    final l$responded_time = json['responded_time'];
-    final l$customer = json['customer'];
-    final l$$__typename = json['__typename'];
-    return Query$GetAllCurrentDeliveryMessages$delivery_messages(
-      id: (l$id as int),
-      entry: mapFromJson(l$entry),
-      phone_number: (l$phone_number as String),
-      driver_id: (l$driver_id as int?),
-      received_time: (l$received_time as String),
-      finished_time: (l$finished_time as String?),
-      responded_time: (l$responded_time as String?),
-      customer: l$customer == null
-          ? null
-          : Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
-              .fromJson((l$customer as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final dynamic entry;
-
-  final String phone_number;
-
-  final int? driver_id;
-
-  final String received_time;
-
-  final String? finished_time;
-
-  final String? responded_time;
-
-  final Query$GetAllCurrentDeliveryMessages$delivery_messages$customer?
-      customer;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$entry = entry;
-    _resultData['entry'] = mapToJson(l$entry);
-    final l$phone_number = phone_number;
-    _resultData['phone_number'] = l$phone_number;
-    final l$driver_id = driver_id;
-    _resultData['driver_id'] = l$driver_id;
-    final l$received_time = received_time;
-    _resultData['received_time'] = l$received_time;
-    final l$finished_time = finished_time;
-    _resultData['finished_time'] = l$finished_time;
-    final l$responded_time = responded_time;
-    _resultData['responded_time'] = l$responded_time;
-    final l$customer = customer;
-    _resultData['customer'] = l$customer?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$entry = entry;
-    final l$phone_number = phone_number;
-    final l$driver_id = driver_id;
-    final l$received_time = received_time;
-    final l$finished_time = finished_time;
-    final l$responded_time = responded_time;
-    final l$customer = customer;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$entry,
-      l$phone_number,
-      l$driver_id,
-      l$received_time,
-      l$finished_time,
-      l$responded_time,
-      l$customer,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$GetAllCurrentDeliveryMessages$delivery_messages) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$entry = entry;
-    final lOther$entry = other.entry;
-    if (l$entry != lOther$entry) {
-      return false;
-    }
-    final l$phone_number = phone_number;
-    final lOther$phone_number = other.phone_number;
-    if (l$phone_number != lOther$phone_number) {
-      return false;
-    }
-    final l$driver_id = driver_id;
-    final lOther$driver_id = other.driver_id;
-    if (l$driver_id != lOther$driver_id) {
-      return false;
-    }
-    final l$received_time = received_time;
-    final lOther$received_time = other.received_time;
-    if (l$received_time != lOther$received_time) {
-      return false;
-    }
-    final l$finished_time = finished_time;
-    final lOther$finished_time = other.finished_time;
-    if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$responded_time = responded_time;
-    final lOther$responded_time = other.responded_time;
-    if (l$responded_time != lOther$responded_time) {
-      return false;
-    }
-    final l$customer = customer;
-    final lOther$customer = other.customer;
-    if (l$customer != lOther$customer) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetAllCurrentDeliveryMessages$delivery_messages
-    on Query$GetAllCurrentDeliveryMessages$delivery_messages {
-  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<
-          Query$GetAllCurrentDeliveryMessages$delivery_messages>
-      get copyWith =>
-          CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<
-    TRes> {
-  factory CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages(
-    Query$GetAllCurrentDeliveryMessages$delivery_messages instance,
-    TRes Function(Query$GetAllCurrentDeliveryMessages$delivery_messages) then,
-  ) = _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages;
-
-  factory CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages;
-
-  TRes call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Query$GetAllCurrentDeliveryMessages$delivery_messages$customer? customer,
-    String? $__typename,
-  });
-  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<TRes>
-      get customer;
-}
-
-class _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages<TRes>
-    implements
-        CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetAllCurrentDeliveryMessages$delivery_messages _instance;
-
-  final TRes Function(Query$GetAllCurrentDeliveryMessages$delivery_messages)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? entry = _undefined,
-    Object? phone_number = _undefined,
-    Object? driver_id = _undefined,
-    Object? received_time = _undefined,
-    Object? finished_time = _undefined,
-    Object? responded_time = _undefined,
-    Object? customer = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetAllCurrentDeliveryMessages$delivery_messages(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        entry: entry == _undefined || entry == null
-            ? _instance.entry
-            : (entry as dynamic),
-        phone_number: phone_number == _undefined || phone_number == null
-            ? _instance.phone_number
-            : (phone_number as String),
-        driver_id:
-            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
-        received_time: received_time == _undefined || received_time == null
-            ? _instance.received_time
-            : (received_time as String),
-        finished_time: finished_time == _undefined
-            ? _instance.finished_time
-            : (finished_time as String?),
-        responded_time: responded_time == _undefined
-            ? _instance.responded_time
-            : (responded_time as String?),
-        customer: customer == _undefined
-            ? _instance.customer
-            : (customer
-                as Query$GetAllCurrentDeliveryMessages$delivery_messages$customer?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<TRes>
-      get customer {
-    final local$customer = _instance.customer;
-    return local$customer == null
-        ? CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
-            .stub(_then(_instance))
-        : CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
-            local$customer, (e) => call(customer: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages<
-        TRes>
-    implements
-        CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Query$GetAllCurrentDeliveryMessages$delivery_messages$customer? customer,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<TRes>
-      get customer =>
-          CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
-              .stub(_res);
-}
-
-class Query$GetAllCurrentDeliveryMessages$delivery_messages$customer {
-  Query$GetAllCurrentDeliveryMessages$delivery_messages$customer({
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Query$GetAllCurrentDeliveryMessages$delivery_messages$customer.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$GetAllCurrentDeliveryMessages$delivery_messages$customer) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
-    on Query$GetAllCurrentDeliveryMessages$delivery_messages$customer {
-  CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
-          Query$GetAllCurrentDeliveryMessages$delivery_messages$customer>
-      get copyWith =>
-          CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
-    TRes> {
-  factory CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
-    Query$GetAllCurrentDeliveryMessages$delivery_messages$customer instance,
-    TRes Function(
-            Query$GetAllCurrentDeliveryMessages$delivery_messages$customer)
-        then,
-  ) = _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer;
-
-  factory CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer;
-
-  TRes call({
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetAllCurrentDeliveryMessages$delivery_messages$customer
-      _instance;
-
-  final TRes Function(
-      Query$GetAllCurrentDeliveryMessages$delivery_messages$customer) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithStubImpl$Query$GetAllCurrentDeliveryMessages$delivery_messages$customer(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? image,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Variables$Subscription$listenAllCurrentDeliveryMessages {
@@ -6149,16 +5093,14 @@ class Subscription$listenAllCurrentDeliveryMessages {
     final l$$__typename = json['__typename'];
     return Subscription$listenAllCurrentDeliveryMessages(
       delivery_messages: (l$delivery_messages as List<dynamic>)
-          .map((e) =>
-              Subscription$listenAllCurrentDeliveryMessages$delivery_messages
-                  .fromJson((e as Map<String, dynamic>)))
+          .map((e) => Fragment$deliveryMessageWithDriver.fromJson(
+              (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Subscription$listenAllCurrentDeliveryMessages$delivery_messages>
-      delivery_messages;
+  final List<Fragment$deliveryMessageWithDriver> delivery_messages;
 
   final String $__typename;
 
@@ -6233,15 +5175,14 @@ abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages<TRes> {
       _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages;
 
   TRes call({
-    List<Subscription$listenAllCurrentDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Fragment$deliveryMessageWithDriver>? delivery_messages,
     String? $__typename,
   });
   TRes delivery_messages(
-      Iterable<Subscription$listenAllCurrentDeliveryMessages$delivery_messages> Function(
+      Iterable<Fragment$deliveryMessageWithDriver> Function(
               Iterable<
-                  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
-                      Subscription$listenAllCurrentDeliveryMessages$delivery_messages>>)
+                  CopyWith$Fragment$deliveryMessageWithDriver<
+                      Fragment$deliveryMessageWithDriver>>)
           _fn);
 }
 
@@ -6266,24 +5207,23 @@ class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages<TRes>
         delivery_messages: delivery_messages == _undefined ||
                 delivery_messages == null
             ? _instance.delivery_messages
-            : (delivery_messages as List<
-                Subscription$listenAllCurrentDeliveryMessages$delivery_messages>),
+            : (delivery_messages as List<Fragment$deliveryMessageWithDriver>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes delivery_messages(
-          Iterable<Subscription$listenAllCurrentDeliveryMessages$delivery_messages> Function(
+          Iterable<Fragment$deliveryMessageWithDriver> Function(
                   Iterable<
-                      CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
-                          Subscription$listenAllCurrentDeliveryMessages$delivery_messages>>)
+                      CopyWith$Fragment$deliveryMessageWithDriver<
+                          Fragment$deliveryMessageWithDriver>>)
               _fn) =>
       call(
-          delivery_messages: _fn(_instance.delivery_messages.map((e) =>
-              CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
-                e,
-                (i) => i,
-              ))).toList());
+          delivery_messages: _fn(_instance.delivery_messages
+              .map((e) => CopyWith$Fragment$deliveryMessageWithDriver(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
 class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages<TRes>
@@ -6293,8 +5233,7 @@ class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages<TRes>
   TRes _res;
 
   call({
-    List<Subscription$listenAllCurrentDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Fragment$deliveryMessageWithDriver>? delivery_messages,
     String? $__typename,
   }) =>
       _res;
@@ -6344,127 +5283,9 @@ const documentNodeSubscriptionlistenAllCurrentDeliveryMessages =
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
+          FragmentSpreadNode(
+            name: NameNode(value: 'deliveryMessageWithDriver'),
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'entry'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'phone_number'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'received_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'finished_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'responded_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'customer'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'name'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'image'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'user'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'phone'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -6478,6 +5299,8 @@ const documentNodeSubscriptionlistenAllCurrentDeliveryMessages =
       
     ]),
   ),
+  fragmentDefinitiondeliveryMessageWithDriver,
+  fragmentDefinitiondeliveryMessageFields,
 ]);
 Subscription$listenAllCurrentDeliveryMessages
     _parserFn$Subscription$listenAllCurrentDeliveryMessages(
@@ -6561,838 +5384,6 @@ extension ClientExtension$Subscription$listenAllCurrentDeliveryMessages
               WatchOptions$Subscription$listenAllCurrentDeliveryMessages
                   options) =>
           this.watchQuery(options);
-}
-
-class Subscription$listenAllCurrentDeliveryMessages$delivery_messages {
-  Subscription$listenAllCurrentDeliveryMessages$delivery_messages({
-    required this.id,
-    required this.entry,
-    required this.phone_number,
-    this.driver_id,
-    required this.received_time,
-    this.finished_time,
-    this.responded_time,
-    this.customer,
-    this.driver,
-    required this.$__typename,
-  });
-
-  factory Subscription$listenAllCurrentDeliveryMessages$delivery_messages.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$entry = json['entry'];
-    final l$phone_number = json['phone_number'];
-    final l$driver_id = json['driver_id'];
-    final l$received_time = json['received_time'];
-    final l$finished_time = json['finished_time'];
-    final l$responded_time = json['responded_time'];
-    final l$customer = json['customer'];
-    final l$driver = json['driver'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
-      id: (l$id as int),
-      entry: mapFromJson(l$entry),
-      phone_number: (l$phone_number as String),
-      driver_id: (l$driver_id as int?),
-      received_time: (l$received_time as String),
-      finished_time: (l$finished_time as String?),
-      responded_time: (l$responded_time as String?),
-      customer: l$customer == null
-          ? null
-          : Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
-              .fromJson((l$customer as Map<String, dynamic>)),
-      driver: l$driver == null
-          ? null
-          : Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
-              .fromJson((l$driver as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final dynamic entry;
-
-  final String phone_number;
-
-  final int? driver_id;
-
-  final String received_time;
-
-  final String? finished_time;
-
-  final String? responded_time;
-
-  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer?
-      customer;
-
-  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver?
-      driver;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$entry = entry;
-    _resultData['entry'] = mapToJson(l$entry);
-    final l$phone_number = phone_number;
-    _resultData['phone_number'] = l$phone_number;
-    final l$driver_id = driver_id;
-    _resultData['driver_id'] = l$driver_id;
-    final l$received_time = received_time;
-    _resultData['received_time'] = l$received_time;
-    final l$finished_time = finished_time;
-    _resultData['finished_time'] = l$finished_time;
-    final l$responded_time = responded_time;
-    _resultData['responded_time'] = l$responded_time;
-    final l$customer = customer;
-    _resultData['customer'] = l$customer?.toJson();
-    final l$driver = driver;
-    _resultData['driver'] = l$driver?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$entry = entry;
-    final l$phone_number = phone_number;
-    final l$driver_id = driver_id;
-    final l$received_time = received_time;
-    final l$finished_time = finished_time;
-    final l$responded_time = responded_time;
-    final l$customer = customer;
-    final l$driver = driver;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$entry,
-      l$phone_number,
-      l$driver_id,
-      l$received_time,
-      l$finished_time,
-      l$responded_time,
-      l$customer,
-      l$driver,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listenAllCurrentDeliveryMessages$delivery_messages) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$entry = entry;
-    final lOther$entry = other.entry;
-    if (l$entry != lOther$entry) {
-      return false;
-    }
-    final l$phone_number = phone_number;
-    final lOther$phone_number = other.phone_number;
-    if (l$phone_number != lOther$phone_number) {
-      return false;
-    }
-    final l$driver_id = driver_id;
-    final lOther$driver_id = other.driver_id;
-    if (l$driver_id != lOther$driver_id) {
-      return false;
-    }
-    final l$received_time = received_time;
-    final lOther$received_time = other.received_time;
-    if (l$received_time != lOther$received_time) {
-      return false;
-    }
-    final l$finished_time = finished_time;
-    final lOther$finished_time = other.finished_time;
-    if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$responded_time = responded_time;
-    final lOther$responded_time = other.responded_time;
-    if (l$responded_time != lOther$responded_time) {
-      return false;
-    }
-    final l$customer = customer;
-    final lOther$customer = other.customer;
-    if (l$customer != lOther$customer) {
-      return false;
-    }
-    final l$driver = driver;
-    final lOther$driver = other.driver;
-    if (l$driver != lOther$driver) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages$delivery_messages
-    on Subscription$listenAllCurrentDeliveryMessages$delivery_messages {
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages>
-      get copyWith =>
-          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
-    TRes> {
-  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages instance,
-    TRes Function(
-            Subscription$listenAllCurrentDeliveryMessages$delivery_messages)
-        then,
-  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages;
-
-  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages;
-
-  TRes call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer?
-        customer,
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver?
-        driver,
-    String? $__typename,
-  });
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-      TRes> get customer;
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-      TRes> get driver;
-}
-
-class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
-        TRes>
-    implements
-        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
-            TRes> {
-  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages
-      _instance;
-
-  final TRes Function(
-      Subscription$listenAllCurrentDeliveryMessages$delivery_messages) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? entry = _undefined,
-    Object? phone_number = _undefined,
-    Object? driver_id = _undefined,
-    Object? received_time = _undefined,
-    Object? finished_time = _undefined,
-    Object? responded_time = _undefined,
-    Object? customer = _undefined,
-    Object? driver = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        entry: entry == _undefined || entry == null
-            ? _instance.entry
-            : (entry as dynamic),
-        phone_number: phone_number == _undefined || phone_number == null
-            ? _instance.phone_number
-            : (phone_number as String),
-        driver_id:
-            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
-        received_time: received_time == _undefined || received_time == null
-            ? _instance.received_time
-            : (received_time as String),
-        finished_time: finished_time == _undefined
-            ? _instance.finished_time
-            : (finished_time as String?),
-        responded_time: responded_time == _undefined
-            ? _instance.responded_time
-            : (responded_time as String?),
-        customer: customer == _undefined
-            ? _instance.customer
-            : (customer
-                as Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer?),
-        driver: driver == _undefined
-            ? _instance.driver
-            : (driver
-                as Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-      TRes> get customer {
-    final local$customer = _instance.customer;
-    return local$customer == null
-        ? CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
-            local$customer, (e) => call(customer: e));
-  }
-
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-      TRes> get driver {
-    final local$driver = _instance.driver;
-    return local$driver == null
-        ? CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
-            local$driver, (e) => call(driver: e));
-  }
-}
-
-class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
-        TRes>
-    implements
-        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer?
-        customer,
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver?
-        driver,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-          TRes>
-      get customer =>
-          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
-              .stub(_res);
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-          TRes>
-      get driver =>
-          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
-              .stub(_res);
-}
-
-class Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer {
-  Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer({
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
-    on Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer {
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer>
-      get copyWith =>
-          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-    TRes> {
-  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
-        instance,
-    TRes Function(
-            Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer)
-        then,
-  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer;
-
-  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer;
-
-  TRes call({
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer
-      _instance;
-
-  final TRes Function(
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$customer(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? image,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver {
-  Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver({
-    required this.user,
-    required this.$__typename,
-  });
-
-  factory Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver.fromJson(
-      Map<String, dynamic> json) {
-    final l$user = json['user'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
-      user:
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
-              .fromJson((l$user as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
-      user;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$user = user;
-    _resultData['user'] = l$user.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$user = user;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$user,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$user = user;
-    final lOther$user = other.user;
-    if (l$user != lOther$user) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
-    on Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver {
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver>
-      get copyWith =>
-          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-    TRes> {
-  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
-        instance,
-    TRes Function(
-            Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver)
-        then,
-  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver;
-
-  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver;
-
-  TRes call({
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user?
-        user,
-    String? $__typename,
-  });
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-      TRes> get user;
-}
-
-class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-        TRes>
-    implements
-        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-            TRes> {
-  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver
-      _instance;
-
-  final TRes Function(
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? user = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
-        user: user == _undefined || user == null
-            ? _instance.user
-            : (user
-                as Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-      TRes> get user {
-    final local$user = _instance.user;
-    return CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
-        local$user, (e) => call(user: e));
-  }
-}
-
-class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-        TRes>
-    implements
-        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver(
-      this._res);
-
-  TRes _res;
-
-  call({
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user?
-        user,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-          TRes>
-      get user =>
-          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
-              .stub(_res);
-}
-
-class Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user {
-  Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user({
-    this.name,
-    this.phone,
-    required this.$__typename,
-  });
-
-  factory Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$phone = json['phone'];
-    final l$$__typename = json['__typename'];
-    return Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
-      name: (l$name as String?),
-      phone: (l$phone as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? phone;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$phone = phone;
-    _resultData['phone'] = l$phone;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$phone = phone;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$phone,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$phone = phone;
-    final lOther$phone = other.phone;
-    if (l$phone != lOther$phone) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
-    on Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user {
-  CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user>
-      get copyWith =>
-          CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-    TRes> {
-  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
-    Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
-        instance,
-    TRes Function(
-            Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user)
-        then,
-  ) = _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user;
-
-  factory CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user.stub(
-          TRes res) =
-      _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user;
-
-  TRes call({
-    String? name,
-    String? phone,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-        TRes>
-    implements
-        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-            TRes> {
-  _CopyWithImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
-    this._instance,
-    this._then,
-  );
-
-  final Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user
-      _instance;
-
-  final TRes Function(
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? phone = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
-        name: name == _undefined ? _instance.name : (name as String?),
-        phone: phone == _undefined ? _instance.phone : (phone as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-        TRes>
-    implements
-        CopyWith$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user<
-            TRes> {
-  _CopyWithStubImpl$Subscription$listenAllCurrentDeliveryMessages$delivery_messages$driver$user(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? phone,
-    String? $__typename,
-  }) =>
-      _res;
 }
 
 class Variables$Query$GetCustomerDeliveryMessages {
@@ -7506,16 +5497,14 @@ class Query$GetCustomerDeliveryMessages {
     final l$$__typename = json['__typename'];
     return Query$GetCustomerDeliveryMessages(
       delivery_messages: (l$delivery_messages as List<dynamic>)
-          .map((e) =>
-              Query$GetCustomerDeliveryMessages$delivery_messages.fromJson(
-                  (e as Map<String, dynamic>)))
+          .map((e) => Fragment$deliveryMessageWithDriver.fromJson(
+              (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$GetCustomerDeliveryMessages$delivery_messages>
-      delivery_messages;
+  final List<Fragment$deliveryMessageWithDriver> delivery_messages;
 
   final String $__typename;
 
@@ -7588,15 +5577,14 @@ abstract class CopyWith$Query$GetCustomerDeliveryMessages<TRes> {
       _CopyWithStubImpl$Query$GetCustomerDeliveryMessages;
 
   TRes call({
-    List<Query$GetCustomerDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Fragment$deliveryMessageWithDriver>? delivery_messages,
     String? $__typename,
   });
   TRes delivery_messages(
-      Iterable<Query$GetCustomerDeliveryMessages$delivery_messages> Function(
+      Iterable<Fragment$deliveryMessageWithDriver> Function(
               Iterable<
-                  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages<
-                      Query$GetCustomerDeliveryMessages$delivery_messages>>)
+                  CopyWith$Fragment$deliveryMessageWithDriver<
+                      Fragment$deliveryMessageWithDriver>>)
           _fn);
 }
 
@@ -7621,24 +5609,23 @@ class _CopyWithImpl$Query$GetCustomerDeliveryMessages<TRes>
         delivery_messages: delivery_messages == _undefined ||
                 delivery_messages == null
             ? _instance.delivery_messages
-            : (delivery_messages
-                as List<Query$GetCustomerDeliveryMessages$delivery_messages>),
+            : (delivery_messages as List<Fragment$deliveryMessageWithDriver>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes delivery_messages(
-          Iterable<Query$GetCustomerDeliveryMessages$delivery_messages> Function(
+          Iterable<Fragment$deliveryMessageWithDriver> Function(
                   Iterable<
-                      CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages<
-                          Query$GetCustomerDeliveryMessages$delivery_messages>>)
+                      CopyWith$Fragment$deliveryMessageWithDriver<
+                          Fragment$deliveryMessageWithDriver>>)
               _fn) =>
       call(
-          delivery_messages: _fn(_instance.delivery_messages.map((e) =>
-              CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages(
-                e,
-                (i) => i,
-              ))).toList());
+          delivery_messages: _fn(_instance.delivery_messages
+              .map((e) => CopyWith$Fragment$deliveryMessageWithDriver(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
 class _CopyWithStubImpl$Query$GetCustomerDeliveryMessages<TRes>
@@ -7648,8 +5635,7 @@ class _CopyWithStubImpl$Query$GetCustomerDeliveryMessages<TRes>
   TRes _res;
 
   call({
-    List<Query$GetCustomerDeliveryMessages$delivery_messages>?
-        delivery_messages,
+    List<Fragment$deliveryMessageWithDriver>? delivery_messages,
     String? $__typename,
   }) =>
       _res;
@@ -7703,127 +5689,9 @@ const documentNodeQueryGetCustomerDeliveryMessages = DocumentNode(definitions: [
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
+          FragmentSpreadNode(
+            name: NameNode(value: 'deliveryMessageWithDriver'),
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'entry'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'phone_number'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'received_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'finished_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'responded_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'driver'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'user'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'phone'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: '__typename'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                ]),
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'customer'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'name'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'image'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -7837,6 +5705,8 @@ const documentNodeQueryGetCustomerDeliveryMessages = DocumentNode(definitions: [
       
     ]),
   ),
+  fragmentDefinitiondeliveryMessageWithDriver,
+  fragmentDefinitiondeliveryMessageFields,
 ]);
 Query$GetCustomerDeliveryMessages _parserFn$Query$GetCustomerDeliveryMessages(
         Map<String, dynamic> data) =>
@@ -7950,803 +5820,4 @@ extension ClientExtension$Query$GetCustomerDeliveryMessages
         ? null
         : Query$GetCustomerDeliveryMessages.fromJson(result);
   }
-}
-
-class Query$GetCustomerDeliveryMessages$delivery_messages {
-  Query$GetCustomerDeliveryMessages$delivery_messages({
-    required this.id,
-    required this.entry,
-    required this.phone_number,
-    this.driver_id,
-    required this.received_time,
-    this.finished_time,
-    this.responded_time,
-    this.driver,
-    this.customer,
-    required this.$__typename,
-  });
-
-  factory Query$GetCustomerDeliveryMessages$delivery_messages.fromJson(
-      Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$entry = json['entry'];
-    final l$phone_number = json['phone_number'];
-    final l$driver_id = json['driver_id'];
-    final l$received_time = json['received_time'];
-    final l$finished_time = json['finished_time'];
-    final l$responded_time = json['responded_time'];
-    final l$driver = json['driver'];
-    final l$customer = json['customer'];
-    final l$$__typename = json['__typename'];
-    return Query$GetCustomerDeliveryMessages$delivery_messages(
-      id: (l$id as int),
-      entry: mapFromJson(l$entry),
-      phone_number: (l$phone_number as String),
-      driver_id: (l$driver_id as int?),
-      received_time: (l$received_time as String),
-      finished_time: (l$finished_time as String?),
-      responded_time: (l$responded_time as String?),
-      driver: l$driver == null
-          ? null
-          : Query$GetCustomerDeliveryMessages$delivery_messages$driver.fromJson(
-              (l$driver as Map<String, dynamic>)),
-      customer: l$customer == null
-          ? null
-          : Query$GetCustomerDeliveryMessages$delivery_messages$customer
-              .fromJson((l$customer as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final int id;
-
-  final dynamic entry;
-
-  final String phone_number;
-
-  final int? driver_id;
-
-  final String received_time;
-
-  final String? finished_time;
-
-  final String? responded_time;
-
-  final Query$GetCustomerDeliveryMessages$delivery_messages$driver? driver;
-
-  final Query$GetCustomerDeliveryMessages$delivery_messages$customer? customer;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$entry = entry;
-    _resultData['entry'] = mapToJson(l$entry);
-    final l$phone_number = phone_number;
-    _resultData['phone_number'] = l$phone_number;
-    final l$driver_id = driver_id;
-    _resultData['driver_id'] = l$driver_id;
-    final l$received_time = received_time;
-    _resultData['received_time'] = l$received_time;
-    final l$finished_time = finished_time;
-    _resultData['finished_time'] = l$finished_time;
-    final l$responded_time = responded_time;
-    _resultData['responded_time'] = l$responded_time;
-    final l$driver = driver;
-    _resultData['driver'] = l$driver?.toJson();
-    final l$customer = customer;
-    _resultData['customer'] = l$customer?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$id = id;
-    final l$entry = entry;
-    final l$phone_number = phone_number;
-    final l$driver_id = driver_id;
-    final l$received_time = received_time;
-    final l$finished_time = finished_time;
-    final l$responded_time = responded_time;
-    final l$driver = driver;
-    final l$customer = customer;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$id,
-      l$entry,
-      l$phone_number,
-      l$driver_id,
-      l$received_time,
-      l$finished_time,
-      l$responded_time,
-      l$driver,
-      l$customer,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$GetCustomerDeliveryMessages$delivery_messages) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$entry = entry;
-    final lOther$entry = other.entry;
-    if (l$entry != lOther$entry) {
-      return false;
-    }
-    final l$phone_number = phone_number;
-    final lOther$phone_number = other.phone_number;
-    if (l$phone_number != lOther$phone_number) {
-      return false;
-    }
-    final l$driver_id = driver_id;
-    final lOther$driver_id = other.driver_id;
-    if (l$driver_id != lOther$driver_id) {
-      return false;
-    }
-    final l$received_time = received_time;
-    final lOther$received_time = other.received_time;
-    if (l$received_time != lOther$received_time) {
-      return false;
-    }
-    final l$finished_time = finished_time;
-    final lOther$finished_time = other.finished_time;
-    if (l$finished_time != lOther$finished_time) {
-      return false;
-    }
-    final l$responded_time = responded_time;
-    final lOther$responded_time = other.responded_time;
-    if (l$responded_time != lOther$responded_time) {
-      return false;
-    }
-    final l$driver = driver;
-    final lOther$driver = other.driver;
-    if (l$driver != lOther$driver) {
-      return false;
-    }
-    final l$customer = customer;
-    final lOther$customer = other.customer;
-    if (l$customer != lOther$customer) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetCustomerDeliveryMessages$delivery_messages
-    on Query$GetCustomerDeliveryMessages$delivery_messages {
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages<
-          Query$GetCustomerDeliveryMessages$delivery_messages>
-      get copyWith =>
-          CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages<
-    TRes> {
-  factory CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages(
-    Query$GetCustomerDeliveryMessages$delivery_messages instance,
-    TRes Function(Query$GetCustomerDeliveryMessages$delivery_messages) then,
-  ) = _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages;
-
-  factory CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages;
-
-  TRes call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Query$GetCustomerDeliveryMessages$delivery_messages$driver? driver,
-    Query$GetCustomerDeliveryMessages$delivery_messages$customer? customer,
-    String? $__typename,
-  });
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver<TRes>
-      get driver;
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer<TRes>
-      get customer;
-}
-
-class _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages<TRes>
-    implements
-        CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetCustomerDeliveryMessages$delivery_messages _instance;
-
-  final TRes Function(Query$GetCustomerDeliveryMessages$delivery_messages)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? id = _undefined,
-    Object? entry = _undefined,
-    Object? phone_number = _undefined,
-    Object? driver_id = _undefined,
-    Object? received_time = _undefined,
-    Object? finished_time = _undefined,
-    Object? responded_time = _undefined,
-    Object? driver = _undefined,
-    Object? customer = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetCustomerDeliveryMessages$delivery_messages(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        entry: entry == _undefined || entry == null
-            ? _instance.entry
-            : (entry as dynamic),
-        phone_number: phone_number == _undefined || phone_number == null
-            ? _instance.phone_number
-            : (phone_number as String),
-        driver_id:
-            driver_id == _undefined ? _instance.driver_id : (driver_id as int?),
-        received_time: received_time == _undefined || received_time == null
-            ? _instance.received_time
-            : (received_time as String),
-        finished_time: finished_time == _undefined
-            ? _instance.finished_time
-            : (finished_time as String?),
-        responded_time: responded_time == _undefined
-            ? _instance.responded_time
-            : (responded_time as String?),
-        driver: driver == _undefined
-            ? _instance.driver
-            : (driver
-                as Query$GetCustomerDeliveryMessages$delivery_messages$driver?),
-        customer: customer == _undefined
-            ? _instance.customer
-            : (customer
-                as Query$GetCustomerDeliveryMessages$delivery_messages$customer?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver<TRes>
-      get driver {
-    final local$driver = _instance.driver;
-    return local$driver == null
-        ? CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver
-            .stub(_then(_instance))
-        : CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver(
-            local$driver, (e) => call(driver: e));
-  }
-
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer<TRes>
-      get customer {
-    final local$customer = _instance.customer;
-    return local$customer == null
-        ? CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer
-            .stub(_then(_instance))
-        : CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer(
-            local$customer, (e) => call(customer: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages<
-        TRes>
-    implements
-        CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages<TRes> {
-  _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages(
-      this._res);
-
-  TRes _res;
-
-  call({
-    int? id,
-    dynamic? entry,
-    String? phone_number,
-    int? driver_id,
-    String? received_time,
-    String? finished_time,
-    String? responded_time,
-    Query$GetCustomerDeliveryMessages$delivery_messages$driver? driver,
-    Query$GetCustomerDeliveryMessages$delivery_messages$customer? customer,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver<TRes>
-      get driver =>
-          CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver
-              .stub(_res);
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer<TRes>
-      get customer =>
-          CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer
-              .stub(_res);
-}
-
-class Query$GetCustomerDeliveryMessages$delivery_messages$driver {
-  Query$GetCustomerDeliveryMessages$delivery_messages$driver({
-    required this.user,
-    required this.$__typename,
-  });
-
-  factory Query$GetCustomerDeliveryMessages$delivery_messages$driver.fromJson(
-      Map<String, dynamic> json) {
-    final l$user = json['user'];
-    final l$$__typename = json['__typename'];
-    return Query$GetCustomerDeliveryMessages$delivery_messages$driver(
-      user: Query$GetCustomerDeliveryMessages$delivery_messages$driver$user
-          .fromJson((l$user as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Query$GetCustomerDeliveryMessages$delivery_messages$driver$user user;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$user = user;
-    _resultData['user'] = l$user.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$user = user;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$user,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$GetCustomerDeliveryMessages$delivery_messages$driver) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$user = user;
-    final lOther$user = other.user;
-    if (l$user != lOther$user) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetCustomerDeliveryMessages$delivery_messages$driver
-    on Query$GetCustomerDeliveryMessages$delivery_messages$driver {
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver<
-          Query$GetCustomerDeliveryMessages$delivery_messages$driver>
-      get copyWith =>
-          CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver<
-    TRes> {
-  factory CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver(
-    Query$GetCustomerDeliveryMessages$delivery_messages$driver instance,
-    TRes Function(Query$GetCustomerDeliveryMessages$delivery_messages$driver)
-        then,
-  ) = _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver;
-
-  factory CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver;
-
-  TRes call({
-    Query$GetCustomerDeliveryMessages$delivery_messages$driver$user? user,
-    String? $__typename,
-  });
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<TRes>
-      get user;
-}
-
-class _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver<
-        TRes>
-    implements
-        CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver<
-            TRes> {
-  _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetCustomerDeliveryMessages$delivery_messages$driver _instance;
-
-  final TRes Function(
-      Query$GetCustomerDeliveryMessages$delivery_messages$driver) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? user = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetCustomerDeliveryMessages$delivery_messages$driver(
-        user: user == _undefined || user == null
-            ? _instance.user
-            : (user
-                as Query$GetCustomerDeliveryMessages$delivery_messages$driver$user),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<TRes>
-      get user {
-    final local$user = _instance.user;
-    return CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user(
-        local$user, (e) => call(user: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver<
-        TRes>
-    implements
-        CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver<
-            TRes> {
-  _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver(
-      this._res);
-
-  TRes _res;
-
-  call({
-    Query$GetCustomerDeliveryMessages$delivery_messages$driver$user? user,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<TRes>
-      get user =>
-          CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user
-              .stub(_res);
-}
-
-class Query$GetCustomerDeliveryMessages$delivery_messages$driver$user {
-  Query$GetCustomerDeliveryMessages$delivery_messages$driver$user({
-    this.name,
-    this.phone,
-    required this.$__typename,
-  });
-
-  factory Query$GetCustomerDeliveryMessages$delivery_messages$driver$user.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$phone = json['phone'];
-    final l$$__typename = json['__typename'];
-    return Query$GetCustomerDeliveryMessages$delivery_messages$driver$user(
-      name: (l$name as String?),
-      phone: (l$phone as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? phone;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$phone = phone;
-    _resultData['phone'] = l$phone;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$phone = phone;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$phone,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$GetCustomerDeliveryMessages$delivery_messages$driver$user) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$phone = phone;
-    final lOther$phone = other.phone;
-    if (l$phone != lOther$phone) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user
-    on Query$GetCustomerDeliveryMessages$delivery_messages$driver$user {
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<
-          Query$GetCustomerDeliveryMessages$delivery_messages$driver$user>
-      get copyWith =>
-          CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<
-    TRes> {
-  factory CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user(
-    Query$GetCustomerDeliveryMessages$delivery_messages$driver$user instance,
-    TRes Function(
-            Query$GetCustomerDeliveryMessages$delivery_messages$driver$user)
-        then,
-  ) = _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user;
-
-  factory CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user;
-
-  TRes call({
-    String? name,
-    String? phone,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<
-        TRes>
-    implements
-        CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<
-            TRes> {
-  _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetCustomerDeliveryMessages$delivery_messages$driver$user
-      _instance;
-
-  final TRes Function(
-      Query$GetCustomerDeliveryMessages$delivery_messages$driver$user) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? phone = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetCustomerDeliveryMessages$delivery_messages$driver$user(
-        name: name == _undefined ? _instance.name : (name as String?),
-        phone: phone == _undefined ? _instance.phone : (phone as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<
-        TRes>
-    implements
-        CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user<
-            TRes> {
-  _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$driver$user(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? phone,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Query$GetCustomerDeliveryMessages$delivery_messages$customer {
-  Query$GetCustomerDeliveryMessages$delivery_messages$customer({
-    this.name,
-    this.image,
-    required this.$__typename,
-  });
-
-  factory Query$GetCustomerDeliveryMessages$delivery_messages$customer.fromJson(
-      Map<String, dynamic> json) {
-    final l$name = json['name'];
-    final l$image = json['image'];
-    final l$$__typename = json['__typename'];
-    return Query$GetCustomerDeliveryMessages$delivery_messages$customer(
-      name: (l$name as String?),
-      image: (l$image as String?),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final String? name;
-
-  final String? image;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$name = name;
-    final l$image = image;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$name,
-      l$image,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$GetCustomerDeliveryMessages$delivery_messages$customer) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$GetCustomerDeliveryMessages$delivery_messages$customer
-    on Query$GetCustomerDeliveryMessages$delivery_messages$customer {
-  CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer<
-          Query$GetCustomerDeliveryMessages$delivery_messages$customer>
-      get copyWith =>
-          CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer<
-    TRes> {
-  factory CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer(
-    Query$GetCustomerDeliveryMessages$delivery_messages$customer instance,
-    TRes Function(Query$GetCustomerDeliveryMessages$delivery_messages$customer)
-        then,
-  ) = _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$customer;
-
-  factory CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$customer;
-
-  TRes call({
-    String? name,
-    String? image,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithImpl$Query$GetCustomerDeliveryMessages$delivery_messages$customer(
-    this._instance,
-    this._then,
-  );
-
-  final Query$GetCustomerDeliveryMessages$delivery_messages$customer _instance;
-
-  final TRes Function(
-      Query$GetCustomerDeliveryMessages$delivery_messages$customer) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? name = _undefined,
-    Object? image = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$GetCustomerDeliveryMessages$delivery_messages$customer(
-        name: name == _undefined ? _instance.name : (name as String?),
-        image: image == _undefined ? _instance.image : (image as String?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$customer<
-        TRes>
-    implements
-        CopyWith$Query$GetCustomerDeliveryMessages$delivery_messages$customer<
-            TRes> {
-  _CopyWithStubImpl$Query$GetCustomerDeliveryMessages$delivery_messages$customer(
-      this._res);
-
-  TRes _res;
-
-  call({
-    String? name,
-    String? image,
-    String? $__typename,
-  }) =>
-      _res;
 }

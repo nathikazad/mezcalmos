@@ -3559,6 +3559,18 @@
         "title": "Invitación necesaria",
         "subtitle": "Necesita una invitación para usar nuestra aplicación de entrega"
       },
+      "DvOrderView": {
+        "restaurant": "Restaurante",
+        "customer": "Cliente",
+        "orderSummary": "Resumen de pedido",
+        "acceptOrder": "Aceptar pedido",
+        "finishOrder": "Terminar pedido",
+        "cancelOrder": "Cancelar pedido",
+        "deliveryCost": "Coste de envío",
+        "orderItems": "Encargar artículos",
+        "cancel": "Cancelar",
+        "price": "Precio"
+      },
       "OrderDetailsScreen": {
         "cancelOrder": "Cancelar el pedido",
         "service": "Servicio",
@@ -4205,6 +4217,7 @@
             "canceled": "Cancelada"
           }
         },
+        "openOrders": "Ordenes abiertas",
         "incomingOrders": "Órdenes entrantes",
         "pastButton": "ver pasadas",
         "currentOrders": "Órdenes actuales",

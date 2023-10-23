@@ -1983,6 +1983,568 @@ class _CopyWithStubImpl$Mutation$changeUserBigImg$update_user_by_pk<TRes>
       _res;
 }
 
+class Variables$Mutation$changePhoneNumber {
+  factory Variables$Mutation$changePhoneNumber({
+    required Input$user_pk_columns_input id,
+    required String phoneNumber,
+  }) =>
+      Variables$Mutation$changePhoneNumber._({
+        r'id': id,
+        r'phoneNumber': phoneNumber,
+      });
+
+  Variables$Mutation$changePhoneNumber._(this._$data);
+
+  factory Variables$Mutation$changePhoneNumber.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$id = data['id'];
+    result$data['id'] =
+        Input$user_pk_columns_input.fromJson((l$id as Map<String, dynamic>));
+    final l$phoneNumber = data['phoneNumber'];
+    result$data['phoneNumber'] = (l$phoneNumber as String);
+    return Variables$Mutation$changePhoneNumber._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$user_pk_columns_input get id =>
+      (_$data['id'] as Input$user_pk_columns_input);
+  String get phoneNumber => (_$data['phoneNumber'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$id = id;
+    result$data['id'] = l$id.toJson();
+    final l$phoneNumber = phoneNumber;
+    result$data['phoneNumber'] = l$phoneNumber;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$changePhoneNumber<
+          Variables$Mutation$changePhoneNumber>
+      get copyWith => CopyWith$Variables$Mutation$changePhoneNumber(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$changePhoneNumber) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phoneNumber = phoneNumber;
+    final lOther$phoneNumber = other.phoneNumber;
+    if (l$phoneNumber != lOther$phoneNumber) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$phoneNumber = phoneNumber;
+    return Object.hashAll([
+      l$id,
+      l$phoneNumber,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$changePhoneNumber<TRes> {
+  factory CopyWith$Variables$Mutation$changePhoneNumber(
+    Variables$Mutation$changePhoneNumber instance,
+    TRes Function(Variables$Mutation$changePhoneNumber) then,
+  ) = _CopyWithImpl$Variables$Mutation$changePhoneNumber;
+
+  factory CopyWith$Variables$Mutation$changePhoneNumber.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$changePhoneNumber;
+
+  TRes call({
+    Input$user_pk_columns_input? id,
+    String? phoneNumber,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$changePhoneNumber<TRes>
+    implements CopyWith$Variables$Mutation$changePhoneNumber<TRes> {
+  _CopyWithImpl$Variables$Mutation$changePhoneNumber(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$changePhoneNumber _instance;
+
+  final TRes Function(Variables$Mutation$changePhoneNumber) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? phoneNumber = _undefined,
+  }) =>
+      _then(Variables$Mutation$changePhoneNumber._({
+        ..._instance._$data,
+        if (id != _undefined && id != null)
+          'id': (id as Input$user_pk_columns_input),
+        if (phoneNumber != _undefined && phoneNumber != null)
+          'phoneNumber': (phoneNumber as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$changePhoneNumber<TRes>
+    implements CopyWith$Variables$Mutation$changePhoneNumber<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$changePhoneNumber(this._res);
+
+  TRes _res;
+
+  call({
+    Input$user_pk_columns_input? id,
+    String? phoneNumber,
+  }) =>
+      _res;
+}
+
+class Mutation$changePhoneNumber {
+  Mutation$changePhoneNumber({
+    this.update_user_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$changePhoneNumber.fromJson(Map<String, dynamic> json) {
+    final l$update_user_by_pk = json['update_user_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$changePhoneNumber(
+      update_user_by_pk: l$update_user_by_pk == null
+          ? null
+          : Mutation$changePhoneNumber$update_user_by_pk.fromJson(
+              (l$update_user_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$changePhoneNumber$update_user_by_pk? update_user_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_user_by_pk = update_user_by_pk;
+    _resultData['update_user_by_pk'] = l$update_user_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_user_by_pk = update_user_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_user_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$changePhoneNumber) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_user_by_pk = update_user_by_pk;
+    final lOther$update_user_by_pk = other.update_user_by_pk;
+    if (l$update_user_by_pk != lOther$update_user_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$changePhoneNumber
+    on Mutation$changePhoneNumber {
+  CopyWith$Mutation$changePhoneNumber<Mutation$changePhoneNumber>
+      get copyWith => CopyWith$Mutation$changePhoneNumber(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$changePhoneNumber<TRes> {
+  factory CopyWith$Mutation$changePhoneNumber(
+    Mutation$changePhoneNumber instance,
+    TRes Function(Mutation$changePhoneNumber) then,
+  ) = _CopyWithImpl$Mutation$changePhoneNumber;
+
+  factory CopyWith$Mutation$changePhoneNumber.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$changePhoneNumber;
+
+  TRes call({
+    Mutation$changePhoneNumber$update_user_by_pk? update_user_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$changePhoneNumber$update_user_by_pk<TRes>
+      get update_user_by_pk;
+}
+
+class _CopyWithImpl$Mutation$changePhoneNumber<TRes>
+    implements CopyWith$Mutation$changePhoneNumber<TRes> {
+  _CopyWithImpl$Mutation$changePhoneNumber(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$changePhoneNumber _instance;
+
+  final TRes Function(Mutation$changePhoneNumber) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_user_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$changePhoneNumber(
+        update_user_by_pk: update_user_by_pk == _undefined
+            ? _instance.update_user_by_pk
+            : (update_user_by_pk
+                as Mutation$changePhoneNumber$update_user_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$changePhoneNumber$update_user_by_pk<TRes>
+      get update_user_by_pk {
+    final local$update_user_by_pk = _instance.update_user_by_pk;
+    return local$update_user_by_pk == null
+        ? CopyWith$Mutation$changePhoneNumber$update_user_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Mutation$changePhoneNumber$update_user_by_pk(
+            local$update_user_by_pk, (e) => call(update_user_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$changePhoneNumber<TRes>
+    implements CopyWith$Mutation$changePhoneNumber<TRes> {
+  _CopyWithStubImpl$Mutation$changePhoneNumber(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$changePhoneNumber$update_user_by_pk? update_user_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$changePhoneNumber$update_user_by_pk<TRes>
+      get update_user_by_pk =>
+          CopyWith$Mutation$changePhoneNumber$update_user_by_pk.stub(_res);
+}
+
+const documentNodeMutationchangePhoneNumber = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'changePhoneNumber'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'user_pk_columns_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'phoneNumber')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_user_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: VariableNode(name: NameNode(value: 'id')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'phone'),
+                value: VariableNode(name: NameNode(value: 'phoneNumber')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'phone'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$changePhoneNumber _parserFn$Mutation$changePhoneNumber(
+        Map<String, dynamic> data) =>
+    Mutation$changePhoneNumber.fromJson(data);
+typedef OnMutationCompleted$Mutation$changePhoneNumber = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$changePhoneNumber?,
+);
+
+class Options$Mutation$changePhoneNumber
+    extends graphql.MutationOptions<Mutation$changePhoneNumber> {
+  Options$Mutation$changePhoneNumber({
+    String? operationName,
+    required Variables$Mutation$changePhoneNumber variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$changePhoneNumber? onCompleted,
+    graphql.OnMutationUpdate<Mutation$changePhoneNumber>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$changePhoneNumber(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationchangePhoneNumber,
+          parserFn: _parserFn$Mutation$changePhoneNumber,
+        );
+
+  final OnMutationCompleted$Mutation$changePhoneNumber? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$changePhoneNumber
+    extends graphql.WatchQueryOptions<Mutation$changePhoneNumber> {
+  WatchOptions$Mutation$changePhoneNumber({
+    String? operationName,
+    required Variables$Mutation$changePhoneNumber variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationchangePhoneNumber,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$changePhoneNumber,
+        );
+}
+
+extension ClientExtension$Mutation$changePhoneNumber on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$changePhoneNumber>>
+      mutate$changePhoneNumber(
+              Options$Mutation$changePhoneNumber options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$changePhoneNumber>
+      watchMutation$changePhoneNumber(
+              WatchOptions$Mutation$changePhoneNumber options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$changePhoneNumber$update_user_by_pk {
+  Mutation$changePhoneNumber$update_user_by_pk({
+    this.phone,
+    required this.$__typename,
+  });
+
+  factory Mutation$changePhoneNumber$update_user_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$phone = json['phone'];
+    final l$$__typename = json['__typename'];
+    return Mutation$changePhoneNumber$update_user_by_pk(
+      phone: (l$phone as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? phone;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$phone = phone;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$phone,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$changePhoneNumber$update_user_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$changePhoneNumber$update_user_by_pk
+    on Mutation$changePhoneNumber$update_user_by_pk {
+  CopyWith$Mutation$changePhoneNumber$update_user_by_pk<
+          Mutation$changePhoneNumber$update_user_by_pk>
+      get copyWith => CopyWith$Mutation$changePhoneNumber$update_user_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$changePhoneNumber$update_user_by_pk<TRes> {
+  factory CopyWith$Mutation$changePhoneNumber$update_user_by_pk(
+    Mutation$changePhoneNumber$update_user_by_pk instance,
+    TRes Function(Mutation$changePhoneNumber$update_user_by_pk) then,
+  ) = _CopyWithImpl$Mutation$changePhoneNumber$update_user_by_pk;
+
+  factory CopyWith$Mutation$changePhoneNumber$update_user_by_pk.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$changePhoneNumber$update_user_by_pk;
+
+  TRes call({
+    String? phone,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$changePhoneNumber$update_user_by_pk<TRes>
+    implements CopyWith$Mutation$changePhoneNumber$update_user_by_pk<TRes> {
+  _CopyWithImpl$Mutation$changePhoneNumber$update_user_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$changePhoneNumber$update_user_by_pk _instance;
+
+  final TRes Function(Mutation$changePhoneNumber$update_user_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? phone = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$changePhoneNumber$update_user_by_pk(
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$changePhoneNumber$update_user_by_pk<TRes>
+    implements CopyWith$Mutation$changePhoneNumber$update_user_by_pk<TRes> {
+  _CopyWithStubImpl$Mutation$changePhoneNumber$update_user_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    String? phone,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$changeUserImg {
   factory Variables$Mutation$changeUserImg({
     required Input$user_pk_columns_input id,

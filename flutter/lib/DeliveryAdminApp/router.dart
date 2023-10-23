@@ -3,6 +3,7 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpTabsView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpUnauthView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpPastOrdersList.dart';
+import 'package:mezcalmos/Shared/routes/SharedDeliveryRoutes.dart';
 import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
@@ -42,10 +43,11 @@ class DeliveryAdminRoutes {
         ),
       ] +
       sharedWitAdminRoutes +
+      SharedDvRoutes.mainRoutes +
       SharedRoutes.qRoutes +
       SharedServiceProviderRoutes.routes +
       NativeOnlyRoutes.routes;
-  static final List<QRoute> sharedWitAdminRoutes = [
+  static final List<QRoute> sharedWitAdminRoutes = <QRoute>[
     QRoute(
       path: kOrderViewRoute,
       name: kOrderViewRoute,

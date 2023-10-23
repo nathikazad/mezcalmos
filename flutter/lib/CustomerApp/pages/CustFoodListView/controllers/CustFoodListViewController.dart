@@ -40,6 +40,7 @@ class CustFoodListViewController {
   RxSet<Marker> _restaurantsMarkers = <Marker>{}.obs;
   RxSet<Marker> get restaurantsMarkers => _restaurantsMarkers;
   List<int> servicesIds = <int>[];
+  RxBool isShownRestaurantSheet = RxBool(false);
 
   int fetchSize = 25;
   int offset = 0;
@@ -321,8 +322,8 @@ class CustFoodListViewController {
     }
   }
 
-  void _onSelectRentalTag(Restaurant restaurant) {
-    showModalBottomSheet(
+  Future<void> _onSelectRentalTag(Restaurant restaurant) async {
+    await showModalBottomSheet(
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
         context: context,
@@ -349,7 +350,11 @@ class CustFoodListViewController {
                     ),
                   ),
                 ),
-                CustRestaurantCard(restaurant: restaurant),
+                CustRestaurantCard(
+                  restaurant: restaurant,
+                  withBorder: true,
+                ),
+                bigSeperator,
               ],
             ),
           );

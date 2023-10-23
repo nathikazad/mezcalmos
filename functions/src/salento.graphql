@@ -1,0 +1,81 @@
+mutation createRestaurant {
+    insert_restaurant_restaurant_one(object: {details: {data: 
+    {
+      name: "Vege Express", 
+      phone_number: "+529541603201", 
+      image: "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/restaurants%2Fvege%2FIMG_0211.jpg?alt=media&token=c46b99c9-844a-4745-b259-509ea28e7954&_gl=1*1hecxg5*_ga*MjEzODU1NzI3Ny4xNjg5OTU5MTE4*_ga_CW55HF8NVT*MTY5NzcyNDY2My42NC4xLjE2OTc3MjQ3MTAuMTMuMC4w", 
+      location: {data: 
+        {
+          address: "Mercado de Zicatela, Carr. Costera, Sta María, Brisas de zicatela, 70934 Puerto Escondido, Oax., Mexico", 
+          gps: "{ \"type\": \"Point\", \"crs\": { \"type\": \"name\", \"properties\": { \"name\": \"urn:ogc:def:crs:EPSG::4326\" } }, \"coordinates\": [ -97.04859888689117, 15.847318921614379 ] }"}
+        }, 
+        service_provider_type: "restaurant", 
+        unique_id: "vege", 
+        schedule: "{     \"friday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"monday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"sunday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"tuesday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"saturday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"thursday\": {       \"isOpen\": true,       \"openHours\": [         {           \"to\": \"23:00\",           \"from\": \"16:00\"         }       ]     },     \"wednesday\": {       \"isOpen\": false,       \"openHours\": [         {           \"to\": \"20:0\",           \"from\": \"18:0\"         }       ]     }   }   "}}, delivery_details: {data: {self_delivery: true, sitin_available: true, customer_pickup: true, delivery_available: true}}, 
+      }) {
+      id
+    }
+  }
+  
+  mutation createCategories {
+    insert_restaurant_category(objects: 
+      
+        [
+          {position:1,
+          restaurant_id: 169,
+          name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Pizzas"}, 
+                {language_id: "es", value: "Pizzas"}]
+              }
+            }}},
+          {position: 2,
+            restaurant_id: 169,
+            name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Calzone"}, 
+                {language_id: "es", value: "Calzone"}]
+              }
+            }}},
+          {position: 3,
+            restaurant_id: 169,
+            name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Salad"}, 
+                {language_id: "es", value: "Ensaladas"}]
+              }
+            }}},
+          {position: 4,
+            restaurant_id: 169,
+            name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Calzone"}, 
+                {language_id: "es", value: "Calzone"}]
+              }
+            }}},
+          {restaurant_id: 169,
+            name: 
+          {data: 
+            {service_provider_id: 169,
+              service_provider_type: "restaurant",
+              translations: 
+              {data: [{language_id: "en", value: "Desserts"}, 
+                {language_id: "es", value: "Le Nostre Pucce"}]
+              }
+            }}},
+        ]){
+      affected_rows
+    }
+  }

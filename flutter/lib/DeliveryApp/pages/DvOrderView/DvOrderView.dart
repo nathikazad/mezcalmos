@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/controllers/DvOrderViewController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -13,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/SharedDeliveryRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -20,15 +20,18 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpOrderView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
+    ['pages']['DvOrderView'];
 
 class DvOrderView extends StatefulWidget {
   const DvOrderView({super.key});
 
-  static void navigate({required int orderId}) {
+  static void navigate({required int orderId, required int? driverId}) {
     MezRouter.toPath(
-        DeliveryAppRoutes.kDvOrderView.replaceFirst(":orderId", "$orderId"));
+        SharedDvRoutes.kDvOrderView.replaceFirst(":orderId", "$orderId"),
+        arguments: <String, dynamic>{
+          "driverId": driverId,
+        });
   }
 
   @override
@@ -39,9 +42,12 @@ class _DvOrderViewState extends State<DvOrderView> {
   DvOrderViewController viewController = DvOrderViewController();
   @override
   void initState() {
-    final int? orderId = MezRouter.urlArguments["orderId"]?.asInt;
+    final int? orderId =
+        int.tryParse(MezRouter.urlArguments["orderId"].toString());
+    final int? driverId =
+        int.tryParse(MezRouter.bodyArguments?["driverId"]?.toString() ?? "");
     if (orderId != null) {
-      viewController.init(orderId: orderId);
+      viewController.init(orderId: orderId, driverId: driverId);
     } else
       showErrorSnackBar(errorText: "Order Not Found");
     super.initState();
@@ -83,7 +89,7 @@ class _DvOrderViewState extends State<DvOrderView> {
         children: <Widget>[
           OrderMapWidget(
               deliveryOrderId: viewController.order!.orderId,
-              height: 70.mezW,
+              height: 80.mezW,
               updateDriver: false,
               polyline: viewController.order!.routeInformation?.polyline,
               from: viewController.order!.pickupLocation,
@@ -100,13 +106,26 @@ class _DvOrderViewState extends State<DvOrderView> {
               viewController.order!.customer.name,
               style: context.textTheme.bodyLarge,
             ),
-            action: MezIconButton(
-              icon: Ionicons.logo_whatsapp,
-              iconColor: Colors.white,
-              backgroundColor: Colors.green,
-              onTap: () {
-                viewController.openCustomerWhatsapp();
-              },
+            action: Row(
+              children: <Widget>[
+                MezIconButton(
+                  icon: Ionicons.logo_whatsapp,
+                  iconColor: Colors.white,
+                  backgroundColor: Colors.green,
+                  onTap: () {
+                    viewController.openCustomerWhatsapp();
+                  },
+                ),
+                hMeduimSeperator,
+                MezIconButton(
+                  icon: Icons.my_location,
+                  iconColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  onTap: () async {
+                    await viewController.openCustomerMap();
+                  },
+                ),
+              ],
             ),
           ),
           MezCard(
@@ -120,13 +139,26 @@ class _DvOrderViewState extends State<DvOrderView> {
               viewController.order!.serviceProvider.name,
               style: context.textTheme.bodyLarge,
             ),
-            action: MezIconButton(
-              icon: Ionicons.logo_whatsapp,
-              iconColor: Colors.white,
-              backgroundColor: Colors.green,
-              onTap: () {
-                viewController.openRestaurantWhatsapp();
-              },
+            action: Row(
+              children: <Widget>[
+                MezIconButton(
+                  icon: Ionicons.logo_whatsapp,
+                  iconColor: Colors.white,
+                  backgroundColor: Colors.green,
+                  onTap: () {
+                    viewController.openRestaurantWhatsapp();
+                  },
+                ),
+                hMeduimSeperator,
+                MezIconButton(
+                  icon: Icons.my_location,
+                  iconColor: Colors.black,
+                  backgroundColor: Colors.white,
+                  onTap: () async {
+                    await viewController.openRestaurantMap();
+                  },
+                ),
+              ],
             ),
           ),
 
@@ -144,7 +176,7 @@ class _DvOrderViewState extends State<DvOrderView> {
           if (viewController.showFinish) ...<Widget>[
             bigSeperator,
             MezButton(
-              label: "Cancel order",
+              label: "${_i18n()['cancelOrder']}",
               backgroundColor: offRedColor,
               textColor: redAccentColor,
               onClick: () async {
@@ -184,6 +216,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                         : null,
                     firstAvatarIcon:
                         item.image == null ? Icons.fastfood_rounded : null,
+                    firstAvatarIconColor: Colors.white,
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -206,7 +239,7 @@ class _DvOrderViewState extends State<DvOrderView> {
 
   Widget _aceptButton() {
     return MezButton(
-      label: 'Accept Order',
+      label: "${_i18n()['acceptOrder']}",
       borderRadius: 0,
       backgroundColor: Colors.green,
       textColor: Colors.white,
@@ -220,7 +253,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      "Delivery Cost",
+                      "${_i18n()['deliveryCost']}",
                       style: context.textTheme.bodyLarge,
                     ),
                     meduimSeperator,
@@ -229,11 +262,12 @@ class _DvOrderViewState extends State<DvOrderView> {
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
                       decoration: InputDecoration(
-                          hintText: "Price", suffix: Icon(Icons.attach_money)),
+                          hintText: "${_i18n()['price']}",
+                          suffix: Icon(Icons.attach_money)),
                     ),
                     meduimSeperator,
                     MezButton(
-                      label: "Accept Order",
+                      label: "${_i18n()['acceptOrder']}",
                       onClick: () async {
                         final double? cost =
                             double.tryParse(viewController.priceTxt.text);
@@ -245,7 +279,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                     ),
                     meduimSeperator,
                     MezButton(
-                      label: "Cancel",
+                      label: "${_i18n()['cancel']}",
                       backgroundColor: offRedColor,
                       textColor: redAccentColor,
                       onClick: () async {
@@ -262,7 +296,7 @@ class _DvOrderViewState extends State<DvOrderView> {
 
   Widget _finishButton() {
     return MezButton(
-      label: 'Finish Order',
+      label: "${_i18n()['finishOrder']}",
       borderRadius: 0,
       onClick: () async {
         await viewController.finishOrder();

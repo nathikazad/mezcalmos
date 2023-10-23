@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
+import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/DvOrderView.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 
 class DvOpPastOrdersController {
@@ -14,32 +15,18 @@ class DvOpPastOrdersController {
       Get.find<DeliveryOpAuthController>();
   // vars
 
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
-  RxBool initalized = RxBool(false);
-  late int companyId;
+  RxList<DeliveryMinimalOrder> pastOrders = RxList.empty();
 
-// getters
-
-/* SCROLL CONTROLLER */
+  /* SCROLL CONTROLLER */
   ScrollController get scrollController => _scrollController;
   ScrollController _scrollController = ScrollController();
   final int fetchSize = 10;
   int _currentOffset = 0;
   bool _fetchingData = false;
   bool _reachedEndOfData = false;
-  /* SCROLL CONTROLLER */
 
   Future<void> init() async {
-    companyId = opAuthController.companyId!;
-    mezDbgPrint("INIT PAST ORDERS 👋👋👋👋👋👋 Company id $companyId");
-    try {
-      await initOrders();
-    } on Exception catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
-
-    initalized.value = true;
+    await initOrders();
   }
 
   Future<void> initOrders() async {
@@ -55,9 +42,12 @@ class DvOpPastOrdersController {
 
     try {
       _fetchingData = true;
-      final List<MinimalOrder> newData = await get_dvcompany_past_orders(
-              companyId: companyId, offset: _currentOffset, limit: fetchSize) ??
-          [];
+      final List<DeliveryMinimalOrder> newData =
+          await get_delivery_minimal_orders(
+                  offset: _currentOffset,
+                  limit: fetchSize,
+                  status: MinimalDeliveryOrderStatus.Finished) ??
+              <DeliveryMinimalOrder>[];
       pastOrders.value += newData;
       if (newData.length == 0) {
         _reachedEndOfData = true;
@@ -65,6 +55,16 @@ class DvOpPastOrdersController {
       _currentOffset += fetchSize;
     } finally {
       _fetchingData = false;
+    }
+
+    // pastOrders.refresh();
+  }
+
+  void handleNavigation({required DeliveryMinimalOrder order}) {
+    if (order.delivery_order_type == MinimalDeliveryOrderType.Message) {
+      DvConvoView.navigate(phoneNumber: order.phone_number!);
+    } else {
+      DvOrderView.navigate(orderId: order.id.toInt(), driverId: null);
     }
   }
 

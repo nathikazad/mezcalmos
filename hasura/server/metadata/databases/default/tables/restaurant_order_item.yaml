@@ -38,6 +38,20 @@ select_permissions:
         - cost_per_one
         - notes
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - unavailable
+        - id
+        - quantity
+        - restaurant_item_id
+        - restaurant_order_id
+        - review_id
+        - in_json
+        - cost_per_one
+        - notes
+      filter: {}
+    comment: ""
   - role: mez_admin
     permission:
       columns:

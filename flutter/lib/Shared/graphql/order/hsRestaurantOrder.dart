@@ -353,6 +353,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
       firebaseId: orderData.restaurant.details!.firebase_id,
       hasuraId: orderData.restaurant.id,
       image: orderData.restaurant.details!.image,
+      phoneNumber: orderData.restaurant.details?.phone_number,
       name: orderData.restaurant.details!.name,
       currency: orderData.restaurant.details!.currency.toCurrency(),
     ),
@@ -371,6 +372,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
         image: orderData.customer.user.image,
+        phoneNumber: orderData.customer.user.phone,
         name: orderData.customer.user.name),
     dropOffLocation: MezLocation(orderData.to_location_address!,
         orderData.to_location_gps!.toLocationData()),

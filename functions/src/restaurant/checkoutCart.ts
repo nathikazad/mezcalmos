@@ -10,7 +10,7 @@ import { getCart } from "../shared/graphql/restaurant/cart/getCart";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { ForegroundNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { Cart } from "../shared/models/Services/Restaurant/Cart";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -19,6 +19,7 @@ import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/s
 import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
 import { ServiceProvider } from '../shared/models/Services/Service';
 import { notifyDeliveryCompany } from '../shared/helper';
+import { notifyDrivers } from '../utilities/senders/whatsapp/handleWhatsapp';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
@@ -71,6 +72,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     let mezAdmins: MezAdmin[] = response[3];
     errorChecks(restaurant, checkoutRequest, customerId, customerCart);
 
+    
     let orderResponse = await createRestaurantOrder(restaurant, checkoutRequest, customerCart, mezAdmins);
 
     setRestaurantOrderChatInfo(orderResponse.restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
@@ -80,9 +82,12 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     notifyOperators(orderResponse.restaurantOrder.orderId, restaurant);
 
     if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
-
-      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, 1);
-      notifyDeliveryCompany(orderResponse.deliveryOrder);
+      updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, 3);
+      notifyDrivers(buildNotification(customer?.name, restaurant.name, orderResponse.deliveryOrder.deliveryId));
+      console.log(`Order total: ${customerCart.cost} restauant order id:${orderResponse.restaurantOrder.orderId} notifying drivers`)
+      // notifyDeliveryCompany(orderResponse.deliveryOrder);
+    } else {
+      console.log(`Order total: ${customerCart.cost} restauant order id:${orderResponse.restaurantOrder.orderId} NOTTTTT notifying drivers`)
     }
     
     if(checkoutRequest.paymentType == PaymentType.Card) {
@@ -120,6 +125,27 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
   } finally {
     // release the lock
+  }
+
+  function buildNotification(customerName: string | undefined, restaurantName: string | undefined, orderId: number | undefined): Notification {
+    return {
+      foreground: <ForegroundNotification>{
+        time: (new Date()).toISOString(),
+        notificationType: NotificationType.NewMessage,
+        notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+      },
+      background: {
+        en: {
+          title: `New Order`,
+          body: `Order from ${customerName} for restaurant ${restaurantName}`
+        },
+        es: {
+          title: `Nuevo Pedido`,
+          body: `Pedido de ${customerName} para restaurante ${restaurantName}`
+        }
+      },
+      linkUrl: `/orders/${orderId}`
+    };
   }
 }
 function errorChecks(restaurant: ServiceProvider, checkoutRequest: CheckoutRequest, customerId: number, cart: Cart) {

@@ -111,6 +111,30 @@ Future<void> change_user_img({
   }
 }
 
+Future<void> change_phone_number({
+  required int userId,
+  required String phone_number,
+}) async {
+  QueryResult? _res;
+
+  _res = await _db.graphQLClient.mutate$changePhoneNumber(
+    Options$Mutation$changePhoneNumber(
+      variables: Variables$Mutation$changePhoneNumber(
+        id: Input$user_pk_columns_input(id: userId),
+        phoneNumber: phone_number,
+      ),
+    ),
+  );
+
+  if (_res.hasException != false) {
+    mezDbgPrint(
+        "[ERROR] CALLED :: changePhoneNumber :: EXCEPTION || NULL :: ${_res.exception}");
+  } else {
+    mezDbgPrint(
+        "[SUCCESS] CALLED :: changePhoneNumber :: DATA :: ${_res.data}");
+  }
+}
+
 Future<String> set_user_image(
     {required String imageUrl, required int userId}) async {
   final QueryResult<Mutation$changeUserImg> _res =

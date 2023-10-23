@@ -2,20 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hsDeliveryMessage/hsDeliveryMessage.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryMessage.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class DvConvoViewController {
   // instances
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
-  DeliveryAuthController _authController = Get.find<DeliveryAuthController>();
+  //DeliveryAuthController _authController = Get.find<DeliveryAuthController>();
   ScrollController scrollController = ScrollController();
 
   // vars
@@ -34,9 +33,9 @@ class DvConvoViewController {
     return null;
   }
 
-  String get driverName => _authController.driver!.driverInfo.name;
+  // String get driverName => _authController.driver!.driverInfo.name;
 
-  String get driverImage => _authController.driver!.driverInfo.image;
+  // String get driverImage => _authController.driver!.driverInfo.image;
 
   bool get isFinished =>
       dvMessages.isNotEmpty && dvMessages.last.finishedTime != null;

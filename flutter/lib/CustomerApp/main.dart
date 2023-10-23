@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksNative.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
@@ -25,15 +24,15 @@ List<QRoute> routes =
     XRouter.mainRoutes + NativeOnlyRoutes.routes + SharedRoutes.qRoutes;
 
 List<SideMenuItem> sideMenuItems = <SideMenuItem>[
-  SideMenuItem(
-    onClick: () {
-      CustCardsListView.navigate();
-      Get.find<SideMenuDrawerController>().closeMenu();
-    },
-    icon: Icons.credit_card,
-    title: "CustomerApp/main/savedCards",
-    isI18nPath: true,
-  ),
+  // SideMenuItem(
+  //   onClick: () {
+  //     CustCardsListView.navigate();
+  //     Get.find<SideMenuDrawerController>().closeMenu();
+  //   },
+  //   icon: Icons.credit_card,
+  //   title: "CustomerApp/main/savedCards",
+  //   isI18nPath: true,
+  // ),
   SideMenuItem(
     onClick: () {
       SavedLocationView.navigate();

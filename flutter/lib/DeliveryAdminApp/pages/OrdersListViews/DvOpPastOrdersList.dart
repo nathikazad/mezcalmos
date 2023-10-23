@@ -5,8 +5,8 @@ import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvO
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/widgets/DvConvoCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
-import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpPastOrdersList'];
@@ -65,11 +65,12 @@ class _DvOpPastOrdersViewState extends State<DvOpPastOrdersView> {
                   itemCount: _viewController.pastOrders.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (_, int index) {
-                    return MinimalOrderCard(
-                      order: _viewController.pastOrders[index],
-                      onTap: () {
+                    return DvConvoCard(
+                      message: _viewController.pastOrders[index],
+                      onClick: () {
                         DvCompanyOrderView.navigate(
-                            orderId: _viewController.pastOrders[index].id);
+                            orderId:
+                                _viewController.pastOrders[index].id.toInt());
                       },
                     );
                   },
