@@ -188,6 +188,39 @@ Future<void> applyOffersToRestaurantCart(
     }
     discount += calculateRestaurantCartDiscount(cart, promo);
   }
+  for (cModels.Offer promo in activeInfPromotions) {
+    if (promo.details.validityRangeStart != null &&
+        promo.details.validityRangeEnd != null) {
+      final DateTime currentTime = DateTime.now();
+      final DateTime validityRangeStart =
+          DateTime.parse(promo.details.validityRangeStart!);
+      final DateTime validityRangeEnd =
+          DateTime.parse(promo.details.validityRangeEnd!);
+
+      if (promo.details.weeklyRepeat) {
+        if (currentTime.weekday < validityRangeStart.weekday ||
+            currentTime.weekday > validityRangeEnd.weekday) {
+          continue;
+        } else if (currentTime.weekday == validityRangeStart.weekday) {
+          if (currentTime.hour < validityRangeStart.hour) continue;
+          if ((currentTime.hour == validityRangeStart.hour) &&
+              (currentTime.minute < validityRangeStart.minute)) continue;
+        } else if (currentTime.weekday == validityRangeEnd.weekday) {
+          if (currentTime.hour > validityRangeEnd.hour) continue;
+          if ((currentTime.hour == validityRangeEnd.hour) &&
+              (currentTime.minute > validityRangeEnd.minute)) continue;
+        }
+      } else if (currentTime.isBefore(validityRangeStart) ||
+          currentTime.isAfter(validityRangeEnd)) {
+        continue;
+      }
+    }
+
+    if (promo.details.offerForOrder == "firstOrder") {
+      if (numberOfCustomerRestaurantOrders > 0) continue;
+    }
+    discount += calculateRestaurantCartDiscount(cart, promo);
+  }
   cart.discountValue = discount;
   mezDbgPrint(
       " 👋👋👋👋👋👋👋👋 Okay we are here and the discount calculated is ===========>$discount");
