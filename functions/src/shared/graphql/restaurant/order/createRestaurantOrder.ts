@@ -111,6 +111,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       id: true,
       chat_id: true,
       order_time: true,
+      total_cost: true,
       delivery: {
         id: true,
         chat_with_customer_id: true,
@@ -173,6 +174,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
     deliveryType: checkoutReq.deliveryType ?? DeliveryType.Delivery,
     customerAppType: checkoutReq.customerAppType,
     items: orderItems,
+    totalCost: response.insert_restaurant_order_one.total_cost,
     itemsCost: customerCart.cost,
     notes: checkoutReq.notes,
     deliveryCost: checkoutReq.deliveryCost,

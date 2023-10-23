@@ -41,6 +41,7 @@ import { Offer, OfferApplied } from "../shared/models/Services/Offer";
 import { fetchOffers } from "../shared/graphql/offer/getOffer";
 // import { notifyDeliveryCompany } from '../shared/helper';
 import { notifyDrivers } from "../utilities/senders/whatsapp/handleWhatsapp";
+import { getHasura } from "../utilities/hasura";
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType;
@@ -55,6 +56,9 @@ export interface CheckoutRequest {
   tripPolyline: string;
   scheduledTime?: string;
   stripePaymentId?: string;
+  commission?: number;
+  influenceId?: number,
+  offerId?: number,
   stripeFees?: number;
   distanceFromBase?: number;
   tax?: number;
@@ -135,6 +139,24 @@ export async function checkout(
         `Order total: ${customerCart.cost} restauant order id:${orderResponse.restaurantOrder.orderId} notifying drivers`
       );
       // notifyDeliveryCompany(orderResponse.deliveryOrder);
+      if(checkoutRequest.influenceId != null) {
+        let chain = getHasura();
+        chain.mutation({
+          insert_service_provider_offer_applied_one: [{
+            object: {
+              order_type: "restaurant",
+              order_id: orderResponse.restaurantOrder.orderId,
+              order_total: orderResponse.restaurantOrder.totalCost,
+              influencer_id: checkoutRequest.influenceId,
+              comission: checkoutRequest.commission,
+              discount: checkoutRequest.discountValue,
+              offer_id: checkoutRequest.offerId
+            }
+          }, {
+            id: true
+          }]
+        })
+      }
     } else {
       console.log(
         `Order total: ${customerCart.cost} restauant order id:${orderResponse.restaurantOrder.orderId} NOTTTTT notifying drivers`
