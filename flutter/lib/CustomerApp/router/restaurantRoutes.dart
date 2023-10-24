@@ -1,3 +1,5 @@
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/CustFoodListView.dart'
+    deferred as foodListView;
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart'
     deferred as viewCart;
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart'
@@ -7,24 +9,22 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustRestaurantView.dart'
     deferred as restoView;
 import 'package:mezcalmos/CustomerApp/router/deferred_loader.dart';
-// import 'package:mezcalmos/CustomerOldStuff/CustRestaurantsListView/CustRestaurantListView.dart'
-//     deferred as restoList;
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantRoutes {
-  static const String restaurantsListRoute = "/restaurantsList";
+  static const String foodListRoute = "/foodList";
   static const String restaurantViewRoute = "/restaurantView/:restaurantId";
   static const String restaurantItemViewRoute =
       "/restaurantItemView/:restaurantId/:itemId";
   static const String cartRoute = "/cart";
   static const String cartItemViewRoute = "/cartItem/:cartItemId";
   static const String restaurantOrdersRoute = "/restaurantOrders/:orderId";
-  final List<QRoute> routes = [
-    // QRoute(
-    //     path: restaurantsListRoute,
-    //     name: restaurantsListRoute,
-    //     builder: () => restoList.CustRestaurantListView(),
-    //     middleware: <QMiddleware>[DefferedLoader(restoList.loadLibrary)]),
+  final List<QRoute> routes = <QRoute>[
+    QRoute(
+        path: foodListRoute,
+        name: foodListRoute,
+        builder: () => foodListView.CustFoodListView(),
+        middleware: <QMiddleware>[DefferedLoader(foodListView.loadLibrary)]),
     QRoute(
         path: restaurantViewRoute,
         name: restaurantViewRoute,

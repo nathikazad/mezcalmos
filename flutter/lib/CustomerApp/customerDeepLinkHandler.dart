@@ -8,8 +8,7 @@ import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class CustomerLinkHandler {
-  static Future<void> handleLink(Uri link) async {
-    final String uniqueId = link.toString().replaceFirst("mezkala://", "");
+  static Future<void> handleLink(String uniqueId) async {
     mezDbgPrint("🌭🌭🌭🌭🌭🌭🌭🌭 $uniqueId");
     final ServicProviderInfo? servicProviderInfo =
         await get_service_link(uniqueId: uniqueId);

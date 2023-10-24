@@ -374,9 +374,7 @@
         "super": "FlutterFragmentActivity"
       },
       "pubspec": {
-        "dependencies": {
-          "open_file": "^3.3.2"
-        },
+        "dependencies": {},
         "assets": [
           "assets/images/",
           "assets/images/customer/",
@@ -454,6 +452,7 @@
           "assets/images/customer/restaurants/",
           "assets/images/customer/taxi/",
           "assets/images/customer/laundry/",
+          "assets/images/customer/custDelivery/",
           "assets/fonts/",
           "assets/i18n/",
           "assets/animation/",
@@ -501,9 +500,7 @@
         "<uses-permission android:name='android.permission.READ_PRIVILEGED_PHONE_STATE' />"
       ],
       "pubspec": {
-        "dependencies": {
-          "open_file": "^3.3.2"
-        },
+        "dependencies": {},
         "assets": [
           "assets/images/",
           "assets/images/customer/",
@@ -695,9 +692,7 @@
         "super": "FlutterFragmentActivity"
       },
       "pubspec": {
-        "dependencies": {
-          "open_file": "^3.3.2"
-        },
+        "dependencies": {},
         "assets": [
           "assets/images/",
           "assets/images/customer/",
@@ -751,8 +746,6 @@
       },
       "pubspec": {
         "dependencies": {
-          "agora_rtc_engine": "6.1.0",
-          "open_file": "^3.3.2"
         },
         "assets": [
           "assets/images/",

@@ -524,6 +524,13 @@ const documentNodeQuerygetDeliveryCompanyById = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'phone_number'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'service_provider_type'),
                 alias: null,
                 arguments: [],
@@ -1852,6 +1859,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     required this.language,
     required this.open_status,
     required this.creation_time,
+    this.phone_number,
     required this.service_provider_type,
     required this.currency,
     this.description,
@@ -1874,6 +1882,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$language = json['language'];
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
+    final l$phone_number = json['phone_number'];
     final l$service_provider_type = json['service_provider_type'];
     final l$currency = json['currency'];
     final l$description = json['description'];
@@ -1893,6 +1902,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
       language: mapFromJson(l$language),
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
+      phone_number: (l$phone_number as String?),
       service_provider_type: (l$service_provider_type as String),
       currency: (l$currency as String),
       description: l$description == null
@@ -1931,6 +1941,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
   final String open_status;
 
   final String creation_time;
+
+  final String? phone_number;
 
   final String service_provider_type;
 
@@ -1972,6 +1984,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     _resultData['open_status'] = l$open_status;
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
     final l$service_provider_type = service_provider_type;
     _resultData['service_provider_type'] = l$service_provider_type;
     final l$currency = currency;
@@ -2000,6 +2014,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     final l$language = language;
     final l$open_status = open_status;
     final l$creation_time = creation_time;
+    final l$phone_number = phone_number;
     final l$service_provider_type = service_provider_type;
     final l$currency = currency;
     final l$description = description;
@@ -2019,6 +2034,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
       l$language,
       l$open_status,
       l$creation_time,
+      l$phone_number,
       l$service_provider_type,
       l$currency,
       l$description,
@@ -2102,6 +2118,11 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$details {
     if (l$creation_time != lOther$creation_time) {
       return false;
     }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
     final l$service_provider_type = service_provider_type;
     final lOther$service_provider_type = other.service_provider_type;
     if (l$service_provider_type != lOther$service_provider_type) {
@@ -2168,6 +2189,7 @@ abstract class CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
     dynamic? language,
     String? open_status,
     String? creation_time,
+    String? phone_number,
     String? service_provider_type,
     String? currency,
     Query$getDeliveryCompanyById$delivery_company_by_pk$details$description?
@@ -2213,6 +2235,7 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
     Object? language = _undefined,
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
+    Object? phone_number = _undefined,
     Object? service_provider_type = _undefined,
     Object? currency = _undefined,
     Object? description = _undefined,
@@ -2257,6 +2280,9 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$details<
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
@@ -2318,6 +2344,7 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$deta
     dynamic? language,
     String? open_status,
     String? creation_time,
+    String? phone_number,
     String? service_provider_type,
     String? currency,
     Query$getDeliveryCompanyById$delivery_company_by_pk$details$description?

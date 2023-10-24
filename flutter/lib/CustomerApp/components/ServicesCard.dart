@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -12,13 +12,13 @@ class ServicesCard extends StatelessWidget {
     Key? key,
     required this.title,
     required this.subtitle,
-    required this.url,
+    required this.imageAssetPath,
     this.onTap,
   }) : super(key: key);
 
   final String title;
   final String subtitle;
-  final String url;
+  final String imageAssetPath;
 
   final GestureTapCallback? onTap;
 
@@ -34,7 +34,7 @@ class ServicesCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 17.5),
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +46,7 @@ class ServicesCard extends StatelessWidget {
                   children: <Widget>[
                     //================= title=============
                     Text("$title", style: textTheme.displaySmall),
-                    //================ subtitle============
+                    smallSepartor,
                     Text("$subtitle", style: textTheme.titleMedium)
                   ],
                 ),
@@ -55,7 +55,7 @@ class ServicesCard extends StatelessWidget {
                 width: 25.mezW,
                 height: 20.mezW,
                 child: Image.asset(
-                  url,
+                  imageAssetPath,
                   fit: BoxFit.fill,
                 ),
               )

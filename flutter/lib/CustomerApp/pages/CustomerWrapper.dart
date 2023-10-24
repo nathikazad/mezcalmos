@@ -7,14 +7,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustDealsView/CustDealsView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/CustHomeView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustomerServicesList.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -53,7 +55,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   StreamSubscription<dynamic>? _authStateChnagesListener;
   RxList<Widget> tabs = RxList<Widget>(<Widget>[
-    CustHomeView(),
+    CustServicesList(),
     CustomerOrdersListView(asTab: true),
     CustProfileView(),
   ]);
@@ -76,7 +78,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     startAuthListener();
     // DeepLinkHandler.startDynamicLinkCheckRoutine(
     //     CustomerDeepLinkHandler.handleDeepLink);
-
+    redirectIfFirstTime();
     _startListeningForLinks();
   }
 
@@ -120,7 +122,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
         if (authController.user != null) {
           return tabs[_index.value];
         } else {
-          return CustHomeView();
+          return CustServicesList();
         }
       }),
     );
@@ -233,7 +235,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     }
     // Parse the initial link (if it exists)
     if (initialLink != null) {
-      CustomerLinkHandler.handleLink(Uri.parse(initialLink));
+      CustomerLinkHandler.handleLink(
+          initialLink.replaceFirst("mezkala://", ""));
     }
 
     // Subscribe to incoming links
@@ -241,9 +244,23 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       linkStream.listen((String? link) {
         // Parse the link
         if (link != null) {
-          CustomerLinkHandler.handleLink(Uri.parse(link));
+          CustomerLinkHandler.handleLink(link.replaceFirst("mezkala://", ""));
         }
       });
+    }
+  }
+
+  Future<void> redirectIfFirstTime() async {
+    final bool isFirstTime = GetStorage().read("first_time") ?? true;
+
+    if (isFirstTime) {
+      // This is the first time the app is launched
+      GetStorage().write('first_time', false);
+      mezDbgPrint('⏰⏰⏰⏰⏰ App is launched for the first time');
+      final dynamic landingUrl = await CloudFunctions.callCloudFunction(
+          functionName: 'landingWebUrl-get');
+      mezDbgPrint('⏰⏰⏰⏰⏰ landing url is $landingUrl');
+      if (landingUrl != null) CustomerLinkHandler.handleLink(landingUrl);
     }
   }
 
@@ -290,20 +307,20 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
         children: <Widget>[
           ServicesCard(
             title: "${_i18n()['food']["title"]}",
-            url: "assets/images/customer/foodService.png",
+            imageAssetPath: "assets/images/customer/foodService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
             onTap: () {},
           ),
           ServicesCard(
             title: "${_i18n()['laundry']["title"]}",
             subtitle: "${_i18n()['laundry']["subtitle"]}",
-            url: "assets/images/customer/laundryService.png",
+            imageAssetPath: "assets/images/customer/laundryService.png",
             onTap: () {},
           ),
           ServicesCard(
             title: "${_i18n()['courier']["title"]}",
             subtitle: "${_i18n()['courier']["subtitle"]}",
-            url: "assets/images/customer/courrierService.png",
+            imageAssetPath: "assets/images/customer/courrierService.png",
             onTap: () {},
           ),
         ],

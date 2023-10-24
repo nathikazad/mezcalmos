@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvOpPastOrdersViewController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -67,8 +68,9 @@ class _DvOpPastOrdersViewState extends State<DvOpPastOrdersView> {
                     return DvConvoCard(
                       message: _viewController.pastOrders[index],
                       onClick: () {
-                        // DvCompanyOrderView.navigate(
-                        //     orderId: _viewController.pastOrders[index].id);
+                        DvCompanyOrderView.navigate(
+                            orderId:
+                                _viewController.pastOrders[index].id.toInt());
                       },
                     );
                   },

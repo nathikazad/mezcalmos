@@ -18,7 +18,7 @@ class CustLocallyMadeWrapper extends StatefulWidget {
   const CustLocallyMadeWrapper({super.key});
   static Future<void> navigate({required List<ServiceTree> serviceTree}) {
     final String route = CustBusinessRoutes.custLocallyMadeWrapperRoute;
-    return MezRouter.toPath(route, arguments: {
+    return MezRouter.toPath(route, arguments: <String, >{
       "serviceTree": serviceTree,
     });
   }
@@ -40,17 +40,17 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
     switch (mezService) {
       case MezService.Consumable:
         CustLocallyMadeListView.navigate(
-          productCategories: [ProductCategory1.Consumable],
+          productCategories: <ProductCategory1>[ProductCategory1.Consumable],
         );
         break;
       case MezService.PersonalCare:
         CustLocallyMadeListView.navigate(
-          productCategories: [ProductCategory1.PersonalCare],
+          productCategories: <ProductCategory1>[ProductCategory1.PersonalCare],
         );
         break;
       case MezService.Art:
         CustLocallyMadeListView.navigate(
-          productCategories: [ProductCategory1.Art],
+          productCategories: <ProductCategory1>[ProductCategory1.Art],
         );
         break;
       default:
@@ -75,7 +75,7 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MezcalmosAppBar(
-         actionIcons: [
+         actionIcons: <Widget>[
           FloatingCartComponent(
             cartType: CartType.business,
           ),
@@ -93,7 +93,7 @@ class _CustLocallyMadeWrapperState extends State<CustLocallyMadeWrapper> {
               onTap: () {
                 navigateToListView(serviceTree[index].name);
               },
-              url: getCardImage(serviceTree[index].name),
+              imageAssetPath: getCardImage(serviceTree[index].name),
               title: _i18n()[serviceTree[index].name.toFirebaseFormatString()]
                   ['title'],
               subtitle:

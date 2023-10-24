@@ -85,7 +85,8 @@ class DvOpCurrentOrdersController {
       currentOrders.value = await get_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
               driverId: null,
-              limit: 20,
+              forCompany: true,
+              limit: 30,
               offset: 0) ??
           <DeliveryMinimalOrder>[];
       mezDbgPrint("Orders length ======>${openOrders.length}");
@@ -101,6 +102,7 @@ class DvOpCurrentOrdersController {
       currentOrdersListener = listen_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
               driverId: null,
+              forCompany: true,
               limit: 30,
               offset: 0)
           .listen((List<DeliveryMinimalOrder>? event) {

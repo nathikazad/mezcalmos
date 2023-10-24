@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mezcalmos/CustomerApp/helpers/ServiceListHelper.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/components/CustRestaurantCard.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -23,7 +23,7 @@ import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
 
-class CustHomeViewController {
+class CustFoodListViewController {
   late TabController tabController;
   late BuildContext context;
   final GlobalKey<AnimatedListState> animatedListKey =

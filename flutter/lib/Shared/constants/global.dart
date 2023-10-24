@@ -205,6 +205,12 @@ const String aMealPlanning = "assets/images/customer/mealPlanning.png";
 const String aRealEstate = "assets/images/customer/realEstate.png";
 const String aLanguageSchool = "assets/images/customer/languageSchool.png";
 
+// CustDelivery
+const String aChedraui = "assets/images/customer/custDelivery/chedraui.png";
+const String aOpenDv = "assets/images/customer/custDelivery/open.png";
+const String aPharmacy = "assets/images/customer/custDelivery/pharmacy.png";
+const String aFruitsAndVeg = "assets/images/customer/custDelivery/fruits.png";
+
 // Rental Images, Icons
 const String aRentals = "assets/images/customer/rentals.png";
 const String aHomes = "assets/images/customer/rental/homes.png";

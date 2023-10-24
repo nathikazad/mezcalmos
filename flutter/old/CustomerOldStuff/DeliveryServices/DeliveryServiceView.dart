@@ -181,7 +181,7 @@ class _DeliveryServiceViewState extends State<DeliveryServiceView> {
           return Obx(
             () => ServicesCard(
               title: "${_i18n()[currentService.name.toLowerCase()]["title"]}",
-              url: getCardImage(currentService),
+              imageAssetPath: getCardImage(currentService),
               subtitle:
                   "${_i18n()[currentService.name.toLowerCase()]["subtitle"]}",
               onTap: () {

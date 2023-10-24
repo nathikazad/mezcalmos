@@ -580,6 +580,27 @@
       }
     },
     "pages": {
+      "CustDelivery": {
+        "CustDeliveryWrapperView": {
+          "delivery": "Delivery",
+          "fruits": {
+            "title": "Fruits and Veggies",
+            "subtitle": "Find and purchase locally grown fruits, vegetables, grains, and other produce directly from farmers."
+          },
+          "open": {
+            "title": "Open Delivery",
+            "subtitle": "Select your desired products, drivers will promptly deliver them to your location"
+          },
+          "pharmacy": {
+            "title": "Pharmacy",
+            "subtitle": "Your trusted health and wellness destination."
+          },
+          "chedraui": {
+            "title": "Chedraui",
+            "subtitle": "Select your desired products from Chedraui grocery store."
+          }
+        }
+      },
       "CustOrderView": {
         "CustOrderView": {
           "order": "Order",
@@ -889,6 +910,7 @@
         "CustRequestCourierView": {
           "title": "Open Delivery",
           "from": "From",
+          "redirectText": "You will now be redirected to WhatsApp with your order and number of delivery company filled in. You can send message to delivery company and they will reply to you.",
           "to": "To",
           "chooseCompany": "Choose your delivery company",
           "chooseCompanyInfo": "If you choose multiple the first company to accept your order will receive the order.",
@@ -900,6 +922,7 @@
           "CustRequestCourierItems": {
             "item": "Item",
             "remove": "Remove",
+            "addItem": "Add item",
             "whatCanWeGetYou": "What can we get you?",
             "name": "Name",
             "notes": "Notes",
@@ -2104,8 +2127,8 @@
           "title": "Laundry"
         },
         "courier": {
-          "title": "Open Delivery",
-          "subtitle": "Obtain delivery of anything you desire to your location."
+          "title": "Delivery",
+          "subtitle": "Drivers will promptly deliver your selected products to your location."
         },
         "comingSoon": "Coming soon ...",
         "supportText": "Need help ? contact our support team",

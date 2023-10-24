@@ -84,7 +84,7 @@ class DriverCurrentOrdersController {
       currentOrders.value = await get_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
               driverId: opAuthController.driverId!,
-              limit: 20,
+              limit: 30,
               offset: 0) ??
           <DeliveryMinimalOrder>[];
       mezDbgPrint("Orders length ======>${openOrders.length}");
@@ -100,7 +100,7 @@ class DriverCurrentOrdersController {
       currentOrdersListener = listen_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
               driverId: opAuthController.driverId!,
-              limit: 20,
+              limit: 30,
               offset: 0)
           .listen((List<DeliveryMinimalOrder>? event) {
         if (event != null) {

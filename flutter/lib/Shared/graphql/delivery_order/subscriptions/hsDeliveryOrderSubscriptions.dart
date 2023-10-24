@@ -373,6 +373,7 @@ Stream<UserInfo?> listen_on_delivery_order_driver({required int orderId}) {
 Stream<List<cModels.DeliveryMinimalOrder>?> listen_delivery_minimal_orders({
   required cModels.MinimalDeliveryOrderStatus status,
   int? driverId,
+  bool forCompany = false,
   required int limit,
   required int offset,
 }) {
@@ -381,11 +382,13 @@ Stream<List<cModels.DeliveryMinimalOrder>?> listen_delivery_minimal_orders({
           Options$Subscription$ListenMinimalDeliveryMessages(
               fetchPolicy: FetchPolicy.networkOnly,
               variables: Variables$Subscription$ListenMinimalDeliveryMessages(
-                  driver_id: (driverId == null)
-                      ? Input$Int_comparison_exp($_is_null: true)
-                      : Input$Int_comparison_exp(
-                          $_eq: driverId,
-                        ),
+                  driver_id: (driverId == null && forCompany == true)
+                      ? Input$Int_comparison_exp($_is_null: false)
+                      : (driverId == null)
+                          ? Input$Int_comparison_exp($_is_null: true)
+                          : Input$Int_comparison_exp(
+                              $_eq: driverId,
+                            ),
                   status: status.toFirebaseFormatString(),
                   limit: limit,
                   offset: offset)))

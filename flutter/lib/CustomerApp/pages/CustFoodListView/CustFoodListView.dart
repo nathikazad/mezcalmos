@@ -1,45 +1,51 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/components/CustRestaurantItemCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustHomeView/controllers/CustHomeViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/components/CustRestaurantCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/components/CustRestaurantItemCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/controllers/CustFoodListViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 import 'package:uni_links/uni_links.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
 
-class CustHomeView extends StatefulWidget {
-  const CustHomeView({super.key});
+class CustFoodListView extends StatefulWidget {
+  const CustFoodListView({super.key});
+  static Future<void> navigate() {
+    return MezRouter.toPath(RestaurantRoutes.foodListRoute);
+  }
 
   @override
-  State<CustHomeView> createState() => _CustHomeViewState();
+  State<CustFoodListView> createState() => _CustFoodListViewState();
 }
 
-class _CustHomeViewState extends State<CustHomeView>
+class _CustFoodListViewState extends State<CustFoodListView>
     with TickerProviderStateMixin {
-  CustHomeViewController viewController = CustHomeViewController();
+  CustFoodListViewController viewController = CustFoodListViewController();
 
   @override
   void initState() {
+    redirectIfFirstTime();
     _startListeningForLinks();
     viewController.init(vsync: this, context: context);
     super.initState();
@@ -55,7 +61,8 @@ class _CustHomeViewState extends State<CustHomeView>
     }
     // Parse the initial link (if it exists)
     if (initialLink != null) {
-      await CustomerLinkHandler.handleLink(Uri.parse(initialLink));
+      await CustomerLinkHandler.handleLink(
+          initialLink.replaceFirst("mezkala://", ""));
     }
 
     // Subscribe to incoming links
@@ -64,9 +71,23 @@ class _CustHomeViewState extends State<CustHomeView>
         // Parse the link
         mezDbgPrint("👁️👁️👁️👁️👁️new link $link");
         if (link != null) {
-          CustomerLinkHandler.handleLink(Uri.parse(link));
+          CustomerLinkHandler.handleLink(link.replaceFirst("mezkala://", ""));
         }
       });
+    }
+  }
+
+  Future<void> redirectIfFirstTime() async {
+    final bool isFirstTime = GetStorage().read("first_time") ?? true;
+
+    if (isFirstTime) {
+      // This is the first time the app is launched
+      // GetStorage().write('first_time', false);
+      mezDbgPrint('⏰⏰⏰⏰⏰ App is launched for the first time');
+      final dynamic landingUrl = await CloudFunctions.callCloudFunction(
+          functionName: 'landingWebUrl-get');
+      mezDbgPrint('⏰⏰⏰⏰⏰ landing url is $landingUrl');
+      if (landingUrl != null) await CustomerLinkHandler.handleLink(landingUrl);
     }
   }
 
@@ -74,8 +95,7 @@ class _CustHomeViewState extends State<CustHomeView>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: MezSideMenu(),
+
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
@@ -413,7 +433,7 @@ class _CustHomeViewState extends State<CustHomeView>
       scale: 0.6,
       child: InkWell(
         onTap: () {
-          Get.find<SideMenuDrawerController>().openMenu();
+          MezRouter.back();
         },
         child: Ink(
           decoration: BoxDecoration(
@@ -426,11 +446,8 @@ class _CustHomeViewState extends State<CustHomeView>
                   offset: Offset(0, 7),
                 ),
               ],
-              color: primaryBlueColor),
-          child: Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
+              color: secondaryLightBlueColor),
+          child: Icon(Icons.arrow_back_ios_new, color: primaryBlueColor),
         ),
       ),
     );

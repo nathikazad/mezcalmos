@@ -27,7 +27,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class CustRestaurantListView extends StatefulWidget {
   const CustRestaurantListView({Key? key}) : super(key: key);
   static Future<void> navigate() {
-    return MezRouter.toNamed(RestaurantRoutes.restaurantsListRoute);
+    return MezRouter.toNamed(RestaurantRoutes.foodListRoute);
   }
 
   @override
