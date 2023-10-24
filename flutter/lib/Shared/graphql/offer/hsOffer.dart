@@ -37,6 +37,14 @@ Future<List<cModels.Offer>> get_service_provider_offers(
         serviceProviderId: serviceProviderId,
         serviceProviderType: serviceProviderType,
         offerType: data.offer_type.toOfferType(),
+        influencerDetails: (data.influencer_details != null)
+            ? cModels.InfluencerOfferDetails(
+                rewardType: data.influencer_details["rewardType"]
+                    .toString()
+                    .toDiscountType(),
+                rewardValue: double.parse(
+                    data.influencer_details["rewardValue"].toString()))
+            : null,
         details: cModels.OfferDetails(
           offerForOrder: data.details["offerForOrder"],
           discountType:

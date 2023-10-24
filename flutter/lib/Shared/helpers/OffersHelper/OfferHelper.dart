@@ -103,7 +103,7 @@ Future<CouponError?> applyRestaurantCoupon(
 // if it is valid, then apply discount
 
 Future<void> applyOffersToRestaurantCart(
-    {required int customerId, required Cart cart}) async {
+    {required int customerId, required Cart cart, int? influencerId}) async {
   if (cart.restaurant?.restaurantId == null) return;
   final List<cModels.Offer> offers = await get_service_provider_offers(
       serviceProviderId: cart.restaurant!.restaurantId,
@@ -220,8 +220,14 @@ Future<void> applyOffersToRestaurantCart(
       if (numberOfCustomerRestaurantOrders > 0) continue;
     }
     discount += calculateRestaurantCartDiscount(cart, promo);
+    cart.offerId = promo.id;
+    cart.commission = calculateRestaurantCartComission(cart, promo);
+    cart.influencerId = influencerId;
+    mezDbgPrint(
+        "====> cart.commission ${cart.commission} ======> discount : $discount");
   }
   cart.discountValue = discount;
+
   mezDbgPrint(
       " 👋👋👋👋👋👋👋👋 Okay we are here and the discount calculated is ===========>$discount");
   await update_cart_discount(
@@ -349,6 +355,34 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
     cart.offersApplied.add(offer.id.toInt());
     // }
   }
+  return discount;
+}
+
+num? calculateRestaurantCartComission(Cart cart, cModels.Offer offer) {
+  if (offer.influencerDetails == null) {
+    return null;
+  }
+  num discount = 0;
+
+  if (offer.details.minimumOrderAmount != null &&
+      offer.details.minimumOrderAmount! > cart.itemsCost()) {
+    return 0;
+  }
+
+  switch (offer.influencerDetails!.rewardType) {
+    case cModels.DiscountType.StoreCredit:
+    case cModels.DiscountType.AnotherSameFlat:
+    case cModels.DiscountType.AnotherSamePercentage:
+      break;
+    case cModels.DiscountType.FlatAmount:
+      discount += offer.influencerDetails!.rewardValue;
+
+      break;
+    case cModels.DiscountType.Percentage:
+      discount += cart.totalCost * offer.influencerDetails!.rewardValue / 100.0;
+      break;
+  }
+
   return discount;
 }
 

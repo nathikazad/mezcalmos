@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -17,7 +18,9 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
   AuthController authController = Get.find<AuthController>();
   Customer? get customer => _customer.value;
-  String? get customerOffer => "mimi";
+  String? get _customerOffer => "mimi";
+  int? _influencerId;
+  int? get influencerId => _influencerId;
 
   bool _initialized = false;
   StreamController<bool> _cusAuthControllerInitializedStreamController =
@@ -26,6 +29,9 @@ class CustomerAuthController extends GetxController {
     super.onInit();
     mezDbgPrint("CustomerAuthController onInit ");
     if (authController.fireAuthUser?.uid != null) {
+      if (_customerOffer != null) {
+        _influencerId = await get_inf_id_by_tag(tag: _customerOffer!);
+      }
       final User user = fireAuth.FirebaseAuth.instance.currentUser!;
       await ifUserJustSignedUp(user);
 
@@ -34,11 +40,6 @@ class CustomerAuthController extends GetxController {
           await get_customer(user_id: authController.hasuraUserId!);
 
       await _setCustomerInfos(value);
-      // if (value != null) {
-      //   Get.find<SideMenuDrawerController>().addContactAdminItem(
-      //       id: Get.find<AuthController>().hasuraUserId!,
-      //       type: RecipientType.Customer);
-      // }
 
       _initialized = true;
       _cusAuthControllerInitializedStreamController.add(true);

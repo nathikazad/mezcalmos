@@ -70,7 +70,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       });
 
       _checkOrders();
-      if (customerAuthController?.customerOffer != null) {
+      if (customerAuthController?.influencerId != null) {
         tabs.insert(2, CustDealsView());
       }
     }
@@ -169,7 +169,7 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
                               ? Icons.history
                               : Icons.history_outlined)),
                       label: "${_i18n()['orders']}"),
-                  if (customerAuthController?.customerOffer != null)
+                  if (customerAuthController?.influencerId != null)
                     BottomNavigationBarItem(
                       icon: badge.Badge(
                         badgeColor: Colors.red,

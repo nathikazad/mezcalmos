@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
@@ -19,6 +20,8 @@ class CustRestaurantCartController extends GetxController {
 // instances //
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
   AuthController _auth = Get.find<AuthController>();
+  CustomerAuthController _customerAuthController =
+      Get.find<CustomerAuthController>();
   //
   Rxn<Cart> cart = Rxn<Cart>();
   // streams //
@@ -60,7 +63,10 @@ class CustRestaurantCartController extends GetxController {
           mezDbgPrint(
               "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
           applyOffersToRestaurantCart(
-              customerId: _auth.hasuraUserId!, cart: cart.value!);
+              customerId: _auth.hasuraUserId!,
+              cart: cart.value!,
+              influencerId: _customerAuthController.influencerId);
+
           cart.refresh();
         } else {
           cart.value = null;
@@ -180,6 +186,10 @@ class CustRestaurantCartController extends GetxController {
                     address: cart.value!.toLocation!.address),
                 // deliveryCost: cart.value!.shippingCost ?? 0,
                 deliveryCost: 0,
+                commission: cart.value!.commission,
+                influenceId: cart.value!.influencerId,
+                discountValue: cart.value!.discountValue,
+                offerId: cart.value!.offerId,
                 paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
                 notes: cart.value?.notes,
                 restaurantId: cart.value!.restaurant!.info.hasuraId,

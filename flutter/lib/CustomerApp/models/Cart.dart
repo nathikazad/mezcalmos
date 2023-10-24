@@ -21,6 +21,10 @@ class Cart {
   Restaurant? restaurant;
   DateTime? deliveryTime;
   cModels.DeliveryType? deliveryType;
+  int? influencerId;
+  num? commission;
+
+  num? offerId;
 
   String? notes;
   cModels.PaymentType paymentType = cModels.PaymentType.Cash;

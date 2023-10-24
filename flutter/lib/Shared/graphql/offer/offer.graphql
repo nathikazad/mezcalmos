@@ -19,6 +19,7 @@ query get_service_provider_offers(
     status
     coupon_code
     offer_type
+    influencer_details
   }
 }
 

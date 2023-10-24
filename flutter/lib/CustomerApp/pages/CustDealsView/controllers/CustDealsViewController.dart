@@ -6,8 +6,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/influencer/hsInfluencer.dart';
-import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 
 class CustDealsViewController {
@@ -29,7 +27,7 @@ class CustDealsViewController {
   ScrollController get promoScrollController => _promoScrollController;
   bool get isFetching => _promoFetchingData;
   RxBool isInitalized = RxBool(false);
-  int? influencerId;
+  int? get influencerId => Get.find<CustomerAuthController>().influencerId;
 
   // methods //
 
@@ -40,10 +38,7 @@ class CustDealsViewController {
       },
       sensitivity: 200,
     );
-    if (Get.find<CustomerAuthController>().customerOffer != null) {
-      influencerId = await get_inf_id_by_tag(
-          tag: Get.find<CustomerAuthController>().customerOffer!);
-      mezDbgPrint(influencerId);
+    if (Get.find<CustomerAuthController>().influencerId != null) {
       await _fetchInfPromotions();
     }
 

@@ -460,6 +460,13 @@ const documentNodeQueryget_service_provider_offers = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'influencer_details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -596,6 +603,7 @@ class Query$get_service_provider_offers$service_provider_offer {
     required this.status,
     this.coupon_code,
     required this.offer_type,
+    this.influencer_details,
     required this.$__typename,
   });
 
@@ -607,6 +615,7 @@ class Query$get_service_provider_offers$service_provider_offer {
     final l$status = json['status'];
     final l$coupon_code = json['coupon_code'];
     final l$offer_type = json['offer_type'];
+    final l$influencer_details = json['influencer_details'];
     final l$$__typename = json['__typename'];
     return Query$get_service_provider_offers$service_provider_offer(
       id: (l$id as int),
@@ -616,6 +625,9 @@ class Query$get_service_provider_offers$service_provider_offer {
       status: (l$status as String),
       coupon_code: (l$coupon_code as String?),
       offer_type: (l$offer_type as String),
+      influencer_details: l$influencer_details == null
+          ? null
+          : mapFromJson(l$influencer_details),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -631,6 +643,8 @@ class Query$get_service_provider_offers$service_provider_offer {
   final String? coupon_code;
 
   final String offer_type;
+
+  final dynamic? influencer_details;
 
   final String $__typename;
 
@@ -648,6 +662,9 @@ class Query$get_service_provider_offers$service_provider_offer {
     _resultData['coupon_code'] = l$coupon_code;
     final l$offer_type = offer_type;
     _resultData['offer_type'] = l$offer_type;
+    final l$influencer_details = influencer_details;
+    _resultData['influencer_details'] =
+        l$influencer_details == null ? null : mapToJson(l$influencer_details);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -661,6 +678,7 @@ class Query$get_service_provider_offers$service_provider_offer {
     final l$status = status;
     final l$coupon_code = coupon_code;
     final l$offer_type = offer_type;
+    final l$influencer_details = influencer_details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
@@ -669,6 +687,7 @@ class Query$get_service_provider_offers$service_provider_offer {
       l$status,
       l$coupon_code,
       l$offer_type,
+      l$influencer_details,
       l$$__typename,
     ]);
   }
@@ -712,6 +731,11 @@ class Query$get_service_provider_offers$service_provider_offer {
     if (l$offer_type != lOther$offer_type) {
       return false;
     }
+    final l$influencer_details = influencer_details;
+    final lOther$influencer_details = other.influencer_details;
+    if (l$influencer_details != lOther$influencer_details) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -751,6 +775,7 @@ abstract class CopyWith$Query$get_service_provider_offers$service_provider_offer
     String? status,
     String? coupon_code,
     String? offer_type,
+    dynamic? influencer_details,
     String? $__typename,
   });
   CopyWith$Query$get_service_provider_offers$service_provider_offer$name<TRes>
@@ -781,6 +806,7 @@ class _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer<
     Object? status = _undefined,
     Object? coupon_code = _undefined,
     Object? offer_type = _undefined,
+    Object? influencer_details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_service_provider_offers$service_provider_offer(
@@ -801,6 +827,9 @@ class _CopyWithImpl$Query$get_service_provider_offers$service_provider_offer<
         offer_type: offer_type == _undefined || offer_type == null
             ? _instance.offer_type
             : (offer_type as String),
+        influencer_details: influencer_details == _undefined
+            ? _instance.influencer_details
+            : (influencer_details as dynamic?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -830,6 +859,7 @@ class _CopyWithStubImpl$Query$get_service_provider_offers$service_provider_offer
     String? status,
     String? coupon_code,
     String? offer_type,
+    dynamic? influencer_details,
     String? $__typename,
   }) =>
       _res;
