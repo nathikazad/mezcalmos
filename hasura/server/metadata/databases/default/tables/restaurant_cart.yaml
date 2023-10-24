@@ -37,9 +37,8 @@ select_permissions:
       columns:
         - customer_id
         - restaurant_id
-        - discount_value
         - applied_offers
-        - cost
+        - discount_value
       computed_fields:
         - cost
       filter:
@@ -49,9 +48,9 @@ update_permissions:
   - role: customer
     permission:
       columns:
-        - restaurant_id
-        - discount_value
         - applied_offers
+        - discount_value
+        - restaurant_id
       filter:
         customer_id:
           _eq: X-Hasura-User-Id

@@ -26,6 +26,7 @@ export async function fetchOffers(
             // name: 
         }]
     });
+    
     let offers: Offer[] = response.service_provider_offer.map((o): Offer => {
         return {
             id: o.id,
@@ -33,7 +34,7 @@ export async function fetchOffers(
             serviceProviderType: o.service_provider_type as ServiceProviderType,
             serviceProviderId: o.service_provider_id,
             couponCode: o.coupon_code,
-            details: JSON.parse(o.details),
+            details: o.details,
             status: o.status as OfferStatus
         }
     })

@@ -183,11 +183,7 @@ select_permissions:
         - unique_id
       computed_fields:
         - is_open
-      filter:
-        delivery_company:
-          delivery_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: influencer
     permission:
       columns:

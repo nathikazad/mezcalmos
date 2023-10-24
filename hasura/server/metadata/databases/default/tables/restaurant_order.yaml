@@ -11,6 +11,16 @@ object_relationships:
   - name: delivery
     using:
       foreign_key_constraint_on: delivery_id
+  - name: offers_applied
+    using:
+      manual_configuration:
+        column_mapping:
+          id: order_id
+          order_type: order_type
+        insertion_order: null
+        remote_table:
+          name: offer_applied
+          schema: service_provider
   - name: restaurant
     using:
       foreign_key_constraint_on: restaurant_id
@@ -96,12 +106,7 @@ select_permissions:
       columns:
         - id
         - stripe_info
-      filter:
-        delivery:
-          delivery_company:
-            delivery_operators:
-              user_id:
-                _eq: X-Hasura-User-Id
+      filter: {}
   - role: mez_admin
     permission:
       columns:
