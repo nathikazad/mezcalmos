@@ -8,7 +8,18 @@ import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class CustomerLinkHandler {
-  static Future<void> handleLink(String uniqueId) async {
+  static Future<void> handleLink(
+      {required String path,
+      required void Function(String) updateInfluencerUi}) async {
+    if (path.startsWith("i/")) {
+      final String influencerTag = path.substring(2);
+      updateInfluencerUi(influencerTag); // Call the passed function
+    } else {
+      await handleUniqueLink(path);
+    }
+  }
+
+  static Future<void> handleUniqueLink(String uniqueId) async {
     mezDbgPrint("🌭🌭🌭🌭🌭🌭🌭🌭 $uniqueId");
     final ServicProviderInfo? servicProviderInfo =
         await get_service_link(uniqueId: uniqueId);

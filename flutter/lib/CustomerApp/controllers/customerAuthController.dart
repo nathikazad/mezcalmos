@@ -18,7 +18,8 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
   AuthController authController = Get.find<AuthController>();
   Customer? get customer => _customer.value;
-  String? get _customerOffer => "mimi";
+  String? _influencerTag = "mimi";
+  String? get influencerTag => _influencerTag;
   int? _influencerId;
   int? get influencerId => _influencerId;
 
@@ -43,9 +44,13 @@ class CustomerAuthController extends GetxController {
     }
   }
 
+  void setInfluencerTag(String influencerTag) {
+    _influencerTag = influencerTag;
+  }
+
   Future<void> getInfluencerIdForCustomer() async {
-    if (_customerOffer != null) {
-      _influencerId = await get_inf_id_by_tag(tag: _customerOffer!);
+    if (_influencerTag != null) {
+      _influencerId = await get_inf_id_by_tag(tag: _influencerTag!);
     }
   }
 

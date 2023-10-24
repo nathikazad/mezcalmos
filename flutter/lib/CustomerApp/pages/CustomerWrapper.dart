@@ -82,17 +82,6 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     _startListeningForLinks();
   }
 
-  void handleInfluencerDeals() {
-    customerAuthController?.getInfluencerIdForCustomer().then((value) {
-      if (customerAuthController?.influencerId != null) {
-        tabs.value.insert(2, CustDealsView());
-        _index.value = 2;
-        mezDbgPrint("Refreshing tabs ===========> 😁😁😁😁😁😁😁😁😁😁😁");
-        tabs.refresh();
-      }
-    });
-  }
-
   void _checkOrders() {
     if (_index.value == 0) {
       mezDbgPrint(
@@ -236,7 +225,8 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
     // Parse the initial link (if it exists)
     if (initialLink != null) {
       CustomerLinkHandler.handleLink(
-          initialLink.replaceFirst("mezkala://", ""));
+          path: initialLink.replaceFirst("mezkala://", ""),
+          updateInfluencerUi: updateInfluencerUi);
     }
 
     // Subscribe to incoming links
@@ -244,7 +234,9 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       linkStream.listen((String? link) {
         // Parse the link
         if (link != null) {
-          CustomerLinkHandler.handleLink(link.replaceFirst("mezkala://", ""));
+          CustomerLinkHandler.handleLink(
+              path: link.replaceFirst("mezkala://", ""),
+              updateInfluencerUi: updateInfluencerUi);
         }
       });
     }
@@ -260,8 +252,26 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       final dynamic landingUrl = await CloudFunctions.callCloudFunction(
           functionName: 'landingWebUrl-get');
       mezDbgPrint('⏰⏰⏰⏰⏰ landing url is $landingUrl');
-      if (landingUrl != null) CustomerLinkHandler.handleLink(landingUrl);
+      if (landingUrl != null)
+        CustomerLinkHandler.handleLink(
+            path: landingUrl, updateInfluencerUi: updateInfluencerUi);
     }
+  }
+
+  void handleInfluencerDeals() {
+    customerAuthController?.getInfluencerIdForCustomer().then((value) {
+      if (customerAuthController?.influencerId != null) {
+        tabs.value.insert(2, CustDealsView());
+        _index.value = 2;
+        mezDbgPrint("Refreshing tabs ===========> 😁😁😁😁😁😁😁😁😁😁😁");
+        tabs.refresh();
+      }
+    });
+  }
+
+  void updateInfluencerUi(String influencerTag) {
+    customerAuthController?.setInfluencerTag(influencerTag);
+    handleInfluencerDeals();
   }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
