@@ -35,6 +35,7 @@ query getDeliveryCompanyById($id: Int!) {
       language
       open_status
       creation_time
+      phone_number
       service_provider_type
       currency
       description {

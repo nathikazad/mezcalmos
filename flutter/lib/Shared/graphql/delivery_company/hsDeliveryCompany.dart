@@ -62,6 +62,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
         location: MezLocation.fromHasura(
             data.details!.location.gps, data.details!.location.address),
         name: data.details!.name,
+        phoneNumber: data.details!.phone_number,
       ),
       state: ServiceState(
           data.details!.open_status.toString().toServiceStatus(),
@@ -126,7 +127,7 @@ Future<List<DeliveryCompany>> get_nearby_companies(
     throwError(res.exception);
   }
   mezDbgPrint("Nearby companies ================>>>>${res.data}");
-  List<DeliveryCompany> returnedList = [];
+  List<DeliveryCompany> returnedList = <DeliveryCompany>[];
   final List<Query$getNearByCompanies$delivery_get_delivery_companies>
       dataList = res.parsedData!.delivery_get_delivery_companies;
   returnedList = dataList
@@ -184,8 +185,8 @@ Future<List<DeliveryCompany>?> get_dv_companies() async {
   if (res.parsedData?.delivery_company == null) {
     throwError(res.exception);
   }
-  List<DeliveryCompany> returnedList = [];
-  List<Query$getDeliveryCompanies$delivery_company> dataList =
+  List<DeliveryCompany> returnedList = <DeliveryCompany>[];
+  final List<Query$getDeliveryCompanies$delivery_company> dataList =
       res.parsedData!.delivery_company;
   returnedList =
       dataList.map((Query$getDeliveryCompanies$delivery_company data) {
