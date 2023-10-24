@@ -45,6 +45,16 @@ object_relationships:
         remote_table:
           name: restaurant
           schema: restaurant
+array_relationships:
+  - name: influencer_offers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: offer_id
+        insertion_order: null
+        remote_table:
+          name: influencer_offer
+          schema: service_provider
 insert_permissions:
   - role: business_operator
     permission:
@@ -104,14 +114,15 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - id
-        - name_id
-        - service_provider_id
         - coupon_code
+        - details
+        - id
+        - influencer_details
+        - name_id
         - offer_type
+        - service_provider_id
         - service_provider_type
         - status
-        - details
       filter: {}
   - role: influencer
     permission:

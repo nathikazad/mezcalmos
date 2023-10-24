@@ -28,6 +28,20 @@ select_permissions:
         - responded_time
         - show_driver_info
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - show_driver_info
+        - driver_id
+        - id
+        - user_id
+        - entry
+        - phone_number
+        - finished_time
+        - received_time
+        - responded_time
+      filter: {}
+    comment: ""
 update_permissions:
   - role: delivery_driver
     permission:
@@ -47,3 +61,13 @@ update_permissions:
                 _eq: X-Hasura-User-Id
           - driver_id:
               _is_null: true
+  - role: delivery_operator
+    permission:
+      columns: []
+      filter:
+        driver_id:
+          _is_null: false
+      check:
+        driver_id:
+          _is_null: false
+    comment: ""
