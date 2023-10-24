@@ -52,11 +52,11 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   RxInt numberOfCurrentOrders = RxInt(0);
 
   StreamSubscription<dynamic>? _authStateChnagesListener;
-  List<Widget> tabs = <Widget>[
+  RxList<Widget> tabs = RxList<Widget>(<Widget>[
     CustHomeView(),
     CustomerOrdersListView(asTab: true),
     CustProfileView(),
-  ];
+  ]);
 
   @override
   void initState() {
@@ -70,15 +70,25 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
       });
 
       _checkOrders();
-      if (customerAuthController?.influencerId != null) {
-        tabs.insert(2, CustDealsView());
-      }
+
+      handleInfluencerDeals();
     }
     startAuthListener();
     // DeepLinkHandler.startDynamicLinkCheckRoutine(
     //     CustomerDeepLinkHandler.handleDeepLink);
 
     _startListeningForLinks();
+  }
+
+  void handleInfluencerDeals() {
+    customerAuthController?.getInfluencerIdForCustomer().then((value) {
+      if (customerAuthController?.influencerId != null) {
+        tabs.value.insert(2, CustDealsView());
+        _index.value = 2;
+        mezDbgPrint("Refreshing tabs ===========> 😁😁😁😁😁😁😁😁😁😁😁");
+        tabs.refresh();
+      }
+    });
   }
 
   void _checkOrders() {

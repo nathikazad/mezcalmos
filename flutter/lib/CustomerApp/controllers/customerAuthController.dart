@@ -29,9 +29,6 @@ class CustomerAuthController extends GetxController {
     super.onInit();
     mezDbgPrint("CustomerAuthController onInit ");
     if (authController.fireAuthUser?.uid != null) {
-      if (_customerOffer != null) {
-        _influencerId = await get_inf_id_by_tag(tag: _customerOffer!);
-      }
       final User user = fireAuth.FirebaseAuth.instance.currentUser!;
       await ifUserJustSignedUp(user);
 
@@ -43,6 +40,12 @@ class CustomerAuthController extends GetxController {
 
       _initialized = true;
       _cusAuthControllerInitializedStreamController.add(true);
+    }
+  }
+
+  Future<void> getInfluencerIdForCustomer() async {
+    if (_customerOffer != null) {
+      _influencerId = await get_inf_id_by_tag(tag: _customerOffer!);
     }
   }
 
