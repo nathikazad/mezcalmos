@@ -4,6 +4,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/influencer/__generated/influencer.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
@@ -216,4 +217,53 @@ Future<num?> get_influencer_earnings_sum({required int influencerId}) async {
 
   return res.parsedData?.service_provider_offer_applied_aggregate.aggregate?.sum
       ?.comission;
+}
+
+Future<num?> get_influencer_discount_sum({required int influencerId}) async {
+  final QueryResult<Query$getInfluencerTotalDiscounts> res =
+      await _db.graphQLClient.query$getInfluencerTotalDiscounts(
+          Options$Query$getInfluencerTotalDiscounts(
+              fetchPolicy: FetchPolicy.networkOnly,
+              variables: Variables$Query$getInfluencerTotalDiscounts(
+                  influencer_id: influencerId)));
+
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+
+  return res.parsedData?.service_provider_offer_applied_aggregate.aggregate?.sum
+      ?.discount;
+}
+
+Future<List<InfEarning>?> get_inf_earnings({required int influencerId}) async {
+  final QueryResult<Query$getInfluencerEarnings> res = await _db.graphQLClient
+      .query$getInfluencerEarnings(Options$Query$getInfluencerEarnings(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$getInfluencerEarnings(
+              influencer_id: influencerId)));
+
+  if (res.hasException) {
+    throwError(res.exception);
+  } else if (res.parsedData?.service_provider_offer_applied != null) {
+    return res.parsedData!.service_provider_offer_applied
+        .map<InfEarning>(
+            (Query$getInfluencerEarnings$service_provider_offer_applied e) =>
+                InfEarning(
+                    customerInfo: UserInfo(
+                        id: e.restaurant_order!.customer.user.id,
+                        name: e.restaurant_order!.customer.user.name,
+                        image: e.restaurant_order!.customer.user.image,
+                        firebaseId: "",
+                        language: Language.EN),
+                    serviceInfo: UserInfo(
+                        id: e.restaurant_order!.restaurant.id,
+                        name: e.restaurant_order!.restaurant.details!.name,
+                        image: e.restaurant_order!.restaurant.details!.image,
+                        firebaseId: "",
+                        language: Language.EN),
+                    orderTotal: e.order_total!,
+                    comission: e.comission!))
+        .toList();
+  }
+  return null;
 }

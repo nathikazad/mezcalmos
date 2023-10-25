@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/InfluencerApp/constants/influencerConstants.dart';
@@ -6,8 +7,10 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["InfluencerApp"]
@@ -22,6 +25,13 @@ class InfEarningsView extends StatefulWidget {
 
 class _InfEarningsViewState extends State<InfEarningsView> {
   InfEarningsViewController viewController = InfEarningsViewController();
+
+  @override
+  void initState() {
+    viewController.init();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,27 +52,77 @@ class _InfEarningsViewState extends State<InfEarningsView> {
                 width: double.infinity,
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("${_i18n()['totalEarnings']}"),
-                    smallSepartor,
-                    Obx(
-                      () => Text(
-                        viewController.totalEarnings
-                            .toPriceString(hideZero: false),
-                        style: context.textTheme.displayLarge
-                            ?.copyWith(color: primaryBlueColor),
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: <Widget>[
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text("${_i18n()['totalEarnings']}"),
+                            smallSepartor,
+                            Obx(
+                              () => Text(
+                                viewController.totalEarnings
+                                    .toPriceString(hideZero: false),
+                                style: context.textTheme.displayLarge
+                                    ?.copyWith(color: primaryBlueColor),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    )
-                  ],
+                      VerticalDivider(),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text("${_i18n()['outstanding']}"),
+                            smallSepartor,
+                            Obx(
+                              () => Text(
+                                viewController.totalDiscounts
+                                    .toPriceString(hideZero: false),
+                                style: context.textTheme.displayLarge
+                                    ?.copyWith(color: primaryBlueColor),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
             meduimSeperator,
             Obx(() {
               if (viewController.earnings.isNotEmpty) {
-                return Text("Not implemeted");
+                return Column(
+                  children: <Widget>[
+                    Column(
+                      children: List.generate(viewController.earnings.length,
+                          (int index) {
+                        final InfEarning e = viewController.earnings[index];
+                        return MezCard(
+                            firstAvatarBgImage: CachedNetworkImageProvider(
+                                e.customerInfo.image!),
+                            content: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  e.customerInfo.name!,
+                                  style: context.textTheme.bodyLarge,
+                                ),
+                                Text(e.description),
+                              ],
+                            ));
+                      }),
+                    )
+                  ],
+                );
               } else {
                 return Container(
                   margin: const EdgeInsets.all(15),
@@ -75,7 +135,7 @@ class _InfEarningsViewState extends State<InfEarningsView> {
                       ),
                       meduimSeperator,
                       Text(
-                        "${_i18n()['noEarnings']}",
+                        "${_i18n()['noEranings']}",
                         style: context.textTheme.bodyLarge,
                       ),
                       smallSepartor,

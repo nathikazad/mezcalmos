@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/graphql/influencer/hsInfluencer.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ScrollHelper.dart';
 
 class CustDealsViewController {
@@ -95,7 +96,7 @@ class CustDealsViewController {
         withCache: false,
       );
       print(newData.length);
-      _offers.value += newData;
+      _offers.value += newData.where((Offer e) => e.isActive == true).toList();
       if (newData.length == 0) {
         _promoReachedEndOfData = true;
       }

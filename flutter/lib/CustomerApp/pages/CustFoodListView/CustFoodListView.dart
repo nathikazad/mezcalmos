@@ -1,21 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mezcalmos/CustomerApp/components/MezServicesMapView.dart';
-import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/components/CustRestaurantCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/components/CustRestaurantItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustFoodListView/controllers/CustFoodListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -24,7 +19,6 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
-import 'package:uni_links/uni_links.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['CustomerWrapper'];
@@ -45,57 +39,61 @@ class _CustFoodListViewState extends State<CustFoodListView>
 
   @override
   void initState() {
-    redirectIfFirstTime();
-    _startListeningForLinks();
+    // redirectIfFirstTime();
+    // _startListeningForLinks();
     viewController.init(vsync: this, context: context);
     super.initState();
   }
 
-  Future<void> _startListeningForLinks() async {
-    mezDbgPrint("👁️👁️👁️👁️👁️startListeningForLinks");
-    String? initialLink;
-    try {
-      initialLink = await getInitialLink();
-    } catch (error) {
-      // Handle error
-    }
-    // Parse the initial link (if it exists)
-    if (initialLink != null) {
-      await CustomerLinkHandler.handleLink(
-          initialLink.replaceFirst("mezkala://", ""));
-    }
+  // Future<void> _startListeningForLinks() async {
+  //   mezDbgPrint("👁️👁️👁️👁️👁️startListeningForLinks");
+  //   String? initialLink;
+  //   try {
+  //     initialLink = await getInitialLink();
+  //   } catch (error) {
+  //     // Handle error
+  //   }
+  //   // Parse the initial link (if it exists)
+  //   if (initialLink != null) {
+  //     await CustomerLinkHandler.handleLink(
+  //         path: initialLink.replaceFirst("mezkala://", ""),
+  //         updateInfluencerUi: (String String) {});
+  //   }
 
-    // Subscribe to incoming links
-    if (kIsWeb == false) {
-      linkStream.listen((String? link) {
-        // Parse the link
-        mezDbgPrint("👁️👁️👁️👁️👁️new link $link");
-        if (link != null) {
-          CustomerLinkHandler.handleLink(link.replaceFirst("mezkala://", ""));
-        }
-      });
-    }
-  }
+  //   // Subscribe to incoming links
+  //   if (kIsWeb == false) {
+  //     linkStream.listen((String? link) {
+  //       // Parse the link
+  //       mezDbgPrint("👁️👁️👁️👁️👁️new link $link");
+  //       if (link != null) {
+  //         CustomerLinkHandler.handleLink(
+  //             path: initialLink!.replaceFirst("mezkala://", ""),
+  //             updateInfluencerUi: (String String) {});
+  //       }
+  //     });
+  //   }
+  // }
 
-  Future<void> redirectIfFirstTime() async {
-    final bool isFirstTime = GetStorage().read("first_time") ?? true;
+  // Future<void> redirectIfFirstTime() async {
+  //   final bool isFirstTime = GetStorage().read("first_time") ?? true;
 
-    if (isFirstTime) {
-      // This is the first time the app is launched
-      // GetStorage().write('first_time', false);
-      mezDbgPrint('⏰⏰⏰⏰⏰ App is launched for the first time');
-      final dynamic landingUrl = await CloudFunctions.callCloudFunction(
-          functionName: 'landingWebUrl-get');
-      mezDbgPrint('⏰⏰⏰⏰⏰ landing url is $landingUrl');
-      if (landingUrl != null) await CustomerLinkHandler.handleLink(landingUrl);
-    }
-  }
+  //   if (isFirstTime) {
+  //     // This is the first time the app is launched
+  //     // GetStorage().write('first_time', false);
+  //     mezDbgPrint('⏰⏰⏰⏰⏰ App is launched for the first time');
+  //     final dynamic landingUrl = await CloudFunctions.callCloudFunction(
+  //         functionName: 'landingWebUrl-get');
+  //     mezDbgPrint('⏰⏰⏰⏰⏰ landing url is $landingUrl');
+  //     if (landingUrl != null)
+  //       await CustomerLinkHandler.handleLink(
+  //           path: landingUrl, updateInfluencerUi: (String String) {});
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[

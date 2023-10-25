@@ -4513,6 +4513,7 @@
         "downloadedQr": "Descargar la imagen QR"
       },
       "InfEarningsView": {
+        "outstanding": "Pendiente",
         "earnings": "Ganancias",
         "totalEarnings": "Ganancias Totales",
         "noEranings": "Todavía no hay ganancias",

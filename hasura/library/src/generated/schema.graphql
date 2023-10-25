@@ -40745,6 +40745,17 @@ type service_provider_influencer_offer_aggregate {
   nodes: [service_provider_influencer_offer!]!
 }
 
+input service_provider_influencer_offer_aggregate_bool_exp {
+  count: service_provider_influencer_offer_aggregate_bool_exp_count
+}
+
+input service_provider_influencer_offer_aggregate_bool_exp_count {
+  arguments: [service_provider_influencer_offer_select_column!]
+  distinct: Boolean
+  filter: service_provider_influencer_offer_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "service_provider.influencer_offer"
 """
@@ -40762,11 +40773,47 @@ type service_provider_influencer_offer_aggregate_fields {
   variance: service_provider_influencer_offer_variance_fields
 }
 
+"""
+order by aggregate values of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_aggregate_order_by {
+  avg: service_provider_influencer_offer_avg_order_by
+  count: order_by
+  max: service_provider_influencer_offer_max_order_by
+  min: service_provider_influencer_offer_min_order_by
+  stddev: service_provider_influencer_offer_stddev_order_by
+  stddev_pop: service_provider_influencer_offer_stddev_pop_order_by
+  stddev_samp: service_provider_influencer_offer_stddev_samp_order_by
+  sum: service_provider_influencer_offer_sum_order_by
+  var_pop: service_provider_influencer_offer_var_pop_order_by
+  var_samp: service_provider_influencer_offer_var_samp_order_by
+  variance: service_provider_influencer_offer_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_arr_rel_insert_input {
+  data: [service_provider_influencer_offer_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: service_provider_influencer_offer_on_conflict
+}
+
 """aggregate avg on columns"""
 type service_provider_influencer_offer_avg_fields {
   id: Float
   influencer_id: Float
   offer_id: Float
+}
+
+"""
+order by avg() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_avg_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
 }
 
 """
@@ -40821,11 +40868,29 @@ type service_provider_influencer_offer_max_fields {
   offer_id: Int
 }
 
+"""
+order by max() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_max_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
+}
+
 """aggregate min on columns"""
 type service_provider_influencer_offer_min_fields {
   id: Int
   influencer_id: Int
   offer_id: Int
+}
+
+"""
+order by min() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_min_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
 }
 
 """
@@ -40894,6 +40959,15 @@ type service_provider_influencer_offer_stddev_fields {
   offer_id: Float
 }
 
+"""
+order by stddev() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_stddev_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type service_provider_influencer_offer_stddev_pop_fields {
   id: Float
@@ -40901,11 +40975,29 @@ type service_provider_influencer_offer_stddev_pop_fields {
   offer_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_stddev_pop_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type service_provider_influencer_offer_stddev_samp_fields {
   id: Float
   influencer_id: Float
   offer_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_stddev_samp_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
 }
 
 """
@@ -40931,6 +41023,15 @@ type service_provider_influencer_offer_sum_fields {
   id: Int
   influencer_id: Int
   offer_id: Int
+}
+
+"""
+order by sum() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_sum_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
 }
 
 """
@@ -40965,6 +41066,15 @@ type service_provider_influencer_offer_var_pop_fields {
   offer_id: Float
 }
 
+"""
+order by var_pop() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_var_pop_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
+}
+
 """aggregate var_samp on columns"""
 type service_provider_influencer_offer_var_samp_fields {
   id: Float
@@ -40972,11 +41082,29 @@ type service_provider_influencer_offer_var_samp_fields {
   offer_id: Float
 }
 
+"""
+order by var_samp() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_var_samp_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
+}
+
 """aggregate variance on columns"""
 type service_provider_influencer_offer_variance_fields {
   id: Float
   influencer_id: Float
   offer_id: Float
+}
+
+"""
+order by variance() on columns of table "service_provider.influencer_offer"
+"""
+input service_provider_influencer_offer_variance_order_by {
+  id: order_by
+  influencer_id: order_by
+  offer_id: order_by
 }
 
 """
@@ -41374,6 +41502,42 @@ type service_provider_offer {
     """JSON select path"""
     path: String
   ): jsonb
+
+  """An array relationship"""
+  influencer_offers(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_offer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_offer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_offer_bool_exp
+  ): [service_provider_influencer_offer!]!
+
+  """An aggregate relationship"""
+  influencer_offers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_influencer_offer_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_influencer_offer_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_influencer_offer_bool_exp
+  ): service_provider_influencer_offer_aggregate!
 
   """An object relationship"""
   laundry: laundry_store
@@ -41904,6 +42068,8 @@ input service_provider_offer_bool_exp {
   details: jsonb_comparison_exp
   id: Int_comparison_exp
   influencer_details: jsonb_comparison_exp
+  influencer_offers: service_provider_influencer_offer_bool_exp
+  influencer_offers_aggregate: service_provider_influencer_offer_aggregate_bool_exp
   laundry: laundry_store_bool_exp
   name: translation_bool_exp
   name_id: Int_comparison_exp
@@ -42013,6 +42179,7 @@ input service_provider_offer_insert_input {
 
   """{  rewardType :  same as discountType  rewardValue : double  }"""
   influencer_details: jsonb
+  influencer_offers: service_provider_influencer_offer_arr_rel_insert_input
   laundry: laundry_store_obj_rel_insert_input
   name: translation_obj_rel_insert_input
   name_id: Int
@@ -42083,6 +42250,7 @@ input service_provider_offer_order_by {
   details: order_by
   id: order_by
   influencer_details: order_by
+  influencer_offers_aggregate: service_provider_influencer_offer_aggregate_order_by
   laundry: laundry_store_order_by
   name: translation_order_by
   name_id: order_by

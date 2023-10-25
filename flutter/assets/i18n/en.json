@@ -4482,6 +4482,7 @@
         "downloadedQr": "Download QR image"
       },
       "InfEarningsView": {
+        "outstanding": "Outstanding",
         "earnings": "Earnings",
         "totalEarnings": "Total earnings",
         "noEranings": "No earnings yet",

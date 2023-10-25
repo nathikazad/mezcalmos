@@ -108,3 +108,45 @@ query getInfluencerTotalComissions($influencer_id: Int!) {
     }
   }
 }
+query getInfluencerTotalDiscounts($influencer_id: Int!) {
+  service_provider_offer_applied_aggregate(
+    where: { influencer_id: { _eq: $influencer_id } }
+  ) {
+    aggregate {
+      sum {
+        discount
+      }
+    }
+  }
+}
+query getInfluencerEarnings($influencer_id: Int!) {
+  service_provider_offer_applied(
+    where: { influencer_id: { _eq: $influencer_id } }
+  ) {
+    comission
+    discount
+    id
+    influencer_id
+    loss
+    offer_id
+    order_id
+    order_total
+    order_type
+    restaurant_order {
+      restaurant {
+        id
+        details {
+          image
+          name
+        }
+      }
+      customer {
+        user {
+          id
+          image
+          name
+        }
+      }
+    }
+  }
+}
