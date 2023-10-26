@@ -4482,6 +4482,7 @@
         "downloadedQr": "Download QR image"
       },
       "InfEarningsView": {
+        "refOrders": "Referral’s orders",
         "outstanding": "Outstanding",
         "earnings": "Earnings",
         "totalEarnings": "Total earnings",

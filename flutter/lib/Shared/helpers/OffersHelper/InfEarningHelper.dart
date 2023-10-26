@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart' as user;
 
 class InfEarning {
   UserInfo customerInfo;
-  UserInfo serviceInfo;
+  user.ServiceInfo serviceInfo;
   num orderTotal;
   num comission;
   InfEarning({

@@ -4513,6 +4513,7 @@
         "downloadedQr": "Descargar la imagen QR"
       },
       "InfEarningsView": {
+        "refOrders": "Órdenes de referidos",
         "outstanding": "Pendiente",
         "earnings": "Ganancias",
         "totalEarnings": "Ganancias Totales",

@@ -6,6 +6,8 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/influencer/__generated/influencer.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart' as user;
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 Future<Influencer?> get_influencer({required int userId}) async {
@@ -252,15 +254,22 @@ Future<List<InfEarning>?> get_inf_earnings({required int influencerId}) async {
                     customerInfo: UserInfo(
                         id: e.restaurant_order!.customer.user.id,
                         name: e.restaurant_order!.customer.user.name,
+                        phoneNumber: e.restaurant_order!.customer.user.phone,
                         image: e.restaurant_order!.customer.user.image,
                         firebaseId: "",
                         language: Language.EN),
-                    serviceInfo: UserInfo(
-                        id: e.restaurant_order!.restaurant.id,
+                    serviceInfo: user.ServiceInfo(
+                        hasuraId: e.restaurant_order!.restaurant.id,
                         name: e.restaurant_order!.restaurant.details!.name,
+                        phoneNumber: e
+                            .restaurant_order!.restaurant.details!.phone_number,
                         image: e.restaurant_order!.restaurant.details!.image,
                         firebaseId: "",
-                        language: Language.EN),
+                        location: MezLocation.fromHasura(
+                            e.restaurant_order!.restaurant.details!.location
+                                .gps,
+                            e.restaurant_order!.restaurant.details!.location
+                                .address)),
                     orderTotal: e.order_total!,
                     comission: e.comission!))
         .toList();

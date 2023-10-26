@@ -138,11 +138,17 @@ query getInfluencerEarnings($influencer_id: Int!) {
         details {
           image
           name
+          phone_number
+          location {
+            gps
+            address
+          }
         }
       }
       customer {
         user {
           id
+          phone
           image
           name
         }

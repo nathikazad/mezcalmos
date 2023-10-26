@@ -56,7 +56,7 @@ class UserInfo {
   //   );
   // }
 
-  Map<String, dynamic> toFirebaseFormatJson() => {
+  Map<String, dynamic> toFirebaseFormatJson() => <String, dynamic>{
         "id": firebaseId,
         "name": name,
         "image": image,
@@ -145,7 +145,7 @@ class MainUserInfo {
   //       image: image ?? defaultUserImgUrl);
   // }
 
-  Map<String, dynamic> toFirebaseFormatJson() => {
+  Map<String, dynamic> toFirebaseFormatJson() => <String, dynamic>{
         "id": id,
         "email": email,
         "name": name,
@@ -193,7 +193,7 @@ class ServiceInfo extends UserInfo {
   }
 
   @override
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         "uid": firebaseId,
         "name": name,
         "image": image,
@@ -213,5 +213,24 @@ class ServiceInfo extends UserInfo {
       name: name ?? this.name,
       descriptionId: descId ?? descriptionId,
     );
+  }
+
+  @override
+  bool operator ==(covariant ServiceInfo other) {
+    if (identical(this, other)) return true;
+
+    return other.hasuraId == hasuraId;
+  }
+
+  @override
+  int get hashCode {
+    return location.hashCode ^
+        locationId.hashCode ^
+        uniqueId.hashCode ^
+        descriptionId.hashCode ^
+        phoneNumber.hashCode ^
+        description.hashCode ^
+        currency.hashCode ^
+        languages.hashCode;
   }
 }
