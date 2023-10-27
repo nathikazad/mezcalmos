@@ -76,11 +76,12 @@ class TaxiOrder extends Order {
   TaxiOrdersStatus status;
   double distanceToClient = 0;
   TaxiUserInfo? get driver => serviceProvider as TaxiUserInfo?;
-  List<TaxiNotificationStatus> notificationStatuses = [];
-  List<CounterOffer> _counterOffers = [];
+  List<TaxiNotificationStatus> notificationStatuses =
+      <TaxiNotificationStatus>[];
+  List<CounterOffer> _counterOffers = <CounterOffer>[];
 
   List<CounterOffer> getValidCounterOfferts() {
-    List<CounterOffer> s = _counterOffers.where((CounterOffer offer) {
+    final List<CounterOffer> s = _counterOffers.where((CounterOffer offer) {
       mezDbgPrint(
           "getValidCounterOfferts ==> validityTimeDifference:${offer.validityTimeDifference()} - valid:${offer.isValid}");
       return offer.validityTimeDifference() < 0 && offer.isValid;
@@ -118,7 +119,7 @@ class TaxiOrder extends Order {
             dropOffLocation: to,
             routeInformation: routeInformation);
   // Get props as list.
-  List<Object> get props => [
+  List<Object> get props => <Object>[
         orderId,
         from,
         dropOffLocation,
@@ -128,14 +129,14 @@ class TaxiOrder extends Order {
       ];
 
   /// Convert [TaxiOrder] object to [TaxiRequest] object.
-  TaxiRequest toTaxiRequest() {
-    return TaxiRequest(
-        from: from,
-        to: dropOffLocation,
-        routeInformation: routeInformation,
-        estimatedPrice: costs.orderItemsCost!.round(),
-        paymentType: paymentType);
-  }
+  // TaxiRequest toTaxiRequest() {
+  //   return TaxiRequest(
+  //       from: from,
+  //       to: dropOffLocation,
+  //       routeInformation: routeInformation,
+  //       estimatedPrice: costs.orderItemsCost!.round(),
+  //       paymentType: paymentType);
+  // }
 
   factory TaxiOrder.fromData(id, data) {
     // mezDbgPrint("TAXI ORDER ------>>>>>>>>>>>>>>>>>>>> $data");
@@ -223,7 +224,7 @@ class TaxiOrder extends Order {
   }
 
   // Added for Debugging Perposes - Don't delete for now
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         "customer": customer,
         "estimatedPrice": costs,
         "from": from,

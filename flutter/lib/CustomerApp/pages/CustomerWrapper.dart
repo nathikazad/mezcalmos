@@ -12,6 +12,7 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
+import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
@@ -23,8 +24,8 @@ import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
+import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:uni_links/uni_links.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -60,22 +61,26 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   void initState() {
     super.initState();
     logEventToServer("Customer Wrapper init");
+
     if (authController.fireAuthUser != null) {
-      customerAuthController = Get.find<CustomerAuthController>();
-      _startListeningForNotifications();
-      MezRouter.registerReturnToViewCallback(SharedRoutes.kHomeRoute, () {
-        _checkOrders();
-      });
+      MezRouter.toPath(XRouter.taxiOrderRequestRoute);
+      // customerAuthController = Get.find<CustomerAuthController>();
+      // _startListeningForNotifications();
+      // MezRouter.registerReturnToViewCallback(SharedRoutes.kHomeRoute, () {
+      //   _checkOrders();
+      // });
 
-      _checkOrders();
+      // _checkOrders();
 
-      handleInfluencerDeals();
+      // handleInfluencerDeals();
+    } else {
+      SignInView.navigateAtInit();
     }
-    startAuthListener();
-    // DeepLinkHandler.startDynamicLinkCheckRoutine(
-    //     CustomerDeepLinkHandler.handleDeepLink);
-    redirectIfFirstTime();
-    _startListeningForLinks();
+    // startAuthListener();
+    // // DeepLinkHandler.startDynamicLinkCheckRoutine(
+    // //     CustomerDeepLinkHandler.handleDeepLink);
+    // redirectIfFirstTime();
+    // _startListeningForLinks();
   }
 
   void _checkOrders() {

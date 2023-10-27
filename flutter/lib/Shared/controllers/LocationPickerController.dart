@@ -32,7 +32,8 @@ class LocationPickerController extends MGoogleMapController {
   /// blackScreenBottomTextMargin
   RxDouble blackScreenBottomTextMargin = 0.0.obs;
 
-  LocationPickerController({bool myLocationButtonEnabled = true})
+  LocationPickerController(
+      {bool myLocationButtonEnabled = true, super.enableMezSmartPointer})
       : super(myLocationButtonEnabled: myLocationButtonEnabled);
 
   void showOrHideBlackScreen(bool value) {
@@ -46,6 +47,10 @@ class LocationPickerController extends MGoogleMapController {
   void showFakeMarkerAndPickButton() {
     _showFakeMarker.value = true;
     _bottomButtomToShow.value = BottomButtomToShow.Pick;
+  }
+
+  void showFakeMarker() {
+    _showFakeMarker.value = true;
   }
 
   void hideFakeMarker() {
@@ -80,9 +85,11 @@ class LocationPicker extends StatefulWidget {
 
   /// showBottomButton
   final bool showBottomButton;
+  final double recenterBtnBottomPadding;
   const LocationPicker({
     this.showBottomButton = true,
     this.onSuccessSignIn,
+    this.recenterBtnBottomPadding = 50,
     required this.notifyParentOfLocationFinalized,
     required this.notifyParentOfConfirm,
     required this.locationPickerMapController,
@@ -105,7 +112,7 @@ class LocationPickerState extends State<LocationPicker> {
             alignment: Alignment.center,
             children: <Widget>[
               MGoogleMap(
-                recenterBtnBottomPadding: 150,
+                recenterBtnBottomPadding: widget.recenterBtnBottomPadding,
                 mGoogleMapController: widget.locationPickerMapController,
                 notifyParentOfNewLocation:
                     widget.notifyParentOfLocationFinalized,
@@ -205,35 +212,20 @@ class LocationPickerState extends State<LocationPicker> {
                   ? 2
                   : 15),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            gradient: LinearGradient(
-                colors: notifier != null
-                    ? <Color>[
-                        Color.fromRGBO(81, 132, 255, 1),
-                        Color.fromRGBO(206, 73, 252, 1)
-                      ]
-                    : <Color>[Colors.grey.shade400, Colors.grey.shade400],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight),
-          ),
+              borderRadius: BorderRadius.circular(5), color: primaryBlueColor),
           child: Center(
             child: buttonText != null
-                ? Text(
-                    buttonText,
+                ? Text(buttonText,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.visible,
-                    style: TextStyle(
-                      fontFamily: 'psr',
-                      color: Colors.white,
-                      fontSize: 14.sp,
-                    ),
-                  )
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: Colors.white))
                 : Container(
                     height: 20,
                     width: 20,
                     child: CircularProgressIndicator(
                       strokeWidth: 1,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ),
           ),

@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -333,12 +334,15 @@ Future<void> showNormalDialog(
   BuildContext context, {
   IconData? icon,
   required String title,
+  bool dismissible = true,
+  Future<void> Function()? onClick,
   String? subtitle,
 }) async {
   final RxBool _clickedYes = false.obs;
   return showDialog(
       context: context,
       useRootNavigator: true,
+      barrierDismissible: dismissible,
       builder: (BuildContext ctx) {
         return AlertDialog(
           contentPadding: EdgeInsets.all(16),
@@ -357,11 +361,11 @@ Future<void> showNormalDialog(
                   width: 55,
                   child: Icon(
                     icon,
-                    color: Colors.orange.shade300,
+                    color: primaryBlueColor,
                     size: 33,
                   ),
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(252, 89, 99, 0.12),
+                    color: secondaryLightBlueColor,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -372,16 +376,22 @@ Future<void> showNormalDialog(
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w700,
-                    fontSize: 24,
+                    fontSize: 20.mezSp,
                   ),
                 ),
-                SizedBox(height: 2),
+                SizedBox(height: 10),
                 if (subtitle != null)
                   Text(subtitle,
                       textAlign: TextAlign.center,
-                      style: context.txt.headlineLarge
-                          ?.copyWith(color: Color(0xFF494949))),
-                SizedBox(height: 4),
+                      style: context.txt.headlineLarge?.copyWith(
+                        color: Colors.black,
+                        fontSize: 20.mezSp,
+                      )),
+                SizedBox(height: 10),
+                MezButton(
+                  label: "Ok",
+                  onClick: onClick,
+                )
               ],
             ),
           ),
