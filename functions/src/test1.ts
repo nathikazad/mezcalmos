@@ -268,6 +268,7 @@ interface Item {
     en: string;
     es: string;
   };
+  image: string;
   options?: Record<string, Option>;
 }
 
@@ -281,9 +282,8 @@ interface Category {
 
 type Menu = Record<string, Category>;
 const writeMenu2 = async (menu: Menu) => {
-  const restaurantId = 170;
+  const restaurantId = 171;
   let chain = getHasura();
-  let options = menu["Tacos"].items["Al Pastor"].options;
   let response = await chain.mutation({
     insert_restaurant_category: [
       {
@@ -331,7 +331,7 @@ const writeMenu2 = async (menu: Menu) => {
                       }
                     }
                   },
-
+                  image: itemData.image,
                   options: itemData.options ? {
                     data: Object.entries(itemData.options).map(([optionName, optionData], index2) => {
                       return {
