@@ -12,10 +12,6 @@ import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/customerDeepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustDealsView/CustDealsView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrdersListView/CustomerOrdersListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustProfileView/CustProfileView.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustomerServicesList.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
@@ -55,9 +51,9 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
 
   StreamSubscription<dynamic>? _authStateChnagesListener;
   RxList<Widget> tabs = RxList<Widget>(<Widget>[
-    CustServicesList(),
-    CustomerOrdersListView(asTab: true),
-    CustProfileView(),
+    // CustServicesList(),
+    // CustomerOrdersListView(asTab: true),
+    // CustProfileView(),
   ]);
 
   @override
@@ -107,13 +103,13 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _navBar(),
-      body: Obx(() {
-        if (authController.user != null) {
-          return tabs[_index.value];
-        } else {
-          return CustServicesList();
-        }
-      }),
+      // body: Obx(() {
+      //   if (authController.user != null) {
+      //     return tabs[_index.value];
+      //   } else {
+      //     return CustServicesList();
+      //   }
+      // }),
     );
   }
 
@@ -261,10 +257,10 @@ class _CustomerWrapperState extends State<CustomerWrapper> {
   void handleInfluencerDeals() {
     customerAuthController?.getInfluencerIdForCustomer().then((value) {
       if (customerAuthController?.influencerId != null) {
-        tabs.value.insert(2, CustDealsView());
-        _index.value = 2;
-        mezDbgPrint("Refreshing tabs ===========> 😁😁😁😁😁😁😁😁😁😁😁");
-        tabs.refresh();
+        // tabs.value.insert(2, CustDealsView());
+        // _index.value = 2;
+        // mezDbgPrint("Refreshing tabs ===========> 😁😁😁😁😁😁😁😁😁😁😁");
+        // tabs.refresh();
       }
     });
   }

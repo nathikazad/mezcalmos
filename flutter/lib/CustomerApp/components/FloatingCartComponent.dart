@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
 // import 'package:mezcalmos/CustomerApp/pages/CustCartView/CustCartView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
@@ -33,7 +32,7 @@ class FloatingCartComponent extends StatefulWidget {
 }
 
 class _FloatingCartComponentState extends State<FloatingCartComponent> {
-  List<dynamic> items = [].obs;
+  List<dynamic> items = <dynamic>[].obs;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
           //     ?
           items =
               Get.find<CustRestaurantCartController>().cart.value?.cartItems ??
-                  [];
+                  <dynamic>[];
           // : Get.find<CustBusinessCartController>().cart.value?.items ?? [];
           return items.length > 0
               ? badge.Badge(
@@ -68,11 +67,11 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
                   child: InkWell(
                     customBorder: CircleBorder(),
                     onTap: () {
-                      if (widget.cartType == CartType.restaurant) {
-                        ViewCartScreen.navigate();
-                      } else {
-                        // CustCartView.navigate();
-                      }
+                      // if (widget.cartType == CartType.restaurant) {
+                      //   ViewCartScreen.navigate();
+                      // } else {
+                      //   // CustCartView.navigate();
+                      // }
                     },
                     child: Container(
                       height: 30,
@@ -83,7 +82,10 @@ class _FloatingCartComponentState extends State<FloatingCartComponent> {
                             secondaryLightBlueColor, // circular shape
                         gradient: (widget.withGradient)
                             ? LinearGradient(
-                                colors: [primaryBlueColor, Color(0xFFAC59FC)],
+                                colors: <Color>[
+                                  primaryBlueColor,
+                                  Color(0xFFAC59FC)
+                                ],
                               )
                             : null,
                       ),

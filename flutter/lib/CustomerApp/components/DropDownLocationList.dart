@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart' as Location;
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/pages//Restaurants/CustCartView/components/SaveLocationDailog.dart';
+// import 'package:mezcalmos/CustomerApp/pages//Restaurants/CustCartView/components/SaveLocationDailog.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ContextHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -66,7 +66,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       id: -1,
       location: locModel.MezLocation(
         "",
-        Location.LocationData.fromMap({"latitude": 0.0, "longitude": 0.0}),
+        Location.LocationData.fromMap(
+            <String, dynamic>{"latitude": 0.0, "longitude": 0.0}),
       ),
     );
     listOfSavedLoacations.insert(
@@ -79,8 +80,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               (SavedLocation element) => element.defaultLocation) ??
           pickLocationPlaceholder;
     } else if (listOfSavedLoacations.isNotEmpty) {
-      SavedLocation? fromPAssedLoc = listOfSavedLoacations.firstWhereOrNull(
-          (SavedLocation element) =>
+      final SavedLocation? fromPAssedLoc =
+          listOfSavedLoacations.firstWhereOrNull((SavedLocation element) =>
               element.location.position.latitude ==
               widget.passedInLocation!.position.latitude);
       setState(() {
@@ -200,18 +201,18 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       onSaveLocation: ({locModel.MezLocation? location}) async {
         SavedLocation? newSavedLoc;
 
-        newSavedLoc = await savedLocationDailog(
-            context: context, loc: location!, skippable: false);
+        // newSavedLoc = await savedLocationDailog(
+        //     context: context, loc: location!, skippable: false);
 
         if (newSavedLoc != null) {
           setState(() {
-            listOfSavedLoacations.add(newSavedLoc!);
+            listOfSavedLoacations.add(newSavedLoc);
             dropDownListValue =
                 listOfSavedLoacations[listOfSavedLoacations.length - 1];
           });
           mezDbgPrint(
               " 😛😛😛😛 Call back after saving new Loc ===========>>>>>>>>>$newSavedLoc");
-        } else {
+        } else if (location != null) {
           setState(() {
             listOfSavedLoacations.add(SavedLocation(
                 name: location.address, id: null, location: location));
@@ -263,7 +264,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
             child: Container(
               alignment: Alignment.centerLeft,
               child: Row(
-                children: [
+                children: <Widget>[
                   Container(
                     child: Icon(
                       Icons.fmd_good,
