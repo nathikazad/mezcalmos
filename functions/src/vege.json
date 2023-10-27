@@ -1,210 +1,276 @@
 {
-    "Tacos": {
+    "noCategory": {
         "name": {
-            "en": "Tacos",
-            "es": "Tacos"
+            "en": "No Category",
+            "es": "Sin Categoria"
         },
         "items": {
-            "Al Pastor": {
+            "Pokephi": {
                 "name": {
-                    "en": "Al Pastor", 
-                    "es": "Al Pastor"
+                    "en": "Pokephi",
+                    "es": "Pokephi"
                 },
-                "cost": 40,
+                "cost": 180,
                 "desc": {
-                    "en": "Corn tortilla filled with al pastor", 
-                    "es": "Tortilla de maíz relleno con al pastor"
+                    "en": "Delicious bowl with various toppings and choices",
+                    "es": "Delicioso tazón con varios ingredientes y opciones"
                 },
+                "image": "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/restaurants%2Fpokephi%2FScreenshot%202023-10-26%20at%207.49.57%20PM.png?alt=media&token=93e5c1cf-0bfc-47cb-a541-72942d163e6e&_gl=1*1r8rf66*_ga*MjEzODU1NzI3Ny4xNjg5OTU5MTE4*_ga_CW55HF8NVT*MTY5ODMzMDEyNC43Mi4xLjE2OTgzMzE0MTcuNjAuMC4w",
                 "options": {
-                    "cantidad": {
+                    "base": {
                         "name": {
-                            "en": "Quantity",
-                            "es": "Cantidad"
+                            "en": "Base",
+                            "es": "Base"
                         },
                         "type": "chooseOne",
                         "choices": {
-                            "2x": {
+                            "arroz": {
                                 "name": {
-                                    "en": "2x",
-                                    "es": "2x"
+                                    "en": "Rice",
+                                    "es": "Arroz"
                                 },
-                                "cost": 0,
-                                "default": true
+                                "cost": 0
                             },
-                            "4x": {
+                            "pasta_de_arroz": {
                                 "name": {
-                                    "en": "4x",
-                                    "es": "4x"
+                                    "en": "Rice Pasta",
+                                    "es": "Pasta de Arroz"
                                 },
-                                "cost": 20
+                                "cost": 0
                             }
                         }
-                    }
-                }
-            },
-            "Soyatomic": {
-                "name": {
-                    "en": "Soyatomic", 
-                    "es": "Soyatomic"
-                },
-                "cost": 40,
-                "desc": {
-                    "en": "Soyatomic", 
-                    "es": "Soyatomic"
-                },
-                "options": {
-                    "cantidad": {
+                    },
+                    "proteina": {
                         "name": {
-                            "en": "Quantity",
-                            "es": "Cantidad"
+                            "en": "Protein",
+                            "es": "Proteína"
                         },
                         "type": "chooseOne",
                         "choices": {
-                            "2x": {
+                            "atun": {
                                 "name": {
-                                    "en": "2x",
-                                    "es": "2x"
+                                    "en": "Tuna",
+                                    "es": "Atún"
                                 },
-                                "cost": 0,
-                                "default": true
+                                "cost": 0
                             },
-                            "4x": {
+                            "salmon": {
                                 "name": {
-                                    "en": "4x",
-                                    "es": "4x"
+                                    "en": "Salmon",
+                                    "es": "Salmón"
                                 },
-                                "cost": 20
+                                "cost": 0
+                            },
+                            "tofu": {
+                                "name": {
+                                    "en": "Tofu",
+                                    "es": "Tofu"
+                                },
+                                "cost": 0
                             }
                         }
-                    }
-                }
-            },
-            "Milanesa": {
-                "name": {
-                    "en": "Milanesa", 
-                    "es": "Milanesa"
-                },
-                "cost": 25,
-                "desc": {
-                    "en": "Corn tortilla, cheese, cactus", 
-                    "es": "Tortilla de maíz, quesillo, nopales"
-                },
-                "options": {
-                    "cantidad": {
+                    },
+                    "toppings": {
                         "name": {
-                            "en": "Quantity",
-                            "es": "Cantidad"
+                            "en": "Toppings",
+                            "es": "Toppings"
+                        },
+                        "type": "chooseMany",
+                        "choices": {
+                            "sunomono": {
+                                "name": {
+                                    "en": "Sunomono",
+                                    "es": "Sunomono"
+                                },
+                                "cost": 0
+                            },
+                            "elote": {
+                                "name": {
+                                    "en": "Corn",
+                                    "es": "Elote"
+                                },
+                                "cost": 0
+                            },
+                            "pepino": {
+                                "name": {
+                                    "en": "Cucumber",
+                                    "es": "Pepino"
+                                },
+                                "cost": 0
+                            },
+                            "zanahoria": {
+                                "name": {
+                                    "en": "Carrot",
+                                    "es": "Zanahoria"
+                                },
+                                "cost": 0
+                            },
+                            "repollo": {
+                                "name": {
+                                    "en": "Cabbage",
+                                    "es": "Repollo"
+                                },
+                                "cost": 0
+                            },
+                            "betabel": {
+                                "name": {
+                                    "en": "Beet",
+                                    "es": "Betabel"
+                                },
+                                "cost": 0
+                            },
+                            "aguacate": {
+                                "name": {
+                                    "en": "Avocado",
+                                    "es": "Aguacate"
+                                },
+                                "cost": 0
+                            },
+                            "jengibre_en_conserva": {
+                                "name": {
+                                    "en": "Pickled Ginger",
+                                    "es": "Jengibre en Conserva"
+                                },
+                                "cost": 0
+                            },
+                            "pina": {
+                                "name": {
+                                    "en": "Pineapple",
+                                    "es": "Piña"
+                                },
+                                "cost": 0
+                            },
+                            "surimi": {
+                                "name": {
+                                    "en": "Surimi",
+                                    "es": "Surimi"
+                                },
+                                "cost": 0
+                            },
+                            "jalapeno": {
+                                "name": {
+                                    "en": "Jalapeño",
+                                    "es": "Jalapeño"
+                                },
+                                "cost": 0
+                            }
+                        }
+                    },
+                    "crunches": {
+                        "name": {
+                            "en": "Crunches",
+                            "es": "Crunches"
+                        },
+                        "type": "chooseMany",
+                        "choices": {
+                            "cebolla_crispy": {
+                                "name": {
+                                    "en": "Crispy Onion",
+                                    "es": "Cebolla Crispy"
+                                },
+                                "cost": 0
+                            },
+                            "cacahuate": {
+                                "name": {
+                                    "en": "Peanut",
+                                    "es": "Cacahuate"
+                                },
+                                "cost": 0
+                            },
+                            "coco": {
+                                "name": {
+                                    "en": "Coconut",
+                                    "es": "Coco"
+                                },
+                                "cost": 0
+                            },
+                            "banana_frita": {
+                                "name": {
+                                    "en": "Fried Banana",
+                                    "es": "Banana Frita"
+                                },
+                                "cost": 0
+                            },
+                            "ajo_crispy": {
+                                "name": {
+                                    "en": "Crispy Garlic",
+                                    "es": "Ajo Crispy"
+                                },
+                                "cost": 0
+                            }
+                        }
+                    },
+                    "salsa": {
+                        "name": {
+                            "en": "Sauce",
+                            "es": "Salsa"
                         },
                         "type": "chooseOne",
                         "choices": {
-                            "1x": {
+                            "soya": {
                                 "name": {
-                                    "en": "1x",
-                                    "es": "1x"
+                                    "en": "Soy",
+                                    "es": "Soya"
                                 },
-                                "cost": 0,
-                                "default": true
+                                "cost": 0
                             },
-                            "3x": {
+                            "chipotle": {
                                 "name": {
-                                    "en": "3x",
-                                    "es": "3x"
+                                    "en": "Chipotle",
+                                    "es": "Chipotle"
                                 },
-                                "cost": 45
+                                "cost": 0
+                            },
+                            "salsa_pokephi": {
+                                "name": {
+                                    "en": "Pokephi Sauce",
+                                    "es": "Salsa Pokephi"
+                                },
+                                "cost": 0
+                            },
+                            "teriaki": {
+                                "name": {
+                                    "en": "Teriyaki",
+                                    "es": "Teriaki"
+                                },
+                                "cost": 0
                             }
                         }
-                    }
-                }
-            },
-            "Suadero": {
-                "name": {
-                    "en": "Suadero",
-                    "es": "Suadero"
-                },
-                "cost": 80,
-                "desc": {
-                    "en": "5x Corn tortilla",
-                    "es": "5x Tortilla de maíz"
-                }
-            }
-        }
-    },
-    "Tortas": {
-        "name": {
-            "en": "Sandwiches",
-            "es": "Tortas"
-        },
-        "items": {
-            "Al Pastor": {
-                "name": {
-                    "en": "Al Pastor",
-                    "es": "Al Pastor"
-                },
-                "cost": 60,
-                "desc": {
-                    "en": "Bread, cheese, avocado, pineapple",
-                    "es": "Pan telera, quesillo, aguacate, piña"
-                }
-            },
-            "Carnitas": {
-                "name": {
-                    "en": "Carnitas",
-                    "es": "Carnitas"
-                },
-                "cost": 60,
-                "desc": {
-                    "en": "Bread, cheese, avocado, lettuce",
-                    "es": "Pan telera, quesillo, aguacate, lechuga"
-                }
-            },
-            "Milanesa": {
-                "name": {
-                    "en": "Milanesa",
-                    "es": "Milanesa"
-                },
-                "cost": 60,
-                "desc": {
-                    "en": "Bread, cheese, avocado, lettuce, tomato",
-                    "es": "Pan telera, quesillo, aguacate, lechuga, tomate"
+                    },
+                    "finalizacion": {
+                        "name": {
+                            "en": "Finish",
+                            "es": "Finalización"
+                        },
+                        "type": "chooseOne",
+                        "choices": {
+                            "sesamo": {
+                                "name": {
+                                    "en": "Sesame",
+                                    "es": "Sésamo"
+                                },
+                                "cost": 0
+                            },
+                            "cebollita_de_verdeo": {
+                                "name": {
+                                    "en": "Green Onion",
+                                    "es": "Cebollita de Verdeo"
+                                },
+                                "cost": 0
+                            },
+                            "alga_nori": {
+                                "name": {
+                                    "en": "Nori Seaweed",
+                                    "es": "Alga Nori"
+                                },
+                                "cost": 0
+                            }
+                        }
+                    }            
                 }
             }
-        }
-    },
-    "Gringas": {
-        "name": {
-            "en": "Gringas",
-            "es": "Gringas"
-        },
-        "items": {
-            "Clásica": {
-                "name": {
-                    "en": "Classic",
-                    "es": "Clásica"
-                },
-                "cost": 45,
-                "desc": {
-                    "en": "Flour tortilla, cheese, onion, bell pepper, mushroom",
-                    "es": "Tortilla de harina, quesillo, cebolla, morón, champiñón"
-                }
-            },
-            "Al Pastor": {
-                "name": {
-                    "en": "Al Pastor",
-                    "es": "Al Pastor"
-                },
-                "cost": 45
-            },
-            "Carnitas": {
-                "name": {
-                    "en": "Carnitas",
-                    "es": "Carnitas"
-                },
-                "cost": 45
-            }
+            
         }
     }
 }
-
-
-
 
