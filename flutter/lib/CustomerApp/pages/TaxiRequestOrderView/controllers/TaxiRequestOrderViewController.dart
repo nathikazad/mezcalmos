@@ -16,8 +16,10 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class TaxiRequestOrderViewController {
   AuthController _authController = Get.find<AuthController>();
+
   final LocationPickerController locationPickerController =
-      LocationPickerController(enableMezSmartPointer: true);
+      LocationPickerController(
+          enableMezSmartPointer: true, myLocationButtonEnabled: false);
   mat.TextEditingController fromLocText = mat.TextEditingController();
   mat.TextEditingController toLocText = mat.TextEditingController();
   mat.FocusNode fromLocFocusNode = mat.FocusNode();
@@ -45,14 +47,21 @@ class TaxiRequestOrderViewController {
   bool get showRouteInfo => route != null && isFromSetted && isToSetted;
 
   void init() {
-    locationPickerController.periodicRerendering.value = false;
-    locationPickerController.myLocationButtonEnabled.value = false;
+    locationPickerController.minMaxZoomPrefs = MinMaxZoomPreference(8, 14);
+    locationPickerController.initialZoomLevel = 10;
+    locationPickerController.periodicRerendering.value = true;
+    locationPickerController.animateMarkersPolyLinesBounds.value = true;
     locationPickerController.recenterButtonEnabled.value = false;
+    locationPickerController.myLocationButtonEnabled.value = true;
 
     // locationPickerController.minMaxZoomPrefs =
     //     MinMaxZoomPreference.unbounded; // LEZEM
-    locationPickerController.animateMarkersPolyLinesBounds.value = true;
+    // locationPickerController.periodicRerendering.value = true;
+    // locationPickerController.myLocationButtonEnabled.value = true;
+    // locationPickerController.recenterButtonEnabled.value = true;
 
+    // locationPickerController.animateMarkersPolyLinesBounds.value = true;
+    _getAndSetCurrentLocation();
     toLocFocusNode.addListener(() {
       if (toLocFocusNode.hasFocus) {
         startEditingToLoc();
@@ -63,7 +72,7 @@ class TaxiRequestOrderViewController {
         startEditingFromLoc();
       }
     });
-    _getAndSetCurrentLocation();
+
     startEditingFromLoc();
   }
 
@@ -208,7 +217,7 @@ class TaxiRequestOrderViewController {
           if (!kIsWeb) {
             locationPickerController.decodeAndAddPolyline(
                 encodedPolylineString: value.encodedPolyLine);
-            locationPickerController.animateAndUpdateBounds();
+            //  locationPickerController.animateAndUpdateBounds();
           }
           orderCost.value =
               (_route.value!.distance.distanceInMeters * 30) / 1000;

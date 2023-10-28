@@ -46,7 +46,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                       null
                   ? LocationPicker(
                       showBottomButton: false,
-                      recenterBtnBottomPadding: 80,
+                      recenterBtnBottomPadding: 150,
                       locationPickerMapController:
                           viewController.locationPickerController,
                       notifyParentOfConfirm: (_) {},
@@ -172,8 +172,8 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                       margin: const EdgeInsets.all(8),
                       child: MezIconButton(
                         onTap: () async {
-                          // await viewController.locationPickerController
-                          //     .locateMe();
+                          await viewController.locationPickerController
+                              .locateMe();
                         },
                         icon: Icons.near_me_outlined,
                         padding: const EdgeInsets.all(10),
