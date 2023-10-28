@@ -73,12 +73,15 @@ class CloudFunctions {
   }
 
   static Future<SendOtpResponse> otp3_sendOTPForLogin(
-      {required String language, required String phoneNumber}) async {
+      {Language? language,
+      required String phoneNumber,
+      AllowedChannels? channel}) async {
     return SendOtpResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "otp3-sendOTPForLogin",
         parameters: <String, dynamic>{
-          "language": language,
+          "language": language?.toFirebaseFormatString(),
           "phoneNumber": phoneNumber,
+          "channel": channel?.toFirebaseFormatString(),
         }));
   }
 
@@ -322,11 +325,11 @@ class CloudFunctions {
       required num tripDistance,
       required num tripDuration,
       required String tripPolyline,
+      String? scheduledTime,
+      String? stripePaymentId,
       num? commission,
       num? influenceId,
       num? offerId,
-      String? scheduledTime,
-      String? stripePaymentId,
       num? stripeFees,
       num? distanceFromBase,
       num? tax,
@@ -346,10 +349,10 @@ class CloudFunctions {
           "tripPolyline": tripPolyline,
           "scheduledTime": scheduledTime,
           "stripePaymentId": stripePaymentId,
-          "stripeFees": stripeFees,
           "commission": commission,
           "influenceId": influenceId,
           "offerId": offerId,
+          "stripeFees": stripeFees,
           "distanceFromBase": distanceFromBase,
           "tax": tax,
           "discountValue": discountValue,

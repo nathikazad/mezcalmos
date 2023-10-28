@@ -1,10 +1,10 @@
 
 
 import { log } from "firebase-functions/logger";
-import { initEnv } from "../../supervisor/src/init"
-import { checkout } from "./restaurant/checkoutCart";
-import { CustomerAppType } from "./shared/models/Generic/Generic";
-import { DeliveryType, PaymentType } from "./shared/models/Generic/Order";
+import { initEnv } from "../../../supervisor/src/init"
+import { checkout } from "./../restaurant/checkoutCart";
+import { CustomerAppType } from "./../shared/models/Generic/Generic";
+import { DeliveryType, PaymentType } from "./../shared/models/Generic/Order";
 // import { markMessagesAsFinished } from "./utilities/senders/whatsapp/markMessagesAsFinished";
 // import { generateA4 } from "./utilities/links/flyer2";
 // import { addAndNotify } from "./utilities/senders/whatsapp/handleWhatsapp";

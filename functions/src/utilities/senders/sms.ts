@@ -2,6 +2,7 @@ import twilio = require("twilio")
 import { getKeys } from "../../shared/keys";
 import { Keys } from "../../shared/models/Generic/Keys";
 import { VerificationCheckInstance } from "twilio/lib/rest/verify/v2/service/verificationCheck";
+import { Language } from "../../shared/models/Generic/Generic";
 
 
 let keys: Keys = getKeys();
@@ -22,12 +23,14 @@ export async function send(payload: Payload): Promise<void> {
 
 export interface OTPPayload {
   phoneNumber: string,
-  locale: AllowedLocales,
+  locale: Language,
   channel: AllowedChannels
 }
 
-export type AllowedLocales = 'en' | 'es';
-export type AllowedChannels = 'sms' | 'whatsapp';
+export enum AllowedChannels {
+  Sms = "sms",
+  Whatsapp = "whatsapp",
+}
 
 export async function sendOTP(payload: OTPPayload): Promise<void> {
   if (keys.twilio)

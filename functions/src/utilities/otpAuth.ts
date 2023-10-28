@@ -1,12 +1,12 @@
 import * as firebase from "firebase-admin";
 import * as functions from "firebase-functions";
-import { MezError } from "../shared/models/Generic/Generic";
-import * as sms from "./senders/sms";
+import { Language, MezError } from "../shared/models/Generic/Generic";
+import { AllowedChannels, OTPPayload, confirmOTP, sendOTP } from "./senders/sms";
 
 interface SendOtpInterface {
-  language?: sms.AllowedLocales,
+  language?: Language,
   phoneNumber: string,
-  channel?: sms.AllowedChannels
+  channel?: AllowedChannels
 }
 
 interface SendOtpResponse {
@@ -64,13 +64,13 @@ export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<Sen
         throw new MezError(SendOtpError.UserNotFound);
       }
     }
-    let payload: sms.OTPPayload = {
+    let payload: OTPPayload = {
       phoneNumber: data.phoneNumber,
-      channel: data.channel ?? "whatsapp",
-      locale: data.language ?? "en"
+      channel: data.channel ?? AllowedChannels.Whatsapp,
+      locale: data.language ?? Language.EN
     }
     try {
-      await sms.sendOTP(payload)
+      await sendOTP(payload)
     } catch (error) {
       functions.logger.error(error);
       throw new MezError(SendOtpError.SMSSendError);
@@ -101,7 +101,6 @@ export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<Sen
 }
 interface VerifyOtpInterface {
   phoneNumber: string,
-  channel: sms.AllowedChannels,
   OTPCode: string
 }
 export interface AuthResponse {
@@ -133,7 +132,7 @@ export async function getAuthUsingOTP(_:any, data: VerifyOtpInterface): Promise<
     if ((data.phoneNumber == "+12098628445" && data.OTPCode == "111111") || pause)  {
     // this condition for google and apple to gain instant Access.  
     } else {
-      let approved:boolean = await sms.confirmOTP(data.phoneNumber, data.OTPCode);
+      let approved:boolean = await confirmOTP(data.phoneNumber, data.OTPCode);
       if(!approved)
         throw AuthOtpError.InvalidOTPCode;
     }

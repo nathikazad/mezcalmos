@@ -19,10 +19,7 @@ export enum MarkMessagesError {
   AnotherDriverTookTheOrder = "anotherDriverTookTheOrder",
 }
 
-export async function markMessagesAsResponded(
-  uid: number,
-  data: MarkMessagesAsRespondedDetails
-): Promise<MarkMessagesResponse> {
+export async function markMessagesAsResponded(uid: number, data: MarkMessagesAsRespondedDetails): Promise<MarkMessagesResponse> {
   try {
     const phoneNumber = data.phoneNumber;
     if (!phoneNumber) {

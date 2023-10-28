@@ -88,10 +88,7 @@ enum CheckoutResponseError {
   UpdateOrderStripeError = "updateOrderStripeError",
 }
 
-export async function checkout(
-  customerId: number,
-  checkoutRequest: CheckoutRequest
-): Promise<CheckoutResponse> {
+export async function checkout(customerId: number,checkoutRequest: CheckoutRequest): Promise<CheckoutResponse> {
   try {
     let response = await Promise.all([
       getRestaurant(checkoutRequest.restaurantId),
