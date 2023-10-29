@@ -7,8 +7,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -16,8 +17,6 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class TaxiRequestOrderViewController {
-  AuthController _authController = Get.find<AuthController>();
-
   final LocationPickerController locationPickerController =
       LocationPickerController(
           enableMezSmartPointer: true, myLocationButtonEnabled: false);
@@ -329,11 +328,27 @@ class TaxiRequestOrderViewController {
         routeInformation: route,
         from: fromLoc.value!,
         to: toLoc.value!,
-        numbOfSeats: numbOfSeats.value);
+        numbOfSeats: numbOfSeats.value,
+        estimatedPrice: orderCost.value);
   }
 
   Future<void> _callCloudFunction() async {
     // @nathik work with the taxi request  ====> it have everything needed
     final TaxiRequest _request = _constructRequest();
+    await CloudFunctions.taxi_request(
+      customerAppType: kIsWeb ? CustomerAppType.Web : CustomerAppType.Native,
+      fromLocation: Location(
+          lat: _request.from.latitude,
+          lng: _request.from.longitude,
+          address: _request.from.address),
+      toLocation: Location(
+          lat: _request.to.latitude,
+          lng: _request.to.longitude,
+          address: _request.to.address),
+      rideCost: _request.estimatedPrice,
+      tripDistance: _request.routeInformation?.distance.distanceInMeters ?? 0,
+      tripDuration: _request.routeInformation?.duration.seconds ?? 0,
+      tripPolyline: _request.routeInformation?.encodedPolyLine ?? "",
+    );
   }
 }

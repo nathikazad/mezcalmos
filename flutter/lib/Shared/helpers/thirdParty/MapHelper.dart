@@ -140,6 +140,15 @@ Future<LocModel.MezLocation> getCurrentLocation() async {
   return LocModel.MezLocation("", res);
 }
 
+bool isLocationWithinIndia(LocModel.MezLocation loc) {
+  // Approximate boundaries of India
+  const double minLat = 6.7, maxLat = 35.5, minLng = 68.1, maxLng = 97.4;
+  return loc.latitude >= minLat &&
+      loc.latitude <= maxLat &&
+      loc.longitude >= minLng &&
+      loc.longitude <= maxLng;
+}
+
 Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
   mezDbgPrint("Getting locations with query =======>$search");
   final List<AutoCompleteResult> _returnedPredictions = <AutoCompleteResult>[];
@@ -150,8 +159,14 @@ Future<List<AutoCompleteResult>> getLocationsSuggestions(String search) async {
   final LocationData loc =
       await Get.find<LocationController>().getCurrentLocation();
 
+  final String components =
+      isLocationWithinIndia(LocModel.MezLocation.fromLocationData(loc))
+          ? "country:in"
+          : "country:mx";
+
   final String url =
-      "https://cors-mezc.herokuapp.com/api/place/autocomplete/json?input=$search&language=en&components=country:mx&location=${loc.latitude!},${loc.longitude!}&radius=11000";
+      "https://cors-mezc.herokuapp.com/api/place/autocomplete/json"
+      "?input=$search&language=${userLanguage.toFirebaseFormatString()}&components=$components&location=${loc.latitude},${loc.longitude}&radius=50";
 
   mezDbgPrint(" $url \n ===>TWRK :  ${loc.latitude}  | ${loc.longitude}<===");
 
@@ -244,6 +259,10 @@ Future<Route?> getDurationAndDistance(
 
   mezDbgPrint(
       "[tt] Called getDurationAndDistance \n- TO :  lat(${to.latitude}) | lng(to(${to.longitude}) \n- FROM :  lat(${from.latitude}) | lng(to(${from.longitude})!");
+
+  final String components =
+      isLocationWithinIndia(from) ? "country:in" : "country:mx";
+
   final String url =
       "https://cors-mezc.herokuapp.com/api/directions/json?units=metric&region=mx&destination=${to.latitude},${to.longitude}&origin=${from.latitude},${from.longitude}";
   mezDbgPrint("URL ==> $url");

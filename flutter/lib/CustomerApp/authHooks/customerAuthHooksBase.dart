@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/CustRestaurantCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -12,7 +11,6 @@ class CustomerAuthHooksBase {
 
     await Get.delete<CustomerAuthController>(force: true);
 
-    await Get.delete<CustRestaurantCartController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
     // await Get.delete<CustBusinessCartController>(force: true);
   }
@@ -26,8 +24,6 @@ class CustomerAuthHooksBase {
         permanent: true);
     Get.put<CustomerAuthController>(CustomerAuthController(), permanent: true);
 
-    Get.put<CustRestaurantCartController>(CustRestaurantCartController(),
-        permanent: true);
     // Get.put<CustBusinessCartController>(CustBusinessCartController(),
     //     permanent: true);
   }

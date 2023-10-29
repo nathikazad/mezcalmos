@@ -684,6 +684,24 @@ class ChangeUniqueIdResponse {
   }
 }
 
+enum CustomerAppType { Native, Web }
+
+extension ParseCustomerAppTypeToString on CustomerAppType {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToCustomerAppType on String {
+  CustomerAppType toCustomerAppType() {
+    return CustomerAppType.values.firstWhere(
+        (CustomerAppType customerAppType) =>
+            customerAppType.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
 class Location {
   num lat;
   num lng;
@@ -695,6 +713,31 @@ class Location {
       "lng": lng,
       "address": address,
     };
+  }
+}
+
+class TaxiRequestResponse {
+  bool success;
+  TaxiRequestResponseError? error;
+  String? unhandledError;
+  num? orderId;
+  TaxiRequestResponse(
+      this.success, this.error, this.unhandledError, this.orderId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+      "orderId": orderId,
+    };
+  }
+
+  factory TaxiRequestResponse.fromFirebaseFormattedJson(json) {
+    return TaxiRequestResponse(
+        json["success"],
+        json["error"]?.toString().toTaxiRequestResponseError(),
+        json["unhandledError"],
+        json["orderId"]);
   }
 }
 
@@ -763,24 +806,6 @@ class RestaurantResponse {
   factory RestaurantResponse.fromFirebaseFormattedJson(json) {
     return RestaurantResponse(json["success"],
         json["error"]?.toString().toRestaurantError(), json["unhandledError"]);
-  }
-}
-
-enum CustomerAppType { Native, Web }
-
-extension ParseCustomerAppTypeToString on CustomerAppType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToCustomerAppType on String {
-  CustomerAppType toCustomerAppType() {
-    return CustomerAppType.values.firstWhere(
-        (CustomerAppType customerAppType) =>
-            customerAppType.toFirebaseFormatString().toLowerCase() ==
-            toLowerCase());
   }
 }
 
@@ -4396,6 +4421,24 @@ extension ParseStringToChangeUniqueIdError on String {
     return ChangeUniqueIdError.values.firstWhere(
         (ChangeUniqueIdError changeUniqueIdError) =>
             changeUniqueIdError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum TaxiRequestResponseError { UnhandledError }
+
+extension ParseTaxiRequestResponseErrorToString on TaxiRequestResponseError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToTaxiRequestResponseError on String {
+  TaxiRequestResponseError toTaxiRequestResponseError() {
+    return TaxiRequestResponseError.values.firstWhere(
+        (TaxiRequestResponseError taxiRequestResponseError) =>
+            taxiRequestResponseError.toFirebaseFormatString().toLowerCase() ==
             toLowerCase());
   }
 }

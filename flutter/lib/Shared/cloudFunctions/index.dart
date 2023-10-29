@@ -284,6 +284,28 @@ class CloudFunctions {
         }));
   }
 
+  static Future<TaxiRequestResponse> taxi_request(
+      {required CustomerAppType customerAppType,
+      required Location fromLocation,
+      required Location toLocation,
+      required num rideCost,
+      required num tripDistance,
+      required num tripDuration,
+      required String tripPolyline}) async {
+    return TaxiRequestResponse.fromFirebaseFormattedJson(
+        await callCloudFunction(
+            functionName: "taxi-request",
+            parameters: <String, dynamic>{
+          "customerAppType": customerAppType.toFirebaseFormatString(),
+          "fromLocation": fromLocation.toFirebaseFormattedJson(),
+          "toLocation": toLocation.toFirebaseFormattedJson(),
+          "rideCost": rideCost,
+          "tripDistance": tripDistance,
+          "tripDuration": tripDuration,
+          "tripPolyline": tripPolyline,
+        }));
+  }
+
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,

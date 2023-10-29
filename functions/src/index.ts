@@ -42,6 +42,7 @@ import { markMessagesAsResponded } from "./utilities/senders/whatsapp/markMessag
 import { markMessagesAsFinished } from "./utilities/senders/whatsapp/markMessagesAsFinished";
 import { markMessagesAsCancelled } from "./utilities/senders/whatsapp/markMessagesAsCancelled";
 import { getLandingUrl, setLandingUrl } from "./utilities/landingUrl";
+import { requestTaxi } from "./utilities/senders/email";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -106,6 +107,10 @@ export const serviceProvider = {
   deleteServiceProvider: authenticatedCall((userId, data) => deleteServiceProvider(userId, data)),
   createMezAdminChat: authenticatedCall((userId, data) => createNewMezAdminChat(userId, data)),
   changeUniqueId: authenticatedCall((userId, data) => changeUniqueId(userId, data)),
+}
+
+export const taxi = {
+  request: authenticatedCall((userId, data) => requestTaxi(userId, data)),
 }
 
 export const restaurant3 = {
