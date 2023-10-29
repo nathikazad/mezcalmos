@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as mat;
 import 'package:get/get.dart';
@@ -47,20 +48,13 @@ class TaxiRequestOrderViewController {
   bool get showRouteInfo => route != null && isFromSetted && isToSetted;
 
   void init() {
-    locationPickerController.minMaxZoomPrefs = MinMaxZoomPreference(8, 14);
+    locationPickerController.minMaxZoomPrefs = MinMaxZoomPreference(8, 18);
     locationPickerController.initialZoomLevel = 10;
     locationPickerController.periodicRerendering.value = true;
     locationPickerController.animateMarkersPolyLinesBounds.value = true;
     locationPickerController.recenterButtonEnabled.value = false;
-    locationPickerController.myLocationButtonEnabled.value = true;
+    locationPickerController.myLocationButtonEnabled.value = false;
 
-    // locationPickerController.minMaxZoomPrefs =
-    //     MinMaxZoomPreference.unbounded; // LEZEM
-    // locationPickerController.periodicRerendering.value = true;
-    // locationPickerController.myLocationButtonEnabled.value = true;
-    // locationPickerController.recenterButtonEnabled.value = true;
-
-    // locationPickerController.animateMarkersPolyLinesBounds.value = true;
     _getAndSetCurrentLocation();
     toLocFocusNode.addListener(() {
       if (toLocFocusNode.hasFocus) {
@@ -77,20 +71,22 @@ class TaxiRequestOrderViewController {
   }
 
   void startEditingFromLoc() {
-    //locationPickerController.showFakeMarker();
     isSettingFromLocation.value = true;
     isSettingToLocation.value = false;
 
     toLocFocusNode.unfocus();
     locationPickerController.showFakeMarker();
+    BotToast.showText(
+        text: "You can move the marker", duration: Duration(seconds: 3));
   }
 
   void startEditingToLoc() {
-    //  locationPickerController.showFakeMarker();
     isSettingFromLocation.value = false;
     isSettingToLocation.value = true;
     fromLocFocusNode.unfocus();
     locationPickerController.showFakeMarker();
+    BotToast.showText(
+        text: "You can move the marker", duration: Duration(seconds: 3));
   }
 
   void setNewLocationOnController({required LatLng latlng, String? address}) {
@@ -192,7 +188,7 @@ class TaxiRequestOrderViewController {
 
     if (!kIsWeb) {
       await locationPickerController.addOrUpdatePurpleDestinationMarker(
-          markerId: "to", latLng: value.toLatLng());
+          markerId: "to", latLng: value.toLatLng(), fitWithinBounds: true);
     }
     toLoc.value = value;
     toLocText.text = value.address;
@@ -211,13 +207,14 @@ class TaxiRequestOrderViewController {
   Future<void> _updatePolyline() async {
     if (fromLoc.value != null && toLoc.value != null) {
       await getDurationAndDistance(fromLoc.value!, toLoc.value!)
-          .then((Route? value) {
+          .then((Route? value) async {
         if (value != null) {
           _route.value = value;
           if (!kIsWeb) {
             locationPickerController.decodeAndAddPolyline(
                 encodedPolylineString: value.encodedPolyLine);
-            //  locationPickerController.animateAndUpdateBounds();
+
+            locationPickerController.lockInAutoZoomAnimation();
           }
           orderCost.value =
               (_route.value!.distance.distanceInMeters * 30) / 1000;
@@ -226,21 +223,22 @@ class TaxiRequestOrderViewController {
     }
   }
 
-  void _setFromLoc(MezLocation value) {
+  Future<void> _setFromLoc(MezLocation value) async {
     fromLocFocusNode.unfocus();
-    locationPickerController.moveToNewLatLng(value.latitude, value.longitude);
+    await locationPickerController.moveToNewLatLng(
+        value.latitude, value.longitude);
     locationPickerController.setLocation(value);
 
     if (!kIsWeb) {
-      locationPickerController.addOrUpdateUserMarker(
-          markerId: "from", latLng: value.toLatLng());
+      await locationPickerController.addOrUpdateUserMarker(
+          markerId: "from", latLng: value.toLatLng(), fitWithinBounds: true);
     }
     fromLoc.value = value;
     fromLocText.text = value.address;
     isSettingFromLocation.value = false;
 
     _fromSuggestions.clear();
-    _updatePolyline();
+    await _updatePolyline();
     if (toLoc.value == null) {
       startEditingToLoc();
     } else {
@@ -257,6 +255,8 @@ class TaxiRequestOrderViewController {
     fromLocFocusNode.unfocus();
     locationPickerController.removeMarkerById("from");
     locationPickerController.clearPolyline();
+
+    startEditingFromLoc();
   }
 
   Future<void> clearToLoc() async {
@@ -267,7 +267,7 @@ class TaxiRequestOrderViewController {
     toLocFocusNode.unfocus();
     locationPickerController.removeMarkerById("to");
     locationPickerController.clearPolyline();
-    locationPickerController.showFakeMarker();
+    startEditingToLoc();
   }
 
   Future<void> selectCurrentLocation() async {
@@ -278,7 +278,7 @@ class TaxiRequestOrderViewController {
 
       await awaitGeoCodeAndSetControllerLocation(_pickedLoc);
       if (isSettingFromLocation.value) {
-        _setFromLoc(locationPickerController.location.value!);
+        await _setFromLoc(locationPickerController.location.value!);
       } else if (isSettingToLocation.value) {
         await _setToLoc(locationPickerController.location.value!);
       }

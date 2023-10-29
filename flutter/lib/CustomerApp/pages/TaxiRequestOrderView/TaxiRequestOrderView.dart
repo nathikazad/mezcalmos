@@ -46,7 +46,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                       null
                   ? LocationPicker(
                       showBottomButton: false,
-                      recenterBtnBottomPadding: 150,
+                      recenterBtnBottomPadding: 0,
                       locationPickerMapController:
                           viewController.locationPickerController,
                       notifyParentOfConfirm: (_) {},
@@ -131,40 +131,6 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                // Align(
-                //   alignment: Alignment.centerRight,
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     crossAxisAlignment: CrossAxisAlignment.end,
-                //     mainAxisSize: MainAxisSize.min,
-                //     children: [
-                //       MezIconButton(
-                //         onTap: () {
-                //           MezRouter.back();
-                //         },
-                //         icon: Icons.close,
-                //         padding: const EdgeInsets.all(10),
-                //         borderRadius: BorderRadius.circular(10),
-                //         backgroundColor: Colors.white,
-                //         iconColor: Colors.grey.shade900,
-                //         shape: BoxShape.rectangle,
-                //       ),
-                //       smallSepartor,
-                //       MezIconButton(
-                //         onTap: () async {
-                //           await viewController.locationPickerController
-                //               .locateMe();
-                //         },
-                //         icon: Icons.near_me_outlined,
-                //         padding: const EdgeInsets.all(10),
-                //         borderRadius: BorderRadius.circular(10),
-                //         backgroundColor: Colors.white,
-                //         iconColor: Colors.grey.shade900,
-                //         shape: BoxShape.rectangle,
-                //       )
-                //     ],
-                //   ),
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -176,7 +142,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                               .locateMe();
                         },
                         icon: Icons.near_me_outlined,
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(12),
                         borderRadius: BorderRadius.circular(10),
                         backgroundColor: Colors.white,
                         iconColor: Colors.grey.shade900,
@@ -191,7 +157,6 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                   else
                     return SizedBox();
                 }),
-
                 Obx(
                   () => MezButton(
                     height: 80,
@@ -233,14 +198,18 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                     MezIconButton(
                         backgroundColor: Colors.transparent,
                         iconColor: Colors.black,
+                        padding: const EdgeInsets.all(2),
                         onTap: () {
                           viewController.removeSeat();
                         },
-                        icon: Icons.remove_circle_outline),
+                        icon: Icons.remove),
                     Obx(
                       () => Text.rich(TextSpan(children: <InlineSpan>[
                         WidgetSpan(
-                            child: Icon(Icons.airline_seat_recline_normal)),
+                            child: Icon(
+                          Icons.airline_seat_recline_normal,
+                          size: 18.mezSp,
+                        )),
                         TextSpan(
                             text: "${viewController.numbOfSeats}",
                             style: context.textTheme.bodyLarge)
@@ -249,10 +218,11 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                     MezIconButton(
                         backgroundColor: Colors.transparent,
                         iconColor: Colors.black,
+                        padding: const EdgeInsets.all(2),
                         onTap: () {
                           viewController.addSeat();
                         },
-                        icon: Icons.add_circle_outline),
+                        icon: Icons.add),
                   ],
                 ),
               )),
