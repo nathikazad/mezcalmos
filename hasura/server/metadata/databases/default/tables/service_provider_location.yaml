@@ -37,6 +37,14 @@ select_permissions:
         - id
         - address
       filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
+    comment: ""
   - role: laundry_operator
     permission:
       columns:
