@@ -90,17 +90,6 @@ select_permissions:
       columns:
         - user_id
       filter: {}
-  - role: influencer
-    permission:
-      columns:
-        - user_id
-        - stripe_info
-        - app_type_id
-        - app_version
-        - service_provider_type
-        - stripe_id
-      filter: {}
-    comment: ""
   - role: laundry_operator
     permission:
       columns:

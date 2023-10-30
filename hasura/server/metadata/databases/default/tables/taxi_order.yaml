@@ -1,0 +1,13 @@
+table:
+  name: order
+  schema: taxi
+object_relationships:
+  - name: customer
+    using:
+      manual_configuration:
+        column_mapping:
+          customer_id: user_id
+        insertion_order: null
+        remote_table:
+          name: customer
+          schema: customer
