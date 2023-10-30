@@ -10,7 +10,9 @@ class TaxiRequest {
   PaymentType paymentType;
   DateTime? scheduledTime;
   List<int>? selectedCompanies;
+  DateTime? time;
   int numbOfSeats;
+  TaxiCarType carType;
   TaxiRequest({
     required this.from,
     required this.to,
@@ -19,6 +21,8 @@ class TaxiRequest {
     this.selectedCompanies,
     this.estimatedPrice = 40,
     this.paymentType = PaymentType.Cash,
+    this.carType = TaxiCarType.Mini,
+    this.time,
   });
 
   void setEstimatedPrice(int price) {
@@ -59,5 +63,21 @@ class TaxiRequest {
       "paymentType": paymentType.toFirebaseFormatString(),
       "scheduledTime": scheduledTime?.toUtc().toString()
     };
+  }
+}
+
+enum TaxiCarType { Mini, Suv }
+
+extension ParseTaxiCarTypeToString on TaxiCarType {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToTaxiCarType on String {
+  TaxiCarType toTaxiCarType() {
+    return TaxiCarType.values.firstWhere((TaxiCarType TaxiCarType) =>
+        TaxiCarType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }

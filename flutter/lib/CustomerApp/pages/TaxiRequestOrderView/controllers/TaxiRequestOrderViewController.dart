@@ -39,11 +39,14 @@ class TaxiRequestOrderViewController {
   RxBool isSettingToLocation = RxBool(false);
   RxInt numbOfSeats = RxInt(1);
   RxNum orderCost = RxNum(0);
+  Rx<TaxiCarType> _carType = Rx(TaxiCarType.Suv);
+  Rxn<DateTime> scheduleTime = Rxn<DateTime>();
   //  getters //
   bool get isFromSetted => fromLoc.value != null;
   bool get isToSetted => toLoc.value != null;
   Route? get route => _route.value;
   bool get _canOrder => isFromSetted && isToSetted && route != null;
+  TaxiCarType get carType => _carType.value;
 
   bool get showRouteInfo => route != null && isFromSetted && isToSetted;
 
@@ -216,11 +219,16 @@ class TaxiRequestOrderViewController {
 
             locationPickerController.lockInAutoZoomAnimation();
           }
-          orderCost.value =
-              (_route.value!.distance.distanceInMeters * 30) / 1000;
+          _calculateCost();
         }
       });
     }
+  }
+
+  void _calculateCost() {
+    final int kmPrice = (_carType.value == TaxiCarType.Mini) ? 33 : 43;
+    orderCost.value =
+        (_route.value!.distance.distanceInMeters * kmPrice) / 1000;
   }
 
   Future<void> _setFromLoc(MezLocation value) async {
@@ -297,6 +305,11 @@ class TaxiRequestOrderViewController {
     }
   }
 
+  void switchCartype(TaxiCarType carType) {
+    _carType.value = carType;
+    _calculateCost();
+  }
+
   Future<void> handleNext(mat.BuildContext context) async {
     if (isSettingFromLocation.value || isSettingToLocation.value) {
       await selectCurrentLocation();
@@ -329,11 +342,36 @@ class TaxiRequestOrderViewController {
         routeInformation: route,
         from: fromLoc.value!,
         to: toLoc.value!,
-        numbOfSeats: numbOfSeats.value);
+        numbOfSeats: numbOfSeats.value,
+        time: scheduleTime.value,
+        carType: _carType.value);
   }
 
   Future<void> _callCloudFunction() async {
     // @nathik work with the taxi request  ====> it have everything needed
     final TaxiRequest _request = _constructRequest();
+  }
+
+  Future<void> locateMe() async {
+    await locationPickerController.locateMe();
+  }
+
+  void clearTime() {
+    scheduleTime.value = null;
+  }
+
+  Future<void> setScheduleTime(mat.BuildContext context) async {
+    final DateTime? date = await getDatePicker(context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().copyWith(day: DateTime.now().day + 7));
+    if (date != null) {
+      final mat.TimeOfDay? time = await getTimePicker(context,
+          initialTime: mat.TimeOfDay(hour: date.hour, minute: date.minute));
+      if (time != null) {
+        scheduleTime.value =
+            DateTime(date.year, date.month, date.day, time.hour, time.minute);
+      }
+    }
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/TaxiRequestOrderView/controllers/TaxiRequestOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -36,32 +38,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Obx(
-            () => Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.grey.shade200),
-              child: viewController.locationPickerController.location.value !=
-                      null
-                  ? LocationPicker(
-                      showBottomButton: false,
-                      recenterBtnBottomPadding: 0,
-                      locationPickerMapController:
-                          viewController.locationPickerController,
-                      notifyParentOfConfirm: (_) {},
-                      notifyParentOfLocationFinalized: (MezLocation? location) {
-                        if (location != null) {
-                          viewController.locationPickerController
-                              .setLocation(location);
-                        }
-                      },
-                    )
-                  : Center(
-                      child: CircularProgressIndicator(),
-                    ),
-            ),
-          ),
+          _mapLayer(),
           SafeArea(
             child: Container(
                 alignment: Alignment.topCenter,
@@ -119,6 +96,48 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                               },
                             ),
                           ),
+                          smallSepartor,
+                          Obx(() => Card(
+                                margin: EdgeInsets.zero,
+                                elevation: 1,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    await viewController
+                                        .setScheduleTime(context);
+                                  },
+                                  child: Ink(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.watch_later,
+                                          size: 15.mezSp,
+                                        ),
+                                        hSmallSepartor,
+                                        Flexible(
+                                            fit: FlexFit.tight,
+                                            child: Text(viewController
+                                                    .scheduleTime.value
+                                                    ?.getOrderTime() ??
+                                                "Now")),
+                                        MezIconButton(
+                                          onTap: () {
+                                            viewController.clearTime();
+                                          },
+                                          icon: Icons.close,
+                                          iconColor: Colors.black,
+                                          padding: const EdgeInsets.all(3),
+                                          backgroundColor: Colors.transparent,
+                                          elevation: 0,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ))
                         ],
                       ),
                     ),
@@ -131,26 +150,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      child: MezIconButton(
-                        onTap: () async {
-                          await viewController.locationPickerController
-                              .locateMe();
-                        },
-                        icon: Icons.near_me_outlined,
-                        padding: const EdgeInsets.all(12),
-                        borderRadius: BorderRadius.circular(10),
-                        backgroundColor: Colors.white,
-                        iconColor: Colors.grey.shade900,
-                        shape: BoxShape.rectangle,
-                      ),
-                    ),
-                  ],
-                ),
+                _locateMeButton(),
                 Obx(() {
                   if (viewController.showRouteInfo)
                     return _routeInfoCard(context);
@@ -159,7 +159,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                 }),
                 Obx(
                   () => MezButton(
-                    height: 80,
+                    height: 70,
                     label: viewController.isSettingFromLocation.value ||
                             viewController.isSettingToLocation.value
                         ? "Pick"
@@ -178,6 +178,52 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
     );
   }
 
+  Container _locateMeButton() {
+    return Container(
+      margin: const EdgeInsets.all(8),
+      alignment: Alignment.bottomRight,
+      child: MezIconButton(
+        onTap: () async {
+          await viewController.locateMe();
+        },
+        icon: Icons.near_me_outlined,
+        padding: const EdgeInsets.all(12),
+        borderRadius: BorderRadius.circular(10),
+        backgroundColor: Colors.white,
+        iconColor: Colors.grey.shade900,
+        shape: BoxShape.rectangle,
+      ),
+    );
+  }
+
+  Obx _mapLayer() {
+    return Obx(
+      () => Container(
+        width: Get.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.grey.shade200),
+        child: viewController.locationPickerController.location.value != null
+            ? LocationPicker(
+                showBottomButton: false,
+                recenterBtnBottomPadding: 0,
+                locationPickerMapController:
+                    viewController.locationPickerController,
+                notifyParentOfConfirm: (_) {},
+                notifyParentOfLocationFinalized: (MezLocation? location) {
+                  if (location != null) {
+                    viewController.locationPickerController
+                        .setLocation(location);
+                  }
+                },
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
+      ),
+    );
+  }
+
   Card _routeInfoCard(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -185,96 +231,183 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
           side: BorderSide(color: primaryBlueColor, width: 1.5)),
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       child: Container(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         child: IntrinsicHeight(
           child: Row(
             children: <Widget>[
               Flexible(
-                  child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    MezIconButton(
-                        backgroundColor: Colors.transparent,
-                        iconColor: Colors.black,
-                        padding: const EdgeInsets.all(2),
-                        onTap: () {
-                          viewController.removeSeat();
-                        },
-                        icon: Icons.remove),
-                    Obx(
-                      () => Text.rich(TextSpan(children: <InlineSpan>[
-                        WidgetSpan(
-                            child: Icon(
-                          Icons.airline_seat_recline_normal,
-                          size: 18.mezSp,
-                        )),
-                        TextSpan(
-                            text: "${viewController.numbOfSeats}",
-                            style: context.textTheme.bodyLarge)
-                      ])),
-                    ),
-                    MezIconButton(
-                        backgroundColor: Colors.transparent,
-                        iconColor: Colors.black,
-                        padding: const EdgeInsets.all(2),
-                        onTap: () {
-                          viewController.addSeat();
-                        },
-                        icon: Icons.add),
-                  ],
-                ),
-              )),
-              VerticalDivider(),
-              Column(
-                children: <Widget>[
-                  RichText(
-                      text: TextSpan(children: <InlineSpan>[
-                    WidgetSpan(
-                        child: Icon(
-                      Icons.route,
-                      size: 15.mezSp,
-                    )),
-                    WidgetSpan(child: hTinySepartor),
-                    TextSpan(
-                        text: viewController.route!.distance.distanceStringInKm,
-                        style: context.textTheme.bodyMedium)
-                  ])),
-                  RichText(
-                      text: TextSpan(children: <InlineSpan>[
-                    WidgetSpan(
-                        child: Icon(
-                      Icons.watch_later_outlined,
-                      size: 15.mezSp,
-                    )),
-                    WidgetSpan(child: hTinySepartor),
-                    TextSpan(
-                        text: viewController.route!.duration.shortTextVersion,
-                        style: context.textTheme.bodyMedium)
-                  ])),
-                ],
-              ),
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: _cartTypeSelector(context)),
               if (viewController.orderCost.value > 0) ...<Widget>[
                 VerticalDivider(),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Cost"),
-                      Text(
-                        "₹${viewController.orderCost.value.round()}",
-                        style: context.textTheme.bodyLarge
-                            ?.copyWith(color: primaryBlueColor),
-                      ),
-                    ],
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("Cost"),
+                        Text(
+                          "₹${viewController.orderCost.value.round()}",
+                          style: context.textTheme.bodyLarge
+                              ?.copyWith(color: primaryBlueColor),
+                        ),
+                      ],
+                    ),
                   ),
                 )
-              ]
+              ],
+              VerticalDivider(),
+              _orderDistanceAndDuration(context),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _orderDistanceAndDuration(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        RichText(
+            text: TextSpan(children: <InlineSpan>[
+          WidgetSpan(
+              child: Icon(
+            Icons.route,
+            size: 15.mezSp,
+          )),
+          WidgetSpan(child: hTinySepartor),
+          TextSpan(
+              text: viewController.route!.distance.distanceStringInKm,
+              style: context.textTheme.bodyMedium)
+        ])),
+        RichText(
+            text: TextSpan(children: <InlineSpan>[
+          WidgetSpan(
+              child: Icon(
+            Icons.watch_later_outlined,
+            size: 15.mezSp,
+          )),
+          WidgetSpan(child: hTinySepartor),
+          TextSpan(
+              text: viewController.route!.duration.shortTextVersion,
+              style: context.textTheme.bodyMedium)
+        ])),
+      ],
+    );
+  }
+
+  Container _cartTypeSelector(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            child: InkWell(
+              onTap: () {
+                viewController.switchCartype(TaxiCarType.Suv);
+              },
+              child: Ink(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: viewController.carType == TaxiCarType.Suv
+                      ? secondaryLightBlueColor
+                      : null,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.airport_shuttle_rounded,
+                      size: 16.mezSp,
+                      color: viewController.carType == TaxiCarType.Suv
+                          ? primaryBlueColor
+                          : Colors.grey.shade700,
+                    ),
+                    Text(
+                      "Suv",
+                      style: context.textTheme.bodyLarge?.copyWith(
+                        color: viewController.carType == TaxiCarType.Suv
+                            ? primaryBlueColor
+                            : Colors.grey.shade700,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          hSmallSepartor,
+          Flexible(
+            child: InkWell(
+              onTap: () {
+                viewController.switchCartype(TaxiCarType.Mini);
+              },
+              child: Ink(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: viewController.carType == TaxiCarType.Mini
+                      ? secondaryLightBlueColor
+                      : null,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.local_taxi_rounded,
+                      size: 16.mezSp,
+                      color: viewController.carType == TaxiCarType.Mini
+                          ? primaryBlueColor
+                          : Colors.grey.shade700,
+                    ),
+                    Text(
+                      "Mini",
+                      style: context.textTheme.bodyLarge?.copyWith(
+                        color: viewController.carType == TaxiCarType.Mini
+                            ? primaryBlueColor
+                            : Colors.grey.shade700,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // MezIconButton(
+          //     backgroundColor: Colors.transparent,
+          //     iconColor: Colors.black,
+          //     padding: const EdgeInsets.all(2),
+          //     onTap: () {
+          //       viewController.removeSeat();
+          //     },
+          //     icon: Icons.remove),
+          // Obx(
+          //   () => Text.rich(TextSpan(children: <InlineSpan>[
+          //     WidgetSpan(
+          //         child: Icon(
+          //       Icons.airline_seat_recline_normal,
+          //       size: 18.mezSp,
+          //     )),
+          //     TextSpan(
+          //         text: "${viewController.numbOfSeats}",
+          //         style: context.textTheme.bodyLarge)
+          //   ])),
+          // ),
+          // MezIconButton(
+          //     backgroundColor: Colors.transparent,
+          //     iconColor: Colors.black,
+          //     padding: const EdgeInsets.all(2),
+          //     onTap: () {
+          //       viewController.addSeat();
+          //     },
+          //     icon: Icons.add),
+        ],
       ),
     );
   }

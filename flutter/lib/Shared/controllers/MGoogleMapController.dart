@@ -433,8 +433,6 @@ class MGoogleMapController {
       }
     });
 
-    mezDbgPrint("BNDS ARRAY ----------------------------->${_bnds.length}");
-
     return _bnds.isEmpty ? null : MapHelper.createMapBounds(_bnds);
   }
 
