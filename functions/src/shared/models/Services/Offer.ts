@@ -46,18 +46,19 @@ export interface OfferDetails {
   discountType: DiscountType;
 
   discountValue: number;
-
+   /*
   // // entireOrder/particularItems/particularCategories
-  // eligibleForReward?: string;
+  eligibleForReward?: string;
 
   // // particularItems/particularCategories
-  // rewardType?: string;
+  rewardType?: string;
   
-  // rewardItems?: Array<number>;
-  // rewardCategories?: Array<number>;
+  rewardItems?: Array<number>;
+  rewardCategories?: Array<number>;
+  */
   minimumOrderAmount?: number;
   influencerCommission?: InfluencerCommission;
-
+   
   // Array<itemsIds>,
   items?: Array<number>;
 
@@ -92,8 +93,11 @@ export enum CommissionType {
 export enum DiscountType {
   FlatAmount = "flatAmount",
   Percentage = "percentage",
-  // ParticularItems = "particularItems",
-  // AnotherSamePercentage = "anotherSamePercentage",
+  /*
+  ParticularItems = "particularItems",
+  AnotherSamePercentage = "anotherSamePercentage",
+  AnotherSameFlat = "anotherSameFlat",
+  */
   StoreCredit = "storeCredit",
 }
 

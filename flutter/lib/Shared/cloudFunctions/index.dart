@@ -73,12 +73,15 @@ class CloudFunctions {
   }
 
   static Future<SendOtpResponse> otp3_sendOTPForLogin(
-      {required String language, required String phoneNumber}) async {
+      {Language? language,
+      required String phoneNumber,
+      AllowedChannels? channel}) async {
     return SendOtpResponse.fromFirebaseFormattedJson(await callCloudFunction(
         functionName: "otp3-sendOTPForLogin",
         parameters: <String, dynamic>{
-          "language": language,
+          "language": language?.toFirebaseFormatString(),
           "phoneNumber": phoneNumber,
+          "channel": channel?.toFirebaseFormatString(),
         }));
   }
 
@@ -281,6 +284,32 @@ class CloudFunctions {
         }));
   }
 
+  static Future<TaxiRequestResponse> taxi_request(
+      {required CustomerAppType customerAppType,
+      required Location fromLocation,
+      required Location toLocation,
+      required num rideCost,
+      required num tripDistance,
+      required num tripDuration,
+      required String tripPolyline,
+      required String orderTime,
+      required String carType}) async {
+    return TaxiRequestResponse.fromFirebaseFormattedJson(
+        await callCloudFunction(
+            functionName: "taxi-request",
+            parameters: <String, dynamic>{
+          "customerAppType": customerAppType.toFirebaseFormatString(),
+          "fromLocation": fromLocation.toFirebaseFormattedJson(),
+          "toLocation": toLocation.toFirebaseFormattedJson(),
+          "rideCost": rideCost,
+          "tripDistance": tripDistance,
+          "tripDuration": tripDuration,
+          "tripPolyline": tripPolyline,
+          "orderTime": orderTime,
+          "carType": carType,
+        }));
+  }
+
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,
@@ -322,11 +351,11 @@ class CloudFunctions {
       required num tripDistance,
       required num tripDuration,
       required String tripPolyline,
+      String? scheduledTime,
+      String? stripePaymentId,
       num? commission,
       num? influenceId,
       num? offerId,
-      String? scheduledTime,
-      String? stripePaymentId,
       num? stripeFees,
       num? distanceFromBase,
       num? tax,
@@ -346,10 +375,10 @@ class CloudFunctions {
           "tripPolyline": tripPolyline,
           "scheduledTime": scheduledTime,
           "stripePaymentId": stripePaymentId,
-          "stripeFees": stripeFees,
           "commission": commission,
           "influenceId": influenceId,
           "offerId": offerId,
+          "stripeFees": stripeFees,
           "distanceFromBase": distanceFromBase,
           "tax": tax,
           "discountValue": discountValue,

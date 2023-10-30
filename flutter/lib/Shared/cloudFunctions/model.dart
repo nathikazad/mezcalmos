@@ -81,6 +81,40 @@ class HasuraClaimResponse {
   }
 }
 
+enum Language { EN, ES }
+
+extension ParseLanguageToString on Language {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str.toLowerCase();
+  }
+}
+
+extension ParseStringToLanguage on String {
+  Language toLanguage() {
+    return Language.values.firstWhere((Language language) =>
+        language.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+enum AllowedChannels { Sms, Whatsapp }
+
+extension ParseAllowedChannelsToString on AllowedChannels {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToAllowedChannels on String {
+  AllowedChannels toAllowedChannels() {
+    return AllowedChannels.values.firstWhere(
+        (AllowedChannels allowedChannels) =>
+            allowedChannels.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
 class SendOtpResponse {
   bool success;
   SendOtpError? error;
@@ -650,6 +684,24 @@ class ChangeUniqueIdResponse {
   }
 }
 
+enum CustomerAppType { Native, Web }
+
+extension ParseCustomerAppTypeToString on CustomerAppType {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToCustomerAppType on String {
+  CustomerAppType toCustomerAppType() {
+    return CustomerAppType.values.firstWhere(
+        (CustomerAppType customerAppType) =>
+            customerAppType.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
 class Location {
   num lat;
   num lng;
@@ -661,6 +713,31 @@ class Location {
       "lng": lng,
       "address": address,
     };
+  }
+}
+
+class TaxiRequestResponse {
+  bool success;
+  TaxiRequestResponseError? error;
+  String? unhandledError;
+  num? orderId;
+  TaxiRequestResponse(
+      this.success, this.error, this.unhandledError, this.orderId);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+      "orderId": orderId,
+    };
+  }
+
+  factory TaxiRequestResponse.fromFirebaseFormattedJson(json) {
+    return TaxiRequestResponse(
+        json["success"],
+        json["error"]?.toString().toTaxiRequestResponseError(),
+        json["unhandledError"],
+        json["orderId"]);
   }
 }
 
@@ -729,24 +806,6 @@ class RestaurantResponse {
   factory RestaurantResponse.fromFirebaseFormattedJson(json) {
     return RestaurantResponse(json["success"],
         json["error"]?.toString().toRestaurantError(), json["unhandledError"]);
-  }
-}
-
-enum CustomerAppType { Native, Web }
-
-extension ParseCustomerAppTypeToString on CustomerAppType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToCustomerAppType on String {
-  CustomerAppType toCustomerAppType() {
-    return CustomerAppType.values.firstWhere(
-        (CustomerAppType customerAppType) =>
-            customerAppType.toFirebaseFormatString().toLowerCase() ==
-            toLowerCase());
   }
 }
 
@@ -1353,22 +1412,6 @@ class NotificationInfo {
       "id": id,
       "userId": userId,
     };
-  }
-}
-
-enum Language { EN, ES }
-
-extension ParseLanguageToString on Language {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str.toLowerCase();
-  }
-}
-
-extension ParseStringToLanguage on String {
-  Language toLanguage() {
-    return Language.values.firstWhere((Language language) =>
-        language.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }
 
@@ -2262,7 +2305,7 @@ class Offer {
   }
 }
 
-enum OfferType { Promotion, Coupon, MonthlySubscription, Influencer }
+enum OfferType { Promotion, Coupon, Influencer, MonthlySubscription }
 
 extension ParseOfferTypeToString on OfferType {
   String toFirebaseFormatString() {
@@ -2311,7 +2354,12 @@ class OfferDetails {
   String? offerForItems;
   DiscountType discountType;
   num discountValue;
+  String? eligibleForReward;
+  String? rewardType;
+  List<num>? rewardItems;
+  List<num>? rewardCategories;
   num? minimumOrderAmount;
+  InfluencerCommission? influencerCommission;
   List<num>? items;
   List<num>? categories;
   List<num>? nameIds;
@@ -2324,7 +2372,12 @@ class OfferDetails {
       this.offerForItems,
       required this.discountType,
       required this.discountValue,
+      this.eligibleForReward,
+      this.rewardType,
+      this.rewardItems,
+      this.rewardCategories,
       this.minimumOrderAmount,
+      this.influencerCommission,
       this.items,
       this.categories,
       this.nameIds,
@@ -2338,7 +2391,12 @@ class OfferDetails {
       "offerForItems": offerForItems,
       "discountType": discountType,
       "discountValue": discountValue,
+      "eligibleForReward": eligibleForReward,
+      "rewardType": rewardType,
+      "rewardItems": rewardItems,
+      "rewardCategories": rewardCategories,
       "minimumOrderAmount": minimumOrderAmount,
+      "influencerCommission": influencerCommission,
       "items": items,
       "categories": categories,
       "nameIds": nameIds,
@@ -2346,6 +2404,18 @@ class OfferDetails {
       "validityRangeStart": validityRangeStart,
       "validityRangeEnd": validityRangeEnd,
       "weeklyRepeat": weeklyRepeat,
+    };
+  }
+}
+
+class InfluencerCommission {
+  CommissionType commissionType;
+  num value;
+  InfluencerCommission({required this.commissionType, required this.value});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "commissionType": commissionType,
+      "value": value,
     };
   }
 }
@@ -2362,11 +2432,28 @@ class InfluencerOfferDetails {
   }
 }
 
+enum CommissionType { FlatAmount, Percentage }
+
+extension ParseCommissionTypeToString on CommissionType {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToCommissionType on String {
+  CommissionType toCommissionType() {
+    return CommissionType.values.firstWhere((CommissionType commissionType) =>
+        commissionType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
 enum DiscountType {
   FlatAmount,
   Percentage,
-  AnotherSameFlat,
+  ParticularItems,
   AnotherSamePercentage,
+  AnotherSameFlat,
   StoreCredit
 }
 
@@ -2381,6 +2468,29 @@ extension ParseStringToDiscountType on String {
   DiscountType toDiscountType() {
     return DiscountType.values.firstWhere((DiscountType discountType) =>
         discountType.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  }
+}
+
+class OfferApplied {
+  num offerId;
+  num orderId;
+  OrderType orderType;
+  num discount;
+  num commission;
+  OfferApplied(
+      {required this.offerId,
+      required this.orderId,
+      required this.orderType,
+      required this.discount,
+      required this.commission});
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "offerId": offerId,
+      "orderId": orderId,
+      "orderType": orderType,
+      "discount": discount,
+      "commission": commission,
+    };
   }
 }
 
@@ -2758,6 +2868,7 @@ class CartItem {
   String? notes;
   Map<Language, String> name;
   String? image;
+  num? categoryId;
   CartItem(
       {this.cartItemId,
       required this.itemId,
@@ -2767,7 +2878,8 @@ class CartItem {
       required this.costPerOne,
       this.notes,
       required this.name,
-      this.image});
+      this.image,
+      this.categoryId});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "cartItemId": cartItemId,
@@ -2779,6 +2891,7 @@ class CartItem {
       "notes": notes,
       "name": name,
       "image": image,
+      "categoryId": categoryId,
     };
   }
 }
@@ -3803,13 +3916,15 @@ class BusinessCart {
   num? businessId;
   num cost;
   List<BusinessOrderItem> items;
-  num? discountValue;
+  num discountValue;
+  List<num> appliedOffers;
   BusinessCart(
       {required this.customerId,
       this.businessId,
       required this.cost,
       required this.items,
-      this.discountValue});
+      required this.discountValue,
+      required this.appliedOffers});
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "customerId": customerId,
@@ -3817,6 +3932,7 @@ class BusinessCart {
       "cost": cost,
       "items": items,
       "discountValue": discountValue,
+      "appliedOffers": appliedOffers,
     };
   }
 }
@@ -4305,6 +4421,24 @@ extension ParseStringToChangeUniqueIdError on String {
     return ChangeUniqueIdError.values.firstWhere(
         (ChangeUniqueIdError changeUniqueIdError) =>
             changeUniqueIdError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum TaxiRequestResponseError { UnhandledError }
+
+extension ParseTaxiRequestResponseErrorToString on TaxiRequestResponseError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToTaxiRequestResponseError on String {
+  TaxiRequestResponseError toTaxiRequestResponseError() {
+    return TaxiRequestResponseError.values.firstWhere(
+        (TaxiRequestResponseError taxiRequestResponseError) =>
+            taxiRequestResponseError.toFirebaseFormatString().toLowerCase() ==
             toLowerCase());
   }
 }

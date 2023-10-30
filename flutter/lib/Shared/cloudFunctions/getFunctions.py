@@ -46,6 +46,8 @@ def searchForModel(search):
     for file in files:
       if file == '.DS_Store':
         continue
+      if "script" in file:
+        continue
       fullpath = os.path.join(folder, file)
       search1 = search
       if "Array" in search:
@@ -400,7 +402,7 @@ def printDartFormatFunction(key, value):
 def getModels():
   toWriteModel = ""
   for key in models:
-    print(key)
+    # print(key)
     if "Array" in key:
       continue
       # matches = re.compile(r'\<(.*?)\>').findall(key)

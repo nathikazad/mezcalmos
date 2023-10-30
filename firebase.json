@@ -24,7 +24,7 @@
     },
     "singleProjectMode": true
   },
-  "hosting": {
+  "hosting": [{
     "site": "mezc-deeplink",
     "public": "flutter/web",
     "ignore": [
@@ -46,5 +46,20 @@
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  {
+    "site": "taxis-in-test",
+    "public": "flutter/build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }]
 }

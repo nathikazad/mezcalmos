@@ -76,8 +76,7 @@ Future<void> logOut() async {
 Future<SendOtpResponse?> sendOTPForLogin(String phoneNumber) async {
   try {
     final SendOtpResponse res = await CloudFunctions.otp3_sendOTPForLogin(
-        language: sDefaultLanguage.toFirebaseFormatString(),
-        phoneNumber: phoneNumber);
+        language: sDefaultLanguage, phoneNumber: phoneNumber);
     return res;
   } on FirebaseFunctionsException catch (e) {
     showErrorSnackBar(errorText: e.message.toString());
@@ -99,6 +98,7 @@ Future<AuthResponse?> signInUsingOTP(String phoneNumber, String otpCode) async {
     final AuthResponse response = await CloudFunctions.otp3_getAuthUsingOTP(
       phoneNumber: phoneNumber,
       OTPCode: otpCode,
+
       // 'language': _settings.appLanguage.userLanguageKey,
     );
 

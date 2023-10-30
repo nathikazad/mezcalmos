@@ -1,11 +1,11 @@
 // import { setupServiceProvider } from "./utilities/stripe/serviceProvider"
 // import * as firebase from "firebase-admin";
 
-import { getHasura } from "./utilities/hasura";
+import { getHasura } from "../utilities/hasura";
 // import * as fs from 'fs';
 // import * as yaml from 'js-yaml';
-import { initEnv } from "../../supervisor/src/init";
-import menu from './vege.json';
+import { initEnv } from "../../../supervisor/src/init";
+import menu from '../vege.json';
 // Assuming you have the yaml in a file named 'input.yaml'
 
 initEnv();

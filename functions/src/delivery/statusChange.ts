@@ -98,10 +98,7 @@ enum ChangeDeliveryStatusError {
   CannotCancelByDriver = "cannotCancelByDriver",
 }
 
-export async function changeDeliveryStatus(
-  userId: number,
-  changeDeliveryStatusDetails: ChangeDeliveryStatusDetails
-): Promise<ChangeDeliveryStatusResponse> {
+export async function changeDeliveryStatus(userId: number, changeDeliveryStatusDetails: ChangeDeliveryStatusDetails): Promise<ChangeDeliveryStatusResponse> {
   try {
     let deliveryOrder: DeliveryOrder = await getDeliveryOrder(
       changeDeliveryStatusDetails.deliveryId

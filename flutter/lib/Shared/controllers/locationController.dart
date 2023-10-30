@@ -37,8 +37,8 @@ class LocationController extends GetxController {
         .timeout(Duration(seconds: 3), onTimeout: () {
       logEventToServer("getting location timedout");
       return LocationData.fromMap({
-        'latitude': 15.8720.toDouble(),
-        'longitude': 97.0767.toDouble(),
+        'latitude': 13.096300.toDouble(),
+        'longitude': 80.206935.toDouble(),
       });
     });
     logEventToServer("getting location success ${locationData.toString()}");
