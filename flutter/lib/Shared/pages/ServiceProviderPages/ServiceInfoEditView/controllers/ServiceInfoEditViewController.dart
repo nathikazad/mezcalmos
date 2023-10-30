@@ -91,7 +91,7 @@ class ServiceInfoEditViewController {
       // phoneNumber.text = service.value?.phoneNumber ?? '';
 
       if (service.value!.phoneNumber == null) {
-        phoneNumber.text = '+52';
+        phoneNumber.text = '+91';
       } else {
         phoneNumber.text = service.value!.phoneNumber!;
       }

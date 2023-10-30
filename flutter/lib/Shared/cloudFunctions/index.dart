@@ -291,7 +291,9 @@ class CloudFunctions {
       required num rideCost,
       required num tripDistance,
       required num tripDuration,
-      required String tripPolyline}) async {
+      required String tripPolyline,
+      required String orderTime,
+      required String carType}) async {
     return TaxiRequestResponse.fromFirebaseFormattedJson(
         await callCloudFunction(
             functionName: "taxi-request",
@@ -303,6 +305,8 @@ class CloudFunctions {
           "tripDistance": tripDistance,
           "tripDuration": tripDuration,
           "tripPolyline": tripPolyline,
+          "orderTime": orderTime,
+          "carType": carType,
         }));
   }
 

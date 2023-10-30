@@ -400,7 +400,6 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
           if (contact != null) {
             if (Platform.isIOS) {
               mezDbgPrint(iosUrl);
-              mezDbgPrint("https://wa.me/+529541283454");
               launchUrl(Uri.parse(iosUrl));
             } else {
               launchUrl(Uri.parse(androidUrl));

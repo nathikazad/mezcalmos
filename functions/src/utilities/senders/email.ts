@@ -29,6 +29,8 @@ export interface TaxiRequest {
   tripDistance: number;
   tripDuration: number;
   tripPolyline: string;
+  orderTime: string;
+  carType: string;
 }
 
 export interface TaxiRequestResponse {

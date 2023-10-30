@@ -41,7 +41,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
   @override
   void initState() {
-    _prefixTextFieldController..text = "+52";
+    _prefixTextFieldController..text = "+91";
 
     super.initState();
   }
