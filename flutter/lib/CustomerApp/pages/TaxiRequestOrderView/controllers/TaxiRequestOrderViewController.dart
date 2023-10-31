@@ -371,7 +371,7 @@ class TaxiRequestOrderViewController {
   }
 
   Future<void> locateMe() async {
-    await locationPickerController.locateMe();
+    await locationPickerController.locateMe(zoomLevel: 14);
   }
 
   void clearTime() {

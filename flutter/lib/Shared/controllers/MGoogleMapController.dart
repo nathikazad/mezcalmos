@@ -508,17 +508,17 @@ class MGoogleMapController {
     controller.value?.animateCamera(CameraUpdate.zoomTo(zoomLvl));
   }
 
-  Future<void> locateMe() async {
+  Future<void> locateMe({double? zoomLevel}) async {
     final GeoLoc.LocationData? _tmpCurrentLoc = await _currentLocation();
     if (_tmpCurrentLoc != null) {
       await controller.value?.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-            target: LatLng(
-              _tmpCurrentLoc.latitude!,
-              _tmpCurrentLoc.longitude!,
-            ),
-          ),
+              target: LatLng(
+                _tmpCurrentLoc.latitude!,
+                _tmpCurrentLoc.longitude!,
+              ),
+              zoom: zoomLevel ?? 0),
         ),
       );
     }
