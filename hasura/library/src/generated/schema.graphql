@@ -26915,6 +26915,23 @@ type notification_info_variance_fields {
   user_id: Float
 }
 
+scalar numeric
+
+"""
+Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'.
+"""
+input numeric_comparison_exp {
+  _eq: numeric
+  _gt: numeric
+  _gte: numeric
+  _in: [numeric!]
+  _is_null: Boolean
+  _lt: numeric
+  _lte: numeric
+  _neq: numeric
+  _nin: [numeric!]
+}
+
 """column ordering options"""
 enum order_by {
   """in ascending order, nulls last"""
@@ -49281,6 +49298,8 @@ type taxi_driver_variance_fields {
 columns and relationships of "taxi.order"
 """
 type taxi_order {
+  car_type: String!
+
   """An object relationship"""
   customer: customer_customer
   customer_id: Int!
@@ -49288,9 +49307,14 @@ type taxi_order {
   dropoff_address: String!
   dropoff_gps: geography!
   id: Int!
+  order_time: String!
   pickup_address: String!
   pickup_gps: geography!
+  ride_cost: money!
   status: String!
+  trip_distance: numeric!
+  trip_duration: numeric!
+  trip_polyline: String!
 }
 
 """
@@ -49323,6 +49347,9 @@ type taxi_order_avg_fields {
   customer_id: Float
   driver_id: Float
   id: Float
+  ride_cost: Float
+  trip_distance: Float
+  trip_duration: Float
 }
 
 """
@@ -49332,15 +49359,21 @@ input taxi_order_bool_exp {
   _and: [taxi_order_bool_exp!]
   _not: taxi_order_bool_exp
   _or: [taxi_order_bool_exp!]
+  car_type: String_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
   driver_id: Int_comparison_exp
   dropoff_address: String_comparison_exp
   dropoff_gps: geography_comparison_exp
   id: Int_comparison_exp
+  order_time: String_comparison_exp
   pickup_address: String_comparison_exp
   pickup_gps: geography_comparison_exp
+  ride_cost: money_comparison_exp
   status: String_comparison_exp
+  trip_distance: numeric_comparison_exp
+  trip_duration: numeric_comparison_exp
+  trip_polyline: String_comparison_exp
 }
 
 """
@@ -49360,41 +49393,62 @@ input taxi_order_inc_input {
   customer_id: Int
   driver_id: Int
   id: Int
+  ride_cost: money
+  trip_distance: numeric
+  trip_duration: numeric
 }
 
 """
 input type for inserting data into table "taxi.order"
 """
 input taxi_order_insert_input {
+  car_type: String
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
   driver_id: Int
   dropoff_address: String
   dropoff_gps: geography
   id: Int
+  order_time: String
   pickup_address: String
   pickup_gps: geography
+  ride_cost: money
   status: String
+  trip_distance: numeric
+  trip_duration: numeric
+  trip_polyline: String
 }
 
 """aggregate max on columns"""
 type taxi_order_max_fields {
+  car_type: String
   customer_id: Int
   driver_id: Int
   dropoff_address: String
   id: Int
+  order_time: String
   pickup_address: String
+  ride_cost: money
   status: String
+  trip_distance: numeric
+  trip_duration: numeric
+  trip_polyline: String
 }
 
 """aggregate min on columns"""
 type taxi_order_min_fields {
+  car_type: String
   customer_id: Int
   driver_id: Int
   dropoff_address: String
   id: Int
+  order_time: String
   pickup_address: String
+  ride_cost: money
   status: String
+  trip_distance: numeric
+  trip_duration: numeric
+  trip_polyline: String
 }
 
 """
@@ -49419,15 +49473,21 @@ input taxi_order_on_conflict {
 
 """Ordering options when selecting data from "taxi.order"."""
 input taxi_order_order_by {
+  car_type: order_by
   customer: customer_customer_order_by
   customer_id: order_by
   driver_id: order_by
   dropoff_address: order_by
   dropoff_gps: order_by
   id: order_by
+  order_time: order_by
   pickup_address: order_by
   pickup_gps: order_by
+  ride_cost: order_by
   status: order_by
+  trip_distance: order_by
+  trip_duration: order_by
+  trip_polyline: order_by
 }
 
 """primary key columns input for table: taxi.order"""
@@ -49439,6 +49499,9 @@ input taxi_order_pk_columns_input {
 select columns of table "taxi.order"
 """
 enum taxi_order_select_column {
+  """column name"""
+  car_type
+
   """column name"""
   customer_id
 
@@ -49455,27 +49518,48 @@ enum taxi_order_select_column {
   id
 
   """column name"""
+  order_time
+
+  """column name"""
   pickup_address
 
   """column name"""
   pickup_gps
 
   """column name"""
+  ride_cost
+
+  """column name"""
   status
+
+  """column name"""
+  trip_distance
+
+  """column name"""
+  trip_duration
+
+  """column name"""
+  trip_polyline
 }
 
 """
 input type for updating data in table "taxi.order"
 """
 input taxi_order_set_input {
+  car_type: String
   customer_id: Int
   driver_id: Int
   dropoff_address: String
   dropoff_gps: geography
   id: Int
+  order_time: String
   pickup_address: String
   pickup_gps: geography
+  ride_cost: money
   status: String
+  trip_distance: numeric
+  trip_duration: numeric
+  trip_polyline: String
 }
 
 """aggregate stddev on columns"""
@@ -49483,6 +49567,9 @@ type taxi_order_stddev_fields {
   customer_id: Float
   driver_id: Float
   id: Float
+  ride_cost: Float
+  trip_distance: Float
+  trip_duration: Float
 }
 
 """aggregate stddev_pop on columns"""
@@ -49490,6 +49577,9 @@ type taxi_order_stddev_pop_fields {
   customer_id: Float
   driver_id: Float
   id: Float
+  ride_cost: Float
+  trip_distance: Float
+  trip_duration: Float
 }
 
 """aggregate stddev_samp on columns"""
@@ -49497,6 +49587,9 @@ type taxi_order_stddev_samp_fields {
   customer_id: Float
   driver_id: Float
   id: Float
+  ride_cost: Float
+  trip_distance: Float
+  trip_duration: Float
 }
 
 """
@@ -49512,14 +49605,20 @@ input taxi_order_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input taxi_order_stream_cursor_value_input {
+  car_type: String
   customer_id: Int
   driver_id: Int
   dropoff_address: String
   dropoff_gps: geography
   id: Int
+  order_time: String
   pickup_address: String
   pickup_gps: geography
+  ride_cost: money
   status: String
+  trip_distance: numeric
+  trip_duration: numeric
+  trip_polyline: String
 }
 
 """aggregate sum on columns"""
@@ -49527,12 +49626,18 @@ type taxi_order_sum_fields {
   customer_id: Int
   driver_id: Int
   id: Int
+  ride_cost: money
+  trip_distance: numeric
+  trip_duration: numeric
 }
 
 """
 update columns of table "taxi.order"
 """
 enum taxi_order_update_column {
+  """column name"""
+  car_type
+
   """column name"""
   customer_id
 
@@ -49549,13 +49654,28 @@ enum taxi_order_update_column {
   id
 
   """column name"""
+  order_time
+
+  """column name"""
   pickup_address
 
   """column name"""
   pickup_gps
 
   """column name"""
+  ride_cost
+
+  """column name"""
   status
+
+  """column name"""
+  trip_distance
+
+  """column name"""
+  trip_duration
+
+  """column name"""
+  trip_polyline
 }
 
 input taxi_order_updates {
@@ -49572,6 +49692,9 @@ type taxi_order_var_pop_fields {
   customer_id: Float
   driver_id: Float
   id: Float
+  ride_cost: Float
+  trip_distance: Float
+  trip_duration: Float
 }
 
 """aggregate var_samp on columns"""
@@ -49579,6 +49702,9 @@ type taxi_order_var_samp_fields {
   customer_id: Float
   driver_id: Float
   id: Float
+  ride_cost: Float
+  trip_distance: Float
+  trip_duration: Float
 }
 
 """aggregate variance on columns"""
@@ -49586,6 +49712,9 @@ type taxi_order_variance_fields {
   customer_id: Float
   driver_id: Float
   id: Float
+  ride_cost: Float
+  trip_distance: Float
+  trip_duration: Float
 }
 
 scalar timestamp
