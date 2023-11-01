@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -127,25 +128,30 @@ class MGoogleMapController {
       String? customImgHttpUrl}) async {
     if (latLng != null) {
       BitmapDescriptor icon;
-
-      final String? uImg = Get.find<AuthController>().user?.image ??
-          Get.find<AuthController>().user?.image;
-
-      if (uImg == null) {
-        icon = await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await rootBundle.load(aDefaultAvatar)).buffer.asUint8List())),
-            _calculateMarkersSize(),
-            _calculateMarkersSize(),
-            isBytes: true);
+      if (kIsWeb) {
+        icon = await BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(size: Size(45, 45)), aDefaultAvatar);
       } else {
-        icon = await bitmapDescriptorLoader(
-            (await cropRonded(
-                (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
-                    .bodyBytes) as Uint8List),
-            _calculateMarkersSize(),
-            _calculateMarkersSize(),
-            isBytes: true);
+        final String? uImg = Get.find<AuthController>().user?.image ??
+            Get.find<AuthController>().user?.image;
+
+        if (uImg == null) {
+          icon = await bitmapDescriptorLoader(
+              (await cropRonded((await rootBundle.load(aDefaultAvatar))
+                  .buffer
+                  .asUint8List())),
+              _calculateMarkersSize(),
+              _calculateMarkersSize(),
+              isBytes: true);
+        } else {
+          icon = await bitmapDescriptorLoader(
+              (await cropRonded(
+                  (await http.get(Uri.parse(customImgHttpUrl ?? uImg)))
+                      .bodyBytes) as Uint8List),
+              _calculateMarkersSize(),
+              _calculateMarkersSize(),
+              isBytes: true);
+        }
       }
 
       final String mId = (markerId ??
@@ -270,14 +276,16 @@ class MGoogleMapController {
       required LatLng? latLng,
       bool fitWithinBounds = true}) async {
     if (latLng != null) {
-      final BitmapDescriptor icon = await bitmapDescriptorLoader(
-          (await cropRonded((await rootBundle.load(mezDestinationMarker))
-              .buffer
-              .asUint8List())),
-          _calculateMarkersSize(),
-          _calculateMarkersSize(),
-          isBytes: true);
-      // markerId = markerId;
+      final BitmapDescriptor icon = kIsWeb
+          ? await BitmapDescriptor.fromAssetImage(
+              ImageConfiguration(size: Size(45, 45)), mezDestinationMarker)
+          : await bitmapDescriptorLoader(
+              (await cropRonded((await rootBundle.load(mezDestinationMarker))
+                  .buffer
+                  .asUint8List())),
+              _calculateMarkersSize(),
+              _calculateMarkersSize(),
+              isBytes: true);
 
       _addOrUpdateMarker(
         MezMarker(
@@ -323,10 +331,13 @@ class MGoogleMapController {
   }
 
   void decodeAndAddPolyline({required String encodedPolylineString}) {
-    final List<PointLatLng> pts = MapHelper.loadUpPolyline(
-            encodedPolylineString)
+    final List<LatLng> latLgs = kIsWeb
+        ? MapHelper.decodeEncodedPolylineForWeb(encodedPolylineString)
+        : MapHelper.loadUpPolyline(encodedPolylineString);
+    final List<PointLatLng> pts = latLgs
         .map<PointLatLng>((LatLng e) => PointLatLng(e.latitude, e.longitude))
         .toList();
+
     mezDbgPrint("[AAA] First cords of polyline => ${pts.first}");
     mezDbgPrint("[AAA] Last cords of polyline => ${pts.last}");
     addPolyline(pts);

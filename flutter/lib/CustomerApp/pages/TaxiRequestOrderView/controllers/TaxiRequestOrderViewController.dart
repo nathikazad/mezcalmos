@@ -183,41 +183,18 @@ class TaxiRequestOrderViewController {
     }).whenComplete(() => toLocLoading.value = false);
   }
 
-  Future<void> _setToLoc(MezLocation value) async {
-    await locationPickerController.moveToNewLatLng(
-        value.latitude, value.longitude);
-    locationPickerController.setLocation(value);
-
-    if (!kIsWeb) {
-      await locationPickerController.addOrUpdatePurpleDestinationMarker(
-          markerId: "to", latLng: value.toLatLng(), fitWithinBounds: true);
-    }
-    toLoc.value = value;
-    toLocText.text = value.address;
-    isSettingToLocation.value = false;
-    _toSuggestions.clear();
-    toLocFocusNode.unfocus();
-    await _updatePolyline();
-
-    if (fromLoc.value == null) {
-      startEditingFromLoc();
-    } else {
-      locationPickerController.hideFakeMarker();
-    }
-  }
-
   Future<void> _updatePolyline() async {
     if (fromLoc.value != null && toLoc.value != null) {
       await getDurationAndDistance(fromLoc.value!, toLoc.value!)
           .then((Route? value) async {
         if (value != null) {
           _route.value = value;
-          if (!kIsWeb) {
-            locationPickerController.decodeAndAddPolyline(
-                encodedPolylineString: value.encodedPolyLine);
+          // if (!kIsWeb) {
+          locationPickerController.decodeAndAddPolyline(
+              encodedPolylineString: value.encodedPolyLine);
 
-            locationPickerController.lockInAutoZoomAnimation();
-          }
+          locationPickerController.lockInAutoZoomAnimation();
+          //  }
           _calculateCost();
         }
       });
@@ -236,10 +213,10 @@ class TaxiRequestOrderViewController {
         value.latitude, value.longitude);
     locationPickerController.setLocation(value);
 
-    if (!kIsWeb) {
-      await locationPickerController.addOrUpdateUserMarker(
-          markerId: "from", latLng: value.toLatLng(), fitWithinBounds: true);
-    }
+    //   if (!kIsWeb) {
+    await locationPickerController.addOrUpdateUserMarker(
+        markerId: "from", latLng: value.toLatLng(), fitWithinBounds: true);
+    //   }
     fromLoc.value = value;
     fromLocText.text = value.address;
     isSettingFromLocation.value = false;
@@ -248,6 +225,29 @@ class TaxiRequestOrderViewController {
     await _updatePolyline();
     if (toLoc.value == null) {
       startEditingToLoc();
+    } else {
+      locationPickerController.hideFakeMarker();
+    }
+  }
+
+  Future<void> _setToLoc(MezLocation value) async {
+    await locationPickerController.moveToNewLatLng(
+        value.latitude, value.longitude);
+    locationPickerController.setLocation(value);
+
+    // if (!kIsWeb) {
+    await locationPickerController.addOrUpdatePurpleDestinationMarker(
+        markerId: "to", latLng: value.toLatLng(), fitWithinBounds: true);
+    //  }
+    toLoc.value = value;
+    toLocText.text = value.address;
+    isSettingToLocation.value = false;
+    _toSuggestions.clear();
+    toLocFocusNode.unfocus();
+    await _updatePolyline();
+
+    if (fromLoc.value == null) {
+      startEditingFromLoc();
     } else {
       locationPickerController.hideFakeMarker();
     }

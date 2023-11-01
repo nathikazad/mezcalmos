@@ -97,47 +97,7 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
                             ),
                           ),
                           smallSepartor,
-                          Obx(() => Card(
-                                margin: EdgeInsets.zero,
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: InkWell(
-                                  onTap: () async {
-                                    await viewController
-                                        .setScheduleTime(context);
-                                  },
-                                  child: Ink(
-                                    padding: const EdgeInsets.all(8),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.watch_later,
-                                          size: 15.mezSp,
-                                        ),
-                                        hSmallSepartor,
-                                        Flexible(
-                                            fit: FlexFit.tight,
-                                            child: Text(viewController
-                                                    .scheduleTime.value
-                                                    ?.getOrderTime() ??
-                                                "Now")),
-                                        MezIconButton(
-                                          onTap: () {
-                                            viewController.clearTime();
-                                          },
-                                          icon: Icons.close,
-                                          iconColor: Colors.black,
-                                          padding: const EdgeInsets.all(3),
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ))
+                          _orderTimeComponent(context)
                         ],
                       ),
                     ),
@@ -176,6 +136,48 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
         ],
       ),
     );
+  }
+
+  Obx _orderTimeComponent(BuildContext context) {
+    return Obx(() => Card(
+          margin: EdgeInsets.zero,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: InkWell(
+            onTap: () async {
+              await viewController.setScheduleTime(context);
+            },
+            child: Ink(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.watch_later,
+                    size: 15.mezSp,
+                  ),
+                  hSmallSepartor,
+                  Flexible(
+                      fit: FlexFit.tight,
+                      child: Text(
+                          viewController.scheduleTime.value?.getOrderTime() ??
+                              "Now")),
+                  MezIconButton(
+                    onTap: () {
+                      viewController.clearTime();
+                    },
+                    icon: Icons.close,
+                    iconColor: Colors.black,
+                    padding: const EdgeInsets.all(3),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 
   Container _locateMeButton() {
@@ -272,30 +274,57 @@ class _TaxiRequestOrderViewState extends State<TaxiRequestOrderView> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        RichText(
-            text: TextSpan(children: <InlineSpan>[
-          WidgetSpan(
-              child: Icon(
-            Icons.route,
-            size: 15.mezSp,
-          )),
-          WidgetSpan(child: hTinySepartor),
-          TextSpan(
-              text: viewController.route!.distance.distanceStringInKm,
-              style: context.textTheme.bodyMedium)
-        ])),
-        RichText(
-            text: TextSpan(children: <InlineSpan>[
-          WidgetSpan(
-              child: Icon(
-            Icons.watch_later_outlined,
-            size: 15.mezSp,
-          )),
-          WidgetSpan(child: hTinySepartor),
-          TextSpan(
-              text: viewController.route!.duration.shortTextVersion,
-              style: context.textTheme.bodyMedium)
-        ])),
+        // RichText(
+        //     text: TextSpan(children: <InlineSpan>[
+        //   WidgetSpan(
+        //       child: Icon(
+        //     Icons.route,
+        //     size: 15.mezSp,
+        //   )),
+        //   WidgetSpan(child: hTinySepartor),
+        //   TextSpan(
+        //       text: viewController.route!.distance.distanceStringInKm,
+        //       style: context.textTheme.bodyMedium)
+        // ])),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.route,
+              size: 15.mezSp,
+            ),
+            hTinySepartor,
+            Text(viewController.route!.distance.distanceStringInKm,
+                style: context.textTheme.bodyMedium)
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.watch_later_outlined,
+              size: 15.mezSp,
+            ),
+            hTinySepartor,
+            Text(viewController.route!.duration.shortTextVersion,
+                style: context.textTheme.bodyMedium)
+          ],
+        ),
+
+        // RichText(
+        //     text: TextSpan(children: <InlineSpan>[
+        //   WidgetSpan(
+        //       child: Icon(
+        //     Icons.watch_later_outlined,
+        //     size: 15.mezSp,
+        //   )),
+        //   WidgetSpan(child: hTinySepartor),
+        //   TextSpan(
+        //       text: viewController.route!.duration.shortTextVersion,
+        //       style: context.textTheme.bodyMedium)
+        // ])),
       ],
     );
   }

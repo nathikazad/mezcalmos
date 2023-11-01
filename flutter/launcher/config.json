@@ -265,7 +265,7 @@
       },
       "pubspec": {
         "dependencies": {
-          "google_maps_flutter_web": "^0.4.0+2",
+          "google_maps_flutter_web": "^0.5.4+2",
           "sticky_headers": "^0.3.0+2",
           "flutter_svg": "^1.1.5",
           "another_flushbar": "^1.12.29",
@@ -742,8 +742,7 @@
         "super": "FlutterFragmentActivity"
       },
       "pubspec": {
-        "dependencies": {
-        },
+        "dependencies": {},
         "assets": [
           "assets/images/",
           "assets/images/shared/",
