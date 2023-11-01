@@ -1791,7 +1791,8 @@ enum AppType {
   MezAdmin,
   Business,
   Laundry,
-  Influencer
+  Influencer,
+  Taxi,
 }
 
 extension ParseAppTypeToString on AppType {
