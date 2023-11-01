@@ -201,12 +201,6 @@ class TaxiRequestOrderViewController {
     }
   }
 
-  void _calculateCost() {
-    final int kmPrice = (_carType.value == TaxiCarType.Mini) ? 33 : 43;
-    orderCost.value =
-        (_route.value!.distance.distanceInMeters * kmPrice) / 1000;
-  }
-
   Future<void> _setFromLoc(MezLocation value) async {
     fromLocFocusNode.unfocus();
     await locationPickerController.moveToNewLatLng(
@@ -307,6 +301,12 @@ class TaxiRequestOrderViewController {
   void switchCartype(TaxiCarType carType) {
     _carType.value = carType;
     _calculateCost();
+  }
+
+  void _calculateCost() {
+    final int kmPrice = (_carType.value == TaxiCarType.Mini) ? 33 : 43;
+    orderCost.value =
+        (_route.value!.distance.distanceInMeters * kmPrice) / 1000;
   }
 
   Future<void> handleNext(mat.BuildContext context) async {
