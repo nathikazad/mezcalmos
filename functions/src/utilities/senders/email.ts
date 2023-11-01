@@ -1,6 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as nodemailer from 'nodemailer';
 import { CustomerAppType } from '../../shared/models/Generic/Generic';
+import { getHasura } from '../hasura';
+import { $ } from '../../../../hasura/library/src/generated/graphql-zeus';
 
 // Create a Nodemailer transporter object
 const transporter = nodemailer.createTransport({
@@ -46,12 +48,22 @@ enum TaxiRequestResponseError {
 }
 
 export async function requestTaxi(customerId: number, taxiRequest: TaxiRequest): Promise<TaxiRequestResponse> {
-
+  const hasura = getHasura();
   const tripDistanceKm = (taxiRequest.tripDistance / 1000).toFixed(2);  // Convert meters to kilometers and round to 2 decimal places
   const tripDurationMin = (taxiRequest.tripDuration / 60).toFixed(2);  // Convert seconds to minutes and round to 2 decimal places
-
+  const user = await hasura.query({
+    user_by_pk: [{
+      id: customerId
+    }, {
+      name: true,
+      phone: true
+    }]
+  })
   // Construct the email text using the taxi request parameters
   const emailText = `
+    Customer:
+      Name: ${user.user_by_pk?.name}
+      Phone number: ${user.user_by_pk?.phone}
     From Location:
       Latitude: ${taxiRequest.fromLocation.lat}
       Longitude: ${taxiRequest.fromLocation.lng}
@@ -66,7 +78,7 @@ export async function requestTaxi(customerId: number, taxiRequest: TaxiRequest):
     Ride Cost: $${taxiRequest.rideCost.toFixed(2)}
     Trip Distance: ${tripDistanceKm} km
     Trip Duration: ${tripDurationMin} minutes
-    Trip Polyline: ${taxiRequest.tripPolyline}
+    
   `;
 
   const mailOptions = {
@@ -76,9 +88,42 @@ export async function requestTaxi(customerId: number, taxiRequest: TaxiRequest):
     text: emailText,
   };
 
+  hasura.mutation({
+    insert_taxi_order_one: [{
+      object : {
+        customer_id: customerId,
+        dropoff_gps: $`dropoff_gps`,
+        dropoff_address: taxiRequest.toLocation.address,
+        pickup_gps: $`pickup_gps`,
+        pickup_address: taxiRequest.fromLocation.address,
+        status: "open",
+        car_type: taxiRequest.carType,
+        ride_cost: taxiRequest.rideCost,
+        trip_distance: taxiRequest.tripDistance,
+        trip_duration: taxiRequest.tripDuration,
+        trip_polyline: taxiRequest.tripPolyline,
+        driver_id: 31
+      }, 
+    }, {
+      id: true
+    }]
+  }, {
+    "dropoff_gps": {
+      "type": "Point",
+      "coordinates": [taxiRequest.toLocation.lng, taxiRequest.toLocation.lat ],
+    },
+    "pickup_gps": {
+      "type": "Point",
+      "coordinates": [taxiRequest.fromLocation.lng, taxiRequest.fromLocation.lat ],
+    },
+  })
+
+  
   try {
     // Send email
     const info = await transporter.sendMail(mailOptions);
+    mailOptions.to = functions.config().email.to
+    await transporter.sendMail(mailOptions);
     console.log('Email sent:', info.response);
     return {
       success: true,
@@ -91,4 +136,6 @@ export async function requestTaxi(customerId: number, taxiRequest: TaxiRequest):
       unhandledError: error.message
     };
   }
+
+  
 }
