@@ -145,7 +145,7 @@ class HasuraDb {
             parser: MyParser(),
             inactivityTimeout: Duration(seconds: 30),
             initialPayload: () async {
-              return {
+              return <String, Map<String, String>>{
                 'headers': headers,
               };
             },
@@ -156,7 +156,7 @@ class HasuraDb {
         parser: MyParser(),
         inactivityTimeout: Duration(seconds: 30),
         initialPayload: () async {
-          return {
+          return <String, Map<String, String>>{
             'headers': headers,
           };
         },
@@ -193,7 +193,7 @@ class HasuraDb {
   }
 
   Future<String> _getAuthorizationToken(User user, bool testMode) async {
-    final String token = (await user.getIdToken(true))!;
+    final String token = (await user.getIdToken(true));
     if (testMode) {
       final Map<String, dynamic> decoded = JwtDecoder.decode(token);
       // mezDbgPrint(decoded);
@@ -279,6 +279,8 @@ class HasuraDb {
         return "laundry_operator";
       case AppType.Influencer:
         return "influencer";
+      case AppType.Taxi:
+        return "taxi_driver";
       default:
         return "customer";
     }

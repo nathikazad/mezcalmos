@@ -1,6 +1,17 @@
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/taxi/driver/hsTaxiDriver.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 
 class TaxiAuthController extends GetxController {
+  AuthController _authController = Get.find<AuthController>();
+
+  Rxn<DeliveryDriver> _driver = Rxn();
+
+  DeliveryDriverState? get driverState => _driver.value?.deliveryDriverState;
+  DeliveryDriver? get driver => _driver.value;
+  int? get driverId => _driver.value?.deliveryDriverId;
   // Rxn<TaxiState> _state = Rxn();
   // FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   // AuthController _authController = Get.find<AuthController>();
@@ -22,15 +33,24 @@ class TaxiAuthController extends GetxController {
   // String? _previousStateValue = "init";
   // final AppLaunchMode lmode = getAppLaunchMode();
 
-  // @override
-  // void onInit() {
-  //   // ------------------------------------------------------------------------
-  //   mezDbgPrint("TaxiAuthController: init $hashCode");
-  //   mezDbgPrint("TaxiAuthController: calling handle state change first time");
-  //   setupTaxi(Get.find<AuthController>().fireAuthUser!);
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    // ------------------------------------------------------------------------
 
+    super.onInit();
+  }
+
+  Future<void> setupDeliveryDriver() async {
+    mezDbgPrint("TaxiAuthController: handle state change user value");
+    _driver.value = null;
+
+    try {
+      _driver.value = await get_taxi_driver_by_user_id(
+          userId: _authController.hasuraUserId!, withCache: false);
+    } catch (e) {
+      mezDbgPrint("Error fetching driver");
+    }
+  }
   // Future<void> setupTaxi(User user) async {
   //   mezDbgPrint("TaxiAuthController: handle state change user value");
   //   mezDbgPrint(user);

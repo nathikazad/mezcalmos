@@ -277,6 +277,8 @@ extension ParseOrderTypeToString on AppType {
         return "BusinessApp";
       case AppType.Influencer:
         return "InfluencerApp";
+      case AppType.Taxi:
+        return "TaxiApp";
     }
   }
 
@@ -298,6 +300,8 @@ extension ParseOrderTypeToString on AppType {
         return ParticipantType.BusinessOperator;
       case AppType.Influencer:
         return ParticipantType.Influcencer;
+      case AppType.Taxi:
+        return ParticipantType.Taxi;
     }
     return null;
   }

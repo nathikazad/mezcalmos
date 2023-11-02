@@ -1,32 +1,46 @@
-// Routes Keys.
-// const String kTaxiWrapperRoute = '/taxi_wrapper';
-const String kIncomingOrdersListRoute = '/incomingOrders';
-const String kIncomingOrdersViewRoute = '/incomingOrders/:orderId';
-const String kTaxiOrderRoute = '/taxiOrders/:orderId';
-const String kPastOrdersListRoute = '/pastOrders';
+import 'package:mezcalmos/Shared/routes/SharedDeliveryRoutes.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/TaxiApp/pages/OrdersList/TaxiCurrentOrdersListScreen.dart';
+import 'package:mezcalmos/TaxiApp/pages/OrdersList/TaxiPastOrdersView.dart';
+import 'package:mezcalmos/TaxiApp/pages/TaxiWrapper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
-String getIncomingOrderRoute(String orderId) {
-  return kIncomingOrdersViewRoute.replaceFirst(":orderId", orderId);
-}
+class TaxiAppRoutes {
+  static const String kCurrentOrdersListRoute = '/currentOrders';
+  static const String kPastOrdersViewRoute = "/pastOrders";
+  static const String kTaxiUnAuthRoute = "/taxiUnauth";
 
-String getTaxiOrderRoute(String orderId) {
-  return kTaxiOrderRoute.replaceFirst(":orderId", orderId);
-}
+  static final List<QRoute> mainRoutes = <QRoute>[
+        QRoute(
+          path: kCurrentOrdersListRoute,
+          name: kCurrentOrdersListRoute,
+          builder: () => TaxiCurrentOrdersListScreen(),
+        ),
 
-// GetX based Router (For navigating)
-class XRouter {
-  // static dynamic mainRoutes = [
-  //       GetPage(name: kPastOrdersListRoute, page: () => PastOrderList()),
-  //       GetPage(name: kTaxiOrderRoute, page: () => CurrentOrderScreen()),
-  //       GetPage(
-  //         name: kIncomingOrdersListRoute,
-  //         page: () => IncomingOrdersScreen(),
-  //       ),
-  //       GetPage(name: kHomeRoute, page: () => TaxiWrapper()),
-  //       GetPage(
-  //         name: kIncomingOrdersViewRoute,
-  //         page: () => IncomingOrderViewScreen(),
-  //       ),
-  //     ] +
-  //     SharedRouter.sharedRoutes;
+        QRoute(
+          path: SharedRoutes.kHomeRoute,
+          name: SharedRoutes.kHomeRoute,
+          builder: () => TaxiWrapper(),
+        ),
+
+        // QRoute(
+        //   path: kOrderDetailsViewRoute,
+        //   name: kOrderDetailsViewRoute,
+        //   builder: () => OrderDetailsScreen(),
+        // ),
+        QRoute(
+          path: kPastOrdersViewRoute,
+          name: kPastOrdersViewRoute,
+          builder: () => TaxiPastOrdersView(),
+        ),
+        // QRoute(
+        //   path: kDriverUnAuthRoute,
+        //   name: kDriverUnAuthRoute,
+        //   builder: () => UnAuthorizedDriverView(),
+        // ),
+      ] +
+      SharedRoutes.qRoutes +
+      SharedDvRoutes.mainRoutes +
+      NativeOnlyRoutes.routes;
 }

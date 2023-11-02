@@ -1,0 +1,18 @@
+query getTaxiDriversByUserId($userId: Int!) {
+  taxi_driver(where: { user_id: { _eq: $userId } }) {
+    app_version
+    current_location
+    delivery_company_type
+    delivery_company_id
+    id
+    online
+    status
+    user {
+      id
+      image
+      name
+      firebase_id
+      language_id
+    }
+  }
+}
