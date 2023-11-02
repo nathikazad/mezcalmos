@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -13,6 +11,8 @@ import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/TaxiApp/controllers/TaxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/OrdersList/controllers/TaxiDriverCurrentOrdersController.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -26,15 +26,14 @@ class TaxiCurrentOrdersListScreen extends StatefulWidget {
 
 class _TaxiCurrentOrdersListScreenState
     extends State<TaxiCurrentOrdersListScreen> {
-  DriverCurrentOrdersController viewController =
-      DriverCurrentOrdersController();
+  TaxiCurrentOrdersController viewController = TaxiCurrentOrdersController();
   TaxiAuthController _TaxiAuthController = Get.find<TaxiAuthController>();
 
   @override
   void initState() {
     if (_TaxiAuthController.driverState?.isAuthorized == true) {
       Get.find<SideMenuDrawerController>().pastOrdersRoute =
-          DeliveryAppRoutes.kPastOrdersViewRoute;
+          TaxiAppRoutes.kPastOrdersViewRoute;
     }
 
     viewController.init();
@@ -57,7 +56,7 @@ class _TaxiCurrentOrdersListScreenState
         drawer: MezSideMenu(),
         appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
             showNotifications: true,
-            ordersRoute: DeliveryAppRoutes.kPastOrdersViewRoute),
+            ordersRoute: TaxiAppRoutes.kPastOrdersViewRoute),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

@@ -4,15 +4,15 @@ import 'package:mezcalmos/Shared/appStart/appStartNative.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/TaxiApp/authHooks.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 import 'package:mezcalmos/TaxiApp/theme.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 Function signInCallback = AuthHooks.onSignInHook;
 Function signOutCallback = AuthHooks.onSignOutHook;
-List<QRoute> routes = SharedRoutes.qRoutes;
+List<QRoute> routes = TaxiAppRoutes.mainRoutes;
 
 void main() {
   loadBitmaps();

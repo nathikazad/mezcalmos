@@ -1,3 +1,29 @@
 table:
   name: driver
   schema: taxi
+object_relationships:
+  - name: user
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+select_permissions:
+  - role: taxi_driver
+    permission:
+      columns:
+        - app_type_id
+        - app_version
+        - current_location
+        - delivery_company_id
+        - delivery_company_type
+        - id
+        - online
+        - status
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

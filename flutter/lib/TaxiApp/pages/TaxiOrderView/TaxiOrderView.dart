@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -19,6 +18,7 @@ import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
+import 'package:mezcalmos/TaxiApp/pages/TaxiOrderView/controllers/TaxiOrderViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
     ['pages']['DvOrderView'];
@@ -39,7 +39,7 @@ class TaxiOrderView extends StatefulWidget {
 }
 
 class _TaxiOrderViewState extends State<TaxiOrderView> {
-  DvOrderViewController viewController = DvOrderViewController();
+  TaxiOrderViewController viewController = TaxiOrderViewController();
   @override
   void initState() {
     final int? orderId =

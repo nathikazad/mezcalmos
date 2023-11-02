@@ -147,7 +147,7 @@ class AuthController extends GetxController {
   }
 
   bool roleMissing(List<Object?> actualRoles) {
-    List<String> expectedRoles = <String>[
+    final List<String> expectedRoles = <String>[
       'anonymous',
       'restaurant_operator',
       'customer',
@@ -157,7 +157,8 @@ class AuthController extends GetxController {
       'delivery_driver',
       'laundry_operator',
       'business_operator',
-      'influencer'
+      'influencer',
+      'taxi_driver'
     ];
 
     final List<String> difference =

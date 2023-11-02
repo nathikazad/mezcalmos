@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/PastOrderViewController.dart';
-import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -15,6 +13,8 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/DvConvoCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/TaxiApp/pages/OrdersList/controllers/TaxiPastOrderViewController.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
     ["pages"]["CurrentOrders"]["CurrentOrdersListScreen"];
@@ -27,7 +27,7 @@ class TaxiPastOrdersView extends StatefulWidget {
 }
 
 class _TaxiPastOrdersViewState extends State<TaxiPastOrdersView> {
-  DriverPastOrdersController _viewController = DriverPastOrdersController();
+  TaxiPastOrdersController _viewController = TaxiPastOrdersController();
   @override
   void initState() {
     _viewController.init();
@@ -68,7 +68,7 @@ class _TaxiPastOrdersViewState extends State<TaxiPastOrdersView> {
                       textColor: primaryBlueColor,
                       onClick: () async {
                         unawaited(MezRouter.toPath(
-                            DeliveryAppRoutes.kCurrentOrdersListRoute));
+                            TaxiAppRoutes.kCurrentOrdersListRoute));
                       },
                       icon: Icons.timelapse,
                     )

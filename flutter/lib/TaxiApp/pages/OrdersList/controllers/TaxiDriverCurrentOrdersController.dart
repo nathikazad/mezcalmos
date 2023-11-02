@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/pages/DvConvoView/DvConvoView.dart';
-import 'package:mezcalmos/DeliveryApp/pages/DvOrderView/DvOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -172,11 +170,11 @@ class TaxiCurrentOrdersController {
   }
 
   void handleNavigation({required DeliveryMinimalOrder order}) {
-    if (order.delivery_order_type == MinimalDeliveryOrderType.Message) {
-      DvConvoView.navigate(phoneNumber: order.phone_number!);
-    } else {
-      DvOrderView.navigate(
-          orderId: order.id.toInt(), driverId: opAuthController.driverId!);
-    }
+    // if (order.delivery_order_type == MinimalDeliveryOrderType.Message) {
+    //   DvConvoView.navigate(phoneNumber: order.phone_number!);
+    // } else {
+    //   DvOrderView.navigate(
+    //       orderId: order.id.toInt(), driverId: opAuthController.driverId!);
+    // }
   }
 }

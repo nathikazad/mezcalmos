@@ -7,8 +7,8 @@ import 'package:mezcalmos/TaxiApp/pages/TaxiWrapper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class TaxiAppRoutes {
-  static const String kCurrentOrdersListRoute = '/currentOrders';
-  static const String kPastOrdersViewRoute = "/pastOrders";
+  static const String kCurrentOrdersListRoute = '/taxiCurrentOrders';
+  static const String kPastOrdersViewRoute = "/taxiPastOrders";
   static const String kTaxiUnAuthRoute = "/taxiUnauth";
 
   static final List<QRoute> mainRoutes = <QRoute>[
