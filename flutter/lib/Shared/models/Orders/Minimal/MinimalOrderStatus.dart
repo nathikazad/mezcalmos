@@ -1,6 +1,7 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 enum MinimalOrderStatus {
+  Open,
   InProcess,
   Delivered,
   Cancelled,
@@ -23,6 +24,23 @@ extension ParseDeliveryOrderStatusToMinimalOrderStatus on DeliveryOrderStatus {
         return MinimalOrderStatus.Cancelled;
       case DeliveryOrderStatus.Delivered:
         return MinimalOrderStatus.Delivered;
+
+      default:
+        return MinimalOrderStatus.InProcess;
+    }
+  }
+}
+
+extension ParseMinimalDeliveryOrderStatusToMinimalOrderStatus
+    on MinimalDeliveryOrderStatus {
+  MinimalOrderStatus toMinimalOrderStatus() {
+    switch (this) {
+      case MinimalDeliveryOrderStatus.Finished:
+        return MinimalOrderStatus.Delivered;
+      case MinimalDeliveryOrderStatus.InProcess:
+        return MinimalOrderStatus.InProcess;
+      case MinimalDeliveryOrderStatus.Open:
+        return MinimalOrderStatus.Open;
 
       default:
         return MinimalOrderStatus.InProcess;

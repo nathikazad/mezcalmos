@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
-import 'package:mezcalmos/Shared/widgets/DvConvoCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
+import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:mezcalmos/TaxiApp/controllers/TaxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/OrdersList/controllers/TaxiDriverCurrentOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
@@ -124,12 +124,11 @@ class _TaxiCurrentOrdersListScreenState
           Column(
             children:
                 List.generate(viewController.currentOrders.length, (int index) {
-              final DeliveryMinimalOrder message =
-                  viewController.currentOrders[index];
-              return DvConvoCard(
-                message: message,
-                onClick: () {
-                  viewController.handleNavigation(order: message);
+              final MinimalOrder order = viewController.currentOrders[index];
+              return MinimalOrderCard(
+                order: order,
+                onTap: () {
+                  viewController.handleNavigation(order: order);
                 },
               );
             }),
@@ -183,12 +182,11 @@ class _TaxiCurrentOrdersListScreenState
           Column(
             children:
                 List.generate(viewController.openOrders.length, (int index) {
-              final DeliveryMinimalOrder message =
-                  viewController.openOrders[index];
-              return DvConvoCard(
-                message: message,
-                onClick: () {
-                  viewController.handleNavigation(order: message);
+              final MinimalOrder order = viewController.openOrders[index];
+              return MinimalOrderCard(
+                order: order,
+                onTap: () {
+                  viewController.handleNavigation(order: order);
                 },
               );
             }),

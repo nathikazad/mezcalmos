@@ -1,0 +1,62 @@
+query GetTaxiMinimalDeliveryOrders(
+  $status: String!
+  $limit: Int!
+  $offset: Int!
+  $driver_id: Int_comparison_exp!
+) {
+  taxi_order(
+    limit: $limit
+    offset: $offset
+    order_by: { order_time: desc }
+    where: { status: { _eq: $status }, driver_id: $driver_id }
+  ) {
+    id
+    status
+    pickup_gps
+    pickup_address
+    dropoff_gps
+    dropoff_address
+    ride_cost
+    car_type
+    order_time
+    customer {
+      user {
+        image
+        name
+        id
+        phone
+      }
+    }
+  }
+}
+subscription ListenTaxiMinimalDeliveryOrders(
+  $status: String!
+  $limit: Int!
+  $offset: Int!
+  $driver_id: Int_comparison_exp!
+) {
+  taxi_order(
+    limit: $limit
+    offset: $offset
+    order_by: { order_time: desc }
+    where: { status: { _eq: $status }, driver_id: $driver_id }
+  ) {
+    id
+    status
+    pickup_gps
+    pickup_address
+    dropoff_gps
+    dropoff_address
+    ride_cost
+    car_type
+    order_time
+    customer {
+      user {
+        image
+        name
+        id
+        phone
+      }
+    }
+  }
+}

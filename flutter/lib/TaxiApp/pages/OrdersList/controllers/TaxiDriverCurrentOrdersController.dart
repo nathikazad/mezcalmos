@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/subscriptions/hsDeliveryOrderSubscriptions.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/graphql/taxi/order/hsTaxiOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/TaxiApp/controllers/TaxiAuthController.dart';
 
 class TaxiCurrentOrdersController {
@@ -18,8 +16,8 @@ class TaxiCurrentOrdersController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
 
   // vars
-  RxList<DeliveryMinimalOrder> currentOrders = <DeliveryMinimalOrder>[].obs;
-  RxList<DeliveryMinimalOrder> openOrders = <DeliveryMinimalOrder>[].obs;
+  RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
+  RxList<MinimalOrder> openOrders = <MinimalOrder>[].obs;
 
   RxBool initalized = RxBool(false);
   int get driverId => opAuthController.driver!.deliveryDriverId;
@@ -32,8 +30,8 @@ class TaxiCurrentOrdersController {
   bool _openOrdersFetchingData = false;
   bool _openOrdersReachedEndOfData = false;
 // streams
-  StreamSubscription<List<DeliveryMinimalOrder>?>? currentOrdersListener;
-  StreamSubscription<List<DeliveryMinimalOrder>?>? openOrdersListener;
+  StreamSubscription<List<MinimalOrder>?>? currentOrdersListener;
+  StreamSubscription<List<MinimalOrder>?>? openOrdersListener;
   String? subscriptionId;
 
 // getters
@@ -57,12 +55,12 @@ class TaxiCurrentOrdersController {
       mezDbgPrint(
           "👋 _fetchopenOrderses called with ferchSize : $openOrdersFetchSize offset: $_openOrdersCurrentOffset");
       _openOrdersFetchingData = true;
-      final List<DeliveryMinimalOrder>? newList =
-          await get_delivery_minimal_orders(
+      final List<MinimalOrder>? newList =
+          await get_taxi_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.Open,
               limit: openOrdersFetchSize,
               offset: _openOrdersCurrentOffset);
-      openOrders.value += newList ?? <DeliveryMinimalOrder>[];
+      openOrders.value += newList ?? <MinimalOrder>[];
       if (newList?.length == 0) {
         _openOrdersReachedEndOfData = true;
       }
@@ -77,14 +75,12 @@ class TaxiCurrentOrdersController {
 
   Future<void> _fetchCurrentOrders() async {
     try {
-      //  openOrders.value = await get_delivery_minimal_orders(withCache: false);
-
-      currentOrders.value = await get_delivery_minimal_orders(
+      currentOrders.value = await get_taxi_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
               driverId: opAuthController.driverId!,
               limit: 30,
               offset: 0) ??
-          <DeliveryMinimalOrder>[];
+          <MinimalOrder>[];
       mezDbgPrint("Orders length ======>${openOrders.length}");
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -95,22 +91,22 @@ class TaxiCurrentOrdersController {
 
   void _listenOnOrders() {
     subscriptionId = hasuraDb.createSubscription(start: () {
-      currentOrdersListener = listen_delivery_minimal_orders(
+      currentOrdersListener = listen_taxi_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
               driverId: opAuthController.driverId!,
               limit: 30,
               offset: 0)
-          .listen((List<DeliveryMinimalOrder>? event) {
+          .listen((List<MinimalOrder>? event) {
         if (event != null) {
           currentOrders.value = event;
         }
       });
-      openOrdersListener = listen_delivery_minimal_orders(
+      openOrdersListener = listen_taxi_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.Open,
               driverId: null,
               limit: openOrdersFetchSize,
               offset: 0)
-          .listen((List<DeliveryMinimalOrder>? event) {
+          .listen((List<MinimalOrder>? event) {
         if (event != null) {
           mezDbgPrint(
               "😇  Setting open orders from listners ::::::=================>${event.length}");
@@ -147,29 +143,29 @@ class TaxiCurrentOrdersController {
   }
 
   Future<void> finishAllOrders() async {
-    final List<String> numbers = currentOrders
-        .map((DeliveryMinimalOrder element) => element.phone_number.toString())
-        .toList();
-    try {
-      final MarkMessagesResponse res =
-          await CloudFunctions.whatsapp_markMessagesAsFinished(
-              phoneNumbers: numbers);
-      if (res.success) {
-        showSavedSnackBar(
-            title: "Finished", subtitle: "All messgaes are finished");
-      }
-    } catch (e, stk) {
-      showErrorSnackBar();
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
+    // final List<String> numbers = currentOrders
+    //     .map((DeliveryMinimalOrder element) => element.phone_number.toString())
+    //     .toList();
+    // try {
+    //   final MarkMessagesResponse res =
+    //       await CloudFunctions.whatsapp_markMessagesAsFinished(
+    //           phoneNumbers: numbers);
+    //   if (res.success) {
+    //     showSavedSnackBar(
+    //         title: "Finished", subtitle: "All messgaes are finished");
+    //   }
+    // } catch (e, stk) {
+    //   showErrorSnackBar();
+    //   mezDbgPrint(e);
+    //   mezDbgPrint(stk);
+    // }
   }
 
   void dispose() {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
   }
 
-  void handleNavigation({required DeliveryMinimalOrder order}) {
+  void handleNavigation({required MinimalOrder order}) {
     // if (order.delivery_order_type == MinimalDeliveryOrderType.Message) {
     //   DvConvoView.navigate(phoneNumber: order.phone_number!);
     // } else {

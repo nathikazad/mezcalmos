@@ -112,6 +112,11 @@ select_permissions:
       columns:
         - user_id
       filter: {}
+  - role: taxi_driver
+    permission:
+      columns: []
+      filter: {}
+    comment: ""
 update_permissions:
   - role: customer
     permission:

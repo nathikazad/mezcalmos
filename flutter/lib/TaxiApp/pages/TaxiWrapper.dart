@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/TaxiApp/controllers/taxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/controllers/TaxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
 
 class TaxiWrapper extends StatefulWidget {
@@ -45,7 +45,6 @@ class _TaxiWrapperState extends State<TaxiWrapper> {
 
       unawaited(MezRouter.toPath(TaxiAppRoutes.kCurrentOrdersListRoute));
     } else {
-      // unawaited(MezRouter.toNamed(DeliveryAppRoutes.kDriverUnAuthRoute));
       mezDbgPrint("DeliveryWrapper::handleState going to unauthorized");
     }
   }

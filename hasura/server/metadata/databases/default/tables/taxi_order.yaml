@@ -11,3 +11,37 @@ object_relationships:
         remote_table:
           name: customer
           schema: customer
+  - name: driver
+    using:
+      manual_configuration:
+        column_mapping:
+          driver_id: id
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: taxi
+select_permissions:
+  - role: taxi_driver
+    permission:
+      columns:
+        - car_type
+        - customer_id
+        - driver_id
+        - dropoff_address
+        - dropoff_gps
+        - id
+        - order_time
+        - pickup_address
+        - pickup_gps
+        - ride_cost
+        - status
+        - trip_distance
+        - trip_duration
+        - trip_polyline
+      filter:
+        _or:
+          - driver_id:
+              _is_null: true
+          - driver:
+              user_id:
+                _eq: X-Hasura-User-Id

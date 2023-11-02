@@ -141,9 +141,7 @@ select_permissions:
         - creation_time
         - name
         - phone
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
+      filter: {}
 update_permissions:
   - role: business_operator
     permission:

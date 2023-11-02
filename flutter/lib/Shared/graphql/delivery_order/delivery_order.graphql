@@ -723,6 +723,7 @@ mutation updateDeliveryOrderDriverAndCost(
     }
   }
 }
+
 query GetMinimalDeliveryMessages(
   $status: String!
   $limit: Int!

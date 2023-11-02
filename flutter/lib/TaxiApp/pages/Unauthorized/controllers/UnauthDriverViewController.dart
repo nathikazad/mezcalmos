@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpCurrentOrders.dart';
-import 'package:mezcalmos/TaxiApp/controllers/TaxiAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/deliveryDeepLinkHandler.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/TaxiApp/controllers/TaxiAuthController.dart';
 
 class UnautthDriverViewController {
   // instances
