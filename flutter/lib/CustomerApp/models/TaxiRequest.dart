@@ -1,5 +1,6 @@
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class TaxiRequest {
@@ -63,21 +64,5 @@ class TaxiRequest {
       "paymentType": paymentType.toFirebaseFormatString(),
       "scheduledTime": scheduledTime?.toUtc().toString()
     };
-  }
-}
-
-enum TaxiCarType { Mini, Suv }
-
-extension ParseTaxiCarTypeToString on TaxiCarType {
-  String toFirebaseFormatString() {
-    final String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToTaxiCarType on String {
-  TaxiCarType toTaxiCarType() {
-    return TaxiCarType.values.firstWhere((TaxiCarType TaxiCarType) =>
-        TaxiCarType.toFirebaseFormatString().toLowerCase() == toLowerCase());
   }
 }

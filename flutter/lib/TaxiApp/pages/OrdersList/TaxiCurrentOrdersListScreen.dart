@@ -3,13 +3,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
-import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
-import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
+import 'package:mezcalmos/TaxiApp/components/TaxiDriverOrderCard.dart';
 import 'package:mezcalmos/TaxiApp/controllers/TaxiAuthController.dart';
 import 'package:mezcalmos/TaxiApp/pages/OrdersList/controllers/TaxiDriverCurrentOrdersController.dart';
 import 'package:mezcalmos/TaxiApp/router.dart';
@@ -124,33 +122,15 @@ class _TaxiCurrentOrdersListScreenState
           Column(
             children:
                 List.generate(viewController.currentOrders.length, (int index) {
-              final MinimalOrder order = viewController.currentOrders[index];
-              return MinimalOrderCard(
+              final TaxiOrder order = viewController.currentOrders[index];
+              return TaxiDriverOrderCard(
                 order: order,
-                onTap: () {
-                  viewController.handleNavigation(order: order);
+                onClick: () {
+                  viewController.handleNavigation(orderId: order.id);
                 },
               );
             }),
           ),
-          Divider(),
-          MezInkwell(
-            label: _i18n()['confirmationDialog']["markAll"],
-            backgroundColor: secondaryLightBlueColor,
-            textColor: primaryBlueColor,
-            icon: Icons.arrow_forward,
-            onClick: () async {
-              await showConfirmationDialog(context,
-                  title: _i18n()['confirmationDialog']["markAll"],
-                  helperText: '',
-                  primaryButtonText: _i18n()['confirmationDialog']['yes'],
-                  secondaryButtonText: _i18n()['confirmationDialog']['cancel'],
-                  primaryColor: primaryBlueColor,
-                  icon: Icons.done_all_rounded, onYesClick: () async {
-                await viewController.finishAllOrders();
-              });
-            },
-          )
         ],
       ),
     );
@@ -182,11 +162,11 @@ class _TaxiCurrentOrdersListScreenState
           Column(
             children:
                 List.generate(viewController.openOrders.length, (int index) {
-              final MinimalOrder order = viewController.openOrders[index];
-              return MinimalOrderCard(
+              final TaxiOrder order = viewController.openOrders[index];
+              return TaxiDriverOrderCard(
                 order: order,
-                onTap: () {
-                  viewController.handleNavigation(order: order);
+                onClick: () {
+                  viewController.handleNavigation(orderId: order.id);
                 },
               );
             }),

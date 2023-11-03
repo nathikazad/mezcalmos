@@ -1,34 +1,35 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/taxi/order/__generated/taxi_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
-Future<List<MinimalOrder>?> get_taxi_delivery_minimal_orders({
-  required MinimalDeliveryOrderStatus status,
-  bool forCompany = false,
+Future<List<TaxiOrder>?> get_taxi_delivery_minimal_orders({
+  required cm.MinimalDeliveryOrderStatus status,
   int? driverId,
   required int limit,
   required int offset,
 }) async {
+  mezDbgPrint(
+      "👋 fetch taxi order with status : ${status.toFirebaseFormatString()} &&&&& driver id : $driverId");
   final QueryResult<Query$GetTaxiMinimalDeliveryOrders> res =
       await _hasuraDb.graphQLClient.query$GetTaxiMinimalDeliveryOrders(
           Options$Query$GetTaxiMinimalDeliveryOrders(
               fetchPolicy: FetchPolicy.networkOnly,
               variables: Variables$Query$GetTaxiMinimalDeliveryOrders(
-                  driver_id: (driverId == null && forCompany == true)
+                  driver_id: (driverId == null)
                       ? Input$Int_comparison_exp($_is_null: false)
-                      : (driverId == null)
-                          ? Input$Int_comparison_exp($_is_null: true)
-                          : Input$Int_comparison_exp(
-                              $_eq: driverId,
-                            ),
+                      : Input$Int_comparison_exp(
+                          $_eq: driverId,
+                        ),
                   status: status.toFirebaseFormatString(),
                   limit: limit,
                   offset: offset)));
@@ -37,27 +38,35 @@ Future<List<MinimalOrder>?> get_taxi_delivery_minimal_orders({
   }
 
   return res.parsedData?.taxi_order
-      .map<MinimalOrder>(
-          (Query$GetTaxiMinimalDeliveryOrders$taxi_order e) => MinimalOrder(
-                id: e.id,
-                toAdress: e.dropoff_address,
-                orderTime: DateTime.parse(e.order_time),
-                title: e.customer!.user.name,
-                image: e.customer!.user.image,
-                status: e.status
-                    .toString()
-                    .toMinimalDeliveryOrderStatus()
-                    .toMinimalOrderStatus(),
-                totalCost: e.ride_cost,
-                orderType: OrderType.Taxi,
-              ))
+      .map<TaxiOrder>((Query$GetTaxiMinimalDeliveryOrders$taxi_order data) =>
+          TaxiOrder(
+              id: data.id,
+              status: data.status.toMinimalDeliveryOrderStatus(),
+              pickupLocation: MezLocation.fromHasura(data.pickup_gps,
+                  data.pickup_address),
+              dropoffLocation:
+                  MezLocation
+                      .fromHasura(data.dropoff_gps, data.dropoff_address),
+              customer:
+                  UserInfo(
+                      hasuraId: data.customer!.user.id,
+                      name: data.customer!.user.name,
+                      image: data.customer!.user.image),
+              rideCost: data.ride_cost,
+              orderTime: DateTime.parse(data.order_time),
+              carType: data.car_type.toTaxiCarType(),
+              routeInformation: RouteInformation(
+                  duration: RideDuration(
+                      data.trip_duration.toString(), data.trip_duration),
+                  distance: RideDistance(
+                      data.trip_distance.toString(), data.trip_distance),
+                  polyline: data.trip_polyline)))
       .toList();
 }
 
-Stream<List<MinimalOrder>?> listen_taxi_delivery_minimal_orders({
-  required MinimalDeliveryOrderStatus status,
+Stream<List<TaxiOrder>?> listen_taxi_delivery_minimal_orders({
+  required cm.MinimalDeliveryOrderStatus status,
   int? driverId,
-  bool forCompany = false,
   required int limit,
   required int offset,
 }) {
@@ -66,38 +75,86 @@ Stream<List<MinimalOrder>?> listen_taxi_delivery_minimal_orders({
           Options$Subscription$ListenTaxiMinimalDeliveryOrders(
               fetchPolicy: FetchPolicy.networkOnly,
               variables: Variables$Subscription$ListenTaxiMinimalDeliveryOrders(
-                  driver_id: (driverId == null && forCompany == true)
-                      ? Input$Int_comparison_exp($_is_null: false)
-                      : (driverId == null)
-                          ? Input$Int_comparison_exp($_is_null: true)
-                          : Input$Int_comparison_exp(
-                              $_eq: driverId,
-                            ),
+                  driver_id: (driverId == null)
+                      ? Input$Int_comparison_exp($_is_null: true)
+                      : Input$Int_comparison_exp(
+                          $_eq: driverId,
+                        ),
                   status: status.toFirebaseFormatString(),
                   limit: limit,
                   offset: offset)))
-      .map<List<MinimalOrder>?>(
+      .map<List<TaxiOrder>?>(
           (QueryResult<Subscription$ListenTaxiMinimalDeliveryOrders> res) {
     if (res.hasException) {
       throwError(res.exception);
     }
 
     return res.parsedData?.taxi_order
-        .map<MinimalOrder>(
-            (Subscription$ListenTaxiMinimalDeliveryOrders$taxi_order e) =>
-                MinimalOrder(
-                  id: e.id,
-                  toAdress: e.dropoff_address,
-                  orderTime: DateTime.parse(e.order_time),
-                  title: e.customer!.user.name,
-                  image: e.customer!.user.image,
-                  status: e.status
-                      .toString()
-                      .toMinimalDeliveryOrderStatus()
-                      .toMinimalOrderStatus(),
-                  totalCost: e.ride_cost,
-                  orderType: OrderType.Taxi,
-                ))
+        .map<TaxiOrder>((Subscription$ListenTaxiMinimalDeliveryOrders$taxi_order
+                data) =>
+            TaxiOrder(
+                id: data.id,
+                status: data.status.toMinimalDeliveryOrderStatus(),
+                pickupLocation: MezLocation.fromHasura(
+                    data.pickup_gps, data.pickup_address),
+                dropoffLocation: MezLocation.fromHasura(
+                    data.dropoff_gps, data.dropoff_address),
+                customer: UserInfo(
+                    hasuraId: data.customer!.user.id,
+                    name: data.customer!.user.name,
+                    image: data.customer!.user.image),
+                rideCost: data.ride_cost,
+                orderTime: DateTime.parse(data.order_time),
+                carType: data.car_type.toTaxiCarType(),
+                routeInformation: RouteInformation(
+                    duration: RideDuration(
+                        data.trip_duration.toString(), data.trip_duration),
+                    distance: RideDistance(
+                        data.trip_distance.toString(), data.trip_distance),
+                    polyline: data.trip_polyline)))
         .toList();
   });
+}
+
+Future<TaxiOrder?> get_taxi_order_by_id(
+    {required int orderId, bool withCache = true}) async {
+  final QueryResult<Query$get_taxi_order> res = await _hasuraDb.graphQLClient
+      .query$get_taxi_order(Options$Query$get_taxi_order(
+          fetchPolicy: withCache ? null : FetchPolicy.networkOnly,
+          variables: Variables$Query$get_taxi_order(orderId: orderId)));
+  if (res.hasException) {
+    throwError(res.exception);
+  }
+  if (res.parsedData?.taxi_order_by_pk != null) {
+    final Query$get_taxi_order$taxi_order_by_pk data =
+        res.parsedData!.taxi_order_by_pk!;
+    return TaxiOrder(
+        id: data.id,
+        status: data.status.toMinimalDeliveryOrderStatus(),
+        pickupLocation:
+            MezLocation.fromHasura(data.pickup_gps, data.pickup_address),
+        dropoffLocation:
+            MezLocation.fromHasura(data.dropoff_gps, data.dropoff_address),
+        customer: UserInfo(
+            hasuraId: data.customer!.user.id,
+            name: data.customer!.user.name,
+            image: data.customer!.user.image),
+        driver: (data.driver == null)
+            ? null
+            : UserInfo(
+                hasuraId: data.driver!.user!.id,
+                name: data.driver!.user!.name,
+                image: data.driver!.user!.image),
+        rideCost: data.ride_cost,
+        orderTime: DateTime.parse(data.order_time),
+        carType: data.car_type.toTaxiCarType(),
+        routeInformation: RouteInformation(
+            duration:
+                RideDuration(data.trip_duration.toString(), data.trip_duration),
+            distance:
+                RideDistance(data.trip_distance.toString(), data.trip_distance),
+            polyline: data.trip_polyline));
+  }
+
+  return null;
 }

@@ -20,6 +20,8 @@ class OrderMapWidget extends StatefulWidget {
       required this.polyline,
       required this.from,
       this.height = 350,
+      this.fromIcon,
+      this.toIcon,
       this.mapPadding = EdgeInsets.zero,
       this.recenterBtnBottomPadding = 20,
       this.margin,
@@ -27,6 +29,8 @@ class OrderMapWidget extends StatefulWidget {
   final int deliveryOrderId;
   final bool updateDriver;
   final String? polyline;
+  final String? toIcon;
+  final String? fromIcon;
   final MezLocation? from;
   final MezLocation to;
   final EdgeInsets? margin;
@@ -46,6 +50,8 @@ class _OrderMapWidgetState extends State<OrderMapWidget> {
         deliveryOrderId: widget.deliveryOrderId,
         updateDriver: widget.updateDriver,
         polyline: widget.polyline,
+        fromIcon: widget.fromIcon,
+        toIcon: widget.toIcon,
         from: widget.from,
         to: widget.to);
     super.initState();

@@ -5,20 +5,18 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/routes/SharedDeliveryRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:mezcalmos/TaxiApp/pages/TaxiOrderView/controllers/TaxiOrderViewController.dart';
+import 'package:mezcalmos/TaxiApp/router.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['DeliveryApp']
     ['pages']['DvOrderView'];
@@ -28,7 +26,7 @@ class TaxiOrderView extends StatefulWidget {
 
   static void navigate({required int orderId, required int? driverId}) {
     MezRouter.toPath(
-        SharedDvRoutes.kDvOrderView.replaceFirst(":orderId", "$orderId"),
+        TaxiAppRoutes.kOrderView.replaceFirst(":orderId", "$orderId"),
         arguments: <String, dynamic>{
           "driverId": driverId,
         });
@@ -88,13 +86,109 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           OrderMapWidget(
-              deliveryOrderId: viewController.order!.orderId,
+              deliveryOrderId: viewController.order!.id,
               height: 80.mezW,
+              fromIcon: aDefaultAvatar,
               updateDriver: false,
-              polyline: viewController.order!.routeInformation?.polyline,
+              polyline: viewController.order!.routeInformation.polyline,
               from: viewController.order!.pickupLocation,
-              to: viewController.order!.dropOffLocation),
+              to: viewController.order!.dropoffLocation),
           // here call OrderMapWidget
+
+          meduimSeperator,
+          MezCard(
+            content: IntrinsicHeight(
+              child: Row(
+                children: <Widget>[
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.route,
+                              size: 15.mezSp,
+                            ),
+                            hTinySepartor,
+                            Flexible(
+                              child: Text(
+                                  "Distance : " +
+                                      viewController
+                                          .order!.routeInformation.distance
+                                          .toKmText(),
+                                  style: context.textTheme.bodyMedium),
+                            )
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.watch_later_outlined,
+                              size: 15.mezSp,
+                            ),
+                            hTinySepartor,
+                            Flexible(
+                              child: Text(
+                                  "Est duration : " +
+                                      viewController
+                                          .order!.routeInformation.duration
+                                          .inMinutesText(),
+                                  style: context.textTheme.bodyMedium),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  VerticalDivider(),
+                  Column(
+                    children: <Widget>[
+                      Icon(
+                        viewController.order!.carType.icon,
+                        color: Colors.black,
+                      ),
+                      Text(viewController.order!.carType.name,
+                          style: context.textTheme.bodyMedium)
+                    ],
+                  ),
+                  VerticalDivider(),
+                  Column(
+                    children: <Widget>[
+                      Text("Ride Cost"),
+                      Text(
+                        viewController.order!.rideCost.toPriceString(),
+                        style: context.textTheme.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          MezCard(
+              label: "Pickup address",
+              firstAvatarIcon: Icons.person_pin_circle,
+              firstAvatarBgColor: secondaryLightBlueColor,
+              firstAvatarIconColor: primaryBlueColor,
+              radius: 15,
+              content: Text(viewController.order!.pickupLocation.address,
+                  style: context.textTheme.bodyLarge)),
+          MezCard(
+              label: "Dropoff address",
+              firstAvatarIcon: Icons.pin_drop_rounded,
+              firstAvatarBgColor: secondaryLightBlueColor,
+              firstAvatarIconColor: primaryBlueColor,
+              radius: 15,
+              content: Text(viewController.order!.dropoffLocation.address,
+                  style: context.textTheme.bodyLarge)),
+
           MezCard(
             label: "${_i18n()['customer']}",
             margin: const EdgeInsets.only(top: 15),
@@ -106,73 +200,16 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
               viewController.order!.customer.name,
               style: context.textTheme.bodyLarge,
             ),
-            action: Row(
-              children: <Widget>[
-                MezIconButton(
-                  icon: Ionicons.logo_whatsapp,
-                  iconColor: Colors.white,
-                  backgroundColor: Colors.green,
-                  onTap: () {
-                    viewController.openCustomerWhatsapp();
-                  },
-                ),
-                hMeduimSeperator,
-                MezIconButton(
-                  icon: Icons.my_location,
-                  iconColor: Colors.black,
-                  backgroundColor: Colors.white,
-                  onTap: () async {
-                    await viewController.openCustomerMap();
-                  },
-                ),
-              ],
-            ),
-          ),
-          MezCard(
-            label: "${_i18n()['restaurant']}",
-            margin: const EdgeInsets.only(top: 15),
-            radius: 22,
-            firstAvatarBgImage: CachedNetworkImageProvider(
-              viewController.order!.serviceProvider.image,
-            ),
-            content: Text(
-              viewController.order!.serviceProvider.name,
-              style: context.textTheme.bodyLarge,
-            ),
-            action: Row(
-              children: <Widget>[
-                MezIconButton(
-                  icon: Ionicons.logo_whatsapp,
-                  iconColor: Colors.white,
-                  backgroundColor: Colors.green,
-                  onTap: () {
-                    viewController.openRestaurantWhatsapp();
-                  },
-                ),
-                hMeduimSeperator,
-                MezIconButton(
-                  icon: Icons.my_location,
-                  iconColor: Colors.black,
-                  backgroundColor: Colors.white,
-                  onTap: () async {
-                    await viewController.openRestaurantMap();
-                  },
-                ),
-              ],
+            action: MezIconButton(
+              icon: Ionicons.logo_whatsapp,
+              iconColor: Colors.white,
+              backgroundColor: Colors.green,
+              onTap: () {
+                viewController.openCustomerWhatsapp();
+              },
             ),
           ),
 
-          _orderItemsList(),
-          meduimSeperator,
-          Text(
-            "${_i18n()['orderSummary']}",
-            style: context.textTheme.bodyLarge,
-          ),
-          OrderSummaryCard(
-            margin: const EdgeInsets.only(top: 15),
-            costs: viewController.order!.costs,
-            stripeOrderPaymentInfo: null,
-          ),
           if (viewController.showFinish) ...<Widget>[
             bigSeperator,
             MezButton(
@@ -191,52 +228,6 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
     );
   }
 
-  Widget _orderItemsList() {
-    return Container(
-      margin: const EdgeInsets.only(top: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            '${_i18n()["orderItems"]}',
-            style: context.textTheme.bodyLarge,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Column(
-            children: List.generate(
-              viewController.order!.dvItems.length,
-              (int index) {
-                final DeliveryOrderItem item =
-                    viewController.order!.dvItems[index];
-                return MezCard(
-                    firstAvatarBgImage: item.image != null
-                        ? CachedNetworkImageProvider(item.image!)
-                        : null,
-                    firstAvatarIcon:
-                        item.image == null ? Icons.fastfood_rounded : null,
-                    firstAvatarIconColor: Colors.white,
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          item.name.getTranslation(userLanguage) ?? "",
-                          style: context.textTheme.bodyLarge,
-                        ),
-                        tinySepartor,
-                        Text(
-                            "\$${item.costPerOne} x ${item.quantity} = \$${item.totalCost}")
-                      ],
-                    ));
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _aceptButton() {
     return MezButton(
       label: "${_i18n()['acceptOrder']}",
@@ -244,52 +235,7 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
       backgroundColor: Colors.green,
       textColor: Colors.white,
       onClick: () async {
-        await showDialog(
-            context: context,
-            builder: (BuildContext ctx) {
-              return AlertDialog(
-                contentPadding: const EdgeInsets.all(16),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      "${_i18n()['deliveryCost']}",
-                      style: context.textTheme.bodyLarge,
-                    ),
-                    meduimSeperator,
-                    TextFormField(
-                      controller: viewController.priceTxt,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      decoration: InputDecoration(
-                          hintText: "${_i18n()['price']}",
-                          suffix: Icon(Icons.attach_money)),
-                    ),
-                    meduimSeperator,
-                    MezButton(
-                      label: "${_i18n()['acceptOrder']}",
-                      onClick: () async {
-                        final double? cost =
-                            double.tryParse(viewController.priceTxt.text);
-                        if (cost != null) {
-                          await viewController.acceptOrder(deliveryCost: cost);
-                          Navigator.pop(context);
-                        }
-                      },
-                    ),
-                    meduimSeperator,
-                    MezButton(
-                      label: "${_i18n()['cancel']}",
-                      backgroundColor: offRedColor,
-                      textColor: redAccentColor,
-                      onClick: () async {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-              );
-            });
+        await viewController.acceptOrder();
       },
     );
   }
@@ -310,18 +256,34 @@ class _TaxiOrderViewState extends State<TaxiOrderView> {
       child: Card(
         margin: EdgeInsets.zero,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Flexible(
                 fit: FlexFit.tight,
-                child: Text(
-                  viewController.order!.status.title,
-                  style: context.textTheme.bodyLarge,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Order is currently: "),
+                    Text(
+                      viewController.order!.status.name,
+                      style: context.textTheme.bodyLarge,
+                    ),
+                  ],
                 ),
               ),
               hSmallSepartor,
-              viewController.order!.status.widget(packageReady: false)
+              CircleAvatar(
+                radius: 15,
+                backgroundColor: secondaryLightBlueColor,
+                child: Icon(
+                  viewController.order!.status.icon,
+                  color: primaryBlueColor,
+                  size: 15,
+                ),
+              ),
             ],
           ),
         ),

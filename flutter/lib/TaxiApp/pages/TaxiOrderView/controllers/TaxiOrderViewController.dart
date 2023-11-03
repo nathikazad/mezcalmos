@@ -4,31 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
-import 'package:mezcalmos/Shared/graphql/delivery_order/mutations/hsDeliveryOrderMutations.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_order/queries/hsDleiveryOrderQuerries.dart';
+import 'package:mezcalmos/Shared/graphql/taxi/order/hsTaxiOrder.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 
 class TaxiOrderViewController {
   late int orderId;
-  Rxn<DeliveryOrder> _order = Rxn<DeliveryOrder>();
+  Rxn<TaxiOrder> _order = Rxn<TaxiOrder>();
   // TaxiAuthController _TaxiAuthController =
   //     Get.find<TaxiAuthController>();
   TextEditingController priceTxt = TextEditingController();
 
   // getters //
-  DeliveryOrder? get order => _order.value;
+  TaxiOrder? get order => _order.value;
   bool get hasData => _order.value != null;
-  bool get showAccept => isOpenOrder && driverId != null;
-  bool get isOpenOrder =>
-      _order.value != null && _order.value!.driverInfo == null;
+  bool get showAccept => isOpenOrder;
+  bool get isOpenOrder => _order.value != null && _order.value!.driver == null;
   bool get showFinish =>
       _order.value != null &&
-      _order.value!.driverInfo != null &&
-      _order.value!.inProcess();
+      _order.value!.driver != null &&
+      _order.value!.inProcess;
   int? driverId;
 
   void init({required int orderId, int? driverId}) {
@@ -40,40 +36,23 @@ class TaxiOrderViewController {
   Future<void> _fetchOrder() async {
     _order.value = null;
     _order.value =
-        await get_driver_order_by_id(orderId: orderId, withCache: false);
+        await get_taxi_order_by_id(orderId: orderId, withCache: false);
   }
 
-  Future<void> acceptOrder({required double deliveryCost}) async {
-    if (driverId != null) {
-      try {
-        final bool res = await update_dvorder_driver_and_cost(
-            driverId: driverId!, cost: deliveryCost, orderId: orderId);
-        if (res) {
-          showSavedSnackBar(
-              title: "Assigned", subtitle: "You are assigned to this order");
-          await (_fetchOrder());
-          mezDbgPrint("ORDER REFETCH =============>${order?.driverInfo}");
-        } else {
-          showErrorSnackBar(errorText: "Driver Already Assigned");
-        }
-      } catch (e) {
-        mezDbgPrint(e);
-        showErrorSnackBar();
-      }
+  Future<void> acceptOrder() async {
+    try {
+      final cm.TaxiAcceptResponse res =
+          await CloudFunctions.taxi_acceptOrder(orderId: orderId);
+      if (res.success) {
+        showSavedSnackBar();
+        await _fetchOrder();
+      } else
+        showErrorSnackBar(errorText: res.error.toString());
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar();
     }
-  }
-
-  Future<void> openRestaurantWhatsapp() async {
-    final String? phoneNumber = order?.serviceProvider.phoneNumber;
-    if (phoneNumber != null) {
-      try {
-        await callWhatsappNumber(phoneNumber);
-      } catch (e) {
-        showErrorSnackBar();
-        mezDbgPrint(e);
-      }
-    } else
-      mezDbgPrint("Phone number is null 🥲");
   }
 
   Future<void> openCustomerWhatsapp() async {
@@ -91,11 +70,13 @@ class TaxiOrderViewController {
 
   Future<void> finishOrder() async {
     try {
-      final cm.CompleteRestaurantOrderResponse res =
-          await CloudFunctions.restaurant3_completeOrder(orderId: orderId);
+      final cm.TaxiFinishResponse res =
+          await CloudFunctions.taxi_finishOrder(orderId: orderId);
+      mezDbgPrint(res.toFirebaseFormattedJson());
       if (res.success) {
         showSavedSnackBar();
-        await _fetchOrder();
+
+        // await _fetchOrder();
       } else
         showErrorSnackBar(errorText: res.error.toString());
     } catch (e, stk) {
@@ -107,10 +88,8 @@ class TaxiOrderViewController {
 
   Future<void> cancelOrder() async {
     try {
-      final cm.ChangeDeliveryStatusResponse res =
-          await CloudFunctions.delivery3_changeStatus(
-              deliveryId: orderId,
-              newStatus: cm.DeliveryOrderStatus.CancelledByDeliverer);
+      final cm.cancelTaxiResponse res =
+          await CloudFunctions.taxi_cancelOrder(orderId: orderId);
       if (res.success) {
         showSavedSnackBar();
         await _fetchOrder();
@@ -123,31 +102,31 @@ class TaxiOrderViewController {
     }
   }
 
-  Future<void> openRestaurantMap() async {
-    if (order?.pickupLocation != null) {
-      final String mapUrl =
-          getGMapsDirectionLink(null, order!.pickupLocation!.toLatLng()!);
-      try {
-        await launchUrl(Uri.parse(mapUrl),
-            mode: LaunchMode.externalApplication);
-      } catch (e) {
-        showErrorSnackBar();
-        mezDbgPrint(e);
-      }
-    }
-  }
+  // Future<void> openRestaurantMap() async {
+  //   if (order?.pickupLocation != null) {
+  //     final String mapUrl =
+  //         getGMapsDirectionLink(null, order!.pickupLocation.toLatLng()!);
+  //     try {
+  //       await launchUrl(Uri.parse(mapUrl),
+  //           mode: LaunchMode.externalApplication);
+  //     } catch (e) {
+  //       showErrorSnackBar();
+  //       mezDbgPrint(e);
+  //     }
+  //   }
+  // }
 
-  Future<void> openCustomerMap() async {
-    if (order?.dropOffLocation != null) {
-      final String mapUrl =
-          getGMapsDirectionLink(null, order!.dropOffLocation.toLatLng()!);
-      try {
-        await launchUrl(Uri.parse(mapUrl),
-            mode: LaunchMode.externalApplication);
-      } catch (e) {
-        showErrorSnackBar();
-        mezDbgPrint(e);
-      }
-    }
-  }
+  // Future<void> openCustomerMap() async {
+  //   // if (order?.dropOffLocation != null) {
+  //   //   final String mapUrl =
+  //   //       getGMapsDirectionLink(null, order!.dropOffLocation.toLatLng()!);
+  //   //   try {
+  //   //     await launchUrl(Uri.parse(mapUrl),
+  //   //         mode: LaunchMode.externalApplication);
+  //   //   } catch (e) {
+  //   //     showErrorSnackBar();
+  //   //     mezDbgPrint(e);
+  //   //   }
+  //   // }
+  // }
 }

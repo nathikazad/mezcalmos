@@ -16,6 +16,9 @@ query GetTaxiMinimalDeliveryOrders(
     pickup_address
     dropoff_gps
     dropoff_address
+    trip_polyline
+    trip_distance
+    trip_duration
     ride_cost
     car_type
     order_time
@@ -47,10 +50,57 @@ subscription ListenTaxiMinimalDeliveryOrders(
     pickup_address
     dropoff_gps
     dropoff_address
+    trip_polyline
+    trip_distance
+    trip_duration
     ride_cost
     car_type
     order_time
     customer {
+      user {
+        image
+        name
+        id
+        phone
+      }
+    }
+  }
+}
+query get_taxi_order($orderId: Int!) {
+  taxi_order_by_pk(id: $orderId) {
+    id
+    status
+    pickup_gps
+    pickup_address
+    dropoff_gps
+    dropoff_address
+    trip_polyline
+    trip_distance
+    trip_duration
+    ride_cost
+    car_type
+    order_time
+    customer {
+      user {
+        image
+        name
+        id
+        phone
+      }
+    }
+    driver {
+      user {
+        image
+        name
+        id
+        phone
+      }
+    }
+  }
+}
+subscription listen_taxi_order_driver($orderId: Int!) {
+  taxi_order_by_pk(id: $orderId) {
+    driver {
       user {
         image
         name

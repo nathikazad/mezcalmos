@@ -21860,6 +21860,11 @@ type mutation_root {
   ): taxi_driver_mutation_response
 
   """
+  delete single row from the table: "taxi.driver"
+  """
+  delete_taxi_driver_by_pk(id: Int!): taxi_driver
+
+  """
   delete data from the table: "taxi.order"
   """
   delete_taxi_order(
@@ -23534,6 +23539,9 @@ type mutation_root {
   insert_taxi_driver(
     """the rows to be inserted"""
     objects: [taxi_driver_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: taxi_driver_on_conflict
   ): taxi_driver_mutation_response
 
   """
@@ -23542,6 +23550,9 @@ type mutation_root {
   insert_taxi_driver_one(
     """the row to be inserted"""
     object: taxi_driver_insert_input!
+
+    """upsert condition"""
+    on_conflict: taxi_driver_on_conflict
   ): taxi_driver
 
   """
@@ -27115,6 +27126,18 @@ type mutation_root {
   ): taxi_driver_mutation_response
 
   """
+  update single row of the table: "taxi.driver"
+  """
+  update_taxi_driver_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: taxi_driver_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: taxi_driver_set_input
+    pk_columns: taxi_driver_pk_columns_input!
+  ): taxi_driver
+
+  """
   update multiples rows of table: "taxi.driver"
   """
   update_taxi_driver_many(
@@ -27587,23 +27610,6 @@ type notification_info_var_samp_fields {
 type notification_info_variance_fields {
   id: Float
   user_id: Float
-}
-
-scalar numeric
-
-"""
-Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'.
-"""
-input numeric_comparison_exp {
-  _eq: numeric
-  _gt: numeric
-  _gte: numeric
-  _in: [numeric!]
-  _is_null: Boolean
-  _lt: numeric
-  _lte: numeric
-  _neq: numeric
-  _nin: [numeric!]
 }
 
 """column ordering options"""
@@ -31193,6 +31199,9 @@ type query_root {
     """filter the rows returned"""
     where: taxi_driver_bool_exp
   ): taxi_driver_aggregate!
+
+  """fetch data from the table: "taxi.driver" using primary key columns"""
+  taxi_driver_by_pk(id: Int!): taxi_driver
 
   """
   fetch data from the table: "taxi.order"
@@ -49606,6 +49615,9 @@ type subscription_root {
     where: taxi_driver_bool_exp
   ): taxi_driver_aggregate!
 
+  """fetch data from the table: "taxi.driver" using primary key columns"""
+  taxi_driver_by_pk(id: Int!): taxi_driver
+
   """
   fetch data from the table in a streaming manner: "taxi.driver"
   """
@@ -49981,7 +49993,7 @@ type taxi_driver {
   current_location: geography
   delivery_company_id: Int
   delivery_company_type: String
-  id: Int
+  id: Int!
   online: Boolean
   status: String
 
@@ -50042,6 +50054,21 @@ input taxi_driver_bool_exp {
 }
 
 """
+unique or primary key constraints on table "taxi.driver"
+"""
+enum taxi_driver_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  driver_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  driver_pkey
+}
+
+"""
 input type for incrementing numeric columns in table "taxi.driver"
 """
 input taxi_driver_inc_input {
@@ -50099,6 +50126,25 @@ type taxi_driver_mutation_response {
   returning: [taxi_driver!]!
 }
 
+"""
+input type for inserting object relation for remote table "taxi.driver"
+"""
+input taxi_driver_obj_rel_insert_input {
+  data: taxi_driver_insert_input!
+
+  """upsert condition"""
+  on_conflict: taxi_driver_on_conflict
+}
+
+"""
+on_conflict condition type for table "taxi.driver"
+"""
+input taxi_driver_on_conflict {
+  constraint: taxi_driver_constraint!
+  update_columns: [taxi_driver_update_column!]! = []
+  where: taxi_driver_bool_exp
+}
+
 """Ordering options when selecting data from "taxi.driver"."""
 input taxi_driver_order_by {
   app_type_id: order_by
@@ -50111,6 +50157,11 @@ input taxi_driver_order_by {
   status: order_by
   user: user_order_by
   user_id: order_by
+}
+
+"""primary key columns input for table: taxi.driver"""
+input taxi_driver_pk_columns_input {
+  id: Int!
 }
 
 """
@@ -50212,6 +50263,38 @@ type taxi_driver_sum_fields {
   user_id: Int
 }
 
+"""
+update columns of table "taxi.driver"
+"""
+enum taxi_driver_update_column {
+  """column name"""
+  app_type_id
+
+  """column name"""
+  app_version
+
+  """column name"""
+  current_location
+
+  """column name"""
+  delivery_company_id
+
+  """column name"""
+  delivery_company_type
+
+  """column name"""
+  id
+
+  """column name"""
+  online
+
+  """column name"""
+  status
+
+  """column name"""
+  user_id
+}
+
 input taxi_driver_updates {
   """increments the numeric columns with given value of the filtered values"""
   _inc: taxi_driver_inc_input
@@ -50253,17 +50336,20 @@ type taxi_order {
   """An object relationship"""
   customer: customer_customer
   customer_id: Int!
-  driver_id: Int!
+
+  """An object relationship"""
+  driver: taxi_driver
+  driver_id: Int
   dropoff_address: String!
   dropoff_gps: geography!
   id: Int!
-  order_time: time!
+  order_time: timestamptz!
   pickup_address: String!
   pickup_gps: geography!
   ride_cost: money!
   status: String!
-  trip_distance: numeric!
-  trip_duration: numeric!
+  trip_distance: Int!
+  trip_duration: Int!
   trip_polyline: String!
 }
 
@@ -50312,17 +50398,18 @@ input taxi_order_bool_exp {
   car_type: String_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  driver: taxi_driver_bool_exp
   driver_id: Int_comparison_exp
   dropoff_address: String_comparison_exp
   dropoff_gps: geography_comparison_exp
   id: Int_comparison_exp
-  order_time: time_comparison_exp
+  order_time: timestamptz_comparison_exp
   pickup_address: String_comparison_exp
   pickup_gps: geography_comparison_exp
   ride_cost: money_comparison_exp
   status: String_comparison_exp
-  trip_distance: numeric_comparison_exp
-  trip_duration: numeric_comparison_exp
+  trip_distance: Int_comparison_exp
+  trip_duration: Int_comparison_exp
   trip_polyline: String_comparison_exp
 }
 
@@ -50344,8 +50431,8 @@ input taxi_order_inc_input {
   driver_id: Int
   id: Int
   ride_cost: money
-  trip_distance: numeric
-  trip_duration: numeric
+  trip_distance: Int
+  trip_duration: Int
 }
 
 """
@@ -50355,17 +50442,18 @@ input taxi_order_insert_input {
   car_type: String
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  driver: taxi_driver_obj_rel_insert_input
   driver_id: Int
   dropoff_address: String
   dropoff_gps: geography
   id: Int
-  order_time: time
+  order_time: timestamptz
   pickup_address: String
   pickup_gps: geography
   ride_cost: money
   status: String
-  trip_distance: numeric
-  trip_duration: numeric
+  trip_distance: Int
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -50376,11 +50464,12 @@ type taxi_order_max_fields {
   driver_id: Int
   dropoff_address: String
   id: Int
+  order_time: timestamptz
   pickup_address: String
   ride_cost: money
   status: String
-  trip_distance: numeric
-  trip_duration: numeric
+  trip_distance: Int
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -50391,11 +50480,12 @@ type taxi_order_min_fields {
   driver_id: Int
   dropoff_address: String
   id: Int
+  order_time: timestamptz
   pickup_address: String
   ride_cost: money
   status: String
-  trip_distance: numeric
-  trip_duration: numeric
+  trip_distance: Int
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -50424,6 +50514,7 @@ input taxi_order_order_by {
   car_type: order_by
   customer: customer_customer_order_by
   customer_id: order_by
+  driver: taxi_driver_order_by
   driver_id: order_by
   dropoff_address: order_by
   dropoff_gps: order_by
@@ -50500,13 +50591,13 @@ input taxi_order_set_input {
   dropoff_address: String
   dropoff_gps: geography
   id: Int
-  order_time: time
+  order_time: timestamptz
   pickup_address: String
   pickup_gps: geography
   ride_cost: money
   status: String
-  trip_distance: numeric
-  trip_duration: numeric
+  trip_distance: Int
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -50559,13 +50650,13 @@ input taxi_order_stream_cursor_value_input {
   dropoff_address: String
   dropoff_gps: geography
   id: Int
-  order_time: time
+  order_time: timestamptz
   pickup_address: String
   pickup_gps: geography
   ride_cost: money
   status: String
-  trip_distance: numeric
-  trip_duration: numeric
+  trip_distance: Int
+  trip_duration: Int
   trip_polyline: String
 }
 
@@ -50575,8 +50666,8 @@ type taxi_order_sum_fields {
   driver_id: Int
   id: Int
   ride_cost: money
-  trip_distance: numeric
-  trip_duration: numeric
+  trip_distance: Int
+  trip_duration: Int
 }
 
 """
@@ -50665,23 +50756,6 @@ type taxi_order_variance_fields {
   ride_cost: Float
   trip_distance: Float
   trip_duration: Float
-}
-
-scalar time
-
-"""
-Boolean expression to compare columns of type "time". All fields are combined with logical 'AND'.
-"""
-input time_comparison_exp {
-  _eq: time
-  _gt: time
-  _gte: time
-  _in: [time!]
-  _is_null: Boolean
-  _lt: time
-  _lte: time
-  _neq: time
-  _nin: [time!]
 }
 
 scalar timestamp

@@ -22,16 +22,23 @@ class OrderMapWidgetController {
   Rxn<LatLng> deliveryLocation = Rxn();
   Rxn<UserInfo> driver = Rxn();
   bool shouldUpdate = false;
+  String? fromIcon;
+  String? toIcon;
 
   Future<void> initMap(
       {required int deliveryOrderId,
       required bool updateDriver,
       required String? polyline,
       required MezLocation? from,
+      String? fromIcon,
+      String? toIcon,
       required MezLocation to}) async {
     this.deliveryOrderId = deliveryOrderId;
-    driver.value = await get_order_driver_info(orderId: deliveryOrderId);
+    this.fromIcon = fromIcon;
+    this.toIcon = toIcon;
+
     shouldUpdate = updateDriver;
+
     //mGoogleMapController.initialZoomLevel = 10;
     // mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference(10, 16);
     mGoogleMapController.minMaxZoomPrefs = MinMaxZoomPreference.unbounded;
@@ -51,12 +58,14 @@ class OrderMapWidgetController {
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     await mGoogleMapController.addOrUpdatePackageMarkerMarker(
+      iconAsset: fromIcon,
       latLng: from?.toLatLng(),
       markerId: "from",
       fitWithinBounds: true,
     );
     // customer's
     await mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+      iconAsset: toIcon,
       latLng: to.toLatLng(),
       fitWithinBounds: true,
     );
@@ -65,6 +74,7 @@ class OrderMapWidgetController {
           encodedPolylineString: polyline);
 
     if (shouldUpdate) {
+      driver.value = await get_order_driver_info(orderId: deliveryOrderId);
       _listenToDriverLoc();
     } else {
       await driverLocationStream?.cancel();

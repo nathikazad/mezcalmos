@@ -7,8 +7,9 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/taxi/order/hsTaxiOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/controllers/TaxiAuthController.dart';
+import 'package:mezcalmos/TaxiApp/pages/TaxiOrderView/TaxiOrderView.dart';
 
 class TaxiCurrentOrdersController {
   //instances
@@ -16,8 +17,8 @@ class TaxiCurrentOrdersController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
 
   // vars
-  RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> openOrders = <MinimalOrder>[].obs;
+  RxList<TaxiOrder> currentOrders = <TaxiOrder>[].obs;
+  RxList<TaxiOrder> openOrders = <TaxiOrder>[].obs;
 
   RxBool initalized = RxBool(false);
   int get driverId => opAuthController.driver!.deliveryDriverId;
@@ -30,8 +31,8 @@ class TaxiCurrentOrdersController {
   bool _openOrdersFetchingData = false;
   bool _openOrdersReachedEndOfData = false;
 // streams
-  StreamSubscription<List<MinimalOrder>?>? currentOrdersListener;
-  StreamSubscription<List<MinimalOrder>?>? openOrdersListener;
+  StreamSubscription<List<TaxiOrder>?>? currentOrdersListener;
+  StreamSubscription<List<TaxiOrder>?>? openOrdersListener;
   String? subscriptionId;
 
 // getters
@@ -55,12 +56,11 @@ class TaxiCurrentOrdersController {
       mezDbgPrint(
           "👋 _fetchopenOrderses called with ferchSize : $openOrdersFetchSize offset: $_openOrdersCurrentOffset");
       _openOrdersFetchingData = true;
-      final List<MinimalOrder>? newList =
-          await get_taxi_delivery_minimal_orders(
-              status: MinimalDeliveryOrderStatus.Open,
-              limit: openOrdersFetchSize,
-              offset: _openOrdersCurrentOffset);
-      openOrders.value += newList ?? <MinimalOrder>[];
+      final List<TaxiOrder>? newList = await get_taxi_delivery_minimal_orders(
+          status: MinimalDeliveryOrderStatus.Open,
+          limit: openOrdersFetchSize,
+          offset: _openOrdersCurrentOffset);
+      openOrders.value += newList ?? <TaxiOrder>[];
       if (newList?.length == 0) {
         _openOrdersReachedEndOfData = true;
       }
@@ -77,11 +77,11 @@ class TaxiCurrentOrdersController {
     try {
       currentOrders.value = await get_taxi_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
-              driverId: opAuthController.driverId!,
+              driverId: driverId,
               limit: 30,
               offset: 0) ??
-          <MinimalOrder>[];
-      mezDbgPrint("Orders length ======>${openOrders.length}");
+          <TaxiOrder>[];
+      mezDbgPrint("Current Orders length ======>${currentOrders.length}");
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -93,10 +93,10 @@ class TaxiCurrentOrdersController {
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener = listen_taxi_delivery_minimal_orders(
               status: MinimalDeliveryOrderStatus.InProcess,
-              driverId: opAuthController.driverId!,
+              driverId: driverId,
               limit: 30,
               offset: 0)
-          .listen((List<MinimalOrder>? event) {
+          .listen((List<TaxiOrder>? event) {
         if (event != null) {
           currentOrders.value = event;
         }
@@ -106,7 +106,7 @@ class TaxiCurrentOrdersController {
               driverId: null,
               limit: openOrdersFetchSize,
               offset: 0)
-          .listen((List<MinimalOrder>? event) {
+          .listen((List<TaxiOrder>? event) {
         if (event != null) {
           mezDbgPrint(
               "😇  Setting open orders from listners ::::::=================>${event.length}");
@@ -165,12 +165,7 @@ class TaxiCurrentOrdersController {
     if (subscriptionId != null) hasuraDb.cancelSubscription(subscriptionId!);
   }
 
-  void handleNavigation({required MinimalOrder order}) {
-    // if (order.delivery_order_type == MinimalDeliveryOrderType.Message) {
-    //   DvConvoView.navigate(phoneNumber: order.phone_number!);
-    // } else {
-    //   DvOrderView.navigate(
-    //       orderId: order.id.toInt(), driverId: opAuthController.driverId!);
-    // }
+  void handleNavigation({required int orderId}) {
+    TaxiOrderView.navigate(orderId: orderId, driverId: null);
   }
 }

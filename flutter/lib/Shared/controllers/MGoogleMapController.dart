@@ -274,15 +274,18 @@ class MGoogleMapController {
   Future<void> addOrUpdatePurpleDestinationMarker(
       {String markerId = "dest",
       required LatLng? latLng,
+      String? iconAsset,
       bool fitWithinBounds = true}) async {
     if (latLng != null) {
       final BitmapDescriptor icon = kIsWeb
           ? await BitmapDescriptor.fromAssetImage(
-              ImageConfiguration(size: Size(45, 45)), mezDestinationMarker)
+              ImageConfiguration(size: Size(45, 45)),
+              iconAsset ?? mezDestinationMarker)
           : await bitmapDescriptorLoader(
-              (await cropRonded((await rootBundle.load(mezDestinationMarker))
-                  .buffer
-                  .asUint8List())),
+              (await cropRonded(
+                  (await rootBundle.load(iconAsset ?? mezDestinationMarker))
+                      .buffer
+                      .asUint8List())),
               _calculateMarkersSize(),
               _calculateMarkersSize(),
               isBytes: true);
@@ -302,12 +305,15 @@ class MGoogleMapController {
 
   Future<void> addOrUpdatePackageMarkerMarker(
       {String markerId = "package",
+      String? iconAsset,
       required LatLng? latLng,
       bool fitWithinBounds = true}) async {
     if (latLng != null) {
       final BitmapDescriptor icon = await bitmapDescriptorLoader(
           (await cropRonded(
-              (await rootBundle.load(mezPackageMarker)).buffer.asUint8List())),
+              (await rootBundle.load(iconAsset ?? mezPackageMarker))
+                  .buffer
+                  .asUint8List())),
           _calculateMarkersSize(),
           _calculateMarkersSize(),
           isBytes: true);

@@ -523,7 +523,7 @@ class Query$getTaxiDriversByUserId$taxi_driver {
     this.current_location,
     this.delivery_company_type,
     this.delivery_company_id,
-    this.id,
+    required this.id,
     this.online,
     this.status,
     this.user,
@@ -548,7 +548,7 @@ class Query$getTaxiDriversByUserId$taxi_driver {
           : geographyFromJson(l$current_location),
       delivery_company_type: (l$delivery_company_type as String?),
       delivery_company_id: (l$delivery_company_id as int?),
-      id: (l$id as int?),
+      id: (l$id as int),
       online: (l$online as bool?),
       status: (l$status as String?),
       user: l$user == null
@@ -567,7 +567,7 @@ class Query$getTaxiDriversByUserId$taxi_driver {
 
   final int? delivery_company_id;
 
-  final int? id;
+  final int id;
 
   final bool? online;
 
@@ -753,7 +753,7 @@ class _CopyWithImpl$Query$getTaxiDriversByUserId$taxi_driver<TRes>
         delivery_company_id: delivery_company_id == _undefined
             ? _instance.delivery_company_id
             : (delivery_company_id as int?),
-        id: id == _undefined ? _instance.id : (id as int?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         online: online == _undefined ? _instance.online : (online as bool?),
         status: status == _undefined ? _instance.status : (status as String?),
         user: user == _undefined

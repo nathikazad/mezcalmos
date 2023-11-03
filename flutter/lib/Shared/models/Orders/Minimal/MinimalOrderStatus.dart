@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 
 enum MinimalOrderStatus {
@@ -33,6 +34,17 @@ extension ParseDeliveryOrderStatusToMinimalOrderStatus on DeliveryOrderStatus {
 
 extension ParseMinimalDeliveryOrderStatusToMinimalOrderStatus
     on MinimalDeliveryOrderStatus {
+  IconData get icon {
+    switch (this) {
+      case MinimalDeliveryOrderStatus.Finished:
+        return Icons.check;
+      case MinimalDeliveryOrderStatus.Open:
+        return Icons.watch_later;
+      case MinimalDeliveryOrderStatus.InProcess:
+        return Icons.route;
+    }
+  }
+
   MinimalOrderStatus toMinimalOrderStatus() {
     switch (this) {
       case MinimalDeliveryOrderStatus.Finished:
