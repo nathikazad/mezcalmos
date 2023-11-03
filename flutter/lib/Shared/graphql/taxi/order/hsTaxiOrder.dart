@@ -138,6 +138,7 @@ Future<TaxiOrder?> get_taxi_order_by_id(
         customer: UserInfo(
             hasuraId: data.customer!.user.id,
             name: data.customer!.user.name,
+            phoneNumber: data.customer!.user.phone,
             image: data.customer!.user.image),
         driver: (data.driver == null)
             ? null
@@ -157,4 +158,30 @@ Future<TaxiOrder?> get_taxi_order_by_id(
   }
 
   return null;
+}
+
+Stream<UserInfo?> listen_on_taxi_order_driver({required int orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_taxi_order_driver(
+    Options$Subscription$listen_taxi_order_driver(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$listen_taxi_order_driver(
+        orderId: orderId,
+      ),
+    ),
+  )
+      .map<UserInfo?>(
+          (QueryResult<Subscription$listen_taxi_order_driver> event) {
+    if (event.parsedData?.taxi_order_by_pk?.driver != null) {
+      final Subscription$listen_taxi_order_driver$taxi_order_by_pk? orderData =
+          event.parsedData!.taxi_order_by_pk;
+      return UserInfo(
+        hasuraId: orderData!.driver!.user!.id,
+        name: orderData.driver!.user!.name,
+        phoneNumber: orderData.driver!.user!.phone,
+        image: orderData.driver!.user!.image,
+      );
+    }
+    return null;
+  });
 }

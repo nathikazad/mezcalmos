@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -267,72 +266,72 @@ Map<String, dynamic>? getRestaurantOrderStatusFields(
   return null;
 }
 
-Map<String, dynamic>? getTaxiOrderStatusFields(
-    TaxiOrdersStatus taxiOrdersStatus) {
-  switch (taxiOrdersStatus) {
-    case TaxiOrdersStatus.OnTheWay:
-      return <String, dynamic>{
-        "title": "${_i18n()["taxiOnTheWayTitle"]}",
-        "body": "${_i18n()["taxiOnTheWayBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-      };
-    case TaxiOrdersStatus.InTransit:
-      return <String, dynamic>{
-        "title": "${_i18n()["taxiInTransitTitle"]}",
-        "body": "${_i18n()["taxiInTransitBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-      };
-    case TaxiOrdersStatus.DroppedOff:
-      return <String, dynamic>{
-        "title": "${_i18n()["taxiDroppedOffTitle"]}",
-        "body": "${_i18n()["taxiDroppedOffBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
-      };
-    case TaxiOrdersStatus.CancelledByTaxi:
-      return <String, dynamic>{
-        "title": "${_i18n()["taxiCancelledTitle"]}",
-        "body": "${_i18n()["taxiCancelledBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-        "icon": Material.Icons.close_rounded,
-      };
-    case TaxiOrdersStatus.Expired:
-      return <String, dynamic>{
-        "title": "${_i18n()["taxiExpiredTitle"]}",
-        "body": "${_i18n()["taxiExpiredBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-        "icon": Material.Icons.restore,
-      };
+//Map<String, dynamic>? getTaxiOrderStatusFields(
+//   TaxiOrdersStatus taxiOrdersStatus) {
+// switch (taxiOrdersStatus) {
+//   case TaxiOrdersStatus.OnTheWay:
+//     return <String, dynamic>{
+//       "title": "${_i18n()["taxiOnTheWayTitle"]}",
+//       "body": "${_i18n()["taxiOnTheWayBody"]}",
+//       "imgUrl":
+//           "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+//     };
+//   case TaxiOrdersStatus.InTransit:
+//     return <String, dynamic>{
+//       "title": "${_i18n()["taxiInTransitTitle"]}",
+//       "body": "${_i18n()["taxiInTransitBody"]}",
+//       "imgUrl":
+//           "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+//     };
+//   case TaxiOrdersStatus.DroppedOff:
+//     return <String, dynamic>{
+//       "title": "${_i18n()["taxiDroppedOffTitle"]}",
+//       "body": "${_i18n()["taxiDroppedOffBody"]}",
+//       "imgUrl":
+//           "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+//     };
+//   case TaxiOrdersStatus.CancelledByTaxi:
+//     return <String, dynamic>{
+//       "title": "${_i18n()["taxiCancelledTitle"]}",
+//       "body": "${_i18n()["taxiCancelledBody"]}",
+//       "imgUrl":
+//           "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+//       "icon": Material.Icons.close_rounded,
+//     };
+//   case TaxiOrdersStatus.Expired:
+//     return <String, dynamic>{
+//       "title": "${_i18n()["taxiExpiredTitle"]}",
+//       "body": "${_i18n()["taxiExpiredBody"]}",
+//       "imgUrl":
+//           "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+//       "icon": Material.Icons.restore,
+//     };
 
-    case TaxiOrdersStatus.ForwardingToLocalCompany:
-      return <String, dynamic>{
-        "title": "${_i18n()["taxiFwdToCompanyTitle"]}",
-        "body": "${_i18n()["taxiFwdToCompanyBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
-      };
-    case TaxiOrdersStatus.ForwardingUnsuccessful:
-      return <String, dynamic>{
-        "title": "${_i18n()["taxiFwdCancelTitle"]}",
-        "body": "${_i18n()["taxiFwdCancelBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
-      };
-    case TaxiOrdersStatus.ForwardingSuccessful:
-      return <String, dynamic>{
-        "title": "${_i18n()["taxiFwdSuccessTitle"]}",
-        "body": "${_i18n()["taxiFwdSuccessBody"]}",
-        "imgUrl":
-            "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
-      };
-    default:
-  }
-  return null;
-}
+//   case TaxiOrdersStatus.ForwardingToLocalCompany:
+//     return <String, dynamic>{
+//       "title": "${_i18n()["taxiFwdToCompanyTitle"]}",
+//       "body": "${_i18n()["taxiFwdToCompanyBody"]}",
+//       "imgUrl":
+//           "assets/images/shared/notifications/onTheWayOrderNotificationIcon.png",
+//     };
+//   case TaxiOrdersStatus.ForwardingUnsuccessful:
+//     return <String, dynamic>{
+//       "title": "${_i18n()["taxiFwdCancelTitle"]}",
+//       "body": "${_i18n()["taxiFwdCancelBody"]}",
+//       "imgUrl":
+//           "assets/images/shared/notifications/cancelledOrderNotificationIcon.png",
+//     };
+//   case TaxiOrdersStatus.ForwardingSuccessful:
+//     return <String, dynamic>{
+//       "title": "${_i18n()["taxiFwdSuccessTitle"]}",
+//       "body": "${_i18n()["taxiFwdSuccessBody"]}",
+//       "imgUrl":
+//           "assets/images/shared/notifications/droppedOrderNotificationIcon.png",
+//     };
+//   default:
+// }
+// return null;
+//}
 
 Notification newMessageNotification(String key, value) {
   return Notification(

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/CustomerApp/pages/TaxiOrderView/CustTaxiOrderView.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
@@ -314,23 +315,16 @@ class TaxiRequestOrderViewController {
     if (isSettingFromLocation.value || isSettingToLocation.value) {
       await selectCurrentLocation();
     } else if (_canOrder) {
-      await _callCloudFunction();
-      await showNormalDialog(
-        context,
-        dismissible: false,
-        icon: mat.Icons.check_rounded,
-        title: "Your Request is sent",
-        subtitle: "Driver will contact you shortly",
-        onClick: () async {
-          await clearFromLoc();
-          await clearToLoc();
-          if (!kIsWeb) {
-            locationPickerController.clearPolyline();
-            locationPickerController.clearMarkers();
-          }
-          mat.Navigator.pop(context);
-        },
-      );
+      final TaxiRequestResponse res = await _callCloudFunction();
+      mezDbgPrint(res.toFirebaseFormattedJson());
+
+      if (res.orderId != null) {
+        mezDbgPrint("ORDER DONE ORDERID +++++============>${res.orderId}");
+        await clearFromLoc();
+        await clearToLoc();
+        clearTime();
+        await CustTaxiOrderView.navigate(orderId: res.orderId!.toInt());
+      }
     } else {
       showErrorSnackBar(
           errorText: "Please make sure you select from and to locations");
@@ -348,10 +342,11 @@ class TaxiRequestOrderViewController {
         estimatedPrice: orderCost.value);
   }
 
-  Future<void> _callCloudFunction() async {
+  Future<TaxiRequestResponse> _callCloudFunction() async {
     // @nathik work with the taxi request  ====> it have everything needed
+    mezDbgPrint("Called taxi cloud func");
     final TaxiRequest _request = _constructRequest();
-    await CloudFunctions.taxi_request(
+    final TaxiRequestResponse res = await CloudFunctions.taxi_request(
       customerAppType: kIsWeb ? CustomerAppType.Web : CustomerAppType.Native,
       fromLocation: Location(
           lat: _request.from.latitude,
@@ -369,6 +364,8 @@ class TaxiRequestOrderViewController {
           DateTime.now().toUtc().toString(),
       carType: carType.toFirebaseFormatString(),
     );
+    mezDbgPrint("Called taxi cloud func");
+    return res;
   }
 
   Future<void> locateMe() async {
