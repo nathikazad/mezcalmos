@@ -64,6 +64,7 @@ export async function requestTaxi(customerId: number, taxiRequest: TaxiRequest):
     Customer:
       Name: ${user.user_by_pk?.name}
       Phone number: ${user.user_by_pk?.phone}
+    Time: ${taxiRequest.orderTime}
     From Location:
       Latitude: ${taxiRequest.fromLocation.lat}
       Longitude: ${taxiRequest.fromLocation.lng}
@@ -78,7 +79,7 @@ export async function requestTaxi(customerId: number, taxiRequest: TaxiRequest):
     Ride Cost: $${taxiRequest.rideCost.toFixed(2)}
     Trip Distance: ${tripDistanceKm} km
     Trip Duration: ${tripDurationMin} minutes
-    
+    Car Type: ${taxiRequest.carType}
   `;
 
   const mailOptions = {
