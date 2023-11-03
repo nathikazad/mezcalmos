@@ -310,6 +310,43 @@ class CloudFunctions {
         }));
   }
 
+  static Future<TaxiAcceptResponse> taxi_acceptOrder(
+      {required num orderId}) async {
+    return TaxiAcceptResponse.fromFirebaseFormattedJson(await callCloudFunction(
+        functionName: "taxi-acceptOrder",
+        parameters: <String, dynamic>{
+          "orderId": orderId,
+        }));
+  }
+
+  static Future<DriverRemoveResponse> taxi_removeDriver(
+      {required num orderId}) async {
+    return DriverRemoveResponse.fromFirebaseFormattedJson(
+        await callCloudFunction(
+            functionName: "taxi-removeDriver",
+            parameters: <String, dynamic>{
+          "orderId": orderId,
+        }));
+  }
+
+  static Future<TaxiFinishResponse> taxi_finishOrder(
+      {required num orderId}) async {
+    return TaxiFinishResponse.fromFirebaseFormattedJson(await callCloudFunction(
+        functionName: "taxi-finishOrder",
+        parameters: <String, dynamic>{
+          "orderId": orderId,
+        }));
+  }
+
+  static Future<cancelTaxiResponse> taxi_cancelOrder(
+      {required num orderId}) async {
+    return cancelTaxiResponse.fromFirebaseFormattedJson(await callCloudFunction(
+        functionName: "taxi-cancelOrder",
+        parameters: <String, dynamic>{
+          "orderId": orderId,
+        }));
+  }
+
   static Future<RestaurantResponse> restaurant3_createRestaurant(
       {required String name,
       required String image,

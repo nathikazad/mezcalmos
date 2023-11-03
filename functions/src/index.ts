@@ -42,7 +42,11 @@ import { markMessagesAsResponded } from "./utilities/senders/whatsapp/markMessag
 import { markMessagesAsFinished } from "./utilities/senders/whatsapp/markMessagesAsFinished";
 import { markMessagesAsCancelled } from "./utilities/senders/whatsapp/markMessagesAsCancelled";
 import { getLandingUrl, setLandingUrl } from "./utilities/landingUrl";
-import { requestTaxi } from "./utilities/senders/email";
+import { requestTaxi } from "./taxiNew/request";
+import { acceptTaxi } from "./taxiNew/accept";
+import { removeTaxiDriver } from "./taxiNew/removeDriver";
+import { finishTaxi } from "./taxiNew/finish";
+import { cancelTaxi } from "./taxiNew/cancel";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -51,9 +55,6 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 } else {
   firebase.initializeApp()
 }
-
-
-
 
 
 export const landingWebUrl = {
@@ -111,6 +112,10 @@ export const serviceProvider = {
 
 export const taxi = {
   request: authenticatedCall((userId, data) => requestTaxi(userId, data)),
+  acceptOrder: authenticatedCall((userId, data) => acceptTaxi(userId, data)),
+  removeDriver: authenticatedCall((userId, data) => removeTaxiDriver(userId, data)),
+  finishOrder: authenticatedCall((userId, data) => finishTaxi(userId, data)),
+  cancelOrder: authenticatedCall((userId, data) => cancelTaxi(userId, data)),
 }
 
 export const restaurant3 = {

@@ -741,6 +741,90 @@ class TaxiRequestResponse {
   }
 }
 
+class TaxiAcceptResponse {
+  bool success;
+  TaxiAcceptResponseError? error;
+  String? unhandledError;
+  TaxiAcceptResponse(this.success, this.error, this.unhandledError);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+
+  factory TaxiAcceptResponse.fromFirebaseFormattedJson(json) {
+    return TaxiAcceptResponse(
+        json["success"],
+        json["error"]?.toString().toTaxiAcceptResponseError(),
+        json["unhandledError"]);
+  }
+}
+
+class DriverRemoveResponse {
+  bool success;
+  DriverRemoveResponseError? error;
+  String? unhandledError;
+  DriverRemoveResponse(this.success, this.error, this.unhandledError);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+
+  factory DriverRemoveResponse.fromFirebaseFormattedJson(json) {
+    return DriverRemoveResponse(
+        json["success"],
+        json["error"]?.toString().toDriverRemoveResponseError(),
+        json["unhandledError"]);
+  }
+}
+
+class TaxiFinishResponse {
+  bool success;
+  TaxiFinishResponseError? error;
+  String? unhandledError;
+  TaxiFinishResponse(this.success, this.error, this.unhandledError);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+
+  factory TaxiFinishResponse.fromFirebaseFormattedJson(json) {
+    return TaxiFinishResponse(
+        json["success"],
+        json["error"]?.toString().toTaxiFinishResponseError(),
+        json["unhandledError"]);
+  }
+}
+
+class cancelTaxiResponse {
+  bool success;
+  cancelTaxiResponseError? error;
+  String? unhandledError;
+  cancelTaxiResponse(this.success, this.error, this.unhandledError);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "success": success,
+      "error": error,
+      "unhandledError": unhandledError,
+    };
+  }
+
+  factory cancelTaxiResponse.fromFirebaseFormattedJson(json) {
+    return cancelTaxiResponse(
+        json["success"],
+        json["error"]?.toString().tocancelTaxiResponseError(),
+        json["unhandledError"]);
+  }
+}
+
 class Schedule {
   Map<Weekday, WorkingDay> openHours;
   Schedule({required this.openHours});
@@ -4440,6 +4524,78 @@ extension ParseStringToTaxiRequestResponseError on String {
     return TaxiRequestResponseError.values.firstWhere(
         (TaxiRequestResponseError taxiRequestResponseError) =>
             taxiRequestResponseError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum TaxiAcceptResponseError { UnhandledError, OrderNotAvailable }
+
+extension ParseTaxiAcceptResponseErrorToString on TaxiAcceptResponseError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToTaxiAcceptResponseError on String {
+  TaxiAcceptResponseError toTaxiAcceptResponseError() {
+    return TaxiAcceptResponseError.values.firstWhere(
+        (TaxiAcceptResponseError taxiAcceptResponseError) =>
+            taxiAcceptResponseError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum DriverRemoveResponseError { UnhandledError, OrderNotAvailable }
+
+extension ParseDriverRemoveResponseErrorToString on DriverRemoveResponseError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToDriverRemoveResponseError on String {
+  DriverRemoveResponseError toDriverRemoveResponseError() {
+    return DriverRemoveResponseError.values.firstWhere(
+        (DriverRemoveResponseError driverRemoveResponseError) =>
+            driverRemoveResponseError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum TaxiFinishResponseError { UnhandledError, OrderNotAvailable }
+
+extension ParseTaxiFinishResponseErrorToString on TaxiFinishResponseError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToTaxiFinishResponseError on String {
+  TaxiFinishResponseError toTaxiFinishResponseError() {
+    return TaxiFinishResponseError.values.firstWhere(
+        (TaxiFinishResponseError taxiFinishResponseError) =>
+            taxiFinishResponseError.toFirebaseFormatString().toLowerCase() ==
+            toLowerCase());
+  }
+}
+
+enum cancelTaxiResponseError { UnhandledError, OrderNotAvailable }
+
+extension ParsecancelTaxiResponseErrorToString on cancelTaxiResponseError {
+  String toFirebaseFormatString() {
+    final String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringTocancelTaxiResponseError on String {
+  cancelTaxiResponseError tocancelTaxiResponseError() {
+    return cancelTaxiResponseError.values.firstWhere(
+        (cancelTaxiResponseError cancelTaxiResponseError) =>
+            cancelTaxiResponseError.toFirebaseFormatString().toLowerCase() ==
             toLowerCase());
   }
 }
