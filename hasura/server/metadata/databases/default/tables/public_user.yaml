@@ -85,9 +85,7 @@ select_permissions:
         - name
         - phone
         - creation_time
-      filter:
-        id:
-          _eq: X-Hasura-User-Id
+      filter: {}
   - role: laundry_operator
     permission:
       columns:
@@ -129,6 +127,7 @@ select_permissions:
         - name
         - phone
       filter: {}
+
 update_permissions:
   - role: business_operator
     permission:

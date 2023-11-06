@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -59,12 +59,10 @@ class InfDealCard extends StatelessWidget {
                         style: context.textTheme.bodyLarge,
                       ),
                       tinySepartor,
-                      Center(
-                        child: Text(
-                          "Reward type : ${offer.influencerDetails!.rewardType.toFirebaseFormatString()}, Reward value : ${offer.influencerDetails!.rewardValue.toPriceString()}",
-                          style: context.textTheme.bodyMedium
-                              ?.copyWith(color: primaryBlueColor),
-                        ),
+                      Text(
+                        "Reward : ${offer.influencerDetails!.toReadableString}",
+                        style: context.textTheme.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
                       )
                     ],
                   ),

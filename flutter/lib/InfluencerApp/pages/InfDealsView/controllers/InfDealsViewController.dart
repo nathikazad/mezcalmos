@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/InfluencerApp/controllers/influencerAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/graphql/influencer/hsInfluencer.dart';
@@ -10,6 +12,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 class InfDealsViewController {
   InfluencerAuthController _influencerAuthController =
       Get.find<InfluencerAuthController>();
+
+  TextEditingController refTxt = TextEditingController();
   RxList<Offer> _openOffers = RxList<Offer>.empty();
 
   List<Offer> get openOffers => _openOffers.value;
@@ -20,6 +24,7 @@ class InfDealsViewController {
   Influencer get influencer => _influencerAuthController.influencer!;
 
   void init() {
+    refTxt.text = _influencerAuthController.influencer!.tag;
     fetchOffers();
   }
 
@@ -69,6 +74,31 @@ class InfDealsViewController {
     } on Exception catch (e) {
       mezDbgPrint(e);
       // TODO
+    }
+  }
+
+  Future<void> updateTag(BuildContext context) async {
+    if (refTxt.text.isNotEmpty) {
+      try {
+        final String? res = await update_influencer_tag(
+            infId: _influencerAuthController.influencer!.id.toInt(),
+            tag: refTxt.text);
+        if (res != null) {
+          showSavedSnackBar();
+          _influencerAuthController.setTag(res);
+          refTxt.text = res;
+          Navigator.pop(context);
+        }
+      } on OperationException catch (e) {
+        if (e.graphqlErrors.first.message.startsWith("Uniqueness")) {
+          showErrorSnackBar(
+              errorText: "This tag is taken please choose another one");
+        } else {
+          showErrorSnackBar(errorText: e.graphqlErrors.first.message);
+        }
+
+        mezDbgPrint(e);
+      }
     }
   }
 }

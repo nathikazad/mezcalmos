@@ -107,6 +107,13 @@ select_permissions:
         - id
         - stripe_info
       filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - id
+        - order_time
+      filter: {}
+    comment: ""
   - role: mez_admin
     permission:
       columns:

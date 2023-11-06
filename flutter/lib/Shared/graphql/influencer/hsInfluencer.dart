@@ -251,28 +251,45 @@ Future<List<InfEarning>?> get_inf_earnings({required int influencerId}) async {
         .map<InfEarning>(
             (Query$getInfluencerEarnings$service_provider_offer_applied e) =>
                 InfEarning(
-                    customerInfo: UserInfo(
-                        id: e.restaurant_order!.customer.user.id,
-                        name: e.restaurant_order!.customer.user.name,
-                        phoneNumber: e.restaurant_order!.customer.user.phone,
-                        image: e.restaurant_order!.customer.user.image,
-                        firebaseId: "",
-                        language: Language.EN),
-                    serviceInfo: user.ServiceInfo(
-                        hasuraId: e.restaurant_order!.restaurant.id,
-                        name: e.restaurant_order!.restaurant.details!.name,
-                        phoneNumber: e
-                            .restaurant_order!.restaurant.details!.phone_number,
-                        image: e.restaurant_order!.restaurant.details!.image,
-                        firebaseId: "",
-                        location: MezLocation.fromHasura(
-                            e.restaurant_order!.restaurant.details!.location
-                                .gps,
-                            e.restaurant_order!.restaurant.details!.location
-                                .address)),
-                    orderTotal: e.order_total!,
-                    comission: e.comission!))
+                  customerInfo: UserInfo(
+                      id: e.restaurant_order!.customer.user.id,
+                      name: e.restaurant_order!.customer.user.name,
+                      phoneNumber: e.restaurant_order!.customer.user.phone,
+                      image: e.restaurant_order!.customer.user.image,
+                      firebaseId: "",
+                      language: Language.EN),
+                  serviceInfo: user.ServiceInfo(
+                      hasuraId: e.restaurant_order!.restaurant.id,
+                      name: e.restaurant_order!.restaurant.details!.name,
+                      phoneNumber:
+                          e.restaurant_order!.restaurant.details!.phone_number,
+                      image: e.restaurant_order!.restaurant.details!.image,
+                      firebaseId: "",
+                      location: MezLocation.fromHasura(
+                          e.restaurant_order!.restaurant.details!.location.gps,
+                          e.restaurant_order!.restaurant.details!.location
+                              .address)),
+                  orderTotal: e.order_total!,
+                  comission: e.comission!,
+                  discount: e.discount,
+                ))
         .toList();
   }
+  return null;
+}
+
+Future<String?> update_influencer_tag(
+    {required int infId, required String tag}) async {
+  final QueryResult<Mutation$updateInfluencerTag> res = await _db.graphQLClient
+      .mutate$updateInfluencerTag(Options$Mutation$updateInfluencerTag(
+          variables:
+              Variables$Mutation$updateInfluencerTag(tag: tag, id: infId)));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  if (res.parsedData?.update_service_provider_influencer_by_pk?.tag != null) {
+    return res.parsedData?.update_service_provider_influencer_by_pk?.tag;
+  }
+
   return null;
 }

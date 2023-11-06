@@ -8,12 +8,16 @@ class InfEarning {
   user.ServiceInfo serviceInfo;
   num orderTotal;
   num comission;
+  num discount;
   InfEarning({
     required this.customerInfo,
     required this.serviceInfo,
     required this.orderTotal,
     required this.comission,
+    required this.discount,
   });
+
+  num get totalBeforeDiscount => orderTotal + discount;
 
   String get description =>
       "${customerInfo.name} bought for ${orderTotal.toPriceString()} from ${serviceInfo.name} your commission is ${comission.toPriceString()}.";

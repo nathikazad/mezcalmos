@@ -19,6 +19,20 @@ enum CouponError {
   NotReusable
 }
 
+extension infDetailsHelper on cModels.InfluencerOfferDetails {
+  String get toReadableString {
+    switch (rewardType) {
+      case cModels.DiscountType.Percentage:
+        return "%${rewardValue.toInt()} from total order cost";
+      case cModels.DiscountType.FlatAmount:
+        return "${rewardValue.toPriceString()} for each order";
+
+      default:
+        throw StateError("not supported $rewardType");
+    }
+  }
+}
+
 Future<CouponError?> applyRestaurantCoupon(
     {required int customerId,
     required Cart cart,
@@ -275,32 +289,34 @@ num calculateRestaurantCartDiscount(Cart cart, cModels.Offer offer) {
       break;
     case cModels.DiscountType.Percentage:
       cart.cartItems.forEach((CartItem cartItem) {
-        if (offer.details.offerForItems == "particularItems") {
-          offer.details.items!.forEach((num c) => <Set<double>>{
-                if (c == cartItem.item.id)
-                  <double>{
-                    discount += cartItem.item.cost *
-                        offer.details.discountValue /
-                        100.0 *
-                        cartItem.quantity
-                  }
-              });
-        } else if (offer.details.offerForItems == "particularCategories") {
-          offer.details.categories!.forEach((num c) => <Set<double>>{
-                if (c == cartItem.item.categoryId)
-                  <double>{
-                    discount += cartItem.item.cost *
-                        offer.details.discountValue /
-                        100.0 *
-                        cartItem.quantity
-                  }
-              });
-        } else {
-          discount += cartItem.item.cost *
-              offer.details.discountValue /
-              100.0 *
-              cartItem.quantity;
-        }
+        // if (offer.details.offerForItems == "particularItems" &&
+        //     offer.details.items?.isNotEmpty == true) {
+        //   offer.details.items!.forEach((num c) => <Set<double>>{
+        //         if (c == cartItem.item.id)
+        //           <double>{
+        //             discount += cartItem.item.cost *
+        //                 offer.details.discountValue /
+        //                 100.0 *
+        //                 cartItem.quantity
+        //           }
+        //       });
+        // } else if (offer.details.offerForItems == "particularCategories") {
+        //   offer.details.categories!.forEach((num c) => <Set<double>>{
+        //         if (c == cartItem.item.categoryId)
+        //           <double>{
+        //             discount += cartItem.item.cost *
+        //                 offer.details.discountValue /
+        //                 100.0 *
+        //                 cartItem.quantity
+        //           }
+        //       });
+        // } else {
+        mezDbgPrint(
+            "Calculating discount $discount 🇵🇸🇵🇸🇵🇸🇵🇸==============> item cost : ${cartItem.item.cost}\n ${offer.details.discountValue}");
+        discount +=
+            ((cartItem.item.cost * offer.details.discountValue) / 100.0) *
+                cartItem.quantity;
+        //  }
       });
       break;
     case cModels.DiscountType.AnotherSameFlat:

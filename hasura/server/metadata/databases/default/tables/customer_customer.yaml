@@ -90,6 +90,12 @@ select_permissions:
       columns:
         - user_id
       filter: {}
+  - role: influencer
+    permission:
+      columns:
+        - user_id
+      filter: {}
+    comment: ""
   - role: laundry_operator
     permission:
       columns:
@@ -112,6 +118,7 @@ select_permissions:
       columns:
         - user_id
       filter: {}
+
 update_permissions:
   - role: customer
     permission:

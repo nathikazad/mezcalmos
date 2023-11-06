@@ -147,9 +147,40 @@ class _InfDealsViewState extends State<InfDealsView> {
                 children: <Widget>[
                   Text("${_i18n()['refCode']}"),
                   smallSepartor,
-                  Text(
-                    viewController.influencer.tag,
-                    style: context.textTheme.displayMedium,
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        viewController.influencer.tag,
+                        style: context.textTheme.displayMedium,
+                      ),
+                      hMeduimSeperator,
+                      MezIconButton(
+                          iconSize: 18,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          iconColor: Colors.black,
+                          padding: const EdgeInsets.all(5),
+                          onTap: () {
+                            showMezSheet(
+                                context: context,
+                                title: "${_i18n()['refCode']}",
+                                content: Column(
+                                  children: <Widget>[
+                                    TextFormField(
+                                      controller: viewController.refTxt,
+                                    ),
+                                    meduimSeperator,
+                                    MezButton(
+                                      label: "Save",
+                                      onClick: () async {
+                                        await viewController.updateTag(context);
+                                      },
+                                    )
+                                  ],
+                                ));
+                          },
+                          icon: Icons.edit_rounded)
+                    ],
                   ),
                 ],
               ),

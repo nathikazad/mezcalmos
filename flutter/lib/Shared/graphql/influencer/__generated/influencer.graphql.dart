@@ -7994,7 +7994,21 @@ const documentNodeQuerygetInfluencerEarnings = DocumentNode(definitions: [
                 ]),
               )
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'restaurant_order'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'order_time'),
+                    value: EnumValueNode(name: NameNode(value: 'desc')),
+                  )
+                ]),
+              )
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
@@ -8060,6 +8074,28 @@ const documentNodeQuerygetInfluencerEarnings = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'offer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'influencer_details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'restaurant_order'),
@@ -8356,6 +8392,7 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     this.order_id,
     this.order_total,
     required this.order_type,
+    required this.offer,
     this.restaurant_order,
     required this.$__typename,
   });
@@ -8371,6 +8408,7 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     final l$order_id = json['order_id'];
     final l$order_total = json['order_total'];
     final l$order_type = json['order_type'];
+    final l$offer = json['offer'];
     final l$restaurant_order = json['restaurant_order'];
     final l$$__typename = json['__typename'];
     return Query$getInfluencerEarnings$service_provider_offer_applied(
@@ -8383,6 +8421,8 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
       order_id: (l$order_id as int?),
       order_total: l$order_total == null ? null : moneyFromJson(l$order_total),
       order_type: (l$order_type as String),
+      offer: Query$getInfluencerEarnings$service_provider_offer_applied$offer
+          .fromJson((l$offer as Map<String, dynamic>)),
       restaurant_order: l$restaurant_order == null
           ? null
           : Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order
@@ -8408,6 +8448,8 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
   final double? order_total;
 
   final String order_type;
+
+  final Query$getInfluencerEarnings$service_provider_offer_applied$offer offer;
 
   final Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order?
       restaurant_order;
@@ -8436,6 +8478,8 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
         l$order_total == null ? null : moneyToJson(l$order_total);
     final l$order_type = order_type;
     _resultData['order_type'] = l$order_type;
+    final l$offer = offer;
+    _resultData['offer'] = l$offer.toJson();
     final l$restaurant_order = restaurant_order;
     _resultData['restaurant_order'] = l$restaurant_order?.toJson();
     final l$$__typename = $__typename;
@@ -8454,6 +8498,7 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     final l$order_id = order_id;
     final l$order_total = order_total;
     final l$order_type = order_type;
+    final l$offer = offer;
     final l$restaurant_order = restaurant_order;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -8466,6 +8511,7 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
       l$order_id,
       l$order_total,
       l$order_type,
+      l$offer,
       l$restaurant_order,
       l$$__typename,
     ]);
@@ -8526,6 +8572,11 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     if (l$order_type != lOther$order_type) {
       return false;
     }
+    final l$offer = offer;
+    final lOther$offer = other.offer;
+    if (l$offer != lOther$offer) {
+      return false;
+    }
     final l$restaurant_order = restaurant_order;
     final lOther$restaurant_order = other.restaurant_order;
     if (l$restaurant_order != lOther$restaurant_order) {
@@ -8573,10 +8624,13 @@ abstract class CopyWith$Query$getInfluencerEarnings$service_provider_offer_appli
     int? order_id,
     double? order_total,
     String? order_type,
+    Query$getInfluencerEarnings$service_provider_offer_applied$offer? offer,
     Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order?
         restaurant_order,
     String? $__typename,
   });
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+      TRes> get offer;
   CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order<
       TRes> get restaurant_order;
 }
@@ -8608,6 +8662,7 @@ class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied<
     Object? order_id = _undefined,
     Object? order_total = _undefined,
     Object? order_type = _undefined,
+    Object? offer = _undefined,
     Object? restaurant_order = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -8634,6 +8689,10 @@ class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied<
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
+        offer: offer == _undefined || offer == null
+            ? _instance.offer
+            : (offer
+                as Query$getInfluencerEarnings$service_provider_offer_applied$offer),
         restaurant_order: restaurant_order == _undefined
             ? _instance.restaurant_order
             : (restaurant_order
@@ -8642,6 +8701,13 @@ class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied<
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+      TRes> get offer {
+    final local$offer = _instance.offer;
+    return CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer(
+        local$offer, (e) => call(offer: e));
+  }
+
   CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order<
       TRes> get restaurant_order {
     final local$restaurant_order = _instance.restaurant_order;
@@ -8673,16 +8739,167 @@ class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_appli
     int? order_id,
     double? order_total,
     String? order_type,
+    Query$getInfluencerEarnings$service_provider_offer_applied$offer? offer,
     Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order?
         restaurant_order,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+          TRes>
+      get offer =>
+          CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer
+              .stub(_res);
   CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order<
           TRes>
       get restaurant_order =>
           CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order
               .stub(_res);
+}
+
+class Query$getInfluencerEarnings$service_provider_offer_applied$offer {
+  Query$getInfluencerEarnings$service_provider_offer_applied$offer({
+    this.influencer_details,
+    required this.$__typename,
+  });
+
+  factory Query$getInfluencerEarnings$service_provider_offer_applied$offer.fromJson(
+      Map<String, dynamic> json) {
+    final l$influencer_details = json['influencer_details'];
+    final l$$__typename = json['__typename'];
+    return Query$getInfluencerEarnings$service_provider_offer_applied$offer(
+      influencer_details: l$influencer_details == null
+          ? null
+          : mapFromJson(l$influencer_details),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final dynamic? influencer_details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$influencer_details = influencer_details;
+    _resultData['influencer_details'] =
+        l$influencer_details == null ? null : mapToJson(l$influencer_details);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$influencer_details = influencer_details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$influencer_details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getInfluencerEarnings$service_provider_offer_applied$offer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$influencer_details = influencer_details;
+    final lOther$influencer_details = other.influencer_details;
+    if (l$influencer_details != lOther$influencer_details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getInfluencerEarnings$service_provider_offer_applied$offer
+    on Query$getInfluencerEarnings$service_provider_offer_applied$offer {
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+          Query$getInfluencerEarnings$service_provider_offer_applied$offer>
+      get copyWith =>
+          CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+    TRes> {
+  factory CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer(
+    Query$getInfluencerEarnings$service_provider_offer_applied$offer instance,
+    TRes Function(
+            Query$getInfluencerEarnings$service_provider_offer_applied$offer)
+        then,
+  ) = _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$offer;
+
+  factory CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$offer;
+
+  TRes call({
+    dynamic? influencer_details,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+            TRes> {
+  _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$offer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getInfluencerEarnings$service_provider_offer_applied$offer
+      _instance;
+
+  final TRes Function(
+      Query$getInfluencerEarnings$service_provider_offer_applied$offer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? influencer_details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getInfluencerEarnings$service_provider_offer_applied$offer(
+        influencer_details: influencer_details == _undefined
+            ? _instance.influencer_details
+            : (influencer_details as dynamic?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
+            TRes> {
+  _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$offer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    dynamic? influencer_details,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order {
@@ -9820,6 +10037,605 @@ class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_appli
     String? phone,
     String? image,
     String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateInfluencerTag {
+  factory Variables$Mutation$updateInfluencerTag({
+    required String tag,
+    required int id,
+  }) =>
+      Variables$Mutation$updateInfluencerTag._({
+        r'tag': tag,
+        r'id': id,
+      });
+
+  Variables$Mutation$updateInfluencerTag._(this._$data);
+
+  factory Variables$Mutation$updateInfluencerTag.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$tag = data['tag'];
+    result$data['tag'] = (l$tag as String);
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    return Variables$Mutation$updateInfluencerTag._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  String get tag => (_$data['tag'] as String);
+  int get id => (_$data['id'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$tag = tag;
+    result$data['tag'] = l$tag;
+    final l$id = id;
+    result$data['id'] = l$id;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateInfluencerTag<
+          Variables$Mutation$updateInfluencerTag>
+      get copyWith => CopyWith$Variables$Mutation$updateInfluencerTag(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateInfluencerTag) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$tag = tag;
+    final lOther$tag = other.tag;
+    if (l$tag != lOther$tag) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$tag = tag;
+    final l$id = id;
+    return Object.hashAll([
+      l$tag,
+      l$id,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateInfluencerTag<TRes> {
+  factory CopyWith$Variables$Mutation$updateInfluencerTag(
+    Variables$Mutation$updateInfluencerTag instance,
+    TRes Function(Variables$Mutation$updateInfluencerTag) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateInfluencerTag;
+
+  factory CopyWith$Variables$Mutation$updateInfluencerTag.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateInfluencerTag;
+
+  TRes call({
+    String? tag,
+    int? id,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateInfluencerTag<TRes>
+    implements CopyWith$Variables$Mutation$updateInfluencerTag<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateInfluencerTag(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateInfluencerTag _instance;
+
+  final TRes Function(Variables$Mutation$updateInfluencerTag) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? tag = _undefined,
+    Object? id = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateInfluencerTag._({
+        ..._instance._$data,
+        if (tag != _undefined && tag != null) 'tag': (tag as String),
+        if (id != _undefined && id != null) 'id': (id as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateInfluencerTag<TRes>
+    implements CopyWith$Variables$Mutation$updateInfluencerTag<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateInfluencerTag(this._res);
+
+  TRes _res;
+
+  call({
+    String? tag,
+    int? id,
+  }) =>
+      _res;
+}
+
+class Mutation$updateInfluencerTag {
+  Mutation$updateInfluencerTag({
+    this.update_service_provider_influencer_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateInfluencerTag.fromJson(Map<String, dynamic> json) {
+    final l$update_service_provider_influencer_by_pk =
+        json['update_service_provider_influencer_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateInfluencerTag(
+      update_service_provider_influencer_by_pk:
+          l$update_service_provider_influencer_by_pk == null
+              ? null
+              : Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk
+                  .fromJson((l$update_service_provider_influencer_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk?
+      update_service_provider_influencer_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_service_provider_influencer_by_pk =
+        update_service_provider_influencer_by_pk;
+    _resultData['update_service_provider_influencer_by_pk'] =
+        l$update_service_provider_influencer_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_service_provider_influencer_by_pk =
+        update_service_provider_influencer_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_service_provider_influencer_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateInfluencerTag) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_service_provider_influencer_by_pk =
+        update_service_provider_influencer_by_pk;
+    final lOther$update_service_provider_influencer_by_pk =
+        other.update_service_provider_influencer_by_pk;
+    if (l$update_service_provider_influencer_by_pk !=
+        lOther$update_service_provider_influencer_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateInfluencerTag
+    on Mutation$updateInfluencerTag {
+  CopyWith$Mutation$updateInfluencerTag<Mutation$updateInfluencerTag>
+      get copyWith => CopyWith$Mutation$updateInfluencerTag(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateInfluencerTag<TRes> {
+  factory CopyWith$Mutation$updateInfluencerTag(
+    Mutation$updateInfluencerTag instance,
+    TRes Function(Mutation$updateInfluencerTag) then,
+  ) = _CopyWithImpl$Mutation$updateInfluencerTag;
+
+  factory CopyWith$Mutation$updateInfluencerTag.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateInfluencerTag;
+
+  TRes call({
+    Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk?
+        update_service_provider_influencer_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+      TRes> get update_service_provider_influencer_by_pk;
+}
+
+class _CopyWithImpl$Mutation$updateInfluencerTag<TRes>
+    implements CopyWith$Mutation$updateInfluencerTag<TRes> {
+  _CopyWithImpl$Mutation$updateInfluencerTag(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateInfluencerTag _instance;
+
+  final TRes Function(Mutation$updateInfluencerTag) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_service_provider_influencer_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateInfluencerTag(
+        update_service_provider_influencer_by_pk:
+            update_service_provider_influencer_by_pk == _undefined
+                ? _instance.update_service_provider_influencer_by_pk
+                : (update_service_provider_influencer_by_pk
+                    as Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+      TRes> get update_service_provider_influencer_by_pk {
+    final local$update_service_provider_influencer_by_pk =
+        _instance.update_service_provider_influencer_by_pk;
+    return local$update_service_provider_influencer_by_pk == null
+        ? CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk(
+            local$update_service_provider_influencer_by_pk,
+            (e) => call(update_service_provider_influencer_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateInfluencerTag<TRes>
+    implements CopyWith$Mutation$updateInfluencerTag<TRes> {
+  _CopyWithStubImpl$Mutation$updateInfluencerTag(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk?
+        update_service_provider_influencer_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+          TRes>
+      get update_service_provider_influencer_by_pk =>
+          CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationupdateInfluencerTag = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateInfluencerTag'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'tag')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'id')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_service_provider_influencer_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'tag'),
+                value: VariableNode(name: NameNode(value: 'tag')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'tag'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateInfluencerTag _parserFn$Mutation$updateInfluencerTag(
+        Map<String, dynamic> data) =>
+    Mutation$updateInfluencerTag.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateInfluencerTag = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateInfluencerTag?,
+);
+
+class Options$Mutation$updateInfluencerTag
+    extends graphql.MutationOptions<Mutation$updateInfluencerTag> {
+  Options$Mutation$updateInfluencerTag({
+    String? operationName,
+    required Variables$Mutation$updateInfluencerTag variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateInfluencerTag? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateInfluencerTag>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateInfluencerTag(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateInfluencerTag,
+          parserFn: _parserFn$Mutation$updateInfluencerTag,
+        );
+
+  final OnMutationCompleted$Mutation$updateInfluencerTag? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateInfluencerTag
+    extends graphql.WatchQueryOptions<Mutation$updateInfluencerTag> {
+  WatchOptions$Mutation$updateInfluencerTag({
+    String? operationName,
+    required Variables$Mutation$updateInfluencerTag variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateInfluencerTag,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateInfluencerTag,
+        );
+}
+
+extension ClientExtension$Mutation$updateInfluencerTag
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateInfluencerTag>>
+      mutate$updateInfluencerTag(
+              Options$Mutation$updateInfluencerTag options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateInfluencerTag>
+      watchMutation$updateInfluencerTag(
+              WatchOptions$Mutation$updateInfluencerTag options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk {
+  Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk({
+    required this.tag,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$tag = json['tag'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk(
+      tag: (l$tag as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String tag;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$tag = tag;
+    _resultData['tag'] = l$tag;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$tag = tag;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$tag,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$tag = tag;
+    final lOther$tag = other.tag;
+    if (l$tag != lOther$tag) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk
+    on Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk {
+  CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+          Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk(
+    Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk
+        instance,
+    TRes Function(
+            Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk;
+
+  factory CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk;
+
+  TRes call({
+    String? tag,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk
+      _instance;
+
+  final TRes Function(
+          Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? tag = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk(
+        tag: tag == _undefined || tag == null ? _instance.tag : (tag as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateInfluencerTag$update_service_provider_influencer_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? tag,
     String? $__typename,
   }) =>
       _res;

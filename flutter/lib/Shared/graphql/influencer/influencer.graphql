@@ -122,6 +122,7 @@ query getInfluencerTotalDiscounts($influencer_id: Int!) {
 query getInfluencerEarnings($influencer_id: Int!) {
   service_provider_offer_applied(
     where: { influencer_id: { _eq: $influencer_id } }
+    order_by: { restaurant_order: { order_time: desc } }
   ) {
     comission
     discount
@@ -132,6 +133,9 @@ query getInfluencerEarnings($influencer_id: Int!) {
     order_id
     order_total
     order_type
+    offer {
+      influencer_details
+    }
     restaurant_order {
       restaurant {
         id
@@ -154,5 +158,13 @@ query getInfluencerEarnings($influencer_id: Int!) {
         }
       }
     }
+  }
+}
+mutation updateInfluencerTag($tag: String!, $id: Int!) {
+  update_service_provider_influencer_by_pk(
+    _set: { tag: $tag }
+    pk_columns: { id: $id }
+  ) {
+    tag
   }
 }

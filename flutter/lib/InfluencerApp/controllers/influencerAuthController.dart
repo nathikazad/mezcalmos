@@ -31,4 +31,9 @@ class InfluencerAuthController extends GetxController {
 
     super.onClose();
   }
+
+  void setTag(String res) {
+    _influencer.value?.tag = res;
+    _influencer.refresh();
+  }
 }

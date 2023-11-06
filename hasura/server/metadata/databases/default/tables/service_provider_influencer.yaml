@@ -28,3 +28,15 @@ select_permissions:
       filter:
         user_id:
           _eq: X-Hasura-User-Id
+update_permissions:
+  - role: influencer
+    permission:
+      columns:
+        - tag
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+    comment: ""

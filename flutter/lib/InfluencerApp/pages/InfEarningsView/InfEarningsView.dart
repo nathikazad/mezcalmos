@@ -178,50 +178,85 @@ class _InfEarningsViewState extends State<InfEarningsView> {
                     children: List.generate(viewController.earnings.length,
                         (int index) {
                       final InfEarning e = viewController.earnings[index];
-                      return MezCard(
-                          action: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Text(
-                              "+${e.comission.toPriceString()}",
-                              style: context.textTheme.displayMedium
-                                  ?.copyWith(color: primaryBlueColor),
+                      return Card(
+                          child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                CircleAvatar(
+                                  radius: 18,
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      e.customerInfo.image!),
+                                ),
+                                hSmallSepartor,
+                                Flexible(
+                                  fit: FlexFit.tight,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        e.customerInfo.name!,
+                                        style: context.textTheme.bodyLarge,
+                                      ),
+                                      Text.rich(TextSpan(children: <InlineSpan>[
+                                        WidgetSpan(
+                                          child: Icon(
+                                            Icons.food_bank,
+                                            size: 17,
+                                            color: Colors.grey.shade500,
+                                          ),
+                                        ),
+                                        WidgetSpan(child: hTinySepartor),
+                                        TextSpan(text: e.serviceInfo.name),
+                                      ])),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Text(
+                                    "+${e.comission.toPriceString()}",
+                                    style: context.textTheme.displayMedium
+                                        ?.copyWith(color: primaryBlueColor),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          firstAvatarBgImage:
-                              CachedNetworkImageProvider(e.customerInfo.image!),
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                e.customerInfo.name!,
-                                style: context.textTheme.bodyLarge,
+                            Divider(),
+                            Text.rich(TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                child: Icon(
+                                  Icons.attach_money,
+                                  size: 17,
+                                  color: Colors.grey.shade500,
+                                ),
                               ),
-                              Text.rich(TextSpan(children: <InlineSpan>[
-                                WidgetSpan(
-                                  child: Icon(
-                                    Icons.food_bank,
-                                    size: 17,
-                                    color: Colors.grey.shade500,
-                                  ),
+                              WidgetSpan(child: hTinySepartor),
+                              TextSpan(
+                                  text:
+                                      "Discount : ${e.discount.toPriceString()}"),
+                            ])),
+                            Text.rich(TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                child: Icon(
+                                  Icons.attach_money,
+                                  size: 17,
+                                  color: Colors.grey.shade500,
                                 ),
-                                WidgetSpan(child: hTinySepartor),
-                                TextSpan(text: e.serviceInfo.name),
-                              ])),
-                              Text.rich(TextSpan(children: <InlineSpan>[
-                                WidgetSpan(
-                                  child: Icon(
-                                    Icons.attach_money,
-                                    size: 17,
-                                    color: Colors.grey.shade500,
-                                  ),
-                                ),
-                                WidgetSpan(child: hTinySepartor),
-                                TextSpan(
-                                    text:
-                                        "Order Total : ${e.orderTotal.toPriceString()}"),
-                              ])),
-                            ],
-                          ));
+                              ),
+                              WidgetSpan(child: hTinySepartor),
+                              TextSpan(
+                                  text:
+                                      "Order Total : ${e.totalBeforeDiscount.toPriceString()} - ${(e.discount).toPriceString()} = ${e.orderTotal.toPriceString()}"),
+                            ])),
+                          ],
+                        ),
+                      ));
                     }),
                   )
                 ],
