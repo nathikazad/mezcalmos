@@ -78,55 +78,53 @@ class _InfDealsViewState extends State<InfDealsView> {
               }
             }),
             Obx(() {
-              if (viewController.openOffers.isNotEmpty) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    bigSeperator,
-                    Text(
-                      "${_i18n()['openOffers']}",
-                      style: context.textTheme.bodyLarge,
-                    ),
-                    meduimSeperator,
-                    Column(
-                      children: List.generate(
-                          viewController.openOffers.length,
-                          (int index) => InfDealCard(
-                                isPromoted: false,
-                                offer: viewController.openOffers[index],
-                                onClick: () async {
-                                  await viewController.promote(
-                                      offerId:
-                                          viewController.openOffers[index].id);
-                                },
-                              )),
-                    )
-                  ],
-                );
-              } else {
-                return Container(
-                  margin: const EdgeInsets.all(15),
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        kNoDealsImg,
-                        height: 70.mezW,
-                        width: 50.mezW,
-                      ),
-                      meduimSeperator,
-                      Text(
-                        "${_i18n()['noDeals']}",
-                        style: context.textTheme.bodyLarge,
-                      ),
-                      smallSepartor,
-                      Text(
-                        "${_i18n()['noDealsText']}",
-                        textAlign: TextAlign.center,
-                      )
-                    ],
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  bigSeperator,
+                  Text(
+                    "${_i18n()['openOffers']}",
+                    style: context.textTheme.bodyLarge,
                   ),
-                );
-              }
+                  meduimSeperator,
+                  viewController.openOffers.isNotEmpty
+                      ? Column(
+                          children: List.generate(
+                              viewController.openOffers.length,
+                              (int index) => InfDealCard(
+                                    isPromoted: false,
+                                    offer: viewController.openOffers[index],
+                                    onClick: () async {
+                                      await viewController.promote(
+                                          offerId: viewController
+                                              .openOffers[index].id);
+                                    },
+                                  )),
+                        )
+                      : Container(
+                          margin: const EdgeInsets.all(15),
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset(
+                                kNoDealsImg,
+                                height: 70.mezW,
+                                width: 50.mezW,
+                              ),
+                              meduimSeperator,
+                              Text(
+                                "${_i18n()['noDeals']}",
+                                style: context.textTheme.bodyLarge,
+                              ),
+                              smallSepartor,
+                              Text(
+                                "${_i18n()['noDealsText']}",
+                                textAlign: TextAlign.center,
+                              )
+                            ],
+                          ),
+                        )
+                ],
+              );
             })
           ],
         ),

@@ -11,15 +11,16 @@ class CustomerLinkHandler {
   static Future<void> handleLink(
       {required String path,
       required void Function(String) updateInfluencerUi}) async {
+    mezDbgPrint("path =======================>$path");
     if (path.startsWith("i/")) {
       final String influencerTag = path.substring(2);
       updateInfluencerUi(influencerTag); // Call the passed function
     } else {
-      await handleUniqueLink(path);
+      await _handleUniqueLink(path);
     }
   }
 
-  static Future<void> handleUniqueLink(String uniqueId) async {
+  static Future<void> _handleUniqueLink(String uniqueId) async {
     mezDbgPrint("🌭🌭🌭🌭🌭🌭🌭🌭 $uniqueId");
     final ServicProviderInfo? servicProviderInfo =
         await get_service_link(uniqueId: uniqueId);

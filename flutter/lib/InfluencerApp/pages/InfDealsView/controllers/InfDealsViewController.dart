@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:mezcalmos/InfluencerApp/controllers/influencerAuthController.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
@@ -23,11 +25,19 @@ class InfDealsViewController {
 
   Future<void> fetchOffers() async {
     _currentOffers.value = await get_inf_current_offers(
-        offset: 0,
-        limit: 25,
-        influencerId: _influencerAuthController.influencer!.id.toInt(),
-        withCache: false);
-    _openOffers.value = await get_inf_open_offers(withCache: false);
+      offset: 0,
+      limit: 25,
+      influencerId: _influencerAuthController.influencer!.id.toInt(),
+      withCache: false,
+    );
+
+    final List<Offer> _newOpenOffers =
+        await get_inf_open_offers(withCache: false);
+
+    _openOffers.value = _newOpenOffers.where((Offer element) {
+      return !_currentOffers.value
+          .any((Offer currentOffer) => currentOffer.id == element.id);
+    }).toList();
   }
 
   Future<void> promote({required num offerId}) async {
@@ -38,6 +48,7 @@ class InfDealsViewController {
       if (res) {
         showSavedSnackBar(
             title: "Promoting", subtitle: "you are now promoting the offer");
+        unawaited(fetchOffers());
       }
     } on Exception catch (e) {
       mezDbgPrint(e);
@@ -53,6 +64,7 @@ class InfDealsViewController {
       if (res) {
         showSavedSnackBar(
             title: "Removed", subtitle: "no longer promoting the offer");
+        unawaited(fetchOffers());
       }
     } on Exception catch (e) {
       mezDbgPrint(e);
