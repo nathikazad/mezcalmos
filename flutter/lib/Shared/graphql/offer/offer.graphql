@@ -248,3 +248,75 @@ query getInfluencerIdByTag($tag: String!) {
     id
   }
 }
+query getOfferTotalRevenue($offer_id: Int!) {
+  service_provider_offer_applied_aggregate(
+    where: { offer_id: { _eq: $offer_id } }
+  ) {
+    aggregate {
+      sum {
+        order_total
+      }
+    }
+  }
+}
+query getOfferTotalLoss($offer_id: Int!) {
+  service_provider_offer_applied_aggregate(
+    where: { offer_id: { _eq: $offer_id } }
+  ) {
+    aggregate {
+      sum {
+        loss
+      }
+    }
+  }
+}
+
+query getOfferAppliedByOffer($offer_id: Int!) {
+  service_provider_offer_applied(
+    where: { offer_id: { _eq: $offer_id } }
+    order_by: { restaurant_order: { order_time: desc } }
+  ) {
+    comission
+    discount
+    id
+    influencer_id
+    loss
+    offer_id
+    order_id
+    order_total
+    order_type
+    influencer {
+      user {
+        id
+        phone
+        image
+        name
+      }
+    }
+    offer {
+      influencer_details
+    }
+    restaurant_order {
+      restaurant {
+        id
+        details {
+          image
+          name
+          phone_number
+          location {
+            gps
+            address
+          }
+        }
+      }
+      customer {
+        user {
+          id
+          phone
+          image
+          name
+        }
+      }
+    }
+  }
+}

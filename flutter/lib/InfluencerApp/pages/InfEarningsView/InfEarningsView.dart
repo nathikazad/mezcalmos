@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/InfluencerApp/constants/influencerConstants.dart';
+import 'package:mezcalmos/InfluencerApp/pages/InfEarningsView/components/InfOfferEarningCard.dart';
 import 'package:mezcalmos/InfluencerApp/pages/InfEarningsView/controllers/InfEarningsViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
-import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -179,98 +179,7 @@ class _InfEarningsViewState extends State<InfEarningsView> {
                     children: List.generate(viewController.earnings.length,
                         (int index) {
                       final InfEarning e = viewController.earnings[index];
-                      return Card(
-                          child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  radius: 18,
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      e.customerInfo.image!),
-                                ),
-                                hSmallSepartor,
-                                Flexible(
-                                  fit: FlexFit.tight,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        e.customerInfo.name!,
-                                        style: context.textTheme.bodyLarge,
-                                      ),
-                                      Text.rich(TextSpan(children: <InlineSpan>[
-                                        WidgetSpan(
-                                          child: Icon(
-                                            Icons.food_bank,
-                                            size: 17,
-                                            color: Colors.grey.shade500,
-                                          ),
-                                        ),
-                                        WidgetSpan(child: hTinySepartor),
-                                        TextSpan(text: e.serviceInfo.name),
-                                      ])),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  child: Text(
-                                    "+${e.comission.toPriceString()}",
-                                    style: context.textTheme.displayMedium
-                                        ?.copyWith(color: primaryBlueColor),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(),
-                            Text.rich(TextSpan(children: <InlineSpan>[
-                              WidgetSpan(
-                                child: Icon(
-                                  Icons.sell,
-                                  size: 17,
-                                  color: Colors.grey.shade500,
-                                ),
-                              ),
-                              WidgetSpan(child: hTinySepartor),
-                              TextSpan(
-                                  text:
-                                      "Discount : ${e.discount.toPriceString()}"),
-                            ])),
-                            Text.rich(TextSpan(children: <InlineSpan>[
-                              WidgetSpan(
-                                child: Icon(
-                                  Icons.attach_money,
-                                  size: 17,
-                                  color: Colors.grey.shade500,
-                                ),
-                              ),
-                              WidgetSpan(child: hTinySepartor),
-                              TextSpan(
-                                  text:
-                                      "Order Total : ${e.totalBeforeDiscount.toPriceString()} - ${(e.discount).toPriceString()} = ${e.orderTotal.toPriceString()}"),
-                            ])),
-                            Text.rich(TextSpan(children: <InlineSpan>[
-                              WidgetSpan(
-                                child: Icon(
-                                  Icons.redeem,
-                                  size: 17,
-                                  color: Colors.grey.shade500,
-                                ),
-                              ),
-                              WidgetSpan(child: hTinySepartor),
-                              TextSpan(
-                                  text: e
-                                      .influencerOfferDetails.toReadableString),
-                            ])),
-                          ],
-                        ),
-                      ));
+                      return InfOfferEarningCard(earning: e);
                     }),
                   )
                 ],

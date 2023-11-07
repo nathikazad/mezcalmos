@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/InfluencerApp/pages/InfEarningsView/components/InfOfferEarningCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/SingleOfferView/controllers/SingleOfferStatsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class SingleOfferStatsView extends StatefulWidget {
   const SingleOfferStatsView({super.key});
@@ -29,8 +31,8 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
 
   @override
   void initState() {
-    final int? offerId =
-        int.tryParse(MezRouter.urlArguments[":offerId"].toString());
+    final int? offerId = MezRouter.urlArguments["offerId"]?.asInt;
+    mezDbgPrint("Init 🇹🇳🇹🇳🇹🇳🇹🇳🇹🇳 ========>$offerId");
     if (offerId != null) {
       viewController.init(offerId: offerId);
     }
@@ -49,86 +51,90 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
           children: <Widget>[
             _earningsCard(context),
             meduimSeperator,
-            MezButton(
-              label: "Record Influencer Sale",
-              onClick: () async {
-                showMezSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  showCancel: true,
-                  title: "Record Influencer Sale",
-                  content: Form(
-                    key: viewController.formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("Order total"),
-                        smallSepartor,
-                        TextFormField(
-                          controller: viewController.orderTotal,
-                          validator: (String? v) {
-                            if (v == null || num.tryParse(v) == null) {
-                              return "required valid number";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(suffixText: "\$"),
-                        ),
-                        meduimSeperator,
-                        Text("Influencer commission"),
-                        smallSepartor,
-                        TextFormField(
-                          controller: viewController.infCommission,
-                          validator: (String? v) {
-                            if (v == null || num.tryParse(v) == null) {
-                              return "required valid number";
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(suffixText: "\$"),
-                        ),
-                        meduimSeperator,
-                        Text("Influencer code"),
-                        smallSepartor,
-                        TextFormField(
-                          controller: viewController.infCode,
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return "required";
-                            }
-                            return null;
-                          },
-                          // decoration: InputDecoration(suffixText: "\$"),
-                        ),
-                        meduimSeperator,
-                        MezButton(
-                          label: "Record sale",
-                          onClick: () async {
-                            await viewController.recordSale();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
+            _recordSaleButton(context),
             meduimSeperator,
-            Column(
-              children: List.generate(
-                  5,
-                  (int index) => MezCard(
-                      firstAvatarIcon: Icons.person_2_rounded,
-                      content: Column(
-                        children: <Widget>[
-                          Text(
-                              "Roger bought for ${400.toPriceString()} from Bello Puerto, your commission is ${40.toPriceString()}."),
-                        ],
-                      ))),
+            Obx(
+              () => Column(
+                children:
+                    List.generate(viewController.earnings.length, (int index) {
+                  final InfEarning e = viewController.earnings[index];
+                  return InfOfferEarningCard(
+                    earning: e,
+                    forServiceProvider: true,
+                  );
+                }),
+              ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  MezButton _recordSaleButton(BuildContext context) {
+    return MezButton(
+      label: "Record Influencer Sale",
+      onClick: () async {
+        showMezSheet(
+          context: context,
+          isScrollControlled: true,
+          showCancel: true,
+          title: "Record Influencer Sale",
+          content: Form(
+            key: viewController.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("Order total"),
+                smallSepartor,
+                TextFormField(
+                  controller: viewController.orderTotal,
+                  validator: (String? v) {
+                    if (v == null || num.tryParse(v) == null) {
+                      return "required valid number";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(suffixText: "\$"),
+                ),
+                meduimSeperator,
+                Text("Influencer commission"),
+                smallSepartor,
+                TextFormField(
+                  controller: viewController.infCommission,
+                  validator: (String? v) {
+                    if (v == null || num.tryParse(v) == null) {
+                      return "required valid number";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(suffixText: "\$"),
+                ),
+                meduimSeperator,
+                Text("Influencer code"),
+                smallSepartor,
+                TextFormField(
+                  controller: viewController.infCode,
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return "required";
+                    }
+                    return null;
+                  },
+                  // decoration: InputDecoration(suffixText: "\$"),
+                ),
+                meduimSeperator,
+                MezButton(
+                  label: "Record sale",
+                  onClick: () async {
+                    await viewController.recordSale();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -155,10 +161,12 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          "+ ${500.toPriceString()}",
-                          style: context.textTheme.displayMedium
-                              ?.copyWith(color: primaryBlueColor),
+                        Obx(
+                          () => Text(
+                            "+ ${viewController.revenue.toPriceString()}",
+                            style: context.textTheme.displayMedium
+                                ?.copyWith(color: primaryBlueColor),
+                          ),
                         ),
                         smallSepartor,
                         Text(
@@ -176,10 +184,12 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                          "- ${100.toPriceString()}",
-                          style: context.textTheme.displayMedium
-                              ?.copyWith(color: redAccentColor),
+                        Obx(
+                          () => Text(
+                            "- ${viewController.loss.toPriceString()}",
+                            style: context.textTheme.displayMedium
+                                ?.copyWith(color: redAccentColor),
+                          ),
                         ),
                         smallSepartor,
                         Text(

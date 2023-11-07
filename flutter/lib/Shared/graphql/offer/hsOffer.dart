@@ -6,7 +6,10 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/offer/__generated/offer.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -487,5 +490,90 @@ Future<int?> get_inf_id_by_tag({required String tag}) async {
       res.parsedData?.service_provider_influencer;
   if (data?.isNotEmpty == true)
     return res.parsedData?.service_provider_influencer.first.id;
+  return null;
+}
+
+Future<num?> get_offer_total_revenue({required int offerId}) async {
+  final QueryResult<Query$getOfferTotalRevenue> res = await _db.graphQLClient
+      .query$getOfferTotalRevenue(Options$Query$getOfferTotalRevenue(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$getOfferTotalRevenue(offer_id: offerId)));
+
+  if (res.hasException) {
+    throw (res.exception!);
+  }
+  mezDbgPrint("Total revenue ========>${res.data}");
+  return res.parsedData?.service_provider_offer_applied_aggregate.aggregate?.sum
+      ?.order_total;
+}
+
+Future<num?> get_offer_total_loss({required int offerId}) async {
+  final QueryResult<Query$getOfferTotalLoss> res = await _db.graphQLClient
+      .query$getOfferTotalLoss(Options$Query$getOfferTotalLoss(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables: Variables$Query$getOfferTotalLoss(offer_id: offerId)));
+
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  mezDbgPrint("Total Loss ========>${res.data}");
+
+  return res.parsedData?.service_provider_offer_applied_aggregate.aggregate?.sum
+      ?.loss;
+}
+
+Future<List<InfEarning>?> get_offer_applied_by_offer(
+    {required int offerId}) async {
+  final QueryResult<Query$getOfferAppliedByOffer> res = await _db.graphQLClient
+      .query$getOfferAppliedByOffer(Options$Query$getOfferAppliedByOffer(
+          fetchPolicy: FetchPolicy.networkOnly,
+          variables:
+              Variables$Query$getOfferAppliedByOffer(offer_id: offerId)));
+
+  if (res.hasException) {
+    throwError(res.exception);
+  } else if (res.parsedData?.service_provider_offer_applied != null) {
+    return res.parsedData!.service_provider_offer_applied
+        .map<InfEarning>(
+            (Query$getOfferAppliedByOffer$service_provider_offer_applied e) =>
+                InfEarning(
+                  influencerOfferDetails: cModels.InfluencerOfferDetails(
+                      rewardType: e.offer.influencer_details["rewardType"]
+                          .toString()
+                          .toDiscountType(),
+                      rewardValue: double.parse(e
+                          .offer.influencer_details["rewardValue"]
+                          .toString())),
+                  customerInfo: cModels.UserInfo(
+                      id: e.restaurant_order!.customer.user.id,
+                      name: e.restaurant_order!.customer.user.name,
+                      phoneNumber: e.restaurant_order!.customer.user.phone,
+                      image: e.restaurant_order!.customer.user.image,
+                      firebaseId: "",
+                      language: cModels.Language.EN),
+                  influencerInfo: cModels.UserInfo(
+                      id: e.influencer!.user!.id,
+                      name: e.influencer!.user!.name,
+                      phoneNumber: e.influencer!.user!.phone,
+                      image: e.influencer!.user!.image,
+                      firebaseId: "",
+                      language: cModels.Language.EN),
+                  serviceInfo: ServiceInfo(
+                      hasuraId: e.restaurant_order!.restaurant.id,
+                      name: e.restaurant_order!.restaurant.details!.name,
+                      phoneNumber:
+                          e.restaurant_order!.restaurant.details!.phone_number,
+                      image: e.restaurant_order!.restaurant.details!.image,
+                      firebaseId: "",
+                      location: MezLocation.fromHasura(
+                          e.restaurant_order!.restaurant.details!.location.gps,
+                          e.restaurant_order!.restaurant.details!.location
+                              .address)),
+                  orderTotal: e.order_total!,
+                  comission: e.comission!,
+                  discount: e.discount,
+                ))
+        .toList();
+  }
   return null;
 }

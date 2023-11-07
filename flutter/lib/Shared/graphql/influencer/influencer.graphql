@@ -133,6 +133,14 @@ query getInfluencerEarnings($influencer_id: Int!) {
     order_id
     order_total
     order_type
+    influencer {
+      user {
+        id
+        phone
+        image
+        name
+      }
+    }
     offer {
       influencer_details
     }
