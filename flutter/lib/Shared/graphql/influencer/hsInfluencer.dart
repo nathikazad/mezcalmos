@@ -251,6 +251,13 @@ Future<List<InfEarning>?> get_inf_earnings({required int influencerId}) async {
         .map<InfEarning>(
             (Query$getInfluencerEarnings$service_provider_offer_applied e) =>
                 InfEarning(
+                  influencerOfferDetails: InfluencerOfferDetails(
+                      rewardType: e.offer.influencer_details["rewardType"]
+                          .toString()
+                          .toDiscountType(),
+                      rewardValue: double.parse(e
+                          .offer.influencer_details["rewardValue"]
+                          .toString())),
                   customerInfo: UserInfo(
                       id: e.restaurant_order!.customer.user.id,
                       name: e.restaurant_order!.customer.user.name,

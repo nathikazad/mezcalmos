@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
+import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
@@ -231,7 +232,7 @@ class _InfEarningsViewState extends State<InfEarningsView> {
                             Text.rich(TextSpan(children: <InlineSpan>[
                               WidgetSpan(
                                 child: Icon(
-                                  Icons.attach_money,
+                                  Icons.sell,
                                   size: 17,
                                   color: Colors.grey.shade500,
                                 ),
@@ -253,6 +254,19 @@ class _InfEarningsViewState extends State<InfEarningsView> {
                               TextSpan(
                                   text:
                                       "Order Total : ${e.totalBeforeDiscount.toPriceString()} - ${(e.discount).toPriceString()} = ${e.orderTotal.toPriceString()}"),
+                            ])),
+                            Text.rich(TextSpan(children: <InlineSpan>[
+                              WidgetSpan(
+                                child: Icon(
+                                  Icons.redeem,
+                                  size: 17,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ),
+                              WidgetSpan(child: hTinySepartor),
+                              TextSpan(
+                                  text: e
+                                      .influencerOfferDetails.toReadableString),
                             ])),
                           ],
                         ),
