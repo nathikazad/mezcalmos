@@ -28,6 +28,14 @@ select_permissions:
       filter:
         user_id:
           _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - user_id
+        - tag
+      filter: {}
+    comment: ""
 update_permissions:
   - role: influencer
     permission:

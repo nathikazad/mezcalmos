@@ -85,7 +85,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("Order total"),
+                Text("Order total (after discount)"),
                 smallSepartor,
                 TextFormField(
                   controller: viewController.orderTotal,
@@ -98,6 +98,18 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                   decoration: InputDecoration(suffixText: "\$"),
                 ),
                 meduimSeperator,
+                Text("Discount"),
+                smallSepartor,
+                TextFormField(
+                  controller: viewController.discountTxt,
+                  validator: (String? v) {
+                    if (v == null || num.tryParse(v) == null) {
+                      return "required valid number";
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(suffixText: "\$"),
+                ),
                 Text("Influencer commission"),
                 smallSepartor,
                 TextFormField(

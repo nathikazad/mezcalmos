@@ -459,6 +459,7 @@ Future<List<cModels.Offer>> fetch_all_promotions_within_distance(
 Future<bool> insert_offer_applied({
   required num orderTotal,
   required num infComission,
+  required num discount,
   required int influencerId,
   required int offerId,
 }) async {
@@ -469,6 +470,7 @@ Future<bool> insert_offer_applied({
     order_total: orderTotal.toDouble(),
     influencer_id: influencerId,
     offer_id: offerId,
+    order_type: cModels.OrderType.Restaurant.toFirebaseFormatString(),
     comission: infComission.toDouble(),
   ))));
 

@@ -21,6 +21,7 @@ class SingleOfferStatsViewController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController orderTotal = TextEditingController();
   TextEditingController infCommission = TextEditingController();
+  TextEditingController discountTxt = TextEditingController();
   TextEditingController infCode = TextEditingController();
 
   void init({required int offerId}) {
@@ -47,6 +48,7 @@ class SingleOfferStatsViewController {
         final bool res = await insert_offer_applied(
             orderTotal: double.parse(orderTotal.text),
             infComission: double.parse(infCommission.text),
+            discount: double.parse(discountTxt.text),
             influencerId: infId,
             offerId: offerId);
         if (res) {
@@ -54,6 +56,10 @@ class SingleOfferStatsViewController {
           unawaited(_fetchRevAndLoss());
         } else
           showErrorSnackBar();
+      } else {
+        showErrorSnackBar(
+            errorText:
+                "Can't find any influencer with this tag ${infCode.text}");
       }
     }
   }

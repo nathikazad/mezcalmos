@@ -4,7 +4,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart' as user;
 
 class InfEarning {
-  UserInfo customerInfo;
+  UserInfo? customerInfo;
   UserInfo influencerInfo;
   user.ServiceInfo serviceInfo;
   InfluencerOfferDetails influencerOfferDetails;
@@ -24,5 +24,5 @@ class InfEarning {
   num get totalBeforeDiscount => orderTotal + discount;
 
   String get description =>
-      "${customerInfo.name} bought for ${orderTotal.toPriceString()} from ${serviceInfo.name} your commission is ${comission.toPriceString()}.";
+      "${customerInfo?.name} bought for ${orderTotal.toPriceString()} from ${serviceInfo.name} your commission is ${comission.toPriceString()}.";
 }

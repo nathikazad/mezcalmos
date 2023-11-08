@@ -33,7 +33,7 @@ class InfOfferEarningCard extends StatelessWidget {
                     CircleAvatar(
                       radius: 18,
                       backgroundImage: CachedNetworkImageProvider(
-                          earning.customerInfo.image!),
+                          earning.customerInfo?.image ?? defaultUserImgUrl),
                     ),
                     hSmallSepartor,
                     Flexible(
@@ -42,7 +42,7 @@ class InfOfferEarningCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            earning.customerInfo.name!,
+                            earning.customerInfo?.name ?? "Local customer",
                             style: context.textTheme.bodyLarge
                                 ?.copyWith(fontSize: 11.mezSp),
                           ),
@@ -57,7 +57,8 @@ class InfOfferEarningCard extends StatelessWidget {
                                     ),
                                   ),
                                   WidgetSpan(child: hTinySepartor),
-                                  TextSpan(text: earning.serviceInfo.name),
+                                  TextSpan(
+                                      text: earning.serviceInfo?.name ?? ""),
                                 ])),
                         ],
                       ),
@@ -91,7 +92,8 @@ class InfOfferEarningCard extends StatelessWidget {
                                       ),
                                     ),
                                     WidgetSpan(child: hTinySepartor),
-                                    TextSpan(text: earning.serviceInfo.name),
+                                    TextSpan(
+                                        text: earning.serviceInfo?.name ?? ""),
                                   ])),
                           ],
                         ),

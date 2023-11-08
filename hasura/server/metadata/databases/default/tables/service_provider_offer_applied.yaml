@@ -50,6 +50,27 @@ computed_fields:
       function:
         name: offer_loss
         schema: service_provider
+insert_permissions:
+  - role: restaurant_operator
+    permission:
+      check:
+        _or:
+          - order_id:
+              _is_null: true
+          - restaurant_order:
+              restaurant:
+                restaurant_operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+      columns:
+        - comission
+        - discount
+        - influencer_id
+        - offer_id
+        - order_id
+        - order_total
+        - order_type
+    comment: ""
 select_permissions:
   - role: influencer
     permission:
@@ -68,5 +89,29 @@ select_permissions:
         influencer:
           user_id:
             _eq: X-Hasura-User-Id
+      allow_aggregations: true
+    comment: ""
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - influencer_id
+        - offer_id
+        - order_id
+        - comission
+        - discount
+        - order_total
+        - order_type
+      computed_fields:
+        - loss
+      filter:
+        _or:
+          - order_id:
+              _is_null: true
+          - restaurant_order:
+              restaurant:
+                restaurant_operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
       allow_aggregations: true
     comment: ""
