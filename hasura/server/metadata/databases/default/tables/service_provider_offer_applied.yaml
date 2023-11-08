@@ -34,6 +34,16 @@ object_relationships:
   - name: offer
     using:
       foreign_key_constraint_on: offer_id
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          order_type: service_provider_type
+          service_provider_id: id
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
   - name: restaurant_order
     using:
       manual_configuration:
@@ -70,7 +80,7 @@ insert_permissions:
         - order_id
         - order_total
         - order_type
-    comment: ""
+        - service_provider_id
 select_permissions:
   - role: influencer
     permission:

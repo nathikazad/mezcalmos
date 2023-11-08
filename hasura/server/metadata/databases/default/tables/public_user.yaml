@@ -127,7 +127,6 @@ select_permissions:
         - name
         - phone
       filter: {}
-
 update_permissions:
   - role: business_operator
     permission:

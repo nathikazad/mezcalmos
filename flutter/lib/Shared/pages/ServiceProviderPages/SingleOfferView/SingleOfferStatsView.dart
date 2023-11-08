@@ -110,6 +110,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                   },
                   decoration: InputDecoration(suffixText: "\$"),
                 ),
+                meduimSeperator,
                 Text("Influencer commission"),
                 smallSepartor,
                 TextFormField(
@@ -139,7 +140,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                 MezButton(
                   label: "Record sale",
                   onClick: () async {
-                    await viewController.recordSale();
+                    await viewController.recordSale(context);
                   },
                 ),
               ],

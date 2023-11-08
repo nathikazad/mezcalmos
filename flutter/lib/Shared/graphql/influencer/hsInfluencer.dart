@@ -272,17 +272,28 @@ Future<List<InfEarning>?> get_inf_earnings({required int influencerId}) async {
                       image: e.influencer!.user!.image,
                       firebaseId: "",
                       language: Language.EN),
-                  serviceInfo: user.ServiceInfo(
-                      hasuraId: e.restaurant_order!.restaurant.id,
-                      name: e.restaurant_order!.restaurant.details!.name,
-                      phoneNumber:
-                          e.restaurant_order!.restaurant.details!.phone_number,
-                      image: e.restaurant_order!.restaurant.details!.image,
-                      firebaseId: "",
-                      location: MezLocation.fromHasura(
-                          e.restaurant_order!.restaurant.details!.location.gps,
-                          e.restaurant_order!.restaurant.details!.location
-                              .address)),
+                  serviceInfo: e.restaurant_order != null
+                      ? user.ServiceInfo(
+                          hasuraId: e.restaurant_order!.restaurant.id,
+                          name: e.restaurant_order!.restaurant.details!.name,
+                          phoneNumber: e.restaurant_order!.restaurant.details!
+                              .phone_number,
+                          image: e.restaurant_order!.restaurant.details!.image,
+                          firebaseId: "",
+                          location: MezLocation.fromHasura(
+                              e.restaurant_order!.restaurant.details!.location
+                                  .gps,
+                              e.restaurant_order!.restaurant.details!.location
+                                  .address))
+                      : user.ServiceInfo(
+                          hasuraId: e.restaurant!.id,
+                          name: e.restaurant!.details!.name,
+                          phoneNumber: e.restaurant!.details!.phone_number,
+                          image: e.restaurant!.details!.image,
+                          firebaseId: "",
+                          location: MezLocation.fromHasura(
+                              e.restaurant!.details!.location.gps,
+                              e.restaurant!.details!.location.address)),
                   orderTotal: e.order_total!,
                   comission: e.comission!,
                   discount: e.discount,

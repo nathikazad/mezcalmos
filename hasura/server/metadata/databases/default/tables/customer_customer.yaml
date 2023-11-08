@@ -118,7 +118,6 @@ select_permissions:
       columns:
         - user_id
       filter: {}
-
 update_permissions:
   - role: customer
     permission:

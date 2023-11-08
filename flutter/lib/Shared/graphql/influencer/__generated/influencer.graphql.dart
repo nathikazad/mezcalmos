@@ -8156,6 +8156,93 @@ const documentNodeQuerygetInfluencerEarnings = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
+            name: NameNode(value: 'restaurant'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'restaurant_order'),
             alias: null,
             arguments: [],
@@ -8452,6 +8539,7 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     required this.order_type,
     this.influencer,
     required this.offer,
+    this.restaurant,
     this.restaurant_order,
     required this.$__typename,
   });
@@ -8469,6 +8557,7 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     final l$order_type = json['order_type'];
     final l$influencer = json['influencer'];
     final l$offer = json['offer'];
+    final l$restaurant = json['restaurant'];
     final l$restaurant_order = json['restaurant_order'];
     final l$$__typename = json['__typename'];
     return Query$getInfluencerEarnings$service_provider_offer_applied(
@@ -8487,6 +8576,10 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
               .fromJson((l$influencer as Map<String, dynamic>)),
       offer: Query$getInfluencerEarnings$service_provider_offer_applied$offer
           .fromJson((l$offer as Map<String, dynamic>)),
+      restaurant: l$restaurant == null
+          ? null
+          : Query$getInfluencerEarnings$service_provider_offer_applied$restaurant
+              .fromJson((l$restaurant as Map<String, dynamic>)),
       restaurant_order: l$restaurant_order == null
           ? null
           : Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order
@@ -8517,6 +8610,9 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
       influencer;
 
   final Query$getInfluencerEarnings$service_provider_offer_applied$offer offer;
+
+  final Query$getInfluencerEarnings$service_provider_offer_applied$restaurant?
+      restaurant;
 
   final Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order?
       restaurant_order;
@@ -8549,6 +8645,8 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     _resultData['influencer'] = l$influencer?.toJson();
     final l$offer = offer;
     _resultData['offer'] = l$offer.toJson();
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant?.toJson();
     final l$restaurant_order = restaurant_order;
     _resultData['restaurant_order'] = l$restaurant_order?.toJson();
     final l$$__typename = $__typename;
@@ -8569,6 +8667,7 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     final l$order_type = order_type;
     final l$influencer = influencer;
     final l$offer = offer;
+    final l$restaurant = restaurant;
     final l$restaurant_order = restaurant_order;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -8583,6 +8682,7 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
       l$order_type,
       l$influencer,
       l$offer,
+      l$restaurant,
       l$restaurant_order,
       l$$__typename,
     ]);
@@ -8653,6 +8753,11 @@ class Query$getInfluencerEarnings$service_provider_offer_applied {
     if (l$offer != lOther$offer) {
       return false;
     }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant != lOther$restaurant) {
+      return false;
+    }
     final l$restaurant_order = restaurant_order;
     final lOther$restaurant_order = other.restaurant_order;
     if (l$restaurant_order != lOther$restaurant_order) {
@@ -8703,6 +8808,8 @@ abstract class CopyWith$Query$getInfluencerEarnings$service_provider_offer_appli
     Query$getInfluencerEarnings$service_provider_offer_applied$influencer?
         influencer,
     Query$getInfluencerEarnings$service_provider_offer_applied$offer? offer,
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant?
+        restaurant,
     Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order?
         restaurant_order,
     String? $__typename,
@@ -8711,6 +8818,8 @@ abstract class CopyWith$Query$getInfluencerEarnings$service_provider_offer_appli
       TRes> get influencer;
   CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer<
       TRes> get offer;
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+      TRes> get restaurant;
   CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order<
       TRes> get restaurant_order;
 }
@@ -8744,6 +8853,7 @@ class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied<
     Object? order_type = _undefined,
     Object? influencer = _undefined,
     Object? offer = _undefined,
+    Object? restaurant = _undefined,
     Object? restaurant_order = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -8778,6 +8888,10 @@ class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied<
             ? _instance.offer
             : (offer
                 as Query$getInfluencerEarnings$service_provider_offer_applied$offer),
+        restaurant: restaurant == _undefined
+            ? _instance.restaurant
+            : (restaurant
+                as Query$getInfluencerEarnings$service_provider_offer_applied$restaurant?),
         restaurant_order: restaurant_order == _undefined
             ? _instance.restaurant_order
             : (restaurant_order
@@ -8801,6 +8915,16 @@ class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied<
     final local$offer = _instance.offer;
     return CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer(
         local$offer, (e) => call(offer: e));
+  }
+
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+      TRes> get restaurant {
+    final local$restaurant = _instance.restaurant;
+    return local$restaurant == null
+        ? CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant
+            .stub(_then(_instance))
+        : CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant(
+            local$restaurant, (e) => call(restaurant: e));
   }
 
   CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order<
@@ -8837,6 +8961,8 @@ class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_appli
     Query$getInfluencerEarnings$service_provider_offer_applied$influencer?
         influencer,
     Query$getInfluencerEarnings$service_provider_offer_applied$offer? offer,
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant?
+        restaurant,
     Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order?
         restaurant_order,
     String? $__typename,
@@ -8851,6 +8977,11 @@ class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_appli
           TRes>
       get offer =>
           CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$offer
+              .stub(_res);
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+          TRes>
+      get restaurant =>
+          CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant
               .stub(_res);
   CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant_order<
           TRes>
@@ -9364,6 +9495,581 @@ class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_appli
 
   call({
     dynamic? influencer_details,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getInfluencerEarnings$service_provider_offer_applied$restaurant {
+  Query$getInfluencerEarnings$service_provider_offer_applied$restaurant({
+    required this.id,
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$getInfluencerEarnings$service_provider_offer_applied$restaurant.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$getInfluencerEarnings$service_provider_offer_applied$restaurant(
+      id: (l$id as int),
+      details: l$details == null
+          ? null
+          : Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details?
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getInfluencerEarnings$service_provider_offer_applied$restaurant) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant
+    on Query$getInfluencerEarnings$service_provider_offer_applied$restaurant {
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant>
+      get copyWith =>
+          CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+    TRes> {
+  factory CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant(
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant
+        instance,
+    TRes Function(
+            Query$getInfluencerEarnings$service_provider_offer_applied$restaurant)
+        then,
+  ) = _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant;
+
+  factory CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant;
+
+  TRes call({
+    int? id,
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+            TRes> {
+  _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getInfluencerEarnings$service_provider_offer_applied$restaurant
+      _instance;
+
+  final TRes Function(
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant<
+            TRes> {
+  _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details
+              .stub(_res);
+}
+
+class Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details {
+  Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details({
+    required this.image,
+    required this.name,
+    this.phone_number,
+    required this.location,
+    required this.$__typename,
+  });
+
+  factory Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$phone_number = json['phone_number'];
+    final l$location = json['location'];
+    final l$$__typename = json['__typename'];
+    return Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details(
+      image: (l$image as String),
+      name: (l$name as String),
+      phone_number: (l$phone_number as String?),
+      location:
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String image;
+
+  final String name;
+
+  final String? phone_number;
+
+  final Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location
+      location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$phone_number = phone_number;
+    final l$location = location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$phone_number,
+      l$location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details
+    on Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details {
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details>
+      get copyWith =>
+          CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+    TRes> {
+  factory CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details(
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details
+        instance,
+    TRes Function(
+            Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details)
+        then,
+  ) = _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details;
+
+  factory CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details;
+
+  TRes call({
+    String? image,
+    String? name,
+    String? phone_number,
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location?
+        location,
+    String? $__typename,
+  });
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+      TRes> get location;
+}
+
+class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+            TRes> {
+  _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details
+      _instance;
+
+  final TRes Function(
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? phone_number = _undefined,
+    Object? location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details(
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location(
+        local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? image,
+    String? name,
+    String? phone_number,
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location
+              .stub(_res);
+}
+
+class Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location {
+  Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location
+    on Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location {
+  CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location>
+      get copyWith =>
+          CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+    TRes> {
+  factory CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location(
+    Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location
+        instance,
+    TRes Function(
+            Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location)
+        then,
+  ) = _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location;
+
+  factory CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+            TRes> {
+  _CopyWithImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location
+      _instance;
+
+  final TRes Function(
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+        TRes>
+    implements
+        CopyWith$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$getInfluencerEarnings$service_provider_offer_applied$restaurant$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;

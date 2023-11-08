@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
@@ -12,6 +13,8 @@ class SingleOfferStatsViewController {
   RxNum _revenue = RxNum(0);
   RxNum _cost = RxNum(0);
   RxList<InfEarning> _earnings = RxList<InfEarning>.empty();
+  ServiceProfileController _serviceProfileController =
+      Get.find<ServiceProfileController>();
   // getters //
   List<InfEarning> get earnings => _earnings.value;
   num get revenue => _revenue.value;
@@ -41,7 +44,7 @@ class SingleOfferStatsViewController {
         await get_offer_applied_by_offer(offerId: offerId) ?? <InfEarning>[];
   }
 
-  Future<void> recordSale() async {
+  Future<void> recordSale(BuildContext context) async {
     if (formKey.currentState?.validate() == true) {
       final int? infId = await get_inf_id_by_tag(tag: infCode.text);
       if (infId != null) {
@@ -49,11 +52,14 @@ class SingleOfferStatsViewController {
             orderTotal: double.parse(orderTotal.text),
             infComission: double.parse(infCommission.text),
             discount: double.parse(discountTxt.text),
+            serviceProviderId: _serviceProfileController.serviceId,
             influencerId: infId,
             offerId: offerId);
         if (res) {
           showSavedSnackBar();
+          Navigator.pop(context);
           unawaited(_fetchRevAndLoss());
+          unawaited(fetchOfferEarnings());
         } else
           showErrorSnackBar();
       } else {

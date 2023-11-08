@@ -144,6 +144,18 @@ query getInfluencerEarnings($influencer_id: Int!) {
     offer {
       influencer_details
     }
+    restaurant {
+      id
+      details {
+        image
+        name
+        phone_number
+        location {
+          gps
+          address
+        }
+      }
+    }
     restaurant_order {
       restaurant {
         id

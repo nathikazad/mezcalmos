@@ -462,6 +462,7 @@ Future<bool> insert_offer_applied({
   required num discount,
   required int influencerId,
   required int offerId,
+  required int serviceProviderId,
 }) async {
   final QueryResult<Mutation$insertOfferApplied> res = await _db.graphQLClient
       .mutate$insertOfferApplied(Options$Mutation$insertOfferApplied(
@@ -470,6 +471,8 @@ Future<bool> insert_offer_applied({
     order_total: orderTotal.toDouble(),
     influencer_id: influencerId,
     offer_id: offerId,
+    discount: discount.toDouble(),
+    service_provider_id: serviceProviderId,
     order_type: cModels.OrderType.Restaurant.toFirebaseFormatString(),
     comission: infComission.toDouble(),
   ))));
@@ -546,13 +549,15 @@ Future<List<InfEarning>?> get_offer_applied_by_offer(
                       rewardValue: double.parse(e
                           .offer.influencer_details["rewardValue"]
                           .toString())),
-                  customerInfo: cModels.UserInfo(
-                      id: e.restaurant_order!.customer.user.id,
-                      name: e.restaurant_order!.customer.user.name,
-                      phoneNumber: e.restaurant_order!.customer.user.phone,
-                      image: e.restaurant_order!.customer.user.image,
-                      firebaseId: "",
-                      language: cModels.Language.EN),
+                  customerInfo: e.restaurant_order != null
+                      ? cModels.UserInfo(
+                          id: e.restaurant_order!.customer.user.id,
+                          name: e.restaurant_order!.customer.user.name,
+                          phoneNumber: e.restaurant_order!.customer.user.phone,
+                          image: e.restaurant_order!.customer.user.image,
+                          firebaseId: "",
+                          language: cModels.Language.EN)
+                      : null,
                   influencerInfo: cModels.UserInfo(
                       id: e.influencer!.user!.id,
                       name: e.influencer!.user!.name,
@@ -560,17 +565,28 @@ Future<List<InfEarning>?> get_offer_applied_by_offer(
                       image: e.influencer!.user!.image,
                       firebaseId: "",
                       language: cModels.Language.EN),
-                  serviceInfo: ServiceInfo(
-                      hasuraId: e.restaurant_order!.restaurant.id,
-                      name: e.restaurant_order!.restaurant.details!.name,
-                      phoneNumber:
-                          e.restaurant_order!.restaurant.details!.phone_number,
-                      image: e.restaurant_order!.restaurant.details!.image,
-                      firebaseId: "",
-                      location: MezLocation.fromHasura(
-                          e.restaurant_order!.restaurant.details!.location.gps,
-                          e.restaurant_order!.restaurant.details!.location
-                              .address)),
+                  serviceInfo: e.restaurant_order != null
+                      ? ServiceInfo(
+                          hasuraId: e.restaurant_order!.restaurant.id,
+                          name: e.restaurant_order!.restaurant.details!.name,
+                          phoneNumber: e.restaurant_order!.restaurant.details!
+                              .phone_number,
+                          image: e.restaurant_order!.restaurant.details!.image,
+                          firebaseId: "",
+                          location: MezLocation.fromHasura(
+                              e.restaurant_order!.restaurant.details!.location
+                                  .gps,
+                              e.restaurant_order!.restaurant.details!.location
+                                  .address))
+                      : ServiceInfo(
+                          hasuraId: e.restaurant!.id,
+                          name: e.restaurant!.details!.name,
+                          phoneNumber: e.restaurant!.details!.phone_number,
+                          image: e.restaurant!.details!.image,
+                          firebaseId: "",
+                          location: MezLocation.fromHasura(
+                              e.restaurant!.details!.location.gps,
+                              e.restaurant!.details!.location.address)),
                   orderTotal: e.order_total!,
                   comission: e.comission!,
                   discount: e.discount,
