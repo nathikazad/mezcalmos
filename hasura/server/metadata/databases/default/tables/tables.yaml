@@ -65,6 +65,7 @@
 - "!include service_provider_details.yaml"
 - "!include service_provider_influencer.yaml"
 - "!include service_provider_influencer_offer.yaml"
+- "!include service_provider_influencer_payouts.yaml"
 - "!include service_provider_location.yaml"
 - "!include service_provider_offer.yaml"
 - "!include service_provider_offer_applied.yaml"

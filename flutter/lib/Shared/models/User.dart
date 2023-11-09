@@ -94,6 +94,24 @@ class UserInfo {
       language: language ?? this.language,
     );
   }
+
+  @override
+  bool operator ==(covariant UserInfo other) {
+    if (identical(this, other)) return true;
+
+    return other.hasuraId == hasuraId;
+  }
+
+  @override
+  int get hashCode {
+    return firebaseId.hashCode ^
+        phoneNumber.hashCode ^
+        hasuraId.hashCode ^
+        _name.hashCode ^
+        _image.hashCode ^
+        language.hashCode ^
+        creationTime.hashCode;
+  }
 }
 
 class MainUserInfo {

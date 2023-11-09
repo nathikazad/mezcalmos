@@ -265,8 +265,8 @@ Future<List<InfEarning>?> get_inf_earnings({required int influencerId}) async {
                       image: e.restaurant_order!.customer.user.image,
                       firebaseId: "",
                       language: Language.EN),
-                  influencerInfo: UserInfo(
-                      id: e.influencer!.user!.id,
+                  influencerInfo: user.UserInfo(
+                      hasuraId: e.influencer!.user!.id,
                       name: e.influencer!.user!.name,
                       phoneNumber: e.influencer!.user!.phone,
                       image: e.influencer!.user!.image,

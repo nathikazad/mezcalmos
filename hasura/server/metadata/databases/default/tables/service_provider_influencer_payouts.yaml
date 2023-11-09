@@ -1,0 +1,65 @@
+table:
+  name: influencer_payouts
+  schema: service_provider
+object_relationships:
+  - name: influencer
+    using:
+      manual_configuration:
+        column_mapping:
+          influencer_id: id
+        insertion_order: null
+        remote_table:
+          name: influencer
+          schema: service_provider
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          sp_id: id
+          sp_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
+insert_permissions:
+  - role: restaurant_operator
+    permission:
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - influencer_id
+        - amount
+        - date
+        - sp_id
+        - sp_type
+select_permissions:
+  - role: influencer
+    permission:
+      columns:
+        - id
+        - influencer_id
+        - sp_id
+        - amount
+        - date
+        - sp_type
+      filter:
+        influencer:
+          user_id:
+            _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - influencer_id
+        - id
+        - sp_id
+        - amount
+        - sp_type
+        - date
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

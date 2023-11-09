@@ -1,0 +1,1 @@
+CREATE TABLE "service_provider"."influencer_payouts" ("id" serial NOT NULL, "Influencer_id" integer NOT NULL, "sp_id" integer NOT NULL, "amount" numeric NOT NULL, "date" timestamp with time zone NOT NULL DEFAULT now(), PRIMARY KEY ("id") , UNIQUE ("id"));

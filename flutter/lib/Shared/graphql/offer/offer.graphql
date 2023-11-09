@@ -286,6 +286,7 @@ query getOfferAppliedByOffer($offer_id: Int!) {
     order_total
     order_type
     influencer {
+      id
       user {
         id
         phone
@@ -330,5 +331,17 @@ query getOfferAppliedByOffer($offer_id: Int!) {
         }
       }
     }
+  }
+}
+mutation insertInfluencerPayout(
+  $object: service_provider_influencer_payouts_insert_input!
+) {
+  insert_service_provider_influencer_payouts_one(object: $object) {
+    id
+    influencer_id
+    amount
+    date
+    sp_id
+    sp_type
   }
 }

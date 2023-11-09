@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/InfluencerApp/pages/InfEarningsView/components/InfOfferEarningCard.dart';
@@ -7,11 +8,14 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/SingleOfferView/controllers/SingleOfferStatsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
+import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 
 class SingleOfferStatsView extends StatefulWidget {
   const SingleOfferStatsView({super.key});
@@ -48,10 +52,37 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _earningsCard(context),
             meduimSeperator,
+            Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Influencers payouts",
+                    style: context.textTheme.bodyLarge,
+                  ),
+                  meduimSeperator,
+                  Column(
+                    children: List.generate(viewController.groupedByInf.length,
+                        (int index) {
+                      final MapEntry<UserInfo, num> item =
+                          viewController.groupedByInf.entries.toList()[index];
+                      return _infPayoutCard(item, context);
+                    }),
+                  ),
+                ],
+              ),
+            ),
+            meduimSeperator,
             _recordSaleButton(context),
+            meduimSeperator,
+            Text(
+              "Transactions",
+              style: context.textTheme.bodyLarge,
+            ),
             meduimSeperator,
             Obx(
               () => Column(
@@ -65,6 +96,86 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                 }),
               ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+
+  MezCard _infPayoutCard(MapEntry<UserInfo, num> item, BuildContext context) {
+    return MezCard(
+      firstAvatarBgImage: CachedNetworkImageProvider(item.key.image),
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            item.key.name,
+            style: context.textTheme.bodyLarge,
+          ),
+          smallSepartor,
+        ],
+      ),
+      action: MezInkwell(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+        label: "Pay",
+        icon: Icons.payments,
+        backgroundColor: secondaryLightBlueColor,
+        textColor: primaryBlueColor,
+        onClick: () async {
+          showMezSheet(
+              context: context,
+              showCancel: true,
+              title: "Record ${item.key.name} payout",
+              content: Column(
+                children: <Widget>[
+                  Text("Amount"),
+                  smallSepartor,
+                  TextFormField(
+                    controller: viewController.infPayoutAmmount,
+                    validator: (String? v) {
+                      if (v == null || num.tryParse(v) == null) {
+                        return "required valid number";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(suffixText: "\$"),
+                  ),
+                  meduimSeperator,
+                  MezButton(
+                    label: "Record Payout",
+                    onClick: () async {
+                      await viewController.recordInfPayout(
+                          infId: item.key.hasuraId, context: context);
+                    },
+                  )
+                ],
+              ));
+        },
+      ),
+      footer: IntrinsicHeight(
+        child: Row(
+          children: <Widget>[
+            Flexible(
+              fit: FlexFit.tight,
+              child: Text("Total :" + item.value.toPriceString(),
+                  style: context.textTheme.bodyLarge),
+            ),
+            VerticalDivider(),
+            Flexible(
+              child: Text(
+                "Paid :" + item.value.toPriceString(),
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(color: primaryBlueColor),
+              ),
+            ),
+            VerticalDivider(),
+            Flexible(
+              child: Text(
+                "Unpaid :" + item.value.toPriceString(),
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(color: redAccentColor),
+              ),
+            ),
           ],
         ),
       ),
@@ -136,7 +247,6 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                   },
                   // decoration: InputDecoration(suffixText: "\$"),
                 ),
-                meduimSeperator,
                 MezButton(
                   label: "Record sale",
                   onClick: () async {

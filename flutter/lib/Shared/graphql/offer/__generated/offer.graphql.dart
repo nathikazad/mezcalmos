@@ -13183,6 +13183,13 @@ const documentNodeQuerygetOfferAppliedByOffer = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'user'),
                 alias: null,
                 arguments: [],
@@ -14096,15 +14103,18 @@ class _CopyWithStubImpl$Query$getOfferAppliedByOffer$service_provider_offer_appl
 
 class Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer {
   Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer({
+    required this.id,
     this.user,
     required this.$__typename,
   });
 
   factory Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer(
+      id: (l$id as int),
       user: l$user == null
           ? null
           : Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer$user
@@ -14113,6 +14123,8 @@ class Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer {
     );
   }
 
+  final int id;
+
   final Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer$user?
       user;
 
@@ -14120,6 +14132,8 @@ class Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$user = user;
     _resultData['user'] = l$user?.toJson();
     final l$$__typename = $__typename;
@@ -14129,9 +14143,11 @@ class Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer {
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$user,
       l$$__typename,
     ]);
@@ -14145,6 +14161,11 @@ class Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer {
     if (!(other
             is Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$user = user;
@@ -14187,6 +14208,7 @@ abstract class CopyWith$Query$getOfferAppliedByOffer$service_provider_offer_appl
       _CopyWithStubImpl$Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer;
 
   TRes call({
+    int? id,
     Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer$user?
         user,
     String? $__typename,
@@ -14215,11 +14237,13 @@ class _CopyWithImpl$Query$getOfferAppliedByOffer$service_provider_offer_applied$
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         user: user == _undefined
             ? _instance.user
             : (user
@@ -14250,6 +14274,7 @@ class _CopyWithStubImpl$Query$getOfferAppliedByOffer$service_provider_offer_appl
   TRes _res;
 
   call({
+    int? id,
     Query$getOfferAppliedByOffer$service_provider_offer_applied$influencer$user?
         user,
     String? $__typename,
@@ -16314,6 +16339,699 @@ class _CopyWithStubImpl$Query$getOfferAppliedByOffer$service_provider_offer_appl
     String? phone,
     String? image,
     String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$insertInfluencerPayout {
+  factory Variables$Mutation$insertInfluencerPayout(
+          {required Input$service_provider_influencer_payouts_insert_input
+              object}) =>
+      Variables$Mutation$insertInfluencerPayout._({
+        r'object': object,
+      });
+
+  Variables$Mutation$insertInfluencerPayout._(this._$data);
+
+  factory Variables$Mutation$insertInfluencerPayout.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$object = data['object'];
+    result$data['object'] =
+        Input$service_provider_influencer_payouts_insert_input.fromJson(
+            (l$object as Map<String, dynamic>));
+    return Variables$Mutation$insertInfluencerPayout._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$service_provider_influencer_payouts_insert_input get object =>
+      (_$data['object']
+          as Input$service_provider_influencer_payouts_insert_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$object = object;
+    result$data['object'] = l$object.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$insertInfluencerPayout<
+          Variables$Mutation$insertInfluencerPayout>
+      get copyWith => CopyWith$Variables$Mutation$insertInfluencerPayout(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$insertInfluencerPayout) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$object = object;
+    final lOther$object = other.object;
+    if (l$object != lOther$object) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$object = object;
+    return Object.hashAll([l$object]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$insertInfluencerPayout<TRes> {
+  factory CopyWith$Variables$Mutation$insertInfluencerPayout(
+    Variables$Mutation$insertInfluencerPayout instance,
+    TRes Function(Variables$Mutation$insertInfluencerPayout) then,
+  ) = _CopyWithImpl$Variables$Mutation$insertInfluencerPayout;
+
+  factory CopyWith$Variables$Mutation$insertInfluencerPayout.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$insertInfluencerPayout;
+
+  TRes call({Input$service_provider_influencer_payouts_insert_input? object});
+}
+
+class _CopyWithImpl$Variables$Mutation$insertInfluencerPayout<TRes>
+    implements CopyWith$Variables$Mutation$insertInfluencerPayout<TRes> {
+  _CopyWithImpl$Variables$Mutation$insertInfluencerPayout(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$insertInfluencerPayout _instance;
+
+  final TRes Function(Variables$Mutation$insertInfluencerPayout) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? object = _undefined}) =>
+      _then(Variables$Mutation$insertInfluencerPayout._({
+        ..._instance._$data,
+        if (object != _undefined && object != null)
+          'object': (object
+              as Input$service_provider_influencer_payouts_insert_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$insertInfluencerPayout<TRes>
+    implements CopyWith$Variables$Mutation$insertInfluencerPayout<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$insertInfluencerPayout(this._res);
+
+  TRes _res;
+
+  call({Input$service_provider_influencer_payouts_insert_input? object}) =>
+      _res;
+}
+
+class Mutation$insertInfluencerPayout {
+  Mutation$insertInfluencerPayout({
+    this.insert_service_provider_influencer_payouts_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$insertInfluencerPayout.fromJson(Map<String, dynamic> json) {
+    final l$insert_service_provider_influencer_payouts_one =
+        json['insert_service_provider_influencer_payouts_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$insertInfluencerPayout(
+      insert_service_provider_influencer_payouts_one:
+          l$insert_service_provider_influencer_payouts_one == null
+              ? null
+              : Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one
+                  .fromJson((l$insert_service_provider_influencer_payouts_one
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one?
+      insert_service_provider_influencer_payouts_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_service_provider_influencer_payouts_one =
+        insert_service_provider_influencer_payouts_one;
+    _resultData['insert_service_provider_influencer_payouts_one'] =
+        l$insert_service_provider_influencer_payouts_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_service_provider_influencer_payouts_one =
+        insert_service_provider_influencer_payouts_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_service_provider_influencer_payouts_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$insertInfluencerPayout) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_service_provider_influencer_payouts_one =
+        insert_service_provider_influencer_payouts_one;
+    final lOther$insert_service_provider_influencer_payouts_one =
+        other.insert_service_provider_influencer_payouts_one;
+    if (l$insert_service_provider_influencer_payouts_one !=
+        lOther$insert_service_provider_influencer_payouts_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$insertInfluencerPayout
+    on Mutation$insertInfluencerPayout {
+  CopyWith$Mutation$insertInfluencerPayout<Mutation$insertInfluencerPayout>
+      get copyWith => CopyWith$Mutation$insertInfluencerPayout(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$insertInfluencerPayout<TRes> {
+  factory CopyWith$Mutation$insertInfluencerPayout(
+    Mutation$insertInfluencerPayout instance,
+    TRes Function(Mutation$insertInfluencerPayout) then,
+  ) = _CopyWithImpl$Mutation$insertInfluencerPayout;
+
+  factory CopyWith$Mutation$insertInfluencerPayout.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$insertInfluencerPayout;
+
+  TRes call({
+    Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one?
+        insert_service_provider_influencer_payouts_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+      TRes> get insert_service_provider_influencer_payouts_one;
+}
+
+class _CopyWithImpl$Mutation$insertInfluencerPayout<TRes>
+    implements CopyWith$Mutation$insertInfluencerPayout<TRes> {
+  _CopyWithImpl$Mutation$insertInfluencerPayout(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$insertInfluencerPayout _instance;
+
+  final TRes Function(Mutation$insertInfluencerPayout) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_service_provider_influencer_payouts_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$insertInfluencerPayout(
+        insert_service_provider_influencer_payouts_one:
+            insert_service_provider_influencer_payouts_one == _undefined
+                ? _instance.insert_service_provider_influencer_payouts_one
+                : (insert_service_provider_influencer_payouts_one
+                    as Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+      TRes> get insert_service_provider_influencer_payouts_one {
+    final local$insert_service_provider_influencer_payouts_one =
+        _instance.insert_service_provider_influencer_payouts_one;
+    return local$insert_service_provider_influencer_payouts_one == null
+        ? CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one
+            .stub(_then(_instance))
+        : CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one(
+            local$insert_service_provider_influencer_payouts_one,
+            (e) => call(insert_service_provider_influencer_payouts_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$insertInfluencerPayout<TRes>
+    implements CopyWith$Mutation$insertInfluencerPayout<TRes> {
+  _CopyWithStubImpl$Mutation$insertInfluencerPayout(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one?
+        insert_service_provider_influencer_payouts_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+          TRes>
+      get insert_service_provider_influencer_payouts_one =>
+          CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one
+              .stub(_res);
+}
+
+const documentNodeMutationinsertInfluencerPayout = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'insertInfluencerPayout'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'object')),
+        type: NamedTypeNode(
+          name: NameNode(
+              value: 'service_provider_influencer_payouts_insert_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_service_provider_influencer_payouts_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: VariableNode(name: NameNode(value: 'object')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'influencer_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'amount'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'date'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'sp_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'sp_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$insertInfluencerPayout _parserFn$Mutation$insertInfluencerPayout(
+        Map<String, dynamic> data) =>
+    Mutation$insertInfluencerPayout.fromJson(data);
+typedef OnMutationCompleted$Mutation$insertInfluencerPayout = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$insertInfluencerPayout?,
+);
+
+class Options$Mutation$insertInfluencerPayout
+    extends graphql.MutationOptions<Mutation$insertInfluencerPayout> {
+  Options$Mutation$insertInfluencerPayout({
+    String? operationName,
+    required Variables$Mutation$insertInfluencerPayout variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$insertInfluencerPayout? onCompleted,
+    graphql.OnMutationUpdate<Mutation$insertInfluencerPayout>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$insertInfluencerPayout(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationinsertInfluencerPayout,
+          parserFn: _parserFn$Mutation$insertInfluencerPayout,
+        );
+
+  final OnMutationCompleted$Mutation$insertInfluencerPayout?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$insertInfluencerPayout
+    extends graphql.WatchQueryOptions<Mutation$insertInfluencerPayout> {
+  WatchOptions$Mutation$insertInfluencerPayout({
+    String? operationName,
+    required Variables$Mutation$insertInfluencerPayout variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationinsertInfluencerPayout,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$insertInfluencerPayout,
+        );
+}
+
+extension ClientExtension$Mutation$insertInfluencerPayout
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$insertInfluencerPayout>>
+      mutate$insertInfluencerPayout(
+              Options$Mutation$insertInfluencerPayout options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$insertInfluencerPayout>
+      watchMutation$insertInfluencerPayout(
+              WatchOptions$Mutation$insertInfluencerPayout options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one {
+  Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one({
+    required this.id,
+    required this.influencer_id,
+    required this.amount,
+    required this.date,
+    required this.sp_id,
+    required this.sp_type,
+    required this.$__typename,
+  });
+
+  factory Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$influencer_id = json['influencer_id'];
+    final l$amount = json['amount'];
+    final l$date = json['date'];
+    final l$sp_id = json['sp_id'];
+    final l$sp_type = json['sp_type'];
+    final l$$__typename = json['__typename'];
+    return Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one(
+      id: (l$id as int),
+      influencer_id: (l$influencer_id as int),
+      amount: moneyFromJson(l$amount),
+      date: (l$date as String),
+      sp_id: (l$sp_id as int),
+      sp_type: (l$sp_type as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final int influencer_id;
+
+  final double amount;
+
+  final String date;
+
+  final int sp_id;
+
+  final String sp_type;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$influencer_id = influencer_id;
+    _resultData['influencer_id'] = l$influencer_id;
+    final l$amount = amount;
+    _resultData['amount'] = moneyToJson(l$amount);
+    final l$date = date;
+    _resultData['date'] = l$date;
+    final l$sp_id = sp_id;
+    _resultData['sp_id'] = l$sp_id;
+    final l$sp_type = sp_type;
+    _resultData['sp_type'] = l$sp_type;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$influencer_id = influencer_id;
+    final l$amount = amount;
+    final l$date = date;
+    final l$sp_id = sp_id;
+    final l$sp_type = sp_type;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$influencer_id,
+      l$amount,
+      l$date,
+      l$sp_id,
+      l$sp_type,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$influencer_id = influencer_id;
+    final lOther$influencer_id = other.influencer_id;
+    if (l$influencer_id != lOther$influencer_id) {
+      return false;
+    }
+    final l$amount = amount;
+    final lOther$amount = other.amount;
+    if (l$amount != lOther$amount) {
+      return false;
+    }
+    final l$date = date;
+    final lOther$date = other.date;
+    if (l$date != lOther$date) {
+      return false;
+    }
+    final l$sp_id = sp_id;
+    final lOther$sp_id = other.sp_id;
+    if (l$sp_id != lOther$sp_id) {
+      return false;
+    }
+    final l$sp_type = sp_type;
+    final lOther$sp_type = other.sp_type;
+    if (l$sp_type != lOther$sp_type) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one
+    on Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one {
+  CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+          Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one>
+      get copyWith =>
+          CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+    TRes> {
+  factory CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one(
+    Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one
+        instance,
+    TRes Function(
+            Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one)
+        then,
+  ) = _CopyWithImpl$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one;
+
+  factory CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one;
+
+  TRes call({
+    int? id,
+    int? influencer_id,
+    double? amount,
+    String? date,
+    int? sp_id,
+    String? sp_type,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+        TRes>
+    implements
+        CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+            TRes> {
+  _CopyWithImpl$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one
+      _instance;
+
+  final TRes Function(
+          Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? influencer_id = _undefined,
+    Object? amount = _undefined,
+    Object? date = _undefined,
+    Object? sp_id = _undefined,
+    Object? sp_type = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        influencer_id: influencer_id == _undefined || influencer_id == null
+            ? _instance.influencer_id
+            : (influencer_id as int),
+        amount: amount == _undefined || amount == null
+            ? _instance.amount
+            : (amount as double),
+        date: date == _undefined || date == null
+            ? _instance.date
+            : (date as String),
+        sp_id: sp_id == _undefined || sp_id == null
+            ? _instance.sp_id
+            : (sp_id as int),
+        sp_type: sp_type == _undefined || sp_type == null
+            ? _instance.sp_type
+            : (sp_type as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+        TRes>
+    implements
+        CopyWith$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one<
+            TRes> {
+  _CopyWithStubImpl$Mutation$insertInfluencerPayout$insert_service_provider_influencer_payouts_one(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    int? influencer_id,
+    double? amount,
+    String? date,
+    int? sp_id,
+    String? sp_type,
     String? $__typename,
   }) =>
       _res;

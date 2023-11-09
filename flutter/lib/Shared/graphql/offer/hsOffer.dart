@@ -558,8 +558,8 @@ Future<List<InfEarning>?> get_offer_applied_by_offer(
                           firebaseId: "",
                           language: cModels.Language.EN)
                       : null,
-                  influencerInfo: cModels.UserInfo(
-                      id: e.influencer!.user!.id,
+                  influencerInfo: UserInfo(
+                      hasuraId: e.influencer!.id,
                       name: e.influencer!.user!.name,
                       phoneNumber: e.influencer!.user!.phone,
                       image: e.influencer!.user!.image,
@@ -594,4 +594,26 @@ Future<List<InfEarning>?> get_offer_applied_by_offer(
         .toList();
   }
   return null;
+}
+
+Future<int?> insert_influencer_payout(
+    {required int influencerId,
+    required int spId,
+    required num amount,
+    required cModels.ServiceProviderType spType}) async {
+  final QueryResult<Mutation$insertInfluencerPayout> res = await _db
+      .graphQLClient
+      .mutate$insertInfluencerPayout(Options$Mutation$insertInfluencerPayout(
+          variables: Variables$Mutation$insertInfluencerPayout(
+              object: Input$service_provider_influencer_payouts_insert_input(
+    influencer_id: influencerId,
+    sp_id: spId,
+    amount: amount.toDouble(),
+    sp_type: spType.toFirebaseFormatString(),
+  ))));
+
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  return res.parsedData?.insert_service_provider_influencer_payouts_one?.id;
 }

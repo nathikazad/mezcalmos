@@ -5,12 +5,13 @@ import 'package:mezcalmos/Shared/models/User.dart' as user;
 
 class InfEarning {
   UserInfo? customerInfo;
-  UserInfo influencerInfo;
+  user.UserInfo influencerInfo;
   user.ServiceInfo serviceInfo;
   InfluencerOfferDetails influencerOfferDetails;
   num orderTotal;
   num comission;
   num discount;
+
   InfEarning({
     required this.customerInfo,
     required this.influencerInfo,

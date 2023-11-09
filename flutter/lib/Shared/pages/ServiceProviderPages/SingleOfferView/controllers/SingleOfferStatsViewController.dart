@@ -1,12 +1,16 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 
 class SingleOfferStatsViewController {
   late int offerId;
@@ -26,6 +30,7 @@ class SingleOfferStatsViewController {
   TextEditingController infCommission = TextEditingController();
   TextEditingController discountTxt = TextEditingController();
   TextEditingController infCode = TextEditingController();
+  TextEditingController infPayoutAmmount = TextEditingController();
 
   void init({required int offerId}) {
     this.offerId = offerId;
@@ -67,6 +72,38 @@ class SingleOfferStatsViewController {
             errorText:
                 "Can't find any influencer with this tag ${infCode.text}");
       }
+    }
+  }
+
+  Map<UserInfo, num> get groupedByInf {
+    final Map<UserInfo, List<InfEarning>> groupedInfEarnings =
+        groupBy(earnings, (InfEarning infEarning) => infEarning.influencerInfo);
+    mezDbgPrint("LENGTH ===============>${groupedInfEarnings.length}");
+    return groupedInfEarnings.map<UserInfo, num>(
+        (UserInfo key, List<InfEarning> value) => MapEntry(
+            key,
+            value.fold(
+                0,
+                (num previous, InfEarning current) =>
+                    previous + current.comission)));
+  }
+
+  Future<void> recordInfPayout(
+      {required int infId, required BuildContext context}) async {
+    try {
+      final int? res = await insert_influencer_payout(
+          influencerId: infId,
+          spId: _serviceProfileController.serviceId,
+          amount: double.parse(infPayoutAmmount.text),
+          spType: cm.ServiceProviderType.Restaurant);
+      if (res != null) {
+        showSavedSnackBar();
+        Navigator.pop(context);
+      }
+    } on OperationException catch (e, stk) {
+      showErrorSnackBar(errorText: e.graphqlErrors.first.message);
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
 }
