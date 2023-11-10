@@ -17,10 +17,12 @@ class SingleOfferStatsViewController {
   RxNum _revenue = RxNum(0);
   RxNum _cost = RxNum(0);
   RxList<InfEarning> _earnings = RxList<InfEarning>.empty();
+  RxList<InfPayout> _payouts = RxList<InfPayout>.empty();
   ServiceProfileController _serviceProfileController =
       Get.find<ServiceProfileController>();
   // getters //
   List<InfEarning> get earnings => _earnings.value;
+  List<InfPayout> get payouts => _payouts.value;
   num get revenue => _revenue.value;
   num get loss => _cost.value;
 
@@ -47,6 +49,14 @@ class SingleOfferStatsViewController {
   Future<void> fetchOfferEarnings() async {
     _earnings.value =
         await get_offer_applied_by_offer(offerId: offerId) ?? <InfEarning>[];
+  }
+
+  Future<double> fetchInfluencerPayouts({required int influencerId}) async {
+    return await get_service_influencer_payouts(
+            serviceId: _serviceProfileController.serviceId,
+            influencerId: influencerId,
+            spType: cm.ServiceProviderType.Restaurant) ??
+        0;
   }
 
   Future<void> recordSale(BuildContext context) async {
@@ -98,6 +108,7 @@ class SingleOfferStatsViewController {
           spType: cm.ServiceProviderType.Restaurant);
       if (res != null) {
         showSavedSnackBar();
+        await fetchInfluencerPayouts(influencerId: infId);
         Navigator.pop(context);
       }
     } on OperationException catch (e, stk) {

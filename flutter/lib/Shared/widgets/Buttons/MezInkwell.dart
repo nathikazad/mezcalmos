@@ -104,6 +104,7 @@ class _MezInkwellState extends State<MezInkwell> {
                     ? SpinKitRing(
                         color: widget.textColor ?? primaryBlueColor,
                         lineWidth: 5,
+                        size: 25,
                       )
                     : Row(
                         mainAxisSize: MainAxisSize.min,

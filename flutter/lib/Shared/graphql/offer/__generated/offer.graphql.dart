@@ -17036,3 +17036,2949 @@ class _CopyWithStubImpl$Mutation$insertInfluencerPayout$insert_service_provider_
   }) =>
       _res;
 }
+
+class Variables$Query$GetServiceInfluencerPayoutsSum {
+  factory Variables$Query$GetServiceInfluencerPayoutsSum({
+    required int serviceId,
+    required int influencerId,
+    required String serviceType,
+  }) =>
+      Variables$Query$GetServiceInfluencerPayoutsSum._({
+        r'serviceId': serviceId,
+        r'influencerId': influencerId,
+        r'serviceType': serviceType,
+      });
+
+  Variables$Query$GetServiceInfluencerPayoutsSum._(this._$data);
+
+  factory Variables$Query$GetServiceInfluencerPayoutsSum.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$serviceId = data['serviceId'];
+    result$data['serviceId'] = (l$serviceId as int);
+    final l$influencerId = data['influencerId'];
+    result$data['influencerId'] = (l$influencerId as int);
+    final l$serviceType = data['serviceType'];
+    result$data['serviceType'] = (l$serviceType as String);
+    return Variables$Query$GetServiceInfluencerPayoutsSum._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get serviceId => (_$data['serviceId'] as int);
+  int get influencerId => (_$data['influencerId'] as int);
+  String get serviceType => (_$data['serviceType'] as String);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$serviceId = serviceId;
+    result$data['serviceId'] = l$serviceId;
+    final l$influencerId = influencerId;
+    result$data['influencerId'] = l$influencerId;
+    final l$serviceType = serviceType;
+    result$data['serviceType'] = l$serviceType;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$GetServiceInfluencerPayoutsSum<
+          Variables$Query$GetServiceInfluencerPayoutsSum>
+      get copyWith => CopyWith$Variables$Query$GetServiceInfluencerPayoutsSum(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$GetServiceInfluencerPayoutsSum) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$serviceId = serviceId;
+    final lOther$serviceId = other.serviceId;
+    if (l$serviceId != lOther$serviceId) {
+      return false;
+    }
+    final l$influencerId = influencerId;
+    final lOther$influencerId = other.influencerId;
+    if (l$influencerId != lOther$influencerId) {
+      return false;
+    }
+    final l$serviceType = serviceType;
+    final lOther$serviceType = other.serviceType;
+    if (l$serviceType != lOther$serviceType) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$serviceId = serviceId;
+    final l$influencerId = influencerId;
+    final l$serviceType = serviceType;
+    return Object.hashAll([
+      l$serviceId,
+      l$influencerId,
+      l$serviceType,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$GetServiceInfluencerPayoutsSum<TRes> {
+  factory CopyWith$Variables$Query$GetServiceInfluencerPayoutsSum(
+    Variables$Query$GetServiceInfluencerPayoutsSum instance,
+    TRes Function(Variables$Query$GetServiceInfluencerPayoutsSum) then,
+  ) = _CopyWithImpl$Variables$Query$GetServiceInfluencerPayoutsSum;
+
+  factory CopyWith$Variables$Query$GetServiceInfluencerPayoutsSum.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Query$GetServiceInfluencerPayoutsSum;
+
+  TRes call({
+    int? serviceId,
+    int? influencerId,
+    String? serviceType,
+  });
+}
+
+class _CopyWithImpl$Variables$Query$GetServiceInfluencerPayoutsSum<TRes>
+    implements CopyWith$Variables$Query$GetServiceInfluencerPayoutsSum<TRes> {
+  _CopyWithImpl$Variables$Query$GetServiceInfluencerPayoutsSum(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$GetServiceInfluencerPayoutsSum _instance;
+
+  final TRes Function(Variables$Query$GetServiceInfluencerPayoutsSum) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? serviceId = _undefined,
+    Object? influencerId = _undefined,
+    Object? serviceType = _undefined,
+  }) =>
+      _then(Variables$Query$GetServiceInfluencerPayoutsSum._({
+        ..._instance._$data,
+        if (serviceId != _undefined && serviceId != null)
+          'serviceId': (serviceId as int),
+        if (influencerId != _undefined && influencerId != null)
+          'influencerId': (influencerId as int),
+        if (serviceType != _undefined && serviceType != null)
+          'serviceType': (serviceType as String),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$GetServiceInfluencerPayoutsSum<TRes>
+    implements CopyWith$Variables$Query$GetServiceInfluencerPayoutsSum<TRes> {
+  _CopyWithStubImpl$Variables$Query$GetServiceInfluencerPayoutsSum(this._res);
+
+  TRes _res;
+
+  call({
+    int? serviceId,
+    int? influencerId,
+    String? serviceType,
+  }) =>
+      _res;
+}
+
+class Query$GetServiceInfluencerPayoutsSum {
+  Query$GetServiceInfluencerPayoutsSum({
+    required this.service_provider_influencer_payouts_aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$GetServiceInfluencerPayoutsSum.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_provider_influencer_payouts_aggregate =
+        json['service_provider_influencer_payouts_aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$GetServiceInfluencerPayoutsSum(
+      service_provider_influencer_payouts_aggregate:
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate
+              .fromJson((l$service_provider_influencer_payouts_aggregate
+                  as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate
+      service_provider_influencer_payouts_aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_influencer_payouts_aggregate =
+        service_provider_influencer_payouts_aggregate;
+    _resultData['service_provider_influencer_payouts_aggregate'] =
+        l$service_provider_influencer_payouts_aggregate.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_influencer_payouts_aggregate =
+        service_provider_influencer_payouts_aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_provider_influencer_payouts_aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$GetServiceInfluencerPayoutsSum) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_influencer_payouts_aggregate =
+        service_provider_influencer_payouts_aggregate;
+    final lOther$service_provider_influencer_payouts_aggregate =
+        other.service_provider_influencer_payouts_aggregate;
+    if (l$service_provider_influencer_payouts_aggregate !=
+        lOther$service_provider_influencer_payouts_aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetServiceInfluencerPayoutsSum
+    on Query$GetServiceInfluencerPayoutsSum {
+  CopyWith$Query$GetServiceInfluencerPayoutsSum<
+          Query$GetServiceInfluencerPayoutsSum>
+      get copyWith => CopyWith$Query$GetServiceInfluencerPayoutsSum(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetServiceInfluencerPayoutsSum<TRes> {
+  factory CopyWith$Query$GetServiceInfluencerPayoutsSum(
+    Query$GetServiceInfluencerPayoutsSum instance,
+    TRes Function(Query$GetServiceInfluencerPayoutsSum) then,
+  ) = _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum;
+
+  factory CopyWith$Query$GetServiceInfluencerPayoutsSum.stub(TRes res) =
+      _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum;
+
+  TRes call({
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate?
+        service_provider_influencer_payouts_aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+      TRes> get service_provider_influencer_payouts_aggregate;
+}
+
+class _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum<TRes>
+    implements CopyWith$Query$GetServiceInfluencerPayoutsSum<TRes> {
+  _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetServiceInfluencerPayoutsSum _instance;
+
+  final TRes Function(Query$GetServiceInfluencerPayoutsSum) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_influencer_payouts_aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$GetServiceInfluencerPayoutsSum(
+        service_provider_influencer_payouts_aggregate:
+            service_provider_influencer_payouts_aggregate == _undefined ||
+                    service_provider_influencer_payouts_aggregate == null
+                ? _instance.service_provider_influencer_payouts_aggregate
+                : (service_provider_influencer_payouts_aggregate
+                    as Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+      TRes> get service_provider_influencer_payouts_aggregate {
+    final local$service_provider_influencer_payouts_aggregate =
+        _instance.service_provider_influencer_payouts_aggregate;
+    return CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate(
+        local$service_provider_influencer_payouts_aggregate,
+        (e) => call(service_provider_influencer_payouts_aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum<TRes>
+    implements CopyWith$Query$GetServiceInfluencerPayoutsSum<TRes> {
+  _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum(this._res);
+
+  TRes _res;
+
+  call({
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate?
+        service_provider_influencer_payouts_aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+          TRes>
+      get service_provider_influencer_payouts_aggregate =>
+          CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate
+              .stub(_res);
+}
+
+const documentNodeQueryGetServiceInfluencerPayoutsSum =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'GetServiceInfluencerPayoutsSum'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'serviceId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'influencerId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'serviceType')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_influencer_payouts_aggregate'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'influencer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'influencerId')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'sp_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'serviceId')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'sp_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'serviceType')),
+                  )
+                ]),
+              ),
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'sum'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'amount'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$GetServiceInfluencerPayoutsSum
+    _parserFn$Query$GetServiceInfluencerPayoutsSum(Map<String, dynamic> data) =>
+        Query$GetServiceInfluencerPayoutsSum.fromJson(data);
+
+class Options$Query$GetServiceInfluencerPayoutsSum
+    extends graphql.QueryOptions<Query$GetServiceInfluencerPayoutsSum> {
+  Options$Query$GetServiceInfluencerPayoutsSum({
+    String? operationName,
+    required Variables$Query$GetServiceInfluencerPayoutsSum variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryGetServiceInfluencerPayoutsSum,
+          parserFn: _parserFn$Query$GetServiceInfluencerPayoutsSum,
+        );
+}
+
+class WatchOptions$Query$GetServiceInfluencerPayoutsSum
+    extends graphql.WatchQueryOptions<Query$GetServiceInfluencerPayoutsSum> {
+  WatchOptions$Query$GetServiceInfluencerPayoutsSum({
+    String? operationName,
+    required Variables$Query$GetServiceInfluencerPayoutsSum variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryGetServiceInfluencerPayoutsSum,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$GetServiceInfluencerPayoutsSum,
+        );
+}
+
+class FetchMoreOptions$Query$GetServiceInfluencerPayoutsSum
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$GetServiceInfluencerPayoutsSum({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$GetServiceInfluencerPayoutsSum variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryGetServiceInfluencerPayoutsSum,
+        );
+}
+
+extension ClientExtension$Query$GetServiceInfluencerPayoutsSum
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$GetServiceInfluencerPayoutsSum>>
+      query$GetServiceInfluencerPayoutsSum(
+              Options$Query$GetServiceInfluencerPayoutsSum options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$GetServiceInfluencerPayoutsSum>
+      watchQuery$GetServiceInfluencerPayoutsSum(
+              WatchOptions$Query$GetServiceInfluencerPayoutsSum options) =>
+          this.watchQuery(options);
+  void writeQuery$GetServiceInfluencerPayoutsSum({
+    required Query$GetServiceInfluencerPayoutsSum data,
+    required Variables$Query$GetServiceInfluencerPayoutsSum variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryGetServiceInfluencerPayoutsSum),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$GetServiceInfluencerPayoutsSum?
+      readQuery$GetServiceInfluencerPayoutsSum({
+    required Variables$Query$GetServiceInfluencerPayoutsSum variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQueryGetServiceInfluencerPayoutsSum),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$GetServiceInfluencerPayoutsSum.fromJson(result);
+  }
+}
+
+class Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate {
+  Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate
+    on Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate {
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate>
+      get copyWith =>
+          CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+    TRes> {
+  factory CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate(
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate
+        instance,
+    TRes Function(
+            Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate;
+
+  factory CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate;
+
+  TRes call({
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate
+      _instance;
+
+  final TRes Function(
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate {
+  Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate({
+    this.sum,
+    required this.$__typename,
+  });
+
+  factory Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$sum = json['sum'];
+    final l$$__typename = json['__typename'];
+    return Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate(
+      sum: l$sum == null
+          ? null
+          : Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum
+              .fromJson((l$sum as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum?
+      sum;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$sum = sum;
+    _resultData['sum'] = l$sum?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$sum = sum;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$sum,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$sum = sum;
+    final lOther$sum = other.sum;
+    if (l$sum != lOther$sum) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate
+    on Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate {
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate(
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate;
+
+  factory CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate;
+
+  TRes call({
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum?
+        sum,
+    String? $__typename,
+  });
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+      TRes> get sum;
+}
+
+class _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? sum = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate(
+        sum: sum == _undefined
+            ? _instance.sum
+            : (sum
+                as Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+      TRes> get sum {
+    final local$sum = _instance.sum;
+    return local$sum == null
+        ? CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum
+            .stub(_then(_instance))
+        : CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum(
+            local$sum, (e) => call(sum: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum?
+        sum,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+          TRes>
+      get sum =>
+          CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum
+              .stub(_res);
+}
+
+class Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum {
+  Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum({
+    this.amount,
+    required this.$__typename,
+  });
+
+  factory Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum.fromJson(
+      Map<String, dynamic> json) {
+    final l$amount = json['amount'];
+    final l$$__typename = json['__typename'];
+    return Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum(
+      amount: l$amount == null ? null : moneyFromJson(l$amount),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? amount;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$amount = amount;
+    _resultData['amount'] = l$amount == null ? null : moneyToJson(l$amount);
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$amount = amount;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$amount,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$amount = amount;
+    final lOther$amount = other.amount;
+    if (l$amount != lOther$amount) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum
+    on Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum {
+  CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum>
+      get copyWith =>
+          CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+    TRes> {
+  factory CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum(
+    Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum
+        instance,
+    TRes Function(
+            Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum)
+        then,
+  ) = _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum;
+
+  factory CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum;
+
+  TRes call({
+    double? amount,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+        TRes>
+    implements
+        CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+            TRes> {
+  _CopyWithImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum
+      _instance;
+
+  final TRes Function(
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? amount = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum(
+        amount: amount == _undefined ? _instance.amount : (amount as double?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+        TRes>
+    implements
+        CopyWith$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum<
+            TRes> {
+  _CopyWithStubImpl$Query$GetServiceInfluencerPayoutsSum$service_provider_influencer_payouts_aggregate$aggregate$sum(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? amount,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$GetInfluencerPayouts {
+  factory Variables$Query$GetInfluencerPayouts({required int influencerId}) =>
+      Variables$Query$GetInfluencerPayouts._({
+        r'influencerId': influencerId,
+      });
+
+  Variables$Query$GetInfluencerPayouts._(this._$data);
+
+  factory Variables$Query$GetInfluencerPayouts.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$influencerId = data['influencerId'];
+    result$data['influencerId'] = (l$influencerId as int);
+    return Variables$Query$GetInfluencerPayouts._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get influencerId => (_$data['influencerId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$influencerId = influencerId;
+    result$data['influencerId'] = l$influencerId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$GetInfluencerPayouts<
+          Variables$Query$GetInfluencerPayouts>
+      get copyWith => CopyWith$Variables$Query$GetInfluencerPayouts(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$GetInfluencerPayouts) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$influencerId = influencerId;
+    final lOther$influencerId = other.influencerId;
+    if (l$influencerId != lOther$influencerId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$influencerId = influencerId;
+    return Object.hashAll([l$influencerId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$GetInfluencerPayouts<TRes> {
+  factory CopyWith$Variables$Query$GetInfluencerPayouts(
+    Variables$Query$GetInfluencerPayouts instance,
+    TRes Function(Variables$Query$GetInfluencerPayouts) then,
+  ) = _CopyWithImpl$Variables$Query$GetInfluencerPayouts;
+
+  factory CopyWith$Variables$Query$GetInfluencerPayouts.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$GetInfluencerPayouts;
+
+  TRes call({int? influencerId});
+}
+
+class _CopyWithImpl$Variables$Query$GetInfluencerPayouts<TRes>
+    implements CopyWith$Variables$Query$GetInfluencerPayouts<TRes> {
+  _CopyWithImpl$Variables$Query$GetInfluencerPayouts(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$GetInfluencerPayouts _instance;
+
+  final TRes Function(Variables$Query$GetInfluencerPayouts) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? influencerId = _undefined}) =>
+      _then(Variables$Query$GetInfluencerPayouts._({
+        ..._instance._$data,
+        if (influencerId != _undefined && influencerId != null)
+          'influencerId': (influencerId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$GetInfluencerPayouts<TRes>
+    implements CopyWith$Variables$Query$GetInfluencerPayouts<TRes> {
+  _CopyWithStubImpl$Variables$Query$GetInfluencerPayouts(this._res);
+
+  TRes _res;
+
+  call({int? influencerId}) => _res;
+}
+
+class Query$GetInfluencerPayouts {
+  Query$GetInfluencerPayouts({
+    required this.service_provider_influencer_payouts,
+    required this.$__typename,
+  });
+
+  factory Query$GetInfluencerPayouts.fromJson(Map<String, dynamic> json) {
+    final l$service_provider_influencer_payouts =
+        json['service_provider_influencer_payouts'];
+    final l$$__typename = json['__typename'];
+    return Query$GetInfluencerPayouts(
+      service_provider_influencer_payouts:
+          (l$service_provider_influencer_payouts as List<dynamic>)
+              .map((e) =>
+                  Query$GetInfluencerPayouts$service_provider_influencer_payouts
+                      .fromJson((e as Map<String, dynamic>)))
+              .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$GetInfluencerPayouts$service_provider_influencer_payouts>
+      service_provider_influencer_payouts;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_provider_influencer_payouts =
+        service_provider_influencer_payouts;
+    _resultData['service_provider_influencer_payouts'] =
+        l$service_provider_influencer_payouts.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_provider_influencer_payouts =
+        service_provider_influencer_payouts;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$service_provider_influencer_payouts.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$GetInfluencerPayouts) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_provider_influencer_payouts =
+        service_provider_influencer_payouts;
+    final lOther$service_provider_influencer_payouts =
+        other.service_provider_influencer_payouts;
+    if (l$service_provider_influencer_payouts.length !=
+        lOther$service_provider_influencer_payouts.length) {
+      return false;
+    }
+    for (int i = 0; i < l$service_provider_influencer_payouts.length; i++) {
+      final l$service_provider_influencer_payouts$entry =
+          l$service_provider_influencer_payouts[i];
+      final lOther$service_provider_influencer_payouts$entry =
+          lOther$service_provider_influencer_payouts[i];
+      if (l$service_provider_influencer_payouts$entry !=
+          lOther$service_provider_influencer_payouts$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetInfluencerPayouts
+    on Query$GetInfluencerPayouts {
+  CopyWith$Query$GetInfluencerPayouts<Query$GetInfluencerPayouts>
+      get copyWith => CopyWith$Query$GetInfluencerPayouts(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetInfluencerPayouts<TRes> {
+  factory CopyWith$Query$GetInfluencerPayouts(
+    Query$GetInfluencerPayouts instance,
+    TRes Function(Query$GetInfluencerPayouts) then,
+  ) = _CopyWithImpl$Query$GetInfluencerPayouts;
+
+  factory CopyWith$Query$GetInfluencerPayouts.stub(TRes res) =
+      _CopyWithStubImpl$Query$GetInfluencerPayouts;
+
+  TRes call({
+    List<Query$GetInfluencerPayouts$service_provider_influencer_payouts>?
+        service_provider_influencer_payouts,
+    String? $__typename,
+  });
+  TRes service_provider_influencer_payouts(
+      Iterable<Query$GetInfluencerPayouts$service_provider_influencer_payouts> Function(
+              Iterable<
+                  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts<
+                      Query$GetInfluencerPayouts$service_provider_influencer_payouts>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$GetInfluencerPayouts<TRes>
+    implements CopyWith$Query$GetInfluencerPayouts<TRes> {
+  _CopyWithImpl$Query$GetInfluencerPayouts(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetInfluencerPayouts _instance;
+
+  final TRes Function(Query$GetInfluencerPayouts) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_provider_influencer_payouts = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$GetInfluencerPayouts(
+        service_provider_influencer_payouts: service_provider_influencer_payouts ==
+                    _undefined ||
+                service_provider_influencer_payouts == null
+            ? _instance.service_provider_influencer_payouts
+            : (service_provider_influencer_payouts as List<
+                Query$GetInfluencerPayouts$service_provider_influencer_payouts>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes service_provider_influencer_payouts(
+          Iterable<Query$GetInfluencerPayouts$service_provider_influencer_payouts> Function(
+                  Iterable<
+                      CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts<
+                          Query$GetInfluencerPayouts$service_provider_influencer_payouts>>)
+              _fn) =>
+      call(
+          service_provider_influencer_payouts: _fn(
+              _instance.service_provider_influencer_payouts.map((e) =>
+                  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$GetInfluencerPayouts<TRes>
+    implements CopyWith$Query$GetInfluencerPayouts<TRes> {
+  _CopyWithStubImpl$Query$GetInfluencerPayouts(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$GetInfluencerPayouts$service_provider_influencer_payouts>?
+        service_provider_influencer_payouts,
+    String? $__typename,
+  }) =>
+      _res;
+  service_provider_influencer_payouts(_fn) => _res;
+}
+
+const documentNodeQueryGetInfluencerPayouts = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'GetInfluencerPayouts'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'influencerId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'service_provider_influencer_payouts'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'order_by'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'date'),
+                value: EnumValueNode(name: NameNode(value: 'desc')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'influencer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'influencerId')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'influencer_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'sp_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'amount'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'sp_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'date'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'influencer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'restaurant'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'phone_number'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$GetInfluencerPayouts _parserFn$Query$GetInfluencerPayouts(
+        Map<String, dynamic> data) =>
+    Query$GetInfluencerPayouts.fromJson(data);
+
+class Options$Query$GetInfluencerPayouts
+    extends graphql.QueryOptions<Query$GetInfluencerPayouts> {
+  Options$Query$GetInfluencerPayouts({
+    String? operationName,
+    required Variables$Query$GetInfluencerPayouts variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryGetInfluencerPayouts,
+          parserFn: _parserFn$Query$GetInfluencerPayouts,
+        );
+}
+
+class WatchOptions$Query$GetInfluencerPayouts
+    extends graphql.WatchQueryOptions<Query$GetInfluencerPayouts> {
+  WatchOptions$Query$GetInfluencerPayouts({
+    String? operationName,
+    required Variables$Query$GetInfluencerPayouts variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryGetInfluencerPayouts,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$GetInfluencerPayouts,
+        );
+}
+
+class FetchMoreOptions$Query$GetInfluencerPayouts
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$GetInfluencerPayouts({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$GetInfluencerPayouts variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryGetInfluencerPayouts,
+        );
+}
+
+extension ClientExtension$Query$GetInfluencerPayouts on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$GetInfluencerPayouts>>
+      query$GetInfluencerPayouts(
+              Options$Query$GetInfluencerPayouts options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$GetInfluencerPayouts>
+      watchQuery$GetInfluencerPayouts(
+              WatchOptions$Query$GetInfluencerPayouts options) =>
+          this.watchQuery(options);
+  void writeQuery$GetInfluencerPayouts({
+    required Query$GetInfluencerPayouts data,
+    required Variables$Query$GetInfluencerPayouts variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryGetInfluencerPayouts),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$GetInfluencerPayouts? readQuery$GetInfluencerPayouts({
+    required Variables$Query$GetInfluencerPayouts variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQueryGetInfluencerPayouts),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$GetInfluencerPayouts.fromJson(result);
+  }
+}
+
+class Query$GetInfluencerPayouts$service_provider_influencer_payouts {
+  Query$GetInfluencerPayouts$service_provider_influencer_payouts({
+    required this.id,
+    required this.influencer_id,
+    required this.sp_id,
+    required this.amount,
+    required this.sp_type,
+    required this.date,
+    this.influencer,
+    this.restaurant,
+    required this.$__typename,
+  });
+
+  factory Query$GetInfluencerPayouts$service_provider_influencer_payouts.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$influencer_id = json['influencer_id'];
+    final l$sp_id = json['sp_id'];
+    final l$amount = json['amount'];
+    final l$sp_type = json['sp_type'];
+    final l$date = json['date'];
+    final l$influencer = json['influencer'];
+    final l$restaurant = json['restaurant'];
+    final l$$__typename = json['__typename'];
+    return Query$GetInfluencerPayouts$service_provider_influencer_payouts(
+      id: (l$id as int),
+      influencer_id: (l$influencer_id as int),
+      sp_id: (l$sp_id as int),
+      amount: moneyFromJson(l$amount),
+      sp_type: (l$sp_type as String),
+      date: (l$date as String),
+      influencer: l$influencer == null
+          ? null
+          : Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer
+              .fromJson((l$influencer as Map<String, dynamic>)),
+      restaurant: l$restaurant == null
+          ? null
+          : Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant
+              .fromJson((l$restaurant as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final int influencer_id;
+
+  final int sp_id;
+
+  final double amount;
+
+  final String sp_type;
+
+  final String date;
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer?
+      influencer;
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant?
+      restaurant;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$influencer_id = influencer_id;
+    _resultData['influencer_id'] = l$influencer_id;
+    final l$sp_id = sp_id;
+    _resultData['sp_id'] = l$sp_id;
+    final l$amount = amount;
+    _resultData['amount'] = moneyToJson(l$amount);
+    final l$sp_type = sp_type;
+    _resultData['sp_type'] = l$sp_type;
+    final l$date = date;
+    _resultData['date'] = l$date;
+    final l$influencer = influencer;
+    _resultData['influencer'] = l$influencer?.toJson();
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$influencer_id = influencer_id;
+    final l$sp_id = sp_id;
+    final l$amount = amount;
+    final l$sp_type = sp_type;
+    final l$date = date;
+    final l$influencer = influencer;
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$influencer_id,
+      l$sp_id,
+      l$amount,
+      l$sp_type,
+      l$date,
+      l$influencer,
+      l$restaurant,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetInfluencerPayouts$service_provider_influencer_payouts) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$influencer_id = influencer_id;
+    final lOther$influencer_id = other.influencer_id;
+    if (l$influencer_id != lOther$influencer_id) {
+      return false;
+    }
+    final l$sp_id = sp_id;
+    final lOther$sp_id = other.sp_id;
+    if (l$sp_id != lOther$sp_id) {
+      return false;
+    }
+    final l$amount = amount;
+    final lOther$amount = other.amount;
+    if (l$amount != lOther$amount) {
+      return false;
+    }
+    final l$sp_type = sp_type;
+    final lOther$sp_type = other.sp_type;
+    if (l$sp_type != lOther$sp_type) {
+      return false;
+    }
+    final l$date = date;
+    final lOther$date = other.date;
+    if (l$date != lOther$date) {
+      return false;
+    }
+    final l$influencer = influencer;
+    final lOther$influencer = other.influencer;
+    if (l$influencer != lOther$influencer) {
+      return false;
+    }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant != lOther$restaurant) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetInfluencerPayouts$service_provider_influencer_payouts
+    on Query$GetInfluencerPayouts$service_provider_influencer_payouts {
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts<
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts>
+      get copyWith =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts<
+    TRes> {
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts(
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts instance,
+    TRes Function(
+            Query$GetInfluencerPayouts$service_provider_influencer_payouts)
+        then,
+  ) = _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts;
+
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts;
+
+  TRes call({
+    int? id,
+    int? influencer_id,
+    int? sp_id,
+    double? amount,
+    String? sp_type,
+    String? date,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer?
+        influencer,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant?
+        restaurant,
+    String? $__typename,
+  });
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+      TRes> get influencer;
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+      TRes> get restaurant;
+}
+
+class _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts<
+            TRes> {
+  _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts
+      _instance;
+
+  final TRes Function(
+      Query$GetInfluencerPayouts$service_provider_influencer_payouts) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? influencer_id = _undefined,
+    Object? sp_id = _undefined,
+    Object? amount = _undefined,
+    Object? sp_type = _undefined,
+    Object? date = _undefined,
+    Object? influencer = _undefined,
+    Object? restaurant = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$GetInfluencerPayouts$service_provider_influencer_payouts(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        influencer_id: influencer_id == _undefined || influencer_id == null
+            ? _instance.influencer_id
+            : (influencer_id as int),
+        sp_id: sp_id == _undefined || sp_id == null
+            ? _instance.sp_id
+            : (sp_id as int),
+        amount: amount == _undefined || amount == null
+            ? _instance.amount
+            : (amount as double),
+        sp_type: sp_type == _undefined || sp_type == null
+            ? _instance.sp_type
+            : (sp_type as String),
+        date: date == _undefined || date == null
+            ? _instance.date
+            : (date as String),
+        influencer: influencer == _undefined
+            ? _instance.influencer
+            : (influencer
+                as Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer?),
+        restaurant: restaurant == _undefined
+            ? _instance.restaurant
+            : (restaurant
+                as Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+      TRes> get influencer {
+    final local$influencer = _instance.influencer;
+    return local$influencer == null
+        ? CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer
+            .stub(_then(_instance))
+        : CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer(
+            local$influencer, (e) => call(influencer: e));
+  }
+
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+      TRes> get restaurant {
+    final local$restaurant = _instance.restaurant;
+    return local$restaurant == null
+        ? CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant
+            .stub(_then(_instance))
+        : CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant(
+            local$restaurant, (e) => call(restaurant: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts<
+            TRes> {
+  _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    int? influencer_id,
+    int? sp_id,
+    double? amount,
+    String? sp_type,
+    String? date,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer?
+        influencer,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant?
+        restaurant,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+          TRes>
+      get influencer =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer
+              .stub(_res);
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+          TRes>
+      get restaurant =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant
+              .stub(_res);
+}
+
+class Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer {
+  Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer({
+    required this.id,
+    this.user,
+    required this.$__typename,
+  });
+
+  factory Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer(
+      id: (l$id as int),
+      user: l$user == null
+          ? null
+          : Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user
+              .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user?
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$user = user;
+    _resultData['user'] = l$user?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer
+    on Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer {
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer>
+      get copyWith =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+    TRes> {
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer(
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer
+        instance,
+    TRes Function(
+            Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer)
+        then,
+  ) = _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer;
+
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer;
+
+  TRes call({
+    int? id,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user?
+        user,
+    String? $__typename,
+  });
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+            TRes> {
+  _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer
+      _instance;
+
+  final TRes Function(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        user: user == _undefined
+            ? _instance.user
+            : (user
+                as Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return local$user == null
+        ? CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user
+            .stub(_then(_instance))
+        : CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user(
+            local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer<
+            TRes> {
+  _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user?
+        user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+          TRes>
+      get user =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user
+              .stub(_res);
+}
+
+class Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user {
+  Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user({
+    required this.id,
+    this.phone,
+    this.image,
+    this.name,
+    required this.$__typename,
+  });
+
+  factory Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$phone = json['phone'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user(
+      id: (l$id as int),
+      phone: (l$phone as String?),
+      image: (l$image as String?),
+      name: (l$name as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? phone;
+
+  final String? image;
+
+  final String? name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$phone = phone;
+    _resultData['phone'] = l$phone;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$phone = phone;
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$phone,
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$phone = phone;
+    final lOther$phone = other.phone;
+    if (l$phone != lOther$phone) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user
+    on Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user {
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user>
+      get copyWith =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+    TRes> {
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user(
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user
+        instance,
+    TRes Function(
+            Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user)
+        then,
+  ) = _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user;
+
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user;
+
+  TRes call({
+    int? id,
+    String? phone,
+    String? image,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+            TRes> {
+  _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user
+      _instance;
+
+  final TRes Function(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? phone = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        phone: phone == _undefined ? _instance.phone : (phone as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        name: name == _undefined ? _instance.name : (name as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user<
+            TRes> {
+  _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$influencer$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? phone,
+    String? image,
+    String? name,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant {
+  Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant({
+    required this.id,
+    this.details,
+    required this.$__typename,
+  });
+
+  factory Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$details = json['details'];
+    final l$$__typename = json['__typename'];
+    return Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant(
+      id: (l$id as int),
+      details: l$details == null
+          ? null
+          : Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details?
+      details;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$details = details;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$details,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant
+    on Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant {
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant>
+      get copyWith =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+    TRes> {
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant(
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant
+        instance,
+    TRes Function(
+            Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant)
+        then,
+  ) = _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant;
+
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant;
+
+  TRes call({
+    int? id,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details?
+        details,
+    String? $__typename,
+  });
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+      TRes> get details;
+}
+
+class _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+            TRes> {
+  _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant
+      _instance;
+
+  final TRes Function(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details
+            .stub(_then(_instance))
+        : CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant<
+            TRes> {
+  _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details?
+        details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+          TRes>
+      get details =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details
+              .stub(_res);
+}
+
+class Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details {
+  Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details({
+    required this.image,
+    required this.name,
+    this.phone_number,
+    required this.location,
+    required this.$__typename,
+  });
+
+  factory Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$phone_number = json['phone_number'];
+    final l$location = json['location'];
+    final l$$__typename = json['__typename'];
+    return Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details(
+      image: (l$image as String),
+      name: (l$name as String),
+      phone_number: (l$phone_number as String?),
+      location:
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String image;
+
+  final String name;
+
+  final String? phone_number;
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location
+      location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$phone_number = phone_number;
+    _resultData['phone_number'] = l$phone_number;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$image = image;
+    final l$name = name;
+    final l$phone_number = phone_number;
+    final l$location = location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$image,
+      l$name,
+      l$phone_number,
+      l$location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$phone_number = phone_number;
+    final lOther$phone_number = other.phone_number;
+    if (l$phone_number != lOther$phone_number) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details
+    on Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details {
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details>
+      get copyWith =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+    TRes> {
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details(
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details
+        instance,
+    TRes Function(
+            Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details)
+        then,
+  ) = _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details;
+
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details;
+
+  TRes call({
+    String? image,
+    String? name,
+    String? phone_number,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location?
+        location,
+    String? $__typename,
+  });
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+      TRes> get location;
+}
+
+class _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+            TRes> {
+  _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details
+      _instance;
+
+  final TRes Function(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? phone_number = _undefined,
+    Object? location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details(
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        phone_number: phone_number == _undefined
+            ? _instance.phone_number
+            : (phone_number as String?),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location(
+        local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details<
+            TRes> {
+  _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? image,
+    String? name,
+    String? phone_number,
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location
+              .stub(_res);
+}
+
+class Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location {
+  Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location
+    on Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location {
+  CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location>
+      get copyWith =>
+          CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+    TRes> {
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location(
+    Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location
+        instance,
+    TRes Function(
+            Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location)
+        then,
+  ) = _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location;
+
+  factory CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+            TRes> {
+  _CopyWithImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location
+      _instance;
+
+  final TRes Function(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+        TRes>
+    implements
+        CopyWith$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_payouts$restaurant$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}

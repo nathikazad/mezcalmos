@@ -122,62 +122,99 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
         backgroundColor: secondaryLightBlueColor,
         textColor: primaryBlueColor,
         onClick: () async {
-          showMezSheet(
-              context: context,
-              showCancel: true,
-              title: "Record ${item.key.name} payout",
-              content: Column(
-                children: <Widget>[
-                  Text("Amount"),
-                  smallSepartor,
-                  TextFormField(
-                    controller: viewController.infPayoutAmmount,
-                    validator: (String? v) {
-                      if (v == null || num.tryParse(v) == null) {
-                        return "required valid number";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(suffixText: "\$"),
-                  ),
-                  meduimSeperator,
-                  MezButton(
-                    label: "Record Payout",
-                    onClick: () async {
-                      await viewController.recordInfPayout(
-                          infId: item.key.hasuraId, context: context);
-                    },
-                  )
-                ],
-              ));
+          final double? paid = await viewController.fetchInfluencerPayouts(
+              influencerId: item.key.hasuraId);
+          if (paid != null) {
+            final double max = item.value - paid;
+            showMezSheet(
+                context: context,
+                showCancel: true,
+                title: "Record ${item.key.name} payout",
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Amount"),
+                    smallSepartor,
+                    TextFormField(
+                      controller: viewController.infPayoutAmmount,
+                      validator: (String? v) {
+                        if (v == null || num.tryParse(v) == null) {
+                          return "required valid number";
+                        } else if (num.parse(v) > max) {
+                          return "Max : $max";
+                        }
+                        return null;
+                      },
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      decoration: InputDecoration(
+                          suffixText: "\$",
+                          helperText: "Max : ${max.toPriceString()} "),
+                    ),
+                    meduimSeperator,
+                    if (max > 0)
+                      MezButton(
+                        label: "Record Payout",
+                        onClick: () async {
+                          final double? amount = double.tryParse(
+                              viewController.infPayoutAmmount.text);
+                          if (amount != null && amount < max) {
+                            await viewController.recordInfPayout(
+                                infId: item.key.hasuraId, context: context);
+                            setState(() {});
+                          } else {
+                            showErrorSnackBar(
+                                errorText: "Please enter a correct amount");
+                          }
+                        },
+                      ),
+                  ],
+                ));
+          }
         },
       ),
-      footer: IntrinsicHeight(
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              fit: FlexFit.tight,
-              child: Text("Total :" + item.value.toPriceString(),
-                  style: context.textTheme.bodyLarge),
-            ),
-            VerticalDivider(),
-            Flexible(
-              child: Text(
-                "Paid :" + item.value.toPriceString(),
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(color: primaryBlueColor),
+      footer: FutureBuilder<double?>(
+        future: viewController.fetchInfluencerPayouts(
+            influencerId: item.key.hasuraId),
+        builder: (BuildContext context, AsyncSnapshot<double?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while waiting for the Future to complete
+            return LinearProgressIndicator();
+          } else if (snapshot.hasError) {
+            // Show an error message if the Future fails
+            return Text('Error: ${snapshot.error}');
+          } else {
+            // Show the result in a Text widget
+            final double paid = snapshot.data ?? 0;
+            return IntrinsicHeight(
+              child: Row(
+                children: <Widget>[
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Text("Total: " + item.value.toPriceString(),
+                        style: context.textTheme.bodyLarge),
+                  ),
+                  VerticalDivider(),
+                  Flexible(
+                    child: Text(
+                      "Paid: " + paid.toPriceString(hideZero: false),
+                      style: context.textTheme.bodyLarge
+                          ?.copyWith(color: primaryBlueColor),
+                    ),
+                  ),
+                  VerticalDivider(),
+                  Flexible(
+                    child: Text(
+                      "Unpaid: " + (item.value - paid).toPriceString(),
+                      style: context.textTheme.bodyLarge
+                          ?.copyWith(color: redAccentColor),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            VerticalDivider(),
-            Flexible(
-              child: Text(
-                "Unpaid :" + item.value.toPriceString(),
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(color: redAccentColor),
-              ),
-            ),
-          ],
-        ),
+            );
+          }
+        },
       ),
     );
   }

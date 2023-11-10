@@ -617,3 +617,62 @@ Future<int?> insert_influencer_payout(
   }
   return res.parsedData?.insert_service_provider_influencer_payouts_one?.id;
 }
+
+Future<double?> get_service_influencer_payouts(
+    {required int serviceId,
+    required int influencerId,
+    required cModels.ServiceProviderType spType}) async {
+  final QueryResult<Query$GetServiceInfluencerPayoutsSum> res =
+      await _db.graphQLClient.query$GetServiceInfluencerPayoutsSum(
+          Options$Query$GetServiceInfluencerPayoutsSum(
+              fetchPolicy: FetchPolicy.noCache,
+              variables: Variables$Query$GetServiceInfluencerPayoutsSum(
+                  serviceId: serviceId,
+                  influencerId: influencerId,
+                  serviceType: spType.toFirebaseFormatString())));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  return res.parsedData?.service_provider_influencer_payouts_aggregate.aggregate
+      ?.sum?.amount
+      ?.toDouble();
+}
+
+Future<List<InfPayout>?> get_influencer_payouts(
+    {required int influencerId,
+    required cModels.ServiceProviderType spType}) async {
+  final QueryResult<Query$GetInfluencerPayouts> res = await _db.graphQLClient
+      .query$GetInfluencerPayouts(Options$Query$GetInfluencerPayouts(
+          fetchPolicy: FetchPolicy.noCache,
+          variables: Variables$Query$GetInfluencerPayouts(
+              influencerId: influencerId)));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  return res.parsedData?.service_provider_influencer_payouts
+      .map<InfPayout>(
+          (Query$GetInfluencerPayouts$service_provider_influencer_payouts e) =>
+              InfPayout(
+                  id: e.id,
+                  influencerId: e.influencer_id,
+                  influencerInfo: UserInfo(
+                      hasuraId: e.influencer!.user!.id,
+                      name: e.influencer!.user!.name,
+                      phoneNumber: e.influencer!.user!.phone,
+                      image: e.influencer!.user!.image,
+                      firebaseId: "",
+                      language: cModels.Language.EN),
+                  serviceProviderId: e.sp_id,
+                  serviceProviderType: e.sp_type.toServiceProviderType(),
+                  serviceInfo: ServiceInfo(
+                      hasuraId: e.restaurant!.id,
+                      name: e.restaurant!.details!.name,
+                      phoneNumber: e.restaurant!.details!.phone_number,
+                      image: e.restaurant!.details!.image,
+                      firebaseId: "",
+                      location: MezLocation.fromHasura(
+                          e.restaurant!.details!.location.gps,
+                          e.restaurant!.details!.location.address)),
+                  date: DateTime.parse(e.date)))
+      .toList();
+}

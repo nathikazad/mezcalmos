@@ -345,3 +345,65 @@ mutation insertInfluencerPayout(
     sp_type
   }
 }
+query GetServiceInfluencerPayoutsSum(
+  $serviceId: Int!
+  $influencerId: Int!
+  $serviceType: String!
+) {
+  service_provider_influencer_payouts_aggregate(
+    where: {
+      influencer_id: { _eq: $influencerId }
+      sp_id: { _eq: $serviceId }
+      sp_type: { _eq: $serviceType }
+    }
+  ) {
+    aggregate {
+      sum {
+        amount
+      }
+    }
+    # nodes {
+    #   amount
+    #   date
+    #   id
+    #   influencer_id
+    #   sp_id
+    #   sp_type
+    # }
+  }
+}
+query GetInfluencerPayouts($influencerId: Int!) {
+  service_provider_influencer_payouts(
+    order_by: { date: desc }
+    where: { influencer_id: { _eq: $influencerId } }
+  ) {
+    id
+    influencer_id
+    sp_id
+    amount
+    sp_type
+    date
+    influencer {
+      id
+      user {
+        id
+        phone
+        image
+        name
+      }
+    }
+
+    restaurant {
+      id
+      details {
+        image
+        name
+        phone_number
+        location {
+          gps
+          address
+        }
+      }
+    }
+  }
+}

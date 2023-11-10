@@ -27,3 +27,44 @@ class InfEarning {
   String get description =>
       "${customerInfo?.name} bought for ${orderTotal.toPriceString()} from ${serviceInfo.name} your commission is ${comission.toPriceString()}.";
 }
+
+class InfPayout {
+  int id;
+  user.UserInfo influencerInfo;
+  int serviceProviderId;
+  int influencerId;
+  ServiceProviderType serviceProviderType;
+  user.ServiceInfo serviceInfo;
+  DateTime date;
+  InfPayout({
+    required this.id,
+    required this.influencerInfo,
+    required this.influencerId,
+    required this.serviceProviderId,
+    required this.serviceProviderType,
+    required this.serviceInfo,
+    required this.date,
+  });
+
+  @override
+  bool operator ==(covariant InfPayout other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.influencerInfo == influencerInfo &&
+        other.serviceProviderId == serviceProviderId &&
+        other.serviceProviderType == serviceProviderType &&
+        other.serviceInfo == serviceInfo &&
+        other.date == date;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        influencerInfo.hashCode ^
+        serviceProviderId.hashCode ^
+        serviceProviderType.hashCode ^
+        serviceInfo.hashCode ^
+        date.hashCode;
+  }
+}
