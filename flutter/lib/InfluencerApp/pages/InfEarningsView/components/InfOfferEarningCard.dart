@@ -37,6 +37,7 @@ class InfOfferEarningCard extends StatelessWidget {
                     ),
                     hSmallSepartor,
                     Flexible(
+                      fit: FlexFit.tight,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +59,7 @@ class InfOfferEarningCard extends StatelessWidget {
                                   ),
                                   WidgetSpan(child: hTinySepartor),
                                   TextSpan(
-                                      text: earning.serviceInfo?.name ?? ""),
+                                      text: earning.serviceInfo.name ?? ""),
                                 ])),
                         ],
                       ),
@@ -68,7 +69,7 @@ class InfOfferEarningCard extends StatelessWidget {
                       CircleAvatar(
                         radius: 18,
                         backgroundImage: CachedNetworkImageProvider(
-                            earning.influencerInfo.image!),
+                            earning.influencerInfo.image),
                       ),
                       Flexible(
                         fit: FlexFit.tight,
@@ -77,7 +78,7 @@ class InfOfferEarningCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              earning.influencerInfo.name!,
+                              earning.influencerInfo.name,
                               style: context.textTheme.bodyLarge
                                   ?.copyWith(fontSize: 11.mezSp),
                             ),
@@ -93,7 +94,7 @@ class InfOfferEarningCard extends StatelessWidget {
                                     ),
                                     WidgetSpan(child: hTinySepartor),
                                     TextSpan(
-                                        text: earning.serviceInfo?.name ?? ""),
+                                        text: earning.serviceInfo.name ?? ""),
                                   ])),
                           ],
                         ),

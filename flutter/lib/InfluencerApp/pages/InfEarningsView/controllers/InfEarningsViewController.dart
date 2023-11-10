@@ -1,7 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/InfluencerApp/controllers/influencerAuthController.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cm;
 import 'package:mezcalmos/Shared/graphql/influencer/hsInfluencer.dart';
+import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -42,6 +44,14 @@ class InfEarningsViewController {
     } finally {
       _isFetching.value = false;
     }
+  }
+
+  Future<double> fetchInfluencerPayouts({required int serviceId}) async {
+    return await get_service_influencer_payouts(
+            serviceId: serviceId,
+            influencerId: influencerId,
+            spType: cm.ServiceProviderType.Restaurant) ??
+        0;
   }
 
   Map<ServiceInfo, List<InfEarning>> get groupedByRestaurant {

@@ -258,13 +258,15 @@ Future<List<InfEarning>?> get_inf_earnings({required int influencerId}) async {
                       rewardValue: double.parse(e
                           .offer.influencer_details["rewardValue"]
                           .toString())),
-                  customerInfo: UserInfo(
-                      id: e.restaurant_order!.customer.user.id,
-                      name: e.restaurant_order!.customer.user.name,
-                      phoneNumber: e.restaurant_order!.customer.user.phone,
-                      image: e.restaurant_order!.customer.user.image,
-                      firebaseId: "",
-                      language: Language.EN),
+                  customerInfo: e.restaurant_order != null
+                      ? UserInfo(
+                          id: e.restaurant_order!.customer.user.id,
+                          name: e.restaurant_order!.customer.user.name,
+                          phoneNumber: e.restaurant_order!.customer.user.phone,
+                          image: e.restaurant_order!.customer.user.image,
+                          firebaseId: "",
+                          language: Language.EN)
+                      : null,
                   influencerInfo: user.UserInfo(
                       hasuraId: e.influencer!.user!.id,
                       name: e.influencer!.user!.name,

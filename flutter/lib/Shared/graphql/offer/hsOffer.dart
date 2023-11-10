@@ -638,9 +638,9 @@ Future<double?> get_service_influencer_payouts(
       ?.toDouble();
 }
 
-Future<List<InfPayout>?> get_influencer_payouts(
-    {required int influencerId,
-    required cModels.ServiceProviderType spType}) async {
+Future<List<InfPayout>?> get_influencer_payouts({
+  required int influencerId,
+}) async {
   final QueryResult<Query$GetInfluencerPayouts> res = await _db.graphQLClient
       .query$GetInfluencerPayouts(Options$Query$GetInfluencerPayouts(
           fetchPolicy: FetchPolicy.noCache,

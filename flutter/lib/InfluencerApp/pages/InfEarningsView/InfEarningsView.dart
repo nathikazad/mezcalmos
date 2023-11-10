@@ -123,44 +123,85 @@ class _InfEarningsViewState extends State<InfEarningsView> {
                 final MapEntry<ServiceInfo, List<InfEarning>> data =
                     viewController.groupedByRestaurant.entries.toList()[index];
                 return MezCard(
-                    firstAvatarBgImage:
-                        CachedNetworkImageProvider(data.key.image),
-                    action: Row(
-                      children: <Widget>[
-                        MezIconButton(
-                            backgroundColor: Colors.green.shade100,
-                            iconColor: Colors.green,
-                            onTap: () async {
-                              await viewController.callWhatsapp(
-                                  phone: data.key.phoneNumber);
-                            },
-                            icon: Ionicons.logo_whatsapp),
-                        hMeduimSeperator,
-                        MezIconButton(
-                            onTap: () async {
-                              await viewController.openGmaps(data.key.location);
-                            },
-                            icon: Ionicons.map),
-                      ],
-                    ),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          data.key.name,
-                          style: context.textTheme.bodyLarge,
-                        ),
-                        Text(
-                          data.value
-                              .fold(
-                                  0,
-                                  (num sum, InfEarning infEarning) =>
-                                      sum + infEarning.comission)
-                              .toPriceString(),
-                          style: context.textTheme.bodyLarge,
-                        ),
-                      ],
-                    ));
+                  firstAvatarBgImage:
+                      CachedNetworkImageProvider(data.key.image),
+                  action: Row(
+                    children: <Widget>[
+                      MezIconButton(
+                          backgroundColor: Colors.green.shade100,
+                          iconColor: Colors.green,
+                          onTap: () async {
+                            await viewController.callWhatsapp(
+                                phone: data.key.phoneNumber);
+                          },
+                          icon: Ionicons.logo_whatsapp),
+                      hMeduimSeperator,
+                      MezIconButton(
+                          onTap: () async {
+                            await viewController.openGmaps(data.key.location);
+                          },
+                          icon: Ionicons.map),
+                    ],
+                  ),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        data.key.name,
+                        style: context.textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
+                  footer: FutureBuilder<double?>(
+                    future: viewController.fetchInfluencerPayouts(
+                        serviceId: data.key.hasuraId),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<double?> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Show a loading indicator while waiting for the Future to complete
+                        return LinearProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        // Show an error message if the Future fails
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        // Show the result in a Text widget
+                        final double paid = snapshot.data ?? 0;
+                        final num total = data.value.fold(
+                            0,
+                            (num sum, InfEarning infEarning) =>
+                                sum + infEarning.comission);
+                        return IntrinsicHeight(
+                          child: Row(
+                            children: <Widget>[
+                              Flexible(
+                                fit: FlexFit.tight,
+                                child: Text("Total : " + total.toPriceString(),
+                                    style: context.textTheme.bodyLarge),
+                              ),
+                              VerticalDivider(),
+                              Flexible(
+                                child: Text(
+                                  "Paid: " +
+                                      paid.toPriceString(hideZero: false),
+                                  style: context.textTheme.bodyLarge
+                                      ?.copyWith(color: primaryBlueColor),
+                                ),
+                              ),
+                              VerticalDivider(),
+                              Flexible(
+                                child: Text(
+                                  "Unpaid: " + (total - paid).toPriceString(),
+                                  style: context.textTheme.bodyLarge
+                                      ?.copyWith(color: redAccentColor),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                );
               }),
             );
           }),
