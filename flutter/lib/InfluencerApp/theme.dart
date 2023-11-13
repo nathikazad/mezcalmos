@@ -108,12 +108,15 @@ class InfluencerAppTheme {
         ),
       ),
       chipTheme: ChipThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        backgroundColor: secondaryLightBlueColor,
-        showCheckmark: false,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(22),
+            side: BorderSide(width: 1, color: secondaryLightBlueColor)),
+        backgroundColor: Colors.white,
+        showCheckmark: true,
+        checkmarkColor: primaryBlueColor,
         disabledColor: Colors.grey,
-        selectedColor: Colors.white,
-        padding: EdgeInsets.all(5),
+        selectedColor: secondaryLightBlueColor,
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
         labelStyle: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,

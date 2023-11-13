@@ -4516,9 +4516,16 @@
         "refOrders": "Órdenes de referidos",
         "outstanding": "Pendiente",
         "earnings": "Ganancias",
+        "payments": "Pagos",
+        "paidYou": "Te pagó",
+        "paid": "Pagada",
+        "unpaid": "Pendiente",
+        "total": "Total",
         "totalEarnings": "Ganancias Totales",
         "noEranings": "Todavía no hay ganancias",
-        "noEarningsSubtitle": "Una vez que su referencia realizó una compra, se le notificará y sus ganancias aumentarán."
+        "noEarningsSubtitle": "Una vez que su referencia realizó una compra, se le notificará y sus ganancias aumentarán.",
+        "noPayouts": "Todavía no hay pagos",
+        "noPayoutsSubtitle": "Una vez que reciba un pago, se le notificará"
       }
     }
   },

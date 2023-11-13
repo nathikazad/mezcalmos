@@ -654,6 +654,7 @@ Future<List<InfPayout>?> get_influencer_payouts({
           (Query$GetInfluencerPayouts$service_provider_influencer_payouts e) =>
               InfPayout(
                   id: e.id,
+                  amount: e.amount,
                   influencerId: e.influencer_id,
                   influencerInfo: UserInfo(
                       hasuraId: e.influencer!.user!.id,

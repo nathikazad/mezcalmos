@@ -36,6 +36,7 @@ class InfPayout {
   ServiceProviderType serviceProviderType;
   user.ServiceInfo serviceInfo;
   DateTime date;
+  num amount;
   InfPayout({
     required this.id,
     required this.influencerInfo,
@@ -44,6 +45,7 @@ class InfPayout {
     required this.serviceProviderType,
     required this.serviceInfo,
     required this.date,
+    required this.amount,
   });
 
   @override

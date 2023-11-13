@@ -4484,10 +4484,17 @@
       "InfEarningsView": {
         "refOrders": "Referral’s orders",
         "outstanding": "Outstanding",
+        "payments": "Payments",
         "earnings": "Earnings",
         "totalEarnings": "Total earnings",
         "noEranings": "No earnings yet",
-        "noEarningsSubtitle": "Once your referral made a purchase, you’ll be notified and your earnings will increase."
+        "paidYou": "Paid you",
+        "paid": "Paid",
+        "unpaid": "Pending",
+        "total": "Total",
+        "noEarningsSubtitle": "Once your referral made a purchase, you’ll be notified and your earnings will increase.",
+        "noPayouts": "No payouts yet",
+        "noPayoutsSubtitle": "Once you got a payment, you’ll be notified"
       }
     }
   },

@@ -18,6 +18,13 @@ class InfEarningsViewController {
   RxNum _totalEranings = RxNum(0);
   // RxNum _totalDiscounts = RxNum(0);
   RxList<InfEarning> earnings = RxList<InfEarning>.empty();
+  RxList<InfPayout> payouts = RxList<InfPayout>.empty();
+  Rx<OrdersPaymentsView> _ordersPaymentView =
+      Rx<OrdersPaymentsView>(OrdersPaymentsView.Orders);
+  bool get isOrdersView =>
+      _ordersPaymentView.value == OrdersPaymentsView.Orders;
+  bool get isPaymentsView =>
+      _ordersPaymentView.value == OrdersPaymentsView.Payments;
   num get totalEarnings => _totalEranings.value;
 //  num get totalDiscounts => _totalDiscounts.value;
   int get influencerId => _authController.influencer!.id.toInt();
@@ -37,6 +44,9 @@ class InfEarningsViewController {
       //     0;
       earnings.value =
           await get_inf_earnings(influencerId: influencerId) ?? <InfEarning>[];
+      payouts.value =
+          await get_influencer_payouts(influencerId: influencerId) ??
+              <InfPayout>[];
     } catch (e, stk) {
       showErrorSnackBar();
       mezDbgPrint(e);
@@ -75,4 +85,10 @@ class InfEarningsViewController {
       await callWhatsappNumber(phone);
     }
   }
+
+  void switchOrdersPayments(OrdersPaymentsView view) {
+    _ordersPaymentView.value = view;
+  }
 }
+
+enum OrdersPaymentsView { Orders, Payments }
