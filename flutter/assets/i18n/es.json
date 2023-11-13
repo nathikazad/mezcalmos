@@ -2514,6 +2514,30 @@
       }
     },
     "pages": {
+      "SingleOfferStatsView": {
+        "transactions": "Transacciones",
+        "payouts": "Pagos",
+        "infPayouts": "Pagos de Influencers",
+        "recordSaleButton": "Registrar Venta de Influencer",
+        "orderTotal": "Total del pedido (después del descuento)",
+        "discount": "Descuento",
+        "infCommission": "Comisión de Influencer",
+        "infCode": "Código de Influencer",
+        "recordSale": "Registrar venta",
+        "infoMessage": "Costo se refiere a la cantidad de dinero perdida como resultado de descuentos.",
+        "totalUsages": "Número total de usos",
+        "revenue": "Ingresos",
+        "cost": "Costo",
+        "paid": "Pagado",
+        "youPaid": "Tu pagaste",
+        "unpaid": "Pendiente",
+        "total": "Total",
+        "backButtonTitle": "Oferta",
+        "recordPayout": "Registrar Pago",
+        "amount": "Monto",
+        "maxAmount": "Máx",
+        "recordPayoutTitle": "Registrar {infName} pago"
+      },
       "ServiceOfferView": {
         "activeOffers": "Ofertas activas",
         "inactiveOffers": "Ofertas inactivas",
@@ -3017,6 +3041,14 @@
       }
     },
     "widgets": {
+      "InfOfferEarningCard": {
+        "localCustomer": "Cliente local",
+        "customerLabel": "Cliente",
+        "influencerLabel": "Influencer",
+        "discountLabel": "Descuento",
+        "orderTotalLabel": "Total del pedido",
+        "commissionLabel": "Comisión"
+      },
       "OrderMapWidget": {
         "mapWebText": "Instale la aplicación Mezcalmos para obtener el seguimiento del mapa del pedido de tiempo en vivo"
       },

@@ -2465,6 +2465,30 @@
       }
     },
     "pages": {
+      "SingleOfferStatsView": {
+        "transactions": "Transactions",
+        "payouts": "Payouts",
+        "infPayouts": "Influencer Payouts",
+        "recordSaleButton": "Record Influencer Sale",
+        "orderTotal": "Order total (after discount)",
+        "discount": "Discount",
+        "infCommission": "Influencer commission",
+        "infCode": "Influencer code",
+        "recordSale": "Record sale",
+        "infoMessage": "Cost refers to the amount of money lost as a result of discounts.",
+        "totalUsages": "Total number of usages",
+        "revenue": "Revenue",
+        "cost": "Cost",
+        "paid": "Paid",
+        "unpaid": "Unpaid",
+        "youPaid": "You paid",
+        "total": "Total",
+        "backButtonTitle": "Offer",
+        "recordPayout": "Record Payout",
+        "amount": "Amount",
+        "maxAmount": "Max",
+        "recordPayoutTitle": "Record {infName} payout"
+      },
       "ServiceOfferView": {
         "activeOffers": "Active offers",
         "inactiveOffers": "Inactive offers",
@@ -2965,6 +2989,14 @@
       }
     },
     "widgets": {
+      "InfOfferEarningCard": {
+        "localCustomer": "Local customer",
+        "customerLabel": "Customer",
+        "influencerLabel": "Influencer",
+        "discountLabel": "Discount",
+        "orderTotalLabel": "Order Total",
+        "commissionLabel": "Commission"
+      },
       "OrderMapWidget": {
         "mapWebText": "Install Mezcalmos application to get live time order map tracking"
       },

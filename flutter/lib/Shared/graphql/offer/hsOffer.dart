@@ -677,3 +677,47 @@ Future<List<InfPayout>?> get_influencer_payouts({
                   date: DateTime.parse(e.date)))
       .toList();
 }
+
+Future<List<InfPayout>?> get_all_service_influencer_payouts(
+    {required int serviceId,
+    required cModels.ServiceProviderType spType}) async {
+  final QueryResult<Query$GetAllServiceInfluencerPayouts> res =
+      await _db.graphQLClient.query$GetAllServiceInfluencerPayouts(
+          Options$Query$GetAllServiceInfluencerPayouts(
+              fetchPolicy: FetchPolicy.noCache,
+              variables: Variables$Query$GetAllServiceInfluencerPayouts(
+                serviceId: serviceId,
+                serviceType: spType.toFirebaseFormatString(),
+              )));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  return res.parsedData?.service_provider_influencer_payouts
+      .map<InfPayout>(
+          (Query$GetAllServiceInfluencerPayouts$service_provider_influencer_payouts
+                  e) =>
+              InfPayout(
+                  id: e.id,
+                  amount: e.amount,
+                  influencerId: e.influencer_id,
+                  influencerInfo: UserInfo(
+                      hasuraId: e.influencer!.user!.id,
+                      name: e.influencer!.user!.name,
+                      phoneNumber: e.influencer!.user!.phone,
+                      image: e.influencer!.user!.image,
+                      firebaseId: "",
+                      language: cModels.Language.EN),
+                  serviceProviderId: e.sp_id,
+                  serviceProviderType: e.sp_type.toServiceProviderType(),
+                  serviceInfo: ServiceInfo(
+                      hasuraId: e.restaurant!.id,
+                      name: e.restaurant!.details!.name,
+                      phoneNumber: e.restaurant!.details!.phone_number,
+                      image: e.restaurant!.details!.image,
+                      firebaseId: "",
+                      location: MezLocation.fromHasura(
+                          e.restaurant!.details!.location.gps,
+                          e.restaurant!.details!.location.address)),
+                  date: DateTime.parse(e.date)))
+      .toList();
+}

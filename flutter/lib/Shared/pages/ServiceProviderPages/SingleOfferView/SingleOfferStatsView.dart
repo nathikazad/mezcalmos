@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/InfluencerApp/pages/InfEarningsView/components/InfOfferEarningCard.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
@@ -13,9 +14,13 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/SingleOfferView/cont
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
+import 'package:mezcalmos/Shared/widgets/Influencer/InfOfferEarningCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
+    ["SingleOfferStatsView"];
 
 class SingleOfferStatsView extends StatefulWidget {
   const SingleOfferStatsView({super.key});
@@ -47,8 +52,11 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back, title: "Offer"),
+      appBar: MezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        onClick: MezRouter.back,
+        title: _i18n()['backButtonTitle'],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -61,7 +69,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Influencers payouts",
+                    _i18n()['infPayouts'],
                     style: context.textTheme.bodyLarge,
                   ),
                   meduimSeperator,
@@ -79,26 +87,96 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
             meduimSeperator,
             _recordSaleButton(context),
             meduimSeperator,
-            Text(
-              "Transactions",
-              style: context.textTheme.bodyLarge,
+            Obx(
+              () => Row(
+                children: <Widget>[
+                  FilterChip(
+                    label: Text(_i18n()['transactions']),
+                    selected: viewController.isOrdersView,
+                    onSelected: (bool v) {
+                      viewController.switchOrdersPayments(
+                          TransactionsPaymentsView.Orders);
+                    },
+                  ),
+                  hSmallSepartor,
+                  FilterChip(
+                    label: Text(_i18n()['payouts']),
+                    selected: viewController.isPaymentsView,
+                    onSelected: (bool v) {
+                      viewController.switchOrdersPayments(
+                          TransactionsPaymentsView.Payments);
+                    },
+                  ),
+                ],
+              ),
             ),
             meduimSeperator,
             Obx(
-              () => Column(
-                children:
-                    List.generate(viewController.earnings.length, (int index) {
-                  final InfEarning e = viewController.earnings[index];
-                  return InfOfferEarningCard(
-                    earning: e,
-                    forServiceProvider: true,
-                  );
-                }),
-              ),
-            )
+              () {
+                if (viewController.isOrdersView)
+                  return _buildOrders();
+                else
+                  return _buildPayouts();
+              },
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildOrders() {
+    return Column(
+      children: List.generate(viewController.earnings.length, (int index) {
+        final InfEarning e = viewController.earnings[index];
+        return InfOfferEarningCard(
+          earning: e,
+          forServiceProvider: true,
+        );
+      }),
+    );
+  }
+
+  Widget _buildPayouts() {
+    return Column(
+      children: List.generate(viewController.payouts.length, (int index) {
+        final InfPayout e = viewController.payouts[index];
+        return MezCard(
+          firstAvatarBgImage:
+              CachedNetworkImageProvider(e.influencerInfo.image),
+          action: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text("${_i18n()['youPaid']}: "),
+              hSmallSepartor,
+              Text(
+                e.amount.toPriceString(),
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(color: primaryBlueColor),
+              ),
+            ],
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                e.influencerInfo.name,
+                style: context.textTheme.bodyLarge,
+              ),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.watch_later_outlined,
+                    size: 16,
+                  ),
+                  hTinySepartor,
+                  Text(e.date.getOrderTime())
+                ],
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -117,7 +195,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
       ),
       action: MezInkwell(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-        label: "Pay",
+        label: _i18n()['recordPayout'],
         icon: Icons.payments,
         backgroundColor: secondaryLightBlueColor,
         textColor: primaryBlueColor,
@@ -127,49 +205,53 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
           if (paid != null) {
             final double max = item.value - paid;
             showMezSheet(
-                context: context,
-                showCancel: true,
-                title: "Record ${item.key.name} payout",
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text("Amount"),
-                    smallSepartor,
-                    TextFormField(
-                      controller: viewController.infPayoutAmmount,
-                      validator: (String? v) {
-                        if (v == null || num.tryParse(v) == null) {
-                          return "required valid number";
-                        } else if (num.parse(v) > max) {
-                          return "Max : $max";
-                        }
-                        return null;
-                      },
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      decoration: InputDecoration(
-                          suffixText: "\$",
-                          helperText: "Max : ${max.toPriceString()} "),
+              context: context,
+              showCancel: true,
+              title:
+                  "${_i18n()['recordPayoutTitle'].replaceAll('{infName}', item.key.name)}",
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(_i18n()['amount']),
+                  smallSepartor,
+                  TextFormField(
+                    controller: viewController.infPayoutAmmount,
+                    validator: (String? v) {
+                      if (v == null || num.tryParse(v) == null) {
+                        return "${_i18n()['requiredValidNumber']}";
+                      } else if (num.parse(v) > max) {
+                        return "${_i18n()['maxAmount']} : $max";
+                      }
+                      return null;
+                    },
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    decoration: InputDecoration(
+                      suffixText: "\$",
+                      helperText:
+                          "${_i18n()['maxAmount']} : ${max.toPriceString()} ",
                     ),
-                    meduimSeperator,
-                    if (max > 0)
-                      MezButton(
-                        label: "Record Payout",
-                        onClick: () async {
-                          final double? amount = double.tryParse(
-                              viewController.infPayoutAmmount.text);
-                          if (amount != null && amount < max) {
-                            await viewController.recordInfPayout(
-                                infId: item.key.hasuraId, context: context);
-                            setState(() {});
-                          } else {
-                            showErrorSnackBar(
-                                errorText: "Please enter a correct amount");
-                          }
-                        },
-                      ),
-                  ],
-                ));
+                  ),
+                  meduimSeperator,
+                  if (max > 0)
+                    MezButton(
+                      label: _i18n()['recordPayout'],
+                      onClick: () async {
+                        final double? amount = double.tryParse(
+                            viewController.infPayoutAmmount.text);
+                        if (amount != null && amount < max) {
+                          await viewController.recordInfPayout(
+                              infId: item.key.hasuraId, context: context);
+                          setState(() {});
+                        } else {
+                          showErrorSnackBar(
+                              errorText: "${_i18n()['enterCorrectAmount']}");
+                        }
+                      },
+                    ),
+                ],
+              ),
+            );
           }
         },
       ),
@@ -191,13 +273,14 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                 children: <Widget>[
                   Flexible(
                     fit: FlexFit.tight,
-                    child: Text("Total: " + item.value.toPriceString(),
+                    child: Text(
+                        "${_i18n()['total']} : ${item.value.toPriceString()}",
                         style: context.textTheme.bodyLarge),
                   ),
                   VerticalDivider(),
                   Flexible(
                     child: Text(
-                      "Paid: " + paid.toPriceString(hideZero: false),
+                      "${_i18n()['paid']} : ${paid.toPriceString(hideZero: false)}",
                       style: context.textTheme.bodyLarge
                           ?.copyWith(color: primaryBlueColor),
                     ),
@@ -205,7 +288,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                   VerticalDivider(),
                   Flexible(
                     child: Text(
-                      "Unpaid: " + (item.value - paid).toPriceString(),
+                      "${_i18n()['unpaid']} : ${(item.value - paid).toPriceString()}",
                       style: context.textTheme.bodyLarge
                           ?.copyWith(color: redAccentColor),
                     ),
@@ -221,71 +304,70 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
 
   MezButton _recordSaleButton(BuildContext context) {
     return MezButton(
-      label: "Record Influencer Sale",
+      label: "${_i18n()['recordSaleButton']}",
       onClick: () async {
         showMezSheet(
           context: context,
           isScrollControlled: true,
           showCancel: true,
-          title: "Record Influencer Sale",
+          title: "${_i18n()['recordSale']}",
           content: Form(
             key: viewController.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("Order total (after discount)"),
+                Text("${_i18n()['orderTotal']}"),
                 smallSepartor,
                 TextFormField(
                   controller: viewController.orderTotal,
                   validator: (String? v) {
                     if (v == null || num.tryParse(v) == null) {
-                      return "required valid number";
+                      return "${_i18n()['requiredValidNumber']}";
                     }
                     return null;
                   },
                   decoration: InputDecoration(suffixText: "\$"),
                 ),
                 meduimSeperator,
-                Text("Discount"),
+                Text("${_i18n()['discount']}"),
                 smallSepartor,
                 TextFormField(
                   controller: viewController.discountTxt,
                   validator: (String? v) {
                     if (v == null || num.tryParse(v) == null) {
-                      return "required valid number";
+                      return "${_i18n()['requiredValidNumber']}";
                     }
                     return null;
                   },
                   decoration: InputDecoration(suffixText: "\$"),
                 ),
                 meduimSeperator,
-                Text("Influencer commission"),
+                Text("${_i18n()['infCommission']}"),
                 smallSepartor,
                 TextFormField(
                   controller: viewController.infCommission,
                   validator: (String? v) {
                     if (v == null || num.tryParse(v) == null) {
-                      return "required valid number";
+                      return "${_i18n()['amount']} ${_i18n()['requiredValidNumber']}";
                     }
                     return null;
                   },
                   decoration: InputDecoration(suffixText: "\$"),
                 ),
                 meduimSeperator,
-                Text("Influencer code"),
+                Text("${_i18n()['infCode']}"),
                 smallSepartor,
                 TextFormField(
                   controller: viewController.infCode,
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "required";
+                      return "${_i18n()['required']}";
                     }
                     return null;
                   },
-                  // decoration: InputDecoration(suffixText: "\$"),
                 ),
                 MezButton(
-                  label: "Record sale",
+                  label: "${_i18n()['recordSale']}",
                   onClick: () async {
                     await viewController.recordSale(context);
                   },
@@ -308,7 +390,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
             Container(
               padding: const EdgeInsets.all(5),
               child: Text(
-                "Total number of usages",
+                "${_i18n()['totalUsages']}",
                 style: context.textTheme.bodyLarge,
               ),
             ),
@@ -330,7 +412,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                         ),
                         smallSepartor,
                         Text(
-                          "Revenue",
+                          "${_i18n()['revenue']}",
                           style: context.textTheme.bodyLarge
                               ?.copyWith(color: primaryBlueColor),
                         )
@@ -353,7 +435,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                         ),
                         smallSepartor,
                         Text(
-                          "Cost",
+                          "${_i18n()['cost']}",
                           style: context.textTheme.bodyLarge
                               ?.copyWith(color: redAccentColor),
                         )
@@ -367,18 +449,20 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
             Divider(
               thickness: 0.3,
             ),
-            Text.rich(TextSpan(children: <InlineSpan>[
-              WidgetSpan(
-                child: Icon(
-                  Icons.info_outline,
-                  size: 13.mezSp,
+            Text.rich(
+              TextSpan(children: <InlineSpan>[
+                WidgetSpan(
+                  child: Icon(
+                    Icons.info_outline,
+                    size: 13.mezSp,
+                  ),
                 ),
-              ),
-              WidgetSpan(child: hTinySepartor),
-              TextSpan(
-                  text:
-                      "Cost refers to the amount of money lost as a result of discounts."),
-            ]))
+                WidgetSpan(child: hTinySepartor),
+                TextSpan(
+                  text: "${_i18n()['infoMessage']}",
+                ),
+              ]),
+            ),
           ],
         ),
       ),

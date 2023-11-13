@@ -16,6 +16,8 @@ class SingleOfferStatsViewController {
   late int offerId;
   RxNum _revenue = RxNum(0);
   RxNum _cost = RxNum(0);
+  Rx<TransactionsPaymentsView> _transactionsPaymentsView =
+      Rx<TransactionsPaymentsView>(TransactionsPaymentsView.Orders);
   RxList<InfEarning> _earnings = RxList<InfEarning>.empty();
   RxList<InfPayout> _payouts = RxList<InfPayout>.empty();
   ServiceProfileController _serviceProfileController =
@@ -25,6 +27,10 @@ class SingleOfferStatsViewController {
   List<InfPayout> get payouts => _payouts.value;
   num get revenue => _revenue.value;
   num get loss => _cost.value;
+  bool get isOrdersView =>
+      _transactionsPaymentsView.value == TransactionsPaymentsView.Orders;
+  bool get isPaymentsView =>
+      _transactionsPaymentsView.value == TransactionsPaymentsView.Payments;
 
   // inputs //
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -37,7 +43,8 @@ class SingleOfferStatsViewController {
   void init({required int offerId}) {
     this.offerId = offerId;
     _fetchRevAndLoss();
-    fetchOfferEarnings();
+    _fetchOfferEarnings();
+    _fetchAllPayouts();
   }
 
   Future<void> _fetchRevAndLoss() async {
@@ -46,9 +53,16 @@ class SingleOfferStatsViewController {
     _cost.value = await get_offer_total_loss(offerId: offerId) ?? 0;
   }
 
-  Future<void> fetchOfferEarnings() async {
+  Future<void> _fetchOfferEarnings() async {
     _earnings.value =
         await get_offer_applied_by_offer(offerId: offerId) ?? <InfEarning>[];
+  }
+
+  Future<void> _fetchAllPayouts() async {
+    _payouts.value = await get_all_service_influencer_payouts(
+            serviceId: _serviceProfileController.serviceId,
+            spType: cm.ServiceProviderType.Restaurant) ??
+        <InfPayout>[];
   }
 
   Future<double> fetchInfluencerPayouts({required int influencerId}) async {
@@ -74,7 +88,8 @@ class SingleOfferStatsViewController {
           showSavedSnackBar();
           Navigator.pop(context);
           unawaited(_fetchRevAndLoss());
-          unawaited(fetchOfferEarnings());
+          unawaited(_fetchOfferEarnings());
+          unawaited(_fetchAllPayouts());
         } else
           showErrorSnackBar();
       } else {
@@ -117,4 +132,10 @@ class SingleOfferStatsViewController {
       mezDbgPrint(stk);
     }
   }
+
+  void switchOrdersPayments(TransactionsPaymentsView view) {
+    _transactionsPaymentsView.value = view;
+  }
 }
+
+enum TransactionsPaymentsView { Orders, Payments }
