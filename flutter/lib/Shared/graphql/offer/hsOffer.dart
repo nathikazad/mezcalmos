@@ -527,13 +527,16 @@ Future<num?> get_offer_total_loss({required int offerId}) async {
       ?.loss;
 }
 
-Future<List<InfEarning>?> get_offer_applied_by_offer(
-    {required int offerId}) async {
+Future<List<InfEarning>?> get_offer_applied_by_offer({
+  required int offerId,
+  required int offset,
+  required int limit,
+}) async {
   final QueryResult<Query$getOfferAppliedByOffer> res = await _db.graphQLClient
       .query$getOfferAppliedByOffer(Options$Query$getOfferAppliedByOffer(
           fetchPolicy: FetchPolicy.networkOnly,
-          variables:
-              Variables$Query$getOfferAppliedByOffer(offer_id: offerId)));
+          variables: Variables$Query$getOfferAppliedByOffer(
+              offer_id: offerId, offset: offset, limit: limit)));
 
   if (res.hasException) {
     throwError(res.exception);
@@ -640,12 +643,17 @@ Future<double?> get_service_influencer_payouts(
 
 Future<List<InfPayout>?> get_influencer_payouts({
   required int influencerId,
+  required int offset,
+  required int limit,
 }) async {
   final QueryResult<Query$GetInfluencerPayouts> res = await _db.graphQLClient
       .query$GetInfluencerPayouts(Options$Query$GetInfluencerPayouts(
           fetchPolicy: FetchPolicy.noCache,
           variables: Variables$Query$GetInfluencerPayouts(
-              influencerId: influencerId)));
+            influencerId: influencerId,
+            offset: offset,
+            limit: limit,
+          )));
   if (res.hasException) {
     throw res.exception!;
   }
@@ -678,9 +686,12 @@ Future<List<InfPayout>?> get_influencer_payouts({
       .toList();
 }
 
-Future<List<InfPayout>?> get_all_service_influencer_payouts(
-    {required int serviceId,
-    required cModels.ServiceProviderType spType}) async {
+Future<List<InfPayout>?> get_all_service_influencer_payouts({
+  required int serviceId,
+  required cModels.ServiceProviderType spType,
+  required int offset,
+  required int limit,
+}) async {
   final QueryResult<Query$GetAllServiceInfluencerPayouts> res =
       await _db.graphQLClient.query$GetAllServiceInfluencerPayouts(
           Options$Query$GetAllServiceInfluencerPayouts(
@@ -688,6 +699,8 @@ Future<List<InfPayout>?> get_all_service_influencer_payouts(
               variables: Variables$Query$GetAllServiceInfluencerPayouts(
                 serviceId: serviceId,
                 serviceType: spType.toFirebaseFormatString(),
+                offset: offset,
+                limit: limit,
               )));
   if (res.hasException) {
     throw res.exception!;

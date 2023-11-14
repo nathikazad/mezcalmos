@@ -271,10 +271,12 @@ query getOfferTotalLoss($offer_id: Int!) {
   }
 }
 
-query getOfferAppliedByOffer($offer_id: Int!) {
+query getOfferAppliedByOffer($offer_id: Int!, $offset: Int, $limit: Int) {
   service_provider_offer_applied(
     where: { offer_id: { _eq: $offer_id } }
     order_by: { restaurant_order: { order_time: desc } }
+    offset: $offset
+    limit: $limit
   ) {
     comission
     discount
@@ -372,10 +374,17 @@ query GetServiceInfluencerPayoutsSum(
     # }
   }
 }
-query GetAllServiceInfluencerPayouts($serviceId: Int!, $serviceType: String!) {
+query GetAllServiceInfluencerPayouts(
+  $serviceId: Int!
+  $serviceType: String!
+  $offset: Int
+  $limit: Int
+) {
   service_provider_influencer_payouts(
     where: { sp_id: { _eq: $serviceId }, sp_type: { _eq: $serviceType } }
     order_by: { date: desc }
+    offset: $offset
+    limit: $limit
   ) {
     id
     influencer_id
@@ -407,10 +416,12 @@ query GetAllServiceInfluencerPayouts($serviceId: Int!, $serviceType: String!) {
     }
   }
 }
-query GetInfluencerPayouts($influencerId: Int!) {
+query GetInfluencerPayouts($influencerId: Int!, $offset: Int, $limit: Int) {
   service_provider_influencer_payouts(
     order_by: { date: desc }
     where: { influencer_id: { _eq: $influencerId } }
+    offset: $offset
+    limit: $limit
   ) {
     id
     influencer_id

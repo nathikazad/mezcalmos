@@ -12794,9 +12794,15 @@ class _CopyWithStubImpl$Query$getOfferTotalLoss$service_provider_offer_applied_a
 }
 
 class Variables$Query$getOfferAppliedByOffer {
-  factory Variables$Query$getOfferAppliedByOffer({required int offer_id}) =>
+  factory Variables$Query$getOfferAppliedByOffer({
+    required int offer_id,
+    int? offset,
+    int? limit,
+  }) =>
       Variables$Query$getOfferAppliedByOffer._({
         r'offer_id': offer_id,
+        if (offset != null) r'offset': offset,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$getOfferAppliedByOffer._(this._$data);
@@ -12806,16 +12812,34 @@ class Variables$Query$getOfferAppliedByOffer {
     final result$data = <String, dynamic>{};
     final l$offer_id = data['offer_id'];
     result$data['offer_id'] = (l$offer_id as int);
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$getOfferAppliedByOffer._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get offer_id => (_$data['offer_id'] as int);
+  int? get offset => (_$data['offset'] as int?);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$offer_id = offer_id;
     result$data['offer_id'] = l$offer_id;
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -12839,13 +12863,35 @@ class Variables$Query$getOfferAppliedByOffer {
     if (l$offer_id != lOther$offer_id) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$offer_id = offer_id;
-    return Object.hashAll([l$offer_id]);
+    final l$offset = offset;
+    final l$limit = limit;
+    return Object.hashAll([
+      l$offer_id,
+      _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -12858,7 +12904,11 @@ abstract class CopyWith$Variables$Query$getOfferAppliedByOffer<TRes> {
   factory CopyWith$Variables$Query$getOfferAppliedByOffer.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$getOfferAppliedByOffer;
 
-  TRes call({int? offer_id});
+  TRes call({
+    int? offer_id,
+    int? offset,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$getOfferAppliedByOffer<TRes>
@@ -12874,11 +12924,17 @@ class _CopyWithImpl$Variables$Query$getOfferAppliedByOffer<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? offer_id = _undefined}) =>
+  TRes call({
+    Object? offer_id = _undefined,
+    Object? offset = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$getOfferAppliedByOffer._({
         ..._instance._$data,
         if (offer_id != _undefined && offer_id != null)
           'offer_id': (offer_id as int),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -12888,7 +12944,12 @@ class _CopyWithStubImpl$Variables$Query$getOfferAppliedByOffer<TRes>
 
   TRes _res;
 
-  call({int? offer_id}) => _res;
+  call({
+    int? offer_id,
+    int? offset,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$getOfferAppliedByOffer {
@@ -13074,7 +13135,25 @@ const documentNodeQuerygetOfferAppliedByOffer = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -13109,6 +13188,14 @@ const documentNodeQuerygetOfferAppliedByOffer = DocumentNode(definitions: [
                 ]),
               )
             ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
           ),
         ],
         directives: [],
@@ -18066,10 +18153,14 @@ class Variables$Query$GetAllServiceInfluencerPayouts {
   factory Variables$Query$GetAllServiceInfluencerPayouts({
     required int serviceId,
     required String serviceType,
+    int? offset,
+    int? limit,
   }) =>
       Variables$Query$GetAllServiceInfluencerPayouts._({
         r'serviceId': serviceId,
         r'serviceType': serviceType,
+        if (offset != null) r'offset': offset,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$GetAllServiceInfluencerPayouts._(this._$data);
@@ -18081,6 +18172,14 @@ class Variables$Query$GetAllServiceInfluencerPayouts {
     result$data['serviceId'] = (l$serviceId as int);
     final l$serviceType = data['serviceType'];
     result$data['serviceType'] = (l$serviceType as String);
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$GetAllServiceInfluencerPayouts._(result$data);
   }
 
@@ -18088,12 +18187,22 @@ class Variables$Query$GetAllServiceInfluencerPayouts {
 
   int get serviceId => (_$data['serviceId'] as int);
   String get serviceType => (_$data['serviceType'] as String);
+  int? get offset => (_$data['offset'] as int?);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$serviceId = serviceId;
     result$data['serviceId'] = l$serviceId;
     final l$serviceType = serviceType;
     result$data['serviceType'] = l$serviceType;
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -18122,6 +18231,22 @@ class Variables$Query$GetAllServiceInfluencerPayouts {
     if (l$serviceType != lOther$serviceType) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
@@ -18129,9 +18254,13 @@ class Variables$Query$GetAllServiceInfluencerPayouts {
   int get hashCode {
     final l$serviceId = serviceId;
     final l$serviceType = serviceType;
+    final l$offset = offset;
+    final l$limit = limit;
     return Object.hashAll([
       l$serviceId,
       l$serviceType,
+      _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
     ]);
   }
 }
@@ -18149,6 +18278,8 @@ abstract class CopyWith$Variables$Query$GetAllServiceInfluencerPayouts<TRes> {
   TRes call({
     int? serviceId,
     String? serviceType,
+    int? offset,
+    int? limit,
   });
 }
 
@@ -18168,6 +18299,8 @@ class _CopyWithImpl$Variables$Query$GetAllServiceInfluencerPayouts<TRes>
   TRes call({
     Object? serviceId = _undefined,
     Object? serviceType = _undefined,
+    Object? offset = _undefined,
+    Object? limit = _undefined,
   }) =>
       _then(Variables$Query$GetAllServiceInfluencerPayouts._({
         ..._instance._$data,
@@ -18175,6 +18308,8 @@ class _CopyWithImpl$Variables$Query$GetAllServiceInfluencerPayouts<TRes>
           'serviceId': (serviceId as int),
         if (serviceType != _undefined && serviceType != null)
           'serviceType': (serviceType as String),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -18187,6 +18322,8 @@ class _CopyWithStubImpl$Variables$Query$GetAllServiceInfluencerPayouts<TRes>
   call({
     int? serviceId,
     String? serviceType,
+    int? offset,
+    int? limit,
   }) =>
       _res;
 }
@@ -18391,6 +18528,24 @@ const documentNodeQueryGetAllServiceInfluencerPayouts =
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -18429,6 +18584,14 @@ const documentNodeQueryGetAllServiceInfluencerPayouts =
                 value: EnumValueNode(name: NameNode(value: 'desc')),
               )
             ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
           ),
         ],
         directives: [],
@@ -20044,9 +20207,15 @@ class _CopyWithStubImpl$Query$GetAllServiceInfluencerPayouts$service_provider_in
 }
 
 class Variables$Query$GetInfluencerPayouts {
-  factory Variables$Query$GetInfluencerPayouts({required int influencerId}) =>
+  factory Variables$Query$GetInfluencerPayouts({
+    required int influencerId,
+    int? offset,
+    int? limit,
+  }) =>
       Variables$Query$GetInfluencerPayouts._({
         r'influencerId': influencerId,
+        if (offset != null) r'offset': offset,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$GetInfluencerPayouts._(this._$data);
@@ -20056,16 +20225,34 @@ class Variables$Query$GetInfluencerPayouts {
     final result$data = <String, dynamic>{};
     final l$influencerId = data['influencerId'];
     result$data['influencerId'] = (l$influencerId as int);
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$GetInfluencerPayouts._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get influencerId => (_$data['influencerId'] as int);
+  int? get offset => (_$data['offset'] as int?);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$influencerId = influencerId;
     result$data['influencerId'] = l$influencerId;
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -20089,13 +20276,35 @@ class Variables$Query$GetInfluencerPayouts {
     if (l$influencerId != lOther$influencerId) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$influencerId = influencerId;
-    return Object.hashAll([l$influencerId]);
+    final l$offset = offset;
+    final l$limit = limit;
+    return Object.hashAll([
+      l$influencerId,
+      _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -20108,7 +20317,11 @@ abstract class CopyWith$Variables$Query$GetInfluencerPayouts<TRes> {
   factory CopyWith$Variables$Query$GetInfluencerPayouts.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$GetInfluencerPayouts;
 
-  TRes call({int? influencerId});
+  TRes call({
+    int? influencerId,
+    int? offset,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$GetInfluencerPayouts<TRes>
@@ -20124,11 +20337,17 @@ class _CopyWithImpl$Variables$Query$GetInfluencerPayouts<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? influencerId = _undefined}) =>
+  TRes call({
+    Object? influencerId = _undefined,
+    Object? offset = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$GetInfluencerPayouts._({
         ..._instance._$data,
         if (influencerId != _undefined && influencerId != null)
           'influencerId': (influencerId as int),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -20138,7 +20357,12 @@ class _CopyWithStubImpl$Variables$Query$GetInfluencerPayouts<TRes>
 
   TRes _res;
 
-  call({int? influencerId}) => _res;
+  call({
+    int? influencerId,
+    int? offset,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$GetInfluencerPayouts {
@@ -20327,7 +20551,25 @@ const documentNodeQueryGetInfluencerPayouts = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -20357,6 +20599,14 @@ const documentNodeQueryGetInfluencerPayouts = DocumentNode(definitions: [
                 ]),
               )
             ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
           ),
         ],
         directives: [],

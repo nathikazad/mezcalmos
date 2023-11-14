@@ -39,12 +39,22 @@ class SingleOfferStatsViewController {
   TextEditingController discountTxt = TextEditingController();
   TextEditingController infCode = TextEditingController();
   TextEditingController infPayoutAmmount = TextEditingController();
+  // pagination //
+  final int fetchSize = 10;
+  int _eraningCurrentOffset = 0;
+  bool _earningsFetchingData = false;
+  bool _earningReachedEndOfData = false;
+  int _payoutsCurrentOffset = 0;
+  bool _payoutsFetchingData = false;
+  bool _payoutsReachedEndOfData = false;
+  bool get earningsReachedEndData => _earningReachedEndOfData;
+  bool get payoutsReachedEndOfData => _payoutsReachedEndOfData;
 
   void init({required int offerId}) {
     this.offerId = offerId;
     _fetchRevAndLoss();
-    _fetchOfferEarnings();
-    _fetchAllPayouts();
+    fetchOfferEarnings();
+    fetchAllPayouts();
   }
 
   Future<void> _fetchRevAndLoss() async {
@@ -53,16 +63,61 @@ class SingleOfferStatsViewController {
     _cost.value = await get_offer_total_loss(offerId: offerId) ?? 0;
   }
 
-  Future<void> _fetchOfferEarnings() async {
-    _earnings.value =
-        await get_offer_applied_by_offer(offerId: offerId) ?? <InfEarning>[];
+  // Future<void> _fetchOfferEarnings() async {
+  //   _earnings.value =
+  //       await get_offer_applied_by_offer(offerId: offerId) ?? <InfEarning>[];
+  // }
+
+  // Future<void> _fetchAllPayouts() async {
+  //   _payouts.value = await get_all_service_influencer_payouts(
+  //           serviceId: _serviceProfileController.serviceId,
+  //           spType: cm.ServiceProviderType.Restaurant) ??
+  //       <InfPayout>[];
+  // }
+
+  Future<void> fetchOfferEarnings() async {
+    if (_earningsFetchingData || _earningReachedEndOfData) {
+      return;
+    }
+
+    try {
+      _earningsFetchingData = true;
+      final List<InfEarning> newData = await get_offer_applied_by_offer(
+              offerId: offerId,
+              offset: _eraningCurrentOffset,
+              limit: fetchSize) ??
+          <InfEarning>[];
+      _earnings.value += newData;
+      if (newData.length == 0) {
+        _earningReachedEndOfData = true;
+      }
+      _eraningCurrentOffset += fetchSize;
+    } finally {
+      _earningsFetchingData = false;
+    }
   }
 
-  Future<void> _fetchAllPayouts() async {
-    _payouts.value = await get_all_service_influencer_payouts(
-            serviceId: _serviceProfileController.serviceId,
-            spType: cm.ServiceProviderType.Restaurant) ??
-        <InfPayout>[];
+  Future<void> fetchAllPayouts() async {
+    if (_payoutsFetchingData || _payoutsReachedEndOfData) {
+      return;
+    }
+
+    try {
+      _payoutsFetchingData = true;
+      final List<InfPayout> newData = await get_all_service_influencer_payouts(
+              serviceId: _serviceProfileController.serviceId,
+              spType: cm.ServiceProviderType.Restaurant,
+              offset: _payoutsCurrentOffset,
+              limit: fetchSize) ??
+          <InfPayout>[];
+      _payouts.value += newData;
+      if (newData.length == 0) {
+        _payoutsReachedEndOfData = true;
+      }
+      _payoutsCurrentOffset += fetchSize;
+    } finally {
+      _payoutsFetchingData = false;
+    }
   }
 
   Future<double> fetchInfluencerPayouts({required int influencerId}) async {
@@ -88,8 +143,8 @@ class SingleOfferStatsViewController {
           showSavedSnackBar();
           Navigator.pop(context);
           unawaited(_fetchRevAndLoss());
-          unawaited(_fetchOfferEarnings());
-          unawaited(_fetchAllPayouts());
+          unawaited(fetchOfferEarnings());
+          unawaited(fetchAllPayouts());
         } else
           showErrorSnackBar();
       } else {

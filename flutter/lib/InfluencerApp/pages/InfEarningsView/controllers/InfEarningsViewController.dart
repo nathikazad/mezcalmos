@@ -30,8 +30,24 @@ class InfEarningsViewController {
   int get influencerId => _authController.influencer!.id.toInt();
   RxBool _isFetching = RxBool(false);
   bool get isFetching => _isFetching.value;
+
+  /* SCROLL CONTROLLER */
+  final int fetchSize = 10;
+  int _eraningCurrentOffset = 0;
+  bool _earningsFetchingData = false;
+  bool _earningReachedEndOfData = false;
+  int _payoutsCurrentOffset = 0;
+  bool _payoutsFetchingData = false;
+  bool _payoutsReachedEndOfData = false;
+  bool get earningsReachedEndData => _earningReachedEndOfData;
+  bool get payoutsReachedEndOfData => _payoutsReachedEndOfData;
+  /* SCROLL CONTROLLER */
   Future<void> init() async {
-    await _fetchTotalEarnings();
+    await Future.wait(<Future<void>>[
+      _fetchTotalEarnings(),
+      fetchInfEarnings(),
+      fetchPayouts()
+    ]);
   }
 
   Future<void> _fetchTotalEarnings() async {
@@ -39,20 +55,56 @@ class InfEarningsViewController {
       _isFetching.value = true;
       _totalEranings.value =
           await get_influencer_earnings_sum(influencerId: influencerId) ?? 0;
-      // _totalDiscounts.value = await get_influencer_discount_sum(
-      //         influencerId: _authController.influencer!.id.toInt()) ??
-      //     0;
-      earnings.value =
-          await get_inf_earnings(influencerId: influencerId) ?? <InfEarning>[];
-      payouts.value =
-          await get_influencer_payouts(influencerId: influencerId) ??
-              <InfPayout>[];
     } catch (e, stk) {
       showErrorSnackBar();
       mezDbgPrint(e);
       mezDbgPrint(stk);
     } finally {
       _isFetching.value = false;
+    }
+  }
+
+  Future<void> fetchInfEarnings() async {
+    if (_earningsFetchingData || _earningReachedEndOfData) {
+      return;
+    }
+
+    try {
+      _earningsFetchingData = true;
+      final List<InfEarning> newData = await get_inf_earnings(
+              influencerId: influencerId,
+              offset: _eraningCurrentOffset,
+              limit: fetchSize) ??
+          <InfEarning>[];
+      earnings.value += newData;
+      if (newData.length == 0) {
+        _earningReachedEndOfData = true;
+      }
+      _eraningCurrentOffset += fetchSize;
+    } finally {
+      _earningsFetchingData = false;
+    }
+  }
+
+  Future<void> fetchPayouts() async {
+    if (_payoutsFetchingData || _payoutsReachedEndOfData) {
+      return;
+    }
+
+    try {
+      _payoutsFetchingData = true;
+      final List<InfPayout> newData = await get_influencer_payouts(
+              influencerId: influencerId,
+              offset: _payoutsCurrentOffset,
+              limit: fetchSize) ??
+          <InfPayout>[];
+      payouts.value += newData;
+      if (newData.length == 0) {
+        _payoutsReachedEndOfData = true;
+      }
+      _payoutsCurrentOffset += fetchSize;
+    } finally {
+      _payoutsFetchingData = false;
     }
   }
 

@@ -119,10 +119,12 @@ query getInfluencerTotalDiscounts($influencer_id: Int!) {
     }
   }
 }
-query getInfluencerEarnings($influencer_id: Int!) {
+query getInfluencerEarnings($influencer_id: Int!, $offset: Int, $limit: Int) {
   service_provider_offer_applied(
     where: { influencer_id: { _eq: $influencer_id } }
     order_by: { restaurant_order: { order_time: desc } }
+    offset: $offset
+    limit: $limit
   ) {
     comission
     discount

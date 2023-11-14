@@ -14,6 +14,7 @@ import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/Influencer/InfOfferEarningCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -142,7 +143,14 @@ class _InfEarningsViewState extends State<InfEarningsView> {
               final InfEarning e = viewController.earnings[index];
               return InfOfferEarningCard(earning: e);
             }),
-          )
+          ),
+          if (!viewController.earningsReachedEndData)
+            MezButton(
+              label: "View more",
+              onClick: () async {
+                await viewController.fetchInfEarnings();
+              },
+            )
         ],
       );
     } else {
@@ -216,7 +224,14 @@ class _InfEarningsViewState extends State<InfEarningsView> {
               );
               //  return InfOfferEarningCard(earning: e);
             }),
-          )
+          ),
+          if (!viewController.payoutsReachedEndOfData)
+            MezButton(
+              label: "View more",
+              onClick: () async {
+                await viewController.fetchPayouts();
+              },
+            )
         ],
       );
     } else {

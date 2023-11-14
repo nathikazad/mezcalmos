@@ -237,12 +237,16 @@ Future<num?> get_influencer_discount_sum({required int influencerId}) async {
       ?.discount;
 }
 
-Future<List<InfEarning>?> get_inf_earnings({required int influencerId}) async {
+Future<List<InfEarning>?> get_inf_earnings({
+  required int influencerId,
+  required int offset,
+  required int limit,
+}) async {
   final QueryResult<Query$getInfluencerEarnings> res = await _db.graphQLClient
       .query$getInfluencerEarnings(Options$Query$getInfluencerEarnings(
           fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Query$getInfluencerEarnings(
-              influencer_id: influencerId)));
+              influencer_id: influencerId, offset: offset, limit: limit)));
 
   if (res.hasException) {
     throwError(res.exception);

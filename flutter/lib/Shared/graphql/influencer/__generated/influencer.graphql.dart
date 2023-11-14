@@ -7694,9 +7694,15 @@ class _CopyWithStubImpl$Query$getInfluencerTotalDiscounts$service_provider_offer
 }
 
 class Variables$Query$getInfluencerEarnings {
-  factory Variables$Query$getInfluencerEarnings({required int influencer_id}) =>
+  factory Variables$Query$getInfluencerEarnings({
+    required int influencer_id,
+    int? offset,
+    int? limit,
+  }) =>
       Variables$Query$getInfluencerEarnings._({
         r'influencer_id': influencer_id,
+        if (offset != null) r'offset': offset,
+        if (limit != null) r'limit': limit,
       });
 
   Variables$Query$getInfluencerEarnings._(this._$data);
@@ -7706,16 +7712,34 @@ class Variables$Query$getInfluencerEarnings {
     final result$data = <String, dynamic>{};
     final l$influencer_id = data['influencer_id'];
     result$data['influencer_id'] = (l$influencer_id as int);
+    if (data.containsKey('offset')) {
+      final l$offset = data['offset'];
+      result$data['offset'] = (l$offset as int?);
+    }
+    if (data.containsKey('limit')) {
+      final l$limit = data['limit'];
+      result$data['limit'] = (l$limit as int?);
+    }
     return Variables$Query$getInfluencerEarnings._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get influencer_id => (_$data['influencer_id'] as int);
+  int? get offset => (_$data['offset'] as int?);
+  int? get limit => (_$data['limit'] as int?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$influencer_id = influencer_id;
     result$data['influencer_id'] = l$influencer_id;
+    if (_$data.containsKey('offset')) {
+      final l$offset = offset;
+      result$data['offset'] = l$offset;
+    }
+    if (_$data.containsKey('limit')) {
+      final l$limit = limit;
+      result$data['limit'] = l$limit;
+    }
     return result$data;
   }
 
@@ -7739,13 +7763,35 @@ class Variables$Query$getInfluencerEarnings {
     if (l$influencer_id != lOther$influencer_id) {
       return false;
     }
+    final l$offset = offset;
+    final lOther$offset = other.offset;
+    if (_$data.containsKey('offset') != other._$data.containsKey('offset')) {
+      return false;
+    }
+    if (l$offset != lOther$offset) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (_$data.containsKey('limit') != other._$data.containsKey('limit')) {
+      return false;
+    }
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$influencer_id = influencer_id;
-    return Object.hashAll([l$influencer_id]);
+    final l$offset = offset;
+    final l$limit = limit;
+    return Object.hashAll([
+      l$influencer_id,
+      _$data.containsKey('offset') ? l$offset : const {},
+      _$data.containsKey('limit') ? l$limit : const {},
+    ]);
   }
 }
 
@@ -7758,7 +7804,11 @@ abstract class CopyWith$Variables$Query$getInfluencerEarnings<TRes> {
   factory CopyWith$Variables$Query$getInfluencerEarnings.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$getInfluencerEarnings;
 
-  TRes call({int? influencer_id});
+  TRes call({
+    int? influencer_id,
+    int? offset,
+    int? limit,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$getInfluencerEarnings<TRes>
@@ -7774,11 +7824,17 @@ class _CopyWithImpl$Variables$Query$getInfluencerEarnings<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? influencer_id = _undefined}) =>
+  TRes call({
+    Object? influencer_id = _undefined,
+    Object? offset = _undefined,
+    Object? limit = _undefined,
+  }) =>
       _then(Variables$Query$getInfluencerEarnings._({
         ..._instance._$data,
         if (influencer_id != _undefined && influencer_id != null)
           'influencer_id': (influencer_id as int),
+        if (offset != _undefined) 'offset': (offset as int?),
+        if (limit != _undefined) 'limit': (limit as int?),
       }));
 }
 
@@ -7788,7 +7844,12 @@ class _CopyWithStubImpl$Variables$Query$getInfluencerEarnings<TRes>
 
   TRes _res;
 
-  call({int? influencer_id}) => _res;
+  call({
+    int? influencer_id,
+    int? offset,
+    int? limit,
+  }) =>
+      _res;
 }
 
 class Query$getInfluencerEarnings {
@@ -7973,7 +8034,25 @@ const documentNodeQuerygetInfluencerEarnings = DocumentNode(definitions: [
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offset')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -8008,6 +8087,14 @@ const documentNodeQuerygetInfluencerEarnings = DocumentNode(definitions: [
                 ]),
               )
             ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'offset'),
+            value: VariableNode(name: NameNode(value: 'offset')),
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
           ),
         ],
         directives: [],
