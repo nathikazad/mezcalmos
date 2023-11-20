@@ -11,6 +11,15 @@ object_relationships:
         remote_table:
           name: influencer
           schema: service_provider
+  - name: offer
+    using:
+      manual_configuration:
+        column_mapping:
+          offer_id: id
+        insertion_order: null
+        remote_table:
+          name: offer
+          schema: service_provider
   - name: restaurant
     using:
       manual_configuration:
@@ -35,6 +44,7 @@ insert_permissions:
         - date
         - sp_id
         - sp_type
+        - offer_id
 select_permissions:
   - role: influencer
     permission:
@@ -45,11 +55,11 @@ select_permissions:
         - amount
         - date
         - sp_type
+        - offer_id
       filter:
         influencer:
           user_id:
             _eq: X-Hasura-User-Id
-      allow_aggregations: true
   - role: restaurant_operator
     permission:
       columns:
@@ -59,6 +69,7 @@ select_permissions:
         - amount
         - sp_type
         - date
+        - offer_id
       filter:
         restaurant:
           restaurant_operators:

@@ -41253,6 +41253,10 @@ type service_provider_influencer_payouts {
   influencer_id: Int!
 
   """An object relationship"""
+  offer: service_provider_offer
+  offer_id: Int!
+
+  """An object relationship"""
   restaurant: restaurant_restaurant
   sp_id: Int!
   sp_type: String!
@@ -41288,6 +41292,7 @@ type service_provider_influencer_payouts_avg_fields {
   amount: Float
   id: Float
   influencer_id: Float
+  offer_id: Float
   sp_id: Float
 }
 
@@ -41304,6 +41309,8 @@ input service_provider_influencer_payouts_bool_exp {
   id: Int_comparison_exp
   influencer: service_provider_influencer_bool_exp
   influencer_id: Int_comparison_exp
+  offer: service_provider_offer_bool_exp
+  offer_id: Int_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
   sp_id: Int_comparison_exp
   sp_type: String_comparison_exp
@@ -41326,6 +41333,7 @@ input service_provider_influencer_payouts_inc_input {
   amount: money
   id: Int
   influencer_id: Int
+  offer_id: Int
   sp_id: Int
 }
 
@@ -41338,6 +41346,8 @@ input service_provider_influencer_payouts_insert_input {
   id: Int
   influencer: service_provider_influencer_obj_rel_insert_input
   influencer_id: Int
+  offer: service_provider_offer_obj_rel_insert_input
+  offer_id: Int
   restaurant: restaurant_restaurant_obj_rel_insert_input
   sp_id: Int
   sp_type: String
@@ -41349,6 +41359,7 @@ type service_provider_influencer_payouts_max_fields {
   date: timestamptz
   id: Int
   influencer_id: Int
+  offer_id: Int
   sp_id: Int
   sp_type: String
 }
@@ -41359,6 +41370,7 @@ type service_provider_influencer_payouts_min_fields {
   date: timestamptz
   id: Int
   influencer_id: Int
+  offer_id: Int
   sp_id: Int
   sp_type: String
 }
@@ -41392,6 +41404,8 @@ input service_provider_influencer_payouts_order_by {
   id: order_by
   influencer: service_provider_influencer_order_by
   influencer_id: order_by
+  offer: service_provider_offer_order_by
+  offer_id: order_by
   restaurant: restaurant_restaurant_order_by
   sp_id: order_by
   sp_type: order_by
@@ -41421,6 +41435,9 @@ enum service_provider_influencer_payouts_select_column {
   influencer_id
 
   """column name"""
+  offer_id
+
+  """column name"""
   sp_id
 
   """column name"""
@@ -41435,6 +41452,7 @@ input service_provider_influencer_payouts_set_input {
   date: timestamptz
   id: Int
   influencer_id: Int
+  offer_id: Int
   sp_id: Int
   sp_type: String
 }
@@ -41444,6 +41462,7 @@ type service_provider_influencer_payouts_stddev_fields {
   amount: Float
   id: Float
   influencer_id: Float
+  offer_id: Float
   sp_id: Float
 }
 
@@ -41452,6 +41471,7 @@ type service_provider_influencer_payouts_stddev_pop_fields {
   amount: Float
   id: Float
   influencer_id: Float
+  offer_id: Float
   sp_id: Float
 }
 
@@ -41460,6 +41480,7 @@ type service_provider_influencer_payouts_stddev_samp_fields {
   amount: Float
   id: Float
   influencer_id: Float
+  offer_id: Float
   sp_id: Float
 }
 
@@ -41480,6 +41501,7 @@ input service_provider_influencer_payouts_stream_cursor_value_input {
   date: timestamptz
   id: Int
   influencer_id: Int
+  offer_id: Int
   sp_id: Int
   sp_type: String
 }
@@ -41489,6 +41511,7 @@ type service_provider_influencer_payouts_sum_fields {
   amount: money
   id: Int
   influencer_id: Int
+  offer_id: Int
   sp_id: Int
 }
 
@@ -41507,6 +41530,9 @@ enum service_provider_influencer_payouts_update_column {
 
   """column name"""
   influencer_id
+
+  """column name"""
+  offer_id
 
   """column name"""
   sp_id
@@ -41531,6 +41557,7 @@ type service_provider_influencer_payouts_var_pop_fields {
   amount: Float
   id: Float
   influencer_id: Float
+  offer_id: Float
   sp_id: Float
 }
 
@@ -41539,6 +41566,7 @@ type service_provider_influencer_payouts_var_samp_fields {
   amount: Float
   id: Float
   influencer_id: Float
+  offer_id: Float
   sp_id: Float
 }
 
@@ -41547,6 +41575,7 @@ type service_provider_influencer_payouts_variance_fields {
   amount: Float
   id: Float
   influencer_id: Float
+  offer_id: Float
   sp_id: Float
 }
 

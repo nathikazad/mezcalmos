@@ -416,6 +416,53 @@ query GetAllServiceInfluencerPayouts(
     }
   }
 }
+query GetAllServiceOfferPayouts(
+  $serviceId: Int!
+  $offerId: Int!
+  $serviceType: String!
+  $offset: Int
+  $limit: Int
+) {
+  service_provider_influencer_payouts(
+    where: {
+      sp_id: { _eq: $serviceId }
+      sp_type: { _eq: $serviceType }
+      offer_id: { _eq: $offerId }
+    }
+    order_by: { date: desc }
+    offset: $offset
+    limit: $limit
+  ) {
+    id
+    influencer_id
+    sp_id
+    amount
+    sp_type
+    date
+    influencer {
+      id
+      user {
+        id
+        phone
+        image
+        name
+      }
+    }
+
+    restaurant {
+      id
+      details {
+        image
+        name
+        phone_number
+        location {
+          gps
+          address
+        }
+      }
+    }
+  }
+}
 query GetInfluencerPayouts($influencerId: Int!, $offset: Int, $limit: Int) {
   service_provider_influencer_payouts(
     order_by: { date: desc }
