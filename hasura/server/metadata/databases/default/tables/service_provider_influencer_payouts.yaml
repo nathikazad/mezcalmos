@@ -49,6 +49,7 @@ select_permissions:
         influencer:
           user_id:
             _eq: X-Hasura-User-Id
+      allow_aggregations: true
   - role: restaurant_operator
     permission:
       columns:
@@ -63,3 +64,4 @@ select_permissions:
           restaurant_operators:
             user_id:
               _eq: X-Hasura-User-Id
+      allow_aggregations: true

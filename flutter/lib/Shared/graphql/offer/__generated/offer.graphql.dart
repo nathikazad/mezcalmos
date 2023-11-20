@@ -22213,3 +22213,542 @@ class _CopyWithStubImpl$Query$GetInfluencerPayouts$service_provider_influencer_p
   }) =>
       _res;
 }
+
+class Variables$Mutation$deleteOfferById {
+  factory Variables$Mutation$deleteOfferById({required int offerId}) =>
+      Variables$Mutation$deleteOfferById._({
+        r'offerId': offerId,
+      });
+
+  Variables$Mutation$deleteOfferById._(this._$data);
+
+  factory Variables$Mutation$deleteOfferById.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$offerId = data['offerId'];
+    result$data['offerId'] = (l$offerId as int);
+    return Variables$Mutation$deleteOfferById._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get offerId => (_$data['offerId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$offerId = offerId;
+    result$data['offerId'] = l$offerId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$deleteOfferById<
+          Variables$Mutation$deleteOfferById>
+      get copyWith => CopyWith$Variables$Mutation$deleteOfferById(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$deleteOfferById) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$offerId = offerId;
+    final lOther$offerId = other.offerId;
+    if (l$offerId != lOther$offerId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$offerId = offerId;
+    return Object.hashAll([l$offerId]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$deleteOfferById<TRes> {
+  factory CopyWith$Variables$Mutation$deleteOfferById(
+    Variables$Mutation$deleteOfferById instance,
+    TRes Function(Variables$Mutation$deleteOfferById) then,
+  ) = _CopyWithImpl$Variables$Mutation$deleteOfferById;
+
+  factory CopyWith$Variables$Mutation$deleteOfferById.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$deleteOfferById;
+
+  TRes call({int? offerId});
+}
+
+class _CopyWithImpl$Variables$Mutation$deleteOfferById<TRes>
+    implements CopyWith$Variables$Mutation$deleteOfferById<TRes> {
+  _CopyWithImpl$Variables$Mutation$deleteOfferById(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$deleteOfferById _instance;
+
+  final TRes Function(Variables$Mutation$deleteOfferById) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? offerId = _undefined}) =>
+      _then(Variables$Mutation$deleteOfferById._({
+        ..._instance._$data,
+        if (offerId != _undefined && offerId != null)
+          'offerId': (offerId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$deleteOfferById<TRes>
+    implements CopyWith$Variables$Mutation$deleteOfferById<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$deleteOfferById(this._res);
+
+  TRes _res;
+
+  call({int? offerId}) => _res;
+}
+
+class Mutation$deleteOfferById {
+  Mutation$deleteOfferById({
+    this.delete_service_provider_offer_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteOfferById.fromJson(Map<String, dynamic> json) {
+    final l$delete_service_provider_offer_by_pk =
+        json['delete_service_provider_offer_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteOfferById(
+      delete_service_provider_offer_by_pk:
+          l$delete_service_provider_offer_by_pk == null
+              ? null
+              : Mutation$deleteOfferById$delete_service_provider_offer_by_pk
+                  .fromJson((l$delete_service_provider_offer_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$deleteOfferById$delete_service_provider_offer_by_pk?
+      delete_service_provider_offer_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_service_provider_offer_by_pk =
+        delete_service_provider_offer_by_pk;
+    _resultData['delete_service_provider_offer_by_pk'] =
+        l$delete_service_provider_offer_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_service_provider_offer_by_pk =
+        delete_service_provider_offer_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_service_provider_offer_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$deleteOfferById) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_service_provider_offer_by_pk =
+        delete_service_provider_offer_by_pk;
+    final lOther$delete_service_provider_offer_by_pk =
+        other.delete_service_provider_offer_by_pk;
+    if (l$delete_service_provider_offer_by_pk !=
+        lOther$delete_service_provider_offer_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteOfferById
+    on Mutation$deleteOfferById {
+  CopyWith$Mutation$deleteOfferById<Mutation$deleteOfferById> get copyWith =>
+      CopyWith$Mutation$deleteOfferById(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Mutation$deleteOfferById<TRes> {
+  factory CopyWith$Mutation$deleteOfferById(
+    Mutation$deleteOfferById instance,
+    TRes Function(Mutation$deleteOfferById) then,
+  ) = _CopyWithImpl$Mutation$deleteOfferById;
+
+  factory CopyWith$Mutation$deleteOfferById.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$deleteOfferById;
+
+  TRes call({
+    Mutation$deleteOfferById$delete_service_provider_offer_by_pk?
+        delete_service_provider_offer_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<TRes>
+      get delete_service_provider_offer_by_pk;
+}
+
+class _CopyWithImpl$Mutation$deleteOfferById<TRes>
+    implements CopyWith$Mutation$deleteOfferById<TRes> {
+  _CopyWithImpl$Mutation$deleteOfferById(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteOfferById _instance;
+
+  final TRes Function(Mutation$deleteOfferById) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_service_provider_offer_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$deleteOfferById(
+        delete_service_provider_offer_by_pk: delete_service_provider_offer_by_pk ==
+                _undefined
+            ? _instance.delete_service_provider_offer_by_pk
+            : (delete_service_provider_offer_by_pk
+                as Mutation$deleteOfferById$delete_service_provider_offer_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<TRes>
+      get delete_service_provider_offer_by_pk {
+    final local$delete_service_provider_offer_by_pk =
+        _instance.delete_service_provider_offer_by_pk;
+    return local$delete_service_provider_offer_by_pk == null
+        ? CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk(
+            local$delete_service_provider_offer_by_pk,
+            (e) => call(delete_service_provider_offer_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$deleteOfferById<TRes>
+    implements CopyWith$Mutation$deleteOfferById<TRes> {
+  _CopyWithStubImpl$Mutation$deleteOfferById(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$deleteOfferById$delete_service_provider_offer_by_pk?
+        delete_service_provider_offer_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<TRes>
+      get delete_service_provider_offer_by_pk =>
+          CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationdeleteOfferById = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'deleteOfferById'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'offerId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_service_provider_offer_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'offerId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$deleteOfferById _parserFn$Mutation$deleteOfferById(
+        Map<String, dynamic> data) =>
+    Mutation$deleteOfferById.fromJson(data);
+typedef OnMutationCompleted$Mutation$deleteOfferById = FutureOr<void> Function(
+  dynamic,
+  Mutation$deleteOfferById?,
+);
+
+class Options$Mutation$deleteOfferById
+    extends graphql.MutationOptions<Mutation$deleteOfferById> {
+  Options$Mutation$deleteOfferById({
+    String? operationName,
+    required Variables$Mutation$deleteOfferById variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$deleteOfferById? onCompleted,
+    graphql.OnMutationUpdate<Mutation$deleteOfferById>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$deleteOfferById(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdeleteOfferById,
+          parserFn: _parserFn$Mutation$deleteOfferById,
+        );
+
+  final OnMutationCompleted$Mutation$deleteOfferById? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$deleteOfferById
+    extends graphql.WatchQueryOptions<Mutation$deleteOfferById> {
+  WatchOptions$Mutation$deleteOfferById({
+    String? operationName,
+    required Variables$Mutation$deleteOfferById variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdeleteOfferById,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$deleteOfferById,
+        );
+}
+
+extension ClientExtension$Mutation$deleteOfferById on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$deleteOfferById>> mutate$deleteOfferById(
+          Options$Mutation$deleteOfferById options) async =>
+      await this.mutate(options);
+  graphql.ObservableQuery<Mutation$deleteOfferById>
+      watchMutation$deleteOfferById(
+              WatchOptions$Mutation$deleteOfferById options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$deleteOfferById$delete_service_provider_offer_by_pk {
+  Mutation$deleteOfferById$delete_service_provider_offer_by_pk({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteOfferById$delete_service_provider_offer_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteOfferById$delete_service_provider_offer_by_pk(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$deleteOfferById$delete_service_provider_offer_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteOfferById$delete_service_provider_offer_by_pk
+    on Mutation$deleteOfferById$delete_service_provider_offer_by_pk {
+  CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<
+          Mutation$deleteOfferById$delete_service_provider_offer_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk(
+    Mutation$deleteOfferById$delete_service_provider_offer_by_pk instance,
+    TRes Function(Mutation$deleteOfferById$delete_service_provider_offer_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$deleteOfferById$delete_service_provider_offer_by_pk;
+
+  factory CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$deleteOfferById$delete_service_provider_offer_by_pk;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$deleteOfferById$delete_service_provider_offer_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteOfferById$delete_service_provider_offer_by_pk _instance;
+
+  final TRes Function(
+      Mutation$deleteOfferById$delete_service_provider_offer_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$deleteOfferById$delete_service_provider_offer_by_pk(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteOfferById$delete_service_provider_offer_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$deleteOfferById$delete_service_provider_offer_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}

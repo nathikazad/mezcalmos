@@ -2430,6 +2430,10 @@
       }
     },
     "helpers": {
+      "OfferHelper": {
+        "forOrderTotalCost": "de pedido costo total",
+        "forEachOrder": "uno para el otro"
+      },
       "TimeUnitHelper": {
         "perHour": "Hora",
         "perDay": "Día",
@@ -2533,7 +2537,7 @@
         "unpaid": "Pendiente",
         "total": "Total",
         "backButtonTitle": "Oferta",
-        "recordPayout": "Registrar Pago",
+        "recordPayout": "Pago",
         "amount": "Monto",
         "maxAmount": "Máx",
         "recordPayoutTitle": "Registrar {infName} pago"
@@ -2544,6 +2548,7 @@
         "influencer": "Influenciador",
         "offers": "Ofertas",
         "addOffer": "Agregar oferta",
+        "deleteOffer": "Eliminar oferta",
         "coupon": "Cupón",
         "promotion": "Promoción",
         "monthlySubscription": "Suscripción mensual",

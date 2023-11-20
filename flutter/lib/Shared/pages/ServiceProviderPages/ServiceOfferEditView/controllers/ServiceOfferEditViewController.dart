@@ -2,14 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/ServicesOfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class ServiceOfferEditViewController {
   int? offerId;
@@ -186,15 +190,23 @@ class ServiceOfferEditViewController {
     isLoading.value = true;
     _constructOffer();
     if (isEditMode.value) {
-      await update_service_offer(
+      final int? res = await update_service_offer(
         offer: currentOffer.value!,
         serviceProviderId: serviceProviderId,
       );
+      if (res != null) {
+        showSavedSnackBar();
+      }
     } else {
-      await add_service_offer(
+      final int? res = await add_service_offer(
         offer: currentOffer.value!,
         serviceProviderId: serviceProviderId,
       );
+      if (res != null) {
+        showSavedSnackBar();
+        offerId = res;
+        await _initEditMode();
+      }
     }
     shouldRefetch = true;
     isLoading.value = false;
@@ -212,6 +224,22 @@ class ServiceOfferEditViewController {
   void removeItem({required int id}) {
     selectedItems.removeWhere((OfferItemData element) => element.id == id);
     selectedItems.refresh();
+  }
+
+  Future<void> deleteOffer({required BuildContext context}) async {
+    if (offerId != null) {
+      try {
+        final int? res = await delete_offer_by_id(offerId: offerId!);
+        if (res != null) {
+          Navigator.pop(context);
+          unawaited(MezRouter.back(backResult: true));
+        }
+      } on OperationException catch (e, stk) {
+        showErrorSnackBar(errorText: e.graphqlErrors.first.message);
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
+    }
   }
 
   // void switchOfferInfluencer(bool v) {

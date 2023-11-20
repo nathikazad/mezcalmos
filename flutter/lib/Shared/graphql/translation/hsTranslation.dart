@@ -28,7 +28,7 @@ Future<bool> update_translation(
         ),
         on_conflict: Input$translation_value_on_conflict(
           constraint: Enum$translation_value_constraint.translation_value_pkey,
-          update_columns: [
+          update_columns: <Enum$translation_value_update_column>[
             Enum$translation_value_update_column.value,
           ],
         ),
@@ -77,7 +77,8 @@ Future<int> insert_translation({
 }
 
 List<Input$translation_value_insert_input> _convertTranslation(LanguageMap tr) {
-  final List<Input$translation_value_insert_input> data = [];
+  final List<Input$translation_value_insert_input> data =
+      <Input$translation_value_insert_input>[];
   tr.forEach((Language key, String value) {
     data.add(Input$translation_value_insert_input(
         language_id: key.toFirebaseFormatString(), value: value));
@@ -96,7 +97,7 @@ Future<List<Map<Language, String>>> fetch_translations(
     throw Exception(
         "🚨🚨🚨 Hasura fetch translations exception =>${response.exception}");
   } else {
-    List<Map<Language, String>> translations = [];
+    final List<Map<Language, String>> translations = <Map<Language, String>>[];
     response.parsedData!.translation.forEach(
         (Query$fetch_translations$translation e) =>
             translations.add(toLanguageMap(translations: e.translations)));

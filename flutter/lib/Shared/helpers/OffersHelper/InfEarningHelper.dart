@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart' as user;
 
 class InfEarning {
@@ -24,8 +23,8 @@ class InfEarning {
 
   num get totalBeforeDiscount => orderTotal + discount;
 
-  String get description =>
-      "${customerInfo?.name} bought for ${orderTotal.toPriceString()} from ${serviceInfo.name} your commission is ${comission.toPriceString()}.";
+  // String get description =>
+  //     "${customerInfo?.name} bought for ${orderTotal.toPriceString()} from ${serviceInfo.name} your commission is ${comission.toPriceString()}.";
 }
 
 class InfPayout {

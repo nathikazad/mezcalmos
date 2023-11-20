@@ -734,3 +734,13 @@ Future<List<InfPayout>?> get_all_service_influencer_payouts({
                   date: DateTime.parse(e.date)))
       .toList();
 }
+
+Future<int?> delete_offer_by_id({required int offerId}) async {
+  final QueryResult<Mutation$deleteOfferById> res = await _db.graphQLClient
+      .mutate$deleteOfferById(Options$Mutation$deleteOfferById(
+          variables: Variables$Mutation$deleteOfferById(offerId: offerId)));
+  if (res.hasException) {
+    throw res.exception!;
+  }
+  return res.parsedData?.delete_service_provider_offer_by_pk?.id;
+}

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/InfEarningHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ResponsiveHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/SingleOfferView/controllers/SingleOfferStatsViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -210,10 +211,12 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            item.key.name,
+            item.key.name.inCaps,
             style: context.textTheme.bodyLarge,
           ),
-          smallSepartor,
+          Text(
+            "${_i18n()['total']} : ${item.value.toPriceString()}",
+          ),
         ],
       ),
       action: MezInkwell(
@@ -294,13 +297,6 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
             return IntrinsicHeight(
               child: Row(
                 children: <Widget>[
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: Text(
-                        "${_i18n()['total']} : ${item.value.toPriceString()}",
-                        style: context.textTheme.bodyLarge),
-                  ),
-                  VerticalDivider(),
                   Flexible(
                     child: Text(
                       "${_i18n()['paid']} : ${paid.toPriceString(hideZero: false)}",

@@ -453,3 +453,8 @@ query GetInfluencerPayouts($influencerId: Int!, $offset: Int, $limit: Int) {
     }
   }
 }
+mutation deleteOfferById($offerId: Int!) {
+  delete_service_provider_offer_by_pk(id: $offerId) {
+    id
+  }
+}

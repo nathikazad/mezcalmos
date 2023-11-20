@@ -2381,6 +2381,10 @@
       }
     },
     "helpers": {
+      "OfferHelper": {
+        "forOrderTotalCost": "of order total cost",
+        "forEachOrder": "for each oder"
+      },
       "TimeUnitHelper": {
         "perHour": "Hour",
         "perDay": "Day",
@@ -2484,7 +2488,7 @@
         "youPaid": "You paid",
         "total": "Total",
         "backButtonTitle": "Offer",
-        "recordPayout": "Record Payout",
+        "recordPayout": "Payout",
         "amount": "Amount",
         "maxAmount": "Max",
         "recordPayoutTitle": "Record {infName} payout"
@@ -2509,6 +2513,7 @@
         "couponCode": "Coupon code",
         "enterYourCouponCode": "Enter your coupon code",
         "name": "Name",
+        "deleteOffer": "Delete offer",
         "enterYourPromotionName": "Enter your promotion name",
         "selectTypeOfOrder": "Select type of order",
         "selectRewardType": "Select reward type",

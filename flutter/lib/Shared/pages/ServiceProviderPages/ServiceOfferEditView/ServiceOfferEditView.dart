@@ -7,15 +7,14 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/ServicesOfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/OfferItemsSelectView/OfferItemsSelectView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceOfferEditView/controllers/ServiceOfferEditViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
-import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
@@ -231,21 +230,21 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                           ),
                         ),
 
-                      MezAddButton(
-                          btnHeight: 45,
-                          onClick: () async {
-                            final List<OfferItemData>? data =
-                                await OfferItemsSelectView.navigate(
-                                    selectedItems:
-                                        viewController.initalItemsIds,
-                                    serviceProviderId: serviceProviderId!,
-                                    serviceProviderType: serviceProviderType);
+                      // MezAddButton(
+                      //     btnHeight: 45,
+                      //     onClick: () async {
+                      //       final List<OfferItemData>? data =
+                      //           await OfferItemsSelectView.navigate(
+                      //               selectedItems:
+                      //                   viewController.initalItemsIds,
+                      //               serviceProviderId: serviceProviderId!,
+                      //               serviceProviderType: serviceProviderType);
 
-                            if (data != null) {
-                              viewController.selectedItems.value = data;
-                            }
-                          },
-                          title: "${_i18n()['selectItems']}"),
+                      //       if (data != null) {
+                      //         viewController.selectedItems.value = data;
+                      //       }
+                      //     },
+                      //     title: "${_i18n()['selectItems']}"),
                       if (viewController.itemsNames.isNotEmpty &&
                           viewController.selectedItems.isEmpty)
                         Column(
@@ -265,6 +264,7 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                                       onTap: () {
                                         viewController.itemsNames.remove(
                                             viewController.itemsNames[index]);
+                                        //  viewController.removeItem(id: id);
                                       },
                                       icon: Icons.remove,
                                       iconColor: redAccentColor,
@@ -327,7 +327,20 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                       ),
                       smallSepartor,
                       _timeSelector(context),
-                      smallSepartor,
+                      meduimSeperator,
+                      if (viewController.isEditMode.isTrue)
+                        MezButton(
+                          label: "${_i18n()['deleteOffer']}",
+                          backgroundColor: offRedColor,
+                          textColor: redAccentColor,
+                          onClick: () async {
+                            await showConfirmationDialog(context,
+                                onYesClick: () async {
+                              await viewController.deleteOffer(
+                                  context: context);
+                            });
+                          },
+                        )
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       //   children: [

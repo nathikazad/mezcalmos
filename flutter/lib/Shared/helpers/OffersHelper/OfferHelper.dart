@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/restaurantCart/hsRestaurantCart.dart';
 import 'package:mezcalmos/Shared/graphql/offer/hsOffer.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
+dynamic _i18n() =>
+    Get.find<LanguageController>().strings["Shared"]["helpers"]["OfferHelper"];
 
 enum CouponError {
   UnavailableOrExpired,
@@ -23,9 +27,9 @@ extension infDetailsHelper on cModels.InfluencerOfferDetails {
   String get toReadableString {
     switch (rewardType) {
       case cModels.DiscountType.Percentage:
-        return "%${rewardValue.toInt()} from total order cost";
+        return "%${rewardValue.toInt()} ${_i18n()["forOrderTotalCost"]}";
       case cModels.DiscountType.FlatAmount:
-        return "${rewardValue.toPriceString()} for each order";
+        return "${rewardValue.toPriceString()} ${_i18n()["forEachOrder"]}";
 
       default:
         throw StateError("not supported $rewardType");
