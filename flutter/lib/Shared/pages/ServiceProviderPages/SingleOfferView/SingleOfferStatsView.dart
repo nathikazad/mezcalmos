@@ -127,81 +127,124 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
   }
 
   Widget _buildOrders() {
-    return Column(
-      children: <Widget>[
-        Column(
-          children: List.generate(viewController.earnings.length, (int index) {
-            final InfEarning e = viewController.earnings[index];
-            return InfOfferEarningCard(
-              earning: e,
-              forServiceProvider: true,
-            );
-          }),
+    if (viewController.earnings.isNotEmpty) {
+      return Column(
+        children: <Widget>[
+          Column(
+            children:
+                List.generate(viewController.earnings.length, (int index) {
+              final InfEarning e = viewController.earnings[index];
+              return InfOfferEarningCard(
+                earning: e,
+                forServiceProvider: true,
+              );
+            }),
+          ),
+          if (!viewController.earningsReachedEndData)
+            MezButton(
+              label: "View more",
+              onClick: () async {
+                await viewController.fetchOfferEarnings();
+              },
+            )
+        ],
+      );
+    } else {
+      return Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Empty",
+              style: context.textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              "Sorry no orders yet",
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-        if (!viewController.earningsReachedEndData)
-          MezButton(
-            label: "View more",
-            onClick: () async {
-              await viewController.fetchOfferEarnings();
-            },
-          )
-      ],
-    );
+      );
+    }
   }
 
   Widget _buildPayouts() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Column(
-          children: List.generate(viewController.payouts.length, (int index) {
-            final InfPayout e = viewController.payouts[index];
-            return MezCard(
-              firstAvatarBgImage:
-                  CachedNetworkImageProvider(e.influencerInfo.image),
-              action: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text("${_i18n()['youPaid']}: "),
-                  hSmallSepartor,
-                  Text(
-                    e.amount.toPriceString(),
-                    style: context.textTheme.bodyLarge
-                        ?.copyWith(color: primaryBlueColor),
-                  ),
-                ],
-              ),
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    e.influencerInfo.name,
-                    style: context.textTheme.bodyLarge,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.watch_later_outlined,
-                        size: 16,
-                      ),
-                      hTinySepartor,
-                      Text(e.date.getOrderTime())
-                    ],
-                  ),
-                ],
-              ),
-            );
-          }),
+    if (viewController.payouts.isNotEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Column(
+            children: List.generate(viewController.payouts.length, (int index) {
+              final InfPayout e = viewController.payouts[index];
+              return MezCard(
+                firstAvatarBgImage:
+                    CachedNetworkImageProvider(e.influencerInfo.image),
+                action: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text("${_i18n()['youPaid']}: "),
+                    hSmallSepartor,
+                    Text(
+                      e.amount.toPriceString(),
+                      style: context.textTheme.bodyLarge
+                          ?.copyWith(color: primaryBlueColor),
+                    ),
+                  ],
+                ),
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      e.influencerInfo.name,
+                      style: context.textTheme.bodyLarge,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.watch_later_outlined,
+                          size: 16,
+                        ),
+                        hTinySepartor,
+                        Text(e.date.getOrderTime())
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
+          if (!viewController.payoutsReachedEndOfData)
+            MezButton(
+              label: "View more",
+              onClick: () async {
+                await viewController.fetchAllPayouts();
+              },
+            )
+        ],
+      );
+    } else {
+      return Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Empty",
+              style: context.textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              "Sorry no payouts yet",
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-        if (!viewController.payoutsReachedEndOfData)
-          MezButton(
-            label: "View more",
-            onClick: () async {
-              await viewController.fetchAllPayouts();
-            },
-          )
-      ],
-    );
+      );
+    }
   }
 
   MezCard _infPayoutCard(MapEntry<UserInfo, num> item, BuildContext context) {
@@ -215,7 +258,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
             style: context.textTheme.bodyLarge,
           ),
           Text(
-            "${_i18n()['total']} : ${item.value.toPriceString()}",
+            "${_i18n()['total']} : ${item.value.toPriceString(hideZero: false)}",
           ),
         ],
       ),
@@ -424,7 +467,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                       children: <Widget>[
                         Obx(
                           () => Text(
-                            "+ ${viewController.revenue.toPriceString()}",
+                            "+ ${viewController.revenue.toPriceString(hideZero: false)}",
                             style: context.textTheme.displayMedium
                                 ?.copyWith(color: primaryBlueColor),
                           ),
@@ -447,7 +490,7 @@ class _SingleOfferStatsViewState extends State<SingleOfferStatsView> {
                       children: <Widget>[
                         Obx(
                           () => Text(
-                            "- ${viewController.loss.toPriceString()}",
+                            "- ${viewController.loss.toPriceString(hideZero: false)}",
                             style: context.textTheme.displayMedium
                                 ?.copyWith(color: redAccentColor),
                           ),

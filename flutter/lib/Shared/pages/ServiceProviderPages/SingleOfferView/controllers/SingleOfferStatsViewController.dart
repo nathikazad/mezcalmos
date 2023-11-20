@@ -104,7 +104,8 @@ class SingleOfferStatsViewController {
 
     try {
       _payoutsFetchingData = true;
-      final List<InfPayout> newData = await get_all_service_influencer_payouts(
+      final List<InfPayout> newData = await get_all_service_offer_payouts(
+              offerId: offerId,
               serviceId: _serviceProfileController.serviceId,
               spType: cm.ServiceProviderType.Restaurant,
               offset: _payoutsCurrentOffset,
@@ -173,6 +174,7 @@ class SingleOfferStatsViewController {
     try {
       final int? res = await insert_influencer_payout(
           influencerId: infId,
+          offerId: offerId,
           spId: _serviceProfileController.serviceId,
           amount: double.parse(infPayoutAmmount.text),
           spType: cm.ServiceProviderType.Restaurant);
