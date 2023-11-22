@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/OffersHelper/OfferHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/Buttons/MezInkwell.dart';
 
 class InfDealCard extends StatelessWidget {
   final bool isPromoted;
@@ -69,16 +69,51 @@ class InfDealCard extends StatelessWidget {
                 )
               ],
             ),
-            Divider(),
-            MezButton(
-                width: double.infinity,
-                height: 45,
-                label: isPromoted ? "Unpromote" : "Promote",
-                backgroundColor: isPromoted ? Colors.white : null,
-                borderColor: isPromoted ? redAccentColor : null,
-                textColor: isPromoted ? redAccentColor : null,
-                borderRadius: 20,
-                onClick: onClick),
+            Divider(
+              height: 15,
+            ),
+            IntrinsicHeight(
+              child: Row(
+                children: <Widget>[
+                  Flexible(
+                    flex: 2,
+                    child: MezInkwell(
+                        // width: double.infinity,
+                        // height: 20,
+                        width: double.infinity,
+                        margin: EdgeInsets.zero,
+                        label: isPromoted ? "Unpromote" : "Promote",
+                        backgroundColor: isPromoted ? Colors.white : null,
+                        borderColor: isPromoted ? redAccentColor : null,
+                        textColor: isPromoted ? redAccentColor : null,
+                        borderRadius: 20,
+                        onClick: onClick),
+                  ),
+                  VerticalDivider(),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 8),
+                      decoration: BoxDecoration(
+                        color: offer.isActive
+                            ? Colors.green.shade100
+                            : offRedColor,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Text(
+                        offer.isActive ? "Active" : "Inactive",
+                        textAlign: TextAlign.center,
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          color: offer.isActive ? Colors.green : redAccentColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

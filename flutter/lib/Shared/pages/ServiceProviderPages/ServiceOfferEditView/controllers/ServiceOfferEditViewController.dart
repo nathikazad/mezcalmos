@@ -60,6 +60,8 @@ class ServiceOfferEditViewController {
               .toList()
           : selectedItems.map((OfferItemData element) => element.id).toList();
 
+  bool get isActive => currentOffer.value!.status == OfferStatus.Active;
+
   void init({
     required int? offerId,
     required int serviceProviderId,
@@ -160,7 +162,7 @@ class ServiceOfferEditViewController {
           ? offerNameController.text
           : null,
       serviceProviderType: serviceProviderType,
-      status: OfferStatus.Active,
+      status: currentOffer.value!.status,
       name: <Language, String>{
         Language.EN: offerNameController.text,
       },
@@ -240,6 +242,12 @@ class ServiceOfferEditViewController {
         mezDbgPrint(stk);
       }
     }
+  }
+
+  void switchActive({required bool value}) {
+    currentOffer.value?.status =
+        value ? OfferStatus.Active : OfferStatus.Inactive;
+    currentOffer.refresh();
   }
 
   // void switchOfferInfluencer(bool v) {

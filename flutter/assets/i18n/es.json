@@ -2567,6 +2567,9 @@
         "selectTypeOfOrder": "Selecciona el tipo de pedido",
         "selectRewardType": "Selecciona el tipo de recompensa",
         "rewardValue": "Valor de la recompensa",
+        "status": "Estado",
+        "active": "Activa",
+        "inactive": "Inactiva",
 
         "discountType": "Tipo de descuento",
         "rewardType": "Tipo de recompensa",

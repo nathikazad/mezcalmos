@@ -44,7 +44,6 @@ insert_permissions:
         - date
         - sp_id
         - sp_type
-        - offer_id
 select_permissions:
   - role: influencer
     permission:
@@ -55,7 +54,6 @@ select_permissions:
         - amount
         - date
         - sp_type
-        - offer_id
       filter:
         influencer:
           user_id:
@@ -69,10 +67,8 @@ select_permissions:
         - amount
         - sp_type
         - date
-        - offer_id
       filter:
         restaurant:
           restaurant_operators:
             user_id:
               _eq: X-Hasura-User-Id
-      allow_aggregations: true

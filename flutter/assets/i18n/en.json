@@ -2519,6 +2519,9 @@
         "selectRewardType": "Select reward type",
         "rewardValue": "Reward value",
         "offerAvailibilty": "Offer availability",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
 
         "discountType": "Discount type",
         "rewardType": "Reward type",

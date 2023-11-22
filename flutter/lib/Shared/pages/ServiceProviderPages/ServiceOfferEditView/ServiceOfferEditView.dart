@@ -105,6 +105,23 @@ class _ServiceOfferEditViewState extends State<ServiceOfferEditView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      if (viewController.isEditMode.value) ...<Widget>[
+                        SwitchListTile.adaptive(
+                            value: viewController.isActive,
+                            contentPadding: EdgeInsets.zero,
+                            title: Text("${_i18n()['status']}"),
+                            subtitle: Text(
+                              viewController.isActive
+                                  ? "${_i18n()['active']}"
+                                  : "${_i18n()['inactive']}",
+                              style: context.textTheme.bodyLarge,
+                            ),
+                            onChanged: (bool v) {
+                              viewController.switchActive(value: v);
+                            }),
+                        meduimSeperator,
+                      ],
+
                       Text(
                         "${_i18n()['selectYourOffer']}",
                         style: context.textTheme.bodyLarge,
