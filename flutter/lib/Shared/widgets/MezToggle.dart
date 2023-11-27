@@ -6,8 +6,10 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 class MezToggle extends StatefulWidget {
   final String title;
   final Widget content;
+  final bool isExpanded;
 
-  const MezToggle({required this.title, required this.content});
+  const MezToggle(
+      {required this.title, required this.content, this.isExpanded = false});
 
   @override
   _MezToggleState createState() => _MezToggleState();
@@ -17,10 +19,22 @@ class _MezToggleState extends State<MezToggle> {
   bool _isExpanded = false;
 
   @override
+  void initState() {
+    _isExpanded = widget.isExpanded;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant MezToggle oldWidget) {
+    _isExpanded = widget.isExpanded;
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
+      children: <Widget>[
         GestureDetector(
           onTap: () {
             setState(() {
@@ -32,7 +46,7 @@ class _MezToggleState extends State<MezToggle> {
             decoration: BoxDecoration(),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Flexible(
                   child: Text(widget.title, style: context.textTheme.bodyLarge),
                 ),

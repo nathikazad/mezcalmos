@@ -2563,6 +2563,7 @@
         "couponCode": "Código de cupón",
         "enterYourCouponCode": "Ingresa tu código de cupón",
         "name": "Nombre",
+        "empty": "Vacía",
         "enterYourPromotionName": "Ingresa el nombre de tu promoción",
         "selectTypeOfOrder": "Selecciona el tipo de pedido",
         "selectRewardType": "Selecciona el tipo de recompensa",

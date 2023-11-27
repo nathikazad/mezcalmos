@@ -120,17 +120,24 @@ class _ServiceOffersListViewState extends State<ServiceOffersListView> {
                       style: context.textTheme.bodyLarge,
                     ),
                     smallSepartor,
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: viewController.activeOffers.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return _offerCard(
-                            viewController.activeOffers[index], context);
-                      },
-                    ),
+                    (viewController.activeOffers.isNotEmpty)
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: viewController.activeOffers.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return _offerCard(
+                                  viewController.activeOffers[index], context);
+                            },
+                          )
+                        : Container(
+                            margin: const EdgeInsets.all(16),
+                            alignment: Alignment.center,
+                            child: Text("${_i18n()['empty']}"),
+                          ),
                     MezToggle(
                         title: "${_i18n()['inactiveOffers']}",
+                        isExpanded: true,
                         content: Column(
                           children: List.generate(
                               viewController.inActiveOffers.length,

@@ -2513,6 +2513,7 @@
         "couponCode": "Coupon code",
         "enterYourCouponCode": "Enter your coupon code",
         "name": "Name",
+        "empty": "Empty",
         "deleteOffer": "Delete offer",
         "enterYourPromotionName": "Enter your promotion name",
         "selectTypeOfOrder": "Select type of order",
