@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustDealsView/components/CustPromoCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustDealsView/controllers/CustDealsViewController.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezAppBar.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
+    ["pages"]["CustDealsView"];
 
 class CustDealsView extends StatefulWidget {
   const CustDealsView({super.key});
@@ -29,7 +33,8 @@ class _CustDealsViewState extends State<CustDealsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu, title: "Deals"),
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
+          title: "${_i18n()['deals']}"),
       body: Obx(() => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -41,8 +46,12 @@ class _CustDealsViewState extends State<CustDealsView> {
                       child: _viewController.offers.isEmpty &&
                               !_viewController.isFetching
                           ? Container(
-                              margin: const EdgeInsets.all(15),
-                              child: Text("Sorry no promotions found..."))
+                              margin: const EdgeInsets.all(25),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "${_i18n()['noDeals']}",
+                                textAlign: TextAlign.center,
+                              ))
                           : ListView.builder(
                               controller: _viewController.promoScrollController,
                               itemCount: _viewController.offers.length,

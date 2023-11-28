@@ -576,6 +576,10 @@
       }
     },
     "pages": {
+      "CustDealsView": {
+        "deals": "Ofertas",
+        "noDeals": "No se encontraron ofertas"
+      },
       "CustDelivery": {
         "CustDeliveryWrapperView": {
           "delivery": "Entrega",
@@ -1271,7 +1275,8 @@
             "magicText": "Alguna magia está sucediendo ...",
             "specials": "especiales",
             "undefinedCategory": "Categoría indefinida",
-            "scheduleTitle": "Actualmente cerrado"
+            "scheduleTitle": "Actualmente cerrado",
+            "promotions": "Promociones"
           },
           "components": {
             "RestaurantSliverAppBar": {
@@ -2432,7 +2437,15 @@
     "helpers": {
       "OfferHelper": {
         "forOrderTotalCost": "de pedido costo total",
-        "forEachOrder": "uno para el otro"
+        "forEachOrder": "uno para el otro",
+        "flat": "Plano",
+        "off": "apagado",
+        "buyOneAndGet": "Compra 1 y obtén",
+        "offOnAnotherOne": "de descuento en otro",
+        "onYourFirstOrder": "en tu primer pedido",
+        "withMinOrderAmount": "con un monto mínimo de pedido",
+        "from": "Desde",
+        "to": "A"
       },
       "TimeUnitHelper": {
         "perHour": "Hora",

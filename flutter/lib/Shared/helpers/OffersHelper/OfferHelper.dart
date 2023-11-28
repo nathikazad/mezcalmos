@@ -548,26 +548,28 @@ extension OfferDetailsExtensions on cModels.OfferDetails {
 
     switch (discountType) {
       case cModels.DiscountType.FlatAmount:
-        sb.write(" Flat \$$discountValue off ");
+        sb.write(" ${_i18n()["flat"]} \$$discountValue ${_i18n()["off"]} ");
         break;
       case cModels.DiscountType.Percentage:
-        sb.write(" $discountValue% off ");
+        sb.write(" $discountValue% ${_i18n()["off"]} ");
         break;
       case cModels.DiscountType.AnotherSameFlat:
-        sb.write(" Buy 1 and Get Flat \$$discountValue off on another one ");
+        sb.write(
+            " ${_i18n()["buyOneAndGet"]} \$$discountValue ${_i18n()["offOnAnotherOne"]} ");
         break;
       case cModels.DiscountType.AnotherSamePercentage:
-        sb.write(" Buy 1 and Get $discountValue% off on another one ");
+        sb.write(
+            " ${_i18n()["buyOneAndGet"]} $discountValue% ${_i18n()["offOnAnotherOne"]} ");
         break;
       default:
         throw StateError("Unhanded ===========>$discountType");
     }
     if (offerForOrder == "firstOrder") {
-      sb.write(" on your first order");
+      sb.write("${_i18n()["onYourFirstOrder"]}");
     }
     if (minimumOrderAmount != null) {
       sb.write(
-          " with minimum order amount ${minimumOrderAmount?.toPriceString()}");
+          " ${_i18n()["withMinOrderAmount"]} ${minimumOrderAmount?.toPriceString()}");
     }
     return sb.toString();
   }
@@ -576,7 +578,7 @@ extension OfferDetailsExtensions on cModels.OfferDetails {
     final StringBuffer sb = StringBuffer();
     if (validityRangeStart != null && validityRangeEnd != null) {
       sb.write(
-          "From ${DateTime.parse(validityRangeStart!).getOrderTime()} to ${DateTime.parse(validityRangeEnd!).getOrderTime()}");
+          "${_i18n()["from"]} ${DateTime.parse(validityRangeStart!).getOrderTime()} ${_i18n()["to"]} ${DateTime.parse(validityRangeEnd!).getOrderTime()}");
     }
     return sb.toString();
   }

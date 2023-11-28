@@ -304,7 +304,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "Promotions",
+              "${_i18n()['promotions']}",
               style: context.textTheme.bodyLarge,
             ),
             smallSepartor,
@@ -332,7 +332,7 @@ class _CustRestaurantViewState extends State<CustRestaurantView>
                   firstAvatarIconColor: Colors.white,
                   content: Container(
                     child: Text(
-                        _viewController.offers[index].details.getDescription(),
+                        _viewController.offers[index].details.discountTitle,
                         style: context.textTheme.bodyLarge
                             ?.copyWith(color: primaryBlueColor)),
                   ),

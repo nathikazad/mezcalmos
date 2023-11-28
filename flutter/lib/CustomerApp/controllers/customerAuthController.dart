@@ -18,7 +18,7 @@ class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
   AuthController authController = Get.find<AuthController>();
   Customer? get customer => _customer.value;
-  String? _influencerTag = "mimi";
+  String? _influencerTag = "Foued";
   String? get influencerTag => _influencerTag;
   int? _influencerId;
   int? get influencerId => _influencerId;
