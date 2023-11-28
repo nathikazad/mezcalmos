@@ -502,7 +502,8 @@ class CustCartViewController {
       final String mapsUrl = MapHelper.getGMapsDirectionLink(
           cart.restaurant!.info.location.toLatLng()!,
           cart.toLocation!.toLatLng()!);
-      shortUrl = await getShortLink(mapsUrl);
+      // shortUrl =  await getShortLink(mapsUrl);
+      shortUrl = mapsUrl;
     }
 
     final String separator = "\n" + "=" * 10 + "\n";
