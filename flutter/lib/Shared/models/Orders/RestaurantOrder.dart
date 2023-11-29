@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModels;
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -158,8 +159,7 @@ class RestaurantOrder extends DeliverableOrder {
     if (isDelivery && pickupLocation != null) {
       final String mapsUrl = getGMapsDirectionLink(
           pickupLocation!.toLatLng()!, dropOffLocation.toLatLng()!);
-      // shortUrl = await getShortLink(mapsUrl);
-      shortUrl = mapsUrl;
+      shortUrl = await getShortLink(mapsUrl) ?? mapsUrl;
     }
 
     final String separator = "\n" + "=" * 10 + "\n";

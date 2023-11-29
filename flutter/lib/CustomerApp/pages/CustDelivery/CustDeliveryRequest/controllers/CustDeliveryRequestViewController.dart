@@ -308,8 +308,7 @@ class CustDeliveryRequestViewController {
     if (fromLoc.value != null && toLoc.value != null) {
       final String mapsUrl = MapHelper.getGMapsDirectionLink(
           fromLoc.value!.toLatLng()!, toLoc.value!.toLatLng()!);
-      //  shortUrl = await getShortLink(mapsUrl);
-      shortUrl = mapsUrl;
+      shortUrl = await getShortLink(mapsUrl) ?? mapsUrl;
     }
 
     final String separator = "\n" + "=" * 10 + "\n";

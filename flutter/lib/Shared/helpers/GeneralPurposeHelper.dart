@@ -961,19 +961,27 @@ Future<bool> callWhatsappNumber(String number, {String? message}) async {
   }
 }
 
-Future<String> getShortLink(String longUrl) async {
-  final http.Response response = await http.post(
-    Uri.parse('https://cleanuri.com/api/v1/shorten'),
-    headers: <String, String>{
-      'Content-Type': 'application/json',
-    },
-    body: jsonEncode(<String, String>{'url': longUrl}),
-  );
-  if (response.statusCode == 200) {
-    final Map<String, dynamic> responseData = json.decode(response.body);
-    return responseData['result_url'] as String;
-  } else {
-    throw Exception('Failed to shorten URL');
+Future<String?> getShortLink(String longUrl) async {
+  try {
+    final http.Response response = await http.post(
+      Uri.parse(
+          'https://api.tinyurl.com/create?api_token=82jAUxz7Zime0LxH2uRhPfMbyKiK2JjZEP3Q8acUffAMJ8A5fSHYXhJbfPnK'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{'url': longUrl}),
+    );
+    mezDbgPrint(response.body);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      return responseData["data"]['tiny_url'] as String?;
+    } else {
+      mezDbgPrint('🔻🔻 Failed to shorten URL: $response');
+      return null;
+    }
+  } catch (error) {
+    mezDbgPrint('🔻🔻 Failed to shorten URL: $error');
+    return null;
   }
 }
 
